@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid/v4'
-import { Feature } from 'alpheios-data-models'
+import { Feature, Logger } from 'alpheios-data-models'
 import ParadigmRule from '@/paradigm/lib/paradigm-rule.js'
 import ParadigmInflectionList from '@/paradigm/lib/paradigm-inflection-list.js'
 
@@ -109,7 +109,7 @@ export default class Paradigm {
             if (paradigmMap.has(cell.reflink.id)) {
               this._suppParadigms.set(cell.reflink.id, paradigmMap.get(cell.reflink.id))
             } else {
-              console.warn(`"${cell.reflink.id}" supplemental table is not found`)
+              Logger.getInstance().warn(`"${cell.reflink.id}" supplemental table is not found`)
             }
           }
         }

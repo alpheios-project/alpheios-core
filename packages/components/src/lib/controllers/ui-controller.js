@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME */
 import { version as packageVersion, description as packageDescription } from '../../../package'
-import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
+import { Constants, Feature, LanguageModelFactory, Lexeme, Logger } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 import { WordlistController, UserDataManager } from 'alpheios-wordlist'
 import Vue from '@vue-runtime'
 import Vuex from 'vuex'
 import interact from 'interactjs'
-import Logger from '@/lib/log/logger.js'
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import LexisModule from '@/vue/vuex-modules/data/lexis.js'
@@ -933,7 +932,7 @@ if you want to create a different configuration of a UI controller.
       const response = await fetch(request)
       return response.json()
     } catch (err) {
-      console.error(`Unable to retrieve an app configuration from ${url}: ${err.message}`)
+      this.logger.error(`Unable to retrieve an app configuration from ${url}: ${err.message}`)
       return null
     }
   }

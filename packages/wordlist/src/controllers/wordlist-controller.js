@@ -1,4 +1,4 @@
-import { PsEvent, WordList, WordItem, TextQuoteSelector, LanguageModelFactory } from 'alpheios-data-models'
+import { PsEvent, WordList, WordItem, TextQuoteSelector, LanguageModelFactory, Logger } from 'alpheios-data-models'
 import Utility from '@wordlist/common/utility.js'
 
 export default class WordlistController {
@@ -47,7 +47,7 @@ export default class WordlistController {
                 this.onHomonymReady(cachedItem.homonym)
               }
             } catch (e) {
-              console.error("Alpheios error: unexpected error replaying cached wordlist item",e)
+              Logger.getInstance().error("Alpheios error: unexpected error replaying cached wordlist item",e)
             }
           }
         }
@@ -109,7 +109,7 @@ export default class WordlistController {
           this.removeWordList(languageCode)
         }
       } else {
-        console.error('Alpheios error: unexpected error updating user wordlist: trying to delete an absent element')
+        Logger.getInstance().error('Alpheios error: unexpected error updating user wordlist: trying to delete an absent element')
       }
     }
   }
@@ -131,7 +131,7 @@ export default class WordlistController {
       }
     }
     if (!wordItem) {
-      console.error(`Alpheios error: wordlist item not found: ${languageCode} ${targetWord}`)
+      Logger.getInstance().error(`Alpheios error: wordlist item not found: ${languageCode} ${targetWord}`)
     }
     return wordItem
   }
@@ -169,7 +169,7 @@ export default class WordlistController {
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
       // TODO error handling
-      console.error("Alpheios error: unexpected error updating user word list: request to add definitions to non-existent item.")
+      Logger.getInstance().error("Alpheios error: unexpected error updating user word list: request to add definitions to non-existent item.")
     }
   }
 
@@ -187,7 +187,7 @@ export default class WordlistController {
       wordItem.homonym = data
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
-      console.error("Alpheios error: unexpected error updating user word list: request to add translations to non-existent item")
+      Logger.getInstance().error("Alpheios error: unexpected error updating user word list: request to add translations to non-existent item")
     }
   }
 
@@ -208,7 +208,7 @@ export default class WordlistController {
       // emit a wordlist updated event too in case the wordlist was updated
       WordlistController.evt.WORDLIST_UPDATED.pub([this.getWordList(wordItem.languageCode)])
     } else {
-      console.error("Alpheios error: unexpected error updating user word list: unable to create or retrieve worditem")
+      Logger.getInstance().error("Alpheios error: unexpected error updating user word list: unable to create or retrieve worditem")
     }
 
   }
@@ -227,7 +227,7 @@ export default class WordlistController {
       wordItem.updatedDT = Utility.currentDate
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     } else {
-      console.error("Alpheios error: unexpected error updating user word list: request to set important flag on non-existent item")
+      Logger.getInstance().error("Alpheios error: unexpected error updating user word list: request to set important flag on non-existent item")
     }
   }
 

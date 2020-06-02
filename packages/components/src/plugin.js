@@ -22,7 +22,6 @@ import LanguageOptionDefaults from './settings/language-options-defaults.json'
 import UIOptionDefaults from './settings/ui-options-defaults.json'
 import DefaultsLoader from './lib/options/defaults-loader.js'
 import Options from './lib/options/options.js'
-import Logger from './lib/log/logger.js'
 import HTMLConsole from './lib/log/html-console.js'
 import MouseDblClick from './lib/custom-pointer-events/mouse-dbl-click.js'
 import GenericEvt from './lib/custom-pointer-events/generic-evt.js'
@@ -47,7 +46,7 @@ export {
   Popup, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController,
   Language, HTMLSelector, LexicalQuery, ResourceQuery,
   LocalStorageArea, ExtensionSyncStorage, FeatureOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
-  DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
+  DefaultsLoader, Options, UIStateAPI, Style, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
   HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, ToolbarModule,
   ActionPanelModule, Platform, AuthData, SessionAuthenticator, AppAuthenticator
 }

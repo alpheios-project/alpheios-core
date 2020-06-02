@@ -1,5 +1,6 @@
-import { LanguageModelFactory } from 'alpheios-data-models'
+import { LanguageModelFactory, Logger } from 'alpheios-data-models'
 import GrammarResAdapter from './grammar/grammar_adapter'
+
 
 let grammars = new Map() // Maps a language ID into an array of grammars
 
@@ -56,7 +57,7 @@ export default class Grammars {
 
       return requests
     } catch (error) {
-      console.error(`Alpheios error: unable to fetch resources due to ${error}`)
+      Logger.getInstance().error(`Alpheios error: unable to fetch resources due to ${error}`)
       return []
     }
   }

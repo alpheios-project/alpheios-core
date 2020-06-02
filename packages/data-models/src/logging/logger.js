@@ -106,10 +106,10 @@ export default class Logger {
   }
 
   warn (...data) {
-    if (this._prependMode && data && data.length > 0 && typeof data[0] === 'string') {
-      data[0] = `Alpheios warn: ${data[0]}`
-    }
     if (this._verboseMode) {
+      if (this._prependMode && data && data.length > 0 && typeof data[0] === 'string') {
+        data[0] = `Alpheios warn: ${data[0]}`
+      }
       console.warn(...data)
       if (this._traceMode) {
         console.trace()
@@ -118,10 +118,10 @@ export default class Logger {
   }
 
   log (...data) {
-    if (this._prependMode && data && data.length > 0 && typeof data[0] === 'string') {
-      data[0] = `Alpheios log: ${data[0]}`
-    }
     if (this._verboseMode) {
+      if (this._prependMode && data && data.length > 0 && typeof data[0] === 'string') {
+        data[0] = `Alpheios log: ${data[0]}`
+      }
       console.log(...data)
       if (this._traceMode) {
         console.trace()
@@ -130,10 +130,10 @@ export default class Logger {
   }
 
   info (...data) {
-    if (this._prependMode && data && data.length > 0 && typeof data[0] === 'string') {
-      data[0] = `Alpheios info: ${data[0]}`
-    }
     if (this._verboseMode) {
+      if (this._prependMode && data && data.length > 0 && typeof data[0] === 'string') {
+        data[0] = `Alpheios info: ${data[0]}`
+      }
       console.info(...data)
       if (this._traceMode) {
         console.trace()

@@ -1,4 +1,4 @@
-import { Feature, FeatureList } from 'alpheios-data-models'
+import { Feature, FeatureList, Logger } from 'alpheios-data-models'
 import GroupFeatureType from './group-feature-type.js'
 
 /**
@@ -138,7 +138,7 @@ export default class GroupFeatureList extends FeatureList {
     if (position < this._features.length) {
       return this._features[position]
     } else {
-      console.warn(`Attempting to get feature that is out of bounds, position ${position}`)
+      Logger.getInstance().warn(`Attempting to get feature that is out of bounds, position ${position}`)
       return null
     }
   }

@@ -1,4 +1,4 @@
-import { WordItem } from 'alpheios-data-models'
+import { WordItem, Logger } from 'alpheios-data-models'
 
 /**
  * An interface to IndexedDB Storage
@@ -233,7 +233,7 @@ export default class IndexedDBAdapter {
     this.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"}; // This line should only be needed if it is needed to support the object's constants for older browsers
     this.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
     if (!this.indexedDB) {
-      console.warn("Alpheios warn: your browser doesn't support IndexedDB. Wordlists will not be available.");
+      Logger.getInstance().warn("Alpheios warn: your browser doesn't support IndexedDB. Wordlists will not be available.");
       return false
     }
     return true

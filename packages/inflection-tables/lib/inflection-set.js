@@ -1,3 +1,4 @@
+import { Logger } from 'alpheios-data-models'
 import InflectionList from './inflection-list.js'
 
 /**
@@ -90,7 +91,7 @@ export default class InflectionSet {
         this.addInflectionItems(items)
       }
     } else {
-      console.warn(`Cannot add inflectionSet [languageID=${inflectionSet.languageID.toString()}, POFS=${inflectionSet.partOfSpeech}]` +
+      Logger.getInstance().warn(`Cannot add inflectionSet [languageID=${inflectionSet.languageID.toString()}, POFS=${inflectionSet.partOfSpeech}]` +
         ` to [languageID=${this.languageID.toString()}, POFS=${this.partOfSpeech}]`)
     }
   }

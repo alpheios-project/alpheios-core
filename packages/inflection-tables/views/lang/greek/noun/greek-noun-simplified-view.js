@@ -1,4 +1,4 @@
-import { Constants } from 'alpheios-data-models'
+import { Constants, Logger } from 'alpheios-data-models'
 import Morpheme from '@lib/morpheme.js'
 import Suffix from '@lib/suffix.js'
 import GreekView from '@views/lang/greek/greek-view.js'
@@ -38,7 +38,7 @@ export default class GreekNounSimplifiedView extends GreekNounView {
     if (suffix.extendedLangData && suffix.extendedLangData[Constants.STR_LANG_CODE_GRC]) {
       return suffix.extendedLangData[Constants.STR_LANG_CODE_GRC].primary
     } else {
-      console.warn(`Greek morpheme "${suffix.value}" has no extended language data attached.`)
+      Logger.getInstance().warn(`Greek morpheme "${suffix.value}" has no extended language data attached.`)
       return false
     }
   }

@@ -1,4 +1,4 @@
-import { PsEvent } from 'alpheios-data-models'
+import { PsEvent, Logger } from 'alpheios-data-models'
 
 export default class Platform {
   constructor ({ setRootAttributes = false, appType = Platform.appTypes.OTHER } = {}) {
@@ -109,7 +109,7 @@ export default class Platform {
       // We'll use the `orientation` property which returns an angole of rotation.
       return (Math.abs(parseInt(window.orientation, 10)) === 90) ? this.orientations.LANDSCAPE : this.orientations.PORTRAIT
     } else {
-      console.warn('Alpheios cannot determine the orientation of this device, assuming "portrait"')
+      Logger.getInstance().warn('Alpheios cannot determine the orientation of this device, assuming "portrait"')
       return this.orientations.PORTRAIT
     }
   }
@@ -122,7 +122,7 @@ export default class Platform {
       const bodyOrientationClass = this.isPortrait ? 'alpheios-layout-portrait' : 'alpheios-layout-landscape'
       document.body.classList.add(bodyOrientationClass)
     } else {
-      console.warn('Alpheios cannot determine what platform this is - either document or documentElement are not defined')
+      Logger.getInstance().warn('Alpheios cannot determine what platform this is - either document or documentElement are not defined')
     }
   }
 

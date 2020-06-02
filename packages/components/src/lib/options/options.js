@@ -1,3 +1,4 @@
+import { Logger } from 'alpheios-data-models'
 import OptionItem from './options-item.js'
 /**
  * A set of options grouped by domain. Domain name should be passed in `defaults.domain`.
@@ -74,7 +75,7 @@ export default class Options {
                 try {
                   f.currentValue = JSON.parse(values[key])
                 } catch (e) {
-                  console.warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
+                  Logger.getInstance().warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
                 }
               }
             })
@@ -83,7 +84,7 @@ export default class Options {
               this.items[parsedKey.name].currentValue = JSON.parse(values[key])
             } catch (e) {
               // invalid value
-              console.warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
+              Logger.getInstance().warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
             }
           }
         }
@@ -92,7 +93,7 @@ export default class Options {
     } catch (error) {
       const message = `Unexpected error retrieving options for Alpheios from local storage: ${error}. Default values ` +
       'will be used instead'
-      console.error(message)
+      Logger.getInstance().error(message)
     }
   }
 
@@ -127,7 +128,7 @@ export default class Options {
         group: group
       }
     } catch (e) {
-      console.warn(`Failed to parse stored Alpheios options key ${key}`)
+      Logger.getInstance().warn(`Failed to parse stored Alpheios options key ${key}`)
     }
     return parsed
   }

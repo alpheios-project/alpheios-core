@@ -1,7 +1,7 @@
 /*
 Objects of a morphology analyzer's library
  */
-import { Feature, Lemma, FeatureImporter, Definition, Constants } from 'alpheios-data-models'
+import { Feature, Lemma, FeatureImporter, Definition, Constants, Logger } from 'alpheios-data-models'
 
 /**
  * Holds all information required to transform from morphological analyzer's grammatical feature values to the
@@ -230,7 +230,7 @@ class ImportMorphData {
         // There are multiple values of this feature
         for (const e of inputItem) {
           if (featureName && featureName !== e[attributeName]) {
-            console.warn('Mutiple feature values with mismatching attribute value', inputElem)
+            Logger.getInstance().warn('Mutiple feature values with mismatching attribute value', inputElem)
           }
           featureName = e[attributeName]
           values.push(...this.parseProperty(inputName, e.$, inputElem))

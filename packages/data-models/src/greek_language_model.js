@@ -2,6 +2,7 @@ import LanguageModel from './language_model.js'
 import LanguageModelFactory from './language_model_factory.js'
 import * as Constants from './constants.js'
 import Feature from './feature.js'
+import Logger from './logging/logger.js'
 
 import GreekChars from './languages/greek-chars.js'
 
@@ -283,7 +284,7 @@ for the current node
         constraints.suffixBased = true
       }
     } else {
-      console.warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[Feature.types.part])
+      Logger.getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[Feature.types.part])
     }
 
     constraints.pronounClassRequired =

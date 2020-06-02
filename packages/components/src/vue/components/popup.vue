@@ -113,7 +113,7 @@
 import Morph from './morph.vue'
 import NotificationArea from './notification-area.vue'
 import interact from 'interactjs'
-import Logger from '@/lib/log/logger'
+import { Logger } from 'alpheios-data-models'
 
 import Tooltip from './tooltip.vue'
 import ProgressBar from './progress-bar.vue'

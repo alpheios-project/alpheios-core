@@ -1,6 +1,6 @@
 import Query from './query.js'
 import Options from '@/lib/options/options.js'
-import { PsEvent, LanguageModelFactory } from 'alpheios-data-models'
+import { PsEvent, LanguageModelFactory, Logger } from 'alpheios-data-models'
 
 export default class ResourceQuery extends Query {
   constructor (name, feature, options) {
@@ -25,7 +25,7 @@ export default class ResourceQuery extends Query {
           const resolvedValue = await result.value
           result = iterator.next(resolvedValue)
         } catch (error) {
-          console.error('Unexpected error retrieving Alpheios grammar resource', error)
+          Logger.getInstance().error('Unexpected error retrieving Alpheios grammar resource', error)
           iterator.return()
           break
         }
@@ -82,7 +82,7 @@ export default class ResourceQuery extends Query {
           }
         },
         error => {
-          console.error('Unexpected error retrieving Alpheios grammar resource', error)
+          Logger.getInstance().error('Unexpected error retrieving Alpheios grammar resource', error)
           if (grammarRequests.every(request => request.complete)) {
             if (this.active) {
               ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.pub({ resultStatus: ResourceQuery.resultStatus.SUCCEEDED })

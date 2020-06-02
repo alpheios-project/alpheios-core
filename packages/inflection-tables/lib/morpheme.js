@@ -1,4 +1,4 @@
-import { Feature } from 'alpheios-data-models'
+import { Feature, Logger } from 'alpheios-data-models'
 import InflectionList from './inflection-list.js'
 import MatchData from './match-data'
 import ExtendedLanguageData from './extended-language-data'
@@ -196,7 +196,7 @@ export default class Morpheme {
           }
         }
       } else {
-        console.warn(`Comparison type "${comparisonType}" is not supported`)
+        Logger.getInstance().warn(`Comparison type "${comparisonType}" is not supported`)
       }
     }
 

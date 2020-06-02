@@ -1,3 +1,5 @@
+import { Logger } from 'alpheios-data-models'
+
 /**
  * An auxiliary utility class to provide HTML page, window, and document related functionality.
  */
@@ -42,13 +44,13 @@ export default class HTMLPage {
     }
 
     if (!window.document.body) {
-      console.warn(`Alpheios cannot be activated on a document without a body element (${window.document.URL})`)
+      Logger.getInstance().warn(`Alpheios cannot be activated on a document without a body element (${window.document.URL})`)
       return false
     }
 
     // TODO: This will need to be changed when a mobile support be added
     if (window.document.body.clientWidth < HTMLPage.targetRequirements.minWidth) {
-      console.warn(`Alpheios cannot be activated on a window narrower than ${HTMLPage.targetRequirements.minWidth} (${window.document.URL})`)
+      Logger.getInstance().warn(`Alpheios cannot be activated on a window narrower than ${HTMLPage.targetRequirements.minWidth} (${window.document.URL})`)
       return false
     }
 
@@ -57,12 +59,12 @@ export default class HTMLPage {
         // We could still allow no height for top level documents that have no frames
         return true
       }
-      console.warn(`Alpheios cannot be activated on a window shorter than ${HTMLPage.targetRequirements.minHeight} (${window.document.URL})`)
+      Logger.getInstance().warn(`Alpheios cannot be activated on a window shorter than ${HTMLPage.targetRequirements.minHeight} (${window.document.URL})`)
       return false
     }
 
     if (window.document.body.innerText.length < HTMLPage.targetRequirements.minCharCount) {
-      console.warn(`Alpheios cannot be activated on a page with fewer than ${HTMLPage.targetRequirements.minCharCount} (${window.document.URL})`)
+      Logger.getInstance().warn(`Alpheios cannot be activated on a page with fewer than ${HTMLPage.targetRequirements.minCharCount} (${window.document.URL})`)
       return false
     }
 

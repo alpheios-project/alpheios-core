@@ -1,4 +1,4 @@
-import { LanguageModelFactory } from 'alpheios-data-models'
+import { LanguageModelFactory, Logger } from 'alpheios-data-models'
 import LanguageDatasetFactory from '../../lib/language-dataset-factory.js'
 
 /**
@@ -34,7 +34,7 @@ export default class ViewSet {
                 dataset.setInflectionData(inflection, lexeme.lemma)
               })
             } catch (e) {
-              console.error(`Cannot set inflection data: ${e}`)
+              Logger.getInstance().error(`Cannot set inflection data: ${e}`)
             }
           }
         }

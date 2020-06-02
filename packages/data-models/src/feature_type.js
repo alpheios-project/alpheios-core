@@ -1,6 +1,7 @@
 import Feature from './feature.js'
 import FeatureImporter from './feature_importer.js'
 import LMF from './language_model_factory'
+import Logger from './logging/logger.js'
 
 /**
  * @deprecated Use Feature instead
@@ -65,7 +66,7 @@ class FeatureType {
    * @returns {string} A language code.
    */
   get language () {
-    console.warn('Please use a "languageID" instead of a "language"')
+    Logger.getInstance().warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 

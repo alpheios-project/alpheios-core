@@ -2,6 +2,7 @@ import LMF from './language_model_factory.js'
 import Feature from './feature.js'
 import Translation from './translation.js'
 import uuidv4 from 'uuid/v4'
+import Logger from './logging/logger.js'
 
 /**
  * Lemma, a canonical form of a word.
@@ -39,7 +40,7 @@ class Lemma {
   }
 
   get language () {
-    console.warn('Please use "languageID" instead of "language"')
+    Logger.getInstance().warn('Please use "languageID" instead of "language"')
     return this.languageCode
   }
 
@@ -87,7 +88,7 @@ class Lemma {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    console.warn('Please use "addFeature" instead')
+    Logger.getInstance().warn('Please use "addFeature" instead')
     if (!data) {
       throw new Error('feature data cannot be empty.')
     }

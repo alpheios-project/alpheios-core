@@ -1,3 +1,4 @@
+import { Logger } from 'alpheios-data-models'
 import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver.js'
 import WordItemRemoteDbDriver from '@wordlist/storage/worditem-remotedb-driver.js'
 import IndexedDBAdapter from '@wordlist/storage/indexed-db-adapter.js'
@@ -30,7 +31,7 @@ export default class UserDataManager {
   clear() {
     if (this.blocked) {
       // TODO we should wait on the request queue completion
-      console.warn("Alpheios warn: destroying user data manager with requests pending. Words may not all be deleted.")
+      Logger.getInstance().warn("Alpheios warn: destroying user data manager with requests pending. Words may not all be deleted.")
     }
     for (let unsub of this.subscriptions) {
       unsub()
@@ -88,7 +89,7 @@ export default class UserDataManager {
   }
 
   printErrorAdapterUnvailable(adapter) {
-    console.error(`Alpheios error: user data adapter is not available - ${adapter.constructor.name}`)
+    Logger.getInstance().error(`Alpheios error: user data adapter is not available - ${adapter.constructor.name}`)
   }
 
   /**
@@ -137,7 +138,7 @@ export default class UserDataManager {
       }
       return result
     } catch (error) {
-      console.error('Alpheios error: unexpected error updating user data.', error)
+      Logger.getInstance().error('Alpheios error: unexpected error updating user data.', error)
     }
   }
 
@@ -190,7 +191,7 @@ export default class UserDataManager {
       }
       return remoteResult && localResult
     } catch (error) {
-      console.error('Alpheios error: unexpected error deleting user data.', error.message)
+      Logger.getInstance().error('Alpheios error: unexpected error deleting user data.', error.message)
     }
   }
 
@@ -239,7 +240,7 @@ export default class UserDataManager {
 
       return deletedLocal && deletedRemote
     } catch (error) {
-      console.error('Alpheios error: unexpected error deleting user data.', error.message)
+      Logger.getInstance().error('Alpheios error: unexpected error deleting user data.', error.message)
     }
   }
 
@@ -301,7 +302,7 @@ export default class UserDataManager {
       this.printErrors(localAdapter)
       return finalItems
     } catch (error) {
-      console.error('Alpheios error: unexpected error querying user data.', error.message)
+      Logger.getInstance().error('Alpheios error: unexpected error querying user data.', error.message)
     }
   }
 
@@ -320,7 +321,7 @@ export default class UserDataManager {
    */
   printErrors (adapter) {
     if (adapter.errors && adapter.errors.length > 0) {
-      adapter.errors.forEach(error => console.error(`Alpheios error: user data unexpected error - ${error}`))
+      adapter.errors.forEach(error => Logger.getInstance().error(`Alpheios error: user data unexpected error - ${error}`))
     }
   }
 

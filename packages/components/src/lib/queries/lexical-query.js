@@ -1,9 +1,8 @@
-import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent, Constants } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent, Constants, Logger } from 'alpheios-data-models'
 import Query from './query.js'
 import Options from '@/lib/options/options.js'
 import { ClientAdapters, RemoteError } from 'alpheios-client-adapters'
 import { ResponseMessage } from 'alpheios-messaging'
-import Logger from '@/lib/log/logger.js'
 
 export default class LexicalQuery extends Query {
   constructor (name, selector, options) {
