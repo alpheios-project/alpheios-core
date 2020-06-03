@@ -1171,13 +1171,13 @@ if you want to create a different configuration of a UI controller.
         // we offer change language here when the lookup was from the page because the language used for the
         // lookup is deduced from the page and might be wrong
         const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE',
-          { targetWord: this.store.state.app.targetWord, languageName: languageName })
+          { targetWord: this.store.state.app.targetWord, languageName: languageName, langCode: homonym.language })
         this.store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: true })
       } else {
         // if we are coming from e.g. the lookup or the wordlist, offering change language
         // here creates some confusion and the language was explicit upon lookup so it is not necessary
         const message = this.api.l10n.getMsg('TEXT_NOTICE_NOT_FOUND',
-          { targetWord: this.store.state.app.targetWord, languageName: languageName })
+          { targetWord: this.store.state.app.targetWord, languageName: languageName, langCode: homonym.language })
         this.store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: false })
       }
     } else if (!this.store.state.app.queryStillActive) {

@@ -220,11 +220,11 @@ html {
   -ms-text-size-adjust: 100%;
 }
 .alpheios-content [lang=ara] {
-  font-family: var(--alpheios-arabic-font-face) !important;
+  font-family: var(--alpheios-arabic-font-face), Verdana, Arial, Helvetica, sans-serif !important;
   font-variant-ligatures: normal;
 }
 .alpheios-content [lang=syr] {
-  font-family: var(--alpheios-syriac-font-face) !important;
+  font-family: var(--alpheios-syriac-font-face), Verdana, Arial, Helvetica, sans-serif !important;
   font-variant-ligatures: normal;
 }
 .alpheios-content h1, .alpheios-content h2, .alpheios-content h3, .alpheios-content h4, .alpheios-content h5, .alpheios-content h6, .alpheios-content p, .alpheios-content span, .alpheios-content a {
@@ -1471,6 +1471,9 @@ select.alpheios-setting__control,
 .alpheios-notification-area__notification--important.alpheios-notification-area__notification--cedict-loaded .alpheios-notification-area__close-btn {
   fill: var(--alpheios-notification-important-alt-color);
   stroke: var(--alpheios-notification-important-alt-color);
+}
+.alpheios-notification-area__notification--important span {
+  color: var(--alpheios-notification-important-color);
 }
 .alpheios-notification-area__msg {
   padding-right: calc(var(--alpheios-base-ui-size) * 0.625);

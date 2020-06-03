@@ -324,6 +324,10 @@ export default {
       }
     }
 
+    &__notification--important span {
+      color: var(--alpheios-notification-important-color);
+    }
+
     &__msg {
       padding-right: uisize(10px);
       flex: 1 1 auto;
