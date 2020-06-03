@@ -17,13 +17,13 @@
 
   [lang='ara'] {
     // `Important` below is required to override aggressive styling on pages
-    font-family: var(--alpheios-arabic-font-face) !important;
+    font-family: var(--alpheios-arabic-font-face), Verdana, Arial, Helvetica, sans-serif !important;
     font-variant-ligatures: normal;
   }
 
   [lang='syr'] {
     // `Important` below is required to override aggressive styling on pages
-    font-family: var(--alpheios-syriac-font-face) !important;
+    font-family: var(--alpheios-syriac-font-face), Verdana, Arial, Helvetica, sans-serif !important;
     font-variant-ligatures: normal;
   }
 
