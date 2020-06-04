@@ -1533,7 +1533,7 @@ select.alpheios-setting__control,
   top: 100px;
   box-sizing: border-box;
   touch-action: none;
-  overflow: auto;
+  overflow: hidden;
   border: 1px solid var(--alpheios-border-color);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
 }
@@ -1542,8 +1542,8 @@ select.alpheios-setting__control,
 }
 .alpheios-popup__header {
   display: flex;
+  flex: 0 0 calc(var(--alpheios-base-ui-size) * 2.75);
   justify-content: space-between;
-  height: calc(var(--alpheios-base-ui-size) * 2.75);
   background: var(--alpheios-desktop-popup-header-bg);
   touch-action: auto;
 }
@@ -1624,7 +1624,7 @@ select.alpheios-setting__control,
   padding: calc(var(--alpheios-base-text-size) * 1);
   background: var(--alpheios-desktop-popup-body-bg);
   overflow: auto;
-  flex: 1 0;
+  flex: 1 1;
 }
 .alpheios-popup__toolbar {
   position: relative;

@@ -275,6 +275,8 @@ export default {
           return `${this.resizedHeight}px`
         }
         this.$options.logger.log(`${time}: height getter, return value is ${this.heightValue}`)
+        const value = this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
+        console.info(`height is ${value}`)
         return this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
       },
       set: function (newHeight) {
@@ -569,7 +571,7 @@ export default {
     // Required for Interact.js to take element size with paddings and work correctly
     box-sizing: border-box;
     touch-action: none; // Required by Interact.js
-    overflow: auto;
+    overflow: hidden;
     @include alpheios-ui-border;
 
     & .alpheios-notification-area {
@@ -579,8 +581,8 @@ export default {
 
   .alpheios-popup__header {
     display: flex;
+    flex: 0 0 uisize(44px);
     justify-content: space-between;
-    height: uisize(44px);
     background: var(--alpheios-desktop-popup-header-bg);
     touch-action: auto; // Required by Interact.js
   }
@@ -676,7 +678,7 @@ export default {
     padding: textsize(16px);
     background: var(--alpheios-desktop-popup-body-bg);
     overflow: auto;
-    flex: 1 0;
+    flex: 1 1;
   }
 
   .alpheios-popup__toolbar {
