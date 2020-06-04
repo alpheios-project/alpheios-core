@@ -275,8 +275,6 @@ export default {
           return `${this.resizedHeight}px`
         }
         this.$options.logger.log(`${time}: height getter, return value is ${this.heightValue}`)
-        const value = this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
-        console.info(`height is ${value}`)
         return this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
       },
       set: function (newHeight) {
