@@ -1,6 +1,7 @@
 import Feature from './feature.js'
 import LMF from './language_model_factory.js'
 import * as Constants from './constants.js'
+import Logger from './logging/logger.js'
 /*
  Hierarchical structure of return value of a morphological analyzer:
 
@@ -138,7 +139,7 @@ class Inflection {
    * @returns {string} A language code.
    */
   get language () {
-    console.warn('Please use a "languageID" instead of a "language"')
+    Logger.getInstance().warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -244,7 +245,7 @@ class Inflection {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    console.warn('Please use "addFeature" instead.')
+    Logger.getInstance().warn('Please use "addFeature" instead.')
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
     }

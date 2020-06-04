@@ -4,11 +4,11 @@
 import Feature from '@/feature.js'
 import * as Constants from '@/constants.js'
 import FeatureImporter from '@/feature_importer.js'
+import Logger from '@/logging/logger.js'
 
 describe('feature.test.js', () => {
-  console.error = function () {}
-  console.log = function () {}
-  console.warn = function () {}
+  const logger = Logger.getInstance({ verbose: true })
+  logger.warn = jest.fn(() => {})
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
@@ -251,7 +251,7 @@ describe('feature.test.js', () => {
 
     feature.addValue('foovalue3', 3)
     expect(feature._data).toEqual(checkRes)
-    expect(console.warn).toHaveBeenCalledWith(`Value "foovalue3" already exists. If you want to change it, use "getValue" to access it directly.`)
+    expect(logger.warn).toHaveBeenCalledWith(`Value "foovalue3" already exists. If you want to change it, use "getValue" to access it directly.`)
 
     feature.addValues([ ['foovalue4', 4], ['foovalue5', 5] ])
 
@@ -269,10 +269,10 @@ describe('feature.test.js', () => {
     feature.addValues([ ['foovalue4', 4], ['foovalue6', 6] ])
 
     expect(feature._data).toEqual(checkRes)
-    expect(console.warn).toHaveBeenCalledWith(`One or several values from "foovalue4,foovalue6" already exist. If you want to change it, use "getValue" to access a value directly.`)
+    expect(logger.warn).toHaveBeenCalledWith(`One or several values from "foovalue4,foovalue6" already exist. If you want to change it, use "getValue" to access a value directly.`)
 
     feature.removeValue()
-    expect(console.warn).toHaveBeenCalledWith(`This feature is not implemented yet`)
+    expect(logger.warn).toHaveBeenCalledWith(`This feature is not implemented yet`)
   })
 
   it('14 Feature - check createFeature, createFeatures, getCopy', () => {

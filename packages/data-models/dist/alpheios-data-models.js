@@ -195,7 +195,7 @@ for the current node
    * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
-    return "\\-\\.,;:!?'\"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
+    return "-.,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
   }
 
   /**
@@ -253,6 +253,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -316,7 +318,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
   }
 
   static getPunctuation () {
-    return "\\-\\.,;:!?'\"(){}\\[\\]<>\\\n\r\uFF0C\u3001\u3002\u300C\u300D\u300A\u300B\u200C\u200D"
+    return "-.,;:!?'\"(){}\\[\\]<>/\\\n\r\uFF0C\u3001\u3002\u300C\u300D\u300A\u300B\u200C\u200D"
   }
 
   static _isVowel (aLetter) {
@@ -364,7 +366,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
                   if (k + 1 < pin.length - 1 && pin[k + 1] === ':') { pin = pin.replace('u:', _v[tone]) } else { pin = pin.replace('u', _u[tone]) }
                   break
                 default:
-                  console.warn('some kind of weird vowel', pin[k])
+                  _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('some kind of weird vowel', pin[k])
               }
               break
             }
@@ -1051,7 +1053,7 @@ class Definition {
 /*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
-/*! exports provided: Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, HomonymGroup, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, GeezLanguageModel, ChineseLanguageModel, SyriacLanguageModel, ResourceProvider, Translation, PsEvent, PsEventData, TextQuoteSelector, WordUsageExample, Author, TextWork, WordItem, WordList, TreebankDataItem */
+/*! exports provided: Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, HomonymGroup, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, GeezLanguageModel, ChineseLanguageModel, SyriacLanguageModel, ResourceProvider, Translation, PsEvent, PsEventData, TextQuoteSelector, WordUsageExample, Author, TextWork, WordItem, WordList, TreebankDataItem, Logger */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1151,6 +1153,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./treebank_data_item.js */ "./treebank_data_item.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TreebankDataItem", function() { return _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__["default"]; });
 
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__["default"]; });
+
+
 
 
 
@@ -1205,6 +1211,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Feature; });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -1560,7 +1568,7 @@ class Feature {
       })
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      console.warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance().warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
     }
     return this
   }
@@ -1579,7 +1587,7 @@ class Feature {
       this._data = this._data.concat(normalizedData)
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      console.warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance().warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
     }
     return this
   }
@@ -1591,7 +1599,7 @@ class Feature {
    */
   removeValue (value) {
     // TODO: Do we need it?
-    console.warn('This feature is not implemented yet')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance().warn('This feature is not implemented yet')
   }
 
   /**
@@ -1895,6 +1903,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
 /* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -1962,7 +1972,7 @@ class FeatureType {
    * @returns {string} A language code.
    */
   get language () {
-    console.warn('Please use a "languageID" instead of a "language"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -2241,7 +2251,7 @@ for the current node
    * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
-    return "፡፨።፣፤፥፦፧፠\\-,;:!?'\"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
+    return "፡፨።፣፤፥፦፧፠-,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
   }
 }
 
@@ -2262,7 +2272,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./languages/greek-chars.js */ "./languages/greek-chars.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./languages/greek-chars.js */ "./languages/greek-chars.js");
+
 
 
 
@@ -2525,7 +2537,7 @@ for the current node
    * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
-    return '\\-\\.,;:!?"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u201C\u201D\u0387\u00B7\n\r\u200C\u200D'
+    return '-.,;:!?"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u201C\u201D\u0387\u00B7\n\r\u200C\u200D'
   }
 
   /**
@@ -2548,7 +2560,7 @@ for the current node
         constraints.suffixBased = true
       }
     } else {
-      console.warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part])
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__["default"].getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part])
     }
 
     constraints.pronounClassRequired =
@@ -2652,7 +2664,7 @@ for the current node
   }
 
   static isValidUnicode (word) {
-    return _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_4__["default"].chars.some(char => word.includes(char))
+    return _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_5__["default"].chars.some(char => word.includes(char))
   }
 }
 
@@ -2670,6 +2682,8 @@ for the current node
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -2718,7 +2732,7 @@ class GrmFeature {
    * @returns {string} A language code.
    */
   get language () {
-    console.warn('Please use a "languageID" instead of a "language"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance().warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -2905,6 +2919,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
 /* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -2998,7 +3014,7 @@ class Homonym {
    * @returns {string} A language code, as defined in the `languages` object.
    */
   get language () {
-    console.warn('Please use languageID instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('Please use languageID instead')
     return _language_model_factory__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageCodeFromId(this.languageID)
   }
 
@@ -3093,6 +3109,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -3233,7 +3251,7 @@ class Inflection {
    * @returns {string} A language code.
    */
   get language () {
-    console.warn('Please use a "languageID" instead of a "language"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -3339,7 +3357,7 @@ class Inflection {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    console.warn('Please use "addFeature" instead.')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('Please use "addFeature" instead.')
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
     }
@@ -3585,6 +3603,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_type_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./feature_type.js */ "./feature_type.js");
 /* harmony import */ var _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflection_grouping_key.js */ "./inflection_grouping_key.js");
 /* harmony import */ var _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./inflection_group.js */ "./inflection_group.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -3611,7 +3631,7 @@ class LanguageModel {
    * @deprecated
    */
   get contextForward () {
-    console.warn('Please use static "contextForward" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use static "contextForward" instead')
     return this.constructor.contextForward
   }
 
@@ -3619,7 +3639,7 @@ class LanguageModel {
    * @deprecated
    */
   get contextBackward () {
-    console.warn('Please use static "contextBackward" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use static "contextBackward" instead')
     return this.constructor.contextBackward
   }
 
@@ -3627,7 +3647,7 @@ class LanguageModel {
    * @deprecated
    */
   get direction () {
-    console.warn('Please use static "direction" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use static "direction" instead')
     return this.constructor.direction
   }
 
@@ -3635,7 +3655,7 @@ class LanguageModel {
    * @deprecated
    */
   get baseUnit () {
-    console.warn('Please use static "baseUnit" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use static "baseUnit" instead')
     return this.constructor.baseUnit
   }
 
@@ -3643,7 +3663,7 @@ class LanguageModel {
    * @deprecated
    */
   get features () {
-    console.warn('Please use individual "getFeatureType" or static "features" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use individual "getFeatureType" or static "features" instead')
     return this.constructor.features
   }
 
@@ -3681,7 +3701,7 @@ class LanguageModel {
    * a feature type (a string), and the value is a Feature object.
    */
   static get typeFeatures () {
-    console.warn('This getter must be defined in a descendant class')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('This getter must be defined in a descendant class')
   }
 
   static get features () {
@@ -3710,7 +3730,7 @@ class LanguageModel {
   }
 
   static get codes () {
-    console.warn('Use static "languageCodes" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Use static "languageCodes" instead')
     return this.languageCodes
   }
 
@@ -3719,7 +3739,7 @@ class LanguageModel {
    * @returns {string[]}
    */
   get codes () {
-    console.warn('Please use a static version of "codes" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static version of "codes" instead')
     return this.constructor.languageCodes
   }
 
@@ -3728,7 +3748,7 @@ class LanguageModel {
    * @returns {string}
    */
   toCode () {
-    console.warn('Please use a static "languageCode" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static "languageCode" instead')
     return this.constructor.languageCode
   }
 
@@ -3737,7 +3757,7 @@ class LanguageModel {
    * @returns {string}
    */
   static toCode () {
-    console.warn('Please use a static "languageCode" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static "languageCode" instead')
     return this.languageCode
   }
 
@@ -3856,7 +3876,7 @@ class LanguageModel {
    * @returns {symbol} Returns a language ID
    */
   static get sourceLanguage () {
-    console.warn('Please use languageID directly')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use languageID directly')
     return this.languageID
   }
 
@@ -3865,7 +3885,7 @@ class LanguageModel {
    * @returns {symbol} Returns a language ID
    */
   get sourceLanguage () {
-    console.warn('Please use languageID directly')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use languageID directly')
     return this.constructor.languageID
   }
 
@@ -3875,7 +3895,7 @@ class LanguageModel {
    * @returns {FeatureType}
    */
   static getFeatureType (name) {
-    console.warn('Please use getFeature instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use getFeature instead')
     const featureValues = this.featureValues
     if (featureValues.has(name)) {
       return new _feature_type_js__WEBPACK_IMPORTED_MODULE_3__["default"](name, featureValues.get(name), this.languageID)
@@ -3913,7 +3933,7 @@ class LanguageModel {
    * @deprecated
    */
   grammarFeatures () {
-    console.warn('Please use a static version of "grammarFeatures" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static version of "grammarFeatures" instead')
     return this.constructor.grammarFeatures()
   }
 
@@ -4045,7 +4065,7 @@ class LanguageModel {
    * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
-    return '\\-\\.,;:!?\'"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r'
+    return '-.,;:!?\'"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r'
   }
 
   /**
@@ -4053,7 +4073,7 @@ class LanguageModel {
    * @returns {string}
    */
   getPunctuation () {
-    console.warn('Please use a static version of "getPunctuation"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static version of "getPunctuation"')
     return this.constructor.getPunctuation()
   }
 
@@ -4111,7 +4131,7 @@ class LanguageModel {
    * @param node
    */
   canInflect (node) {
-    console.warn('Please use a static version of "canInflect" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static version of "canInflect" instead')
     return this.constructor.canInflect(node)
   }
 
@@ -4261,7 +4281,7 @@ class LanguageModel {
    * @returns {*}
    */
   groupInflectionsForDisplay (inflections) {
-    console.warn('Please use a static version of "groupInflectionsForDisplay" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static version of "groupInflectionsForDisplay" instead')
     return this.constructor.groupInflectionsForDisplay(inflections)
   }
 }
@@ -4790,6 +4810,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -4963,7 +4985,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
    * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
-    return "\\-\\.,;:!?'\"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
+    return "-.,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
   }
 
   /**
@@ -4989,7 +5011,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         grammar.suffixBased = true
       }
     } else {
-      console.warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part])
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part])
     }
 
     return grammar
@@ -5013,6 +5035,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
 /* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
 /* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -5054,7 +5078,7 @@ class Lemma {
   }
 
   get language () {
-    console.warn('Please use "languageID" instead of "language"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__["default"].getInstance().warn('Please use "languageID" instead of "language"')
     return this.languageCode
   }
 
@@ -5102,7 +5126,7 @@ class Lemma {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    console.warn('Please use "addFeature" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__["default"].getInstance().warn('Please use "addFeature" instead')
     if (!data) {
       throw new Error('feature data cannot be empty.')
     }
@@ -5568,6 +5592,163 @@ class Lexeme {
 
 /***/ }),
 
+/***/ "./logging/logger.js":
+/*!***************************!*\
+  !*** ./logging/logger.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Logger; });
+let singleInstance
+
+// TODO: We should maybe try to capture the file name and the line number, if possible
+
+/**
+ * A simple proxy for the console log functionality
+ */
+class Logger {
+  /**
+   * Creates an instance of the Logger class with the parameters specified.
+   *
+   * @param {boolean} verbose - In verbose mode, messages will be printed on all levels (err, warn. log, info).
+   *                            In non-verbose mode, only error messages will be displayed.
+   * @param {boolean} prepend - Whether to prepend text messages with the alpheios message.
+   * @param {boolean} trace - Whether to print a call stack.
+   */
+  constructor ({ verbose = false, prepend = true, trace = false } = {}) {
+    this._verboseMode = verbose
+    this._prependMode = prepend
+    this._traceMode = trace
+  }
+
+  /**
+   * Returns a single instance of the Logger object. If one does not exist, it will be created
+   * with the options specified. If the Logger instance is already created, but there are some
+   * options provided, options of the existing Logger object will be changed to match the ones supplied.
+   *
+   * @param {object} options - Options of the Logger constructor {@see Logger#constructor}.
+   * @returns {Logger} - An instance of existing or newly created Logger object.
+   */
+  static getInstance (options = {}) {
+    if (!singleInstance) {
+      singleInstance = new Logger(options)
+    } else {
+      // There is an instance of the Logger already created, but we might need to change its parameters
+      // It will be done only if the caller provided meaningful values to options' props
+      if (typeof options.verbose !== 'undefined') {
+        console.info('Setting a verbose mode')
+        singleInstance.setVerboseMode(options.verbose)
+      }
+      if (typeof options.prepend !== 'undefined') {
+        console.info('Setting a prepend mode')
+        singleInstance.setVerboseMode(options.prepend)
+      }
+      if (typeof options.trace !== 'undefined') {
+        console.info('Setting a trace mode')
+        singleInstance.setTraceMode(options.trace)
+      }
+    }
+    return singleInstance
+  }
+
+  setVerboseMode (mode) {
+    this._verboseMode = mode
+    return this
+  }
+
+  setPrependMode (mode) {
+    this._prependMode = mode
+    return this
+  }
+
+  setTraceMode (mode) {
+    this._traceMode = mode
+    return this
+  }
+
+  verboseModeOn () {
+    this.setVerboseMode(true)
+    return this
+  }
+
+  verboseModeOff () {
+    this.setVerboseMode(false)
+    return this
+  }
+
+  prependModeOn () {
+    this.setPrependMode(true)
+    return this
+  }
+
+  prependModeOff () {
+    this.setPrependMode(false)
+    return this
+  }
+
+  traceModeOn () {
+    this.setTraceMode(true)
+    return this
+  }
+
+  traceModeOff () {
+    this.setTraceMode(false)
+    return this
+  }
+
+  error (...data) {
+    if (this._prependMode && data && data.length > 0 && typeof data[0] === 'string') {
+      data[0] = `Alpheios error: ${data[0]}`
+    }
+    console.error(...data)
+    if (this._traceMode) {
+      console.trace()
+    }
+  }
+
+  warn (...data) {
+    if (this._verboseMode) {
+      if (this._prependMode && data && data.length > 0 && typeof data[0] === 'string') {
+        data[0] = `Alpheios warn: ${data[0]}`
+      }
+      console.warn(...data)
+      if (this._traceMode) {
+        console.trace()
+      }
+    }
+  }
+
+  log (...data) {
+    if (this._verboseMode) {
+      if (this._prependMode && data && data.length > 0 && typeof data[0] === 'string') {
+        data[0] = `Alpheios log: ${data[0]}`
+      }
+      console.log(...data)
+      if (this._traceMode) {
+        console.trace()
+      }
+    }
+  }
+
+  info (...data) {
+    if (this._verboseMode) {
+      if (this._prependMode && data && data.length > 0 && typeof data[0] === 'string') {
+        data[0] = `Alpheios info: ${data[0]}`
+      }
+      console.info(...data)
+      if (this._traceMode) {
+        console.trace()
+      }
+    }
+  }
+}
+
+
+/***/ }),
+
 /***/ "./persian_language_model.js":
 /*!***********************************!*\
   !*** ./persian_language_model.js ***!
@@ -5631,7 +5812,7 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
    * @returns {string} a string containing valid punctuation symbols
    */
   static getPunctuation () {
-    return "\\-\\.,;:!?'\"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
+    return "-.,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
   }
 }
 
@@ -5980,7 +6161,7 @@ for the current node
    * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
-    return "\u0700\u0701\u0702\u0703\u0704\u0705\u0706\u0707\u0708\u0709\u070A\u070B\u070C\u070D\u070F\\-\\.,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\n\r\u200C\u200D"
+    return "\u0700\u0701\u0702\u0703\u0704\u0705\u0706\u0707\u0708\u0709\u070A\u070B\u070C\u070D\u070F-.,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\n\r\u200C\u200D"
   }
 
   /**

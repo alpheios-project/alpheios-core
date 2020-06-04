@@ -3,25 +3,18 @@
 import 'whatwg-fetch'
 import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver.js'
 import IndexedDBAdapter from '@wordlist/storage/indexed-db-adapter.js'
-import { WordItem, Constants } from 'alpheios-data-models'
+import { WordItem, Constants, Logger } from 'alpheios-data-models'
 
 import IndexedDB from 'fake-indexeddb'
 import IDBKeyRange from 'fake-indexeddb/lib/FDBKeyRange'
 
 describe('indexed-db-adapter.test.js', () => {
-  // console.error = function () {}
-  console.log = function () {}
-  console.warn = function () {}
+  const logger = Logger.getInstance({ verbose: true })
+  logger.warn = jest.fn(() => {})
 
   beforeAll( () => {
     window.indexedDB = IndexedDB
     window.IDBKeyRange = IDBKeyRange
-  })
-
-  beforeEach(() => {
-    jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
-    jest.spyOn(console, 'warn')
   })
 
   afterEach(() => {
@@ -347,7 +340,7 @@ describe('indexed-db-adapter.test.js', () => {
     window.IDBKeyRange = undefined
 
     expect(localAdapter._initIndexedDBNamespaces()).toBeFalsy()
-    expect(console.warn).toHaveBeenCalledWith(expect.stringMatching(/IndexedDB/))
+    expect(logger.warn).toHaveBeenCalledWith(expect.stringMatching(/IndexedDB/))
 
     window.indexedDB = IndexedDB
     window.IDBKeyRange = IDBKeyRange

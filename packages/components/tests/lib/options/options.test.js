@@ -1,19 +1,17 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
+import { Logger } from 'alpheios-data-models'
 import Options from '@/lib/options/options'
 // import OptionItem from '@/lib/options/options-item'
 import StorageAdapter from '@/lib/options/storage-adapter'
 import LocalStorageArea from '@/lib/options/local-storage-area'
 
 describe('options.test.js', () => {
-  console.error = function () {}
-  console.log = function () {}
-  console.warn = function () {}
+  const logger = Logger.getInstance({ verbose: true })
+  logger.warn = jest.fn(() => {})
+  logger.error = jest.fn(() => {})
 
   beforeEach(() => {
-    jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
-    jest.spyOn(console, 'warn')
     jest.spyOn(Options, 'initItems')
   })
   afterEach(() => {
@@ -170,7 +168,7 @@ describe('options.test.js', () => {
     opt.storageAdapter.get = function () { return new Promise((resolve, reject) => { reject(testError) }) }
 
     await opt.load()
-    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/retrieving/))
+    expect(logger.error).toHaveBeenCalledWith(expect.stringMatching(/retrieving/))
   })
 
   it('10 Options - parseKey parses a string to object', () => {
@@ -235,7 +233,7 @@ describe('options.test.js', () => {
 
     let callBackFn = jest.fn(() => { console.log('I am callBackFn') })
     let returnedOptions = await opt.load(callBackFn)
-    expect(console['warn']).toHaveBeenCalled()
+    expect(logger.warn).toHaveBeenCalled()
     expect(opt.items.locale6.currentValue).toEqual('en-US')
 
   })
@@ -257,7 +255,7 @@ describe('options.test.js', () => {
     window.localStorage.values[key] = 'foo7'
     await opt.load(callBackFn)
 
-    expect(console['warn']).toHaveBeenCalled()
+    expect(logger.warn).toHaveBeenCalled()
     expect(opt.items.locale7[0].currentValue).toEqual('en-US')
   })
   it('18 Options - constructor defaults should contain property version and will throw an error if undefined', () => {
@@ -281,7 +279,7 @@ describe('options.test.js', () => {
     window.localStorage.values[key] = JSON.stringify('foo7')
     await opt.load(callBackFn)
 
-    expect(console['warn']).toHaveBeenCalled()
+    expect(logger.warn).toHaveBeenCalled()
     expect(opt.items.locale7[0].currentValue).toEqual('en-US')
 
   })

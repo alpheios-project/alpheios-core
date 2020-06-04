@@ -1,5 +1,6 @@
 import LanguageModelFactory from './language_model_factory.js'
 import FeatureImporter from './feature_importer.js'
+import Logger from './logging/logger.js'
 
 /**
  * A grammatical feature object, that can replace both Feature and FeatureType objects.
@@ -353,7 +354,7 @@ export default class Feature {
       })
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      console.warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
+      Logger.getInstance().warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
     }
     return this
   }
@@ -372,7 +373,7 @@ export default class Feature {
       this._data = this._data.concat(normalizedData)
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      console.warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
+      Logger.getInstance().warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
     }
     return this
   }
@@ -384,7 +385,7 @@ export default class Feature {
    */
   removeValue (value) {
     // TODO: Do we need it?
-    console.warn('This feature is not implemented yet')
+    Logger.getInstance().warn('This feature is not implemented yet')
   }
 
   /**

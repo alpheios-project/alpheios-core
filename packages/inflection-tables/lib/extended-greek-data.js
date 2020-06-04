@@ -1,3 +1,4 @@
+import { Logger } from 'alpheios-data-models'
 import ExtendedLanguageData from './extended-language-data'
 
 export default class ExtendedGreekData extends ExtendedLanguageData {
@@ -15,7 +16,7 @@ export default class ExtendedGreekData extends ExtendedLanguageData {
 
   merge (extendedGreekData) {
     if (this.primary !== extendedGreekData.primary) {
-      console.log('Mismatch', this.primary, extendedGreekData.primary)
+      Logger.getInstance().log('Mismatch', this.primary, extendedGreekData.primary)
     }
     let merged = new ExtendedGreekData() // eslint-disable-line prefer-const
     merged.primary = this.primary

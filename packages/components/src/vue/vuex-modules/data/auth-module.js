@@ -1,7 +1,7 @@
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
 import AuthData from '@/lib/auth/auth-data.js'
-import { PsEvent } from 'alpheios-data-models'
+import { PsEvent, Logger } from 'alpheios-data-models'
 
 export default class AuthModule extends Module {
   /**
@@ -166,7 +166,7 @@ AuthModule.api = (moduleInstance, store) => {
         moduleInstance._api.updateAuthData(profileData)
         store.commit('auth/setNotification', { text: 'AUTH_LOGIN_SUCCESS_MSG' })
       }).catch((error) => {
-        console.error('Alpheios authentication failed', error)
+        Logger.getInstance().error('Alpheios authentication failed', error)
         return store.commit('auth/setNotification', { text: 'AUTH_LOGIN_AUTH_FAILURE_MSG' })
       })
     },
@@ -186,7 +186,7 @@ AuthModule.api = (moduleInstance, store) => {
         store.commit('auth/setIsNotAuthenticated')
         return store.commit('auth/setNotification', { text: 'AUTH_LOGOUT_SUCCESS_MSG' })
       }).catch((error) => {
-        console.error('Alpheios logout failed', error)
+        Logger.getInstance().error('Alpheios logout failed', error)
       })
     },
 
@@ -204,7 +204,7 @@ AuthModule.api = (moduleInstance, store) => {
               endpoints: endpoints
             })
           }).catch((error) => {
-            console.error('Unexpected error retrieving Alpheios user profile data', error)
+            Logger.getInstance().error('Unexpected error retrieving Alpheios user profile data', error)
           })
         } else {
           reject(new Error('Authentication is not enabled'))

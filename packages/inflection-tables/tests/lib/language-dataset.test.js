@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import { Constants, Feature, Inflection, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Constants, Feature, Inflection, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
 
 import BaseTestHelp from '@tests/data/base-test-help.js'
 
@@ -24,18 +24,12 @@ import Paradigm from '@/paradigm/lib/paradigm.js'
 import papaparse from 'papaparse'
 
 describe('language-dataset.test.js', () => {
-  console.error = function () {}
-  console.log = function () {}
-  console.warn = function () {}
+  const logger = Logger.getInstance({ verbose: true })
+  logger.warn = jest.fn(() => {})
 
   const languageIDLat = Constants.LANG_LATIN
   const languageIDGreek = Constants.LANG_GREEK
 
-  beforeEach(() => {
-    jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
-    jest.spyOn(console, 'warn')
-  })
   afterEach(() => {
     jest.resetModules()
   })
@@ -277,7 +271,7 @@ describe('language-dataset.test.js', () => {
 
     let res = LD.setInflectionData(testInflection, testLemma)
 
-    expect(console.warn).toHaveBeenCalledWith(expect.stringMatching(/^Cannot determine a grammar class for a δύο pronoun/))
+    expect(logger.warn).toHaveBeenCalledWith(expect.stringMatching(/^Cannot determine a grammar class for a δύο pronoun/))
   })
 
   it('15 LanguageDataset - setInflectionData - throw Error if even inflection.constraints has pronounClassRequired = true and doesn\'t have class Feature ', async () => {
@@ -291,7 +285,7 @@ describe('language-dataset.test.js', () => {
 
     let res = LD.setInflectionData(testInflection, testLemma)
 
-    expect(console.warn).toHaveBeenCalledWith(expect.stringMatching(/^There is no source data for the following part of speech:/))
+    expect(logger.warn).toHaveBeenCalledWith(expect.stringMatching(/^There is no source data for the following part of speech:/))
   })
 
   it('16 LanguageDataset - setInflectionData - define fullFormBased, suffixBased, pronounClassRequired, paradigmBased (numeral)', async () => {
@@ -412,7 +406,7 @@ describe('language-dataset.test.js', () => {
     testHomonym.lexemes[0].inflections[0][Feature.types.part]._data = ['foopart']
     LD.getInflectionData(testHomonym)
 
-    expect(console.warn).toHaveBeenCalledWith(expect.stringMatching(/^There is no source data for the following part of speech/))
+    expect(logger.warn).toHaveBeenCalledWith(expect.stringMatching(/^There is no source data for the following part of speech/))
   })
 
   it('21 LanguageDataset - hasMatchingForms - returns False if it hasn\'t Form', async () => {

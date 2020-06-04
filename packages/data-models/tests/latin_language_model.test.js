@@ -1,11 +1,14 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import * as Constants from '@/constants.js'
+import Logger from '@/logging/logger.js'
 import LMF from '@/language_model_factory.js'
 import Feature from '@/feature.js'
 import Inflection from '@/inflection.js'
 
 describe('latin_language_model.js', () => {
+  const logger = Logger.getInstance({ verbose: true })
+  logger.warn = jest.fn(() => {})
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -13,10 +16,6 @@ describe('latin_language_model.js', () => {
   let latinModel
 
   beforeEach(() => {
-    jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
-    jest.spyOn(console, 'warn')
-
     latinModel = LMF.getLanguageModel(Constants.LANG_LATIN)
   })
   afterEach(() => {
@@ -67,7 +66,7 @@ describe('latin_language_model.js', () => {
     let inflection = new Inflection('foo', 'lat')
 
     latinModel.getInflectionConstraints(inflection)
-    expect(console.warn).toHaveBeenCalledWith('Unable to set grammar: part of speech data is missing or is incorrect', undefined)
+    expect(logger.warn).toHaveBeenCalledWith('Unable to set grammar: part of speech data is missing or is incorrect', undefined)
   })
 
   it('7 LatinLanguageModel - getInflectionConstraints - suffixBased part of speach', () => {

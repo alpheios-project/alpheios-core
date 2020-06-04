@@ -1,6 +1,7 @@
 import LanguageModel from './language_model.js'
 import Feature from './feature.js'
 import * as Constants from './constants.js'
+import Logger from './logging/logger.js'
 
 let typeFeatures = new Map() // eslint-disable-line prefer-const
 let typeFeaturesInitialized = false
@@ -197,7 +198,7 @@ export default class LatinLanguageModel extends LanguageModel {
         grammar.suffixBased = true
       }
     } else {
-      console.warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[Feature.types.part])
+      Logger.getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[Feature.types.part])
     }
 
     return grammar

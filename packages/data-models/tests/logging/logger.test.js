@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import Logger from '../../../src/lib/log/logger'
+import Logger from '../../src/logging/logger.js'
 
 describe('logger.test.js', () => {
   let logger

@@ -34,6 +34,7 @@ import WordItem from './word-item.js'
 import WordList from './word-list.js'
 
 import TreebankDataItem from './treebank_data_item.js'
+import Logger from './logging/logger.js'
 
 export {
   Constants,
@@ -67,5 +68,6 @@ export {
   TextWork,
   WordItem,
   WordList,
-  TreebankDataItem
+  TreebankDataItem,
+  Logger
 }

@@ -4,6 +4,7 @@ import Feature from './feature.js'
 import FeatureType from './feature_type.js'
 import InflectionGroupingKey from './inflection_grouping_key.js'
 import InflectionGroup from './inflection_group.js'
+import Logger from './logging/logger.js'
 
 /**
  * @class  LanguageModel is the base class for language-specific behavior
@@ -24,7 +25,7 @@ class LanguageModel {
    * @deprecated
    */
   get contextForward () {
-    console.warn('Please use static "contextForward" instead')
+    Logger.getInstance().warn('Please use static "contextForward" instead')
     return this.constructor.contextForward
   }
 
@@ -32,7 +33,7 @@ class LanguageModel {
    * @deprecated
    */
   get contextBackward () {
-    console.warn('Please use static "contextBackward" instead')
+    Logger.getInstance().warn('Please use static "contextBackward" instead')
     return this.constructor.contextBackward
   }
 
@@ -40,7 +41,7 @@ class LanguageModel {
    * @deprecated
    */
   get direction () {
-    console.warn('Please use static "direction" instead')
+    Logger.getInstance().warn('Please use static "direction" instead')
     return this.constructor.direction
   }
 
@@ -48,7 +49,7 @@ class LanguageModel {
    * @deprecated
    */
   get baseUnit () {
-    console.warn('Please use static "baseUnit" instead')
+    Logger.getInstance().warn('Please use static "baseUnit" instead')
     return this.constructor.baseUnit
   }
 
@@ -56,7 +57,7 @@ class LanguageModel {
    * @deprecated
    */
   get features () {
-    console.warn('Please use individual "getFeatureType" or static "features" instead')
+    Logger.getInstance().warn('Please use individual "getFeatureType" or static "features" instead')
     return this.constructor.features
   }
 
@@ -94,7 +95,7 @@ class LanguageModel {
    * a feature type (a string), and the value is a Feature object.
    */
   static get typeFeatures () {
-    console.warn('This getter must be defined in a descendant class')
+    Logger.getInstance().warn('This getter must be defined in a descendant class')
   }
 
   static get features () {
@@ -123,7 +124,7 @@ class LanguageModel {
   }
 
   static get codes () {
-    console.warn('Use static "languageCodes" instead')
+    Logger.getInstance().warn('Use static "languageCodes" instead')
     return this.languageCodes
   }
 
@@ -132,7 +133,7 @@ class LanguageModel {
    * @returns {string[]}
    */
   get codes () {
-    console.warn('Please use a static version of "codes" instead')
+    Logger.getInstance().warn('Please use a static version of "codes" instead')
     return this.constructor.languageCodes
   }
 
@@ -141,7 +142,7 @@ class LanguageModel {
    * @returns {string}
    */
   toCode () {
-    console.warn('Please use a static "languageCode" instead')
+    Logger.getInstance().warn('Please use a static "languageCode" instead')
     return this.constructor.languageCode
   }
 
@@ -150,7 +151,7 @@ class LanguageModel {
    * @returns {string}
    */
   static toCode () {
-    console.warn('Please use a static "languageCode" instead')
+    Logger.getInstance().warn('Please use a static "languageCode" instead')
     return this.languageCode
   }
 
@@ -269,7 +270,7 @@ class LanguageModel {
    * @returns {symbol} Returns a language ID
    */
   static get sourceLanguage () {
-    console.warn('Please use languageID directly')
+    Logger.getInstance().warn('Please use languageID directly')
     return this.languageID
   }
 
@@ -278,7 +279,7 @@ class LanguageModel {
    * @returns {symbol} Returns a language ID
    */
   get sourceLanguage () {
-    console.warn('Please use languageID directly')
+    Logger.getInstance().warn('Please use languageID directly')
     return this.constructor.languageID
   }
 
@@ -288,7 +289,7 @@ class LanguageModel {
    * @returns {FeatureType}
    */
   static getFeatureType (name) {
-    console.warn('Please use getFeature instead')
+    Logger.getInstance().warn('Please use getFeature instead')
     const featureValues = this.featureValues
     if (featureValues.has(name)) {
       return new FeatureType(name, featureValues.get(name), this.languageID)
@@ -326,7 +327,7 @@ class LanguageModel {
    * @deprecated
    */
   grammarFeatures () {
-    console.warn('Please use a static version of "grammarFeatures" instead')
+    Logger.getInstance().warn('Please use a static version of "grammarFeatures" instead')
     return this.constructor.grammarFeatures()
   }
 
@@ -466,7 +467,7 @@ class LanguageModel {
    * @returns {string}
    */
   getPunctuation () {
-    console.warn('Please use a static version of "getPunctuation"')
+    Logger.getInstance().warn('Please use a static version of "getPunctuation"')
     return this.constructor.getPunctuation()
   }
 
@@ -524,7 +525,7 @@ class LanguageModel {
    * @param node
    */
   canInflect (node) {
-    console.warn('Please use a static version of "canInflect" instead')
+    Logger.getInstance().warn('Please use a static version of "canInflect" instead')
     return this.constructor.canInflect(node)
   }
 
@@ -674,7 +675,7 @@ class LanguageModel {
    * @returns {*}
    */
   groupInflectionsForDisplay (inflections) {
-    console.warn('Please use a static version of "groupInflectionsForDisplay" instead')
+    Logger.getInstance().warn('Please use a static version of "groupInflectionsForDisplay" instead')
     return this.constructor.groupInflectionsForDisplay(inflections)
   }
 }
