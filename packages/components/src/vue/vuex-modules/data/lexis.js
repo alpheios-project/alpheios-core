@@ -178,7 +178,7 @@ export default class Lexis extends Module {
         }
       })
       if (adapterTreebankRes.errors.length > 0) {
-        return undefined
+        throw new Error('Homonym data from treebank is not available')
       }
       return adapterTreebankRes.result
     }))
@@ -280,7 +280,9 @@ export default class Lexis extends Module {
         }
         annotatedHomonyms = await Lexis.getHomonymsFromTreebank(treebankDataItem, textSelector)
       } catch (err) {
-        Logger.getInstance().error(err)
+        // Treebank data is unavailable
+        store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
+        Logger.getInstance().warn(err)
       }
 
       /*
@@ -299,6 +301,8 @@ export default class Lexis extends Module {
         store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       }
     } else if (this._treebankAvailable) {
+      // TODO: Do we need to disable an icon?
+      // Treebank icon is shown if $store.state.lexis.hasTreebankData
       store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       this._treebankDataItem = null
     }
@@ -481,6 +485,8 @@ Lexis.api = (moduleInstance, store) => {
      * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
      */
     lookupText: async (textSelector) => {
+      // Treebank info is not available for queries from a lookup component
+      store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       return moduleInstance.lexicalQuery({ store, textSelector, source: LexicalQuery.sources.LOOKUP })
     },
 
