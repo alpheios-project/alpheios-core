@@ -24,7 +24,7 @@ deploy:
       tags: on
       condition: $TRAVIS_TAG =~ ^ftqa
   - provider: script
-    script: "npx lerna publish from-package --yes --dist-tag latest"
+    script: "npx lerna publish from-package --yes --dist-tag rc"
     on:
       branch: production
       tags: true
