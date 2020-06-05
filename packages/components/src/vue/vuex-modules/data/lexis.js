@@ -301,7 +301,6 @@ export default class Lexis extends Module {
         store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       }
     } else if (this._treebankAvailable) {
-      // TODO: Do we need to disable an icon?
       // Treebank icon is shown if $store.state.lexis.hasTreebankData
       store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       this._treebankDataItem = null
