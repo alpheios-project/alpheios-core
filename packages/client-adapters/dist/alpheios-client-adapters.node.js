@@ -10506,14 +10506,17 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/adapter-error */ "./errors/adapter-error.js");
-/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
-/* harmony import */ var _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/l10n/l10n */ "./l10n/l10n.js");
-/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/adapter-error */ "./errors/adapter-error.js");
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony import */ var _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/l10n/l10n */ "./l10n/l10n.js");
+/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+
 
 
 
@@ -10529,10 +10532,10 @@ class BaseAdapter {
   */
   constructor () {
     this.errors = []
-    this.l10n = new _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__["default"]()
-      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_US)
-      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_GB)
-      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_US)
+    this.l10n = new _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_4__["default"]()
+      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__["default"].en_US)
+      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__["default"].en_GB)
+      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__["default"].en_US)
   }
 
   /**
@@ -10540,12 +10543,12 @@ class BaseAdapter {
    * @param {String} message  - message text for the error
   */
   addError (message) {
-    const error = new _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__["default"](this.config.category, this.config.adapterName, this.config.method, message)
+    const error = new _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_2__["default"](this.config.category, this.config.adapterName, this.config.method, message)
     this.errors.push(error)
   }
 
   addRemoteError (errorCode, message) {
-    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__["default"](this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
   }
 
@@ -10677,15 +10680,15 @@ class BaseAdapter {
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.error('Alpheios error: unexpected response retrieving data from service', error)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Logger"].getInstance().error('Alpheios error: unexpected response retrieving data from service', error)
     } else if (error.request) {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      console.error('Alpheios error: no response from service', error)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Logger"].getInstance().error('Alpheios error: no response from service', error)
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.error('Alpheios error: unexpected error requesting data from service', error.message)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Logger"].getInstance().error('Alpheios error: unexpected error requesting data from service', error.message)
     }
   }
 
@@ -14060,7 +14063,7 @@ class ImportMorphData {
         // There are multiple values of this feature
         for (const e of inputItem) {
           if (featureName && featureName !== e[attributeName]) {
-            console.warn('Mutiple feature values with mismatching attribute value', inputElem)
+            alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn('Mutiple feature values with mismatching attribute value', inputElem)
           }
           featureName = e[attributeName]
           values.push(...this.parseProperty(inputName, e.$, inputElem))

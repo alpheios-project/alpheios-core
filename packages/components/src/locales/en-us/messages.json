@@ -317,16 +317,16 @@
     "component": "UI"
   },
   "TEXT_NOTICE_CHANGE_LANGUAGE": {
-    "message": "'{targetWord}' was not found in our {languageName} resources. Wrong language? Change to:",
+    "message": "<span lang='{langCode}'>'{targetWord}'</span> was not found in our {languageName} resources. Wrong language? Change to:",
     "description": "language notification",
     "component": "UI",
-    "params": ["targetWord", "languageName"]
+    "params": ["targetWord", "languageName", "langCode"]
   },
   "TEXT_NOTICE_NOT_FOUND": {
-    "message": "'{targetWord}' was not found in our {languageName} resources.",
+    "message": "<span lang='{langCode}'>'{targetWord}'</span> was not found in our {languageName} resources.",
     "description": "language notification",
     "component": "UI",
-    "params": ["targetWord", "languageName"]
+    "params": ["targetWord", "languageName", "langCode"]
   },
   "TEXT_NOTICE_LANGUAGE_UNKNOWN": {
     "message": "unknown",

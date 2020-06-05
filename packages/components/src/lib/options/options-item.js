@@ -1,3 +1,5 @@
+import { Logger } from 'alpheios-data-models'
+
 /**
  * A single option item with access methods.
  */
@@ -86,7 +88,7 @@ export default class OptionItem {
         // Options storage succeeded
       },
       (errorMessage) => {
-        console.error(`Unexpected error resetting Alpheios option ${this.name}: ${errorMessage}`)
+        Logger.getInstance().error(`Unexpected error resetting Alpheios option ${this.name}: ${errorMessage}`)
       }
     )
   }
@@ -103,7 +105,7 @@ export default class OptionItem {
         // Options storage succeeded
       },
       (errorMessage) => {
-        console.error(`Unexpected error storing Alpheios option ${this.name}: ${errorMessage}`)
+        Logger.getInstance().error(`Unexpected error storing Alpheios option ${this.name}: ${errorMessage}`)
       }
     )
   }

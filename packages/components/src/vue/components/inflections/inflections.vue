@@ -74,7 +74,7 @@ import WideTableVue from '@/vue/components/inflections/inflections-table-wide.vu
 
 import WideSuppTable from '@/vue/components/inflections/inflections-supp-table-wide.vue'
 import WordForms from '@/vue/components/wordforms.vue'
-import Logger from '@/lib/log/logger'
+import { Logger } from 'alpheios-data-models'
 
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'

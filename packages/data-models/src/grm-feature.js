@@ -1,5 +1,6 @@
 import LMF from './language_model_factory.js'
 import Feature from './feature.js'
+import Logger from './logging/logger.js'
 
 /**
  * Wrapper class for a (grammatical, usually) feature, such as part of speech or declension. Keeps both value and type information.
@@ -46,7 +47,7 @@ class GrmFeature {
    * @returns {string} A language code.
    */
   get language () {
-    console.warn('Please use a "languageID" instead of a "language"')
+    Logger.getInstance().warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 

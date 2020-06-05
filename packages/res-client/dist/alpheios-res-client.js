@@ -9288,6 +9288,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 let grammars = new Map() // Maps a language ID into an array of grammars
 
 class Grammars {
@@ -9343,7 +9344,7 @@ class Grammars {
 
       return requests
     } catch (error) {
-      console.error(`Alpheios error: unable to fetch resources due to ${error}`)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error(`Alpheios error: unable to fetch resources due to ${error}`)
       return []
     }
   }

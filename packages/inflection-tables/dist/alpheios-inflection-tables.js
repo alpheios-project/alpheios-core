@@ -9063,13 +9063,16 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ExtendedGreekData; });
-/* harmony import */ var _extended_language_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./extended-language-data */ "./lib/extended-language-data.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _extended_language_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./extended-language-data */ "./lib/extended-language-data.js");
 
 
-class ExtendedGreekData extends _extended_language_data__WEBPACK_IMPORTED_MODULE_0__["default"] {
+
+class ExtendedGreekData extends _extended_language_data__WEBPACK_IMPORTED_MODULE_1__["default"] {
   constructor () {
     super()
-    this._type = _extended_language_data__WEBPACK_IMPORTED_MODULE_0__["default"].types().EXTENDED_GREEK_DATA // For deserialization
+    this._type = _extended_language_data__WEBPACK_IMPORTED_MODULE_1__["default"].types().EXTENDED_GREEK_DATA // For deserialization
     this.primary = false
   }
 
@@ -9081,7 +9084,7 @@ class ExtendedGreekData extends _extended_language_data__WEBPACK_IMPORTED_MODULE
 
   merge (extendedGreekData) {
     if (this.primary !== extendedGreekData.primary) {
-      console.log('Mismatch', this.primary, extendedGreekData.primary)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().log('Mismatch', this.primary, extendedGreekData.primary)
     }
     let merged = new ExtendedGreekData() // eslint-disable-line prefer-const
     merged.primary = this.primary
@@ -9393,7 +9396,10 @@ class InflectionList {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return InflectionSet; });
-/* harmony import */ var _inflection_list_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inflection-list.js */ "./lib/inflection-list.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _inflection_list_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflection-list.js */ "./lib/inflection-list.js");
+
 
 
 /**
@@ -9486,7 +9492,7 @@ class InflectionSet {
         this.addInflectionItems(items)
       }
     } else {
-      console.warn(`Cannot add inflectionSet [languageID=${inflectionSet.languageID.toString()}, POFS=${inflectionSet.partOfSpeech}]` +
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn(`Cannot add inflectionSet [languageID=${inflectionSet.languageID.toString()}, POFS=${inflectionSet.partOfSpeech}]` +
         ` to [languageID=${this.languageID.toString()}, POFS=${this.partOfSpeech}]`)
     }
   }
@@ -9499,7 +9505,7 @@ class InflectionSet {
    */
   addFootnote (classType, index, footnote) {
     if (!this.types.has(classType)) {
-      this.types.set(classType, new _inflection_list_js__WEBPACK_IMPORTED_MODULE_0__["default"](classType))
+      this.types.set(classType, new _inflection_list_js__WEBPACK_IMPORTED_MODULE_1__["default"](classType))
     }
     this.types.get(classType).addFootnote(index, footnote)
   }
@@ -11298,7 +11304,7 @@ class LanguageDataset {
       const grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"]).items, inflection.getForm(), inflection.lemma.word, true)
 
       if (!grmClasses) {
-        console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun.
+        alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn(`Cannot determine a grammar class for a ${inflection.form} pronoun.
               Table construction will probably fail`)
       } else {
         // One or more values found
@@ -11345,7 +11351,7 @@ class LanguageDataset {
 
     if (!this.pos.get(partOfSpeech)) {
       // There is no source data for this part of speech
-      console.warn(`There is no source data for the following part of speech: ${partOfSpeech}`)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn(`There is no source data for the following part of speech: ${partOfSpeech}`)
       return inflection
     }
 
@@ -11464,7 +11470,7 @@ class LanguageDataset {
       const sourceSet = this.pos.get(pofsValue)
       if (!sourceSet) {
         // There is no source data for this part of speech
-        console.warn(`There is no source data for the following part of speech: ${pofsValue}`)
+        alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn(`There is no source data for the following part of speech: ${pofsValue}`)
         return inflectionSet
       }
 
@@ -11943,7 +11949,7 @@ class Morpheme {
           }
         }
       } else {
-        console.warn(`Comparison type "${comparisonType}" is not supported`)
+        alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn(`Comparison type "${comparisonType}" is not supported`)
       }
     }
 
@@ -12803,7 +12809,7 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       if (paradigms.has(id)) {
         paradigms.get(id).addRule(matchOrder, features, lemma, morphFlags)
       } else {
-        console.warn(`Cannot find a paradigm table for "${id}" index`)
+        alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn(`Cannot find a paradigm table for "${id}" index`)
       }
     }
     for (let paradigm of paradigms.values()) { // eslint-disable-line prefer-const
@@ -12854,7 +12860,7 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       if (paradigms.has(id)) {
         paradigms.get(id).addRule(matchOrder, features, lemma, morphFlags)
       } else {
-        console.warn(`Cannot find a paradigm table for "${id}" index`)
+        alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn(`Cannot find a paradigm table for "${id}" index`)
       }
     }
     for (let paradigm of paradigms.values()) { // eslint-disable-line prefer-const
@@ -14265,7 +14271,7 @@ class Paradigm {
             if (paradigmMap.has(cell.reflink.id)) {
               this._suppParadigms.set(cell.reflink.id, paradigmMap.get(cell.reflink.id))
             } else {
-              console.warn(`"${cell.reflink.id}" supplemental table is not found`)
+              alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Logger"].getInstance().warn(`"${cell.reflink.id}" supplemental table is not found`)
             }
           }
         }
@@ -14742,7 +14748,7 @@ class GreekAdjectiveSimplifiedView extends _views_lang_greek_adjective_greek_adj
     if (suffix.extendedLangData && suffix.extendedLangData[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]) {
       return suffix.extendedLangData[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC].primary
     } else {
-      console.warn(`Greek morpheme "${suffix.value}" has no extended language data attached.`)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn(`Greek morpheme "${suffix.value}" has no extended language data attached.`)
       return false
     }
   }
@@ -15165,7 +15171,7 @@ class GreekNounSimplifiedView extends _greek_noun_view__WEBPACK_IMPORTED_MODULE_
     if (suffix.extendedLangData && suffix.extendedLangData[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]) {
       return suffix.extendedLangData[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC].primary
     } else {
-      console.warn(`Greek morpheme "${suffix.value}" has no extended language data attached.`)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn(`Greek morpheme "${suffix.value}" has no extended language data attached.`)
       return false
     }
   }
@@ -15447,7 +15453,7 @@ class GreekGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MO
       const grammarClasses = _greek_pronoun_view_js__WEBPACK_IMPORTED_MODULE_2__["default"].getClassesFromInflection(inflectionData.inflections).filter(c => GreekGenderPronounView.classes.includes(c))
       // we should only get 1 class here -- if we get more the view is likely to be wrong
       if (grammarClasses.length > 1) {
-        console.warn('more than one grammarClass found for homonym')
+        alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn('more than one grammarClass found for homonym')
       }
       grammarClass = grammarClasses[0]
     }
@@ -17871,7 +17877,7 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
     if (position < this._features.length) {
       return this._features[position]
     } else {
-      console.warn(`Attempting to get feature that is out of bounds, position ${position}`)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn(`Attempting to get feature that is out of bounds, position ${position}`)
       return null
     }
   }
@@ -18976,7 +18982,7 @@ class ViewSetFactory {
       const Constructor = this.getConstructor(homonym.languageID)
       viewSet = new Constructor(homonym)
     } catch (e) {
-      console.error(`Cannot build inflection tables: ${e}`)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error(`Cannot build inflection tables: ${e}`)
       // Create an empty ViewSet with no inflection data
       viewSet = new _view_set_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
     }
@@ -19068,7 +19074,7 @@ class ViewSet {
                 dataset.setInflectionData(inflection, lexeme.lemma)
               })
             } catch (e) {
-              console.error(`Cannot set inflection data: ${e}`)
+              alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error(`Cannot set inflection data: ${e}`)
             }
           }
         }

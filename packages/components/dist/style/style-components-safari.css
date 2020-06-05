@@ -220,11 +220,11 @@ html {
   -ms-text-size-adjust: 100% !important;
 }
 .alpheios-content [lang=ara] {
-  font-family: var(--alpheios-arabic-font-face) !important;
+  font-family: var(--alpheios-arabic-font-face), Verdana, Arial, Helvetica, sans-serif !important;
   font-variant-ligatures: normal !important;
 }
 .alpheios-content [lang=syr] {
-  font-family: var(--alpheios-syriac-font-face) !important;
+  font-family: var(--alpheios-syriac-font-face), Verdana, Arial, Helvetica, sans-serif !important;
   font-variant-ligatures: normal !important;
 }
 .alpheios-content h1, .alpheios-content h2, .alpheios-content h3, .alpheios-content h4, .alpheios-content h5, .alpheios-content h6, .alpheios-content p, .alpheios-content span, .alpheios-content a {
@@ -1472,6 +1472,9 @@ select.alpheios-setting__control,
   fill: var(--alpheios-notification-important-alt-color) !important;
   stroke: var(--alpheios-notification-important-alt-color) !important;
 }
+.alpheios-notification-area__notification--important span {
+  color: var(--alpheios-notification-important-color) !important;
+}
 .alpheios-notification-area__msg {
   padding-right: calc(var(--alpheios-base-ui-size) * 0.625) !important;
   flex: 1 1 auto !important;
@@ -1530,7 +1533,7 @@ select.alpheios-setting__control,
   top: 100px !important;
   box-sizing: border-box !important;
   touch-action: none !important;
-  overflow: auto !important;
+  overflow: hidden !important;
   border: 1px solid var(--alpheios-border-color) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
@@ -1539,8 +1542,8 @@ select.alpheios-setting__control,
 }
 .alpheios-popup__header {
   display: flex;
+  flex: 0 0 calc(var(--alpheios-base-ui-size) * 2.75) !important;
   justify-content: space-between !important;
-  height: calc(var(--alpheios-base-ui-size) * 2.75) !important;
   background: var(--alpheios-desktop-popup-header-bg) !important;
   touch-action: auto !important;
 }
@@ -1621,7 +1624,7 @@ select.alpheios-setting__control,
   padding: calc(var(--alpheios-base-text-size) * 1) !important;
   background: var(--alpheios-desktop-popup-body-bg) !important;
   overflow: auto !important;
-  flex: 1 0 !important;
+  flex: 1 1 !important;
 }
 .alpheios-popup__toolbar {
   position: relative !important;

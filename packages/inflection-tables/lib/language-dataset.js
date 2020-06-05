@@ -1,4 +1,4 @@
-import { Feature, LanguageModelFactory as LMF, Constants } from 'alpheios-data-models'
+import { Feature, LanguageModelFactory as LMF, Constants, Logger } from 'alpheios-data-models'
 import Morpheme from './morpheme.js'
 import Suffix from './suffix.js'
 import Form from './form.js'
@@ -200,7 +200,7 @@ export default class LanguageDataset {
       const grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.getForm(), inflection.lemma.word, true)
 
       if (!grmClasses) {
-        console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun.
+        Logger.getInstance().warn(`Cannot determine a grammar class for a ${inflection.form} pronoun.
               Table construction will probably fail`)
       } else {
         // One or more values found
@@ -247,7 +247,7 @@ export default class LanguageDataset {
 
     if (!this.pos.get(partOfSpeech)) {
       // There is no source data for this part of speech
-      console.warn(`There is no source data for the following part of speech: ${partOfSpeech}`)
+      Logger.getInstance().warn(`There is no source data for the following part of speech: ${partOfSpeech}`)
       return inflection
     }
 
@@ -366,7 +366,7 @@ export default class LanguageDataset {
       const sourceSet = this.pos.get(pofsValue)
       if (!sourceSet) {
         // There is no source data for this part of speech
-        console.warn(`There is no source data for the following part of speech: ${pofsValue}`)
+        Logger.getInstance().warn(`There is no source data for the following part of speech: ${pofsValue}`)
         return inflectionSet
       }
 

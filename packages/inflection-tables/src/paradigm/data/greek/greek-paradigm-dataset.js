@@ -1,4 +1,4 @@
-import { Constants, Feature, FeatureImporter, Lemma, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Constants, Feature, FeatureImporter, Lemma, Logger } from 'alpheios-data-models'
 import Paradigm from '@/paradigm/lib/paradigm.js'
 import GreekParadigmData from '@/paradigm/data/greek/greek-paradigm-data.js'
 
@@ -70,7 +70,7 @@ export default class GreekParadigmDataset extends LanguageDataset {
       if (paradigms.has(id)) {
         paradigms.get(id).addRule(matchOrder, features, lemma, morphFlags)
       } else {
-        console.warn(`Cannot find a paradigm table for "${id}" index`)
+        Logger.getInstance().warn(`Cannot find a paradigm table for "${id}" index`)
       }
     }
     for (let paradigm of paradigms.values()) { // eslint-disable-line prefer-const
@@ -121,7 +121,7 @@ export default class GreekParadigmDataset extends LanguageDataset {
       if (paradigms.has(id)) {
         paradigms.get(id).addRule(matchOrder, features, lemma, morphFlags)
       } else {
-        console.warn(`Cannot find a paradigm table for "${id}" index`)
+        Logger.getInstance().warn(`Cannot find a paradigm table for "${id}" index`)
       }
     }
     for (let paradigm of paradigms.values()) { // eslint-disable-line prefer-const

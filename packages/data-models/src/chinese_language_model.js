@@ -1,6 +1,7 @@
 import LanguageModel from './language_model.js'
 import Feature from './feature.js'
 import * as Constants from './constants.js'
+import Logger from './logging/logger.js'
 
 let typeFeatures = new Map() // eslint-disable-line prefer-const
 let typeFeaturesInitialized = false
@@ -61,7 +62,7 @@ export default class ChineseLanguageModel extends LanguageModel {
   }
 
   static getPunctuation () {
-    return "\\-\\.,;:!?'\"(){}\\[\\]<>\\\n\r\uFF0C\u3001\u3002\u300C\u300D\u300A\u300B\u200C\u200D"
+    return ".,;:!?'\"(){}\\[\\]<>\\\n\r\uFF0C\u3001\u3002\u300C\u300D\u300A\u300B\u200C\u200D"
   }
 
   static _isVowel (aLetter) {
@@ -109,7 +110,7 @@ export default class ChineseLanguageModel extends LanguageModel {
                   if (k + 1 < pin.length - 1 && pin[k + 1] === ':') { pin = pin.replace('u:', _v[tone]) } else { pin = pin.replace('u', _u[tone]) }
                   break
                 default:
-                  console.warn('some kind of weird vowel', pin[k])
+                  Logger.getInstance().warn('some kind of weird vowel', pin[k])
               }
               break
             }

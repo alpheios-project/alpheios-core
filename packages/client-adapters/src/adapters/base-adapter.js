@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Logger } from 'alpheios-data-models'
 import AdapterError from '@clAdapters/errors/adapter-error'
 import RemoteError from '@clAdapters/errors/remote-error.js'
 
@@ -161,15 +162,15 @@ class BaseAdapter {
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.error('Alpheios error: unexpected response retrieving data from service', error)
+      Logger.getInstance().error('Alpheios error: unexpected response retrieving data from service', error)
     } else if (error.request) {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      console.error('Alpheios error: no response from service', error)
+      Logger.getInstance().error('Alpheios error: no response from service', error)
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.error('Alpheios error: unexpected error requesting data from service', error.message)
+      Logger.getInstance().error('Alpheios error: unexpected error requesting data from service', error.message)
     }
   }
 

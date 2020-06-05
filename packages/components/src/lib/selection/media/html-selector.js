@@ -1,5 +1,5 @@
 import 'element-closest' // To polyfill Element.closest() if required
-import { Constants, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory, Logger } from 'alpheios-data-models'
 import TextSelector from '../text-selector'
 import MediaSelector from './media-selector'
 
@@ -76,7 +76,7 @@ export default class HTMLSelector extends MediaSelector {
       if (this.wordSeparator.has(textSelector.model.baseUnit)) {
         textSelector = this.wordSeparator.get(textSelector.model.baseUnit)(textSelector)
       } else {
-        console.warn(`Alpheios word selection error - no word separator function found for "${textSelector.model.baseUnit.toString()}" base unit`)
+        Logger.getInstance().warn(`Alpheios word selection error - no word separator function found for "${textSelector.model.baseUnit.toString()}" base unit`)
       }
     }
     return textSelector
@@ -165,7 +165,7 @@ export default class HTMLSelector extends MediaSelector {
       range.setEndPoint('EndToEnd', endRange)
       range.select()
     } else {
-      console.warn('Browser does not support the Alpheios word selection code. Support for getSelection() or createTextRange() is required.')
+      Logger.getInstance().warn('Browser does not support the Alpheios word selection code. Support for getSelection() or createTextRange() is required.')
     }
     return range
   }

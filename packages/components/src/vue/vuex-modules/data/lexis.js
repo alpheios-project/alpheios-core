@@ -4,7 +4,7 @@ import Platform from '@/lib/utility/platform.js'
 import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import { Constants, TreebankDataItem, HomonymGroup, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Constants, TreebankDataItem, HomonymGroup, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
 import {
   CedictDestinationConfig as CedictProdConfig,
   CedictDestinationDevConfig as CedictDevConfig
@@ -33,7 +33,7 @@ export default class Lexis extends Module {
 
     if (!this._lexisConfig) {
       // If Lexis configuration is not available we will disable any CEDICT-related functionality
-      console.warn('CEDICT functionality will be disabled because LexisCS configuration is not available')
+      Logger.getInstance().warn('CEDICT functionality will be disabled because LexisCS configuration is not available')
     }
 
     // A TextSelector of the last lexical query
@@ -66,7 +66,7 @@ export default class Lexis extends Module {
         })
         .catch((err) => {
           // If refreshUntilLoaded failed treebank data will be unavailable
-          console.warn(err.message)
+          Logger.getInstance().warn(err.message)
           store.commit('lexis/showTreebankFailedNotification')
           this._lastTreebankDataItem = this._treebankDataItem
         })
@@ -141,7 +141,7 @@ export default class Lexis extends Module {
       }
     })
     if (findWordResult.errors.length > 0) {
-      findWordResult.errors.forEach(error => console.error(error.message))
+      findWordResult.errors.forEach(error => Logger.getInstance().error(error.message))
       throw new Error('findWord request failed')
     }
     if (findWordResult.result) {
@@ -159,7 +159,7 @@ export default class Lexis extends Module {
       }
     })
     if (loadResult.errors.length > 0) {
-      loadResult.errors.forEach(error => console.error(error.message))
+      loadResult.errors.forEach(error => Logger.getInstance().error(error.message))
       throw new Error('updateTreebankDiagram request failed')
     }
   }
@@ -258,7 +258,7 @@ export default class Lexis extends Module {
           store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData })
         } catch (err) {
           // If refreshUntilLoaded failed treebank data will be unavailable
-          console.warn(err.message)
+          Logger.getInstance().warn(err.message)
           this._treebankAvailable = false
           this._treebankDataItem = null
           this._lastTreebankDataItem = treebankDataItem
@@ -280,7 +280,7 @@ export default class Lexis extends Module {
         }
         annotatedHomonyms = await Lexis.getHomonymsFromTreebank(treebankDataItem, textSelector)
       } catch (err) {
-        console.error(err)
+        Logger.getInstance().error(err)
       }
 
       /*
@@ -294,7 +294,7 @@ export default class Lexis extends Module {
       try {
         Lexis.updateTreebankDiagram(treebankDataItem)
       } catch (err) {
-        console.error(err)
+        Logger.getInstance().error(err)
         // Mark treebank data as unavailable
         store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       }
@@ -316,7 +316,7 @@ export default class Lexis extends Module {
     source = LexicalQuery.sources.PAGE // Values that are possible currently are: 'page', 'lookup', 'wordlist'
   } = {}) {
     if (textSelector.languageID === Constants.LANG_CHINESE && !this._lexisConfig) {
-      console.warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
+      Logger.getInstance().warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
       return
     }
 
@@ -447,16 +447,20 @@ Lexis.api = (moduleInstance, store) => {
 
         if (textSelector && !textSelector.isEmpty()) {
           const lastTextSelector = moduleInstance._lastTextSelector || {}
-          const checkSameTestSelector = (
-            lastTextSelector.text === textSelector.text &&
-            lastTextSelector.languageID === textSelector.languageID &&
-            moduleInstance._uiApi.isPopupVisible()
-          )
 
-          if (checkSameTestSelector) {
-            // Do nothing
-            return
+          /*
+          We do not want to run a lexical query for the same word that is already
+          shown in a popup on desktop
+           */
+          if (moduleInstance.config.platform.isDesktop && moduleInstance._uiApi.isPopupVisible()) {
+            // Check if a selection is the same
+            if (lastTextSelector.text === textSelector.text &&
+              lastTextSelector.languageID === textSelector.languageID) {
+              // Do nothing
+              return
+            }
           }
+
           moduleInstance._lastTextSelector = textSelector
           moduleInstance.lexicalQuery({
             store,
@@ -503,7 +507,7 @@ Lexis.api = (moduleInstance, store) => {
       if (loadResult.errors.length === 0) {
         store.commit('lexis/setCedictLoadedState')
       } else {
-        console.error('Load CEDICT data request failed', loadResult.errors)
+        Logger.getInstance().error('Load CEDICT data request failed', loadResult.errors)
       }
     },
 
@@ -521,7 +525,7 @@ Lexis.api = (moduleInstance, store) => {
           )
         } catch (err) {
           // Treebank data is probably not available
-          console.warn(err.message)
+          Logger.getInstance().warn(err.message)
           moduleInstance._treebankAvailable = false
           moduleInstance._lastTreebankDataItem = moduleInstance._treebankDataItem
           moduleInstance._treebankDataItem = null

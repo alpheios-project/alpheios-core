@@ -43,13 +43,10 @@
 </template>
 <script>
 import TextSelector from '@/lib/selection/text-selector'
-import HelpIcon from '@/images/inline-icons/help-icon.svg'
-import Options from '@/lib/options/options.js'
 
-import { LanguageModelFactory, Constants } from 'alpheios-data-models'
+import { LanguageModelFactory, Logger } from 'alpheios-data-models'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-import Logger from '@/lib/log/logger'
 
 import Setting from './setting.vue'
 import InputAutocomplete from '@/vue/components/form-components/input-autocomplete.vue'
@@ -64,7 +61,6 @@ export default {
   components: {
     alphSetting: Setting,
     lookupIcon: LookupIcon,
-    helpIcon: HelpIcon,
     inputAutocomplete: InputAutocomplete,
     betaCodesInfo: BetaCodesInfo
   },
@@ -165,7 +161,7 @@ export default {
         this.showLookupResult()
       } catch (err) {
         // Lookup request cannot be completed
-        console.warn(`Lookup request cannot be completed: ${err.message}`)
+        this.$options.logger.warn(`Lookup request cannot be completed: ${err.message}`)
       }
     },
 

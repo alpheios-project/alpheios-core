@@ -1,4 +1,4 @@
-import { Constants } from 'alpheios-data-models'
+import { Constants, Logger } from 'alpheios-data-models'
 import GreekView from '../greek-view.js'
 import GreekPronounView from './greek-pronoun-view.js'
 import Table from '../../../lib/table'
@@ -13,7 +13,7 @@ export default class GreekGenderPronounView extends GreekPronounView {
       const grammarClasses = GreekPronounView.getClassesFromInflection(inflectionData.inflections).filter(c => GreekGenderPronounView.classes.includes(c))
       // we should only get 1 class here -- if we get more the view is likely to be wrong
       if (grammarClasses.length > 1) {
-        console.warn('more than one grammarClass found for homonym')
+        Logger.getInstance().warn('more than one grammarClass found for homonym')
       }
       grammarClass = grammarClasses[0]
     }

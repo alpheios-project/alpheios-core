@@ -2,6 +2,7 @@ import LanguageModel from './language_model.js'
 import LanguageModelFactory from './language_model_factory.js'
 import * as Constants from './constants.js'
 import Feature from './feature.js'
+import Logger from './logging/logger.js'
 
 import GreekChars from './languages/greek-chars.js'
 
@@ -260,7 +261,7 @@ for the current node
    * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
-    return '\\-\\.,;:!?"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u201C\u201D\u0387\u00B7\n\r\u200C\u200D'
+    return '.,;:!?"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u201C\u201D\u0387\u00B7\n\r\u200C\u200D'
   }
 
   /**
@@ -283,7 +284,7 @@ for the current node
         constraints.suffixBased = true
       }
     } else {
-      console.warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[Feature.types.part])
+      Logger.getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[Feature.types.part])
     }
 
     constraints.pronounClassRequired =

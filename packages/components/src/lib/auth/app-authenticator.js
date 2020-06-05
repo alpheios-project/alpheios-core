@@ -1,4 +1,6 @@
-import AuthData from './auth-data'
+import { Logger } from 'alpheios-data-models'
+import AuthData from './auth-data.js'
+
 /* global Auth0Lock */
 /**
  * Encapsulates Authentication Functionality For a Client Side Application
@@ -56,7 +58,7 @@ export default class AppAuthenticator {
       if (!this.auth0Lock) {
         if (!this.env) {
           const error = 'Unable to find Auth0 configuration. Auth0 functionality will be disabled'
-          console.error(error)
+          Logger.getInstance().error(error)
           reject(new Error(error))
         }
         // test environment
@@ -104,13 +106,13 @@ export default class AppAuthenticator {
 
           // Unrecoverable error handler
           this.auth0Lock.on('unrecoverable_error', (error) => {
-            console.error('Auth0 Lock unrecoverable error: ', error)
+            Logger.getInstance().error('Auth0 Lock unrecoverable error: ', error)
             reject(new Error('Auth0 Lock unrecoverable'))
           })
 
           // An authorization error
           this.auth0Lock.on('authorization_error', (error) => {
-            console.error('Auth0 Lock authorization error: ', error)
+            Logger.getInstance().error('Auth0 Lock authorization error: ', error)
             reject(new Error('Auth0Lock authorization error'))
           })
           this.auth0Lock.show()
@@ -129,7 +131,7 @@ export default class AppAuthenticator {
     return new Promise((resolve, reject) => {
       const token = localStorage.getItem('access_token')
       if (!token) {
-        console.error('You must login to call this protected endpoint!')
+        Logger.getInstance().error('You must login to call this protected endpoint!')
         reject(new Error('Login required'))
       }
       const expirationDateTimeStr = localStorage.getItem('expiration_date_time')
@@ -173,7 +175,7 @@ export default class AppAuthenticator {
 
       // block request from happening if no JWT token present
       if (!token) {
-        console.error('You must login to call this protected endpoint!')
+        Logger.getInstance().error('You must login to call this protected endpoint!')
         reject(new Error('Not Authenticated'))
       }
       resolve(token)

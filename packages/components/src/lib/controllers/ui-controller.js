@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME */
 import { version as packageVersion, description as packageDescription } from '../../../package'
-import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
+import { Constants, Feature, LanguageModelFactory, Lexeme, Logger } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 import { WordlistController, UserDataManager } from 'alpheios-wordlist'
 import Vue from '@vue-runtime'
 import Vuex from 'vuex'
 import interact from 'interactjs'
-import Logger from '@/lib/log/logger.js'
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import LexisModule from '@/vue/vuex-modules/data/lexis.js'
@@ -750,7 +749,7 @@ if you want to create a different configuration of a UI controller.
       closePanel: this.closePanel.bind(this),
       openPopup: this.openPopup.bind(this),
       closePopup: this.closePopup.bind(this),
-      isPopupVisible: () => this.store.state.popup.visible,
+      isPopupVisible: () => Boolean(this.store.state.popup && this.store.state.popup.visible),
       openActionPanel: this.openActionPanel.bind(this),
       closeActionPanel: this.closeActionPanel.bind(this),
       toggleActionPanel: this.toggleActionPanel.bind(this),
@@ -933,7 +932,7 @@ if you want to create a different configuration of a UI controller.
       const response = await fetch(request)
       return response.json()
     } catch (err) {
-      console.error(`Unable to retrieve an app configuration from ${url}: ${err.message}`)
+      this.logger.error(`Unable to retrieve an app configuration from ${url}: ${err.message}`)
       return null
     }
   }
@@ -1171,13 +1170,13 @@ if you want to create a different configuration of a UI controller.
         // we offer change language here when the lookup was from the page because the language used for the
         // lookup is deduced from the page and might be wrong
         const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE',
-          { targetWord: this.store.state.app.targetWord, languageName: languageName })
+          { targetWord: this.store.state.app.targetWord, languageName: languageName, langCode: homonym.language })
         this.store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: true })
       } else {
         // if we are coming from e.g. the lookup or the wordlist, offering change language
         // here creates some confusion and the language was explicit upon lookup so it is not necessary
         const message = this.api.l10n.getMsg('TEXT_NOTICE_NOT_FOUND',
-          { targetWord: this.store.state.app.targetWord, languageName: languageName })
+          { targetWord: this.store.state.app.targetWord, languageName: languageName, langCode: homonym.language })
         this.store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: false })
       }
     } else if (!this.store.state.app.queryStillActive) {

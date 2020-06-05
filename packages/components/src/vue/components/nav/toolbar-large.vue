@@ -188,7 +188,7 @@
 </template>
 <script>
 import interact from 'interactjs'
-import Logger from '@/lib/log/logger'
+import { Logger } from 'alpheios-data-models'
 
 import Tooltip from '@/vue/components/tooltip.vue'
 // Embeddable SVG icons

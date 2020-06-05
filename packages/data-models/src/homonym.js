@@ -1,6 +1,7 @@
 import LMF from './language_model_factory'
 import Lexeme from './lexeme.js'
 import Lemma from './lemma.js'
+import Logger from './logging/logger.js'
 
 class Homonym {
   /**
@@ -91,7 +92,7 @@ class Homonym {
    * @returns {string} A language code, as defined in the `languages` object.
    */
   get language () {
-    console.warn('Please use languageID instead')
+    Logger.getInstance().warn('Please use languageID instead')
     return LMF.getLanguageCodeFromId(this.languageID)
   }
 

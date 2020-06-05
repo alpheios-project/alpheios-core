@@ -2144,10 +2144,13 @@ class Utility {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserDataManager; });
-/* harmony import */ var _wordlist_storage_worditem_indexeddb_driver_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordlist/storage/worditem-indexeddb-driver.js */ "./storage/worditem-indexeddb-driver.js");
-/* harmony import */ var _wordlist_storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/storage/worditem-remotedb-driver.js */ "./storage/worditem-remotedb-driver.js");
-/* harmony import */ var _wordlist_storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordlist/storage/indexed-db-adapter.js */ "./storage/indexed-db-adapter.js");
-/* harmony import */ var _wordlist_storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordlist/storage/remote-db-adapter.js */ "./storage/remote-db-adapter.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordlist_storage_worditem_indexeddb_driver_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/storage/worditem-indexeddb-driver.js */ "./storage/worditem-indexeddb-driver.js");
+/* harmony import */ var _wordlist_storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordlist/storage/worditem-remotedb-driver.js */ "./storage/worditem-remotedb-driver.js");
+/* harmony import */ var _wordlist_storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordlist/storage/indexed-db-adapter.js */ "./storage/indexed-db-adapter.js");
+/* harmony import */ var _wordlist_storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordlist/storage/remote-db-adapter.js */ "./storage/remote-db-adapter.js");
+
 
 
 
@@ -2180,7 +2183,7 @@ class UserDataManager {
   clear() {
     if (this.blocked) {
       // TODO we should wait on the request queue completion
-      console.warn("Alpheios warn: destroying user data manager with requests pending. Words may not all be deleted.")
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn("Alpheios warn: destroying user data manager with requests pending. Words may not all be deleted.")
     }
     for (let unsub of this.subscriptions) {
       unsub()
@@ -2195,7 +2198,7 @@ class UserDataManager {
    */
   _localStorageAdapter(dataType) {
     let dbDriver = new UserDataManager.LOCAL_DRIVER_CLASSES[dataType](this.auth.userId)
-    return new _wordlist_storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_2__["default"](dbDriver)
+    return new _wordlist_storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__["default"](dbDriver)
   }
 
   /**
@@ -2205,7 +2208,7 @@ class UserDataManager {
    */
   _remoteStorageAdapter(dataType) {
     let dbDriver = new UserDataManager.REMOTE_DRIVER_CLASSES[dataType](this.auth)
-    return new _wordlist_storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__["default"](dbDriver)
+    return new _wordlist_storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_4__["default"](dbDriver)
   }
 
   /**
@@ -2238,7 +2241,7 @@ class UserDataManager {
   }
 
   printErrorAdapterUnvailable(adapter) {
-    console.error(`Alpheios error: user data adapter is not available - ${adapter.constructor.name}`)
+    alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error(`Alpheios error: user data adapter is not available - ${adapter.constructor.name}`)
   }
 
   /**
@@ -2287,7 +2290,7 @@ class UserDataManager {
       }
       return result
     } catch (error) {
-      console.error('Alpheios error: unexpected error updating user data.', error)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error('Alpheios error: unexpected error updating user data.', error)
     }
   }
 
@@ -2340,7 +2343,7 @@ class UserDataManager {
       }
       return remoteResult && localResult
     } catch (error) {
-      console.error('Alpheios error: unexpected error deleting user data.', error.message)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error('Alpheios error: unexpected error deleting user data.', error.message)
     }
   }
 
@@ -2389,7 +2392,7 @@ class UserDataManager {
 
       return deletedLocal && deletedRemote
     } catch (error) {
-      console.error('Alpheios error: unexpected error deleting user data.', error.message)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error('Alpheios error: unexpected error deleting user data.', error.message)
     }
   }
 
@@ -2451,7 +2454,7 @@ class UserDataManager {
       this.printErrors(localAdapter)
       return finalItems
     } catch (error) {
-      console.error('Alpheios error: unexpected error querying user data.', error.message)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error('Alpheios error: unexpected error querying user data.', error.message)
     }
   }
 
@@ -2470,7 +2473,7 @@ class UserDataManager {
    */
   printErrors (adapter) {
     if (adapter.errors && adapter.errors.length > 0) {
-      adapter.errors.forEach(error => console.error(`Alpheios error: user data unexpected error - ${error}`))
+      adapter.errors.forEach(error => alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error(`Alpheios error: user data unexpected error - ${error}`))
     }
   }
 
@@ -2506,10 +2509,10 @@ class UserDataManager {
 
 // Constants (could be done better, dynamically, etc.)
 UserDataManager.LOCAL_DRIVER_CLASSES = {
-  WordItem: _wordlist_storage_worditem_indexeddb_driver_js__WEBPACK_IMPORTED_MODULE_0__["default"]
+  WordItem: _wordlist_storage_worditem_indexeddb_driver_js__WEBPACK_IMPORTED_MODULE_1__["default"]
 }
 UserDataManager.REMOTE_DRIVER_CLASSES = {
-  WordItem: _wordlist_storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+  WordItem: _wordlist_storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_2__["default"]
 }
 
 
@@ -2581,7 +2584,7 @@ class WordlistController {
                 this.onHomonymReady(cachedItem.homonym)
               }
             } catch (e) {
-              console.error("Alpheios error: unexpected error replaying cached wordlist item",e)
+              alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error("Alpheios error: unexpected error replaying cached wordlist item",e)
             }
           }
         }
@@ -2643,7 +2646,7 @@ class WordlistController {
           this.removeWordList(languageCode)
         }
       } else {
-        console.error('Alpheios error: unexpected error updating user wordlist: trying to delete an absent element')
+        alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error('Alpheios error: unexpected error updating user wordlist: trying to delete an absent element')
       }
     }
   }
@@ -2665,7 +2668,7 @@ class WordlistController {
       }
     }
     if (!wordItem) {
-      console.error(`Alpheios error: wordlist item not found: ${languageCode} ${targetWord}`)
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error(`Alpheios error: wordlist item not found: ${languageCode} ${targetWord}`)
     }
     return wordItem
   }
@@ -2717,7 +2720,7 @@ class WordlistController {
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
       // TODO error handling
-      console.error("Alpheios error: unexpected error updating user word list: request to add definitions to non-existent item.")
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error("Alpheios error: unexpected error updating user word list: request to add definitions to non-existent item.")
     }
   }
 
@@ -2751,7 +2754,7 @@ class WordlistController {
       wordItem.homonym = data
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
-      console.error("Alpheios error: unexpected error updating user word list: request to add translations to non-existent item")
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error("Alpheios error: unexpected error updating user word list: request to add translations to non-existent item")
     }
   }
 
@@ -2788,7 +2791,7 @@ class WordlistController {
       // emit a wordlist updated event too in case the wordlist was updated
       WordlistController.evt.WORDLIST_UPDATED.pub([this.getWordList(wordItem.languageCode)])
     } else {
-      console.error("Alpheios error: unexpected error updating user word list: unable to create or retrieve worditem")
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error("Alpheios error: unexpected error updating user word list: unable to create or retrieve worditem")
     }
 
   }
@@ -2807,7 +2810,7 @@ class WordlistController {
       wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     } else {
-      console.error("Alpheios error: unexpected error updating user word list: request to set important flag on non-existent item")
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().error("Alpheios error: unexpected error updating user word list: request to set important flag on non-existent item")
     }
   }
 
@@ -3175,7 +3178,7 @@ class IndexedDBAdapter {
     this.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"}; // This line should only be needed if it is needed to support the object's constants for older browsers
     this.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
     if (!this.indexedDB) {
-      console.warn("Alpheios warn: your browser doesn't support IndexedDB. Wordlists will not be available.");
+      alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Logger"].getInstance().warn("Alpheios warn: your browser doesn't support IndexedDB. Wordlists will not be available.");
       return false
     }
     return true
