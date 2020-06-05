@@ -447,16 +447,20 @@ Lexis.api = (moduleInstance, store) => {
 
         if (textSelector && !textSelector.isEmpty()) {
           const lastTextSelector = moduleInstance._lastTextSelector || {}
-          const checkSameTestSelector = (
-            lastTextSelector.text === textSelector.text &&
-            lastTextSelector.languageID === textSelector.languageID &&
-            moduleInstance._uiApi.isPopupVisible()
-          )
 
-          if (checkSameTestSelector) {
-            // Do nothing
-            return
+          /*
+          We do not want to run a lexical query for the same word that is already
+          shown in a popup on desktop
+           */
+          if (moduleInstance.config.platform.isDesktop && moduleInstance._uiApi.isPopupVisible()) {
+            // Check if a selection is the same
+            if (lastTextSelector.text === textSelector.text &&
+              lastTextSelector.languageID === textSelector.languageID) {
+              // Do nothing
+              return
+            }
           }
+
           moduleInstance._lastTextSelector = textSelector
           moduleInstance.lexicalQuery({
             store,
