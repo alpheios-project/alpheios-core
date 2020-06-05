@@ -749,7 +749,7 @@ if you want to create a different configuration of a UI controller.
       closePanel: this.closePanel.bind(this),
       openPopup: this.openPopup.bind(this),
       closePopup: this.closePopup.bind(this),
-      isPopupVisible: () => this.store.state.popup.visible,
+      isPopupVisible: () => Boolean(this.store.state.popup && this.store.state.popup.visible),
       openActionPanel: this.openActionPanel.bind(this),
       closeActionPanel: this.closeActionPanel.bind(this),
       toggleActionPanel: this.toggleActionPanel.bind(this),
