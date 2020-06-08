@@ -1430,9 +1430,9 @@ If no URLS are provided, will reset grammar data.
 
   updateLemmaTranslations () {
     if (this.featureOptions.items.enableLemmaTranslations.currentValue && !this.featureOptions.items.locale.currentValue.match(/en-/)) {
-      this.state.setItem('lemmaTranslationLang', this.featureOptions.items.locale.currentValue)
+      this.api.lexis.setLemmaTranslationLang(this.featureOptions.items.locale.currentValue)
     } else {
-      this.state.setItem('lemmaTranslationLang', null)
+      this.api.lexis.setLemmaTranslationLang(null)
     }
   }
 
