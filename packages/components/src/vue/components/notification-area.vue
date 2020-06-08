@@ -365,7 +365,8 @@ export default {
   }
 
   .alpheios-notification-area__hint-btn, button.alpheios-notification-area__hint-btn {
-    color: var(--alpheios-color-neutral-lightest);
+    // An `important` modifier is required to override `important` on Loeb classics website
+    color: var(--alpheios-color-neutral-lightest) !important;
     background: var(--alpheios-color-muted);
     border-color: var(--alpheios-color-muted);
 

@@ -1504,7 +1504,7 @@ select.alpheios-setting__control,
   border: 1px solid var(--alpheios-hint-border-color);
 }
 .alpheios-notification-area__hint-btn, button.alpheios-notification-area__hint-btn {
-  color: var(--alpheios-color-neutral-lightest);
+  color: var(--alpheios-color-neutral-lightest) !important;
   background: var(--alpheios-color-muted);
   border-color: var(--alpheios-color-muted);
 }
