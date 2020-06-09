@@ -29,7 +29,6 @@ export default class IndexedDBAdapter {
       segment = this.dbDriver.segmentsSync
     }
     await this.update(wordItem, { segment: 'common' })
-
     let result = await this.update(wordItem, { segment })
 
     return result

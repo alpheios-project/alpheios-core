@@ -175,7 +175,6 @@ export default class WordItemRemoteDbDriver {
     }
 
     let homonym = this._serializeHomonym(wordItem)
-
     if (homonym !== null) {
       result.homonym = homonym
     }

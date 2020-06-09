@@ -280,8 +280,9 @@ export default class UserDataManager {
       } else {
         remoteItems = await remoteAdapter.query(data.params)
         if (params.type === 'full') {
-          for (let remoteItem of remoteItems) {
-            await localAdapter.checkAndUpdate(remoteItem, data.params.segment, [remoteItem])
+          for(let remoteItem of remoteItems) {
+            let wodrItem = localAdapter.dbDriver.createFromRemoteData(remoteItem)
+            await localAdapter.checkAndUpdate(wodrItem, data.params.segment, [remoteItem])
           }
           let localItems = await localAdapter.query(data.params)
           finalItems = localItems
@@ -300,6 +301,7 @@ export default class UserDataManager {
 
       this.printErrors(remoteAdapter)
       this.printErrors(localAdapter)
+
       return finalItems
     } catch (error) {
       Logger.getInstance().error('Alpheios error: unexpected error querying user data.', error.message)
