@@ -146,7 +146,7 @@ export default {
         }
 
         span.alpheios-tab-options-switch--item__smaller {
-          font-size: 80%;
+          font-size: 65%;
           color: inherit;
         }
     }
