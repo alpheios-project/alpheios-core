@@ -864,8 +864,8 @@ div.alpheios-checkbox-block {
   font-family: "Noto Sans Syriac Western";
   font-style: normal;
   font-weight: 400;
-  src: url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.eot);
-  src: url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.eot?#iefix) format("embedded-opentype"), url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.woff2) format("woff2"), url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.woff) format("woff"), url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.ttf) format("truetype");
+  src: url(https://fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.eot);
+  src: url(https://fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.eot?#iefix) format("embedded-opentype"), url(https://fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.woff2) format("woff2"), url(https://fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.woff) format("woff"), url(https://fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.ttf) format("truetype");
 }
 body {
   -webkit-touch-callout: auto;
