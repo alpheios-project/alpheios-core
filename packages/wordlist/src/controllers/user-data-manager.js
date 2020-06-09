@@ -301,7 +301,6 @@ export default class UserDataManager {
 
       this.printErrors(remoteAdapter)
       this.printErrors(localAdapter)
-
       return finalItems
     } catch (error) {
       Logger.getInstance().error('Alpheios error: unexpected error querying user data.', error.message)
