@@ -2976,6 +2976,7 @@ class IndexedDBAdapter {
       segment = this.dbDriver.segmentsSync
     }
     await this.update(wordItem, { segment: 'common' })
+
     let result = await this.update(wordItem, { segment })
 
     return result
@@ -3718,6 +3719,7 @@ class RemoteDBAdapter {
       let url = this.dbDriver.storageMap.get.url(data)
       let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url, this.dbDriver.requestsParams)
       let final = this.dbDriver.storageMap.get.checkResult(result)
+      
       return final
     } catch (error) {
       let errorFinal = this.dbDriver.storageMap.get.checkErrorResult(error)
@@ -4387,6 +4389,7 @@ class WordItemRemoteDbDriver {
     }
 
     let homonym = this._serializeHomonym(wordItem)
+    
     if (homonym !== null) {
       result.homonym = homonym
     }

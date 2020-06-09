@@ -65,7 +65,6 @@ class Homonym {
   }
 
   static readObject (jsonObject) {
-    console.info('Homonym readObject - ', jsonObject)
     let lexemes = [] // eslint-disable-line prefer-const
     if (jsonObject.lexemes) {
       for (const lexeme of jsonObject.lexemes) {
