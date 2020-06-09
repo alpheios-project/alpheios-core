@@ -311,8 +311,8 @@ export default class WordItemIndexedDbDriver {
       targetWord: wordItem.targetWord,
       important: wordItem.important,
       createdDT: wordItem.createdDT ? wordItem.createdDT : Utility.currentDate,
-      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : Utility.currentDate,
-      frequency: wordItem.frequency ? wordItem.frequency : 1
+      updatedDT: wordItem.updatedDT,
+      frequency: wordItem.frequency
     }]
     return res
   }
