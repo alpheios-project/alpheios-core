@@ -1558,7 +1558,6 @@ select.alpheios-setting__control,
 }
 .alpheios-popup__toolbar-top__btn {
   width: calc(var(--alpheios-base-ui-size) * 3.5);
-  height: 100%;
   cursor: pointer;
   fill: var(--alpheios-desktop-popup-icon-color);
   stroke: var(--alpheios-desktop-popup-icon-color);
@@ -1590,7 +1589,6 @@ select.alpheios-setting__control,
 }
 .alpheios-popup__close-btn {
   width: calc(var(--alpheios-base-ui-size) * 3.5);
-  height: 100%;
   cursor: pointer;
   fill: var(--alpheios-desktop-popup-icon-color);
   stroke: var(--alpheios-desktop-popup-icon-color);
@@ -1648,6 +1646,10 @@ h3.alpheios-popup__toolbar-selection {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
+  align-items: stretch;
+}
+.alpheios-popup__toolbar-buttons > .alph_tooltip {
+  display: flex;
 }
 .alpheios-popup__toolbar-button {
   margin: 0 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625);

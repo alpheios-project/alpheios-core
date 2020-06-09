@@ -598,7 +598,6 @@ export default {
 
   .alpheios-popup__toolbar-top__btn {
     width: uisize(56px);
-    height: 100%;
     cursor: pointer;
     fill: var(--alpheios-desktop-popup-icon-color);
     stroke: var(--alpheios-desktop-popup-icon-color);
@@ -636,7 +635,6 @@ export default {
 
   .alpheios-popup__close-btn {
     width: uisize(56px);
-    height: 100%;
     cursor: pointer;
     fill: var(--alpheios-desktop-popup-icon-color);
     stroke: var(--alpheios-desktop-popup-icon-color);
@@ -704,6 +702,11 @@ export default {
     display: flex;
     justify-content: flex-end;
     flex-wrap: wrap;
+    align-items: stretch;
+
+      & > .alph_tooltip {
+        display: flex;
+      }
   }
 
   .alpheios-popup__toolbar-button {
