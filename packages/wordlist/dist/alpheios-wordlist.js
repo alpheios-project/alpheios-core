@@ -2432,8 +2432,9 @@ class UserDataManager {
       } else {
         remoteItems = await remoteAdapter.query(data.params)
         if (params.type === 'full') {
-          for (let remoteItem of remoteItems) {
-            await localAdapter.checkAndUpdate(remoteItem, data.params.segment, [remoteItem])
+          for(let remoteItem of remoteItems) {
+            let wodrItem = localAdapter.dbDriver.createFromRemoteData(remoteItem)
+            await localAdapter.checkAndUpdate(wodrItem, data.params.segment, [remoteItem])
           }
           let localItems = await localAdapter.query(data.params)
           finalItems = localItems
@@ -2700,6 +2701,8 @@ class WordlistController {
   onHomonymReadyForWordlistUpdate (data) {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
+    // we don't update the currentSession, updatedDT or frequency fields
+    // with this event, as it's a lookup purely to populate the definition in the item for download
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
     // emit a wordlist updated event too in case the wordlist was updated
@@ -4065,8 +4068,8 @@ class WordItemIndexedDbDriver {
       targetWord: wordItem.targetWord,
       important: wordItem.important,
       createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate,
-      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate,
-      frequency: wordItem.frequency ? wordItem.frequency : 1
+      updatedDT: wordItem.updatedDT,
+      frequency: wordItem.frequency
     }]
     return res
   }
@@ -4382,8 +4385,8 @@ class WordItemRemoteDbDriver {
       targetWord: wordItem.targetWord,
       important: wordItem.important,
       createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
-      updatedDT: wordItem.updatedDT, 
-      frequency: wordItem.frequency ? parseInt(wordItem.frequency) : 1
+      updatedDT: wordItem.updatedDT,
+      frequency: wordItem.frequency
     }
 
     let homonym = this._serializeHomonym(wordItem)
@@ -4403,7 +4406,8 @@ class WordItemRemoteDbDriver {
 
   _serializePut (wordItem) {
     let result = this._serialize(wordItem)
-    result.updatedDT = wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
+    result.updatedDT = wordItem.updatedDT
+    result.frequency = wordItem.frequency
     return result
   }
 

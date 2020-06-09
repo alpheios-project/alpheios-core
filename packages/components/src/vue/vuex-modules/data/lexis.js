@@ -36,6 +36,8 @@ export default class Lexis extends Module {
       Logger.getInstance().warn('CEDICT functionality will be disabled because LexisCS configuration is not available')
     }
 
+    // A locale for lemma translations (e.g. 'en-US')
+    this._lemmaTranslationLang = null
     // A TextSelector of the last lexical query
     this._lastTextSelector = null
     // Whether a treebank application has been initialized successfully
@@ -178,7 +180,7 @@ export default class Lexis extends Module {
         }
       })
       if (adapterTreebankRes.errors.length > 0) {
-        return undefined
+        throw new Error('Homonym data from treebank is not available')
       }
       return adapterTreebankRes.result
     }))
@@ -280,7 +282,9 @@ export default class Lexis extends Module {
         }
         annotatedHomonyms = await Lexis.getHomonymsFromTreebank(treebankDataItem, textSelector)
       } catch (err) {
-        Logger.getInstance().error(err)
+        // Treebank data is unavailable
+        store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
+        Logger.getInstance().warn(err)
       }
 
       /*
@@ -299,6 +303,7 @@ export default class Lexis extends Module {
         store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       }
     } else if (this._treebankAvailable) {
+      // Treebank icon is shown if $store.state.lexis.hasTreebankData
       store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       this._treebankDataItem = null
     }
@@ -320,9 +325,9 @@ export default class Lexis extends Module {
       return
     }
 
-    if (!lemmaTranslations && textSelector.languageID === Constants.LANG_LATIN && store.state.app.lemmaTranslationLang) {
+    if (!lemmaTranslations && textSelector.languageID === Constants.LANG_LATIN && this._lemmaTranslationLang) {
       // Use our own rules if lemmaTranslations is not provided
-      lemmaTranslations = { locale: store.state.app.lemmaTranslationLang }
+      lemmaTranslations = { locale: this._lemmaTranslationLang }
     }
     if (!wordUsageExamples) { wordUsageExamples = this._appApi.getWordUsageExamplesQueryParams(textSelector) }
 
@@ -478,9 +483,10 @@ Lexis.api = (moduleInstance, store) => {
      * Starts a lexical query from a lookup component.
      *
      * @param {TextSelector} textSelector - A text selector object containing information about a lookup word.
-     * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
      */
     lookupText: async (textSelector) => {
+      // Treebank info is not available for queries from a lookup component
+      store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       return moduleInstance.lexicalQuery({ store, textSelector, source: LexicalQuery.sources.LOOKUP })
     },
 
@@ -491,6 +497,10 @@ Lexis.api = (moduleInstance, store) => {
      */
     lookupForWordlist: async (textSelector) => {
       return moduleInstance.lexicalQuery({ store, textSelector, source: LexicalQuery.sources.WORDLIST })
+    },
+
+    setLemmaTranslationLang (lemmaTranslationLang) {
+      moduleInstance._lemmaTranslationLang = lemmaTranslationLang
     },
 
     loadCedictData: async () => {

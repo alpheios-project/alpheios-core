@@ -170,8 +170,8 @@ export default class WordItemRemoteDbDriver {
       targetWord: wordItem.targetWord,
       important: wordItem.important,
       createdDT: wordItem.createdDT ? wordItem.createdDT : Utility.currentDate,
-      updatedDT: wordItem.updatedDT, 
-      frequency: wordItem.frequency ? parseInt(wordItem.frequency) : 1
+      updatedDT: wordItem.updatedDT,
+      frequency: wordItem.frequency
     }
 
     let homonym = this._serializeHomonym(wordItem)
@@ -191,7 +191,8 @@ export default class WordItemRemoteDbDriver {
 
   _serializePut (wordItem) {
     let result = this._serialize(wordItem)
-    result.updatedDT = wordItem.updatedDT ? wordItem.updatedDT : Utility.currentDate
+    result.updatedDT = wordItem.updatedDT
+    result.frequency = wordItem.frequency
     return result
   }
 

@@ -864,8 +864,8 @@ div.alpheios-checkbox-block {
   font-family: "Noto Sans Syriac Western";
   font-style: normal;
   font-weight: 400;
-  src: url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.eot);
-  src: url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.eot?#iefix) format("embedded-opentype"), url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.woff2) format("woff2"), url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.woff) format("woff"), url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.ttf) format("truetype");
+  src: url(https://fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.eot);
+  src: url(https://fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.eot?#iefix) format("embedded-opentype"), url(https://fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.woff2) format("woff2"), url(https://fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.woff) format("woff"), url(https://fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.ttf) format("truetype");
 }
 body {
   -webkit-touch-callout: auto;
@@ -883,10 +883,14 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-content .alpheios-definition__short .alpheios-definition__text {
-  color: var(--alpheios-definition-short-color);
-  font-size: calc(var(--alpheios-base-text-size) * 1.125);
+.alpheios-lemma__translations {
+  padding: 5px 0 0 22px;
+  font-style: italic;
+  color: #585858;
   font-weight: bold;
+}
+p.alpheios-lemma__translations-value {
+  margin-bottom: 5px;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -917,23 +921,6 @@ body {
 .alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover,
 .alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__linkedattr:hover {
   color: var(--alpheios-desktop-popup-link-color-hover);
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.alpheios-lemma__translations {
-  padding: 5px 0 0 22px;
-  font-style: italic;
-  color: #585858;
-  font-weight: bold;
-}
-p.alpheios-lemma__translations-value {
-  margin-bottom: 5px;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -1275,6 +1262,19 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-content .alpheios-definition__short .alpheios-definition__text {
+  color: var(--alpheios-definition-short-color);
+  font-size: calc(var(--alpheios-base-text-size) * 1.125);
+  font-weight: bold;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-morph__lexemes .alpheios-definition__lemma {
   display: none;
 }
@@ -1504,7 +1504,7 @@ select.alpheios-setting__control,
   border: 1px solid var(--alpheios-hint-border-color);
 }
 .alpheios-notification-area__hint-btn, button.alpheios-notification-area__hint-btn {
-  color: var(--alpheios-color-neutral-lightest);
+  color: var(--alpheios-color-neutral-lightest) !important;
   background: var(--alpheios-color-muted);
   border-color: var(--alpheios-color-muted);
 }
@@ -1558,7 +1558,6 @@ select.alpheios-setting__control,
 }
 .alpheios-popup__toolbar-top__btn {
   width: calc(var(--alpheios-base-ui-size) * 3.5);
-  height: 100%;
   cursor: pointer;
   fill: var(--alpheios-desktop-popup-icon-color);
   stroke: var(--alpheios-desktop-popup-icon-color);
@@ -1590,7 +1589,6 @@ select.alpheios-setting__control,
 }
 .alpheios-popup__close-btn {
   width: calc(var(--alpheios-base-ui-size) * 3.5);
-  height: 100%;
   cursor: pointer;
   fill: var(--alpheios-desktop-popup-icon-color);
   stroke: var(--alpheios-desktop-popup-icon-color);
@@ -1648,6 +1646,10 @@ h3.alpheios-popup__toolbar-selection {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
+  align-items: stretch;
+}
+.alpheios-popup__toolbar-buttons > .alph_tooltip {
+  display: flex;
 }
 .alpheios-popup__toolbar-button {
   margin: 0 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625);
@@ -3193,7 +3195,7 @@ p.alpheios-word-usage-filter-title {
   color: var(--alpheios-desktop-panel-icon-color-active);
 }
 .alpheios-tab-options-switch--item span.alpheios-tab-options-switch--item__smaller {
-  font-size: 80%;
+  font-size: 65%;
   color: inherit;
 }
 .alpheios-tab-options-reset-all-block {

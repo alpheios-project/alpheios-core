@@ -21,13 +21,10 @@
   </div>
 </template>
 <script>
-import { Feature, LanguageModelFactory } from 'alpheios-data-models'
-import ShortDef from './shortdef.vue'
-import InflectionAttribute from './infl-attribute.vue'
 import LemmaTranslation from './lemma-translation.vue'
 import MorphData from '@/vue/components/morph-parts/morph-data.vue'
-import DefinitionsList  from '@/vue/components/morph-parts/definitions-list.vue'
-import InflectionsList  from '@/vue/components/morph-parts/inflections-list.vue'
+import DefinitionsList from '@/vue/components/morph-parts/definitions-list.vue'
+import InflectionsList from '@/vue/components/morph-parts/inflections-list.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 

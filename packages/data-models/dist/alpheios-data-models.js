@@ -2992,8 +2992,12 @@ class Homonym {
       for (const lexeme of jsonObject.lexemes) {
         lexemes.push(_lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(lexeme))
       }
+    } else {
+      const languageID = _language_model_factory__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageIdFromCode(jsonObject.languageCode)
+      lexemes = [new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"](new _lemma_js__WEBPACK_IMPORTED_MODULE_2__["default"](jsonObject.targetWord, languageID), [])]
     }
-    const homonym = new Homonym(lexemes, jsonObject.form)
+    const homonym = new Homonym(lexemes, jsonObject.form || jsonObject.targetWord)
+    homonym.lemmasList = jsonObject.lemmasList
     return homonym
   }
 

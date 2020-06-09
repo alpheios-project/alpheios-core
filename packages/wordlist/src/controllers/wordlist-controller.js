@@ -167,6 +167,8 @@ export default class WordlistController {
   onHomonymReadyForWordlistUpdate (data) {
     let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
+    // we don't update the currentSession, updatedDT or frequency fields
+    // with this event, as it's a lookup purely to populate the definition in the item for download
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
     // emit a wordlist updated event too in case the wordlist was updated

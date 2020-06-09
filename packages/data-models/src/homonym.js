@@ -70,8 +70,12 @@ class Homonym {
       for (const lexeme of jsonObject.lexemes) {
         lexemes.push(Lexeme.readObject(lexeme))
       }
+    } else {
+      const languageID = LMF.getLanguageIdFromCode(jsonObject.languageCode)
+      lexemes = [new Lexeme(new Lemma(jsonObject.targetWord, languageID), [])]
     }
-    const homonym = new Homonym(lexemes, jsonObject.form)
+    const homonym = new Homonym(lexemes, jsonObject.form || jsonObject.targetWord)
+    homonym.lemmasList = jsonObject.lemmasList
     return homonym
   }
 
