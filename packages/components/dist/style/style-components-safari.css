@@ -3193,7 +3193,7 @@ p.alpheios-word-usage-filter-title {
   color: var(--alpheios-desktop-panel-icon-color-active) !important;
 }
 .alpheios-tab-options-switch--item span.alpheios-tab-options-switch--item__smaller {
-  font-size: 80% !important;
+  font-size: 65% !important;
   color: inherit !important;
 }
 .alpheios-tab-options-reset-all-block {
