@@ -278,7 +278,20 @@ export default {
 
       return !part ? items : items.sort( (item1, item2) => {
         let compared
-        if (typeof item1[part] === 'string') {
+
+        if (part === 'updatedDT') {
+          /*
+          Some `updatedDT` fields could have undefined values. If those values would go through
+          a `localCompare` function and be compared with a date time string, this will produce
+          different results in Safari and in other browsers (Chrome, Firefox).
+          To fix this, we need to apply special sorting rules to those values.
+          Browser versions at the moment of writing: Safari - 13, Chrome - 81, Firefox - 77.
+         */
+          if (!item1[part] && !item2[part]) { compared = 0 } // Items are equivalent
+          if (!item1[part]) { compared = -1 } // Item 1 should go before item 2
+          if (!item2[part]) { compared = 1 } // Item 1 should go after item 2
+        }
+        else if (typeof item1[part] === 'string') {
           compared = item1[part].localeCompare(item2[part], this.languageCode, {sensitivity: 'accent'})
         } else {
           if (!item1[part]) {
