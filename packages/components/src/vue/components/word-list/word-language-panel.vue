@@ -288,10 +288,10 @@ export default {
           Browser versions at the moment of writing: Safari - 13, Chrome - 81, Firefox - 77.
          */
           if (!item1[part] && !item2[part]) { compared = 0 } // Items are equivalent
-          if (!item1[part]) { compared = -1 } // Item 1 should go before item 2
-          if (!item2[part]) { compared = 1 } // Item 1 should go after item 2
-        }
-        else if (typeof item1[part] === 'string') {
+          else if (!item1[part]) { compared = -1 } // Item 1 should go before item 2
+          else if (!item2[part]) { compared = 1 } // Item 1 should go after item 2
+          else { compared = item1[part].localeCompare(item2[part], this.languageCode, { sensitivity: 'accent' }) }
+        } else if (typeof item1[part] === 'string') {
           compared = item1[part].localeCompare(item2[part], this.languageCode, {sensitivity: 'accent'})
         } else {
           if (!item1[part]) {
