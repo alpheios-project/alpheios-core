@@ -1776,6 +1776,9 @@ If no URLS are provided, will reset grammar data.
     if (homonym && homonym.lexemes && homonym.lexemes.length > 0 && homonym.lexemes.filter(l => l.isPopulated()).length === homonym.lexemes.length) {
       // if we were able to retrieve full homonym data then we can just display it
       this.onHomonymReady(homonym)
+      // we still need to notify the wordlist controller that an onHomonymReady event
+      // was received so that it can update the wordlist item as appropriate
+      this.wordlistC.onHomonymReady(homonym)
       this.updateProviders(homonym)
       // We already have both short and full definitions so we can update the status of both
       this.store.commit('app/shortDefsUpdated')
