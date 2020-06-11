@@ -99,7 +99,7 @@ export default class SessionAuthenticator {
   /**
    * Respond to a logout request
    */
-  logout () {
+  async logout () {
     this._authData.setAuthStatus(false)
     this._authData.userId = ''
     this._authData.name = ''
