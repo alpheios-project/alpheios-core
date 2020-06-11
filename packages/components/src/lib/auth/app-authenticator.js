@@ -193,12 +193,19 @@ export default class AppAuthenticator {
   /**
    * Respond to a logout request
    */
-  logout () {
+  async logout () {
     localStorage.removeItem('id_token')
     localStorage.removeItem('access_token')
     localStorage.removeItem('profile')
-    this.auth0Lock.logout({
-      returnTo: this.env.LOGOUT_URL
-    })
+    if (this.auth0Lock) {
+      this.auth0Lock.logout({
+        returnTo: this.env.LOGOUT_URL
+      })
+    } else if (this.env.TEST_ID) {
+      const expirationDateTime = new Date(Date.now())
+      localStorage.setItem('expiration_date_time', expirationDateTime.toJSON())
+    } else {
+      Logger.getInstance().error('Auth0 Lock instance does not exist at the logout')
+    }
   }
 }

@@ -836,6 +836,7 @@ export default {
 
   .alpheios-panel__tab-panel--options {
     display: block;
+    max-width: 100vw; // To prevent it from expanding beyond the viewport on mobile
   }
 
   .alpheios-panel__tab__treebank {

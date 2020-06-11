@@ -3376,6 +3376,7 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-panel__tab-panel--options {
   display: block;
+  max-width: 100vw !important;
 }
 .alpheios-panel__tab__treebank {
   width: 100% !important;
