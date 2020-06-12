@@ -684,6 +684,9 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-bottom: textsize(10px);
+    // It seems that Safari 13.1 disregards `flex-shrink: 0` on some occasions
+    // so we have to use `min-height` to prevent element from collapsing
+    min-height: textsize(24px);
   }
 
   .alpheios-popup__toolbar-text {
@@ -695,6 +698,8 @@ export default {
   }
 
   h3.alpheios-popup__toolbar-selection {
+    margin-top: textsize(12px);
+    margin-bottom: textsize(8px);
     display: inline-block;
   }
 
