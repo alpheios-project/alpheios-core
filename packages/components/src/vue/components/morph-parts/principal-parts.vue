@@ -23,7 +23,7 @@
             class="alpheios-principal-parts__pointer-tooltip"
             v-show="disambiguated"
         >
-            <disambiguated-icon class="alpheios-principal-parts__pointer-icn"></disambiguated-icon>
+            <disambiguated-icon class="alpheios-principal-parts__pointer-icn alpheios-disambiguated-icon"></disambiguated-icon>
         </tooltip>
         <div v-show="disambiguated" class="alpheios-principal-parts__dsmbg-providers">
             <tooltip
@@ -31,7 +31,7 @@
                 tooltip-direction="top"
                 class="alpheios-principal-parts__dsmbg-providers-tooltip"
             >
-                <treebank-icon class="alpheios-principal-parts__dsmbg-providers-icn"></treebank-icon>
+                <treebank-icon class="alpheios-principal-parts__dsmbg-providers-icn alpheios-treebank-icon"></treebank-icon>
             </tooltip>
         </div>
 
