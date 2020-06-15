@@ -1631,6 +1631,7 @@ select.alpheios-setting__control,
   justify-content: space-between;
   align-items: center;
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+  min-height: calc(var(--alpheios-base-text-size) * 1.5);
 }
 .alpheios-popup__toolbar-text {
   padding-right: calc(var(--alpheios-base-text-size) * 1.25);
@@ -1640,6 +1641,8 @@ select.alpheios-setting__control,
   /* the arabic amiri font does not like the top padding */
 }
 h3.alpheios-popup__toolbar-selection {
+  margin-top: calc(var(--alpheios-base-text-size) * 0.75);
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.5);
   display: inline-block;
 }
 .alpheios-popup__toolbar-buttons {
