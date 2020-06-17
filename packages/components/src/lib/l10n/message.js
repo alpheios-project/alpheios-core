@@ -1,3 +1,4 @@
+import { Logger } from 'alpheios-data-models'
 import IntlMessageFormat from 'intl-messageformat'
 
 /**
@@ -51,6 +52,11 @@ export default class Message {
    * @return {string} A formatted message text
    */
   getMsg (formatOptions) {
+    if (this.hasParameters && !this.formatFunc) {
+      Logger.getInstance().warn(`Format function is missing for a message with parameters: ${this.message}`, this.params)
+      // Since message cannot be constructed, return an empty string instead
+      return ''
+    }
     return !this.hasParameters ? this.message : this.formatFunc.format(formatOptions)
   }
 

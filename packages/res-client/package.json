@@ -24,32 +24,32 @@
   },
   "homepage": "https://github.com/alpheios-project/res-client#readme",
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
-    "@babel/plugin-transform-runtime": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/runtime": "^7.9.6",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/runtime": "^7.10.2",
     "alpheios-node-build": "github:alpheios-project/node-build#v3",
-    "babel-jest": "^21.2.0",
+    "babel-jest": "^26.0.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.1.0",
-    "eslint": "^7.0.0",
+    "eslint": "^7.2.0",
     "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^26.0.1",
-    "jest-fetch-mock": "^3.0.1",
-    "papaparse": "^5.1.1",
+    "jest-fetch-mock": "^3.0.3",
+    "papaparse": "^5.2.0",
     "shx": "^0.3.2"
   },
   "peerDependencies": {
     "alpheios-data-models": "^3.3.0"
   },
   "engines": {
-    "node": ">= 9.10.1",
-    "npm": ">= 5.6.0"
+    "node": ">= 14.1.0",
+    "npm": ">= 6.13.0"
   },
   "jest": {
     "verbose": true,

@@ -97,9 +97,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ({
 
 /***/ "../../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js":
-/*!*************************************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js ***!
-  \*************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1821,9 +1821,9 @@ ResponseMessage.errorCodes = {
 /***/ }),
 
 /***/ "../../../node_modules/axios/index.js":
-/*!**************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/index.js ***!
-  \**************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/index.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1832,9 +1832,9 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/http.js":
-/*!**************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/adapters/http.js ***!
-  \**************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/adapters/http.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2123,9 +2123,9 @@ module.exports = function httpAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/xhr.js":
-/*!*************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/adapters/xhr.js ***!
-  \*************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/adapters/xhr.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2315,9 +2315,9 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/axios.js":
-/*!******************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/axios.js ***!
-  \******************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/axios.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2380,9 +2380,9 @@ module.exports.default = axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
-/*!**************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/cancel/Cancel.js ***!
-  \**************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/Cancel.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2411,9 +2411,9 @@ module.exports = Cancel;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*******************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/cancel/CancelToken.js ***!
-  \*******************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/CancelToken.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2480,9 +2480,9 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
-/*!****************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/cancel/isCancel.js ***!
-  \****************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/isCancel.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2497,9 +2497,9 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/Axios.js":
-/*!***********************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/Axios.js ***!
-  \***********************************************************************/
+/*!***********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/Axios.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2603,9 +2603,9 @@ module.exports = Axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
-/*!************************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/InterceptorManager.js ***!
-  \************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/InterceptorManager.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2667,9 +2667,9 @@ module.exports = InterceptorManager;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
-/*!*******************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/buildFullPath.js ***!
-  \*******************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/buildFullPath.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2699,9 +2699,9 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/createError.js":
-/*!*****************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/createError.js ***!
-  \*****************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/createError.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2729,9 +2729,9 @@ module.exports = function createError(message, config, code, request, response) 
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
-/*!*********************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/dispatchRequest.js ***!
-  \*********************************************************************************/
+/*!*********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/dispatchRequest.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2820,9 +2820,9 @@ module.exports = function dispatchRequest(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/enhanceError.js":
-/*!******************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/enhanceError.js ***!
-  \******************************************************************************/
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/enhanceError.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2874,9 +2874,9 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
-/*!*****************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/mergeConfig.js ***!
-  \*****************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/mergeConfig.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2959,9 +2959,9 @@ module.exports = function mergeConfig(config1, config2) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/settle.js":
-/*!************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/settle.js ***!
-  \************************************************************************/
+/*!************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/settle.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2996,9 +2996,9 @@ module.exports = function settle(resolve, reject, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/transformData.js":
-/*!*******************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/transformData.js ***!
-  \*******************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/transformData.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3028,9 +3028,9 @@ module.exports = function transformData(data, headers, fns) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/defaults.js":
-/*!*********************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/defaults.js ***!
-  \*********************************************************************/
+/*!*********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/defaults.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3137,9 +3137,9 @@ module.exports = defaults;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/bind.js":
-/*!*************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/bind.js ***!
-  \*************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/bind.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3160,9 +3160,9 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
-/*!*****************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/buildURL.js ***!
-  \*****************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/buildURL.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3243,9 +3243,9 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
-/*!********************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/combineURLs.js ***!
-  \********************************************************************************/
+/*!********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/combineURLs.js ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3269,9 +3269,9 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/cookies.js":
-/*!****************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/cookies.js ***!
-  \****************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/cookies.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3334,9 +3334,9 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!**********************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
-  \**********************************************************************************/
+/*!**********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3360,9 +3360,9 @@ module.exports = function isAbsoluteURL(url) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!************************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
-  \************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3440,9 +3440,9 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!****************************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
-  \****************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3464,9 +3464,9 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!*********************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/parseHeaders.js ***!
-  \*********************************************************************************/
+/*!*********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3529,9 +3529,9 @@ module.exports = function parseHeaders(headers) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/spread.js":
-/*!***************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/spread.js ***!
-  \***************************************************************************/
+/*!***************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/spread.js ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3568,9 +3568,9 @@ module.exports = function spread(callback) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/utils.js":
-/*!******************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/utils.js ***!
-  \******************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/utils.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3924,20 +3924,20 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/axios/package.json":
-/*!******************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/axios/package.json ***!
-  \******************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/package.json ***!
+  \******************************************************************************/
 /*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browser, bugs, bundlesize, dependencies, description, devDependencies, homepage, keywords, license, main, name, repository, scripts, typings, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_args\":[[\"axios@0.19.2\",\"C:\\\\_Alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.19.2\",\"_id\":\"axios@0.19.2\",\"_inBundle\":false,\"_integrity\":\"sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.19.2\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.19.2\",\"saveSpec\":null,\"fetchSpec\":\"0.19.2\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.19.2.tgz\",\"_spec\":\"0.19.2\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"1.5.10\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"version\":\"0.19.2\"}");
+module.exports = JSON.parse("{\"_args\":[[\"axios@0.19.2\",\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.19.2\",\"_id\":\"axios@0.19.2\",\"_inBundle\":false,\"_integrity\":\"sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.19.2\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.19.2\",\"saveSpec\":null,\"fetchSpec\":\"0.19.2\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.19.2.tgz\",\"_spec\":\"0.19.2\",\"_where\":\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"1.5.10\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"version\":\"0.19.2\"}");
 
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/index.js":
-/*!*************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/follow-redirects/index.js ***!
-  \*************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/follow-redirects/index.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4268,9 +4268,9 @@ module.exports.wrap = wrap;
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/node_modules/debug/src/browser.js":
-/*!**************************************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/follow-redirects/node_modules/debug/src/browser.js ***!
-  \**************************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/follow-redirects/node_modules/debug/src/browser.js ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4474,9 +4474,9 @@ function localstorage() {
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/node_modules/debug/src/debug.js":
-/*!************************************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/follow-redirects/node_modules/debug/src/debug.js ***!
-  \************************************************************************************************/
+/*!************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/follow-redirects/node_modules/debug/src/debug.js ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4710,9 +4710,9 @@ function coerce(val) {
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/node_modules/debug/src/index.js":
-/*!************************************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/follow-redirects/node_modules/debug/src/index.js ***!
-  \************************************************************************************************/
+/*!************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/follow-redirects/node_modules/debug/src/index.js ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4731,9 +4731,9 @@ if (typeof process === 'undefined' || process.type === 'renderer') {
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/node_modules/debug/src/node.js":
-/*!***********************************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/follow-redirects/node_modules/debug/src/node.js ***!
-  \***********************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/follow-redirects/node_modules/debug/src/node.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4928,9 +4928,9 @@ exports.enable(load());
 /***/ }),
 
 /***/ "../../../node_modules/has-flag/index.js":
-/*!*****************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/has-flag/index.js ***!
-  \*****************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/has-flag/index.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4947,2682 +4947,4223 @@ module.exports = (flag, argv) => {
 
 /***/ }),
 
-/***/ "../../../node_modules/intl-messageformat-parser/index.js":
-/*!**********************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/intl-messageformat-parser/index.js ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "../../../node_modules/intl-format-cache/lib/index.js":
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-format-cache/lib/index.js ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/*
+Copyright (c) 2014, Yahoo! Inc. All rights reserved.
+Copyrights licensed under the New BSD License.
+See the accompanying LICENSE file for terms.
+*/
+var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+// -- Utilities ----------------------------------------------------------------
+function getCacheId(inputs) {
+    return JSON.stringify(inputs.map(function (input) {
+        return input && typeof input === 'object' ? orderedProps(input) : input;
+    }));
+}
+function orderedProps(obj) {
+    return Object.keys(obj)
+        .sort()
+        .map(function (k) {
+        var _a;
+        return (_a = {}, _a[k] = obj[k], _a);
+    });
+}
+var memoizeFormatConstructor = function (FormatConstructor, cache) {
+    if (cache === void 0) { cache = {}; }
+    return function () {
+        var _a;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var cacheId = getCacheId(args);
+        var format = cacheId && cache[cacheId];
+        if (!format) {
+            format = new ((_a = FormatConstructor).bind.apply(_a, __spreadArrays([void 0], args)))();
+            if (cacheId) {
+                cache[cacheId] = format;
+            }
+        }
+        return format;
+    };
+};
+/* harmony default export */ __webpack_exports__["default"] = (memoizeFormatConstructor);
 
 
-exports = module.exports = __webpack_require__(/*! ./lib/parser */ "../../../node_modules/intl-messageformat-parser/lib/parser.js")['default'];
-exports['default'] = exports;
+/***/ }),
+
+/***/ "../../../node_modules/intl-messageformat-parser/lib/index.js":
+/*!**************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/lib/index.js ***!
+  \**************************************************************************************************/
+/*! exports provided: TYPE, SKELETON_TYPE, isLiteralElement, isArgumentElement, isNumberElement, isDateElement, isTimeElement, isSelectElement, isPluralElement, isPoundElement, isTagElement, isNumberSkeleton, isDateTimeSkeleton, createLiteralElement, createNumberElement, SyntaxError, pegParse, parseDateTimeSkeleton, convertNumberSkeletonToNumberFormatOptions, parse */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parse", function() { return parse; });
+/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./parser */ "../../../node_modules/intl-messageformat-parser/lib/parser.js");
+/* harmony import */ var _normalize__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./normalize */ "../../../node_modules/intl-messageformat-parser/lib/normalize.js");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./types */ "../../../node_modules/intl-messageformat-parser/lib/types.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TYPE", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["TYPE"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SKELETON_TYPE", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["SKELETON_TYPE"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isLiteralElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isLiteralElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isArgumentElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isArgumentElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isNumberElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isNumberElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isDateElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isDateElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isTimeElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isTimeElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isSelectElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isSelectElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isPluralElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isPluralElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isPoundElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isPoundElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isTagElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isTagElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isNumberSkeleton", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isNumberSkeleton"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isDateTimeSkeleton", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["isDateTimeSkeleton"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createLiteralElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["createLiteralElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createNumberElement", function() { return _types__WEBPACK_IMPORTED_MODULE_2__["createNumberElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SyntaxError", function() { return _parser__WEBPACK_IMPORTED_MODULE_0__["SyntaxError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pegParse", function() { return _parser__WEBPACK_IMPORTED_MODULE_0__["pegParse"]; });
+
+/* harmony import */ var _skeleton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./skeleton */ "../../../node_modules/intl-messageformat-parser/lib/skeleton.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseDateTimeSkeleton", function() { return _skeleton__WEBPACK_IMPORTED_MODULE_3__["parseDateTimeSkeleton"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "convertNumberSkeletonToNumberFormatOptions", function() { return _skeleton__WEBPACK_IMPORTED_MODULE_3__["convertNumberSkeletonToNumberFormatOptions"]; });
+
+
+
+
+
+
+function parse(input, opts) {
+    var els = Object(_parser__WEBPACK_IMPORTED_MODULE_0__["pegParse"])(input, opts);
+    if (!opts || opts.normalizeHashtagInPlural !== false) {
+        Object(_normalize__WEBPACK_IMPORTED_MODULE_1__["normalizeHashtagInPlural"])(els);
+    }
+    return els;
+}
+
+
+/***/ }),
+
+/***/ "../../../node_modules/intl-messageformat-parser/lib/normalize.js":
+/*!******************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/lib/normalize.js ***!
+  \******************************************************************************************************/
+/*! exports provided: normalizeHashtagInPlural */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "normalizeHashtagInPlural", function() { return normalizeHashtagInPlural; });
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "../../../node_modules/intl-messageformat-parser/lib/types.js");
+/* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parser */ "../../../node_modules/intl-messageformat-parser/lib/parser.js");
+var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+
+
+var PLURAL_HASHTAG_REGEX = /(^|[^\\])#/g;
+/**
+ * Whether to convert `#` in plural rule options
+ * to `{var, number}`
+ * @param el AST Element
+ * @param pluralStack current plural stack
+ */
+function normalizeHashtagInPlural(els) {
+    els.forEach(function (el) {
+        // If we're encountering a plural el
+        if (!Object(_types__WEBPACK_IMPORTED_MODULE_0__["isPluralElement"])(el) && !Object(_types__WEBPACK_IMPORTED_MODULE_0__["isSelectElement"])(el)) {
+            return;
+        }
+        // Go down the options and search for # in any literal element
+        Object.keys(el.options).forEach(function (id) {
+            var _a;
+            var opt = el.options[id];
+            // If we got a match, we have to split this
+            // and inject a NumberElement in the middle
+            var matchingLiteralElIndex = -1;
+            var literalEl = undefined;
+            for (var i = 0; i < opt.value.length; i++) {
+                var el_1 = opt.value[i];
+                if (Object(_types__WEBPACK_IMPORTED_MODULE_0__["isLiteralElement"])(el_1) && PLURAL_HASHTAG_REGEX.test(el_1.value)) {
+                    matchingLiteralElIndex = i;
+                    literalEl = el_1;
+                    break;
+                }
+            }
+            if (literalEl) {
+                var newValue = literalEl.value.replace(PLURAL_HASHTAG_REGEX, "$1{" + el.value + ", number}");
+                var newEls = Object(_parser__WEBPACK_IMPORTED_MODULE_1__["pegParse"])(newValue);
+                (_a = opt.value).splice.apply(_a, __spreadArrays([matchingLiteralElIndex, 1], newEls));
+            }
+            normalizeHashtagInPlural(opt.value);
+        });
+    });
+}
 
 
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/lib/parser.js":
-/*!***************************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/intl-messageformat-parser/lib/parser.js ***!
-  \***************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*!***************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/lib/parser.js ***!
+  \***************************************************************************************************/
+/*! exports provided: SyntaxError, pegParse */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SyntaxError", function() { return SyntaxError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pegParse", function() { return pegParse; });
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "../../../node_modules/intl-messageformat-parser/lib/types.js");
+// tslint:disable:only-arrow-functions
+// tslint:disable:object-literal-shorthand
+// tslint:disable:trailing-comma
+// tslint:disable:object-literal-sort-keys
+// tslint:disable:one-variable-per-declaration
+// tslint:disable:max-line-length
+// tslint:disable:no-consecutive-blank-lines
+// tslint:disable:align
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+// Generated by PEG.js v. 0.10.0 (ts-pegjs plugin v. 0.2.6 )
+//
+// https://pegjs.org/   https://github.com/metadevpro/ts-pegjs
 
-
-exports["default"] = (function() {
-  "use strict";
-
-  /*
-   * Generated by PEG.js 0.9.0.
-   *
-   * http://pegjs.org/
-   */
-
-  function peg$subclass(child, parent) {
-    function ctor() { this.constructor = child; }
-    ctor.prototype = parent.prototype;
-    child.prototype = new ctor();
-  }
-
-  function peg$SyntaxError(message, expected, found, location) {
-    this.message  = message;
-    this.expected = expected;
-    this.found    = found;
-    this.location = location;
-    this.name     = "SyntaxError";
-
-    if (typeof Error.captureStackTrace === "function") {
-      Error.captureStackTrace(this, peg$SyntaxError);
+var SyntaxError = /** @class */ (function (_super) {
+    __extends(SyntaxError, _super);
+    function SyntaxError(message, expected, found, location) {
+        var _this = _super.call(this) || this;
+        _this.message = message;
+        _this.expected = expected;
+        _this.found = found;
+        _this.location = location;
+        _this.name = "SyntaxError";
+        if (typeof Error.captureStackTrace === "function") {
+            Error.captureStackTrace(_this, SyntaxError);
+        }
+        return _this;
     }
-  }
-
-  peg$subclass(peg$SyntaxError, Error);
-
-  function peg$parse(input) {
-    var options = arguments.length > 1 ? arguments[1] : {},
-        parser  = this,
-
-        peg$FAILED = {},
-
-        peg$startRuleFunctions = { start: peg$parsestart },
-        peg$startRuleFunction  = peg$parsestart,
-
-        peg$c0 = function(elements) {
-                return {
-                    type    : 'messageFormatPattern',
-                    elements: elements,
-                    location: location()
-                };
-            },
-        peg$c1 = function(text) {
-                var string = '',
-                    i, j, outerLen, inner, innerLen;
-
-                for (i = 0, outerLen = text.length; i < outerLen; i += 1) {
-                    inner = text[i];
-
-                    for (j = 0, innerLen = inner.length; j < innerLen; j += 1) {
-                        string += inner[j];
+    SyntaxError.buildMessage = function (expected, found) {
+        function hex(ch) {
+            return ch.charCodeAt(0).toString(16).toUpperCase();
+        }
+        function literalEscape(s) {
+            return s
+                .replace(/\\/g, "\\\\")
+                .replace(/"/g, "\\\"")
+                .replace(/\0/g, "\\0")
+                .replace(/\t/g, "\\t")
+                .replace(/\n/g, "\\n")
+                .replace(/\r/g, "\\r")
+                .replace(/[\x00-\x0F]/g, function (ch) { return "\\x0" + hex(ch); })
+                .replace(/[\x10-\x1F\x7F-\x9F]/g, function (ch) { return "\\x" + hex(ch); });
+        }
+        function classEscape(s) {
+            return s
+                .replace(/\\/g, "\\\\")
+                .replace(/\]/g, "\\]")
+                .replace(/\^/g, "\\^")
+                .replace(/-/g, "\\-")
+                .replace(/\0/g, "\\0")
+                .replace(/\t/g, "\\t")
+                .replace(/\n/g, "\\n")
+                .replace(/\r/g, "\\r")
+                .replace(/[\x00-\x0F]/g, function (ch) { return "\\x0" + hex(ch); })
+                .replace(/[\x10-\x1F\x7F-\x9F]/g, function (ch) { return "\\x" + hex(ch); });
+        }
+        function describeExpectation(expectation) {
+            switch (expectation.type) {
+                case "literal":
+                    return "\"" + literalEscape(expectation.text) + "\"";
+                case "class":
+                    var escapedParts = expectation.parts.map(function (part) {
+                        return Array.isArray(part)
+                            ? classEscape(part[0]) + "-" + classEscape(part[1])
+                            : classEscape(part);
+                    });
+                    return "[" + (expectation.inverted ? "^" : "") + escapedParts + "]";
+                case "any":
+                    return "any character";
+                case "end":
+                    return "end of input";
+                case "other":
+                    return expectation.description;
+            }
+        }
+        function describeExpected(expected1) {
+            var descriptions = expected1.map(describeExpectation);
+            var i;
+            var j;
+            descriptions.sort();
+            if (descriptions.length > 0) {
+                for (i = 1, j = 1; i < descriptions.length; i++) {
+                    if (descriptions[i - 1] !== descriptions[i]) {
+                        descriptions[j] = descriptions[i];
+                        j++;
                     }
                 }
-
-                return string;
-            },
-        peg$c2 = function(messageText) {
-                return {
-                    type : 'messageTextElement',
-                    value: messageText,
-                    location: location()
-                };
-            },
-        peg$c3 = /^[^ \t\n\r,.+={}#]/,
-        peg$c4 = { type: "class", value: "[^ \\t\\n\\r,.+={}#]", description: "[^ \\t\\n\\r,.+={}#]" },
-        peg$c5 = "{",
-        peg$c6 = { type: "literal", value: "{", description: "\"{\"" },
-        peg$c7 = ",",
-        peg$c8 = { type: "literal", value: ",", description: "\",\"" },
-        peg$c9 = "}",
-        peg$c10 = { type: "literal", value: "}", description: "\"}\"" },
-        peg$c11 = function(id, format) {
-                return {
-                    type  : 'argumentElement',
-                    id    : id,
-                    format: format && format[2],
-                    location: location()
-                };
-            },
-        peg$c12 = "number",
-        peg$c13 = { type: "literal", value: "number", description: "\"number\"" },
-        peg$c14 = "date",
-        peg$c15 = { type: "literal", value: "date", description: "\"date\"" },
-        peg$c16 = "time",
-        peg$c17 = { type: "literal", value: "time", description: "\"time\"" },
-        peg$c18 = function(type, style) {
-                return {
-                    type : type + 'Format',
-                    style: style && style[2],
-                    location: location()
-                };
-            },
-        peg$c19 = "plural",
-        peg$c20 = { type: "literal", value: "plural", description: "\"plural\"" },
-        peg$c21 = function(pluralStyle) {
-                return {
-                    type   : pluralStyle.type,
-                    ordinal: false,
-                    offset : pluralStyle.offset || 0,
-                    options: pluralStyle.options,
-                    location: location()
-                };
-            },
-        peg$c22 = "selectordinal",
-        peg$c23 = { type: "literal", value: "selectordinal", description: "\"selectordinal\"" },
-        peg$c24 = function(pluralStyle) {
-                return {
-                    type   : pluralStyle.type,
-                    ordinal: true,
-                    offset : pluralStyle.offset || 0,
-                    options: pluralStyle.options,
-                    location: location()
-                }
-            },
-        peg$c25 = "select",
-        peg$c26 = { type: "literal", value: "select", description: "\"select\"" },
-        peg$c27 = function(options) {
-                return {
-                    type   : 'selectFormat',
-                    options: options,
-                    location: location()
-                };
-            },
-        peg$c28 = "=",
-        peg$c29 = { type: "literal", value: "=", description: "\"=\"" },
-        peg$c30 = function(selector, pattern) {
-                return {
-                    type    : 'optionalFormatPattern',
-                    selector: selector,
-                    value   : pattern,
-                    location: location()
-                };
-            },
-        peg$c31 = "offset:",
-        peg$c32 = { type: "literal", value: "offset:", description: "\"offset:\"" },
-        peg$c33 = function(number) {
-                return number;
-            },
-        peg$c34 = function(offset, options) {
-                return {
-                    type   : 'pluralFormat',
-                    offset : offset,
-                    options: options,
-                    location: location()
-                };
-            },
-        peg$c35 = { type: "other", description: "whitespace" },
-        peg$c36 = /^[ \t\n\r]/,
-        peg$c37 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
-        peg$c38 = { type: "other", description: "optionalWhitespace" },
-        peg$c39 = /^[0-9]/,
-        peg$c40 = { type: "class", value: "[0-9]", description: "[0-9]" },
-        peg$c41 = /^[0-9a-f]/i,
-        peg$c42 = { type: "class", value: "[0-9a-f]i", description: "[0-9a-f]i" },
-        peg$c43 = "0",
-        peg$c44 = { type: "literal", value: "0", description: "\"0\"" },
-        peg$c45 = /^[1-9]/,
-        peg$c46 = { type: "class", value: "[1-9]", description: "[1-9]" },
-        peg$c47 = function(digits) {
-            return parseInt(digits, 10);
-        },
-        peg$c48 = /^[^{}\\\0-\x1F \t\n\r]/,
-        peg$c49 = { type: "class", value: "[^{}\\\\\\0-\\x1F\\x7f \\t\\n\\r]", description: "[^{}\\\\\\0-\\x1F\\x7f \\t\\n\\r]" },
-        peg$c50 = "\\\\",
-        peg$c51 = { type: "literal", value: "\\\\", description: "\"\\\\\\\\\"" },
-        peg$c52 = function() { return '\\'; },
-        peg$c53 = "\\#",
-        peg$c54 = { type: "literal", value: "\\#", description: "\"\\\\#\"" },
-        peg$c55 = function() { return '\\#'; },
-        peg$c56 = "\\{",
-        peg$c57 = { type: "literal", value: "\\{", description: "\"\\\\{\"" },
-        peg$c58 = function() { return '\u007B'; },
-        peg$c59 = "\\}",
-        peg$c60 = { type: "literal", value: "\\}", description: "\"\\\\}\"" },
-        peg$c61 = function() { return '\u007D'; },
-        peg$c62 = "\\u",
-        peg$c63 = { type: "literal", value: "\\u", description: "\"\\\\u\"" },
-        peg$c64 = function(digits) {
-                return String.fromCharCode(parseInt(digits, 16));
-            },
-        peg$c65 = function(chars) { return chars.join(''); },
-
-        peg$currPos          = 0,
-        peg$savedPos         = 0,
-        peg$posDetailsCache  = [{ line: 1, column: 1, seenCR: false }],
-        peg$maxFailPos       = 0,
-        peg$maxFailExpected  = [],
-        peg$silentFails      = 0,
-
-        peg$result;
-
-    if ("startRule" in options) {
-      if (!(options.startRule in peg$startRuleFunctions)) {
-        throw new Error("Can't start parsing from rule \"" + options.startRule + "\".");
-      }
-
-      peg$startRuleFunction = peg$startRuleFunctions[options.startRule];
-    }
-
-    function text() {
-      return input.substring(peg$savedPos, peg$currPos);
-    }
-
-    function location() {
-      return peg$computeLocation(peg$savedPos, peg$currPos);
-    }
-
-    function expected(description) {
-      throw peg$buildException(
-        null,
-        [{ type: "other", description: description }],
-        input.substring(peg$savedPos, peg$currPos),
-        peg$computeLocation(peg$savedPos, peg$currPos)
-      );
-    }
-
-    function error(message) {
-      throw peg$buildException(
-        message,
-        null,
-        input.substring(peg$savedPos, peg$currPos),
-        peg$computeLocation(peg$savedPos, peg$currPos)
-      );
-    }
-
-    function peg$computePosDetails(pos) {
-      var details = peg$posDetailsCache[pos],
-          p, ch;
-
-      if (details) {
-        return details;
-      } else {
-        p = pos - 1;
-        while (!peg$posDetailsCache[p]) {
-          p--;
-        }
-
-        details = peg$posDetailsCache[p];
-        details = {
-          line:   details.line,
-          column: details.column,
-          seenCR: details.seenCR
-        };
-
-        while (p < pos) {
-          ch = input.charAt(p);
-          if (ch === "\n") {
-            if (!details.seenCR) { details.line++; }
-            details.column = 1;
-            details.seenCR = false;
-          } else if (ch === "\r" || ch === "\u2028" || ch === "\u2029") {
-            details.line++;
-            details.column = 1;
-            details.seenCR = true;
-          } else {
-            details.column++;
-            details.seenCR = false;
-          }
-
-          p++;
-        }
-
-        peg$posDetailsCache[pos] = details;
-        return details;
-      }
-    }
-
-    function peg$computeLocation(startPos, endPos) {
-      var startPosDetails = peg$computePosDetails(startPos),
-          endPosDetails   = peg$computePosDetails(endPos);
-
-      return {
-        start: {
-          offset: startPos,
-          line:   startPosDetails.line,
-          column: startPosDetails.column
-        },
-        end: {
-          offset: endPos,
-          line:   endPosDetails.line,
-          column: endPosDetails.column
-        }
-      };
-    }
-
-    function peg$fail(expected) {
-      if (peg$currPos < peg$maxFailPos) { return; }
-
-      if (peg$currPos > peg$maxFailPos) {
-        peg$maxFailPos = peg$currPos;
-        peg$maxFailExpected = [];
-      }
-
-      peg$maxFailExpected.push(expected);
-    }
-
-    function peg$buildException(message, expected, found, location) {
-      function cleanupExpected(expected) {
-        var i = 1;
-
-        expected.sort(function(a, b) {
-          if (a.description < b.description) {
-            return -1;
-          } else if (a.description > b.description) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-
-        while (i < expected.length) {
-          if (expected[i - 1] === expected[i]) {
-            expected.splice(i, 1);
-          } else {
-            i++;
-          }
-        }
-      }
-
-      function buildMessage(expected, found) {
-        function stringEscape(s) {
-          function hex(ch) { return ch.charCodeAt(0).toString(16).toUpperCase(); }
-
-          return s
-            .replace(/\\/g,   '\\\\')
-            .replace(/"/g,    '\\"')
-            .replace(/\x08/g, '\\b')
-            .replace(/\t/g,   '\\t')
-            .replace(/\n/g,   '\\n')
-            .replace(/\f/g,   '\\f')
-            .replace(/\r/g,   '\\r')
-            .replace(/[\x00-\x07\x0B\x0E\x0F]/g, function(ch) { return '\\x0' + hex(ch); })
-            .replace(/[\x10-\x1F\x80-\xFF]/g,    function(ch) { return '\\x'  + hex(ch); })
-            .replace(/[\u0100-\u0FFF]/g,         function(ch) { return '\\u0' + hex(ch); })
-            .replace(/[\u1000-\uFFFF]/g,         function(ch) { return '\\u'  + hex(ch); });
-        }
-
-        var expectedDescs = new Array(expected.length),
-            expectedDesc, foundDesc, i;
-
-        for (i = 0; i < expected.length; i++) {
-          expectedDescs[i] = expected[i].description;
-        }
-
-        expectedDesc = expected.length > 1
-          ? expectedDescs.slice(0, -1).join(", ")
-              + " or "
-              + expectedDescs[expected.length - 1]
-          : expectedDescs[0];
-
-        foundDesc = found ? "\"" + stringEscape(found) + "\"" : "end of input";
-
-        return "Expected " + expectedDesc + " but " + foundDesc + " found.";
-      }
-
-      if (expected !== null) {
-        cleanupExpected(expected);
-      }
-
-      return new peg$SyntaxError(
-        message !== null ? message : buildMessage(expected, found),
-        expected,
-        found,
-        location
-      );
-    }
-
-    function peg$parsestart() {
-      var s0;
-
-      s0 = peg$parsemessageFormatPattern();
-
-      return s0;
-    }
-
-    function peg$parsemessageFormatPattern() {
-      var s0, s1, s2;
-
-      s0 = peg$currPos;
-      s1 = [];
-      s2 = peg$parsemessageFormatElement();
-      while (s2 !== peg$FAILED) {
-        s1.push(s2);
-        s2 = peg$parsemessageFormatElement();
-      }
-      if (s1 !== peg$FAILED) {
-        peg$savedPos = s0;
-        s1 = peg$c0(s1);
-      }
-      s0 = s1;
-
-      return s0;
-    }
-
-    function peg$parsemessageFormatElement() {
-      var s0;
-
-      s0 = peg$parsemessageTextElement();
-      if (s0 === peg$FAILED) {
-        s0 = peg$parseargumentElement();
-      }
-
-      return s0;
-    }
-
-    function peg$parsemessageText() {
-      var s0, s1, s2, s3, s4, s5;
-
-      s0 = peg$currPos;
-      s1 = [];
-      s2 = peg$currPos;
-      s3 = peg$parse_();
-      if (s3 !== peg$FAILED) {
-        s4 = peg$parsechars();
-        if (s4 !== peg$FAILED) {
-          s5 = peg$parse_();
-          if (s5 !== peg$FAILED) {
-            s3 = [s3, s4, s5];
-            s2 = s3;
-          } else {
-            peg$currPos = s2;
-            s2 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s2;
-          s2 = peg$FAILED;
-        }
-      } else {
-        peg$currPos = s2;
-        s2 = peg$FAILED;
-      }
-      if (s2 !== peg$FAILED) {
-        while (s2 !== peg$FAILED) {
-          s1.push(s2);
-          s2 = peg$currPos;
-          s3 = peg$parse_();
-          if (s3 !== peg$FAILED) {
-            s4 = peg$parsechars();
-            if (s4 !== peg$FAILED) {
-              s5 = peg$parse_();
-              if (s5 !== peg$FAILED) {
-                s3 = [s3, s4, s5];
-                s2 = s3;
-              } else {
-                peg$currPos = s2;
-                s2 = peg$FAILED;
-              }
-            } else {
-              peg$currPos = s2;
-              s2 = peg$FAILED;
+                descriptions.length = j;
             }
-          } else {
-            peg$currPos = s2;
-            s2 = peg$FAILED;
-          }
+            switch (descriptions.length) {
+                case 1:
+                    return descriptions[0];
+                case 2:
+                    return descriptions[0] + " or " + descriptions[1];
+                default:
+                    return descriptions.slice(0, -1).join(", ")
+                        + ", or "
+                        + descriptions[descriptions.length - 1];
+            }
         }
-      } else {
-        s1 = peg$FAILED;
-      }
-      if (s1 !== peg$FAILED) {
-        peg$savedPos = s0;
-        s1 = peg$c1(s1);
-      }
-      s0 = s1;
-      if (s0 === peg$FAILED) {
-        s0 = peg$currPos;
-        s1 = peg$parsews();
-        if (s1 !== peg$FAILED) {
-          s0 = input.substring(s0, peg$currPos);
-        } else {
-          s0 = s1;
+        function describeFound(found1) {
+            return found1 ? "\"" + literalEscape(found1) + "\"" : "end of input";
         }
-      }
+        return "Expected " + describeExpected(expected) + " but " + describeFound(found) + " found.";
+    };
+    return SyntaxError;
+}(Error));
 
-      return s0;
+function peg$parse(input, options) {
+    options = options !== undefined ? options : {};
+    var peg$FAILED = {};
+    var peg$startRuleFunctions = { start: peg$parsestart };
+    var peg$startRuleFunction = peg$parsestart;
+    var peg$c0 = function (parts) {
+        return parts.join('');
+    };
+    var peg$c1 = function (messageText) {
+        return __assign({ type: _types__WEBPACK_IMPORTED_MODULE_0__["TYPE"].literal, value: messageText }, insertLocation());
+    };
+    var peg$c2 = "#";
+    var peg$c3 = peg$literalExpectation("#", false);
+    var peg$c4 = function () {
+        return __assign({ type: _types__WEBPACK_IMPORTED_MODULE_0__["TYPE"].pound }, insertLocation());
+    };
+    var peg$c5 = peg$otherExpectation("tagElement");
+    var peg$c6 = "<";
+    var peg$c7 = peg$literalExpectation("<", false);
+    var peg$c8 = "/>";
+    var peg$c9 = peg$literalExpectation("/>", false);
+    var peg$c10 = function (value) {
+        return __assign({ type: _types__WEBPACK_IMPORTED_MODULE_0__["TYPE"].literal, value: value.join('') }, insertLocation());
+    };
+    var peg$c11 = function (open, children, close) {
+        if (open !== close) {
+            error("Mismatch tag \"" + open + "\" !== \"" + close + "\"", location());
+        }
+        return __assign({ type: _types__WEBPACK_IMPORTED_MODULE_0__["TYPE"].tag, value: open, children: children }, insertLocation());
+    };
+    var peg$c12 = function () { messageCtx.push('openingTag'); return true; };
+    var peg$c13 = ">";
+    var peg$c14 = peg$literalExpectation(">", false);
+    var peg$c15 = function (tag) { messageCtx.pop(); return true; };
+    var peg$c16 = function (tag) {
+        return tag;
+    };
+    var peg$c17 = "</";
+    var peg$c18 = peg$literalExpectation("</", false);
+    var peg$c19 = function () { messageCtx.push('closingTag'); return true; };
+    var peg$c20 = peg$otherExpectation("argumentElement");
+    var peg$c21 = "{";
+    var peg$c22 = peg$literalExpectation("{", false);
+    var peg$c23 = "}";
+    var peg$c24 = peg$literalExpectation("}", false);
+    var peg$c25 = function (value) {
+        return __assign({ type: _types__WEBPACK_IMPORTED_MODULE_0__["TYPE"].argument, value: value }, insertLocation());
+    };
+    var peg$c26 = peg$otherExpectation("numberSkeletonId");
+    var peg$c27 = /^['\/{}]/;
+    var peg$c28 = peg$classExpectation(["'", "/", "{", "}"], false, false);
+    var peg$c29 = peg$anyExpectation();
+    var peg$c30 = peg$otherExpectation("numberSkeletonTokenOption");
+    var peg$c31 = "/";
+    var peg$c32 = peg$literalExpectation("/", false);
+    var peg$c33 = function (option) { return option; };
+    var peg$c34 = peg$otherExpectation("numberSkeletonToken");
+    var peg$c35 = function (stem, options) {
+        return { stem: stem, options: options };
+    };
+    var peg$c36 = function (tokens) {
+        return __assign({ type: 0 /* number */, tokens: tokens }, insertLocation());
+    };
+    var peg$c37 = "::";
+    var peg$c38 = peg$literalExpectation("::", false);
+    var peg$c39 = function (skeleton) { return skeleton; };
+    var peg$c40 = function () { messageCtx.push('numberArgStyle'); return true; };
+    var peg$c41 = function (style) {
+        messageCtx.pop();
+        return style.replace(/\s*$/, '');
+    };
+    var peg$c42 = ",";
+    var peg$c43 = peg$literalExpectation(",", false);
+    var peg$c44 = "number";
+    var peg$c45 = peg$literalExpectation("number", false);
+    var peg$c46 = function (value, type, style) {
+        return __assign({ type: type === 'number' ? _types__WEBPACK_IMPORTED_MODULE_0__["TYPE"].number : type === 'date' ? _types__WEBPACK_IMPORTED_MODULE_0__["TYPE"].date : _types__WEBPACK_IMPORTED_MODULE_0__["TYPE"].time, style: style && style[2], value: value }, insertLocation());
+    };
+    var peg$c47 = "'";
+    var peg$c48 = peg$literalExpectation("'", false);
+    var peg$c49 = /^[^']/;
+    var peg$c50 = peg$classExpectation(["'"], true, false);
+    var peg$c51 = /^[^a-zA-Z'{}]/;
+    var peg$c52 = peg$classExpectation([["a", "z"], ["A", "Z"], "'", "{", "}"], true, false);
+    var peg$c53 = /^[a-zA-Z]/;
+    var peg$c54 = peg$classExpectation([["a", "z"], ["A", "Z"]], false, false);
+    var peg$c55 = function (pattern) {
+        return __assign({ type: 1 /* dateTime */, pattern: pattern }, insertLocation());
+    };
+    var peg$c56 = function () { messageCtx.push('dateOrTimeArgStyle'); return true; };
+    var peg$c57 = "date";
+    var peg$c58 = peg$literalExpectation("date", false);
+    var peg$c59 = "time";
+    var peg$c60 = peg$literalExpectation("time", false);
+    var peg$c61 = "plural";
+    var peg$c62 = peg$literalExpectation("plural", false);
+    var peg$c63 = "selectordinal";
+    var peg$c64 = peg$literalExpectation("selectordinal", false);
+    var peg$c65 = "offset:";
+    var peg$c66 = peg$literalExpectation("offset:", false);
+    var peg$c67 = function (value, pluralType, offset, options) {
+        return __assign({ type: _types__WEBPACK_IMPORTED_MODULE_0__["TYPE"].plural, pluralType: pluralType === 'plural' ? 'cardinal' : 'ordinal', value: value, offset: offset ? offset[2] : 0, options: options.reduce(function (all, _a) {
+                var id = _a.id, value = _a.value, optionLocation = _a.location;
+                if (id in all) {
+                    error("Duplicate option \"" + id + "\" in plural element: \"" + text() + "\"", location());
+                }
+                all[id] = {
+                    value: value,
+                    location: optionLocation
+                };
+                return all;
+            }, {}) }, insertLocation());
+    };
+    var peg$c68 = "select";
+    var peg$c69 = peg$literalExpectation("select", false);
+    var peg$c70 = function (value, options) {
+        return __assign({ type: _types__WEBPACK_IMPORTED_MODULE_0__["TYPE"].select, value: value, options: options.reduce(function (all, _a) {
+                var id = _a.id, value = _a.value, optionLocation = _a.location;
+                if (id in all) {
+                    error("Duplicate option \"" + id + "\" in select element: \"" + text() + "\"", location());
+                }
+                all[id] = {
+                    value: value,
+                    location: optionLocation
+                };
+                return all;
+            }, {}) }, insertLocation());
+    };
+    var peg$c71 = "=";
+    var peg$c72 = peg$literalExpectation("=", false);
+    var peg$c73 = function (id) { messageCtx.push('select'); return true; };
+    var peg$c74 = function (id, value) {
+        messageCtx.pop();
+        return __assign({ id: id,
+            value: value }, insertLocation());
+    };
+    var peg$c75 = function (id) { messageCtx.push('plural'); return true; };
+    var peg$c76 = function (id, value) {
+        messageCtx.pop();
+        return __assign({ id: id,
+            value: value }, insertLocation());
+    };
+    var peg$c77 = peg$otherExpectation("whitespace");
+    var peg$c78 = /^[\t-\r \x85\xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]/;
+    var peg$c79 = peg$classExpectation([["\t", "\r"], " ", "\x85", "\xA0", "\u1680", ["\u2000", "\u200A"], "\u2028", "\u2029", "\u202F", "\u205F", "\u3000"], false, false);
+    var peg$c80 = peg$otherExpectation("syntax pattern");
+    var peg$c81 = /^[!-\/:-@[-\^`{-~\xA1-\xA7\xA9\xAB\xAC\xAE\xB0\xB1\xB6\xBB\xBF\xD7\xF7\u2010-\u2027\u2030-\u203E\u2041-\u2053\u2055-\u205E\u2190-\u245F\u2500-\u2775\u2794-\u2BFF\u2E00-\u2E7F\u3001-\u3003\u3008-\u3020\u3030\uFD3E\uFD3F\uFE45\uFE46]/;
+    var peg$c82 = peg$classExpectation([["!", "/"], [":", "@"], ["[", "^"], "`", ["{", "~"], ["\xA1", "\xA7"], "\xA9", "\xAB", "\xAC", "\xAE", "\xB0", "\xB1", "\xB6", "\xBB", "\xBF", "\xD7", "\xF7", ["\u2010", "\u2027"], ["\u2030", "\u203E"], ["\u2041", "\u2053"], ["\u2055", "\u205E"], ["\u2190", "\u245F"], ["\u2500", "\u2775"], ["\u2794", "\u2BFF"], ["\u2E00", "\u2E7F"], ["\u3001", "\u3003"], ["\u3008", "\u3020"], "\u3030", "\uFD3E", "\uFD3F", "\uFE45", "\uFE46"], false, false);
+    var peg$c83 = peg$otherExpectation("optional whitespace");
+    var peg$c84 = peg$otherExpectation("number");
+    var peg$c85 = "-";
+    var peg$c86 = peg$literalExpectation("-", false);
+    var peg$c87 = function (negative, num) {
+        return num
+            ? negative
+                ? -num
+                : num
+            : 0;
+    };
+    var peg$c88 = peg$otherExpectation("apostrophe");
+    var peg$c89 = peg$otherExpectation("double apostrophes");
+    var peg$c90 = "''";
+    var peg$c91 = peg$literalExpectation("''", false);
+    var peg$c92 = function () { return "'"; };
+    var peg$c93 = function (escapedChar, quotedChars) {
+        return escapedChar + quotedChars.replace("''", "'");
+    };
+    var peg$c94 = function (x) {
+        return ((ignoreTag() || x !== '<') &&
+            x !== '{' &&
+            !(isInPluralOption() && x === '#') &&
+            !(isNestedMessageText() && x === '}') &&
+            !(!ignoreTag() && isNestedMessageText() && x === '>'));
+    };
+    var peg$c95 = "\n";
+    var peg$c96 = peg$literalExpectation("\n", false);
+    var peg$c97 = function (x) {
+        return x === '<' || x === '>' || x === '{' || x === '}' || (isInPluralOption() && x === '#');
+    };
+    var peg$c98 = peg$otherExpectation("argNameOrNumber");
+    var peg$c99 = peg$otherExpectation("validTag");
+    var peg$c100 = peg$otherExpectation("argNumber");
+    var peg$c101 = "0";
+    var peg$c102 = peg$literalExpectation("0", false);
+    var peg$c103 = function () { return 0; };
+    var peg$c104 = /^[1-9]/;
+    var peg$c105 = peg$classExpectation([["1", "9"]], false, false);
+    var peg$c106 = /^[0-9]/;
+    var peg$c107 = peg$classExpectation([["0", "9"]], false, false);
+    var peg$c108 = function (digits) {
+        return parseInt(digits.join(''), 10);
+    };
+    var peg$c109 = peg$otherExpectation("argName");
+    var peg$c110 = peg$otherExpectation("tagName");
+    var peg$currPos = 0;
+    var peg$savedPos = 0;
+    var peg$posDetailsCache = [{ line: 1, column: 1 }];
+    var peg$maxFailPos = 0;
+    var peg$maxFailExpected = [];
+    var peg$silentFails = 0;
+    var peg$result;
+    if (options.startRule !== undefined) {
+        if (!(options.startRule in peg$startRuleFunctions)) {
+            throw new Error("Can't start parsing from rule \"" + options.startRule + "\".");
+        }
+        peg$startRuleFunction = peg$startRuleFunctions[options.startRule];
     }
-
-    function peg$parsemessageTextElement() {
-      var s0, s1;
-
-      s0 = peg$currPos;
-      s1 = peg$parsemessageText();
-      if (s1 !== peg$FAILED) {
-        peg$savedPos = s0;
-        s1 = peg$c2(s1);
-      }
-      s0 = s1;
-
-      return s0;
+    function text() {
+        return input.substring(peg$savedPos, peg$currPos);
     }
-
-    function peg$parseargument() {
-      var s0, s1, s2;
-
-      s0 = peg$parsenumber();
-      if (s0 === peg$FAILED) {
+    function location() {
+        return peg$computeLocation(peg$savedPos, peg$currPos);
+    }
+    function expected(description, location1) {
+        location1 = location1 !== undefined
+            ? location1
+            : peg$computeLocation(peg$savedPos, peg$currPos);
+        throw peg$buildStructuredError([peg$otherExpectation(description)], input.substring(peg$savedPos, peg$currPos), location1);
+    }
+    function error(message, location1) {
+        location1 = location1 !== undefined
+            ? location1
+            : peg$computeLocation(peg$savedPos, peg$currPos);
+        throw peg$buildSimpleError(message, location1);
+    }
+    function peg$literalExpectation(text1, ignoreCase) {
+        return { type: "literal", text: text1, ignoreCase: ignoreCase };
+    }
+    function peg$classExpectation(parts, inverted, ignoreCase) {
+        return { type: "class", parts: parts, inverted: inverted, ignoreCase: ignoreCase };
+    }
+    function peg$anyExpectation() {
+        return { type: "any" };
+    }
+    function peg$endExpectation() {
+        return { type: "end" };
+    }
+    function peg$otherExpectation(description) {
+        return { type: "other", description: description };
+    }
+    function peg$computePosDetails(pos) {
+        var details = peg$posDetailsCache[pos];
+        var p;
+        if (details) {
+            return details;
+        }
+        else {
+            p = pos - 1;
+            while (!peg$posDetailsCache[p]) {
+                p--;
+            }
+            details = peg$posDetailsCache[p];
+            details = {
+                line: details.line,
+                column: details.column
+            };
+            while (p < pos) {
+                if (input.charCodeAt(p) === 10) {
+                    details.line++;
+                    details.column = 1;
+                }
+                else {
+                    details.column++;
+                }
+                p++;
+            }
+            peg$posDetailsCache[pos] = details;
+            return details;
+        }
+    }
+    function peg$computeLocation(startPos, endPos) {
+        var startPosDetails = peg$computePosDetails(startPos);
+        var endPosDetails = peg$computePosDetails(endPos);
+        return {
+            start: {
+                offset: startPos,
+                line: startPosDetails.line,
+                column: startPosDetails.column
+            },
+            end: {
+                offset: endPos,
+                line: endPosDetails.line,
+                column: endPosDetails.column
+            }
+        };
+    }
+    function peg$fail(expected1) {
+        if (peg$currPos < peg$maxFailPos) {
+            return;
+        }
+        if (peg$currPos > peg$maxFailPos) {
+            peg$maxFailPos = peg$currPos;
+            peg$maxFailExpected = [];
+        }
+        peg$maxFailExpected.push(expected1);
+    }
+    function peg$buildSimpleError(message, location1) {
+        return new SyntaxError(message, [], "", location1);
+    }
+    function peg$buildStructuredError(expected1, found, location1) {
+        return new SyntaxError(SyntaxError.buildMessage(expected1, found), expected1, found, location1);
+    }
+    function peg$parsestart() {
+        var s0;
+        s0 = peg$parsemessage();
+        return s0;
+    }
+    function peg$parsemessage() {
+        var s0, s1;
+        s0 = [];
+        s1 = peg$parsemessageElement();
+        while (s1 !== peg$FAILED) {
+            s0.push(s1);
+            s1 = peg$parsemessageElement();
+        }
+        return s0;
+    }
+    function peg$parsemessageElement() {
+        var s0;
+        s0 = peg$parseliteralElement();
+        if (s0 === peg$FAILED) {
+            s0 = peg$parseargumentElement();
+            if (s0 === peg$FAILED) {
+                s0 = peg$parsesimpleFormatElement();
+                if (s0 === peg$FAILED) {
+                    s0 = peg$parsepluralElement();
+                    if (s0 === peg$FAILED) {
+                        s0 = peg$parseselectElement();
+                        if (s0 === peg$FAILED) {
+                            s0 = peg$parsetagElement();
+                            if (s0 === peg$FAILED) {
+                                s0 = peg$parsepoundElement();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return s0;
+    }
+    function peg$parsemessageText() {
+        var s0, s1, s2;
         s0 = peg$currPos;
         s1 = [];
-        if (peg$c3.test(input.charAt(peg$currPos))) {
-          s2 = input.charAt(peg$currPos);
-          peg$currPos++;
-        } else {
-          s2 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c4); }
+        s2 = peg$parsedoubleApostrophes();
+        if (s2 === peg$FAILED) {
+            s2 = peg$parsequotedString();
+            if (s2 === peg$FAILED) {
+                s2 = peg$parseunquotedString();
+            }
         }
         if (s2 !== peg$FAILED) {
-          while (s2 !== peg$FAILED) {
-            s1.push(s2);
-            if (peg$c3.test(input.charAt(peg$currPos))) {
-              s2 = input.charAt(peg$currPos);
-              peg$currPos++;
-            } else {
-              s2 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c4); }
+            while (s2 !== peg$FAILED) {
+                s1.push(s2);
+                s2 = peg$parsedoubleApostrophes();
+                if (s2 === peg$FAILED) {
+                    s2 = peg$parsequotedString();
+                    if (s2 === peg$FAILED) {
+                        s2 = peg$parseunquotedString();
+                    }
+                }
             }
-          }
-        } else {
-          s1 = peg$FAILED;
+        }
+        else {
+            s1 = peg$FAILED;
         }
         if (s1 !== peg$FAILED) {
-          s0 = input.substring(s0, peg$currPos);
-        } else {
-          s0 = s1;
+            peg$savedPos = s0;
+            s1 = peg$c0(s1);
         }
-      }
-
-      return s0;
+        s0 = s1;
+        return s0;
     }
-
-    function peg$parseargumentElement() {
-      var s0, s1, s2, s3, s4, s5, s6, s7, s8;
-
-      s0 = peg$currPos;
-      if (input.charCodeAt(peg$currPos) === 123) {
-        s1 = peg$c5;
-        peg$currPos++;
-      } else {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c6); }
-      }
-      if (s1 !== peg$FAILED) {
-        s2 = peg$parse_();
+    function peg$parseliteralElement() {
+        var s0, s1;
+        s0 = peg$currPos;
+        s1 = peg$parsemessageText();
+        if (s1 !== peg$FAILED) {
+            peg$savedPos = s0;
+            s1 = peg$c1(s1);
+        }
+        s0 = s1;
+        return s0;
+    }
+    function peg$parsepoundElement() {
+        var s0, s1;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 35) {
+            s1 = peg$c2;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c3);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            peg$savedPos = s0;
+            s1 = peg$c4();
+        }
+        s0 = s1;
+        return s0;
+    }
+    function peg$parsetagElement() {
+        var s0, s1, s2, s3, s4, s5;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        s1 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 60) {
+            s2 = peg$c6;
+            peg$currPos++;
+        }
+        else {
+            s2 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c7);
+            }
+        }
         if (s2 !== peg$FAILED) {
-          s3 = peg$parseargument();
-          if (s3 !== peg$FAILED) {
-            s4 = peg$parse_();
-            if (s4 !== peg$FAILED) {
-              s5 = peg$currPos;
-              if (input.charCodeAt(peg$currPos) === 44) {
-                s6 = peg$c7;
-                peg$currPos++;
-              } else {
-                s6 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c8); }
-              }
-              if (s6 !== peg$FAILED) {
-                s7 = peg$parse_();
-                if (s7 !== peg$FAILED) {
-                  s8 = peg$parseelementFormat();
-                  if (s8 !== peg$FAILED) {
-                    s6 = [s6, s7, s8];
-                    s5 = s6;
-                  } else {
-                    peg$currPos = s5;
-                    s5 = peg$FAILED;
-                  }
-                } else {
-                  peg$currPos = s5;
-                  s5 = peg$FAILED;
+            s3 = peg$parsevalidTag();
+            if (s3 !== peg$FAILED) {
+                s4 = peg$parse_();
+                if (s4 !== peg$FAILED) {
+                    if (input.substr(peg$currPos, 2) === peg$c8) {
+                        s5 = peg$c8;
+                        peg$currPos += 2;
+                    }
+                    else {
+                        s5 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c9);
+                        }
+                    }
+                    if (s5 !== peg$FAILED) {
+                        s2 = [s2, s3, s4, s5];
+                        s1 = s2;
+                    }
+                    else {
+                        peg$currPos = s1;
+                        s1 = peg$FAILED;
+                    }
                 }
-              } else {
-                peg$currPos = s5;
-                s5 = peg$FAILED;
-              }
-              if (s5 === peg$FAILED) {
-                s5 = null;
-              }
-              if (s5 !== peg$FAILED) {
-                s6 = peg$parse_();
-                if (s6 !== peg$FAILED) {
-                  if (input.charCodeAt(peg$currPos) === 125) {
-                    s7 = peg$c9;
-                    peg$currPos++;
-                  } else {
-                    s7 = peg$FAILED;
-                    if (peg$silentFails === 0) { peg$fail(peg$c10); }
-                  }
-                  if (s7 !== peg$FAILED) {
-                    peg$savedPos = s0;
-                    s1 = peg$c11(s3, s5);
-                    s0 = s1;
-                  } else {
+                else {
+                    peg$currPos = s1;
+                    s1 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s1;
+                s1 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s1;
+            s1 = peg$FAILED;
+        }
+        if (s1 !== peg$FAILED) {
+            peg$savedPos = s0;
+            s1 = peg$c10(s1);
+        }
+        s0 = s1;
+        if (s0 === peg$FAILED) {
+            s0 = peg$currPos;
+            s1 = peg$parseopeningTag();
+            if (s1 !== peg$FAILED) {
+                s2 = peg$parsemessage();
+                if (s2 !== peg$FAILED) {
+                    s3 = peg$parseclosingTag();
+                    if (s3 !== peg$FAILED) {
+                        peg$savedPos = s0;
+                        s1 = peg$c11(s1, s2, s3);
+                        s0 = s1;
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
                     peg$currPos = s0;
                     s0 = peg$FAILED;
-                  }
-                } else {
-                  peg$currPos = s0;
-                  s0 = peg$FAILED;
                 }
-              } else {
+            }
+            else {
                 peg$currPos = s0;
                 s0 = peg$FAILED;
-              }
-            } else {
-              peg$currPos = s0;
-              s0 = peg$FAILED;
             }
-          } else {
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c5);
+            }
+        }
+        return s0;
+    }
+    function peg$parseopeningTag() {
+        var s0, s1, s2, s3, s4, s5;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 60) {
+            s1 = peg$c6;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c7);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            peg$savedPos = peg$currPos;
+            s2 = peg$c12();
+            if (s2) {
+                s2 = undefined;
+            }
+            else {
+                s2 = peg$FAILED;
+            }
+            if (s2 !== peg$FAILED) {
+                s3 = peg$parsevalidTag();
+                if (s3 !== peg$FAILED) {
+                    if (input.charCodeAt(peg$currPos) === 62) {
+                        s4 = peg$c13;
+                        peg$currPos++;
+                    }
+                    else {
+                        s4 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c14);
+                        }
+                    }
+                    if (s4 !== peg$FAILED) {
+                        peg$savedPos = peg$currPos;
+                        s5 = peg$c15(s3);
+                        if (s5) {
+                            s5 = undefined;
+                        }
+                        else {
+                            s5 = peg$FAILED;
+                        }
+                        if (s5 !== peg$FAILED) {
+                            peg$savedPos = s0;
+                            s1 = peg$c16(s3);
+                            s0 = s1;
+                        }
+                        else {
+                            peg$currPos = s0;
+                            s0 = peg$FAILED;
+                        }
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
             peg$currPos = s0;
             s0 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
         }
-      } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
-      }
-
-      return s0;
+        return s0;
     }
-
-    function peg$parseelementFormat() {
-      var s0;
-
-      s0 = peg$parsesimpleFormat();
-      if (s0 === peg$FAILED) {
-        s0 = peg$parsepluralFormat();
-        if (s0 === peg$FAILED) {
-          s0 = peg$parseselectOrdinalFormat();
-          if (s0 === peg$FAILED) {
-            s0 = peg$parseselectFormat();
-          }
+    function peg$parseclosingTag() {
+        var s0, s1, s2, s3, s4, s5;
+        s0 = peg$currPos;
+        if (input.substr(peg$currPos, 2) === peg$c17) {
+            s1 = peg$c17;
+            peg$currPos += 2;
         }
-      }
-
-      return s0;
-    }
-
-    function peg$parsesimpleFormat() {
-      var s0, s1, s2, s3, s4, s5, s6;
-
-      s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c12) {
-        s1 = peg$c12;
-        peg$currPos += 6;
-      } else {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c13); }
-      }
-      if (s1 === peg$FAILED) {
-        if (input.substr(peg$currPos, 4) === peg$c14) {
-          s1 = peg$c14;
-          peg$currPos += 4;
-        } else {
-          s1 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c15); }
-        }
-        if (s1 === peg$FAILED) {
-          if (input.substr(peg$currPos, 4) === peg$c16) {
-            s1 = peg$c16;
-            peg$currPos += 4;
-          } else {
+        else {
             s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c17); }
-          }
-        }
-      }
-      if (s1 !== peg$FAILED) {
-        s2 = peg$parse_();
-        if (s2 !== peg$FAILED) {
-          s3 = peg$currPos;
-          if (input.charCodeAt(peg$currPos) === 44) {
-            s4 = peg$c7;
-            peg$currPos++;
-          } else {
-            s4 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c8); }
-          }
-          if (s4 !== peg$FAILED) {
-            s5 = peg$parse_();
-            if (s5 !== peg$FAILED) {
-              s6 = peg$parsechars();
-              if (s6 !== peg$FAILED) {
-                s4 = [s4, s5, s6];
-                s3 = s4;
-              } else {
-                peg$currPos = s3;
-                s3 = peg$FAILED;
-              }
-            } else {
-              peg$currPos = s3;
-              s3 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c18);
             }
-          } else {
+        }
+        if (s1 !== peg$FAILED) {
+            peg$savedPos = peg$currPos;
+            s2 = peg$c19();
+            if (s2) {
+                s2 = undefined;
+            }
+            else {
+                s2 = peg$FAILED;
+            }
+            if (s2 !== peg$FAILED) {
+                s3 = peg$parsevalidTag();
+                if (s3 !== peg$FAILED) {
+                    if (input.charCodeAt(peg$currPos) === 62) {
+                        s4 = peg$c13;
+                        peg$currPos++;
+                    }
+                    else {
+                        s4 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c14);
+                        }
+                    }
+                    if (s4 !== peg$FAILED) {
+                        peg$savedPos = peg$currPos;
+                        s5 = peg$c15(s3);
+                        if (s5) {
+                            s5 = undefined;
+                        }
+                        else {
+                            s5 = peg$FAILED;
+                        }
+                        if (s5 !== peg$FAILED) {
+                            peg$savedPos = s0;
+                            s1 = peg$c16(s3);
+                            s0 = s1;
+                        }
+                        else {
+                            peg$currPos = s0;
+                            s0 = peg$FAILED;
+                        }
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        return s0;
+    }
+    function peg$parseargumentElement() {
+        var s0, s1, s2, s3, s4, s5;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 123) {
+            s1 = peg$c21;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c22);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parse_();
+            if (s2 !== peg$FAILED) {
+                s3 = peg$parseargNameOrNumber();
+                if (s3 !== peg$FAILED) {
+                    s4 = peg$parse_();
+                    if (s4 !== peg$FAILED) {
+                        if (input.charCodeAt(peg$currPos) === 125) {
+                            s5 = peg$c23;
+                            peg$currPos++;
+                        }
+                        else {
+                            s5 = peg$FAILED;
+                            if (peg$silentFails === 0) {
+                                peg$fail(peg$c24);
+                            }
+                        }
+                        if (s5 !== peg$FAILED) {
+                            peg$savedPos = s0;
+                            s1 = peg$c25(s3);
+                            s0 = s1;
+                        }
+                        else {
+                            peg$currPos = s0;
+                            s0 = peg$FAILED;
+                        }
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c20);
+            }
+        }
+        return s0;
+    }
+    function peg$parsenumberSkeletonId() {
+        var s0, s1, s2, s3, s4;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        s1 = [];
+        s2 = peg$currPos;
+        s3 = peg$currPos;
+        peg$silentFails++;
+        s4 = peg$parsewhiteSpace();
+        if (s4 === peg$FAILED) {
+            if (peg$c27.test(input.charAt(peg$currPos))) {
+                s4 = input.charAt(peg$currPos);
+                peg$currPos++;
+            }
+            else {
+                s4 = peg$FAILED;
+                if (peg$silentFails === 0) {
+                    peg$fail(peg$c28);
+                }
+            }
+        }
+        peg$silentFails--;
+        if (s4 === peg$FAILED) {
+            s3 = undefined;
+        }
+        else {
             peg$currPos = s3;
             s3 = peg$FAILED;
-          }
-          if (s3 === peg$FAILED) {
-            s3 = null;
-          }
-          if (s3 !== peg$FAILED) {
-            peg$savedPos = s0;
-            s1 = peg$c18(s1, s3);
-            s0 = s1;
-          } else {
-            peg$currPos = s0;
-            s0 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
-        }
-      } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
-      }
-
-      return s0;
-    }
-
-    function peg$parsepluralFormat() {
-      var s0, s1, s2, s3, s4, s5;
-
-      s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c19) {
-        s1 = peg$c19;
-        peg$currPos += 6;
-      } else {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c20); }
-      }
-      if (s1 !== peg$FAILED) {
-        s2 = peg$parse_();
-        if (s2 !== peg$FAILED) {
-          if (input.charCodeAt(peg$currPos) === 44) {
-            s3 = peg$c7;
-            peg$currPos++;
-          } else {
-            s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c8); }
-          }
-          if (s3 !== peg$FAILED) {
-            s4 = peg$parse_();
-            if (s4 !== peg$FAILED) {
-              s5 = peg$parsepluralStyle();
-              if (s5 !== peg$FAILED) {
-                peg$savedPos = s0;
-                s1 = peg$c21(s5);
-                s0 = s1;
-              } else {
-                peg$currPos = s0;
-                s0 = peg$FAILED;
-              }
-            } else {
-              peg$currPos = s0;
-              s0 = peg$FAILED;
-            }
-          } else {
-            peg$currPos = s0;
-            s0 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
-        }
-      } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
-      }
-
-      return s0;
-    }
-
-    function peg$parseselectOrdinalFormat() {
-      var s0, s1, s2, s3, s4, s5;
-
-      s0 = peg$currPos;
-      if (input.substr(peg$currPos, 13) === peg$c22) {
-        s1 = peg$c22;
-        peg$currPos += 13;
-      } else {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c23); }
-      }
-      if (s1 !== peg$FAILED) {
-        s2 = peg$parse_();
-        if (s2 !== peg$FAILED) {
-          if (input.charCodeAt(peg$currPos) === 44) {
-            s3 = peg$c7;
-            peg$currPos++;
-          } else {
-            s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c8); }
-          }
-          if (s3 !== peg$FAILED) {
-            s4 = peg$parse_();
-            if (s4 !== peg$FAILED) {
-              s5 = peg$parsepluralStyle();
-              if (s5 !== peg$FAILED) {
-                peg$savedPos = s0;
-                s1 = peg$c24(s5);
-                s0 = s1;
-              } else {
-                peg$currPos = s0;
-                s0 = peg$FAILED;
-              }
-            } else {
-              peg$currPos = s0;
-              s0 = peg$FAILED;
-            }
-          } else {
-            peg$currPos = s0;
-            s0 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
-        }
-      } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
-      }
-
-      return s0;
-    }
-
-    function peg$parseselectFormat() {
-      var s0, s1, s2, s3, s4, s5, s6;
-
-      s0 = peg$currPos;
-      if (input.substr(peg$currPos, 6) === peg$c25) {
-        s1 = peg$c25;
-        peg$currPos += 6;
-      } else {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c26); }
-      }
-      if (s1 !== peg$FAILED) {
-        s2 = peg$parse_();
-        if (s2 !== peg$FAILED) {
-          if (input.charCodeAt(peg$currPos) === 44) {
-            s3 = peg$c7;
-            peg$currPos++;
-          } else {
-            s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c8); }
-          }
-          if (s3 !== peg$FAILED) {
-            s4 = peg$parse_();
-            if (s4 !== peg$FAILED) {
-              s5 = [];
-              s6 = peg$parseoptionalFormatPattern();
-              if (s6 !== peg$FAILED) {
-                while (s6 !== peg$FAILED) {
-                  s5.push(s6);
-                  s6 = peg$parseoptionalFormatPattern();
-                }
-              } else {
-                s5 = peg$FAILED;
-              }
-              if (s5 !== peg$FAILED) {
-                peg$savedPos = s0;
-                s1 = peg$c27(s5);
-                s0 = s1;
-              } else {
-                peg$currPos = s0;
-                s0 = peg$FAILED;
-              }
-            } else {
-              peg$currPos = s0;
-              s0 = peg$FAILED;
-            }
-          } else {
-            peg$currPos = s0;
-            s0 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
-        }
-      } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
-      }
-
-      return s0;
-    }
-
-    function peg$parseselector() {
-      var s0, s1, s2, s3;
-
-      s0 = peg$currPos;
-      s1 = peg$currPos;
-      if (input.charCodeAt(peg$currPos) === 61) {
-        s2 = peg$c28;
-        peg$currPos++;
-      } else {
-        s2 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c29); }
-      }
-      if (s2 !== peg$FAILED) {
-        s3 = peg$parsenumber();
-        if (s3 !== peg$FAILED) {
-          s2 = [s2, s3];
-          s1 = s2;
-        } else {
-          peg$currPos = s1;
-          s1 = peg$FAILED;
-        }
-      } else {
-        peg$currPos = s1;
-        s1 = peg$FAILED;
-      }
-      if (s1 !== peg$FAILED) {
-        s0 = input.substring(s0, peg$currPos);
-      } else {
-        s0 = s1;
-      }
-      if (s0 === peg$FAILED) {
-        s0 = peg$parsechars();
-      }
-
-      return s0;
-    }
-
-    function peg$parseoptionalFormatPattern() {
-      var s0, s1, s2, s3, s4, s5, s6, s7, s8;
-
-      s0 = peg$currPos;
-      s1 = peg$parse_();
-      if (s1 !== peg$FAILED) {
-        s2 = peg$parseselector();
-        if (s2 !== peg$FAILED) {
-          s3 = peg$parse_();
-          if (s3 !== peg$FAILED) {
-            if (input.charCodeAt(peg$currPos) === 123) {
-              s4 = peg$c5;
-              peg$currPos++;
-            } else {
-              s4 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c6); }
-            }
-            if (s4 !== peg$FAILED) {
-              s5 = peg$parse_();
-              if (s5 !== peg$FAILED) {
-                s6 = peg$parsemessageFormatPattern();
-                if (s6 !== peg$FAILED) {
-                  s7 = peg$parse_();
-                  if (s7 !== peg$FAILED) {
-                    if (input.charCodeAt(peg$currPos) === 125) {
-                      s8 = peg$c9;
-                      peg$currPos++;
-                    } else {
-                      s8 = peg$FAILED;
-                      if (peg$silentFails === 0) { peg$fail(peg$c10); }
-                    }
-                    if (s8 !== peg$FAILED) {
-                      peg$savedPos = s0;
-                      s1 = peg$c30(s2, s6);
-                      s0 = s1;
-                    } else {
-                      peg$currPos = s0;
-                      s0 = peg$FAILED;
-                    }
-                  } else {
-                    peg$currPos = s0;
-                    s0 = peg$FAILED;
-                  }
-                } else {
-                  peg$currPos = s0;
-                  s0 = peg$FAILED;
-                }
-              } else {
-                peg$currPos = s0;
-                s0 = peg$FAILED;
-              }
-            } else {
-              peg$currPos = s0;
-              s0 = peg$FAILED;
-            }
-          } else {
-            peg$currPos = s0;
-            s0 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
-        }
-      } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
-      }
-
-      return s0;
-    }
-
-    function peg$parseoffset() {
-      var s0, s1, s2, s3;
-
-      s0 = peg$currPos;
-      if (input.substr(peg$currPos, 7) === peg$c31) {
-        s1 = peg$c31;
-        peg$currPos += 7;
-      } else {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c32); }
-      }
-      if (s1 !== peg$FAILED) {
-        s2 = peg$parse_();
-        if (s2 !== peg$FAILED) {
-          s3 = peg$parsenumber();
-          if (s3 !== peg$FAILED) {
-            peg$savedPos = s0;
-            s1 = peg$c33(s3);
-            s0 = s1;
-          } else {
-            peg$currPos = s0;
-            s0 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
-        }
-      } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
-      }
-
-      return s0;
-    }
-
-    function peg$parsepluralStyle() {
-      var s0, s1, s2, s3, s4;
-
-      s0 = peg$currPos;
-      s1 = peg$parseoffset();
-      if (s1 === peg$FAILED) {
-        s1 = null;
-      }
-      if (s1 !== peg$FAILED) {
-        s2 = peg$parse_();
-        if (s2 !== peg$FAILED) {
-          s3 = [];
-          s4 = peg$parseoptionalFormatPattern();
-          if (s4 !== peg$FAILED) {
-            while (s4 !== peg$FAILED) {
-              s3.push(s4);
-              s4 = peg$parseoptionalFormatPattern();
-            }
-          } else {
-            s3 = peg$FAILED;
-          }
-          if (s3 !== peg$FAILED) {
-            peg$savedPos = s0;
-            s1 = peg$c34(s1, s3);
-            s0 = s1;
-          } else {
-            peg$currPos = s0;
-            s0 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
-        }
-      } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
-      }
-
-      return s0;
-    }
-
-    function peg$parsews() {
-      var s0, s1;
-
-      peg$silentFails++;
-      s0 = [];
-      if (peg$c36.test(input.charAt(peg$currPos))) {
-        s1 = input.charAt(peg$currPos);
-        peg$currPos++;
-      } else {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c37); }
-      }
-      if (s1 !== peg$FAILED) {
-        while (s1 !== peg$FAILED) {
-          s0.push(s1);
-          if (peg$c36.test(input.charAt(peg$currPos))) {
-            s1 = input.charAt(peg$currPos);
-            peg$currPos++;
-          } else {
-            s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c37); }
-          }
-        }
-      } else {
-        s0 = peg$FAILED;
-      }
-      peg$silentFails--;
-      if (s0 === peg$FAILED) {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c35); }
-      }
-
-      return s0;
-    }
-
-    function peg$parse_() {
-      var s0, s1, s2;
-
-      peg$silentFails++;
-      s0 = peg$currPos;
-      s1 = [];
-      s2 = peg$parsews();
-      while (s2 !== peg$FAILED) {
-        s1.push(s2);
-        s2 = peg$parsews();
-      }
-      if (s1 !== peg$FAILED) {
-        s0 = input.substring(s0, peg$currPos);
-      } else {
-        s0 = s1;
-      }
-      peg$silentFails--;
-      if (s0 === peg$FAILED) {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c38); }
-      }
-
-      return s0;
-    }
-
-    function peg$parsedigit() {
-      var s0;
-
-      if (peg$c39.test(input.charAt(peg$currPos))) {
-        s0 = input.charAt(peg$currPos);
-        peg$currPos++;
-      } else {
-        s0 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c40); }
-      }
-
-      return s0;
-    }
-
-    function peg$parsehexDigit() {
-      var s0;
-
-      if (peg$c41.test(input.charAt(peg$currPos))) {
-        s0 = input.charAt(peg$currPos);
-        peg$currPos++;
-      } else {
-        s0 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c42); }
-      }
-
-      return s0;
-    }
-
-    function peg$parsenumber() {
-      var s0, s1, s2, s3, s4, s5;
-
-      s0 = peg$currPos;
-      if (input.charCodeAt(peg$currPos) === 48) {
-        s1 = peg$c43;
-        peg$currPos++;
-      } else {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c44); }
-      }
-      if (s1 === peg$FAILED) {
-        s1 = peg$currPos;
-        s2 = peg$currPos;
-        if (peg$c45.test(input.charAt(peg$currPos))) {
-          s3 = input.charAt(peg$currPos);
-          peg$currPos++;
-        } else {
-          s3 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c46); }
         }
         if (s3 !== peg$FAILED) {
-          s4 = [];
-          s5 = peg$parsedigit();
-          while (s5 !== peg$FAILED) {
-            s4.push(s5);
-            s5 = peg$parsedigit();
-          }
-          if (s4 !== peg$FAILED) {
-            s3 = [s3, s4];
-            s2 = s3;
-          } else {
+            if (input.length > peg$currPos) {
+                s4 = input.charAt(peg$currPos);
+                peg$currPos++;
+            }
+            else {
+                s4 = peg$FAILED;
+                if (peg$silentFails === 0) {
+                    peg$fail(peg$c29);
+                }
+            }
+            if (s4 !== peg$FAILED) {
+                s3 = [s3, s4];
+                s2 = s3;
+            }
+            else {
+                peg$currPos = s2;
+                s2 = peg$FAILED;
+            }
+        }
+        else {
             peg$currPos = s2;
             s2 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s2;
-          s2 = peg$FAILED;
         }
         if (s2 !== peg$FAILED) {
-          s1 = input.substring(s1, peg$currPos);
-        } else {
-          s1 = s2;
+            while (s2 !== peg$FAILED) {
+                s1.push(s2);
+                s2 = peg$currPos;
+                s3 = peg$currPos;
+                peg$silentFails++;
+                s4 = peg$parsewhiteSpace();
+                if (s4 === peg$FAILED) {
+                    if (peg$c27.test(input.charAt(peg$currPos))) {
+                        s4 = input.charAt(peg$currPos);
+                        peg$currPos++;
+                    }
+                    else {
+                        s4 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c28);
+                        }
+                    }
+                }
+                peg$silentFails--;
+                if (s4 === peg$FAILED) {
+                    s3 = undefined;
+                }
+                else {
+                    peg$currPos = s3;
+                    s3 = peg$FAILED;
+                }
+                if (s3 !== peg$FAILED) {
+                    if (input.length > peg$currPos) {
+                        s4 = input.charAt(peg$currPos);
+                        peg$currPos++;
+                    }
+                    else {
+                        s4 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c29);
+                        }
+                    }
+                    if (s4 !== peg$FAILED) {
+                        s3 = [s3, s4];
+                        s2 = s3;
+                    }
+                    else {
+                        peg$currPos = s2;
+                        s2 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s2;
+                    s2 = peg$FAILED;
+                }
+            }
         }
-      }
-      if (s1 !== peg$FAILED) {
-        peg$savedPos = s0;
-        s1 = peg$c47(s1);
-      }
-      s0 = s1;
-
-      return s0;
-    }
-
-    function peg$parsechar() {
-      var s0, s1, s2, s3, s4, s5, s6, s7;
-
-      if (peg$c48.test(input.charAt(peg$currPos))) {
-        s0 = input.charAt(peg$currPos);
-        peg$currPos++;
-      } else {
-        s0 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c49); }
-      }
-      if (s0 === peg$FAILED) {
-        s0 = peg$currPos;
-        if (input.substr(peg$currPos, 2) === peg$c50) {
-          s1 = peg$c50;
-          peg$currPos += 2;
-        } else {
-          s1 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c51); }
+        else {
+            s1 = peg$FAILED;
         }
         if (s1 !== peg$FAILED) {
-          peg$savedPos = s0;
-          s1 = peg$c52();
+            s0 = input.substring(s0, peg$currPos);
+        }
+        else {
+            s0 = s1;
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c26);
+            }
+        }
+        return s0;
+    }
+    function peg$parsenumberSkeletonTokenOption() {
+        var s0, s1, s2;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 47) {
+            s1 = peg$c31;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c32);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parsenumberSkeletonId();
+            if (s2 !== peg$FAILED) {
+                peg$savedPos = s0;
+                s1 = peg$c33(s2);
+                s0 = s1;
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c30);
+            }
+        }
+        return s0;
+    }
+    function peg$parsenumberSkeletonToken() {
+        var s0, s1, s2, s3, s4;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        s1 = peg$parse_();
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parsenumberSkeletonId();
+            if (s2 !== peg$FAILED) {
+                s3 = [];
+                s4 = peg$parsenumberSkeletonTokenOption();
+                while (s4 !== peg$FAILED) {
+                    s3.push(s4);
+                    s4 = peg$parsenumberSkeletonTokenOption();
+                }
+                if (s3 !== peg$FAILED) {
+                    peg$savedPos = s0;
+                    s1 = peg$c35(s2, s3);
+                    s0 = s1;
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c34);
+            }
+        }
+        return s0;
+    }
+    function peg$parsenumberSkeleton() {
+        var s0, s1, s2;
+        s0 = peg$currPos;
+        s1 = [];
+        s2 = peg$parsenumberSkeletonToken();
+        if (s2 !== peg$FAILED) {
+            while (s2 !== peg$FAILED) {
+                s1.push(s2);
+                s2 = peg$parsenumberSkeletonToken();
+            }
+        }
+        else {
+            s1 = peg$FAILED;
+        }
+        if (s1 !== peg$FAILED) {
+            peg$savedPos = s0;
+            s1 = peg$c36(s1);
+        }
+        s0 = s1;
+        return s0;
+    }
+    function peg$parsenumberArgStyle() {
+        var s0, s1, s2;
+        s0 = peg$currPos;
+        if (input.substr(peg$currPos, 2) === peg$c37) {
+            s1 = peg$c37;
+            peg$currPos += 2;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c38);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parsenumberSkeleton();
+            if (s2 !== peg$FAILED) {
+                peg$savedPos = s0;
+                s1 = peg$c39(s2);
+                s0 = s1;
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        if (s0 === peg$FAILED) {
+            s0 = peg$currPos;
+            peg$savedPos = peg$currPos;
+            s1 = peg$c40();
+            if (s1) {
+                s1 = undefined;
+            }
+            else {
+                s1 = peg$FAILED;
+            }
+            if (s1 !== peg$FAILED) {
+                s2 = peg$parsemessageText();
+                if (s2 !== peg$FAILED) {
+                    peg$savedPos = s0;
+                    s1 = peg$c41(s2);
+                    s0 = s1;
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        return s0;
+    }
+    function peg$parsenumberFormatElement() {
+        var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 123) {
+            s1 = peg$c21;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c22);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parse_();
+            if (s2 !== peg$FAILED) {
+                s3 = peg$parseargNameOrNumber();
+                if (s3 !== peg$FAILED) {
+                    s4 = peg$parse_();
+                    if (s4 !== peg$FAILED) {
+                        if (input.charCodeAt(peg$currPos) === 44) {
+                            s5 = peg$c42;
+                            peg$currPos++;
+                        }
+                        else {
+                            s5 = peg$FAILED;
+                            if (peg$silentFails === 0) {
+                                peg$fail(peg$c43);
+                            }
+                        }
+                        if (s5 !== peg$FAILED) {
+                            s6 = peg$parse_();
+                            if (s6 !== peg$FAILED) {
+                                if (input.substr(peg$currPos, 6) === peg$c44) {
+                                    s7 = peg$c44;
+                                    peg$currPos += 6;
+                                }
+                                else {
+                                    s7 = peg$FAILED;
+                                    if (peg$silentFails === 0) {
+                                        peg$fail(peg$c45);
+                                    }
+                                }
+                                if (s7 !== peg$FAILED) {
+                                    s8 = peg$parse_();
+                                    if (s8 !== peg$FAILED) {
+                                        s9 = peg$currPos;
+                                        if (input.charCodeAt(peg$currPos) === 44) {
+                                            s10 = peg$c42;
+                                            peg$currPos++;
+                                        }
+                                        else {
+                                            s10 = peg$FAILED;
+                                            if (peg$silentFails === 0) {
+                                                peg$fail(peg$c43);
+                                            }
+                                        }
+                                        if (s10 !== peg$FAILED) {
+                                            s11 = peg$parse_();
+                                            if (s11 !== peg$FAILED) {
+                                                s12 = peg$parsenumberArgStyle();
+                                                if (s12 !== peg$FAILED) {
+                                                    s10 = [s10, s11, s12];
+                                                    s9 = s10;
+                                                }
+                                                else {
+                                                    peg$currPos = s9;
+                                                    s9 = peg$FAILED;
+                                                }
+                                            }
+                                            else {
+                                                peg$currPos = s9;
+                                                s9 = peg$FAILED;
+                                            }
+                                        }
+                                        else {
+                                            peg$currPos = s9;
+                                            s9 = peg$FAILED;
+                                        }
+                                        if (s9 === peg$FAILED) {
+                                            s9 = null;
+                                        }
+                                        if (s9 !== peg$FAILED) {
+                                            s10 = peg$parse_();
+                                            if (s10 !== peg$FAILED) {
+                                                if (input.charCodeAt(peg$currPos) === 125) {
+                                                    s11 = peg$c23;
+                                                    peg$currPos++;
+                                                }
+                                                else {
+                                                    s11 = peg$FAILED;
+                                                    if (peg$silentFails === 0) {
+                                                        peg$fail(peg$c24);
+                                                    }
+                                                }
+                                                if (s11 !== peg$FAILED) {
+                                                    peg$savedPos = s0;
+                                                    s1 = peg$c46(s3, s7, s9);
+                                                    s0 = s1;
+                                                }
+                                                else {
+                                                    peg$currPos = s0;
+                                                    s0 = peg$FAILED;
+                                                }
+                                            }
+                                            else {
+                                                peg$currPos = s0;
+                                                s0 = peg$FAILED;
+                                            }
+                                        }
+                                        else {
+                                            peg$currPos = s0;
+                                            s0 = peg$FAILED;
+                                        }
+                                    }
+                                    else {
+                                        peg$currPos = s0;
+                                        s0 = peg$FAILED;
+                                    }
+                                }
+                                else {
+                                    peg$currPos = s0;
+                                    s0 = peg$FAILED;
+                                }
+                            }
+                            else {
+                                peg$currPos = s0;
+                                s0 = peg$FAILED;
+                            }
+                        }
+                        else {
+                            peg$currPos = s0;
+                            s0 = peg$FAILED;
+                        }
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        return s0;
+    }
+    function peg$parsedateTimeSkeletonLiteral() {
+        var s0, s1, s2, s3;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 39) {
+            s1 = peg$c47;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c48);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = [];
+            s3 = peg$parsedoubleApostrophes();
+            if (s3 === peg$FAILED) {
+                if (peg$c49.test(input.charAt(peg$currPos))) {
+                    s3 = input.charAt(peg$currPos);
+                    peg$currPos++;
+                }
+                else {
+                    s3 = peg$FAILED;
+                    if (peg$silentFails === 0) {
+                        peg$fail(peg$c50);
+                    }
+                }
+            }
+            if (s3 !== peg$FAILED) {
+                while (s3 !== peg$FAILED) {
+                    s2.push(s3);
+                    s3 = peg$parsedoubleApostrophes();
+                    if (s3 === peg$FAILED) {
+                        if (peg$c49.test(input.charAt(peg$currPos))) {
+                            s3 = input.charAt(peg$currPos);
+                            peg$currPos++;
+                        }
+                        else {
+                            s3 = peg$FAILED;
+                            if (peg$silentFails === 0) {
+                                peg$fail(peg$c50);
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                s2 = peg$FAILED;
+            }
+            if (s2 !== peg$FAILED) {
+                if (input.charCodeAt(peg$currPos) === 39) {
+                    s3 = peg$c47;
+                    peg$currPos++;
+                }
+                else {
+                    s3 = peg$FAILED;
+                    if (peg$silentFails === 0) {
+                        peg$fail(peg$c48);
+                    }
+                }
+                if (s3 !== peg$FAILED) {
+                    s1 = [s1, s2, s3];
+                    s0 = s1;
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        if (s0 === peg$FAILED) {
+            s0 = [];
+            s1 = peg$parsedoubleApostrophes();
+            if (s1 === peg$FAILED) {
+                if (peg$c51.test(input.charAt(peg$currPos))) {
+                    s1 = input.charAt(peg$currPos);
+                    peg$currPos++;
+                }
+                else {
+                    s1 = peg$FAILED;
+                    if (peg$silentFails === 0) {
+                        peg$fail(peg$c52);
+                    }
+                }
+            }
+            if (s1 !== peg$FAILED) {
+                while (s1 !== peg$FAILED) {
+                    s0.push(s1);
+                    s1 = peg$parsedoubleApostrophes();
+                    if (s1 === peg$FAILED) {
+                        if (peg$c51.test(input.charAt(peg$currPos))) {
+                            s1 = input.charAt(peg$currPos);
+                            peg$currPos++;
+                        }
+                        else {
+                            s1 = peg$FAILED;
+                            if (peg$silentFails === 0) {
+                                peg$fail(peg$c52);
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                s0 = peg$FAILED;
+            }
+        }
+        return s0;
+    }
+    function peg$parsedateTimeSkeletonPattern() {
+        var s0, s1;
+        s0 = [];
+        if (peg$c53.test(input.charAt(peg$currPos))) {
+            s1 = input.charAt(peg$currPos);
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c54);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            while (s1 !== peg$FAILED) {
+                s0.push(s1);
+                if (peg$c53.test(input.charAt(peg$currPos))) {
+                    s1 = input.charAt(peg$currPos);
+                    peg$currPos++;
+                }
+                else {
+                    s1 = peg$FAILED;
+                    if (peg$silentFails === 0) {
+                        peg$fail(peg$c54);
+                    }
+                }
+            }
+        }
+        else {
+            s0 = peg$FAILED;
+        }
+        return s0;
+    }
+    function peg$parsedateTimeSkeleton() {
+        var s0, s1, s2, s3;
+        s0 = peg$currPos;
+        s1 = peg$currPos;
+        s2 = [];
+        s3 = peg$parsedateTimeSkeletonLiteral();
+        if (s3 === peg$FAILED) {
+            s3 = peg$parsedateTimeSkeletonPattern();
+        }
+        if (s3 !== peg$FAILED) {
+            while (s3 !== peg$FAILED) {
+                s2.push(s3);
+                s3 = peg$parsedateTimeSkeletonLiteral();
+                if (s3 === peg$FAILED) {
+                    s3 = peg$parsedateTimeSkeletonPattern();
+                }
+            }
+        }
+        else {
+            s2 = peg$FAILED;
+        }
+        if (s2 !== peg$FAILED) {
+            s1 = input.substring(s1, peg$currPos);
+        }
+        else {
+            s1 = s2;
+        }
+        if (s1 !== peg$FAILED) {
+            peg$savedPos = s0;
+            s1 = peg$c55(s1);
+        }
+        s0 = s1;
+        return s0;
+    }
+    function peg$parsedateOrTimeArgStyle() {
+        var s0, s1, s2;
+        s0 = peg$currPos;
+        if (input.substr(peg$currPos, 2) === peg$c37) {
+            s1 = peg$c37;
+            peg$currPos += 2;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c38);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parsedateTimeSkeleton();
+            if (s2 !== peg$FAILED) {
+                peg$savedPos = s0;
+                s1 = peg$c39(s2);
+                s0 = s1;
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        if (s0 === peg$FAILED) {
+            s0 = peg$currPos;
+            peg$savedPos = peg$currPos;
+            s1 = peg$c56();
+            if (s1) {
+                s1 = undefined;
+            }
+            else {
+                s1 = peg$FAILED;
+            }
+            if (s1 !== peg$FAILED) {
+                s2 = peg$parsemessageText();
+                if (s2 !== peg$FAILED) {
+                    peg$savedPos = s0;
+                    s1 = peg$c41(s2);
+                    s0 = s1;
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        return s0;
+    }
+    function peg$parsedateOrTimeFormatElement() {
+        var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 123) {
+            s1 = peg$c21;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c22);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parse_();
+            if (s2 !== peg$FAILED) {
+                s3 = peg$parseargNameOrNumber();
+                if (s3 !== peg$FAILED) {
+                    s4 = peg$parse_();
+                    if (s4 !== peg$FAILED) {
+                        if (input.charCodeAt(peg$currPos) === 44) {
+                            s5 = peg$c42;
+                            peg$currPos++;
+                        }
+                        else {
+                            s5 = peg$FAILED;
+                            if (peg$silentFails === 0) {
+                                peg$fail(peg$c43);
+                            }
+                        }
+                        if (s5 !== peg$FAILED) {
+                            s6 = peg$parse_();
+                            if (s6 !== peg$FAILED) {
+                                if (input.substr(peg$currPos, 4) === peg$c57) {
+                                    s7 = peg$c57;
+                                    peg$currPos += 4;
+                                }
+                                else {
+                                    s7 = peg$FAILED;
+                                    if (peg$silentFails === 0) {
+                                        peg$fail(peg$c58);
+                                    }
+                                }
+                                if (s7 === peg$FAILED) {
+                                    if (input.substr(peg$currPos, 4) === peg$c59) {
+                                        s7 = peg$c59;
+                                        peg$currPos += 4;
+                                    }
+                                    else {
+                                        s7 = peg$FAILED;
+                                        if (peg$silentFails === 0) {
+                                            peg$fail(peg$c60);
+                                        }
+                                    }
+                                }
+                                if (s7 !== peg$FAILED) {
+                                    s8 = peg$parse_();
+                                    if (s8 !== peg$FAILED) {
+                                        s9 = peg$currPos;
+                                        if (input.charCodeAt(peg$currPos) === 44) {
+                                            s10 = peg$c42;
+                                            peg$currPos++;
+                                        }
+                                        else {
+                                            s10 = peg$FAILED;
+                                            if (peg$silentFails === 0) {
+                                                peg$fail(peg$c43);
+                                            }
+                                        }
+                                        if (s10 !== peg$FAILED) {
+                                            s11 = peg$parse_();
+                                            if (s11 !== peg$FAILED) {
+                                                s12 = peg$parsedateOrTimeArgStyle();
+                                                if (s12 !== peg$FAILED) {
+                                                    s10 = [s10, s11, s12];
+                                                    s9 = s10;
+                                                }
+                                                else {
+                                                    peg$currPos = s9;
+                                                    s9 = peg$FAILED;
+                                                }
+                                            }
+                                            else {
+                                                peg$currPos = s9;
+                                                s9 = peg$FAILED;
+                                            }
+                                        }
+                                        else {
+                                            peg$currPos = s9;
+                                            s9 = peg$FAILED;
+                                        }
+                                        if (s9 === peg$FAILED) {
+                                            s9 = null;
+                                        }
+                                        if (s9 !== peg$FAILED) {
+                                            s10 = peg$parse_();
+                                            if (s10 !== peg$FAILED) {
+                                                if (input.charCodeAt(peg$currPos) === 125) {
+                                                    s11 = peg$c23;
+                                                    peg$currPos++;
+                                                }
+                                                else {
+                                                    s11 = peg$FAILED;
+                                                    if (peg$silentFails === 0) {
+                                                        peg$fail(peg$c24);
+                                                    }
+                                                }
+                                                if (s11 !== peg$FAILED) {
+                                                    peg$savedPos = s0;
+                                                    s1 = peg$c46(s3, s7, s9);
+                                                    s0 = s1;
+                                                }
+                                                else {
+                                                    peg$currPos = s0;
+                                                    s0 = peg$FAILED;
+                                                }
+                                            }
+                                            else {
+                                                peg$currPos = s0;
+                                                s0 = peg$FAILED;
+                                            }
+                                        }
+                                        else {
+                                            peg$currPos = s0;
+                                            s0 = peg$FAILED;
+                                        }
+                                    }
+                                    else {
+                                        peg$currPos = s0;
+                                        s0 = peg$FAILED;
+                                    }
+                                }
+                                else {
+                                    peg$currPos = s0;
+                                    s0 = peg$FAILED;
+                                }
+                            }
+                            else {
+                                peg$currPos = s0;
+                                s0 = peg$FAILED;
+                            }
+                        }
+                        else {
+                            peg$currPos = s0;
+                            s0 = peg$FAILED;
+                        }
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        return s0;
+    }
+    function peg$parsesimpleFormatElement() {
+        var s0;
+        s0 = peg$parsenumberFormatElement();
+        if (s0 === peg$FAILED) {
+            s0 = peg$parsedateOrTimeFormatElement();
+        }
+        return s0;
+    }
+    function peg$parsepluralElement() {
+        var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 123) {
+            s1 = peg$c21;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c22);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parse_();
+            if (s2 !== peg$FAILED) {
+                s3 = peg$parseargNameOrNumber();
+                if (s3 !== peg$FAILED) {
+                    s4 = peg$parse_();
+                    if (s4 !== peg$FAILED) {
+                        if (input.charCodeAt(peg$currPos) === 44) {
+                            s5 = peg$c42;
+                            peg$currPos++;
+                        }
+                        else {
+                            s5 = peg$FAILED;
+                            if (peg$silentFails === 0) {
+                                peg$fail(peg$c43);
+                            }
+                        }
+                        if (s5 !== peg$FAILED) {
+                            s6 = peg$parse_();
+                            if (s6 !== peg$FAILED) {
+                                if (input.substr(peg$currPos, 6) === peg$c61) {
+                                    s7 = peg$c61;
+                                    peg$currPos += 6;
+                                }
+                                else {
+                                    s7 = peg$FAILED;
+                                    if (peg$silentFails === 0) {
+                                        peg$fail(peg$c62);
+                                    }
+                                }
+                                if (s7 === peg$FAILED) {
+                                    if (input.substr(peg$currPos, 13) === peg$c63) {
+                                        s7 = peg$c63;
+                                        peg$currPos += 13;
+                                    }
+                                    else {
+                                        s7 = peg$FAILED;
+                                        if (peg$silentFails === 0) {
+                                            peg$fail(peg$c64);
+                                        }
+                                    }
+                                }
+                                if (s7 !== peg$FAILED) {
+                                    s8 = peg$parse_();
+                                    if (s8 !== peg$FAILED) {
+                                        if (input.charCodeAt(peg$currPos) === 44) {
+                                            s9 = peg$c42;
+                                            peg$currPos++;
+                                        }
+                                        else {
+                                            s9 = peg$FAILED;
+                                            if (peg$silentFails === 0) {
+                                                peg$fail(peg$c43);
+                                            }
+                                        }
+                                        if (s9 !== peg$FAILED) {
+                                            s10 = peg$parse_();
+                                            if (s10 !== peg$FAILED) {
+                                                s11 = peg$currPos;
+                                                if (input.substr(peg$currPos, 7) === peg$c65) {
+                                                    s12 = peg$c65;
+                                                    peg$currPos += 7;
+                                                }
+                                                else {
+                                                    s12 = peg$FAILED;
+                                                    if (peg$silentFails === 0) {
+                                                        peg$fail(peg$c66);
+                                                    }
+                                                }
+                                                if (s12 !== peg$FAILED) {
+                                                    s13 = peg$parse_();
+                                                    if (s13 !== peg$FAILED) {
+                                                        s14 = peg$parsenumber();
+                                                        if (s14 !== peg$FAILED) {
+                                                            s12 = [s12, s13, s14];
+                                                            s11 = s12;
+                                                        }
+                                                        else {
+                                                            peg$currPos = s11;
+                                                            s11 = peg$FAILED;
+                                                        }
+                                                    }
+                                                    else {
+                                                        peg$currPos = s11;
+                                                        s11 = peg$FAILED;
+                                                    }
+                                                }
+                                                else {
+                                                    peg$currPos = s11;
+                                                    s11 = peg$FAILED;
+                                                }
+                                                if (s11 === peg$FAILED) {
+                                                    s11 = null;
+                                                }
+                                                if (s11 !== peg$FAILED) {
+                                                    s12 = peg$parse_();
+                                                    if (s12 !== peg$FAILED) {
+                                                        s13 = [];
+                                                        s14 = peg$parsepluralOption();
+                                                        if (s14 !== peg$FAILED) {
+                                                            while (s14 !== peg$FAILED) {
+                                                                s13.push(s14);
+                                                                s14 = peg$parsepluralOption();
+                                                            }
+                                                        }
+                                                        else {
+                                                            s13 = peg$FAILED;
+                                                        }
+                                                        if (s13 !== peg$FAILED) {
+                                                            s14 = peg$parse_();
+                                                            if (s14 !== peg$FAILED) {
+                                                                if (input.charCodeAt(peg$currPos) === 125) {
+                                                                    s15 = peg$c23;
+                                                                    peg$currPos++;
+                                                                }
+                                                                else {
+                                                                    s15 = peg$FAILED;
+                                                                    if (peg$silentFails === 0) {
+                                                                        peg$fail(peg$c24);
+                                                                    }
+                                                                }
+                                                                if (s15 !== peg$FAILED) {
+                                                                    peg$savedPos = s0;
+                                                                    s1 = peg$c67(s3, s7, s11, s13);
+                                                                    s0 = s1;
+                                                                }
+                                                                else {
+                                                                    peg$currPos = s0;
+                                                                    s0 = peg$FAILED;
+                                                                }
+                                                            }
+                                                            else {
+                                                                peg$currPos = s0;
+                                                                s0 = peg$FAILED;
+                                                            }
+                                                        }
+                                                        else {
+                                                            peg$currPos = s0;
+                                                            s0 = peg$FAILED;
+                                                        }
+                                                    }
+                                                    else {
+                                                        peg$currPos = s0;
+                                                        s0 = peg$FAILED;
+                                                    }
+                                                }
+                                                else {
+                                                    peg$currPos = s0;
+                                                    s0 = peg$FAILED;
+                                                }
+                                            }
+                                            else {
+                                                peg$currPos = s0;
+                                                s0 = peg$FAILED;
+                                            }
+                                        }
+                                        else {
+                                            peg$currPos = s0;
+                                            s0 = peg$FAILED;
+                                        }
+                                    }
+                                    else {
+                                        peg$currPos = s0;
+                                        s0 = peg$FAILED;
+                                    }
+                                }
+                                else {
+                                    peg$currPos = s0;
+                                    s0 = peg$FAILED;
+                                }
+                            }
+                            else {
+                                peg$currPos = s0;
+                                s0 = peg$FAILED;
+                            }
+                        }
+                        else {
+                            peg$currPos = s0;
+                            s0 = peg$FAILED;
+                        }
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        return s0;
+    }
+    function peg$parseselectElement() {
+        var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 123) {
+            s1 = peg$c21;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c22);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parse_();
+            if (s2 !== peg$FAILED) {
+                s3 = peg$parseargNameOrNumber();
+                if (s3 !== peg$FAILED) {
+                    s4 = peg$parse_();
+                    if (s4 !== peg$FAILED) {
+                        if (input.charCodeAt(peg$currPos) === 44) {
+                            s5 = peg$c42;
+                            peg$currPos++;
+                        }
+                        else {
+                            s5 = peg$FAILED;
+                            if (peg$silentFails === 0) {
+                                peg$fail(peg$c43);
+                            }
+                        }
+                        if (s5 !== peg$FAILED) {
+                            s6 = peg$parse_();
+                            if (s6 !== peg$FAILED) {
+                                if (input.substr(peg$currPos, 6) === peg$c68) {
+                                    s7 = peg$c68;
+                                    peg$currPos += 6;
+                                }
+                                else {
+                                    s7 = peg$FAILED;
+                                    if (peg$silentFails === 0) {
+                                        peg$fail(peg$c69);
+                                    }
+                                }
+                                if (s7 !== peg$FAILED) {
+                                    s8 = peg$parse_();
+                                    if (s8 !== peg$FAILED) {
+                                        if (input.charCodeAt(peg$currPos) === 44) {
+                                            s9 = peg$c42;
+                                            peg$currPos++;
+                                        }
+                                        else {
+                                            s9 = peg$FAILED;
+                                            if (peg$silentFails === 0) {
+                                                peg$fail(peg$c43);
+                                            }
+                                        }
+                                        if (s9 !== peg$FAILED) {
+                                            s10 = peg$parse_();
+                                            if (s10 !== peg$FAILED) {
+                                                s11 = [];
+                                                s12 = peg$parseselectOption();
+                                                if (s12 !== peg$FAILED) {
+                                                    while (s12 !== peg$FAILED) {
+                                                        s11.push(s12);
+                                                        s12 = peg$parseselectOption();
+                                                    }
+                                                }
+                                                else {
+                                                    s11 = peg$FAILED;
+                                                }
+                                                if (s11 !== peg$FAILED) {
+                                                    s12 = peg$parse_();
+                                                    if (s12 !== peg$FAILED) {
+                                                        if (input.charCodeAt(peg$currPos) === 125) {
+                                                            s13 = peg$c23;
+                                                            peg$currPos++;
+                                                        }
+                                                        else {
+                                                            s13 = peg$FAILED;
+                                                            if (peg$silentFails === 0) {
+                                                                peg$fail(peg$c24);
+                                                            }
+                                                        }
+                                                        if (s13 !== peg$FAILED) {
+                                                            peg$savedPos = s0;
+                                                            s1 = peg$c70(s3, s11);
+                                                            s0 = s1;
+                                                        }
+                                                        else {
+                                                            peg$currPos = s0;
+                                                            s0 = peg$FAILED;
+                                                        }
+                                                    }
+                                                    else {
+                                                        peg$currPos = s0;
+                                                        s0 = peg$FAILED;
+                                                    }
+                                                }
+                                                else {
+                                                    peg$currPos = s0;
+                                                    s0 = peg$FAILED;
+                                                }
+                                            }
+                                            else {
+                                                peg$currPos = s0;
+                                                s0 = peg$FAILED;
+                                            }
+                                        }
+                                        else {
+                                            peg$currPos = s0;
+                                            s0 = peg$FAILED;
+                                        }
+                                    }
+                                    else {
+                                        peg$currPos = s0;
+                                        s0 = peg$FAILED;
+                                    }
+                                }
+                                else {
+                                    peg$currPos = s0;
+                                    s0 = peg$FAILED;
+                                }
+                            }
+                            else {
+                                peg$currPos = s0;
+                                s0 = peg$FAILED;
+                            }
+                        }
+                        else {
+                            peg$currPos = s0;
+                            s0 = peg$FAILED;
+                        }
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        return s0;
+    }
+    function peg$parsepluralRuleSelectValue() {
+        var s0, s1, s2, s3;
+        s0 = peg$currPos;
+        s1 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 61) {
+            s2 = peg$c71;
+            peg$currPos++;
+        }
+        else {
+            s2 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c72);
+            }
+        }
+        if (s2 !== peg$FAILED) {
+            s3 = peg$parsenumber();
+            if (s3 !== peg$FAILED) {
+                s2 = [s2, s3];
+                s1 = s2;
+            }
+            else {
+                peg$currPos = s1;
+                s1 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s1;
+            s1 = peg$FAILED;
+        }
+        if (s1 !== peg$FAILED) {
+            s0 = input.substring(s0, peg$currPos);
+        }
+        else {
+            s0 = s1;
+        }
+        if (s0 === peg$FAILED) {
+            s0 = peg$parseargName();
+        }
+        return s0;
+    }
+    function peg$parseselectOption() {
+        var s0, s1, s2, s3, s4, s5, s6, s7;
+        s0 = peg$currPos;
+        s1 = peg$parse_();
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parseargName();
+            if (s2 !== peg$FAILED) {
+                s3 = peg$parse_();
+                if (s3 !== peg$FAILED) {
+                    if (input.charCodeAt(peg$currPos) === 123) {
+                        s4 = peg$c21;
+                        peg$currPos++;
+                    }
+                    else {
+                        s4 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c22);
+                        }
+                    }
+                    if (s4 !== peg$FAILED) {
+                        peg$savedPos = peg$currPos;
+                        s5 = peg$c73(s2);
+                        if (s5) {
+                            s5 = undefined;
+                        }
+                        else {
+                            s5 = peg$FAILED;
+                        }
+                        if (s5 !== peg$FAILED) {
+                            s6 = peg$parsemessage();
+                            if (s6 !== peg$FAILED) {
+                                if (input.charCodeAt(peg$currPos) === 125) {
+                                    s7 = peg$c23;
+                                    peg$currPos++;
+                                }
+                                else {
+                                    s7 = peg$FAILED;
+                                    if (peg$silentFails === 0) {
+                                        peg$fail(peg$c24);
+                                    }
+                                }
+                                if (s7 !== peg$FAILED) {
+                                    peg$savedPos = s0;
+                                    s1 = peg$c74(s2, s6);
+                                    s0 = s1;
+                                }
+                                else {
+                                    peg$currPos = s0;
+                                    s0 = peg$FAILED;
+                                }
+                            }
+                            else {
+                                peg$currPos = s0;
+                                s0 = peg$FAILED;
+                            }
+                        }
+                        else {
+                            peg$currPos = s0;
+                            s0 = peg$FAILED;
+                        }
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        return s0;
+    }
+    function peg$parsepluralOption() {
+        var s0, s1, s2, s3, s4, s5, s6, s7;
+        s0 = peg$currPos;
+        s1 = peg$parse_();
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parsepluralRuleSelectValue();
+            if (s2 !== peg$FAILED) {
+                s3 = peg$parse_();
+                if (s3 !== peg$FAILED) {
+                    if (input.charCodeAt(peg$currPos) === 123) {
+                        s4 = peg$c21;
+                        peg$currPos++;
+                    }
+                    else {
+                        s4 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c22);
+                        }
+                    }
+                    if (s4 !== peg$FAILED) {
+                        peg$savedPos = peg$currPos;
+                        s5 = peg$c75(s2);
+                        if (s5) {
+                            s5 = undefined;
+                        }
+                        else {
+                            s5 = peg$FAILED;
+                        }
+                        if (s5 !== peg$FAILED) {
+                            s6 = peg$parsemessage();
+                            if (s6 !== peg$FAILED) {
+                                if (input.charCodeAt(peg$currPos) === 125) {
+                                    s7 = peg$c23;
+                                    peg$currPos++;
+                                }
+                                else {
+                                    s7 = peg$FAILED;
+                                    if (peg$silentFails === 0) {
+                                        peg$fail(peg$c24);
+                                    }
+                                }
+                                if (s7 !== peg$FAILED) {
+                                    peg$savedPos = s0;
+                                    s1 = peg$c76(s2, s6);
+                                    s0 = s1;
+                                }
+                                else {
+                                    peg$currPos = s0;
+                                    s0 = peg$FAILED;
+                                }
+                            }
+                            else {
+                                peg$currPos = s0;
+                                s0 = peg$FAILED;
+                            }
+                        }
+                        else {
+                            peg$currPos = s0;
+                            s0 = peg$FAILED;
+                        }
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        return s0;
+    }
+    function peg$parsewhiteSpace() {
+        var s0, s1;
+        peg$silentFails++;
+        if (peg$c78.test(input.charAt(peg$currPos))) {
+            s0 = input.charAt(peg$currPos);
+            peg$currPos++;
+        }
+        else {
+            s0 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c79);
+            }
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c77);
+            }
+        }
+        return s0;
+    }
+    function peg$parsepatternSyntax() {
+        var s0, s1;
+        peg$silentFails++;
+        if (peg$c81.test(input.charAt(peg$currPos))) {
+            s0 = input.charAt(peg$currPos);
+            peg$currPos++;
+        }
+        else {
+            s0 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c82);
+            }
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c80);
+            }
+        }
+        return s0;
+    }
+    function peg$parse_() {
+        var s0, s1, s2;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        s1 = [];
+        s2 = peg$parsewhiteSpace();
+        while (s2 !== peg$FAILED) {
+            s1.push(s2);
+            s2 = peg$parsewhiteSpace();
+        }
+        if (s1 !== peg$FAILED) {
+            s0 = input.substring(s0, peg$currPos);
+        }
+        else {
+            s0 = s1;
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c83);
+            }
+        }
+        return s0;
+    }
+    function peg$parsenumber() {
+        var s0, s1, s2;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 45) {
+            s1 = peg$c85;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c86);
+            }
+        }
+        if (s1 === peg$FAILED) {
+            s1 = null;
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parseargNumber();
+            if (s2 !== peg$FAILED) {
+                peg$savedPos = s0;
+                s1 = peg$c87(s1, s2);
+                s0 = s1;
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c84);
+            }
+        }
+        return s0;
+    }
+    function peg$parseapostrophe() {
+        var s0, s1;
+        peg$silentFails++;
+        if (input.charCodeAt(peg$currPos) === 39) {
+            s0 = peg$c47;
+            peg$currPos++;
+        }
+        else {
+            s0 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c48);
+            }
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c88);
+            }
+        }
+        return s0;
+    }
+    function peg$parsedoubleApostrophes() {
+        var s0, s1;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        if (input.substr(peg$currPos, 2) === peg$c90) {
+            s1 = peg$c90;
+            peg$currPos += 2;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c91);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            peg$savedPos = s0;
+            s1 = peg$c92();
+        }
+        s0 = s1;
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c89);
+            }
+        }
+        return s0;
+    }
+    function peg$parsequotedString() {
+        var s0, s1, s2, s3, s4, s5;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 39) {
+            s1 = peg$c47;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c48);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s2 = peg$parseescapedChar();
+            if (s2 !== peg$FAILED) {
+                s3 = peg$currPos;
+                s4 = [];
+                if (input.substr(peg$currPos, 2) === peg$c90) {
+                    s5 = peg$c90;
+                    peg$currPos += 2;
+                }
+                else {
+                    s5 = peg$FAILED;
+                    if (peg$silentFails === 0) {
+                        peg$fail(peg$c91);
+                    }
+                }
+                if (s5 === peg$FAILED) {
+                    if (peg$c49.test(input.charAt(peg$currPos))) {
+                        s5 = input.charAt(peg$currPos);
+                        peg$currPos++;
+                    }
+                    else {
+                        s5 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c50);
+                        }
+                    }
+                }
+                while (s5 !== peg$FAILED) {
+                    s4.push(s5);
+                    if (input.substr(peg$currPos, 2) === peg$c90) {
+                        s5 = peg$c90;
+                        peg$currPos += 2;
+                    }
+                    else {
+                        s5 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c91);
+                        }
+                    }
+                    if (s5 === peg$FAILED) {
+                        if (peg$c49.test(input.charAt(peg$currPos))) {
+                            s5 = input.charAt(peg$currPos);
+                            peg$currPos++;
+                        }
+                        else {
+                            s5 = peg$FAILED;
+                            if (peg$silentFails === 0) {
+                                peg$fail(peg$c50);
+                            }
+                        }
+                    }
+                }
+                if (s4 !== peg$FAILED) {
+                    s3 = input.substring(s3, peg$currPos);
+                }
+                else {
+                    s3 = s4;
+                }
+                if (s3 !== peg$FAILED) {
+                    if (input.charCodeAt(peg$currPos) === 39) {
+                        s4 = peg$c47;
+                        peg$currPos++;
+                    }
+                    else {
+                        s4 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c48);
+                        }
+                    }
+                    if (s4 === peg$FAILED) {
+                        s4 = null;
+                    }
+                    if (s4 !== peg$FAILED) {
+                        peg$savedPos = s0;
+                        s1 = peg$c93(s2, s3);
+                        s0 = s1;
+                    }
+                    else {
+                        peg$currPos = s0;
+                        s0 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s0;
+                    s0 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+        }
+        return s0;
+    }
+    function peg$parseunquotedString() {
+        var s0, s1, s2, s3;
+        s0 = peg$currPos;
+        s1 = peg$currPos;
+        if (input.length > peg$currPos) {
+            s2 = input.charAt(peg$currPos);
+            peg$currPos++;
+        }
+        else {
+            s2 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c29);
+            }
+        }
+        if (s2 !== peg$FAILED) {
+            peg$savedPos = peg$currPos;
+            s3 = peg$c94(s2);
+            if (s3) {
+                s3 = undefined;
+            }
+            else {
+                s3 = peg$FAILED;
+            }
+            if (s3 !== peg$FAILED) {
+                s2 = [s2, s3];
+                s1 = s2;
+            }
+            else {
+                peg$currPos = s1;
+                s1 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s1;
+            s1 = peg$FAILED;
+        }
+        if (s1 === peg$FAILED) {
+            if (input.charCodeAt(peg$currPos) === 10) {
+                s1 = peg$c95;
+                peg$currPos++;
+            }
+            else {
+                s1 = peg$FAILED;
+                if (peg$silentFails === 0) {
+                    peg$fail(peg$c96);
+                }
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            s0 = input.substring(s0, peg$currPos);
+        }
+        else {
+            s0 = s1;
+        }
+        return s0;
+    }
+    function peg$parseescapedChar() {
+        var s0, s1, s2, s3;
+        s0 = peg$currPos;
+        s1 = peg$currPos;
+        if (input.length > peg$currPos) {
+            s2 = input.charAt(peg$currPos);
+            peg$currPos++;
+        }
+        else {
+            s2 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c29);
+            }
+        }
+        if (s2 !== peg$FAILED) {
+            peg$savedPos = peg$currPos;
+            s3 = peg$c97(s2);
+            if (s3) {
+                s3 = undefined;
+            }
+            else {
+                s3 = peg$FAILED;
+            }
+            if (s3 !== peg$FAILED) {
+                s2 = [s2, s3];
+                s1 = s2;
+            }
+            else {
+                peg$currPos = s1;
+                s1 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s1;
+            s1 = peg$FAILED;
+        }
+        if (s1 !== peg$FAILED) {
+            s0 = input.substring(s0, peg$currPos);
+        }
+        else {
+            s0 = s1;
+        }
+        return s0;
+    }
+    function peg$parseargNameOrNumber() {
+        var s0, s1;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        s1 = peg$parseargNumber();
+        if (s1 === peg$FAILED) {
+            s1 = peg$parseargName();
+        }
+        if (s1 !== peg$FAILED) {
+            s0 = input.substring(s0, peg$currPos);
+        }
+        else {
+            s0 = s1;
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c98);
+            }
+        }
+        return s0;
+    }
+    function peg$parsevalidTag() {
+        var s0, s1;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        s1 = peg$parseargNumber();
+        if (s1 === peg$FAILED) {
+            s1 = peg$parsetagName();
+        }
+        if (s1 !== peg$FAILED) {
+            s0 = input.substring(s0, peg$currPos);
+        }
+        else {
+            s0 = s1;
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c99);
+            }
+        }
+        return s0;
+    }
+    function peg$parseargNumber() {
+        var s0, s1, s2, s3, s4;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        if (input.charCodeAt(peg$currPos) === 48) {
+            s1 = peg$c101;
+            peg$currPos++;
+        }
+        else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c102);
+            }
+        }
+        if (s1 !== peg$FAILED) {
+            peg$savedPos = s0;
+            s1 = peg$c103();
         }
         s0 = s1;
         if (s0 === peg$FAILED) {
-          s0 = peg$currPos;
-          if (input.substr(peg$currPos, 2) === peg$c53) {
-            s1 = peg$c53;
-            peg$currPos += 2;
-          } else {
-            s1 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c54); }
-          }
-          if (s1 !== peg$FAILED) {
-            peg$savedPos = s0;
-            s1 = peg$c55();
-          }
-          s0 = s1;
-          if (s0 === peg$FAILED) {
             s0 = peg$currPos;
-            if (input.substr(peg$currPos, 2) === peg$c56) {
-              s1 = peg$c56;
-              peg$currPos += 2;
-            } else {
-              s1 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c57); }
+            s1 = peg$currPos;
+            if (peg$c104.test(input.charAt(peg$currPos))) {
+                s2 = input.charAt(peg$currPos);
+                peg$currPos++;
+            }
+            else {
+                s2 = peg$FAILED;
+                if (peg$silentFails === 0) {
+                    peg$fail(peg$c105);
+                }
+            }
+            if (s2 !== peg$FAILED) {
+                s3 = [];
+                if (peg$c106.test(input.charAt(peg$currPos))) {
+                    s4 = input.charAt(peg$currPos);
+                    peg$currPos++;
+                }
+                else {
+                    s4 = peg$FAILED;
+                    if (peg$silentFails === 0) {
+                        peg$fail(peg$c107);
+                    }
+                }
+                while (s4 !== peg$FAILED) {
+                    s3.push(s4);
+                    if (peg$c106.test(input.charAt(peg$currPos))) {
+                        s4 = input.charAt(peg$currPos);
+                        peg$currPos++;
+                    }
+                    else {
+                        s4 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c107);
+                        }
+                    }
+                }
+                if (s3 !== peg$FAILED) {
+                    s2 = [s2, s3];
+                    s1 = s2;
+                }
+                else {
+                    peg$currPos = s1;
+                    s1 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s1;
+                s1 = peg$FAILED;
             }
             if (s1 !== peg$FAILED) {
-              peg$savedPos = s0;
-              s1 = peg$c58();
+                peg$savedPos = s0;
+                s1 = peg$c108(s1);
             }
             s0 = s1;
-            if (s0 === peg$FAILED) {
-              s0 = peg$currPos;
-              if (input.substr(peg$currPos, 2) === peg$c59) {
-                s1 = peg$c59;
-                peg$currPos += 2;
-              } else {
-                s1 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c60); }
-              }
-              if (s1 !== peg$FAILED) {
-                peg$savedPos = s0;
-                s1 = peg$c61();
-              }
-              s0 = s1;
-              if (s0 === peg$FAILED) {
-                s0 = peg$currPos;
-                if (input.substr(peg$currPos, 2) === peg$c62) {
-                  s1 = peg$c62;
-                  peg$currPos += 2;
-                } else {
-                  s1 = peg$FAILED;
-                  if (peg$silentFails === 0) { peg$fail(peg$c63); }
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c100);
+            }
+        }
+        return s0;
+    }
+    function peg$parseargName() {
+        var s0, s1, s2, s3, s4;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        s1 = [];
+        s2 = peg$currPos;
+        s3 = peg$currPos;
+        peg$silentFails++;
+        s4 = peg$parsewhiteSpace();
+        if (s4 === peg$FAILED) {
+            s4 = peg$parsepatternSyntax();
+        }
+        peg$silentFails--;
+        if (s4 === peg$FAILED) {
+            s3 = undefined;
+        }
+        else {
+            peg$currPos = s3;
+            s3 = peg$FAILED;
+        }
+        if (s3 !== peg$FAILED) {
+            if (input.length > peg$currPos) {
+                s4 = input.charAt(peg$currPos);
+                peg$currPos++;
+            }
+            else {
+                s4 = peg$FAILED;
+                if (peg$silentFails === 0) {
+                    peg$fail(peg$c29);
                 }
-                if (s1 !== peg$FAILED) {
-                  s2 = peg$currPos;
-                  s3 = peg$currPos;
-                  s4 = peg$parsehexDigit();
-                  if (s4 !== peg$FAILED) {
-                    s5 = peg$parsehexDigit();
-                    if (s5 !== peg$FAILED) {
-                      s6 = peg$parsehexDigit();
-                      if (s6 !== peg$FAILED) {
-                        s7 = peg$parsehexDigit();
-                        if (s7 !== peg$FAILED) {
-                          s4 = [s4, s5, s6, s7];
-                          s3 = s4;
-                        } else {
-                          peg$currPos = s3;
-                          s3 = peg$FAILED;
-                        }
-                      } else {
-                        peg$currPos = s3;
-                        s3 = peg$FAILED;
-                      }
-                    } else {
-                      peg$currPos = s3;
-                      s3 = peg$FAILED;
-                    }
-                  } else {
+            }
+            if (s4 !== peg$FAILED) {
+                s3 = [s3, s4];
+                s2 = s3;
+            }
+            else {
+                peg$currPos = s2;
+                s2 = peg$FAILED;
+            }
+        }
+        else {
+            peg$currPos = s2;
+            s2 = peg$FAILED;
+        }
+        if (s2 !== peg$FAILED) {
+            while (s2 !== peg$FAILED) {
+                s1.push(s2);
+                s2 = peg$currPos;
+                s3 = peg$currPos;
+                peg$silentFails++;
+                s4 = peg$parsewhiteSpace();
+                if (s4 === peg$FAILED) {
+                    s4 = peg$parsepatternSyntax();
+                }
+                peg$silentFails--;
+                if (s4 === peg$FAILED) {
+                    s3 = undefined;
+                }
+                else {
                     peg$currPos = s3;
                     s3 = peg$FAILED;
-                  }
-                  if (s3 !== peg$FAILED) {
-                    s2 = input.substring(s2, peg$currPos);
-                  } else {
-                    s2 = s3;
-                  }
-                  if (s2 !== peg$FAILED) {
-                    peg$savedPos = s0;
-                    s1 = peg$c64(s2);
-                    s0 = s1;
-                  } else {
-                    peg$currPos = s0;
-                    s0 = peg$FAILED;
-                  }
-                } else {
-                  peg$currPos = s0;
-                  s0 = peg$FAILED;
                 }
-              }
+                if (s3 !== peg$FAILED) {
+                    if (input.length > peg$currPos) {
+                        s4 = input.charAt(peg$currPos);
+                        peg$currPos++;
+                    }
+                    else {
+                        s4 = peg$FAILED;
+                        if (peg$silentFails === 0) {
+                            peg$fail(peg$c29);
+                        }
+                    }
+                    if (s4 !== peg$FAILED) {
+                        s3 = [s3, s4];
+                        s2 = s3;
+                    }
+                    else {
+                        peg$currPos = s2;
+                        s2 = peg$FAILED;
+                    }
+                }
+                else {
+                    peg$currPos = s2;
+                    s2 = peg$FAILED;
+                }
             }
-          }
         }
-      }
-
-      return s0;
-    }
-
-    function peg$parsechars() {
-      var s0, s1, s2;
-
-      s0 = peg$currPos;
-      s1 = [];
-      s2 = peg$parsechar();
-      if (s2 !== peg$FAILED) {
-        while (s2 !== peg$FAILED) {
-          s1.push(s2);
-          s2 = peg$parsechar();
+        else {
+            s1 = peg$FAILED;
         }
-      } else {
-        s1 = peg$FAILED;
-      }
-      if (s1 !== peg$FAILED) {
-        peg$savedPos = s0;
-        s1 = peg$c65(s1);
-      }
-      s0 = s1;
-
-      return s0;
+        if (s1 !== peg$FAILED) {
+            s0 = input.substring(s0, peg$currPos);
+        }
+        else {
+            s0 = s1;
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c109);
+            }
+        }
+        return s0;
     }
-
+    function peg$parsetagName() {
+        var s0, s1, s2, s3, s4;
+        peg$silentFails++;
+        s0 = peg$currPos;
+        s1 = [];
+        if (input.charCodeAt(peg$currPos) === 45) {
+            s2 = peg$c85;
+            peg$currPos++;
+        }
+        else {
+            s2 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c86);
+            }
+        }
+        if (s2 === peg$FAILED) {
+            s2 = peg$currPos;
+            s3 = peg$currPos;
+            peg$silentFails++;
+            s4 = peg$parsewhiteSpace();
+            if (s4 === peg$FAILED) {
+                s4 = peg$parsepatternSyntax();
+            }
+            peg$silentFails--;
+            if (s4 === peg$FAILED) {
+                s3 = undefined;
+            }
+            else {
+                peg$currPos = s3;
+                s3 = peg$FAILED;
+            }
+            if (s3 !== peg$FAILED) {
+                if (input.length > peg$currPos) {
+                    s4 = input.charAt(peg$currPos);
+                    peg$currPos++;
+                }
+                else {
+                    s4 = peg$FAILED;
+                    if (peg$silentFails === 0) {
+                        peg$fail(peg$c29);
+                    }
+                }
+                if (s4 !== peg$FAILED) {
+                    s3 = [s3, s4];
+                    s2 = s3;
+                }
+                else {
+                    peg$currPos = s2;
+                    s2 = peg$FAILED;
+                }
+            }
+            else {
+                peg$currPos = s2;
+                s2 = peg$FAILED;
+            }
+        }
+        if (s2 !== peg$FAILED) {
+            while (s2 !== peg$FAILED) {
+                s1.push(s2);
+                if (input.charCodeAt(peg$currPos) === 45) {
+                    s2 = peg$c85;
+                    peg$currPos++;
+                }
+                else {
+                    s2 = peg$FAILED;
+                    if (peg$silentFails === 0) {
+                        peg$fail(peg$c86);
+                    }
+                }
+                if (s2 === peg$FAILED) {
+                    s2 = peg$currPos;
+                    s3 = peg$currPos;
+                    peg$silentFails++;
+                    s4 = peg$parsewhiteSpace();
+                    if (s4 === peg$FAILED) {
+                        s4 = peg$parsepatternSyntax();
+                    }
+                    peg$silentFails--;
+                    if (s4 === peg$FAILED) {
+                        s3 = undefined;
+                    }
+                    else {
+                        peg$currPos = s3;
+                        s3 = peg$FAILED;
+                    }
+                    if (s3 !== peg$FAILED) {
+                        if (input.length > peg$currPos) {
+                            s4 = input.charAt(peg$currPos);
+                            peg$currPos++;
+                        }
+                        else {
+                            s4 = peg$FAILED;
+                            if (peg$silentFails === 0) {
+                                peg$fail(peg$c29);
+                            }
+                        }
+                        if (s4 !== peg$FAILED) {
+                            s3 = [s3, s4];
+                            s2 = s3;
+                        }
+                        else {
+                            peg$currPos = s2;
+                            s2 = peg$FAILED;
+                        }
+                    }
+                    else {
+                        peg$currPos = s2;
+                        s2 = peg$FAILED;
+                    }
+                }
+            }
+        }
+        else {
+            s1 = peg$FAILED;
+        }
+        if (s1 !== peg$FAILED) {
+            s0 = input.substring(s0, peg$currPos);
+        }
+        else {
+            s0 = s1;
+        }
+        peg$silentFails--;
+        if (s0 === peg$FAILED) {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) {
+                peg$fail(peg$c110);
+            }
+        }
+        return s0;
+    }
+    var messageCtx = ['root'];
+    function isNestedMessageText() {
+        return messageCtx.length > 1;
+    }
+    function isInPluralOption() {
+        return messageCtx[messageCtx.length - 1] === 'plural';
+    }
+    function insertLocation() {
+        return options && options.captureLocation ? {
+            location: location()
+        } : {};
+    }
+    function ignoreTag() {
+        return options && options.ignoreTag;
+    }
     peg$result = peg$startRuleFunction();
-
     if (peg$result !== peg$FAILED && peg$currPos === input.length) {
-      return peg$result;
-    } else {
-      if (peg$result !== peg$FAILED && peg$currPos < input.length) {
-        peg$fail({ type: "end", description: "end of input" });
-      }
-
-      throw peg$buildException(
-        null,
-        peg$maxFailExpected,
-        peg$maxFailPos < input.length ? input.charAt(peg$maxFailPos) : null,
-        peg$maxFailPos < input.length
-          ? peg$computeLocation(peg$maxFailPos, peg$maxFailPos + 1)
-          : peg$computeLocation(peg$maxFailPos, peg$maxFailPos)
-      );
+        return peg$result;
     }
-  }
-
-  return {
-    SyntaxError: peg$SyntaxError,
-    parse:       peg$parse
-  };
-})();
-
+    else {
+        if (peg$result !== peg$FAILED && peg$currPos < input.length) {
+            peg$fail(peg$endExpectation());
+        }
+        throw peg$buildStructuredError(peg$maxFailExpected, peg$maxFailPos < input.length ? input.charAt(peg$maxFailPos) : null, peg$maxFailPos < input.length
+            ? peg$computeLocation(peg$maxFailPos, peg$maxFailPos + 1)
+            : peg$computeLocation(peg$maxFailPos, peg$maxFailPos));
+    }
+}
+var pegParse = peg$parse;
 
 
 /***/ }),
 
-/***/ "../../../node_modules/intl-messageformat/index.js":
-/*!***************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/intl-messageformat/index.js ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "../../../node_modules/intl-messageformat-parser/lib/skeleton.js":
+/*!*****************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/lib/skeleton.js ***!
+  \*****************************************************************************************************/
+/*! exports provided: parseDateTimeSkeleton, convertNumberSkeletonToNumberFormatOptions */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* jshint node:true */
-
-
-
-var IntlMessageFormat = __webpack_require__(/*! ./lib/main */ "../../../node_modules/intl-messageformat/lib/main.js")['default'];
-
-// Add all locale data to `IntlMessageFormat`. This module will be ignored when
-// bundling for the browser with Browserify/Webpack.
-__webpack_require__(/*! ./lib/locales */ "../../../node_modules/intl-messageformat/lib/locales.js");
-
-// Re-export `IntlMessageFormat` as the CommonJS default exports with all the
-// locale data registered, and with English set as the default locale. Define
-// the `default` prop for use with other compiled ES6 Modules.
-exports = module.exports = IntlMessageFormat;
-exports['default'] = exports;
-
-
-/***/ }),
-
-/***/ "../../../node_modules/intl-messageformat/lib/compiler.js":
-/*!**********************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/intl-messageformat/lib/compiler.js ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
-Copyright (c) 2014, Yahoo! Inc. All rights reserved.
-Copyrights licensed under the New BSD License.
-See the accompanying LICENSE file for terms.
-*/
-
-/* jslint esnext: true */
-
-
-exports["default"] = Compiler;
-
-function Compiler(locales, formats, pluralFn) {
-    this.locales  = locales;
-    this.formats  = formats;
-    this.pluralFn = pluralFn;
-}
-
-Compiler.prototype.compile = function (ast) {
-    this.pluralStack        = [];
-    this.currentPlural      = null;
-    this.pluralNumberFormat = null;
-
-    return this.compileMessage(ast);
-};
-
-Compiler.prototype.compileMessage = function (ast) {
-    if (!(ast && ast.type === 'messageFormatPattern')) {
-        throw new Error('Message AST is not of type: "messageFormatPattern"');
-    }
-
-    var elements = ast.elements,
-        pattern  = [];
-
-    var i, len, element;
-
-    for (i = 0, len = elements.length; i < len; i += 1) {
-        element = elements[i];
-
-        switch (element.type) {
-            case 'messageTextElement':
-                pattern.push(this.compileMessageText(element));
-                break;
-
-            case 'argumentElement':
-                pattern.push(this.compileArgument(element));
-                break;
-
-            default:
-                throw new Error('Message element does not have a valid type');
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseDateTimeSkeleton", function() { return parseDateTimeSkeleton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "convertNumberSkeletonToNumberFormatOptions", function() { return convertNumberSkeletonToNumberFormatOptions; });
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
         }
-    }
-
-    return pattern;
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
-
-Compiler.prototype.compileMessageText = function (element) {
-    // When this `element` is part of plural sub-pattern and its value contains
-    // an unescaped '#', use a `PluralOffsetString` helper to properly output
-    // the number with the correct offset in the string.
-    if (this.currentPlural && /(^|[^\\])#/g.test(element.value)) {
-        // Create a cache a NumberFormat instance that can be reused for any
-        // PluralOffsetString instance in this message.
-        if (!this.pluralNumberFormat) {
-            this.pluralNumberFormat = new Intl.NumberFormat(this.locales);
+/**
+ * https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
+ * Credit: https://github.com/caridy/intl-datetimeformat-pattern/blob/master/index.js
+ * with some tweaks
+ */
+var DATE_TIME_REGEX = /(?:[Eec]{1,6}|G{1,5}|[Qq]{1,5}|(?:[yYur]+|U{1,5})|[ML]{1,5}|d{1,2}|D{1,3}|F{1}|[abB]{1,5}|[hkHK]{1,2}|w{1,2}|W{1}|m{1,2}|s{1,2}|[zZOvVxX]{1,4})(?=([^']*'[^']*')*[^']*$)/g;
+/**
+ * Parse Date time skeleton into Intl.DateTimeFormatOptions
+ * Ref: https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
+ * @public
+ * @param skeleton skeleton string
+ */
+function parseDateTimeSkeleton(skeleton) {
+    var result = {};
+    skeleton.replace(DATE_TIME_REGEX, function (match) {
+        var len = match.length;
+        switch (match[0]) {
+            // Era
+            case 'G':
+                result.era = len === 4 ? 'long' : len === 5 ? 'narrow' : 'short';
+                break;
+            // Year
+            case 'y':
+                result.year = len === 2 ? '2-digit' : 'numeric';
+                break;
+            case 'Y':
+            case 'u':
+            case 'U':
+            case 'r':
+                throw new RangeError('`Y/u/U/r` (year) patterns are not supported, use `y` instead');
+            // Quarter
+            case 'q':
+            case 'Q':
+                throw new RangeError('`q/Q` (quarter) patterns are not supported');
+            // Month
+            case 'M':
+            case 'L':
+                result.month = ['numeric', '2-digit', 'short', 'long', 'narrow'][len - 1];
+                break;
+            // Week
+            case 'w':
+            case 'W':
+                throw new RangeError('`w/W` (week) patterns are not supported');
+            case 'd':
+                result.day = ['numeric', '2-digit'][len - 1];
+                break;
+            case 'D':
+            case 'F':
+            case 'g':
+                throw new RangeError('`D/F/g` (day) patterns are not supported, use `d` instead');
+            // Weekday
+            case 'E':
+                result.weekday = len === 4 ? 'short' : len === 5 ? 'narrow' : 'short';
+                break;
+            case 'e':
+                if (len < 4) {
+                    throw new RangeError('`e..eee` (weekday) patterns are not supported');
+                }
+                result.weekday = ['short', 'long', 'narrow', 'short'][len - 4];
+                break;
+            case 'c':
+                if (len < 4) {
+                    throw new RangeError('`c..ccc` (weekday) patterns are not supported');
+                }
+                result.weekday = ['short', 'long', 'narrow', 'short'][len - 4];
+                break;
+            // Period
+            case 'a': // AM, PM
+                result.hour12 = true;
+                break;
+            case 'b': // am, pm, noon, midnight
+            case 'B': // flexible day periods
+                throw new RangeError('`b/B` (period) patterns are not supported, use `a` instead');
+            // Hour
+            case 'h':
+                result.hourCycle = 'h12';
+                result.hour = ['numeric', '2-digit'][len - 1];
+                break;
+            case 'H':
+                result.hourCycle = 'h23';
+                result.hour = ['numeric', '2-digit'][len - 1];
+                break;
+            case 'K':
+                result.hourCycle = 'h11';
+                result.hour = ['numeric', '2-digit'][len - 1];
+                break;
+            case 'k':
+                result.hourCycle = 'h24';
+                result.hour = ['numeric', '2-digit'][len - 1];
+                break;
+            case 'j':
+            case 'J':
+            case 'C':
+                throw new RangeError('`j/J/C` (hour) patterns are not supported, use `h/H/K/k` instead');
+            // Minute
+            case 'm':
+                result.minute = ['numeric', '2-digit'][len - 1];
+                break;
+            // Second
+            case 's':
+                result.second = ['numeric', '2-digit'][len - 1];
+                break;
+            case 'S':
+            case 'A':
+                throw new RangeError('`S/A` (second) pattenrs are not supported, use `s` instead');
+            // Zone
+            case 'z': // 1..3, 4: specific non-location format
+                result.timeZoneName = len < 4 ? 'short' : 'long';
+                break;
+            case 'Z': // 1..3, 4, 5: The ISO8601 varios formats
+            case 'O': // 1, 4: miliseconds in day short, long
+            case 'v': // 1, 4: generic non-location format
+            case 'V': // 1, 2, 3, 4: time zone ID or city
+            case 'X': // 1, 2, 3, 4: The ISO8601 varios formats
+            case 'x': // 1, 2, 3, 4: The ISO8601 varios formats
+                throw new RangeError('`Z/O/v/V/X/x` (timeZone) pattenrs are not supported, use `z` instead');
         }
-
-        return new PluralOffsetString(
-                this.currentPlural.id,
-                this.currentPlural.format.offset,
-                this.pluralNumberFormat,
-                element.value);
-    }
-
-    // Unescape the escaped '#'s in the message text.
-    return element.value.replace(/\\#/g, '#');
-};
-
-Compiler.prototype.compileArgument = function (element) {
-    var format = element.format;
-
-    if (!format) {
-        return new StringFormat(element.id);
-    }
-
-    var formats  = this.formats,
-        locales  = this.locales,
-        pluralFn = this.pluralFn,
-        options;
-
-    switch (format.type) {
-        case 'numberFormat':
-            options = formats.number[format.style];
-            return {
-                id    : element.id,
-                format: new Intl.NumberFormat(locales, options).format
-            };
-
-        case 'dateFormat':
-            options = formats.date[format.style];
-            return {
-                id    : element.id,
-                format: new Intl.DateTimeFormat(locales, options).format
-            };
-
-        case 'timeFormat':
-            options = formats.time[format.style];
-            return {
-                id    : element.id,
-                format: new Intl.DateTimeFormat(locales, options).format
-            };
-
-        case 'pluralFormat':
-            options = this.compileOptions(element);
-            return new PluralFormat(
-                element.id, format.ordinal, format.offset, options, pluralFn
-            );
-
-        case 'selectFormat':
-            options = this.compileOptions(element);
-            return new SelectFormat(element.id, options);
-
-        default:
-            throw new Error('Message element does not have a valid format type');
-    }
-};
-
-Compiler.prototype.compileOptions = function (element) {
-    var format      = element.format,
-        options     = format.options,
-        optionsHash = {};
-
-    // Save the current plural element, if any, then set it to a new value when
-    // compiling the options sub-patterns. This conforms the spec's algorithm
-    // for handling `"#"` syntax in message text.
-    this.pluralStack.push(this.currentPlural);
-    this.currentPlural = format.type === 'pluralFormat' ? element : null;
-
-    var i, len, option;
-
-    for (i = 0, len = options.length; i < len; i += 1) {
-        option = options[i];
-
-        // Compile the sub-pattern and save it under the options's selector.
-        optionsHash[option.selector] = this.compileMessage(option.value);
-    }
-
-    // Pop the plural stack to put back the original current plural value.
-    this.currentPlural = this.pluralStack.pop();
-
-    return optionsHash;
-};
-
-// -- Compiler Helper Classes --------------------------------------------------
-
-function StringFormat(id) {
-    this.id = id;
-}
-
-StringFormat.prototype.format = function (value) {
-    if (!value && typeof value !== 'number') {
         return '';
+    });
+    return result;
+}
+function icuUnitToEcma(unit) {
+    return unit.replace(/^(.*?)-/, '');
+}
+var FRACTION_PRECISION_REGEX = /^\.(?:(0+)(\*)?|(#+)|(0+)(#+))$/g;
+var SIGNIFICANT_PRECISION_REGEX = /^(@+)?(\+|#+)?$/g;
+function parseSignificantPrecision(str) {
+    var result = {};
+    str.replace(SIGNIFICANT_PRECISION_REGEX, function (_, g1, g2) {
+        // @@@ case
+        if (typeof g2 !== 'string') {
+            result.minimumSignificantDigits = g1.length;
+            result.maximumSignificantDigits = g1.length;
+        }
+        // @@@+ case
+        else if (g2 === '+') {
+            result.minimumSignificantDigits = g1.length;
+        }
+        // .### case
+        else if (g1[0] === '#') {
+            result.maximumSignificantDigits = g1.length;
+        }
+        // .@@## or .@@@ case
+        else {
+            result.minimumSignificantDigits = g1.length;
+            result.maximumSignificantDigits =
+                g1.length + (typeof g2 === 'string' ? g2.length : 0);
+        }
+        return '';
+    });
+    return result;
+}
+function parseSign(str) {
+    switch (str) {
+        case 'sign-auto':
+            return {
+                signDisplay: 'auto',
+            };
+        case 'sign-accounting':
+            return {
+                currencySign: 'accounting',
+            };
+        case 'sign-always':
+            return {
+                signDisplay: 'always',
+            };
+        case 'sign-accounting-always':
+            return {
+                signDisplay: 'always',
+                currencySign: 'accounting',
+            };
+        case 'sign-except-zero':
+            return {
+                signDisplay: 'exceptZero',
+            };
+        case 'sign-accounting-except-zero':
+            return {
+                signDisplay: 'exceptZero',
+                currencySign: 'accounting',
+            };
+        case 'sign-never':
+            return {
+                signDisplay: 'never',
+            };
     }
-
-    return typeof value === 'string' ? value : String(value);
-};
-
-function PluralFormat(id, useOrdinal, offset, options, pluralFn) {
-    this.id         = id;
-    this.useOrdinal = useOrdinal;
-    this.offset     = offset;
-    this.options    = options;
-    this.pluralFn   = pluralFn;
+}
+function parseNotationOptions(opt) {
+    var result = {};
+    var signOpts = parseSign(opt);
+    if (signOpts) {
+        return signOpts;
+    }
+    return result;
+}
+/**
+ * https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md#skeleton-stems-and-options
+ */
+function convertNumberSkeletonToNumberFormatOptions(tokens) {
+    var result = {};
+    for (var _i = 0, tokens_1 = tokens; _i < tokens_1.length; _i++) {
+        var token = tokens_1[_i];
+        switch (token.stem) {
+            case 'percent':
+                result.style = 'percent';
+                continue;
+            case 'currency':
+                result.style = 'currency';
+                result.currency = token.options[0];
+                continue;
+            case 'group-off':
+                result.useGrouping = false;
+                continue;
+            case 'precision-integer':
+            case '.':
+                result.maximumFractionDigits = 0;
+                continue;
+            case 'measure-unit':
+                result.style = 'unit';
+                result.unit = icuUnitToEcma(token.options[0]);
+                continue;
+            case 'compact-short':
+                result.notation = 'compact';
+                result.compactDisplay = 'short';
+                continue;
+            case 'compact-long':
+                result.notation = 'compact';
+                result.compactDisplay = 'long';
+                continue;
+            case 'scientific':
+                result = __assign(__assign(__assign({}, result), { notation: 'scientific' }), token.options.reduce(function (all, opt) { return (__assign(__assign({}, all), parseNotationOptions(opt))); }, {}));
+                continue;
+            case 'engineering':
+                result = __assign(__assign(__assign({}, result), { notation: 'engineering' }), token.options.reduce(function (all, opt) { return (__assign(__assign({}, all), parseNotationOptions(opt))); }, {}));
+                continue;
+            case 'notation-simple':
+                result.notation = 'standard';
+                continue;
+            // https://github.com/unicode-org/icu/blob/master/icu4c/source/i18n/unicode/unumberformatter.h
+            case 'unit-width-narrow':
+                result.currencyDisplay = 'narrowSymbol';
+                result.unitDisplay = 'narrow';
+                continue;
+            case 'unit-width-short':
+                result.currencyDisplay = 'code';
+                result.unitDisplay = 'short';
+                continue;
+            case 'unit-width-full-name':
+                result.currencyDisplay = 'name';
+                result.unitDisplay = 'long';
+                continue;
+            case 'unit-width-iso-code':
+                result.currencyDisplay = 'symbol';
+                continue;
+        }
+        // Precision
+        // https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md#fraction-precision
+        // precision-integer case
+        if (FRACTION_PRECISION_REGEX.test(token.stem)) {
+            if (token.options.length > 1) {
+                throw new RangeError('Fraction-precision stems only accept a single optional option');
+            }
+            token.stem.replace(FRACTION_PRECISION_REGEX, function (match, g1, g2, g3, g4, g5) {
+                // .000* case (before ICU67 it was .000+)
+                if (g2 === '*') {
+                    result.minimumFractionDigits = g1.length;
+                }
+                // .### case
+                else if (g3 && g3[0] === '#') {
+                    result.maximumFractionDigits = g3.length;
+                }
+                // .00## case
+                else if (g4 && g5) {
+                    result.minimumFractionDigits = g4.length;
+                    result.maximumFractionDigits = g4.length + g5.length;
+                }
+                else {
+                    result.minimumFractionDigits = g1.length;
+                    result.maximumFractionDigits = g1.length;
+                }
+                return '';
+            });
+            if (token.options.length) {
+                result = __assign(__assign({}, result), parseSignificantPrecision(token.options[0]));
+            }
+            continue;
+        }
+        if (SIGNIFICANT_PRECISION_REGEX.test(token.stem)) {
+            result = __assign(__assign({}, result), parseSignificantPrecision(token.stem));
+            continue;
+        }
+        var signOpts = parseSign(token.stem);
+        if (signOpts) {
+            result = __assign(__assign({}, result), signOpts);
+        }
+    }
+    return result;
 }
 
-PluralFormat.prototype.getOption = function (value) {
-    var options = this.options;
 
-    var option = options['=' + value] ||
-            options[this.pluralFn(value - this.offset, this.useOrdinal)];
+/***/ }),
 
-    return option || options.other;
-};
+/***/ "../../../node_modules/intl-messageformat-parser/lib/types.js":
+/*!**************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/lib/types.js ***!
+  \**************************************************************************************************/
+/*! exports provided: TYPE, SKELETON_TYPE, isLiteralElement, isArgumentElement, isNumberElement, isDateElement, isTimeElement, isSelectElement, isPluralElement, isPoundElement, isTagElement, isNumberSkeleton, isDateTimeSkeleton, createLiteralElement, createNumberElement */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function PluralOffsetString(id, offset, numberFormat, string) {
-    this.id           = id;
-    this.offset       = offset;
-    this.numberFormat = numberFormat;
-    this.string       = string;
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TYPE", function() { return TYPE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SKELETON_TYPE", function() { return SKELETON_TYPE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isLiteralElement", function() { return isLiteralElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isArgumentElement", function() { return isArgumentElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isNumberElement", function() { return isNumberElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isDateElement", function() { return isDateElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isTimeElement", function() { return isTimeElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isSelectElement", function() { return isSelectElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isPluralElement", function() { return isPluralElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isPoundElement", function() { return isPoundElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isTagElement", function() { return isTagElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isNumberSkeleton", function() { return isNumberSkeleton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isDateTimeSkeleton", function() { return isDateTimeSkeleton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createLiteralElement", function() { return createLiteralElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNumberElement", function() { return createNumberElement; });
+var TYPE;
+(function (TYPE) {
+    /**
+     * Raw text
+     */
+    TYPE[TYPE["literal"] = 0] = "literal";
+    /**
+     * Variable w/o any format, e.g `var` in `this is a {var}`
+     */
+    TYPE[TYPE["argument"] = 1] = "argument";
+    /**
+     * Variable w/ number format
+     */
+    TYPE[TYPE["number"] = 2] = "number";
+    /**
+     * Variable w/ date format
+     */
+    TYPE[TYPE["date"] = 3] = "date";
+    /**
+     * Variable w/ time format
+     */
+    TYPE[TYPE["time"] = 4] = "time";
+    /**
+     * Variable w/ select format
+     */
+    TYPE[TYPE["select"] = 5] = "select";
+    /**
+     * Variable w/ plural format
+     */
+    TYPE[TYPE["plural"] = 6] = "plural";
+    /**
+     * Only possible within plural argument.
+     * This is the `#` symbol that will be substituted with the count.
+     */
+    TYPE[TYPE["pound"] = 7] = "pound";
+    /**
+     * XML-like tag
+     */
+    TYPE[TYPE["tag"] = 8] = "tag";
+})(TYPE || (TYPE = {}));
+var SKELETON_TYPE;
+(function (SKELETON_TYPE) {
+    SKELETON_TYPE[SKELETON_TYPE["number"] = 0] = "number";
+    SKELETON_TYPE[SKELETON_TYPE["dateTime"] = 1] = "dateTime";
+})(SKELETON_TYPE || (SKELETON_TYPE = {}));
+/**
+ * Type Guards
+ */
+function isLiteralElement(el) {
+    return el.type === TYPE.literal;
 }
-
-PluralOffsetString.prototype.format = function (value) {
-    var number = this.numberFormat.format(value - this.offset);
-
-    return this.string
-            .replace(/(^|[^\\])#/g, '$1' + number)
-            .replace(/\\#/g, '#');
-};
-
-function SelectFormat(id, options) {
-    this.id      = id;
-    this.options = options;
+function isArgumentElement(el) {
+    return el.type === TYPE.argument;
 }
-
-SelectFormat.prototype.getOption = function (value) {
-    var options = this.options;
-    return options[value] || options.other;
-};
-
+function isNumberElement(el) {
+    return el.type === TYPE.number;
+}
+function isDateElement(el) {
+    return el.type === TYPE.date;
+}
+function isTimeElement(el) {
+    return el.type === TYPE.time;
+}
+function isSelectElement(el) {
+    return el.type === TYPE.select;
+}
+function isPluralElement(el) {
+    return el.type === TYPE.plural;
+}
+function isPoundElement(el) {
+    return el.type === TYPE.pound;
+}
+function isTagElement(el) {
+    return el.type === TYPE.tag;
+}
+function isNumberSkeleton(el) {
+    return !!(el && typeof el === 'object' && el.type === 0 /* number */);
+}
+function isDateTimeSkeleton(el) {
+    return !!(el && typeof el === 'object' && el.type === 1 /* dateTime */);
+}
+function createLiteralElement(value) {
+    return {
+        type: TYPE.literal,
+        value: value,
+    };
+}
+function createNumberElement(value, style) {
+    return {
+        type: TYPE.number,
+        value: value,
+        style: style,
+    };
+}
 
 
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/core.js":
-/*!******************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/intl-messageformat/lib/core.js ***!
-  \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/core.js ***!
+  \******************************************************************************************/
+/*! exports provided: createDefaultFormatters, IntlMessageFormat, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDefaultFormatters", function() { return createDefaultFormatters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IntlMessageFormat", function() { return IntlMessageFormat; });
+/* harmony import */ var intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat-parser */ "../../../node_modules/intl-messageformat-parser/lib/index.js");
+/* harmony import */ var intl_format_cache__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! intl-format-cache */ "../../../node_modules/intl-format-cache/lib/index.js");
+/* harmony import */ var _formatters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./formatters */ "../../../node_modules/intl-messageformat/lib/formatters.js");
 /*
 Copyright (c) 2014, Yahoo! Inc. All rights reserved.
 Copyrights licensed under the New BSD License.
 See the accompanying LICENSE file for terms.
 */
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 
-/* jslint esnext: true */
 
-
-var src$utils$$ = __webpack_require__(/*! ./utils */ "../../../node_modules/intl-messageformat/lib/utils.js"), src$es5$$ = __webpack_require__(/*! ./es5 */ "../../../node_modules/intl-messageformat/lib/es5.js"), src$compiler$$ = __webpack_require__(/*! ./compiler */ "../../../node_modules/intl-messageformat/lib/compiler.js"), intl$messageformat$parser$$ = __webpack_require__(/*! intl-messageformat-parser */ "../../../node_modules/intl-messageformat-parser/index.js");
-exports["default"] = MessageFormat;
 
 // -- MessageFormat --------------------------------------------------------
-
-function MessageFormat(message, locales, formats) {
-    // Parse string messages into an AST.
-    var ast = typeof message === 'string' ?
-            MessageFormat.__parse(message) : message;
-
-    if (!(ast && ast.type === 'messageFormatPattern')) {
-        throw new TypeError('A message must be provided as a String or AST.');
+function mergeConfig(c1, c2) {
+    if (!c2) {
+        return c1;
     }
-
-    // Creates a new object with the specified `formats` merged with the default
-    // formats.
-    formats = this._mergeFormats(MessageFormat.formats, formats);
-
-    // Defined first because it's used to build the format pattern.
-    src$es5$$.defineProperty(this, '_locale',  {value: this._resolveLocale(locales)});
-
-    // Compile the `ast` to a pattern that is highly optimized for repeated
-    // `format()` invocations. **Note:** This passes the `locales` set provided
-    // to the constructor instead of just the resolved locale.
-    var pluralFn = this._findPluralRuleFunction(this._locale);
-    var pattern  = this._compilePattern(ast, locales, formats, pluralFn);
-
-    // "Bind" `format()` method to `this` so it can be passed by reference like
-    // the other `Intl` APIs.
-    var messageFormat = this;
-    this.format = function (values) {
-      try {
-        return messageFormat._format(pattern, values);
-      } catch (e) {
-        if (e.variableId) {
-          throw new Error(
-            'The intl string context variable \'' + e.variableId + '\'' +
-            ' was not provided to the string \'' + message + '\''
-          );
-        } else {
-          throw e;
-        }
-      }
+    return __assign(__assign(__assign({}, (c1 || {})), (c2 || {})), Object.keys(c1).reduce(function (all, k) {
+        all[k] = __assign(__assign({}, c1[k]), (c2[k] || {}));
+        return all;
+    }, {}));
+}
+function mergeConfigs(defaultConfig, configs) {
+    if (!configs) {
+        return defaultConfig;
+    }
+    return Object.keys(defaultConfig).reduce(function (all, k) {
+        all[k] = mergeConfig(defaultConfig[k], configs[k]);
+        return all;
+    }, __assign({}, defaultConfig));
+}
+function createDefaultFormatters(cache) {
+    if (cache === void 0) { cache = {
+        number: {},
+        dateTime: {},
+        pluralRules: {},
+    }; }
+    return {
+        getNumberFormat: Object(intl_format_cache__WEBPACK_IMPORTED_MODULE_1__["default"])(Intl.NumberFormat, cache.number),
+        getDateTimeFormat: Object(intl_format_cache__WEBPACK_IMPORTED_MODULE_1__["default"])(Intl.DateTimeFormat, cache.dateTime),
+        getPluralRules: Object(intl_format_cache__WEBPACK_IMPORTED_MODULE_1__["default"])(Intl.PluralRules, cache.pluralRules),
     };
 }
-
-// Default format options used as the prototype of the `formats` provided to the
-// constructor. These are used when constructing the internal Intl.NumberFormat
-// and Intl.DateTimeFormat instances.
-src$es5$$.defineProperty(MessageFormat, 'formats', {
-    enumerable: true,
-
-    value: {
+var IntlMessageFormat = /** @class */ (function () {
+    function IntlMessageFormat(message, locales, overrideFormats, opts) {
+        var _this = this;
+        if (locales === void 0) { locales = IntlMessageFormat.defaultLocale; }
+        this.formatterCache = {
+            number: {},
+            dateTime: {},
+            pluralRules: {},
+        };
+        this.format = function (values) {
+            var parts = _this.formatToParts(values);
+            // Hot path for straight simple msg translations
+            if (parts.length === 1) {
+                return parts[0].value;
+            }
+            var result = parts.reduce(function (all, part) {
+                if (!all.length ||
+                    part.type !== 0 /* literal */ ||
+                    typeof all[all.length - 1] !== 'string') {
+                    all.push(part.value);
+                }
+                else {
+                    all[all.length - 1] += part.value;
+                }
+                return all;
+            }, []);
+            if (result.length <= 1) {
+                return result[0] || '';
+            }
+            return result;
+        };
+        this.formatToParts = function (values) {
+            return Object(_formatters__WEBPACK_IMPORTED_MODULE_2__["formatToParts"])(_this.ast, _this.locales, _this.formatters, _this.formats, values, undefined, _this.message);
+        };
+        this.resolvedOptions = function () { return ({
+            locale: Intl.NumberFormat.supportedLocalesOf(_this.locales)[0],
+        }); };
+        this.getAst = function () { return _this.ast; };
+        if (typeof message === 'string') {
+            this.message = message;
+            if (!IntlMessageFormat.__parse) {
+                throw new TypeError('IntlMessageFormat.__parse must be set to process `message` of type `string`');
+            }
+            // Parse string messages into an AST.
+            this.ast = IntlMessageFormat.__parse(message, {
+                normalizeHashtagInPlural: false,
+            });
+        }
+        else {
+            this.ast = message;
+        }
+        if (!Array.isArray(this.ast)) {
+            throw new TypeError('A message must be provided as a String or AST.');
+        }
+        // Creates a new object with the specified `formats` merged with the default
+        // formats.
+        this.formats = mergeConfigs(IntlMessageFormat.formats, overrideFormats);
+        // Defined first because it's used to build the format pattern.
+        this.locales = locales;
+        this.formatters =
+            (opts && opts.formatters) || createDefaultFormatters(this.formatterCache);
+    }
+    Object.defineProperty(IntlMessageFormat, "defaultLocale", {
+        get: function () {
+            if (!IntlMessageFormat.memoizedDefaultLocale) {
+                IntlMessageFormat.memoizedDefaultLocale = new Intl.NumberFormat().resolvedOptions().locale;
+            }
+            return IntlMessageFormat.memoizedDefaultLocale;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    IntlMessageFormat.memoizedDefaultLocale = null;
+    IntlMessageFormat.__parse = intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["parse"];
+    // Default format options used as the prototype of the `formats` provided to the
+    // constructor. These are used when constructing the internal Intl.NumberFormat
+    // and Intl.DateTimeFormat instances.
+    IntlMessageFormat.formats = {
         number: {
-            'currency': {
-                style: 'currency'
+            currency: {
+                style: 'currency',
             },
-
-            'percent': {
-                style: 'percent'
-            }
+            percent: {
+                style: 'percent',
+            },
         },
-
         date: {
-            'short': {
+            short: {
                 month: 'numeric',
-                day  : 'numeric',
-                year : '2-digit'
+                day: 'numeric',
+                year: '2-digit',
             },
-
-            'medium': {
+            medium: {
                 month: 'short',
-                day  : 'numeric',
-                year : 'numeric'
+                day: 'numeric',
+                year: 'numeric',
             },
-
-            'long': {
+            long: {
                 month: 'long',
-                day  : 'numeric',
-                year : 'numeric'
+                day: 'numeric',
+                year: 'numeric',
             },
-
-            'full': {
+            full: {
                 weekday: 'long',
-                month  : 'long',
-                day    : 'numeric',
-                year   : 'numeric'
-            }
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+            },
         },
-
         time: {
-            'short': {
-                hour  : 'numeric',
-                minute: 'numeric'
-            },
-
-            'medium':  {
-                hour  : 'numeric',
+            short: {
+                hour: 'numeric',
                 minute: 'numeric',
-                second: 'numeric'
             },
-
-            'long': {
-                hour        : 'numeric',
-                minute      : 'numeric',
-                second      : 'numeric',
-                timeZoneName: 'short'
+            medium: {
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
             },
-
-            'full': {
-                hour        : 'numeric',
-                minute      : 'numeric',
-                second      : 'numeric',
-                timeZoneName: 'short'
-            }
-        }
-    }
-});
-
-// Define internal private properties for dealing with locale data.
-src$es5$$.defineProperty(MessageFormat, '__localeData__', {value: src$es5$$.objCreate(null)});
-src$es5$$.defineProperty(MessageFormat, '__addLocaleData', {value: function (data) {
-    if (!(data && data.locale)) {
-        throw new Error(
-            'Locale data provided to IntlMessageFormat is missing a ' +
-            '`locale` property'
-        );
-    }
-
-    MessageFormat.__localeData__[data.locale.toLowerCase()] = data;
-}});
-
-// Defines `__parse()` static method as an exposed private.
-src$es5$$.defineProperty(MessageFormat, '__parse', {value: intl$messageformat$parser$$["default"].parse});
-
-// Define public `defaultLocale` property which defaults to English, but can be
-// set by the developer.
-src$es5$$.defineProperty(MessageFormat, 'defaultLocale', {
-    enumerable: true,
-    writable  : true,
-    value     : undefined
-});
-
-MessageFormat.prototype.resolvedOptions = function () {
-    // TODO: Provide anything else?
-    return {
-        locale: this._locale
+            long: {
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                timeZoneName: 'short',
+            },
+            full: {
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                timeZoneName: 'short',
+            },
+        },
     };
-};
+    return IntlMessageFormat;
+}());
 
-MessageFormat.prototype._compilePattern = function (ast, locales, formats, pluralFn) {
-    var compiler = new src$compiler$$["default"](locales, formats, pluralFn);
-    return compiler.compile(ast);
-};
+/* harmony default export */ __webpack_exports__["default"] = (IntlMessageFormat);
 
-MessageFormat.prototype._findPluralRuleFunction = function (locale) {
-    var localeData = MessageFormat.__localeData__;
-    var data       = localeData[locale.toLowerCase()];
 
-    // The locale data is de-duplicated, so we have to traverse the locale's
-    // hierarchy until we find a `pluralRuleFunction` to return.
-    while (data) {
-        if (data.pluralRuleFunction) {
-            return data.pluralRuleFunction;
-        }
+/***/ }),
 
-        data = data.parentLocale && localeData[data.parentLocale.toLowerCase()];
+/***/ "../../../node_modules/intl-messageformat/lib/error.js":
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/error.js ***!
+  \*******************************************************************************************/
+/*! exports provided: ErrorCode, FormatError, InvalidValueError, InvalidValueTypeError, MissingValueError */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorCode", function() { return ErrorCode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormatError", function() { return FormatError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InvalidValueError", function() { return InvalidValueError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InvalidValueTypeError", function() { return InvalidValueTypeError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MissingValueError", function() { return MissingValueError; });
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var ErrorCode;
+(function (ErrorCode) {
+    // When we have a placeholder but no value to format
+    ErrorCode["MISSING_VALUE"] = "MISSING_VALUE";
+    // When value supplied is invalid
+    ErrorCode["INVALID_VALUE"] = "INVALID_VALUE";
+    // When we need specific Intl API but it's not available
+    ErrorCode["MISSING_INTL_API"] = "MISSING_INTL_API";
+})(ErrorCode || (ErrorCode = {}));
+var FormatError = /** @class */ (function (_super) {
+    __extends(FormatError, _super);
+    function FormatError(msg, code, originalMessage) {
+        var _this = _super.call(this, msg) || this;
+        _this.code = code;
+        _this.originalMessage = originalMessage;
+        return _this;
     }
+    FormatError.prototype.toString = function () {
+        return "[formatjs Error: " + this.code + "] " + this.message;
+    };
+    return FormatError;
+}(Error));
 
-    throw new Error(
-        'Locale data added to IntlMessageFormat is missing a ' +
-        '`pluralRuleFunction` for :' + locale
-    );
-};
+var InvalidValueError = /** @class */ (function (_super) {
+    __extends(InvalidValueError, _super);
+    function InvalidValueError(variableId, value, options, originalMessage) {
+        return _super.call(this, "Invalid values for \"" + variableId + "\": \"" + value + "\". Options are \"" + Object.keys(options).join('", "') + "\"", "INVALID_VALUE" /* INVALID_VALUE */, originalMessage) || this;
+    }
+    return InvalidValueError;
+}(FormatError));
 
-MessageFormat.prototype._format = function (pattern, values) {
-    var result = '',
-        i, len, part, id, value, err;
+var InvalidValueTypeError = /** @class */ (function (_super) {
+    __extends(InvalidValueTypeError, _super);
+    function InvalidValueTypeError(value, type, originalMessage) {
+        return _super.call(this, "Value for \"" + value + "\" must be of type " + type, "INVALID_VALUE" /* INVALID_VALUE */, originalMessage) || this;
+    }
+    return InvalidValueTypeError;
+}(FormatError));
 
-    for (i = 0, len = pattern.length; i < len; i += 1) {
-        part = pattern[i];
+var MissingValueError = /** @class */ (function (_super) {
+    __extends(MissingValueError, _super);
+    function MissingValueError(variableId, originalMessage) {
+        return _super.call(this, "The intl string context variable \"" + variableId + "\" was not provided to the string \"" + originalMessage + "\"", "MISSING_VALUE" /* MISSING_VALUE */, originalMessage) || this;
+    }
+    return MissingValueError;
+}(FormatError));
 
-        // Exist early for string parts.
-        if (typeof part === 'string') {
-            result += part;
+
+
+/***/ }),
+
+/***/ "../../../node_modules/intl-messageformat/lib/formatters.js":
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/formatters.js ***!
+  \************************************************************************************************/
+/*! exports provided: PART_TYPE, formatToParts */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PART_TYPE", function() { return PART_TYPE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatToParts", function() { return formatToParts; });
+/* harmony import */ var intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat-parser */ "../../../node_modules/intl-messageformat-parser/lib/index.js");
+/* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./error */ "../../../node_modules/intl-messageformat/lib/error.js");
+
+
+var PART_TYPE;
+(function (PART_TYPE) {
+    PART_TYPE[PART_TYPE["literal"] = 0] = "literal";
+    PART_TYPE[PART_TYPE["object"] = 1] = "object";
+})(PART_TYPE || (PART_TYPE = {}));
+function mergeLiteral(parts) {
+    if (parts.length < 2) {
+        return parts;
+    }
+    return parts.reduce(function (all, part) {
+        var lastPart = all[all.length - 1];
+        if (!lastPart ||
+            lastPart.type !== 0 /* literal */ ||
+            part.type !== 0 /* literal */) {
+            all.push(part);
+        }
+        else {
+            lastPart.value += part.value;
+        }
+        return all;
+    }, []);
+}
+function isFormatXMLElementFn(el) {
+    return typeof el === 'function';
+}
+// TODO(skeleton): add skeleton support
+function formatToParts(els, locales, formatters, formats, values, currentPluralValue, 
+// For debugging
+originalMessage) {
+    // Hot path for straight simple msg translations
+    if (els.length === 1 && Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isLiteralElement"])(els[0])) {
+        return [
+            {
+                type: 0 /* literal */,
+                value: els[0].value,
+            },
+        ];
+    }
+    var result = [];
+    for (var _i = 0, els_1 = els; _i < els_1.length; _i++) {
+        var el = els_1[_i];
+        // Exit early for string parts.
+        if (Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isLiteralElement"])(el)) {
+            result.push({
+                type: 0 /* literal */,
+                value: el.value,
+            });
             continue;
         }
-
-        id = part.id;
-
-        // Enforce that all required values are provided by the caller.
-        if (!(values && src$utils$$.hop.call(values, id))) {
-          err = new Error('A value must be provided for: ' + id);
-          err.variableId = id;
-          throw err;
+        // TODO: should this part be literal type?
+        // Replace `#` in plural rules with the actual numeric value.
+        if (Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isPoundElement"])(el)) {
+            if (typeof currentPluralValue === 'number') {
+                result.push({
+                    type: 0 /* literal */,
+                    value: formatters.getNumberFormat(locales).format(currentPluralValue),
+                });
+            }
+            continue;
         }
-
-        value = values[id];
-
+        var varName = el.value;
+        // Enforce that all required values are provided by the caller.
+        if (!(values && varName in values)) {
+            throw new _error__WEBPACK_IMPORTED_MODULE_1__["MissingValueError"](varName, originalMessage);
+        }
+        var value = values[varName];
+        if (Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isArgumentElement"])(el)) {
+            if (!value || typeof value === 'string' || typeof value === 'number') {
+                value =
+                    typeof value === 'string' || typeof value === 'number'
+                        ? String(value)
+                        : '';
+            }
+            result.push({
+                type: typeof value === 'string' ? 0 /* literal */ : 1 /* object */,
+                value: value,
+            });
+            continue;
+        }
         // Recursively format plural and select parts' option — which can be a
         // nested pattern structure. The choosing of the option to use is
         // abstracted-by and delegated-to the part helper object.
-        if (part.options) {
-            result += this._format(part.getOption(value), values);
-        } else {
-            result += part.format(value);
+        if (Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isDateElement"])(el)) {
+            var style = typeof el.style === 'string'
+                ? formats.date[el.style]
+                : Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isDateTimeSkeleton"])(el.style)
+                    ? Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["parseDateTimeSkeleton"])(el.style.pattern)
+                    : undefined;
+            result.push({
+                type: 0 /* literal */,
+                value: formatters
+                    .getDateTimeFormat(locales, style)
+                    .format(value),
+            });
+            continue;
         }
-    }
-
-    return result;
-};
-
-MessageFormat.prototype._mergeFormats = function (defaults, formats) {
-    var mergedFormats = {},
-        type, mergedType;
-
-    for (type in defaults) {
-        if (!src$utils$$.hop.call(defaults, type)) { continue; }
-
-        mergedFormats[type] = mergedType = src$es5$$.objCreate(defaults[type]);
-
-        if (formats && src$utils$$.hop.call(formats, type)) {
-            src$utils$$.extend(mergedType, formats[type]);
+        if (Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isTimeElement"])(el)) {
+            var style = typeof el.style === 'string'
+                ? formats.time[el.style]
+                : Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isDateTimeSkeleton"])(el.style)
+                    ? Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["parseDateTimeSkeleton"])(el.style.pattern)
+                    : undefined;
+            result.push({
+                type: 0 /* literal */,
+                value: formatters
+                    .getDateTimeFormat(locales, style)
+                    .format(value),
+            });
+            continue;
         }
-    }
-
-    return mergedFormats;
-};
-
-MessageFormat.prototype._resolveLocale = function (locales) {
-    if (typeof locales === 'string') {
-        locales = [locales];
-    }
-
-    // Create a copy of the array so we can push on the default locale.
-    locales = (locales || []).concat(MessageFormat.defaultLocale);
-
-    var localeData = MessageFormat.__localeData__;
-    var i, len, localeParts, data;
-
-    // Using the set of locales + the default locale, we look for the first one
-    // which that has been registered. When data does not exist for a locale, we
-    // traverse its ancestors to find something that's been registered within
-    // its hierarchy of locales. Since we lack the proper `parentLocale` data
-    // here, we must take a naive approach to traversal.
-    for (i = 0, len = locales.length; i < len; i += 1) {
-        localeParts = locales[i].toLowerCase().split('-');
-
-        while (localeParts.length) {
-            data = localeData[localeParts.join('-')];
-            if (data) {
-                // Return the normalized locale string; e.g., we return "en-US",
-                // instead of "en-us".
-                return data.locale;
+        if (Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isNumberElement"])(el)) {
+            var style = typeof el.style === 'string'
+                ? formats.number[el.style]
+                : Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isNumberSkeleton"])(el.style)
+                    ? Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["convertNumberSkeletonToNumberFormatOptions"])(el.style.tokens)
+                    : undefined;
+            result.push({
+                type: 0 /* literal */,
+                value: formatters
+                    .getNumberFormat(locales, style)
+                    .format(value),
+            });
+            continue;
+        }
+        if (Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isTagElement"])(el)) {
+            var children = el.children, value_1 = el.value;
+            var formatFn = values[value_1];
+            if (!isFormatXMLElementFn(formatFn)) {
+                throw new _error__WEBPACK_IMPORTED_MODULE_1__["InvalidValueTypeError"](value_1, 'function', originalMessage);
             }
-
-            localeParts.pop();
-        }
-    }
-
-    var defaultLocale = locales.pop();
-    throw new Error(
-        'No locale data has been added to IntlMessageFormat for: ' +
-        locales.join(', ') + ', or the default locale: ' + defaultLocale
-    );
-};
-
-
-
-/***/ }),
-
-/***/ "../../../node_modules/intl-messageformat/lib/en.js":
-/*!****************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/intl-messageformat/lib/en.js ***!
-  \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// GENERATED FILE
-
-exports["default"] = {"locale":"en","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return n10==1&&n100!=11?"one":n10==2&&n100!=12?"two":n10==3&&n100!=13?"few":"other";return n==1&&v0?"one":"other"}};
-
-
-
-/***/ }),
-
-/***/ "../../../node_modules/intl-messageformat/lib/es5.js":
-/*!*****************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/intl-messageformat/lib/es5.js ***!
-  \*****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
-Copyright (c) 2014, Yahoo! Inc. All rights reserved.
-Copyrights licensed under the New BSD License.
-See the accompanying LICENSE file for terms.
-*/
-
-/* jslint esnext: true */
-
-
-var src$utils$$ = __webpack_require__(/*! ./utils */ "../../../node_modules/intl-messageformat/lib/utils.js");
-
-// Purposely using the same implementation as the Intl.js `Intl` polyfill.
-// Copyright 2013 Andy Earnshaw, MIT License
-
-var realDefineProp = (function () {
-    try { return !!Object.defineProperty({}, 'a', {}); }
-    catch (e) { return false; }
-})();
-
-var es3 = !realDefineProp && !Object.prototype.__defineGetter__;
-
-var defineProperty = realDefineProp ? Object.defineProperty :
-        function (obj, name, desc) {
-
-    if ('get' in desc && obj.__defineGetter__) {
-        obj.__defineGetter__(name, desc.get);
-    } else if (!src$utils$$.hop.call(obj, name) || 'value' in desc) {
-        obj[name] = desc.value;
-    }
-};
-
-var objCreate = Object.create || function (proto, props) {
-    var obj, k;
-
-    function F() {}
-    F.prototype = proto;
-    obj = new F();
-
-    for (k in props) {
-        if (src$utils$$.hop.call(props, k)) {
-            defineProperty(obj, k, props[k]);
-        }
-    }
-
-    return obj;
-};
-
-exports.defineProperty = defineProperty, exports.objCreate = objCreate;
-
-
-
-/***/ }),
-
-/***/ "../../../node_modules/intl-messageformat/lib/locales.js":
-/*!*********************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/intl-messageformat/lib/locales.js ***!
-  \*********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// GENERATED FILE
-var IntlMessageFormat = __webpack_require__(/*! ./core */ "../../../node_modules/intl-messageformat/lib/core.js")["default"];
-
-IntlMessageFormat.__addLocaleData({"locale":"af","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"af-NA","parentLocale":"af"});
-IntlMessageFormat.__addLocaleData({"locale":"agq","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ak","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==0||n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"am","pluralRuleFunction":function (n,ord){if(ord)return"other";return n>=0&&n<=1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ar","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n,n100=t0&&s[0].slice(-2);if(ord)return"other";return n==0?"zero":n==1?"one":n==2?"two":n100>=3&&n100<=10?"few":n100>=11&&n100<=99?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ar-AE","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-BH","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-DJ","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-DZ","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-EG","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-EH","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-ER","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-IL","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-IQ","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-JO","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-KM","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-KW","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-LB","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-LY","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-MA","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-MR","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-OM","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-PS","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-QA","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-SA","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-SD","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-SO","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-SS","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-SY","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-TD","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-TN","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"ar-YE","parentLocale":"ar"});
-IntlMessageFormat.__addLocaleData({"locale":"as","pluralRuleFunction":function (n,ord){if(ord)return n==1||n==5||n==7||n==8||n==9||n==10?"one":n==2||n==3?"two":n==4?"few":n==6?"many":"other";return n>=0&&n<=1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"asa","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ast","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"az","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],i10=i.slice(-1),i100=i.slice(-2),i1000=i.slice(-3);if(ord)return i10==1||i10==2||i10==5||i10==7||i10==8||(i100==20||i100==50||i100==70||i100==80)?"one":i10==3||i10==4||(i1000==100||i1000==200||i1000==300||i1000==400||i1000==500||i1000==600||i1000==700||i1000==800||i1000==900)?"few":i==0||i10==6||(i100==40||i100==60||i100==90)?"many":"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"az-Arab","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"az-Cyrl","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"az-Latn","parentLocale":"az"});
-IntlMessageFormat.__addLocaleData({"locale":"bas","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"be","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return(n10==2||n10==3)&&n100!=12&&n100!=13?"few":"other";return n10==1&&n100!=11?"one":n10>=2&&n10<=4&&(n100<12||n100>14)?"few":t0&&n10==0||n10>=5&&n10<=9||n100>=11&&n100<=14?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bem","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bez","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bg","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bh","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==0||n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bm","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bm-Nkoo","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bn","pluralRuleFunction":function (n,ord){if(ord)return n==1||n==5||n==7||n==8||n==9||n==10?"one":n==2||n==3?"two":n==4?"few":n==6?"many":"other";return n>=0&&n<=1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bn-IN","parentLocale":"bn"});
-IntlMessageFormat.__addLocaleData({"locale":"bo","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bo-IN","parentLocale":"bo"});
-IntlMessageFormat.__addLocaleData({"locale":"br","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2),n1000000=t0&&s[0].slice(-6);if(ord)return"other";return n10==1&&n100!=11&&n100!=71&&n100!=91?"one":n10==2&&n100!=12&&n100!=72&&n100!=92?"two":(n10==3||n10==4||n10==9)&&(n100<10||n100>19)&&(n100<70||n100>79)&&(n100<90||n100>99)?"few":n!=0&&t0&&n1000000==0?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"brx","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bs","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],f=s[1]||"",v0=!s[1],i10=i.slice(-1),i100=i.slice(-2),f10=f.slice(-1),f100=f.slice(-2);if(ord)return"other";return v0&&i10==1&&i100!=11||f10==1&&f100!=11?"one":v0&&(i10>=2&&i10<=4)&&(i100<12||i100>14)||f10>=2&&f10<=4&&(f100<12||f100>14)?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bs-Cyrl","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"bs-Latn","parentLocale":"bs"});
-IntlMessageFormat.__addLocaleData({"locale":"ca","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return n==1||n==3?"one":n==2?"two":n==4?"few":"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ca-AD","parentLocale":"ca"});
-IntlMessageFormat.__addLocaleData({"locale":"ca-ES-VALENCIA","parentLocale":"ca-ES"});
-IntlMessageFormat.__addLocaleData({"locale":"ca-ES","parentLocale":"ca"});
-IntlMessageFormat.__addLocaleData({"locale":"ca-FR","parentLocale":"ca"});
-IntlMessageFormat.__addLocaleData({"locale":"ca-IT","parentLocale":"ca"});
-IntlMessageFormat.__addLocaleData({"locale":"ce","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"cgg","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"chr","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ckb","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ckb-IR","parentLocale":"ckb"});
-IntlMessageFormat.__addLocaleData({"locale":"cs","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],v0=!s[1];if(ord)return"other";return n==1&&v0?"one":i>=2&&i<=4&&v0?"few":!v0?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"cu","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"cy","pluralRuleFunction":function (n,ord){if(ord)return n==0||n==7||n==8||n==9?"zero":n==1?"one":n==2?"two":n==3||n==4?"few":n==5||n==6?"many":"other";return n==0?"zero":n==1?"one":n==2?"two":n==3?"few":n==6?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"da","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],t0=Number(s[0])==n;if(ord)return"other";return n==1||!t0&&(i==0||i==1)?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"da-GL","parentLocale":"da"});
-IntlMessageFormat.__addLocaleData({"locale":"dav","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"de","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"de-AT","parentLocale":"de"});
-IntlMessageFormat.__addLocaleData({"locale":"de-BE","parentLocale":"de"});
-IntlMessageFormat.__addLocaleData({"locale":"de-CH","parentLocale":"de"});
-IntlMessageFormat.__addLocaleData({"locale":"de-LI","parentLocale":"de"});
-IntlMessageFormat.__addLocaleData({"locale":"de-LU","parentLocale":"de"});
-IntlMessageFormat.__addLocaleData({"locale":"dje","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"dsb","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],f=s[1]||"",v0=!s[1],i100=i.slice(-2),f100=f.slice(-2);if(ord)return"other";return v0&&i100==1||f100==1?"one":v0&&i100==2||f100==2?"two":v0&&(i100==3||i100==4)||(f100==3||f100==4)?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"dua","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"dv","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"dyo","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"dz","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ebu","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ee","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ee-TG","parentLocale":"ee"});
-IntlMessageFormat.__addLocaleData({"locale":"el","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"el-CY","parentLocale":"el"});
-IntlMessageFormat.__addLocaleData({"locale":"en","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return n10==1&&n100!=11?"one":n10==2&&n100!=12?"two":n10==3&&n100!=13?"few":"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"en-001","parentLocale":"en"});
-IntlMessageFormat.__addLocaleData({"locale":"en-150","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-AG","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-AI","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-AS","parentLocale":"en"});
-IntlMessageFormat.__addLocaleData({"locale":"en-AT","parentLocale":"en-150"});
-IntlMessageFormat.__addLocaleData({"locale":"en-AU","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-BB","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-BE","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-BI","parentLocale":"en"});
-IntlMessageFormat.__addLocaleData({"locale":"en-BM","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-BS","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-BW","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-BZ","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-CA","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-CC","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-CH","parentLocale":"en-150"});
-IntlMessageFormat.__addLocaleData({"locale":"en-CK","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-CM","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-CX","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-CY","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-DE","parentLocale":"en-150"});
-IntlMessageFormat.__addLocaleData({"locale":"en-DG","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-DK","parentLocale":"en-150"});
-IntlMessageFormat.__addLocaleData({"locale":"en-DM","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-Dsrt","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"en-ER","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-FI","parentLocale":"en-150"});
-IntlMessageFormat.__addLocaleData({"locale":"en-FJ","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-FK","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-FM","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-GB","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-GD","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-GG","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-GH","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-GI","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-GM","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-GU","parentLocale":"en"});
-IntlMessageFormat.__addLocaleData({"locale":"en-GY","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-HK","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-IE","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-IL","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-IM","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-IN","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-IO","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-JE","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-JM","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-KE","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-KI","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-KN","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-KY","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-LC","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-LR","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-LS","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-MG","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-MH","parentLocale":"en"});
-IntlMessageFormat.__addLocaleData({"locale":"en-MO","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-MP","parentLocale":"en"});
-IntlMessageFormat.__addLocaleData({"locale":"en-MS","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-MT","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-MU","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-MW","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-MY","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-NA","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-NF","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-NG","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-NL","parentLocale":"en-150"});
-IntlMessageFormat.__addLocaleData({"locale":"en-NR","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-NU","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-NZ","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-PG","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-PH","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-PK","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-PN","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-PR","parentLocale":"en"});
-IntlMessageFormat.__addLocaleData({"locale":"en-PW","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-RW","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SB","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SC","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SD","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SE","parentLocale":"en-150"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SG","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SH","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SI","parentLocale":"en-150"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SL","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SS","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SX","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-SZ","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-Shaw","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"en-TC","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-TK","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-TO","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-TT","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-TV","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-TZ","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-UG","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-UM","parentLocale":"en"});
-IntlMessageFormat.__addLocaleData({"locale":"en-US","parentLocale":"en"});
-IntlMessageFormat.__addLocaleData({"locale":"en-VC","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-VG","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-VI","parentLocale":"en"});
-IntlMessageFormat.__addLocaleData({"locale":"en-VU","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-WS","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-ZA","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-ZM","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"en-ZW","parentLocale":"en-001"});
-IntlMessageFormat.__addLocaleData({"locale":"eo","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"es","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"es-419","parentLocale":"es"});
-IntlMessageFormat.__addLocaleData({"locale":"es-AR","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-BO","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-CL","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-CO","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-CR","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-CU","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-DO","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-EA","parentLocale":"es"});
-IntlMessageFormat.__addLocaleData({"locale":"es-EC","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-GQ","parentLocale":"es"});
-IntlMessageFormat.__addLocaleData({"locale":"es-GT","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-HN","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-IC","parentLocale":"es"});
-IntlMessageFormat.__addLocaleData({"locale":"es-MX","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-NI","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-PA","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-PE","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-PH","parentLocale":"es"});
-IntlMessageFormat.__addLocaleData({"locale":"es-PR","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-PY","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-SV","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-US","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-UY","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"es-VE","parentLocale":"es-419"});
-IntlMessageFormat.__addLocaleData({"locale":"et","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"eu","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ewo","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"fa","pluralRuleFunction":function (n,ord){if(ord)return"other";return n>=0&&n<=1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"fa-AF","parentLocale":"fa"});
-IntlMessageFormat.__addLocaleData({"locale":"ff","pluralRuleFunction":function (n,ord){if(ord)return"other";return n>=0&&n<2?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ff-CM","parentLocale":"ff"});
-IntlMessageFormat.__addLocaleData({"locale":"ff-GN","parentLocale":"ff"});
-IntlMessageFormat.__addLocaleData({"locale":"ff-MR","parentLocale":"ff"});
-IntlMessageFormat.__addLocaleData({"locale":"fi","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"fil","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],f=s[1]||"",v0=!s[1],i10=i.slice(-1),f10=f.slice(-1);if(ord)return n==1?"one":"other";return v0&&(i==1||i==2||i==3)||v0&&i10!=4&&i10!=6&&i10!=9||!v0&&f10!=4&&f10!=6&&f10!=9?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"fo","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"fo-DK","parentLocale":"fo"});
-IntlMessageFormat.__addLocaleData({"locale":"fr","pluralRuleFunction":function (n,ord){if(ord)return n==1?"one":"other";return n>=0&&n<2?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"fr-BE","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-BF","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-BI","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-BJ","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-BL","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-CA","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-CD","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-CF","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-CG","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-CH","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-CI","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-CM","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-DJ","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-DZ","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-GA","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-GF","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-GN","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-GP","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-GQ","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-HT","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-KM","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-LU","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-MA","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-MC","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-MF","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-MG","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-ML","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-MQ","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-MR","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-MU","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-NC","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-NE","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-PF","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-PM","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-RE","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-RW","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-SC","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-SN","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-SY","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-TD","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-TG","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-TN","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-VU","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-WF","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fr-YT","parentLocale":"fr"});
-IntlMessageFormat.__addLocaleData({"locale":"fur","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"fy","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ga","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n;if(ord)return n==1?"one":"other";return n==1?"one":n==2?"two":t0&&n>=3&&n<=6?"few":t0&&n>=7&&n<=10?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"gd","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n;if(ord)return"other";return n==1||n==11?"one":n==2||n==12?"two":t0&&n>=3&&n<=10||t0&&n>=13&&n<=19?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"gl","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"gsw","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"gsw-FR","parentLocale":"gsw"});
-IntlMessageFormat.__addLocaleData({"locale":"gsw-LI","parentLocale":"gsw"});
-IntlMessageFormat.__addLocaleData({"locale":"gu","pluralRuleFunction":function (n,ord){if(ord)return n==1?"one":n==2||n==3?"two":n==4?"few":n==6?"many":"other";return n>=0&&n<=1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"guw","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==0||n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"guz","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"gv","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],v0=!s[1],i10=i.slice(-1),i100=i.slice(-2);if(ord)return"other";return v0&&i10==1?"one":v0&&i10==2?"two":v0&&(i100==0||i100==20||i100==40||i100==60||i100==80)?"few":!v0?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ha","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ha-Arab","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ha-GH","parentLocale":"ha"});
-IntlMessageFormat.__addLocaleData({"locale":"ha-NE","parentLocale":"ha"});
-IntlMessageFormat.__addLocaleData({"locale":"haw","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"he","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1);if(ord)return"other";return n==1&&v0?"one":i==2&&v0?"two":v0&&(n<0||n>10)&&t0&&n10==0?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"hi","pluralRuleFunction":function (n,ord){if(ord)return n==1?"one":n==2||n==3?"two":n==4?"few":n==6?"many":"other";return n>=0&&n<=1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"hr","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],f=s[1]||"",v0=!s[1],i10=i.slice(-1),i100=i.slice(-2),f10=f.slice(-1),f100=f.slice(-2);if(ord)return"other";return v0&&i10==1&&i100!=11||f10==1&&f100!=11?"one":v0&&(i10>=2&&i10<=4)&&(i100<12||i100>14)||f10>=2&&f10<=4&&(f100<12||f100>14)?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"hr-BA","parentLocale":"hr"});
-IntlMessageFormat.__addLocaleData({"locale":"hsb","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],f=s[1]||"",v0=!s[1],i100=i.slice(-2),f100=f.slice(-2);if(ord)return"other";return v0&&i100==1||f100==1?"one":v0&&i100==2||f100==2?"two":v0&&(i100==3||i100==4)||(f100==3||f100==4)?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"hu","pluralRuleFunction":function (n,ord){if(ord)return n==1||n==5?"one":"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"hy","pluralRuleFunction":function (n,ord){if(ord)return n==1?"one":"other";return n>=0&&n<2?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"id","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ig","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ii","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"in","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"is","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],t0=Number(s[0])==n,i10=i.slice(-1),i100=i.slice(-2);if(ord)return"other";return t0&&i10==1&&i100!=11||!t0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"it","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return n==11||n==8||n==80||n==800?"many":"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"it-CH","parentLocale":"it"});
-IntlMessageFormat.__addLocaleData({"locale":"it-SM","parentLocale":"it"});
-IntlMessageFormat.__addLocaleData({"locale":"iu","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":n==2?"two":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"iu-Latn","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"iw","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1);if(ord)return"other";return n==1&&v0?"one":i==2&&v0?"two":v0&&(n<0||n>10)&&t0&&n10==0?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ja","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"jbo","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"jgo","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ji","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"jmc","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"jv","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"jw","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ka","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],i100=i.slice(-2);if(ord)return i==1?"one":i==0||(i100>=2&&i100<=20||i100==40||i100==60||i100==80)?"many":"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kab","pluralRuleFunction":function (n,ord){if(ord)return"other";return n>=0&&n<2?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kaj","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kam","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kcg","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kde","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kea","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"khq","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ki","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kk","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n,n10=t0&&s[0].slice(-1);if(ord)return n10==6||n10==9||t0&&n10==0&&n!=0?"many":"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kkj","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kl","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kln","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"km","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kn","pluralRuleFunction":function (n,ord){if(ord)return"other";return n>=0&&n<=1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ko","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ko-KP","parentLocale":"ko"});
-IntlMessageFormat.__addLocaleData({"locale":"kok","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ks","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ksb","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ksf","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ksh","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==0?"zero":n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ku","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"kw","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":n==2?"two":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ky","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"lag","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0];if(ord)return"other";return n==0?"zero":(i==0||i==1)&&n!=0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"lb","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"lg","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"lkt","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ln","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==0||n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ln-AO","parentLocale":"ln"});
-IntlMessageFormat.__addLocaleData({"locale":"ln-CF","parentLocale":"ln"});
-IntlMessageFormat.__addLocaleData({"locale":"ln-CG","parentLocale":"ln"});
-IntlMessageFormat.__addLocaleData({"locale":"lo","pluralRuleFunction":function (n,ord){if(ord)return n==1?"one":"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"lrc","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"lrc-IQ","parentLocale":"lrc"});
-IntlMessageFormat.__addLocaleData({"locale":"lt","pluralRuleFunction":function (n,ord){var s=String(n).split("."),f=s[1]||"",t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return"other";return n10==1&&(n100<11||n100>19)?"one":n10>=2&&n10<=9&&(n100<11||n100>19)?"few":f!=0?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"lu","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"luo","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"luy","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"lv","pluralRuleFunction":function (n,ord){var s=String(n).split("."),f=s[1]||"",v=f.length,t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2),f100=f.slice(-2),f10=f.slice(-1);if(ord)return"other";return t0&&n10==0||n100>=11&&n100<=19||v==2&&(f100>=11&&f100<=19)?"zero":n10==1&&n100!=11||v==2&&f10==1&&f100!=11||v!=2&&f10==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mas","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mas-TZ","parentLocale":"mas"});
-IntlMessageFormat.__addLocaleData({"locale":"mer","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mfe","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mg","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==0||n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mgh","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mgo","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mk","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],f=s[1]||"",v0=!s[1],i10=i.slice(-1),i100=i.slice(-2),f10=f.slice(-1);if(ord)return i10==1&&i100!=11?"one":i10==2&&i100!=12?"two":(i10==7||i10==8)&&i100!=17&&i100!=18?"many":"other";return v0&&i10==1||f10==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ml","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mn","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mn-Mong","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mo","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n100=t0&&s[0].slice(-2);if(ord)return n==1?"one":"other";return n==1&&v0?"one":!v0||n==0||n!=1&&(n100>=1&&n100<=19)?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mr","pluralRuleFunction":function (n,ord){if(ord)return n==1?"one":n==2||n==3?"two":n==4?"few":"other";return n>=0&&n<=1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ms","pluralRuleFunction":function (n,ord){if(ord)return n==1?"one":"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ms-Arab","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ms-BN","parentLocale":"ms"});
-IntlMessageFormat.__addLocaleData({"locale":"ms-SG","parentLocale":"ms"});
-IntlMessageFormat.__addLocaleData({"locale":"mt","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n,n100=t0&&s[0].slice(-2);if(ord)return"other";return n==1?"one":n==0||n100>=2&&n100<=10?"few":n100>=11&&n100<=19?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mua","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"my","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"mzn","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nah","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"naq","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":n==2?"two":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nb","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nb-SJ","parentLocale":"nb"});
-IntlMessageFormat.__addLocaleData({"locale":"nd","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ne","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n;if(ord)return t0&&n>=1&&n<=4?"one":"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ne-IN","parentLocale":"ne"});
-IntlMessageFormat.__addLocaleData({"locale":"nl","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nl-AW","parentLocale":"nl"});
-IntlMessageFormat.__addLocaleData({"locale":"nl-BE","parentLocale":"nl"});
-IntlMessageFormat.__addLocaleData({"locale":"nl-BQ","parentLocale":"nl"});
-IntlMessageFormat.__addLocaleData({"locale":"nl-CW","parentLocale":"nl"});
-IntlMessageFormat.__addLocaleData({"locale":"nl-SR","parentLocale":"nl"});
-IntlMessageFormat.__addLocaleData({"locale":"nl-SX","parentLocale":"nl"});
-IntlMessageFormat.__addLocaleData({"locale":"nmg","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nn","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nnh","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"no","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nqo","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nr","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nso","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==0||n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nus","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ny","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"nyn","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"om","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"om-KE","parentLocale":"om"});
-IntlMessageFormat.__addLocaleData({"locale":"or","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"os","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"os-RU","parentLocale":"os"});
-IntlMessageFormat.__addLocaleData({"locale":"pa","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==0||n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"pa-Arab","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"pa-Guru","parentLocale":"pa"});
-IntlMessageFormat.__addLocaleData({"locale":"pap","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"pl","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],v0=!s[1],i10=i.slice(-1),i100=i.slice(-2);if(ord)return"other";return n==1&&v0?"one":v0&&(i10>=2&&i10<=4)&&(i100<12||i100>14)?"few":v0&&i!=1&&(i10==0||i10==1)||v0&&(i10>=5&&i10<=9)||v0&&(i100>=12&&i100<=14)?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"prg","pluralRuleFunction":function (n,ord){var s=String(n).split("."),f=s[1]||"",v=f.length,t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2),f100=f.slice(-2),f10=f.slice(-1);if(ord)return"other";return t0&&n10==0||n100>=11&&n100<=19||v==2&&(f100>=11&&f100<=19)?"zero":n10==1&&n100!=11||v==2&&f10==1&&f100!=11||v!=2&&f10==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ps","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"pt","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n;if(ord)return"other";return t0&&n>=0&&n<=2&&n!=2?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"pt-AO","parentLocale":"pt-PT"});
-IntlMessageFormat.__addLocaleData({"locale":"pt-PT","parentLocale":"pt","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"pt-CV","parentLocale":"pt-PT"});
-IntlMessageFormat.__addLocaleData({"locale":"pt-GW","parentLocale":"pt-PT"});
-IntlMessageFormat.__addLocaleData({"locale":"pt-MO","parentLocale":"pt-PT"});
-IntlMessageFormat.__addLocaleData({"locale":"pt-MZ","parentLocale":"pt-PT"});
-IntlMessageFormat.__addLocaleData({"locale":"pt-ST","parentLocale":"pt-PT"});
-IntlMessageFormat.__addLocaleData({"locale":"pt-TL","parentLocale":"pt-PT"});
-IntlMessageFormat.__addLocaleData({"locale":"qu","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"qu-BO","parentLocale":"qu"});
-IntlMessageFormat.__addLocaleData({"locale":"qu-EC","parentLocale":"qu"});
-IntlMessageFormat.__addLocaleData({"locale":"rm","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"rn","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ro","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n100=t0&&s[0].slice(-2);if(ord)return n==1?"one":"other";return n==1&&v0?"one":!v0||n==0||n!=1&&(n100>=1&&n100<=19)?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ro-MD","parentLocale":"ro"});
-IntlMessageFormat.__addLocaleData({"locale":"rof","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ru","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],v0=!s[1],i10=i.slice(-1),i100=i.slice(-2);if(ord)return"other";return v0&&i10==1&&i100!=11?"one":v0&&(i10>=2&&i10<=4)&&(i100<12||i100>14)?"few":v0&&i10==0||v0&&(i10>=5&&i10<=9)||v0&&(i100>=11&&i100<=14)?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ru-BY","parentLocale":"ru"});
-IntlMessageFormat.__addLocaleData({"locale":"ru-KG","parentLocale":"ru"});
-IntlMessageFormat.__addLocaleData({"locale":"ru-KZ","parentLocale":"ru"});
-IntlMessageFormat.__addLocaleData({"locale":"ru-MD","parentLocale":"ru"});
-IntlMessageFormat.__addLocaleData({"locale":"ru-UA","parentLocale":"ru"});
-IntlMessageFormat.__addLocaleData({"locale":"rw","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"rwk","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sah","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"saq","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sbp","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sdh","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"se","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":n==2?"two":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"se-FI","parentLocale":"se"});
-IntlMessageFormat.__addLocaleData({"locale":"se-SE","parentLocale":"se"});
-IntlMessageFormat.__addLocaleData({"locale":"seh","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ses","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sg","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sh","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],f=s[1]||"",v0=!s[1],i10=i.slice(-1),i100=i.slice(-2),f10=f.slice(-1),f100=f.slice(-2);if(ord)return"other";return v0&&i10==1&&i100!=11||f10==1&&f100!=11?"one":v0&&(i10>=2&&i10<=4)&&(i100<12||i100>14)||f10>=2&&f10<=4&&(f100<12||f100>14)?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"shi","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n;if(ord)return"other";return n>=0&&n<=1?"one":t0&&n>=2&&n<=10?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"shi-Latn","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"shi-Tfng","parentLocale":"shi"});
-IntlMessageFormat.__addLocaleData({"locale":"si","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],f=s[1]||"";if(ord)return"other";return n==0||n==1||i==0&&f==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sk","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],v0=!s[1];if(ord)return"other";return n==1&&v0?"one":i>=2&&i<=4&&v0?"few":!v0?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sl","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],v0=!s[1],i100=i.slice(-2);if(ord)return"other";return v0&&i100==1?"one":v0&&i100==2?"two":v0&&(i100==3||i100==4)||!v0?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sma","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":n==2?"two":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"smi","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":n==2?"two":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"smj","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":n==2?"two":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"smn","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":n==2?"two":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sms","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":n==2?"two":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sn","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"so","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"so-DJ","parentLocale":"so"});
-IntlMessageFormat.__addLocaleData({"locale":"so-ET","parentLocale":"so"});
-IntlMessageFormat.__addLocaleData({"locale":"so-KE","parentLocale":"so"});
-IntlMessageFormat.__addLocaleData({"locale":"sq","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return n==1?"one":n10==4&&n100!=14?"many":"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sq-MK","parentLocale":"sq"});
-IntlMessageFormat.__addLocaleData({"locale":"sq-XK","parentLocale":"sq"});
-IntlMessageFormat.__addLocaleData({"locale":"sr","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],f=s[1]||"",v0=!s[1],i10=i.slice(-1),i100=i.slice(-2),f10=f.slice(-1),f100=f.slice(-2);if(ord)return"other";return v0&&i10==1&&i100!=11||f10==1&&f100!=11?"one":v0&&(i10>=2&&i10<=4)&&(i100<12||i100>14)||f10>=2&&f10<=4&&(f100<12||f100>14)?"few":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sr-Cyrl","parentLocale":"sr"});
-IntlMessageFormat.__addLocaleData({"locale":"sr-Cyrl-BA","parentLocale":"sr-Cyrl"});
-IntlMessageFormat.__addLocaleData({"locale":"sr-Cyrl-ME","parentLocale":"sr-Cyrl"});
-IntlMessageFormat.__addLocaleData({"locale":"sr-Cyrl-XK","parentLocale":"sr-Cyrl"});
-IntlMessageFormat.__addLocaleData({"locale":"sr-Latn","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sr-Latn-BA","parentLocale":"sr-Latn"});
-IntlMessageFormat.__addLocaleData({"locale":"sr-Latn-ME","parentLocale":"sr-Latn"});
-IntlMessageFormat.__addLocaleData({"locale":"sr-Latn-XK","parentLocale":"sr-Latn"});
-IntlMessageFormat.__addLocaleData({"locale":"ss","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ssy","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"st","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sv","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return(n10==1||n10==2)&&n100!=11&&n100!=12?"one":"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sv-AX","parentLocale":"sv"});
-IntlMessageFormat.__addLocaleData({"locale":"sv-FI","parentLocale":"sv"});
-IntlMessageFormat.__addLocaleData({"locale":"sw","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"sw-CD","parentLocale":"sw"});
-IntlMessageFormat.__addLocaleData({"locale":"sw-KE","parentLocale":"sw"});
-IntlMessageFormat.__addLocaleData({"locale":"sw-UG","parentLocale":"sw"});
-IntlMessageFormat.__addLocaleData({"locale":"syr","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ta","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ta-LK","parentLocale":"ta"});
-IntlMessageFormat.__addLocaleData({"locale":"ta-MY","parentLocale":"ta"});
-IntlMessageFormat.__addLocaleData({"locale":"ta-SG","parentLocale":"ta"});
-IntlMessageFormat.__addLocaleData({"locale":"te","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"teo","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"teo-KE","parentLocale":"teo"});
-IntlMessageFormat.__addLocaleData({"locale":"th","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ti","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==0||n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ti-ER","parentLocale":"ti"});
-IntlMessageFormat.__addLocaleData({"locale":"tig","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"tk","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"tl","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],f=s[1]||"",v0=!s[1],i10=i.slice(-1),f10=f.slice(-1);if(ord)return n==1?"one":"other";return v0&&(i==1||i==2||i==3)||v0&&i10!=4&&i10!=6&&i10!=9||!v0&&f10!=4&&f10!=6&&f10!=9?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"tn","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"to","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"tr","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"tr-CY","parentLocale":"tr"});
-IntlMessageFormat.__addLocaleData({"locale":"ts","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"twq","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"tzm","pluralRuleFunction":function (n,ord){var s=String(n).split("."),t0=Number(s[0])==n;if(ord)return"other";return n==0||n==1||t0&&n>=11&&n<=99?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ug","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"uk","pluralRuleFunction":function (n,ord){var s=String(n).split("."),i=s[0],v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2),i10=i.slice(-1),i100=i.slice(-2);if(ord)return n10==3&&n100!=13?"few":"other";return v0&&i10==1&&i100!=11?"one":v0&&(i10>=2&&i10<=4)&&(i100<12||i100>14)?"few":v0&&i10==0||v0&&(i10>=5&&i10<=9)||v0&&(i100>=11&&i100<=14)?"many":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ur","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"ur-IN","parentLocale":"ur"});
-IntlMessageFormat.__addLocaleData({"locale":"uz","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"uz-Arab","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"uz-Cyrl","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"uz-Latn","parentLocale":"uz"});
-IntlMessageFormat.__addLocaleData({"locale":"vai","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"vai-Latn","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"vai-Vaii","parentLocale":"vai"});
-IntlMessageFormat.__addLocaleData({"locale":"ve","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"vi","pluralRuleFunction":function (n,ord){if(ord)return n==1?"one":"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"vo","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"vun","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"wa","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==0||n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"wae","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"wo","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"xh","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"xog","pluralRuleFunction":function (n,ord){if(ord)return"other";return n==1?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"yav","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"yi","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1];if(ord)return"other";return n==1&&v0?"one":"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"yo","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"yo-BJ","parentLocale":"yo"});
-IntlMessageFormat.__addLocaleData({"locale":"zgh","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"zh","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"zh-Hans","parentLocale":"zh"});
-IntlMessageFormat.__addLocaleData({"locale":"zh-Hans-HK","parentLocale":"zh-Hans"});
-IntlMessageFormat.__addLocaleData({"locale":"zh-Hans-MO","parentLocale":"zh-Hans"});
-IntlMessageFormat.__addLocaleData({"locale":"zh-Hans-SG","parentLocale":"zh-Hans"});
-IntlMessageFormat.__addLocaleData({"locale":"zh-Hant","pluralRuleFunction":function (n,ord){if(ord)return"other";return"other"}});
-IntlMessageFormat.__addLocaleData({"locale":"zh-Hant-HK","parentLocale":"zh-Hant"});
-IntlMessageFormat.__addLocaleData({"locale":"zh-Hant-MO","parentLocale":"zh-Hant-HK"});
-IntlMessageFormat.__addLocaleData({"locale":"zu","pluralRuleFunction":function (n,ord){if(ord)return"other";return n>=0&&n<=1?"one":"other"}});
-
-
-/***/ }),
-
-/***/ "../../../node_modules/intl-messageformat/lib/main.js":
-/*!******************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/intl-messageformat/lib/main.js ***!
-  \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* jslint esnext: true */
-
-
-var src$core$$ = __webpack_require__(/*! ./core */ "../../../node_modules/intl-messageformat/lib/core.js"), src$en$$ = __webpack_require__(/*! ./en */ "../../../node_modules/intl-messageformat/lib/en.js");
-
-src$core$$["default"].__addLocaleData(src$en$$["default"]);
-src$core$$["default"].defaultLocale = 'en';
-
-exports["default"] = src$core$$["default"];
-
-
-
-/***/ }),
-
-/***/ "../../../node_modules/intl-messageformat/lib/utils.js":
-/*!*******************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/intl-messageformat/lib/utils.js ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
-Copyright (c) 2014, Yahoo! Inc. All rights reserved.
-Copyrights licensed under the New BSD License.
-See the accompanying LICENSE file for terms.
-*/
-
-/* jslint esnext: true */
-
-
-exports.extend = extend;
-var hop = Object.prototype.hasOwnProperty;
-
-function extend(obj) {
-    var sources = Array.prototype.slice.call(arguments, 1),
-        i, len, source, key;
-
-    for (i = 0, len = sources.length; i < len; i += 1) {
-        source = sources[i];
-        if (!source) { continue; }
-
-        for (key in source) {
-            if (hop.call(source, key)) {
-                obj[key] = source[key];
+            var parts = formatToParts(children, locales, formatters, formats, values, currentPluralValue);
+            var chunks = formatFn.apply(void 0, parts.map(function (p) { return p.value; }));
+            if (!Array.isArray(chunks)) {
+                chunks = [chunks];
             }
+            result.push.apply(result, chunks.map(function (c) {
+                return {
+                    type: typeof c === 'string' ? 0 /* literal */ : 1 /* object */,
+                    value: c,
+                };
+            }));
+        }
+        if (Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isSelectElement"])(el)) {
+            var opt = el.options[value] || el.options.other;
+            if (!opt) {
+                throw new _error__WEBPACK_IMPORTED_MODULE_1__["InvalidValueError"](el.value, value, Object.keys(el.options), originalMessage);
+            }
+            result.push.apply(result, formatToParts(opt.value, locales, formatters, formats, values));
+            continue;
+        }
+        if (Object(intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__["isPluralElement"])(el)) {
+            var opt = el.options["=" + value];
+            if (!opt) {
+                if (!Intl.PluralRules) {
+                    throw new _error__WEBPACK_IMPORTED_MODULE_1__["FormatError"]("Intl.PluralRules is not available in this environment.\nTry polyfilling it using \"@formatjs/intl-pluralrules\"\n", "MISSING_INTL_API" /* MISSING_INTL_API */, originalMessage);
+                }
+                var rule = formatters
+                    .getPluralRules(locales, { type: el.pluralType })
+                    .select(value - (el.offset || 0));
+                opt = el.options[rule] || el.options.other;
+            }
+            if (!opt) {
+                throw new _error__WEBPACK_IMPORTED_MODULE_1__["InvalidValueError"](el.value, value, Object.keys(el.options), originalMessage);
+            }
+            result.push.apply(result, formatToParts(opt.value, locales, formatters, formats, values, value - (el.offset || 0)));
+            continue;
         }
     }
-
-    return obj;
+    return mergeLiteral(result);
 }
-exports.hop = hop;
 
+
+/***/ }),
+
+/***/ "../../../node_modules/intl-messageformat/lib/index.js":
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/index.js ***!
+  \*******************************************************************************************/
+/*! exports provided: PART_TYPE, formatToParts, createDefaultFormatters, IntlMessageFormat, ErrorCode, FormatError, InvalidValueError, InvalidValueTypeError, MissingValueError, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core */ "../../../node_modules/intl-messageformat/lib/core.js");
+/* harmony import */ var _formatters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./formatters */ "../../../node_modules/intl-messageformat/lib/formatters.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PART_TYPE", function() { return _formatters__WEBPACK_IMPORTED_MODULE_1__["PART_TYPE"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatToParts", function() { return _formatters__WEBPACK_IMPORTED_MODULE_1__["formatToParts"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createDefaultFormatters", function() { return _core__WEBPACK_IMPORTED_MODULE_0__["createDefaultFormatters"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "IntlMessageFormat", function() { return _core__WEBPACK_IMPORTED_MODULE_0__["IntlMessageFormat"]; });
+
+/* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./error */ "../../../node_modules/intl-messageformat/lib/error.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ErrorCode", function() { return _error__WEBPACK_IMPORTED_MODULE_2__["ErrorCode"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "FormatError", function() { return _error__WEBPACK_IMPORTED_MODULE_2__["FormatError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InvalidValueError", function() { return _error__WEBPACK_IMPORTED_MODULE_2__["InvalidValueError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InvalidValueTypeError", function() { return _error__WEBPACK_IMPORTED_MODULE_2__["InvalidValueTypeError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MissingValueError", function() { return _error__WEBPACK_IMPORTED_MODULE_2__["MissingValueError"]; });
+
+/*
+Copyright (c) 2014, Yahoo! Inc. All rights reserved.
+Copyrights licensed under the New BSD License.
+See the accompanying LICENSE file for terms.
+*/
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (_core__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 /***/ }),
 
 /***/ "../../../node_modules/ms/index.js":
-/*!***********************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/ms/index.js ***!
-  \***********************************************************/
+/*!***********************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/ms/index.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -7783,9 +9324,9 @@ function plural(ms, n, name) {
 /***/ }),
 
 /***/ "../../../node_modules/papaparse/papaparse.js":
-/*!**********************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/papaparse/papaparse.js ***!
-  \**********************************************************************/
+/*!**********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/papaparse/papaparse.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9710,9 +11251,9 @@ License: MIT
 /***/ }),
 
 /***/ "../../../node_modules/supports-color/index.js":
-/*!***********************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/supports-color/index.js ***!
-  \***********************************************************************/
+/*!***********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/supports-color/index.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9886,9 +11427,9 @@ module.exports = function(module) {
 /***/ }),
 
 /***/ "../../../node_modules/xmltojson/lib/xmlToJSON.js":
-/*!**************************************************************************!*\
-  !*** C:/_Alpheios/alpheios-core/node_modules/xmltojson/lib/xmlToJSON.js ***!
-  \**************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/xmltojson/lib/xmlToJSON.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13368,8 +14909,7 @@ class MessageBundle {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Message; });
-/* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat */ "../../../node_modules/intl-messageformat/index.js");
-/* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_messageformat__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat */ "../../../node_modules/intl-messageformat/lib/index.js");
 
 
 /**
@@ -13394,7 +14934,7 @@ class Message {
       this[key] = message[key]
     }
 
-    this.formatFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default.a(message.message, this.locale)
+    this.formatFunc = new intl_messageformat__WEBPACK_IMPORTED_MODULE_0__["default"](message.message, this.locale)
   }
 
   /**

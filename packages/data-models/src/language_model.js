@@ -420,12 +420,18 @@ class LanguageModel {
    * Returns alternate encodings for a word
    *
    * @param {object} params paramaters {}
-   *   @param {string} word the word
-   *   @param {string} preceding preceding word (optional)
-   *   @param {string} following following word (optional)
-   *   @param {string} encoding encoding name to filter the response to (optional)
-   *   @param {boolean} preserveCase if true will preserve the case (default is false)
-   *   @param {boolean} includeOriginal if true will include the original word even if it is unchanged (default is false)
+   * @param params.word
+   * @param {string} word the word
+   * @param {string} preceding preceding word (optional)
+   * @param {string} following following word (optional)
+   * @param {string} encoding encoding name to filter the response to (optional)
+   * @param {boolean} preserveCase if true will preserve the case (default is false)
+   * @param {boolean} includeOriginal if true will include the original word even if it is unchanged (default is false)
+   * @param params.preceding
+   * @param params.following
+   * @param params.encoding
+   * @param params.preserveCase
+   * @param params.includeOriginal
    * @returns {Array} an array of alternate encodings if they differ from the original
    */
   static alternateWordEncodings ({
