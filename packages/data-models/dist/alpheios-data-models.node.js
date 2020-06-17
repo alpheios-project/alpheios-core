@@ -4189,6 +4189,7 @@ class LanguageModel {
    * Check to see if this language tool can produce an inflection table display for the current node
    *
    * @param node
+   * @returns {boolean}
    */
   static canInflect (node) {
     return false
@@ -4197,9 +4198,8 @@ class LanguageModel {
   /**
    * Check to see if the supplied language code is supported by this tool
    *
-   * @param {string} code the language code
-   * @returns true if supported false if not
-   * @type Boolean
+   * @param {string} code - The language code
+   * @returns {boolean} - True if supported, false if not
    */
   static supportsLanguage (code) {
     return this.languageCodes.includes[code]
@@ -4253,9 +4253,8 @@ class LanguageModel {
    * Return a normalized version of a text string which can be used to compare the word for equality
    *
    * @param {string} word the source word
-   * @returns string normalized form of the word (default version just returns the same word,
+   * @returns {string} Normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
-   * @type string
    */
   static normalizeText (word) {
     return word
@@ -4264,19 +4263,13 @@ class LanguageModel {
   /**
    * Returns alternate encodings for a word
    *
-   * @param {object} params paramaters {}
-   * @param params.word
-   * @param {string} word the word
-   * @param {string} preceding preceding word (optional)
-   * @param {string} following following word (optional)
-   * @param {string} encoding encoding name to filter the response to (optional)
-   * @param {boolean} preserveCase if true will preserve the case (default is false)
-   * @param {boolean} includeOriginal if true will include the original word even if it is unchanged (default is false)
-   * @param params.preceding
-   * @param params.following
-   * @param params.encoding
-   * @param params.preserveCase
-   * @param params.includeOriginal
+   * @param {object} params - A parameters object.
+   * @param {string} params.word - The word.
+   * @param {string} [params.preceding=null] - A preceding word (optional).
+   * @param {string} [params.following=null] - A following word (optional).
+   * @param {string} [params.encoding=null] - Encoding name to filter the response to (optional).
+   * @param {boolean} [params.preserveCase=false] - If true will preserve the case (default is false).
+   * @param {boolean} [params.includeOriginal=false] - If true will include the original word even if it is unchanged (default is false).
    * @returns {Array} an array of alternate encodings if they differ from the original
    */
   static alternateWordEncodings ({
