@@ -12,11 +12,11 @@
     "test-no-coverage": "jest",
     "test-c": "jest tests/chinese/chinese.test.js --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-l": "jest tests/greek_language_model.test --coverage && shx cat ./coverage/lcov.info | coveralls",
-    "build-lib": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p lib",
+    "build-lib": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p lib -c config.mjs",
     "build-node": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p node-lib -c config-node.mjs",
     "build": "npm run build-lib && npm run build-node",
-    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib",
-    "build-dev": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p lib",
+    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib -c config.mjs",
+    "build-dev": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p lib -c config.mjs",
     "lint": "eslint --fix src/**/*.js"
   },
   "repository": {

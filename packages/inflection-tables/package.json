@@ -57,6 +57,7 @@
     "intl-messageformat": "^8.3.23",
     "jest": "^26.0.1",
     "papaparse": "^5.2.0",
+    "readable-stream": "^3.6.0",
     "raw-loader": "^4.0.1",
     "shx": "^0.3.2",
     "source-map-loader": "^1.0.0",

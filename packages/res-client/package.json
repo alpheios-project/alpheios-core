@@ -8,9 +8,9 @@
   "scripts": {
     "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-no-coverage": "jest",
-    "build": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p lib",
-    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib",
-    "build-dev": "node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p lib",
+    "build": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p lib -c config.mjs",
+    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib -c config.mjs",
+    "build-dev": "node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p lib -c config.mjs",
     "lint": "eslint --fix src/**/*.js"
   },
   "repository": {
@@ -42,6 +42,7 @@
     "jest": "^26.0.1",
     "jest-fetch-mock": "^3.0.3",
     "papaparse": "^5.2.0",
+    "readable-stream": "^3.6.0",
     "shx": "^0.3.2"
   },
   "peerDependencies": {
