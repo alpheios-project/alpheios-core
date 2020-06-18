@@ -13,8 +13,8 @@
     "build": "npm run build-lib && npm run build-node",
     "build-lib": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p vue -c config.mjs",
     "build-node": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p node-lib -c config-node.mjs",
-    "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p vue",
-    "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p vue",
+    "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p vue -c config.mjs",
+    "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p vue -c config.mjs",
     "lint": "eslint --fix src/**/*.js"
   },
   "repository": {
@@ -55,6 +55,7 @@
     "jest-serializer-vue": "^2.0.2",
     "jest-vue-preprocessor": "^1.7.1",
     "papaparse": "^5.2.0",
+    "readable-stream": "^3.6.0",
     "shx": "^0.3.2",
     "whatwg-fetch": "^3.0.0",
     "xmltojson": "^1.3.5"
