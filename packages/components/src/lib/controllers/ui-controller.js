@@ -1242,7 +1242,7 @@ if you want to create a different configuration of a UI controller.
     }
     const isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
 
-    if (['treebank', 'inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
+    if (['inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
       const message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
       this.store.commit('ui/setHint', message, tabName)
     } else if (this.forceMouseMoveEvent()) {
