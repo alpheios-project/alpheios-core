@@ -1631,6 +1631,7 @@ select.alpheios-setting__control,
   justify-content: space-between !important;
   align-items: center !important;
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important;
+  min-height: calc(var(--alpheios-base-text-size) * 1.5) !important;
 }
 .alpheios-popup__toolbar-text {
   padding-right: calc(var(--alpheios-base-text-size) * 1.25) !important;
@@ -1640,6 +1641,8 @@ select.alpheios-setting__control,
   /* the arabic amiri font does not like the top padding */
 }
 h3.alpheios-popup__toolbar-selection {
+  margin-top: calc(var(--alpheios-base-text-size) * 0.75) !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.5) !important;
   display: inline-block;
 }
 .alpheios-popup__toolbar-buttons {
@@ -3124,7 +3127,7 @@ p.alpheios-word-usage-filter-title {
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.3125) !important;
 }
 .alpheios-ui-options__popup-size-item_bottom-label {
-  display: flex;
+  display: flex !important;
   justify-content: space-between !important;
 }
 /*
@@ -3376,6 +3379,7 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-panel__tab-panel--options {
   display: block;
+  max-width: 100vw !important;
 }
 .alpheios-panel__tab__treebank {
   width: 100% !important;
