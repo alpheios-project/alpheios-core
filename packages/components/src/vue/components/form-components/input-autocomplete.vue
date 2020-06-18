@@ -94,8 +94,11 @@ export default {
     },
 
     onPaste (event) {
-      this.valueText = (event.clipboardData || window.clipboardData).getData('text').trim()
-      this.$emit('updateLookupText', this.valueText)
+      const data = event.clipboardData || window.clipboardData
+      if (data && data.getData) {
+        const text = data.getData('text').trim()
+        this.$emit('updateLookupText', text)
+      }
     },
 
     updateBetaCodes () {
@@ -120,7 +123,7 @@ export default {
             }
           })
 
-          if (res.result && res.result.length > 0) {
+          if (res && res.result && res.result.length > 0) {
             this.words = res.result
           }
         }
