@@ -66,9 +66,7 @@ export default {
   },
   computed: {
     isMobile: function () {
-      const result = Boolean(this.app && this.app.platform && this.app.platform.isMobile)
-      console.info(`isMobile computed ${result}`)
-      return result
+      return Boolean(this.app && this.app.platform && this.app.platform.isMobile)
     },
 
     uiOptions: function () {
@@ -113,7 +111,8 @@ export default {
     }
 
     &_bottom-label {
-      display: flex;
+      // Needs an `important!` to override styles on https://scaife.perseus.org
+      display: flex !important;
       justify-content: space-between;
     }
   }
