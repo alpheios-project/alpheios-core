@@ -1,6 +1,6 @@
 {
   "name": "alpheios-wordlist",
-  "version": "3.3.0-qa.20200615292",
+  "version": "3.3.0",
   "description": "Word-In-Context List library for an Alpheios project",
   "private": true,
   "main": "dist/alpheios-wordlist.min.js",
@@ -27,17 +27,17 @@
     "alpheios-node-build": "github:alpheios-project/node-build#v3",
     "coveralls": "^3.1.0",
     "cross-env": "^7.0.2",
-    "eslint": "^7.0.0",
+    "eslint": "^7.2.0",
     "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "fake-indexeddb": "^3.0.0",
+    "fake-indexeddb": "^3.0.2",
     "jest": "^26.0.1"
   },
   "peerDependencies": {
-    "intl-messageformat": "^2.2.0"
+    "intl-messageformat": "^8.3.23"
   },
   "jest": {
     "verbose": true,

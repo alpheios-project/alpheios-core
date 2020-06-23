@@ -23,7 +23,6 @@
           v-show="$store.state.actionPanel.showLookup"
       >
 
-
         <lookup
             class="alpheios-action-panel__lookup"
             :name-base="`action-panel`"
@@ -122,7 +121,6 @@ import Lookup from '@/vue/components/lookup.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
-
 export default {
   name: 'ActionPanel',
   // API modules that are required for this component
@@ -155,7 +153,7 @@ export default {
         y: 0
       },
 
-      tooltipDirection: 'top', 
+      tooltipDirection: 'top',
       showLangSelector: false
     }
   },
@@ -168,6 +166,7 @@ export default {
 
   computed: {
     componentStyles: function () {
+      // eslint-disable-next-line prefer-const
       let styles = {
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
         // Should stay on top of a toolbar
@@ -259,7 +258,6 @@ export default {
     height: uisize(100px);
     width: uisize(280px);
   }
-
 
   .alpheios-action-panel.alpheios-action-panel--lookup-visible.alpheios-action-panel--nav-visible {
     height: uisize(270px);
