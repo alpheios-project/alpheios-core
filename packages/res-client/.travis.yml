@@ -1,6 +1,6 @@
 #travis config
 language: node_js
 node_js: 
-  - "14.1.0"
+  - 14.1
 notifications:
   slack: alpheiosproject:9WEA6UNyLr3U0bWIJctp1rqS
