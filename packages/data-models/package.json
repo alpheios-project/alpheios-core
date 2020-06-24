@@ -12,11 +12,11 @@
     "test-no-coverage": "jest",
     "test-c": "jest tests/chinese/chinese.test.js --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-l": "jest tests/greek_language_model.test --coverage && shx cat ./coverage/lcov.info | coveralls",
-    "build-lib": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p lib",
+    "build-lib": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p lib -c config.mjs",
     "build-node": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p node-lib -c config-node.mjs",
     "build": "npm run build-lib && npm run build-node",
-    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib",
-    "build-dev": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p lib",
+    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib -c config.mjs",
+    "build-dev": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p lib -c config.mjs",
     "lint": "eslint --fix src/**/*.js"
   },
   "repository": {
@@ -30,21 +30,20 @@
   },
   "homepage": "https://github.com/alpheios-project/data-models#readme",
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/plugin-transform-runtime": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/runtime": "^7.9.6",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/runtime": "^7.10.2",
     "alpheios-node-build": "github:alpheios-project/node-build#v3",
     "coveralls": "^3.1.0",
-    "eslint": "^7.0.0",
+    "eslint": "^7.2.0",
     "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jsdoc": "^24.0.6",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jsdoc": "^27.0.7",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-scope": "^5.0.0",
-    "intl-messageformat": "^2.2.0",
     "jest": "^26.0.1",
     "shx": "^0.3.2",
     "uuid": "^3.4.0"
@@ -56,7 +55,7 @@
     }
   },
   "peerDependencies": {
-    "intl-messageformat": "^2.2.0",
+    "intl-messageformat": "^8.3.23",
     "uuid": "^3.4.0"
   },
   "eslintConfig": {

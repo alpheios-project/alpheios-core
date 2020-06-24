@@ -23,7 +23,6 @@
           v-show="$store.state.actionPanel.showLookup"
       >
 
-
         <lookup
             class="alpheios-action-panel__lookup"
             :name-base="`action-panel`"
@@ -168,6 +167,7 @@ export default {
 
   computed: {
     componentStyles: function () {
+      // eslint-disable-next-line prefer-const
       let styles = {
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
         // Should stay on top of a toolbar
@@ -259,7 +259,6 @@ export default {
     height: uisize(100px);
     width: uisize(280px);
   }
-
 
   .alpheios-action-panel.alpheios-action-panel--lookup-visible.alpheios-action-panel--nav-visible {
     height: uisize(270px);

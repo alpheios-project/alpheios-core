@@ -30,7 +30,6 @@
                       >
 
                 <ul class="alpheios-select-list"
-                        v-model="selectedExactForm"
                         v-if = "selectedFilterBy === 'byExactForm'"
                         >
                   <li v-for="(exactForm, exactFormIndex) in wordExactFormsFiltered" v-bind:key="exactFormIndex"
@@ -39,7 +38,6 @@
                 </ul>
 
                 <ul class="alpheios-select-list"
-                        v-model="selectedLemma"
                         v-if = "selectedFilterBy === 'byLemma'"
                         >
                   <li v-for="(lemmaForm, lemmaFormIndex) in wordLemmaFormsFiltered" v-bind:key="lemmaFormIndex"
@@ -65,226 +63,237 @@
     </div>
 </template>
 <script>
-  import Tooltip from '@/vue/components/tooltip.vue'
 
-  export default {
-    name: 'WordFilterPanel',
-    inject: ['app', 'l10n', 'settings'],
-    components: {
-      alphTooltip: Tooltip
+export default {
+  name: 'WordFilterPanel',
+  inject: ['app', 'l10n', 'settings'],
+  props: {
+    clickedLemma: {
+      type: String,
+      required: false
     },
-    props: {
-      clickedLemma: {
-        type: String,
-        required: false
-      },
-      wordExactForms: {
-        type: Array,
-        required: false,
-        default: []
-      },
-      wordLemmaForms: {
-        type: Array,
-        required: false,
-        default: []
-      },
-      clearFilters: {
-        type: Number,
-        required: true
+    wordExactForms: {
+      type: Array,
+      required: false,
+      default: function () {
+        return []
       }
     },
-    data () {
-      return {
-        selectedFilterBy: null,
-        selectedExactForm: null,
-        selectedLemma: null,
-        typeFiltersList: [
-          { value: null },
-          { value: 'byCurrentSession', title: this.l10n.getText('WORDLIST_FILTER_BYCURRENTSESSION'), onChange: true },
-          { value: 'byImportant', title: this.l10n.getText('WORDLIST_FILTER_BYIMPORTANT'), onChange: true },
-          { value: 'byExactForm',
-            title: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL'),
-            onClick: true, showTextInput: true,
-            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER')
-          }, 
-          { value: 'byLemma',
-            title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL'),
-            onClick: true, showTextInput: true,
-            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER')
-          },
-          { value: 'byMostRecent', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTRECENT'), 
-            showNumberInput: true, onChange: true,
-            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER') },
-          { value: 'byMostOften', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTOFTEN'), 
-            showNumberInput: true, onChange: true,
-            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER') }
-        ],
-        textInput: null,
-        shownVariantsSelect: false,
-        markLayout: {
-          start: '<span class="alpheios-select-input-filter-part">',
-          end: '</span>'
+    wordLemmaForms: {
+      type: Array,
+      required: false,
+      default: function () {
+        return []
+      }
+    },
+    clearFilters: {
+      type: Number,
+      required: true
+    }
+  },
+  data () {
+    return {
+      selectedFilterBy: null,
+      selectedExactForm: null,
+      selectedLemma: null,
+      typeFiltersList: [
+        { value: null },
+        { value: 'byCurrentSession', title: this.l10n.getText('WORDLIST_FILTER_BYCURRENTSESSION'), onChange: true },
+        { value: 'byImportant', title: this.l10n.getText('WORDLIST_FILTER_BYIMPORTANT'), onChange: true },
+        {
+          value: 'byExactForm',
+          title: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL'),
+          onClick: true,
+          showTextInput: true,
+          textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER')
         },
-        filterAmount: 0
+        {
+          value: 'byLemma',
+          title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL'),
+          onClick: true,
+          showTextInput: true,
+          textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER')
+        },
+        {
+          value: 'byMostRecent',
+          title: this.l10n.getText('WORDLIST_FILTER_BYMOSTRECENT'),
+          showNumberInput: true,
+          onChange: true,
+          textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER')
+        },
+        {
+          value: 'byMostOften',
+          title: this.l10n.getText('WORDLIST_FILTER_BYMOSTOFTEN'),
+          showNumberInput: true,
+          onChange: true,
+          textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER')
+        }
+      ],
+      textInput: null,
+      shownVariantsSelect: false,
+      markLayout: {
+        start: '<span class="alpheios-select-input-filter-part">',
+        end: '</span>'
+      },
+      filterAmount: 0
+    }
+  },
+  mounted () {
+    this.filterAmount = this.wordlistFilterAmountDefault
+  },
+  computed: {
+    featureOptions () {
+      return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
+    },
+    wordlistFilterAmountDefault () {
+      return this.featureOptions ? this.featureOptions.items.wordlistFilterAmountDefault.currentValue : 0
+    },
+    currentTypeFilter () {
+      return this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
+    },
+    currentClickedLemma () {
+      if (this.clickedLemma) {
+        this.setClickedLemmaFilter()
+      }
+      return true
+    },
+    currentAdditionalField () {
+      if (this.currentTypeFilter) {
+        if (this.currentTypeFilter.showTextInput || this.currentTypeFilter.showNumberInput) {
+          return this.currentTypeFilter.showTextInput ? this.textInput : this.filterAmount || 0
+        }
+      }
+      return null
+    },
+    wordExactFormsFiltered () {
+      if (this.selectedFilterBy === 'byExactForm') {
+        if (this.textInput && this.textInput.length > 0) {
+          return this.wordExactForms.filter(exactForm => exactForm.indexOf(this.textInput) > -1).map(exactForm => {
+            const startIndex = exactForm.indexOf(this.textInput)
+            return exactForm.substr(0, startIndex) + this.markLayout.start + this.textInput + this.markLayout.end + exactForm.substr(startIndex + this.textInput.length)
+          })
+        } else {
+          return this.wordExactForms
+        }
+      }
+      return []
+    },
+    wordLemmaFormsFiltered () {
+      if (this.selectedFilterBy === 'byLemma') {
+        if (this.textInput && this.textInput.length > 0) {
+          return this.wordLemmaForms.filter(lemmaForm => lemmaForm.indexOf(this.textInput) > -1).map(lemmaForm => {
+            const startIndex = lemmaForm.indexOf(this.textInput)
+            return lemmaForm.substr(0, startIndex) + this.markLayout.start + this.textInput + this.markLayout.end + lemmaForm.substr(startIndex + this.textInput.length)
+          })
+        } else {
+          return this.wordLemmaForms
+        }
+      }
+      return []
+    }
+  },
+  watch: {
+    clearFilters (value) {
+      this.selectedFilterBy = null
+      this.textInput = null
+      this.filterAmount = 0
+    }
+  },
+  methods: {
+    changedFilterBy () {
+      this.clearFilteringAdditionalField()
+      if (this.currentTypeFilter && this.currentTypeFilter.onChange) {
+        this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
       }
     },
-    mounted () {
+    selectExactForm (selectedExactForm) {
+      let formattedExactForm = selectedExactForm // eslint-disable-line prefer-const
+      this.textInput = formattedExactForm.replace(this.markLayout.start, '').replace(this.markLayout.end, '')
+      this.clickFilterBy()
+    },
+    selectLemmaForm (selectedLemmaForm) {
+      let formattedLemmaForm = selectedLemmaForm // eslint-disable-line prefer-const
+      this.textInput = formattedLemmaForm.replace(this.markLayout.start, '').replace(this.markLayout.end, '')
+      this.clickFilterBy()
+    },
+    clickFilterBy () {
+      if (this.currentTypeFilter && this.currentTypeFilter.onClick && this.textInput) {
+        if (this.selectedFilterBy === 'byExactForm' && !this.wordExactForms.includes(this.textInput)) {
+          return
+        }
+        if (this.selectedFilterBy === 'byLemma' && !this.wordLemmaForms.includes(this.textInput)) {
+          return
+        }
+        this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
+        this.shownVariantsSelect = false
+      }
+    },
+    clearFiltering () {
+      this.selectedFilterBy = null
+      this.textInput = null
+      this.clearFilterEvent()
+    },
+    clearFilteringAdditionalField () {
+      this.textInput = null
       this.filterAmount = this.wordlistFilterAmountDefault
+      this.clearFilterEvent()
+      this.$emit('clearClickedLemma')
     },
-    computed: {
-      featureOptions () {
-        return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
-      },
-      wordlistFilterAmountDefault () {
-        return this.featureOptions ? this.featureOptions.items.wordlistFilterAmountDefault.currentValue : 0
-      },
-      currentTypeFilter () {
-        return this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
-      },
-      currentClickedLemma () {
-        if (this.clickedLemma) {
-          this.setClickedLemmaFilter()
-        }
-        return true
-      },
-      currentAdditionalField () {
-        if (this.currentTypeFilter) {
-          if (this.currentTypeFilter.showTextInput || this.currentTypeFilter.showNumberInput) {
-            return this.currentTypeFilter.showTextInput ? this.textInput : this.filterAmount || 0
-          }
-        } 
-        return null
-      },
-      wordExactFormsFiltered () {
-        if (this.selectedFilterBy === 'byExactForm') {
-          if (this.textInput && this.textInput.length > 0) {
-            return this.wordExactForms.filter(exactForm => exactForm.indexOf(this.textInput) > -1).map(exactForm => {
-              let startIndex = exactForm.indexOf(this.textInput)
-              return exactForm.substr(0, startIndex) + this.markLayout.start + this.textInput + this.markLayout.end + exactForm.substr(startIndex + this.textInput.length)
-            })
-          } else {
-            return this.wordExactForms
-          }
-        }
-        return []
-      },
-      wordLemmaFormsFiltered () {
-        if (this.selectedFilterBy === 'byLemma') {
-          if (this.textInput && this.textInput.length > 0) {
-            return this.wordLemmaForms.filter(lemmaForm => lemmaForm.indexOf(this.textInput) > -1).map(lemmaForm => {
-              let startIndex = lemmaForm.indexOf(this.textInput)
-              return lemmaForm.substr(0, startIndex) + this.markLayout.start + this.textInput + this.markLayout.end + lemmaForm.substr(startIndex + this.textInput.length)
-            })
-          } else {
-            return this.wordLemmaForms
-          }
-        }
-        return []
+    clearFilterEvent () {
+      this.$emit('changedFilterBy', null, null)
+    },
+    setClickedLemmaFilter () {
+      this.selectedFilterBy = 'byLemma'
+      this.textInput = this.clickedLemma.trim()
+      this.clickFilterBy()
+    },
+    filterVariants () {
+      if (this.textInput && this.textInput.length > 0) {
+        this.shownVariantsSelect = true
+      } else {
+        this.shownVariantsSelect = false
       }
     },
-    watch: {
-      clearFilters (value) {
-        this.selectedFilterBy = null
-        this.textInput = null
+    hideAutocomplete () {
+      setTimeout(() => {
+        this.shownVariantsSelect = false
+      }, 300)
+    },
+    calcTitle (typeFiltering, selectedFilterByName) {
+      if (typeFiltering.value) {
+        return typeFiltering.title
+      } else {
+        if (this[selectedFilterByName]) {
+          return this.l10n.getText('WORDLIST_FILTER_CLEAR')
+        } else {
+          return this.l10n.getText('WORDLIST_FILTER_PLACEHOLDER')
+        }
+      }
+    },
+    changeFilterAmount () {
+      this.checkNumberField()
+      if (this.filterAmount === null) {
         this.filterAmount = 0
       }
-    },
-    methods: {
-      changedFilterBy () {
-        this.clearFilteringAdditionalField()
-        if (this.currentTypeFilter && this.currentTypeFilter.onChange) {
-          this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
-        }
-      },
-      selectExactForm (selectedExactForm) {
-        let formattedExactForm = selectedExactForm
-        this.textInput = formattedExactForm.replace(this.markLayout.start,'').replace(this.markLayout.end,'')
-        this.clickFilterBy()
-      },
-      selectLemmaForm (selectedLemmaForm) {
-        let formattedLemmaForm = selectedLemmaForm
-        this.textInput = formattedLemmaForm.replace(this.markLayout.start,'').replace(this.markLayout.end,'')
-        this.clickFilterBy()
-      },
-      clickFilterBy () {
-        if (this.currentTypeFilter && this.currentTypeFilter.onClick && this.textInput) {
-          if (this.selectedFilterBy === 'byExactForm' && !this.wordExactForms.includes(this.textInput)) {
-            return
-          }
-          if (this.selectedFilterBy === 'byLemma' && !this.wordLemmaForms.includes(this.textInput)) {
-            return
-          }
-          this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
-          this.shownVariantsSelect = false
-        }
-      },
-      clearFiltering () {
-        this.selectedFilterBy = null
-        this.textInput = null
-        this.clearFilterEvent()
-      },
-      clearFilteringAdditionalField () {
-        this.textInput = null
-        this.filterAmount = this.wordlistFilterAmountDefault
-        this.clearFilterEvent()
-        this.$emit('clearClickedLemma')
-      },
-      clearFilterEvent () {
-        this.$emit('changedFilterBy', null, null)
-      },
-      setClickedLemmaFilter () {
-        this.selectedFilterBy = 'byLemma'
-        this.textInput = this.clickedLemma.trim()
-        this.clickFilterBy()
-        
-      },
-      filterVariants () {
-        if (this.textInput && this.textInput.length > 0) {
-          this.shownVariantsSelect = true
-        } else {
-          this.shownVariantsSelect = false
-        }
-      },
-      hideAutocomplete () {
-        setTimeout(() => {
-          this.shownVariantsSelect = false
-        }, 300)
-      },
-      calcTitle (typeFiltering, selectedFilterByName) {
-        if (typeFiltering.value) {
-          return typeFiltering.title
-        } else {
-          if (this[selectedFilterByName]) {
-            return this.l10n.getText('WORDLIST_FILTER_CLEAR')
-          } else {
-            return this.l10n.getText('WORDLIST_FILTER_PLACEHOLDER')
-          }
-        }        
-      },
-      changeFilterAmount () {
-        this.checkNumberField()
-        if (this.filterAmount === null) {
-          this.filterAmount = 0
-        }
 
-        if (this.selectedFilterBy) {
-          this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
+      if (this.selectedFilterBy) {
+        this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
+      }
+    },
+    checkNumberField () {
+      if (this.wordlistFilterAmountDefault.number && this.wordlistFilterAmountDefault.minValue) {
+        if (this.filterAmount < this.wordlistFilterAmountDefault.minValue) {
+          this.filterAmount = this.wordlistFilterAmountDefault.minValue
         }
-      },
-      checkNumberField () {
-        if (this.wordlistFilterAmountDefault.number && this.wordlistFilterAmountDefault.minValue) {
-          if (this.filterAmount < this.wordlistFilterAmountDefault.minValue) {
-            this.filterAmount = this.wordlistFilterAmountDefault.minValue
-          }
-        }
-        if (this.wordlistFilterAmountDefault.number && this.wordlistFilterAmountDefault.maxValue) {
-          if (this.filterAmount > this.wordlistFilterAmountDefault.maxValue) {
-            this.filterAmount = this.wordlistFilterAmountDefault.maxValue
-          }
+      }
+      if (this.wordlistFilterAmountDefault.number && this.wordlistFilterAmountDefault.maxValue) {
+        if (this.filterAmount > this.wordlistFilterAmountDefault.maxValue) {
+          this.filterAmount = this.wordlistFilterAmountDefault.maxValue
         }
       }
     }
   }
+}
 </script>
 <style lang="scss">
   @import "../../../styles/variables";
@@ -420,7 +429,7 @@
   .alpheios-rtl {
     .alpheios-wordlist-header-input-filterBy-block,
     .alpheios-select-list {
-      direction: rtl;   
+      direction: rtl;
       text-align: right;
     }
   }

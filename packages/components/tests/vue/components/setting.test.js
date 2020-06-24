@@ -154,9 +154,7 @@ describe('setting.test.js', () => {
       }
     })
 
-    console.info(cmp.html())
     expect(cmp.find('.alpheios-setting__label').isVisible()).toBeFalsy()
     expect(cmp.find('.alpheios-checkbox-block  label').isVisible()).toBeTruthy()
   })
-
 })
