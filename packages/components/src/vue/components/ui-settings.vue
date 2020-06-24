@@ -1,7 +1,7 @@
 <template>
   <div class="alpheios-ui-options__cont">
     <font-size></font-size>
-    <div class="alpheios-ui-options__popup-size-item">
+    <div class="alpheios-ui-options__popup-size-item" v-show="!isMobile">
       <label
           class="alpheios-ui-options__popup-size-item_top-label"
           for="alpheios-ui-options-popup-max-width"
@@ -65,6 +65,10 @@ export default {
     }
   },
   computed: {
+    isMobile: function () {
+      return Boolean(this.app && this.app.platform && this.app.platform.isMobile)
+    },
+
     uiOptions: function () {
       return this.settings.getUiOptions()
     }
@@ -107,7 +111,8 @@ export default {
     }
 
     &_bottom-label {
-      display: flex;
+      // Needs an `important!` to override styles on https://scaife.perseus.org
+      display: flex !important;
       justify-content: space-between;
     }
   }

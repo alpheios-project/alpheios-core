@@ -5,6 +5,7 @@
             autocorrect="off"
             autocomplete="off"
             @keyup="checkLookupKeyPress"
+            @paste="onPaste"
             class="alpheios-input"
             :class="{ 'alpheios-rtl': directionRtl}"
             type="text"
@@ -92,6 +93,14 @@ export default {
       this.getAutocompleteWords()
     },
 
+    onPaste (event) {
+      const data = event.clipboardData || window.clipboardData
+      if (data && data.getData) {
+        const text = data.getData('text').trim()
+        this.$emit('updateLookupText', text)
+      }
+    },
+
     updateBetaCodes () {
       if (this.currentUseBetaCodes && this.availableUseBetaCodes) {
         this.valueText = GreekInput.change(this.valueText)
@@ -105,7 +114,6 @@ export default {
         this.$emit('updateLookupText', this.valueText)
         this.clearWords()
         if (this.valueText.length > 2) {
-
           const res = await ClientAdapters.autocompleteWords.logeion({
             method: 'getWords',
             params: {
@@ -115,7 +123,7 @@ export default {
             }
           })
 
-          if (res.result && res.result.length > 0) {
+          if (res && res.result && res.result.length > 0) {
             this.words = res.result
           }
         }
@@ -158,7 +166,6 @@ export default {
       }
     }
   }
-
 
   .alpheios-input-group {
     position: relative;

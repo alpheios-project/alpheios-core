@@ -134,7 +134,7 @@ return /******/ (() => { // webpackBootstrap
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"_args\":[[\"axios@0.19.2\",\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.19.2\",\"_id\":\"axios@0.19.2\",\"_inBundle\":false,\"_integrity\":\"sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.19.2\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.19.2\",\"saveSpec\":null,\"fetchSpec\":\"0.19.2\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.19.2.tgz\",\"_spec\":\"0.19.2\",\"_where\":\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"1.5.10\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"version\":\"0.19.2\"}");
+module.exports = JSON.parse("{\"_args\":[[\"axios@0.19.2\",\"/home/balmas/workspace/alpheios-core\"]],\"_from\":\"axios@0.19.2\",\"_id\":\"axios@0.19.2\",\"_inBundle\":false,\"_integrity\":\"sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.19.2\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.19.2\",\"saveSpec\":null,\"fetchSpec\":\"0.19.2\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.19.2.tgz\",\"_spec\":\"0.19.2\",\"_where\":\"/home/balmas/workspace/alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"1.5.10\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"version\":\"0.19.2\"}");
 
 /***/ }),
 
@@ -161,7 +161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	var installedModules = {};
 /******/
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_553__(moduleId) {
+/******/ 	function __nested_webpack_require_538__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId]) {
@@ -175,7 +175,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_553__);
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_538__);
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
@@ -186,20 +186,20 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__nested_webpack_require_553__.m = modules;
+/******/ 	__nested_webpack_require_538__.m = modules;
 /******/
 /******/ 	// expose the module cache
-/******/ 	__nested_webpack_require_553__.c = installedModules;
+/******/ 	__nested_webpack_require_538__.c = installedModules;
 /******/
 /******/ 	// define getter function for harmony exports
-/******/ 	__nested_webpack_require_553__.d = function(exports, name, getter) {
-/******/ 		if(!__nested_webpack_require_553__.o(exports, name)) {
+/******/ 	__nested_webpack_require_538__.d = function(exports, name, getter) {
+/******/ 		if(!__nested_webpack_require_538__.o(exports, name)) {
 /******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
-/******/ 	__nested_webpack_require_553__.r = function(exports) {
+/******/ 	__nested_webpack_require_538__.r = function(exports) {
 /******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 		}
@@ -211,35 +211,35 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// mode & 2: merge all properties of value into the ns
 /******/ 	// mode & 4: return value when already ns object
 /******/ 	// mode & 8|1: behave like require
-/******/ 	__nested_webpack_require_553__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __nested_webpack_require_553__(value);
+/******/ 	__nested_webpack_require_538__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __nested_webpack_require_538__(value);
 /******/ 		if(mode & 8) return value;
 /******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
 /******/ 		var ns = Object.create(null);
-/******/ 		__nested_webpack_require_553__.r(ns);
+/******/ 		__nested_webpack_require_538__.r(ns);
 /******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __nested_webpack_require_553__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __nested_webpack_require_538__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
 /******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__nested_webpack_require_553__.n = function(module) {
+/******/ 	__nested_webpack_require_538__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
 /******/ 			function getDefault() { return module['default']; } :
 /******/ 			function getModuleExports() { return module; };
-/******/ 		__nested_webpack_require_553__.d(getter, 'a', getter);
+/******/ 		__nested_webpack_require_538__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
 /******/
 /******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__nested_webpack_require_553__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/ 	__nested_webpack_require_538__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__nested_webpack_require_553__.p = "";
+/******/ 	__nested_webpack_require_538__.p = "";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __nested_webpack_require_553__(__nested_webpack_require_553__.s = "./index.js");
+/******/ 	return __nested_webpack_require_538__(__nested_webpack_require_538__.s = "./index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -249,26 +249,26 @@ return /******/ (function(modules) { // webpackBootstrap
   !*** ./index.js ***!
   \******************/
 /*! exports provided: MessagingService, WindowIframeDestination, RequestMessage, ResponseMessage, CedictDestinationConfig, CedictDestinationDevConfig */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_4365__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_4262__) {
 
 "use strict";
-__nested_webpack_require_4365__.r(__webpack_exports__);
-/* harmony import */ var _messServ_core_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_4365__(/*! @messServ/core/messaging-service.js */ "./src/core/messaging-service.js");
-/* harmony reexport (safe) */ __nested_webpack_require_4365__.d(__webpack_exports__, "MessagingService", function() { return _messServ_core_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+__nested_webpack_require_4262__.r(__webpack_exports__);
+/* harmony import */ var _messServ_core_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_4262__(/*! @messServ/core/messaging-service.js */ "./src/core/messaging-service.js");
+/* harmony reexport (safe) */ __nested_webpack_require_4262__.d(__webpack_exports__, "MessagingService", function() { return _messServ_core_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _messServ_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_4365__(/*! @messServ/destinations/window-iframe-destination.js */ "./src/destinations/window-iframe-destination.js");
-/* harmony reexport (safe) */ __nested_webpack_require_4365__.d(__webpack_exports__, "WindowIframeDestination", function() { return _messServ_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony import */ var _messServ_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_4262__(/*! @messServ/destinations/window-iframe-destination.js */ "./src/destinations/window-iframe-destination.js");
+/* harmony reexport (safe) */ __nested_webpack_require_4262__.d(__webpack_exports__, "WindowIframeDestination", function() { return _messServ_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_4365__(/*! @messServ/messages/request-message.js */ "./src/messages/request-message.js");
-/* harmony reexport (safe) */ __nested_webpack_require_4365__.d(__webpack_exports__, "RequestMessage", function() { return _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_4262__(/*! @messServ/messages/request-message.js */ "./src/messages/request-message.js");
+/* harmony reexport (safe) */ __nested_webpack_require_4262__.d(__webpack_exports__, "RequestMessage", function() { return _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_4365__(/*! @messServ/messages/response-message.js */ "./src/messages/response-message.js");
-/* harmony reexport (safe) */ __nested_webpack_require_4365__.d(__webpack_exports__, "ResponseMessage", function() { return _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony import */ var _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_4262__(/*! @messServ/messages/response-message.js */ "./src/messages/response-message.js");
+/* harmony reexport (safe) */ __nested_webpack_require_4262__.d(__webpack_exports__, "ResponseMessage", function() { return _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _messServ_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__ = __nested_webpack_require_4365__(/*! @messServ/configurations/destinations.js */ "./src/configurations/destinations.js");
-/* harmony reexport (safe) */ __nested_webpack_require_4365__.d(__webpack_exports__, "CedictDestinationConfig", function() { return _messServ_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__["CedictDestinationConfig"]; });
+/* harmony import */ var _messServ_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__ = __nested_webpack_require_4262__(/*! @messServ/configurations/destinations.js */ "./src/configurations/destinations.js");
+/* harmony reexport (safe) */ __nested_webpack_require_4262__.d(__webpack_exports__, "CedictDestinationConfig", function() { return _messServ_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__["CedictDestinationConfig"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_4365__.d(__webpack_exports__, "CedictDestinationDevConfig", function() { return _messServ_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__["CedictDestinationDevConfig"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_4262__.d(__webpack_exports__, "CedictDestinationDevConfig", function() { return _messServ_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__["CedictDestinationDevConfig"]; });
 
 
 
@@ -286,10 +286,10 @@ __nested_webpack_require_4365__.r(__webpack_exports__);
   !*** ./node_modules/uuid/dist/esm-browser/bytesToUuid.js ***!
   \***********************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_7127__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_6987__) {
 
 "use strict";
-__nested_webpack_require_7127__.r(__webpack_exports__);
+__nested_webpack_require_6987__.r(__webpack_exports__);
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -316,21 +316,21 @@ function bytesToUuid(buf, offset) {
   !*** ./node_modules/uuid/dist/esm-browser/index.js ***!
   \*****************************************************/
 /*! exports provided: v1, v3, v4, v5 */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_8351__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_8181__) {
 
 "use strict";
-__nested_webpack_require_8351__.r(__webpack_exports__);
-/* harmony import */ var _v1_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_8351__(/*! ./v1.js */ "./node_modules/uuid/dist/esm-browser/v1.js");
-/* harmony reexport (safe) */ __nested_webpack_require_8351__.d(__webpack_exports__, "v1", function() { return _v1_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+__nested_webpack_require_8181__.r(__webpack_exports__);
+/* harmony import */ var _v1_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_8181__(/*! ./v1.js */ "./node_modules/uuid/dist/esm-browser/v1.js");
+/* harmony reexport (safe) */ __nested_webpack_require_8181__.d(__webpack_exports__, "v1", function() { return _v1_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _v3_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_8351__(/*! ./v3.js */ "./node_modules/uuid/dist/esm-browser/v3.js");
-/* harmony reexport (safe) */ __nested_webpack_require_8351__.d(__webpack_exports__, "v3", function() { return _v3_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony import */ var _v3_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_8181__(/*! ./v3.js */ "./node_modules/uuid/dist/esm-browser/v3.js");
+/* harmony reexport (safe) */ __nested_webpack_require_8181__.d(__webpack_exports__, "v3", function() { return _v3_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _v4_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_8351__(/*! ./v4.js */ "./node_modules/uuid/dist/esm-browser/v4.js");
-/* harmony reexport (safe) */ __nested_webpack_require_8351__.d(__webpack_exports__, "v4", function() { return _v4_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _v4_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_8181__(/*! ./v4.js */ "./node_modules/uuid/dist/esm-browser/v4.js");
+/* harmony reexport (safe) */ __nested_webpack_require_8181__.d(__webpack_exports__, "v4", function() { return _v4_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _v5_js__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_8351__(/*! ./v5.js */ "./node_modules/uuid/dist/esm-browser/v5.js");
-/* harmony reexport (safe) */ __nested_webpack_require_8351__.d(__webpack_exports__, "v5", function() { return _v5_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony import */ var _v5_js__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_8181__(/*! ./v5.js */ "./node_modules/uuid/dist/esm-browser/v5.js");
+/* harmony reexport (safe) */ __nested_webpack_require_8181__.d(__webpack_exports__, "v5", function() { return _v5_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
 
 
@@ -344,10 +344,10 @@ __nested_webpack_require_8351__.r(__webpack_exports__);
   !*** ./node_modules/uuid/dist/esm-browser/md5.js ***!
   \***************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_9966__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_9768__) {
 
 "use strict";
-__nested_webpack_require_9966__.r(__webpack_exports__);
+__nested_webpack_require_9768__.r(__webpack_exports__);
 /*
  * Browser-compatible JavaScript MD5
  *
@@ -574,11 +574,11 @@ function md5ii(a, b, c, d, x, s, t) {
   !*** ./node_modules/uuid/dist/esm-browser/rng.js ***!
   \***************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_17418__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_16990__) {
 
 "use strict";
-__nested_webpack_require_17418__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_17418__.d(__webpack_exports__, "default", function() { return rng; });
+__nested_webpack_require_16990__.r(__webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_16990__.d(__webpack_exports__, "default", function() { return rng; });
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
 // require the crypto API and do not support built-in fallback to lower quality random number
 // generators (like Math.random()).
@@ -602,10 +602,10 @@ function rng() {
   !*** ./node_modules/uuid/dist/esm-browser/sha1.js ***!
   \****************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_18868__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_18412__) {
 
 "use strict";
-__nested_webpack_require_18868__.r(__webpack_exports__);
+__nested_webpack_require_18412__.r(__webpack_exports__);
 // Adapted from Chris Veness' SHA1 code at
 // http://www.movable-type.co.uk/scripts/sha1.html
 function f(s, x, y, z) {
@@ -705,12 +705,12 @@ function sha1(bytes) {
   !*** ./node_modules/uuid/dist/esm-browser/v1.js ***!
   \**************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_21732__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_21173__) {
 
 "use strict";
-__nested_webpack_require_21732__.r(__webpack_exports__);
-/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_21732__(/*! ./rng.js */ "./node_modules/uuid/dist/esm-browser/rng.js");
-/* harmony import */ var _bytesToUuid_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_21732__(/*! ./bytesToUuid.js */ "./node_modules/uuid/dist/esm-browser/bytesToUuid.js");
+__nested_webpack_require_21173__.r(__webpack_exports__);
+/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_21173__(/*! ./rng.js */ "./node_modules/uuid/dist/esm-browser/rng.js");
+/* harmony import */ var _bytesToUuid_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_21173__(/*! ./bytesToUuid.js */ "./node_modules/uuid/dist/esm-browser/bytesToUuid.js");
 
  // **`v1()` - Generate time-based UUID**
 //
@@ -814,12 +814,12 @@ function v1(options, buf, offset) {
   !*** ./node_modules/uuid/dist/esm-browser/v3.js ***!
   \**************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_25934__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_25266__) {
 
 "use strict";
-__nested_webpack_require_25934__.r(__webpack_exports__);
-/* harmony import */ var _v35_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_25934__(/*! ./v35.js */ "./node_modules/uuid/dist/esm-browser/v35.js");
-/* harmony import */ var _md5_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_25934__(/*! ./md5.js */ "./node_modules/uuid/dist/esm-browser/md5.js");
+__nested_webpack_require_25266__.r(__webpack_exports__);
+/* harmony import */ var _v35_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_25266__(/*! ./v35.js */ "./node_modules/uuid/dist/esm-browser/v35.js");
+/* harmony import */ var _md5_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_25266__(/*! ./md5.js */ "./node_modules/uuid/dist/esm-browser/md5.js");
 
 
 var v3 = Object(_v35_js__WEBPACK_IMPORTED_MODULE_0__["default"])('v3', 0x30, _md5_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -832,13 +832,13 @@ var v3 = Object(_v35_js__WEBPACK_IMPORTED_MODULE_0__["default"])('v3', 0x30, _md
   !*** ./node_modules/uuid/dist/esm-browser/v35.js ***!
   \***************************************************/
 /*! exports provided: DNS, URL, default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_26850__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_26164__) {
 
 "use strict";
-__nested_webpack_require_26850__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_26850__.d(__webpack_exports__, "DNS", function() { return DNS; });
-/* harmony export (binding) */ __nested_webpack_require_26850__.d(__webpack_exports__, "URL", function() { return URL; });
-/* harmony import */ var _bytesToUuid_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_26850__(/*! ./bytesToUuid.js */ "./node_modules/uuid/dist/esm-browser/bytesToUuid.js");
+__nested_webpack_require_26164__.r(__webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_26164__.d(__webpack_exports__, "DNS", function() { return DNS; });
+/* harmony export (binding) */ __nested_webpack_require_26164__.d(__webpack_exports__, "URL", function() { return URL; });
+/* harmony import */ var _bytesToUuid_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_26164__(/*! ./bytesToUuid.js */ "./node_modules/uuid/dist/esm-browser/bytesToUuid.js");
 
 
 function uuidToBytes(uuid) {
@@ -903,12 +903,12 @@ var URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
   !*** ./node_modules/uuid/dist/esm-browser/v4.js ***!
   \**************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_29410__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_28653__) {
 
 "use strict";
-__nested_webpack_require_29410__.r(__webpack_exports__);
-/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_29410__(/*! ./rng.js */ "./node_modules/uuid/dist/esm-browser/rng.js");
-/* harmony import */ var _bytesToUuid_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_29410__(/*! ./bytesToUuid.js */ "./node_modules/uuid/dist/esm-browser/bytesToUuid.js");
+__nested_webpack_require_28653__.r(__webpack_exports__);
+/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_28653__(/*! ./rng.js */ "./node_modules/uuid/dist/esm-browser/rng.js");
+/* harmony import */ var _bytesToUuid_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_28653__(/*! ./bytesToUuid.js */ "./node_modules/uuid/dist/esm-browser/bytesToUuid.js");
 
 
 
@@ -944,12 +944,12 @@ function v4(options, buf, offset) {
   !*** ./node_modules/uuid/dist/esm-browser/v5.js ***!
   \**************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_30898__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_30100__) {
 
 "use strict";
-__nested_webpack_require_30898__.r(__webpack_exports__);
-/* harmony import */ var _v35_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_30898__(/*! ./v35.js */ "./node_modules/uuid/dist/esm-browser/v35.js");
-/* harmony import */ var _sha1_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_30898__(/*! ./sha1.js */ "./node_modules/uuid/dist/esm-browser/sha1.js");
+__nested_webpack_require_30100__.r(__webpack_exports__);
+/* harmony import */ var _v35_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_30100__(/*! ./v35.js */ "./node_modules/uuid/dist/esm-browser/v35.js");
+/* harmony import */ var _sha1_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_30100__(/*! ./sha1.js */ "./node_modules/uuid/dist/esm-browser/sha1.js");
 
 
 var v5 = Object(_v35_js__WEBPACK_IMPORTED_MODULE_0__["default"])('v5', 0x50, _sha1_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -962,12 +962,12 @@ var v5 = Object(_v35_js__WEBPACK_IMPORTED_MODULE_0__["default"])('v5', 0x50, _sh
   !*** ./src/configurations/destinations.js ***!
   \********************************************/
 /*! exports provided: CedictDestinationConfig, CedictDestinationDevConfig */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_31824__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_31008__) {
 
 "use strict";
-__nested_webpack_require_31824__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_31824__.d(__webpack_exports__, "CedictDestinationConfig", function() { return CedictDestinationConfig; });
-/* harmony export (binding) */ __nested_webpack_require_31824__.d(__webpack_exports__, "CedictDestinationDevConfig", function() { return CedictDestinationDevConfig; });
+__nested_webpack_require_31008__.r(__webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_31008__.d(__webpack_exports__, "CedictDestinationConfig", function() { return CedictDestinationConfig; });
+/* harmony export (binding) */ __nested_webpack_require_31008__.d(__webpack_exports__, "CedictDestinationDevConfig", function() { return CedictDestinationDevConfig; });
 /**
  * This is a configuration of a WindowsIframeDestination that can be used to connect to CEDICT client service.
  *
@@ -997,14 +997,14 @@ const CedictDestinationDevConfig = {
   !*** ./src/core/messaging-service.js ***!
   \***************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_33140__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_32289__) {
 
 "use strict";
-__nested_webpack_require_33140__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_33140__.d(__webpack_exports__, "default", function() { return MessagingService; });
-/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_33140__(/*! @messServ/messages/message.js */ "./src/messages/message.js");
-/* harmony import */ var _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_33140__(/*! @messServ/messages/response-message.js */ "./src/messages/response-message.js");
-/* harmony import */ var _messServ_core_stored_request_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_33140__(/*! @messServ/core/stored-request.js */ "./src/core/stored-request.js");
+__nested_webpack_require_32289__.r(__webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_32289__.d(__webpack_exports__, "default", function() { return MessagingService; });
+/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_32289__(/*! @messServ/messages/message.js */ "./src/messages/message.js");
+/* harmony import */ var _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_32289__(/*! @messServ/messages/response-message.js */ "./src/messages/response-message.js");
+/* harmony import */ var _messServ_core_stored_request_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_32289__(/*! @messServ/core/stored-request.js */ "./src/core/stored-request.js");
 /**
  * @module MessagingService
  */
@@ -1223,11 +1223,11 @@ MessagingService.errMsgs = {
   !*** ./src/core/stored-request.js ***!
   \************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_42425__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_41348__) {
 
 "use strict";
-__nested_webpack_require_42425__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_42425__.d(__webpack_exports__, "default", function() { return StoredRequest; });
+__nested_webpack_require_41348__.r(__webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_41348__.d(__webpack_exports__, "default", function() { return StoredRequest; });
 /**
  * @module StoredRequest
  */
@@ -1267,11 +1267,11 @@ class StoredRequest {
   !*** ./src/destinations/destination.js ***!
   \*****************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_43606__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_42485__) {
 
 "use strict";
-__nested_webpack_require_43606__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_43606__.d(__webpack_exports__, "default", function() { return Destination; });
+__nested_webpack_require_42485__.r(__webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_42485__.d(__webpack_exports__, "default", function() { return Destination; });
 /**
  * @module Destination
  */
@@ -1368,13 +1368,13 @@ Destination.commModes = {
   !*** ./src/destinations/window-iframe-destination.js ***!
   \*******************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_46821__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_45599__) {
 
 "use strict";
-__nested_webpack_require_46821__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_46821__.d(__webpack_exports__, "default", function() { return WindowIframeDestination; });
-/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_46821__(/*! @messServ/messages/message.js */ "./src/messages/message.js");
-/* harmony import */ var _messServ_destinations_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_46821__(/*! @messServ/destinations/destination.js */ "./src/destinations/destination.js");
+__nested_webpack_require_45599__.r(__webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_45599__.d(__webpack_exports__, "default", function() { return WindowIframeDestination; });
+/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_45599__(/*! @messServ/messages/message.js */ "./src/messages/message.js");
+/* harmony import */ var _messServ_destinations_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_45599__(/*! @messServ/destinations/destination.js */ "./src/destinations/destination.js");
 /**
  * @module WindowIframeDestination
  */
@@ -1630,12 +1630,12 @@ class WindowIframeDestination extends _messServ_destinations_destination_js__WEB
   !*** ./src/messages/message.js ***!
   \*********************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_57793__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_56309__) {
 
 "use strict";
-__nested_webpack_require_57793__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_57793__.d(__webpack_exports__, "default", function() { return Message; });
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_57793__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/index.js");
+__nested_webpack_require_56309__.r(__webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_56309__.d(__webpack_exports__, "default", function() { return Message; });
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_56309__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/index.js");
 /**
  * @module Message
  */
@@ -1707,12 +1707,12 @@ Message.types = {
   !*** ./src/messages/request-message.js ***!
   \*****************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_60011__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_58450__) {
 
 "use strict";
-__nested_webpack_require_60011__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_60011__.d(__webpack_exports__, "default", function() { return RequestMessage; });
-/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_60011__(/*! @messServ/messages/message.js */ "./src/messages/message.js");
+__nested_webpack_require_58450__.r(__webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_58450__.d(__webpack_exports__, "default", function() { return RequestMessage; });
+/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_58450__(/*! @messServ/messages/message.js */ "./src/messages/message.js");
 /**
  * @module RequestMessage
  */
@@ -1744,13 +1744,13 @@ class RequestMessage extends _messServ_messages_message_js__WEBPACK_IMPORTED_MOD
   !*** ./src/messages/response-message.js ***!
   \******************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_61269__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_59671__) {
 
 "use strict";
-__nested_webpack_require_61269__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_61269__.d(__webpack_exports__, "default", function() { return ResponseMessage; });
-/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_61269__(/*! @messServ/messages/message.js */ "./src/messages/message.js");
-/* harmony import */ var _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_61269__(/*! @messServ/messages/request-message.js */ "./src/messages/request-message.js");
+__nested_webpack_require_59671__.r(__webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_59671__.d(__webpack_exports__, "default", function() { return ResponseMessage; });
+/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_59671__(/*! @messServ/messages/message.js */ "./src/messages/message.js");
+/* harmony import */ var _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_59671__(/*! @messServ/messages/request-message.js */ "./src/messages/request-message.js");
 /**
  * @module ResponseMessage
  */
