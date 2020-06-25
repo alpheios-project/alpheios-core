@@ -19,13 +19,13 @@ export default class Lexis extends Module {
    * @param {object} store - A Vuex store.
    * @param {object} api - A public API object.
    * @param {object} config - A module's configuration object:
-   *        {Function} config.getSelectedText - A UI controller's function to start a lexical query.
-   *        This is a temporary solution until wil fully integrate lexical query functionality into a
-   *        UI controller.
+   *        {Function} config.getSelectedText - An app controller's function to start a lexical query.
+   *        This is a temporary solution until wil fully integrate lexical query functionality into
+   *        an app controller.
    */
   constructor (store, api, config = {}) {
     super(store, api, config)
-    // APIs provided by the UI controller
+    // APIs provided by the app controller
     this._appApi = api.app
     this._uiApi = api.ui
     this._settingsApi = api.settings

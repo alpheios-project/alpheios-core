@@ -20,7 +20,7 @@ import Platform from '@/lib/utility/platform.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
 import { Lexeme, Lemma, Homonym, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
-import UIController from '@/lib/controllers/ui-controller.js'
+import UIController from '@/lib/controllers/app-controller.js'
 
 import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
 import { Fixture } from 'alpheios-fixtures'

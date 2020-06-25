@@ -57,16 +57,16 @@ const injectionClasses = {
 // Enable Vuex
 Vue.use(Vuex)
 
-export default class UIController {
+export default class AppController {
   /**
-   * The best way to create a configured instance of a UIController is to use its `create` method.
-   * It configures and attaches all UIController's modules.
-   * If you need a custom configuration of a UIController, replace its `create` method with your own.
+   * The best way to create a configured instance of a AppController is to use its `create` method.
+   * It configures and attaches all AppController's modules.
+   * If you need a custom configuration of a AppController, replace its `create` method with your own.
    *
    * @class
    *
    * @param {UIStateAPI} state - An object to store a UI state.
-   * @param {object} options - UI controller options object.
+   * @param {object} options - app controller options object.
    * See `optionsDefaults` getter for detailed parameter description: @see {@link optionsDefaults}
    * If any options is not specified, it will be set to a default value.
    * If an options is not present in an `optionsDefaults` object, it will be ignored as an unknown option.
@@ -74,14 +74,14 @@ export default class UIController {
    */
   constructor (state, options = {}) {
     this.state = state
-    this.options = UIController.setOptions(options, UIController.optionsDefaults)
+    this.options = AppController.setOptions(options, AppController.optionsDefaults)
 
     this.tabs = {
       DEFAULT: this.options.overrideHelp ? 'settings' : 'info',
       DISABLED: 'disabled'
     }
     /*
-    Define defaults for resource options. If a UI controller creator
+    Define defaults for resource options. If a app controller creator
     needs to provide its own defaults, they shall be defined in a `create()` function.
      */
     this.featureOptionsDefaults = FeatureOptionDefaults
@@ -90,7 +90,7 @@ export default class UIController {
     this.siteOptionsDefaults = SiteOptions
     /*
     All following options will be created during an init phase.
-    This will allow creators of UI controller to provide their own options defaults
+    This will allow creators of an app controller to provide their own options defaults
     inside a `create()` builder function.
      */
     this.featureOptions = null
@@ -98,7 +98,7 @@ export default class UIController {
     this.uiOptions = null
     this.siteOptions = null // Will be set during an `init` phase
 
-    this.irregularBaseFontSize = !UIController.hasRegularBaseFontSize()
+    this.irregularBaseFontSize = !AppController.hasRegularBaseFontSize()
     this.isInitialized = false
     this.isActivated = false
     this.isDeactivated = false
@@ -130,7 +130,7 @@ export default class UIController {
        */
       strict: DEVELOPMENT_MODE_BUILD
     })
-    this.api = {} // An API object for functions of registered modules and UI controller.
+    this.api = {} // An API object for functions of registered modules and an app controller.
     this.modules = new Map()
 
     // Get query parameters from the URL. Do this early so they will be available to modules during registration
@@ -148,29 +148,29 @@ export default class UIController {
   }
 
   /**
-   * Creates an instance of a UI controller with default options. Provide your own implementation of this method
-if you want to create a different configuration of a UI controller.
+   * Creates an instance of an app controller with default options. Provide your own implementation of this method
+if you want to create a different configuration of an app controller.
    *
    * @param state
    * @param options
    */
   static create (state, options) {
-    let uiController = new UIController(state, options) // eslint-disable-line prefer-const
+    let appController = new AppController(state, options) // eslint-disable-line prefer-const
 
     /*
-    If necessary override defaults of a UI controller's options objects here as:
-    uiController.siteOptionsDefaults = mySiteDefaults
+    If necessary override defaults of an app controller's options objects here as:
+    appController.siteOptionsDefaults = mySiteDefaults
      */
 
     // Register data modules
-    uiController.registerModule(L10nModule, {
+    appController.registerModule(L10nModule, {
       defaultLocale: Locales.en_US,
       messageBundles: Locales.bundleArr()
     })
 
-    uiController.registerModule(LexisModule, {
-      arethusaTbRefreshRetryCount: uiController.options.arethusaTbRefreshRetryCount,
-      arethusaTbRefreshDelay: uiController.options.arethusaTbRefreshDelay
+    appController.registerModule(LexisModule, {
+      arethusaTbRefreshRetryCount: appController.options.arethusaTbRefreshRetryCount,
+      arethusaTbRefreshDelay: appController.options.arethusaTbRefreshDelay
     })
 
     /*
@@ -178,51 +178,51 @@ if you want to create a different configuration of a UI controller.
     For webexetension it, for example, can be a messaging service.
     Some environments may not register an Auth module at all.
     That's why this registration shall be made not here,
-    but from within an environment that creates a UI controller
+    but from within an environment that creates an app controller
     (after a call to `create()` function, usually).
      */
-    // uiController.registerModule(AuthModule, undefined)
+    // appController.registerModule(AuthModule, undefined)
 
     // Register UI modules. This is environment specific and thus shall be done after a `create()` call.
-    /* uiController.registerModule(PanelModule, {
+    /* appController.registerModule(PanelModule, {
       mountPoint: '#alpheios-panel' // To what element a panel will be mounted
     })
-    uiController.registerModule(PopupModule, {
+    appController.registerModule(PopupModule, {
       mountPoint: '#alpheios-popup'
     })
-    uiController.registerModule(ActionPanelModule, {})
+    appController.registerModule(ActionPanelModule, {})
     */
 
     // Creates on configures an event listener
-    uiController.evc = new UIEventController()
-    uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), GenericEvt, 'keydown')
+    appController.evc = new UIEventController()
+    appController.evc.registerListener('HandleEscapeKey', document, appController.handleEscapeKey.bind(appController), GenericEvt, 'keydown')
 
     // Subscribe to LexicalQuery events
-    LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
-    LexicalQuery.evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
-    LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
-    LexicalQuery.evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
-    LexicalQuery.evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
-    LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.updateWordUsageExamples.bind(uiController))
-    LexicalQuery.evt.SHORT_DEFS_READY.sub(uiController.onShortDefinitionsReady.bind(uiController))
-    LexicalQuery.evt.FULL_DEFS_READY.sub(uiController.onFullDefinitionsReady.bind(uiController))
-    LexicalQuery.evt.SHORT_DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
-    LexicalQuery.evt.FULL_DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+    LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(appController.onLexicalQueryComplete.bind(appController))
+    LexicalQuery.evt.MORPH_DATA_READY.sub(appController.onMorphDataReady.bind(appController))
+    LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.sub(appController.onMorphDataNotFound.bind(appController))
+    LexicalQuery.evt.HOMONYM_READY.sub(appController.onHomonymReady.bind(appController))
+    LexicalQuery.evt.LEMMA_TRANSL_READY.sub(appController.updateTranslations.bind(appController))
+    LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.sub(appController.updateWordUsageExamples.bind(appController))
+    LexicalQuery.evt.SHORT_DEFS_READY.sub(appController.onShortDefinitionsReady.bind(appController))
+    LexicalQuery.evt.FULL_DEFS_READY.sub(appController.onFullDefinitionsReady.bind(appController))
+    LexicalQuery.evt.SHORT_DEFS_NOT_FOUND.sub(appController.onDefinitionsNotFound.bind(appController))
+    LexicalQuery.evt.FULL_DEFS_NOT_FOUND.sub(appController.onDefinitionsNotFound.bind(appController))
 
     // Subscribe to ResourceQuery events
-    ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
-    ResourceQuery.evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
-    ResourceQuery.evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
+    ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.sub(appController.onResourceQueryComplete.bind(appController))
+    ResourceQuery.evt.GRAMMAR_AVAILABLE.sub(appController.onGrammarAvailable.bind(appController))
+    ResourceQuery.evt.GRAMMAR_NOT_FOUND.sub(appController.onGrammarNotFound.bind(appController))
 
-    uiController.wordlistC = new WordlistController(LanguageModelFactory.availableLanguages(), LexicalQuery.evt)
-    WordlistController.evt.WORDLIST_UPDATED.sub(uiController.onWordListUpdated.bind(uiController))
-    WordlistController.evt.WORDITEM_SELECTED.sub(uiController.onWordItemSelected.bind(uiController))
+    appController.wordlistC = new WordlistController(LanguageModelFactory.availableLanguages(), LexicalQuery.evt)
+    WordlistController.evt.WORDLIST_UPDATED.sub(appController.onWordListUpdated.bind(appController))
+    WordlistController.evt.WORDITEM_SELECTED.sub(appController.onWordItemSelected.bind(appController))
 
-    return uiController
+    return appController
   }
 
   /**
-   * Returns an object with default options of a UIController.
+   * Returns an object with default options of a AppController.
    * Can be redefined to provide other default values.
    *
    * @returns {object} An object that contains default options.
@@ -231,7 +231,7 @@ if you want to create a different configuration of a UI controller.
    *          {string} version - A version of an application;
    *          {string} buildNumber - A build number, if provided.
    *     {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
-   *     {boolean} openPanel - whether to open panel when UI controller is activated. Default: panelOnActivate of uiOptions.
+   *     {boolean} openPanel - whether to open panel when an app controller is activated. Default: panelOnActivate of uiOptions.
    *     {string} textQueryTriggerDesktop - what event will start a lexical query on a selected text on the desktop. If null,
                                             the default 'dblClick' will be used.
    *     {string} textQueryTriggerMobile - what event will start a lexical query on a selected text on mobile devices.  if null,
@@ -265,7 +265,7 @@ if you want to create a different configuration of a UI controller.
       // Whether to disable text selection on mobile devices
       disableTextSelection: false,
       /*
-      textLangCode is a language of a text that is set by the host app during a creation of a UI controller.
+      textLangCode is a language of a text that is set by the host app during a creation of an app controller.
       It has a higher priority than a `preferredLanguage` (a language that is set as default on
       the UI settings page). However, textLangCode has a lower priority than the language
       set by the surrounding context of the word on the HTML page (i.e. the language that is set
@@ -295,14 +295,14 @@ if you want to create a different configuration of a UI controller.
   /**
    * Constructs a new options object that contains properties from either an `options` argument,
    * or, if not provided, from a `defaultOptions` object.
-   * `defaultOptions` object serves as a template. It is a list of valid options known to the UI controller.
+   * `defaultOptions` object serves as a template. It is a list of valid options known to the app controller.
    * All properties from `options` must be presented in `defaultOptions` or
    * they will not be copied into a resulting options object.
    * If an option property is itself an object (i.e. is considered as a group of options),
    * it will be copied recursively.
    *
    * @param {object} options - A user specified options object.
-   * @param {object} defaultOptions - A set of default options specified by a UI controller.
+   * @param {object} defaultOptions - A set of default options specified by an app controller.
    * @returns {object} A resulting options object
    */
   static setOptions (options, defaultOptions) {
@@ -329,12 +329,12 @@ if you want to create a different configuration of a UI controller.
   }
 
   /**
-   * Registers a module for use by UI controller and other modules.
+   * Registers a module for use by an app controller and other modules.
    * It instantiates each module and adds them to the registered modules store.
    *
    * @param {Module} moduleClass - A data module's class (i.e. the constructor function).
    * @param {object} options - Arbitrary number of values that will be passed to the module constructor.
-   * @returns {UIController} - A self reference for chaining.
+   * @returns {AppController} - A self reference for chaining.
    */
   registerModule (moduleClass, options = {}) {
     if (moduleClass.isSupportedPlatform(this.platform)) {
@@ -416,7 +416,7 @@ if you want to create a different configuration of a UI controller.
 
     this.zIndex = HTMLPage.getZIndexMax()
 
-    // Will add morph adapter options to the `options` object of UI controller constructor as needed.
+    // Will add morph adapter options to the `options` object of an app controller constructor as needed.
 
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
@@ -479,8 +479,8 @@ if you want to create a different configuration of a UI controller.
       version: this.options.app.version, // An version of a host application (embed lib or webextension)
       buildName: this.options.app.buildName, // A build number of a host application
       clientId: this.options.clientId, // alpheios api client identifier
-      libName: UIController.libName, // A name of the components library
-      libVersion: UIController.libVersion, // A version of the components library
+      libName: AppController.libName, // A name of the components library
+      libVersion: AppController.libVersion, // A version of the components library
       libBuildName: BUILD_NAME, // A name of a build of a components library that will be injected by Webpack
       config: this.appConfig,
       platform: this.platform,
@@ -507,7 +507,7 @@ if you want to create a different configuration of a UI controller.
       resetAllOptions: this.resetAllOptions.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       notifyExperimental: this.notifyExperimental.bind(this),
-      getLanguageName: UIController.getLanguageName,
+      getLanguageName: AppController.getLanguageName,
       startResourceQuery: this.startResourceQuery.bind(this),
       sendFeature: this.sendFeature.bind(this),
       getHomonymLexemes: () => this.api.app.homonym ? this.api.app.homonym.lexemes : [],
@@ -615,7 +615,7 @@ if you want to create a different configuration of a UI controller.
           state.embedLibActive = status
         },
         setCurrentLanguage (state, languageCodeOrID) {
-          const langDetails = UIController.getLanguageName(languageCodeOrID)
+          const langDetails = AppController.getLanguageName(languageCodeOrID)
           state.currentLanguageID = langDetails.id
           state.currentLanguageName = langDetails.name
           state.currentLanguageCode = langDetails.code
@@ -626,7 +626,7 @@ if you want to create a different configuration of a UI controller.
         },
 
         setTextData (state, data) {
-          const langDetails = UIController.getLanguageName(data.languageID)
+          const langDetails = AppController.getLanguageName(data.languageID)
           state.languageName = langDetails.name
           state.languageCode = langDetails.code
           state.selectedText = data.text
@@ -965,13 +965,13 @@ if you want to create a different configuration of a UI controller.
   }
 
   /**
-   * Activates a UI controller. If `deactivate()` method unloads some resources, we should restore them here.
+   * Activates an app controller. If `deactivate()` method unloads some resources, we should restore them here.
    *
-   * @returns {Promise<UIController>}
+   * @returns {Promise<AppController>}
    */
   async activate () {
     if (this.isActivated) { return 'Already activated' }
-    if (this.state.isDisabled()) { return 'UI controller is disabled' }
+    if (this.state.isDisabled()) { return 'App controller is disabled' }
 
     if (!this.isInitialized) { await this.init() }
 
@@ -1042,10 +1042,10 @@ if you want to create a different configuration of a UI controller.
   }
 
   /**
-   * Deactivates a UI controller. May unload some resources to preserve memory.
+   * Deactivates an app controller. May unload some resources to preserve memory.
    * In this case an `activate()` method will be responsible for restoring them.
    *
-   * @returns {Promise<UIController>}
+   * @returns {Promise<AppController>}
    */
   async deactivate () {
     if (this.isDeactivated) { return 'Already deactivated' }
@@ -1080,20 +1080,20 @@ if you want to create a different configuration of a UI controller.
 
   /**
    * Returns an unmounted Vue instance of a warning panel.
-   * This panel is displayed when UI controller is disabled
+   * This panel is displayed when an app controller is disabled
    * due to embedded lib presence.
    *
    * @param {string} message - A message to display within a panel
    */
   static getEmbedLibWarning (message) {
-    if (!UIController.embedLibWarningInstance) {
+    if (!AppController.embedLibWarningInstance) {
       const EmbedLibWarningClass = Vue.extend(EmbedLibWarning)
-      UIController.embedLibWarningInstance = new EmbedLibWarningClass({
+      AppController.embedLibWarningInstance = new EmbedLibWarningClass({
         propsData: { text: message }
       })
-      UIController.embedLibWarningInstance.$mount() // Render off-document to append afterwards
+      AppController.embedLibWarningInstance.$mount() // Render off-document to append afterwards
     }
-    return UIController.embedLibWarningInstance
+    return AppController.embedLibWarningInstance
   }
 
   activateOnPage () {
@@ -1226,7 +1226,7 @@ if you want to create a different configuration of a UI controller.
    * regarding wither or not current tab can be available.
    *
    * @param {string} tabName - A name of a tab to switch to.
-   * @returns {UIController} - An instance of a UI controller, for chaining.
+   * @returns {AppController} - An instance of an app controller, for chaining.
    */
   changeTab (tabName) {
     // If tab is disabled, switch to a default one
@@ -1260,7 +1260,7 @@ if you want to create a different configuration of a UI controller.
    * Opens a panel and switches tab to the one specified.
    *
    * @param {string} tabName - A name of a tab to switch to.
-   * @returns {UIController} - A UI controller's instance reference, for chaining.
+   * @returns {AppController} - An app controller's instance reference, for chaining.
    */
   showPanelTab (tabName) {
     this.api.ui.changeTab(tabName)
@@ -1273,7 +1273,7 @@ if you want to create a different configuration of a UI controller.
    * Reverses the current visibility state of a panel and switches it to the tab specified.
    *
    * @param {string} tabName - A name of a tab to switch to.
-   * @returns {UIController} - A UI controller's instance reference, for chaining.
+   * @returns {AppController} - An app controller's instance reference, for chaining.
    */
   togglePanelTab (tabName) {
     if (this.store.state.ui.activeTab === tabName) {
@@ -1405,7 +1405,7 @@ If no URLS are provided, will reset grammar data.
       languageID = LanguageModelFactory.getLanguageIdFromCode(languageID)
     }
     if (LanguageModelFactory.isExperimentalLanguage(languageID)) {
-      const langDetails = UIController.getLanguageName(languageID)
+      const langDetails = AppController.getLanguageName(languageID)
       this.store.commit('ui/setNotification',
         { text: this.api.l10n.getMsg('TEXT_NOTICE_EXPIRIMENTAL_LANGUAGE', { languageName: langDetails.name }), important: true })
     }
@@ -2048,17 +2048,17 @@ If no URLS are provided, will reset grammar data.
 /**
  * A name of a components library from a "description" field of package.json
  */
-UIController.libName = packageDescription
+AppController.libName = packageDescription
 
 /**
  * A version of a components library from a "version" field of package.json
  */
-UIController.libVersion = packageVersion
+AppController.libVersion = packageVersion
 
 /**
- * An instance of a warning panel that is shown when UI controller is disabled
+ * An instance of a warning panel that is shown when an app controller is disabled
  * because an Alpheios embedded lib is active on a page
  *
  * @type {Vue | null}
  */
-UIController.embedLibWarningInstance = null
+AppController.embedLibWarningInstance = null

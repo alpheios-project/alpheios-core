@@ -5,7 +5,7 @@ Alpheios Common Components Library
 [![Build Status](https://travis-ci.org/alpheios-project/components.svg?branch=master)](https://travis-ci.org/alpheios-project/components)
 [![Coverage Status](https://coveralls.io/repos/github/alpheios-project/components/badge.svg?branch=master)](https://coveralls.io/github/alpheios-project/components?branch=master)
 
-## UIController configuration
+## AppController configuration
 
 A UI controller should usually be created using its `create()` static method. This method takes `state` object
 (an instance of `UIStateAPI`) as an argument. This `state` object provides configuration options that

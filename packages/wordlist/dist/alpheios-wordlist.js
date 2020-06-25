@@ -1940,7 +1940,7 @@ class UserDataManager {
   /**
    * Creates with auth argument, subscribe to WordItem and WorList events, inits blocked property and request queue
    * @param {AuthModule} auth - auth object with userId and accessToken properties
-   * @param {String} events - events object of the WordlistController, passed in UIController
+   * @param {String} events - events object of the WordlistController, passed in AppController
    */
   constructor (auth, events) {
     this.auth = auth
