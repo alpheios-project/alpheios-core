@@ -32,6 +32,7 @@ import MouseMove from '@/lib/custom-pointer-events/mouse-move.js'
 import Options from '@/lib/options/options.js'
 import LocalStorage from '@/lib/options/local-storage-area.js'
 import RemoteAuthStorageArea from '@/lib/options/remote-auth-storage-area.js'
+import UIController from '@/lib/controllers/ui-controller.js'
 import UIEventController from '@/lib/controllers/ui-event-controller.js'
 import QueryParams from '@/lib/utility/query-params.js'
 
@@ -131,14 +132,27 @@ export default class AppController {
       strict: DEVELOPMENT_MODE_BUILD
     })
     this.api = {} // An API object for functions of registered modules and an app controller.
+
+    /**
+     * A map that holds data modules.
+     *
+     * @type {Map<string, Module>}
+     */
     this.modules = new Map()
 
     // Get query parameters from the URL. Do this early so they will be available to modules during registration
     this.queryParams = QueryParams.parse()
 
     /**
-     * If an event controller be used with an instance of a UI Controller,
-     * this prop will hold an event controller instance. It is usually initialized within a `build` method.
+     * Holds an instance of a UI controller. Its purpose is to manage all UI components within an application.
+     *
+     * @type {UIEventController}
+     */
+    this.uic = new UIController({ platform: this.platform, queryParams: this.queryParams })
+
+    /**
+     * `evc` holds an instance of an event controller, if the latter is used in an application.
+     * It will be initialized at a later stage.
      *
      * @type {UIEventController}
      */
@@ -329,6 +343,15 @@ if you want to create a different configuration of an app controller.
   }
 
   /**
+   * Checks whether an app is using a UI controller.
+   *
+   * @returns {boolean} True if a UI controller is used, false otherwise.
+   */
+  get hasUIController () {
+    return Boolean(this.uic)
+  }
+
+  /**
    * Registers a module for use by an app controller and other modules.
    * It instantiates each module and adds them to the registered modules store.
    *
@@ -352,38 +375,18 @@ if you want to create a different configuration of an app controller.
     return Array.from(this.modules.values()).filter(m => m.ModuleClass.isDataModule)
   }
 
-  get uiModules () {
-    return Array.from(this.modules.values()).filter(m => m.ModuleClass.isUiModule)
-  }
-
   createDataModules () {
     this.dataModules.forEach((m) => {
       m.instance = new m.ModuleClass(this.store, this.api, m.options)
     })
   }
 
-  createUiModules () {
-    this.uiModules.forEach((m) => {
-      m.instance = new m.ModuleClass(this.store, this.api, m.options)
-    })
-  }
-
-  createModules () {
-    // Create data modules fist, UI modules after that because UI modules are dependent on data ones
-    this.createDataModules()
-    this.createUiModules()
-  }
-
   activateModules () {
-    // Activate data modules fist, UI modules after them because UI modules are dependent on data modules
     this.dataModules.forEach(m => m.instance.activate())
-    this.uiModules.forEach(m => m.instance.activate())
   }
 
   deactivateModules () {
-    // Deactivate data modules in reverse order: UI modules first, data modules after them.
     this.dataModules.forEach(m => m.instance.deactivate())
-    this.uiModules.forEach(m => m.instance.deactivate())
   }
 
   hasModule (moduleName) {
@@ -845,23 +848,6 @@ if you want to create a different configuration of an app controller.
       resourceSettingChange: this.resourceSettingChange.bind(this)
     }
 
-    // Set options of modules before modules are created
-    if (this.hasModule('popup')) {
-      let popupOptions = this.modules.get('popup').options // eslint-disable-line prefer-const
-      popupOptions.initialShift = {
-        x: this.uiOptions.items.popupShiftX.currentValue,
-        y: this.uiOptions.items.popupShiftY.currentValue
-      }
-    }
-
-    if (this.hasModule('toolbar')) {
-      let toolbarOptions = this.modules.get('toolbar').options // eslint-disable-line prefer-const
-      toolbarOptions.initialShift = {
-        x: this.uiOptions.items.toolbarShiftX.currentValue,
-        y: this.uiOptions.items.toolbarShiftY.currentValue
-      }
-    }
-
     // Create registered data modules
     this.createDataModules()
 
@@ -874,12 +860,8 @@ if you want to create a different configuration of an app controller.
     this.updateLanguage(defaultLangID)
 
     // Create registered UI modules
-    this.createUiModules()
-
-    // Adjust configuration of modules according to feature options
-    if (this.hasModule('panel')) {
-      this.store.commit('panel/setPosition', this.uiOptions.items.panelPosition.currentValue)
-    }
+    // this.createUiModules()
+    if (this.hasUIController) { this.uic.init({ api: this.api, store: this.store, uiOptions: this.uiOptions }) }
 
     this.uiSetFontSize(this.uiOptions)
 
@@ -999,7 +981,10 @@ if you want to create a different configuration of an app controller.
     this.activateModules()
     // Activate an app first, then activate the UI
     this.state.activate()
-    this.state.activateUI()
+    if (this.hasUIController) {
+      this.uic.activate()
+      this.state.activateUI()
+    }
 
     if (this.state.isPanelStateDefault() || !this.state.isPanelStateValid()) {
       this.setDefaultPanelState()
@@ -1054,8 +1039,11 @@ if you want to create a different configuration of an app controller.
     if (this.evc) { this.evc.deactivateListeners() }
 
     this.deactivateModules()
-    if (this.api.ui.hasModule('popup')) { this.api.ui.closePopup() }
-    if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
+    if (this.hasUIController) {
+      this.uic.deactivate()
+      if (this.uic.hasModule('popup')) { this.api.ui.closePopup() }
+      if (this.uic.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
+    }
 
     // Remove Alpheios CSS rules
     this.deactivateOnPage()
