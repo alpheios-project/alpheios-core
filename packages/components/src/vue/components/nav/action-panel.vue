@@ -48,6 +48,7 @@
         >
           <div
               @click.stop="openTab('inflectionsbrowser')"
+              id="alpheios-action-panel-inflectionsbrowser"
               class="alpheios-action-panel__navbutton"
           >
             <inflections-browser-icon/>
@@ -60,6 +61,7 @@
         >
           <div
               class="alpheios-action-panel__navbutton"
+              id="alpheios-action-panel-grammar"
               @click.stop="openTab('grammar')"
           >
             <grammar-icon/>
@@ -73,6 +75,7 @@
           <div
               :class="{ disabled: !$store.state.app.hasWordListsData }"
               class="alpheios-action-panel__navbutton"
+              id="alpheios-action-panel-wordlist"
               @click.stop="$store.state.app.hasWordListsData ? openTab('wordlist') : null"
           >
             <wordlist-icon/>
@@ -86,6 +89,7 @@
           <div
               :class="{ disabled: !$store.state.auth.enableLogin }"
               class="alpheios-action-panel__navbutton"
+              id="alpheios-action-panel-user"
               @click.stop="$store.state.auth.enableLogin ? openTab('user') : null"
           >
             <user-icon/>
@@ -98,6 +102,7 @@
         >
           <div
               class="alpheios-action-panel__navbutton"
+              id="alpheios-action-panel-options"
               @click.stop="openTab('options')"
           >
             <options-icon/>
