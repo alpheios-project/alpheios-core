@@ -3127,7 +3127,7 @@ p.alpheios-word-usage-filter-title {
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.3125);
 }
 .alpheios-ui-options__popup-size-item_bottom-label {
-  display: flex;
+  display: flex !important;
   justify-content: space-between;
 }
 /*

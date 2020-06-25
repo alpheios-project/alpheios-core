@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-/* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME */
+/* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME, DEVELOPMENT_MODE_BUILD */
 import { version as packageVersion, description as packageDescription } from '../../../package'
 import { Constants, Feature, LanguageModelFactory, Lexeme, Logger } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
@@ -124,8 +124,11 @@ export default class UIController {
 
     // Vuex store. A public API for data and UI module interactions.
     this.store = new Vuex.Store({
-      // TODO: Remove this for production as it slows things down
-      strict: false
+      /*
+      Strict mode is ON for a development build to add safety checks
+      and is OFF for a production build to not slow the app down.
+       */
+      strict: DEVELOPMENT_MODE_BUILD
     })
     this.api = {} // An API object for functions of registered modules and UI controller.
     this.modules = new Map()
@@ -1242,7 +1245,7 @@ if you want to create a different configuration of a UI controller.
     }
     const isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
 
-    if (['treebank', 'inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
+    if (['inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
       const message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
       this.store.commit('ui/setHint', message, tabName)
     } else if (this.forceMouseMoveEvent()) {
