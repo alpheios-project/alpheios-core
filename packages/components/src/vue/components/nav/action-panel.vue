@@ -154,7 +154,7 @@ export default {
         y: 0
       },
 
-      tooltipDirection: 'top', 
+      tooltipDirection: 'top',
       showLangSelector: false
     }
   },

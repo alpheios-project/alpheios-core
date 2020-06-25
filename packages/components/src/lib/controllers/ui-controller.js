@@ -80,7 +80,7 @@ export default class UIController {
 
     // Adjust configuration of _modules according to feature options
     if (this.hasModule('panel')) {
-      this.store.commit('panel/setPosition', this.uiOptions.items.panelPosition.currentValue)
+      this._store.commit('panel/setPosition', this.uiOptions.items.panelPosition.currentValue)
     }
   }
 

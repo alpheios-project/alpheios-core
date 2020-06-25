@@ -337,7 +337,7 @@ if you want to create a different configuration of an app controller.
   }
 
   setDefaultPanelState () {
-    if (!this.hasModule('panel')) { return this }
+    if (!this.uic.hasModule('panel')) { return this }
     this.state.setPanelClosed()
     return this
   }
@@ -360,13 +360,21 @@ if you want to create a different configuration of an app controller.
    * @returns {AppController} - A self reference for chaining.
    */
   registerModule (moduleClass, options = {}) {
-    if (moduleClass.isSupportedPlatform(this.platform)) {
-      // Add query parameters and platform info to module's options
+    if (!moduleClass.isSupportedPlatform(this.platform)) {
+      this.logger.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
+      return this
+    }
+
+    if (moduleClass.isDataModule) {
+      // Data modules are registered with an app controller
       options.queryParams = this.queryParams
       options.platform = this.platform
       this.modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
+    } else if (moduleClass.isUiModule) {
+      // UI modules belong to a UI controller
+      if (this.hasUIController) { this.uic.registerModule(moduleClass, options) }
     } else {
-      this.logger.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
+      this.logger.warn(`Skipping registration of a ${moduleClass.moduleName} of unkown type: ${moduleClass.moduleType}`)
     }
     return this
   }
@@ -991,7 +999,7 @@ if you want to create a different configuration of an app controller.
     }
     // If panel should be opened according to the state, open it
     if (this.state.isPanelOpen()) {
-      if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel(true) } // Force close the panel
+      if (this.uic.hasModule('panel')) { this.api.ui.openPanel(true) } // Force close the panel
     }
 
     if (this.state.tab) {
@@ -1284,7 +1292,7 @@ if you want to create a different configuration of an app controller.
   }
 
   sendFeature (feature) {
-    if (this.api.ui.hasModule('panel')) {
+    if (this.uic.hasModule('panel')) {
       this.api.app.startResourceQuery(feature)
       this.api.ui.changeTab('grammar')
       this.api.ui.openPanel()
@@ -1438,13 +1446,13 @@ If no URLS are provided, will reset grammar data.
   }
 
   open () {
-    if (this.api.ui.hasModule('panel') && this.platform.isMobile) {
+    if (this.uic.hasModule('panel') && this.platform.isMobile) {
       // This is a compact version of a UI
       this.api.ui.openPanel()
       this.changeTab('morphology')
     } else {
-      if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
-      if (this.api.ui.hasModule('popup')) { this.api.ui.openPopup() }
+      if (this.uic.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
+      if (this.uic.hasModule('popup')) { this.api.ui.openPopup() }
     }
     return this
   }
@@ -1455,7 +1463,7 @@ If no URLS are provided, will reset grammar data.
    * @param forceOpen
    */
   openPanel (forceOpen = false) {
-    if (this.api.ui.hasModule('panel')) {
+    if (this.uic.hasModule('panel')) {
       if (forceOpen || !this.state.isPanelOpen()) {
         // If an active tab has been disabled previously, set it to a default one
         if (this.store.getters['ui/isActiveTab'](this.tabs.DISABLED)) {
@@ -1477,7 +1485,7 @@ If no URLS are provided, will reset grammar data.
    * @param syncState
    */
   closePanel (syncState = true) {
-    if (this.api.ui.hasModule('panel')) {
+    if (this.uic.hasModule('panel')) {
       this.store.commit('panel/close')
       this.store.commit('ui/resetActiveTab')
       if (syncState) { this.state.setPanelClosed() }
@@ -1489,13 +1497,13 @@ If no URLS are provided, will reset grammar data.
   }
 
   openPopup () {
-    if (this.api.ui.hasModule('popup')) {
+    if (this.uic.hasModule('popup')) {
       this.store.commit('popup/open')
     }
   }
 
   closePopup () {
-    if (this.api.ui.hasModule('popup')) {
+    if (this.uic.hasModule('popup')) {
       this.store.commit('popup/close')
     }
   }
@@ -1606,8 +1614,8 @@ If no URLS are provided, will reset grammar data.
     // TODO: Why does it not work on initial panel opening?
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
-        if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel() }
-      } else if (this.api.ui.hasModule('popup')) {
+        if (this.uic.hasModule('panel')) { this.api.ui.closePanel() }
+      } else if (this.uic.hasModule('popup')) {
         this.api.ui.closePopup()
       }
     }
