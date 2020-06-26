@@ -7,7 +7,7 @@
             { maxResults:settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
         }}
       </div>
-      <div v-else="!hasSelectedAuthor && !hasSelectedTextWork" class="alpheios_word_usage_hint">
+      <div v-else-if="!hasSelectedAuthor && !hasSelectedTextWork" class="alpheios_word_usage_hint">
         {{ l10n.getText('WORDUSAGE_HINT_INITIAL_SEARCH',
             { maxResults:settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue })
         }}
@@ -106,8 +106,7 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'WordUsageExamples',
-  inject: ['ui', 'app', 'l10n','settings'],
-  storeModules: ['ui'],
+  inject: ['app', 'l10n', 'settings'],
   mixins: [DependencyCheck],
   components: {
     wordUsageExamplesFilters: WordUsageExamplesFilters,
@@ -247,7 +246,7 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.ui.registerAndActivateGetSelectedText('getSelectedText-usageExamples', '.alpheios-word-usage')
+      this.app.registerAndActivateGetSelectedText('getSelectedText-usageExamples', '.alpheios-word-usage')
     })
   }
 }

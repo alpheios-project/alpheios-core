@@ -1,4 +1,5 @@
 import Platform from '@/lib/utility/platform.js'
+import HTMLPage from '@/lib/utility/html-page.js'
 import { Logger } from 'alpheios-data-models'
 
 /**
@@ -86,6 +87,9 @@ export default class UIController {
 
     // region Public API of a UI controller
     // A public API must be defined before modules are created because modules may use it
+    this._api.ui.zIndex = HTMLPage.getZIndexMax()
+    this._api.ui.hasModule = this.hasModule.bind(this)
+    this._api.ui.getModule = this.getModule.bind(this)
     this._api.ui.openPanel = this.openPanel.bind(this)
     this._api.ui.closePanel = this.closePanel.bind(this)
     this._api.ui.showPanelTab = this.showPanelTab.bind(this)

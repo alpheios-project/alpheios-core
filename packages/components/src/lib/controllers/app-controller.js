@@ -21,7 +21,6 @@ import SiteOptions from '@/settings/site-options.json'
 import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
 import UIOptionDefaults from '@/settings/ui-options-defaults.json'
 import TextSelector from '@/lib/selection/text-selector'
-import HTMLPage from '@/lib/utility/html-page.js'
 import Platform from '@/lib/utility/platform.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
 import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
@@ -424,8 +423,6 @@ if you want to create a different configuration of an app controller.
     // TODO: Site options should probably be initialized the same way as other options objects
     this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
-    this.zIndex = HTMLPage.getZIndexMax()
-
     // Will add morph adapter options to the `options` object of an app controller constructor as needed.
 
     // Inject HTML code of a plugin. Should go in reverse order.
@@ -511,6 +508,7 @@ if you want to create a different configuration of an app controller.
 
       // TODO: Some of the functions below should probably belong to other API groups.
       getDefaultLangCode: this.getDefaultLangCode.bind(this),
+      registerAndActivateGetSelectedText: this.registerAndActivateGetSelectedText.bind(this),
       forceMouseMoveEvent: this.forceMouseMoveEvent.bind(this),
       getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
       clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
@@ -752,14 +750,6 @@ if you want to create a different configuration of an app controller.
      * This is a UI-level public API of a UI controller. All objects should use this public API only.
      */
     this.api.ui = {
-      zIndex: this.zIndex, // A z-index of Alpheios UI elements
-
-      // Modules
-      hasModule: this.hasModule.bind(this), // Checks if a UI module is available
-      getModule: this.getModule.bind(this), // Gets direct access to module.
-
-      registerAndActivateGetSelectedText: this.registerAndActivateGetSelectedText.bind(this),
-
       optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
 
@@ -1712,16 +1702,6 @@ If no URLS are provided, will reset grammar data.
         break
     }
   }
-
-  /* uiSetFontSize (uiOptions) {
-    const FONT_SIZE_PROP = '--alpheios-base-text-size'
-    try {
-      document.documentElement.style.setProperty(FONT_SIZE_PROP,
-        `${uiOptions.items.fontSize.currentValue}px`)
-    } catch (error) {
-      this.logger.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
-    }
-  } */
 
   /**
    * Handle a change to a single resource option
