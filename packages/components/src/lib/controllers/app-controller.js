@@ -383,7 +383,7 @@ if you want to create a different configuration of an app controller.
     return Array.from(this.modules.values()).filter(m => m.ModuleClass.isDataModule)
   }
 
-  createDataModules () {
+  createModules () {
     this.dataModules.forEach((m) => {
       m.instance = new m.ModuleClass(this.store, this.api, m.options)
     })
@@ -857,7 +857,7 @@ if you want to create a different configuration of an app controller.
     }
 
     // Create registered data modules
-    this.createDataModules()
+    this.createModules()
 
     // The current language must be set after data modules are created (because it uses an L10n module)
     // but before the UI modules are created (because UI modules use current language during rendering).
@@ -871,7 +871,7 @@ if you want to create a different configuration of an app controller.
     // this.createUiModules()
     if (this.hasUIController) { this.uic.init({ api: this.api, store: this.store, uiOptions: this.uiOptions }) }
 
-    this.uiSetFontSize(this.uiOptions)
+    // this.uiSetFontSize(this.uiOptions)
 
     this.updateLemmaTranslations()
 
@@ -1906,7 +1906,7 @@ If no URLS are provided, will reset grammar data.
 
     switch (settingName) {
       case 'fontSize':
-        this.uiSetFontSize(uiOptions)
+        this.uic.setFontSize(uiOptions)
         break
       case 'panelPosition':
         this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
@@ -1934,7 +1934,7 @@ If no URLS are provided, will reset grammar data.
     }
   }
 
-  uiSetFontSize (uiOptions) {
+  /* uiSetFontSize (uiOptions) {
     const FONT_SIZE_PROP = '--alpheios-base-text-size'
     try {
       document.documentElement.style.setProperty(FONT_SIZE_PROP,
@@ -1942,7 +1942,7 @@ If no URLS are provided, will reset grammar data.
     } catch (error) {
       this.logger.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
     }
-  }
+  } */
 
   /**
    * Handle a change to a single resource option

@@ -45,6 +45,7 @@ export default class UIController {
   }
 
   init ({ api, store, uiOptions } = {}) {
+    console.info('UIC init')
     if (!api) {
       throw new Error('API object is required for a UI controller initialization')
     }
@@ -57,22 +58,22 @@ export default class UIController {
 
     this._api = api
     this._store = store
-    this.uiOptions = uiOptions
+    this._uiOptions = uiOptions
 
     // Set options of _modules before _modules are created
     if (this.hasModule('popup')) {
       let popupOptions = this._modules.get('popup').options // eslint-disable-line prefer-const
       popupOptions.initialShift = {
-        x: this.uiOptions.items.popupShiftX.currentValue,
-        y: this.uiOptions.items.popupShiftY.currentValue
+        x: this._uiOptions.items.popupShiftX.currentValue,
+        y: this._uiOptions.items.popupShiftY.currentValue
       }
     }
 
     if (this.hasModule('toolbar')) {
       let toolbarOptions = this._modules.get('toolbar').options // eslint-disable-line prefer-const
       toolbarOptions.initialShift = {
-        x: this.uiOptions.items.toolbarShiftX.currentValue,
-        y: this.uiOptions.items.toolbarShiftY.currentValue
+        x: this._uiOptions.items.toolbarShiftX.currentValue,
+        y: this._uiOptions.items.toolbarShiftY.currentValue
       }
     }
 
@@ -80,8 +81,10 @@ export default class UIController {
 
     // Adjust configuration of _modules according to feature options
     if (this.hasModule('panel')) {
-      this._store.commit('panel/setPosition', this.uiOptions.items.panelPosition.currentValue)
+      this._store.commit('panel/setPosition', this._uiOptions.items.panelPosition.currentValue)
     }
+
+    this.setFontSize(this._uiOptions)
   }
 
   activate () {
@@ -136,5 +139,16 @@ export default class UIController {
 
   deactivateModules () {
     this._modules.forEach(m => m.instance.deactivate())
+  }
+
+  setFontSize (uiOptions) {
+    console.info(`setFontSize ${uiOptions.items.fontSize.currentValue}`)
+    const FONT_SIZE_PROP = '--alpheios-base-text-size'
+    try {
+      document.documentElement.style.setProperty(FONT_SIZE_PROP,
+        `${uiOptions.items.fontSize.currentValue}px`)
+    } catch (error) {
+      Logger.getInstance().error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
+    }
   }
 }
