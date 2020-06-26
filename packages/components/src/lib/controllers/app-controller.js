@@ -950,7 +950,7 @@ if you want to create a different configuration of an app controller.
     this.isDeactivated = false
 
     this.activateModules()
-    // this.state.activate()
+
     if (this.hasUIController) {
       this.uic.activate()
     }
