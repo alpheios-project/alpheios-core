@@ -960,7 +960,7 @@ if you want to create a different configuration of an app controller.
     this.isDeactivated = false
 
     this.activateModules()
-    // this.state.activate()
+
     if (this.hasUIController) {
       this.uic.activate()
     }
@@ -1712,16 +1712,6 @@ If no URLS are provided, will reset grammar data.
         break
     }
   }
-
-  /* uiSetFontSize (uiOptions) {
-    const FONT_SIZE_PROP = '--alpheios-base-text-size'
-    try {
-      document.documentElement.style.setProperty(FONT_SIZE_PROP,
-        `${uiOptions.items.fontSize.currentValue}px`)
-    } catch (error) {
-      this.logger.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
-    }
-  } */
 
   /**
    * Handle a change to a single resource option
