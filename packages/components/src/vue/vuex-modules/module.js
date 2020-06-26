@@ -81,7 +81,7 @@ export default class Module {
 
 /**
  * Specifies a generic API of a function that returns a module's Vuex store object
- * that will be integrated into a global Vuex store of a UI controller.
+ * that will be integrated into a global Vuex store of an app controller.
  */
 Module.store = (moduleInstance) => {
   return {
@@ -91,9 +91,9 @@ Module.store = (moduleInstance) => {
 
 /**
  * Specifies a generic API of a function that returns a module's public API object
- * that will be integrated into a global Vuex store of a UI controller.
+ * that will be integrated into a global Vuex store of an app controller.
  * An API object groups all publicly available methods of a module.
- * They will be exposed to UI components by the UI controller.
+ * They will be exposed to UI components by the app controller.
  * In order to use methods of a module, a UI component must inject them with `inject['moduleName']`.
  * Methods of a module will be available within a UI component after injection as
  * `this.moduleName.methodName`.
@@ -117,7 +117,7 @@ Module.types = {
 
 Module._configDefaults = {
   /**
-   * A name by which a store of the module will be visible inside a UI controller's Vuex store,
+   * A name by which a store of the module will be visible inside an app controller's Vuex store,
    * It is also used as a prefix for any global function a module may install on Vue instances.
    * Dynamic module names are not supported
    * @type {string}

@@ -8,7 +8,7 @@ import L10n from './lib/l10n/l10n'
 import Locales from './locales/locales'
 import enUS from './locales/en-us/messages.json'
 import enGB from './locales/en-gb/messages.json'
-import UIController from './lib/controllers/ui-controller.js'
+import AppController from './lib/controllers/app-controller.js'
 import UIEventController from '@/lib/controllers/ui-event-controller.js'
 import UIStateAPI from '@/lib/state/ui-state-api.js'
 import Language from './lib/controllers/language.js'
@@ -45,7 +45,7 @@ import AppAuthenticator from '@/lib/auth/app-authenticator.js'
 import { Logger } from 'alpheios-data-models'
 
 export {
-  Popup, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController,
+  Popup, Panel, L10n, Locales, enUS, enGB, AppController, UIEventController,
   Language, HTMLSelector, LexicalQuery, ResourceQuery,
   LocalStorageArea, ExtensionSyncStorage, FeatureOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
   DefaultsLoader, Options, UIStateAPI, Style, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
