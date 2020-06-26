@@ -1,3 +1,4 @@
+import Platform from '@/lib/utility/platform.js'
 import { Logger } from 'alpheios-data-models'
 
 /**
@@ -6,9 +7,13 @@ import { Logger } from 'alpheios-data-models'
  * A UI controller is a part of a higher-level app controller.
  */
 export default class UIController {
-  constructor ({ platform, queryParams = {} } = {}) {
+  constructor ({ uiState, platform, queryParams = {}, defaultTabName = 'info' } = {}) {
     if (!platform) {
       throw new Error('No platform data provided for a UI controller')
+    }
+
+    if (!uiState) {
+      throw new Error('No UI state data provided for a UI controller')
     }
 
     /**
@@ -24,6 +29,20 @@ export default class UIController {
      * @type {QueryParams}
      */
     this._queryParams = queryParams
+
+    /**
+     * The UI state object contains a current state of the UI: whether a UI is activated or not,
+     * whether a panel is open or closed, whether a popup is visible, etc.
+     * It must have an API compatible with a UIStateAPI.
+     *
+     * Usually it is provided by a client from the outside of the app (i.e. by a webextenstion or an embed lib).
+     * A UI controller must follow a state of a `uiState` and make matching changes to the UI, if necessary.
+     * On the other hand, whenever a UI state is changed by user actions, this state must be
+     * reflected in the UI state object.
+     *
+     * @type {UIStateAPI}
+     */
+    this._uiState = uiState
 
     /**
      * A map that holds instances of UI _modules of an application.
@@ -42,10 +61,15 @@ export default class UIController {
 
     // A shared Vuex store object
     this._store = null
+
+    // Options that are shown in a UI section of a Settings tab of the panel and control the visual representation
+    this._uiOptions = null
+
+    this.TAB_NAMES_DEFAULT = defaultTabName
+    this.TAB_NAMES_DISABLED = 'disabled'
   }
 
   init ({ api, store, uiOptions } = {}) {
-    console.info('UIC init')
     if (!api) {
       throw new Error('API object is required for a UI controller initialization')
     }
@@ -59,6 +83,22 @@ export default class UIController {
     this._api = api
     this._store = store
     this._uiOptions = uiOptions
+
+    // region Public API of a UI controller
+    // A public API must be defined before modules are created because modules may use it
+    this._api.ui.openPanel = this.openPanel.bind(this)
+    this._api.ui.closePanel = this.closePanel.bind(this)
+    this._api.ui.showPanelTab = this.showPanelTab.bind(this)
+    this._api.ui.changeTab = this.changeTab.bind(this)
+    this._api.ui.togglePanelTab = this.togglePanelTab.bind(this)
+    this._api.ui.openPopup = this.openPopup.bind(this)
+    this._api.ui.closePopup = this.closePopup.bind(this)
+    this._api.ui.isPopupVisible = () => Boolean(this.hasModule('popup') && this._store.state.popup.visible)
+    this._api.ui.openToolbar = this.openToolbar.bind(this)
+    this._api.ui.openActionPanel = this.openActionPanel.bind(this)
+    this._api.ui.closeActionPanel = this.closeActionPanel.bind(this)
+    this._api.ui.toggleActionPanel = this.toggleActionPanel.bind(this)
+    // endregion Public API of a UI controller
 
     // Set options of _modules before _modules are created
     if (this.hasModule('popup')) {
@@ -88,11 +128,31 @@ export default class UIController {
   }
 
   activate () {
+    this._uiState.activate()
     this.activateModules()
+    this._uiState.activateUI()
+
+    if (this.hasModule('panel')) {
+      if (this._uiState.isPanelStateDefault() || !this._uiState.isPanelStateValid()) {
+        this._uiState.setPanelClosed()
+      }
+      if (this._uiState.isPanelOpen()) {
+        this.openPanel(true)
+      }
+    }
+
+    if (this._uiState.tab) {
+      if (this._uiState.isTabStateDefault()) {
+        this._uiState.tab = this.TAB_NAMES_DEFAULT
+      }
+      this.changeTab(this._uiState.tab)
+    }
   }
 
   deactivate () {
     this.deactivateModules()
+    if (this.hasModule('popup')) { this.closePopup() }
+    if (this.hasModule('panel')) { this.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
   }
 
   /**
@@ -141,14 +201,203 @@ export default class UIController {
     this._modules.forEach(m => m.instance.deactivate())
   }
 
-  setFontSize (uiOptions) {
-    console.info(`setFontSize ${uiOptions.items.fontSize.currentValue}`)
+  setFontSize () {
     const FONT_SIZE_PROP = '--alpheios-base-text-size'
     try {
       document.documentElement.style.setProperty(FONT_SIZE_PROP,
-        `${uiOptions.items.fontSize.currentValue}px`)
+        `${this._uiOptions.items.fontSize.currentValue}px`)
     } catch (error) {
       Logger.getInstance().error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
+    }
+  }
+
+  /**
+   * Opens a panel. Used from a content script upon a panel status change request.
+   *
+   * @param {boolean} forceOpen - Whether to open a panel no matter in what stat it is.
+   */
+  openPanel (forceOpen = false) {
+    if (this.hasModule('panel')) {
+      if (forceOpen || !this._uiState.isPanelOpen()) {
+        // If an active tab has been disabled previously, set it to a default one
+        if (this._store.getters['ui/isActiveTab'](this.TAB_NAMES_DISABLED)) {
+          this.changeTab(this.TAB_NAMES_DEFAULT)
+        }
+        this._store.commit('panel/open')
+        this._uiState.setPanelOpen()
+      }
+      if (this.hasModule('toolbar')) {
+        // Close a toolbar when a panel opens
+        this._store.commit('toolbar/close')
+      }
+    }
+  }
+
+  /**
+   * Closes a panel. Used from a content script upon a panel status change request.
+   *
+   * @param syncState
+   */
+  closePanel (syncState = true) {
+    if (this.hasModule('panel')) {
+      this._store.commit('panel/close')
+      this._store.commit('ui/resetActiveTab')
+      if (syncState) { this._uiState.setPanelClosed() }
+      // Open a toolbar when a panel closes. Do not open if the toolbar is deactivated.
+      if (this.hasModule('toolbar') && this.getModule('toolbar').isActivated) {
+        this._store.commit('toolbar/open')
+      }
+    }
+  }
+
+  /**
+   * Opens a panel and switches tab to the one specified.
+   *
+   * @param {string} tabName - A name of a tab to switch to.
+   * @returns {UIController} - An app controller's instance reference, for chaining.
+   */
+  showPanelTab (tabName) {
+    this.changeTab(tabName)
+    this.openPanel()
+
+    return this
+  }
+
+  /**
+   * Switched between tabs in a panel.
+   * All tab switching should be done through this function only as it performs safety check
+   * regarding wither or not current tab can be available.
+   *
+   * @param {string} tabName - A name of a tab to switch to.
+   * @returns {UIController} - An instance of an app controller, for chaining.
+   */
+  changeTab (tabName) {
+    // If tab is disabled, switch to a default one
+    if (this.isDisabledTab(tabName)) {
+      Logger.getInstance().warn(`Attempting to switch to a ${tabName} tab which is not available`)
+      tabName = this.TAB_NAMES_DEFAULT
+    }
+    this._store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
+    // This is for compatibility with watchers in webextension that track tab changes
+    // and sends this into to a background script
+    this._uiState.changeTab(tabName)
+
+    if (tabName === 'treebank') {
+      // We need to refresh a treebank view if its tab becomes visible. Otherwise a view may not be displayed correctly
+      this._api.lexis.refreshTreebankView()
+    }
+    const isPortrait = this._store.state.panel && (this._store.state.panel.orientation === Platform.orientations.PORTRAIT)
+
+    if (['inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this._platform.isMobile && isPortrait) {
+      const message = this._api.l10n.getMsg('HINT_LANDSCAPE_MODE')
+      this._store.commit('ui/setHint', message, tabName)
+    } else if (this._api.app.forceMouseMoveEvent()) {
+      this._store.commit('ui/setHint', this._api.l10n.getMsg('TEXT_HINT_MOUSE_MOVE'))
+    } else {
+      this._store.commit('ui/resetHint')
+    }
+    return this
+  }
+
+  /**
+   * Reverses the current visibility state of a panel and switches it to the tab specified.
+   *
+   * @param {string} tabName - A name of a tab to switch to.
+   * @returns {UIController} - An app controller's instance reference, for chaining.
+   */
+  togglePanelTab (tabName) {
+    if (this._store.state.ui.activeTab === tabName) {
+      // If clicked on the tab matching a currently selected tab, close the panel
+      if (this._uiState.isPanelOpen()) {
+        this._api.ui.closePanel()
+      } else {
+        this.openPanel()
+      }
+    } else {
+      if (!this.isDisabledTab(tabName)) {
+        // Do not switch to a tab and do not open a panel if a tab is disabled.
+        this.changeTab(tabName)
+        if (!this._uiState.isPanelOpen()) {
+          this.openPanel()
+        }
+      }
+    }
+    return this
+  }
+
+  /**
+   * Checks wither a given tab is disabled.
+   *
+   * @param {string} tabName - A tab name  to be checked.
+   * @returns {boolean} - True if the given tab is disabled,
+   *         false otherwise (including if we have no disabling conditions on this tab).
+   */
+  isDisabledTab (tabName) {
+    /**
+     * A structure that defines availability condition for panel's tabs.
+     * The key is a tab name, and a value is the function that returns true if the tab is available.
+     */
+    const tabsCheck = {
+      definitions: () => this._store.getters['app/fullDefDataReady'],
+      inflections: () => this._store.state.app.hasInflData,
+      treebank: () => this._store.state.lexis.hasTreebankData,
+      wordUsage: () => this._store.state.app.wordUsageExampleEnabled,
+      status: () => this._api.settings.getUiOptions().items.verboseMode.currentValue === 'verbose',
+      wordlist: () => this._store.state.app.hasWordListsData
+    }
+    return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]() // eslint-disable-line no-prototype-builtins
+  }
+
+  openPopup () {
+    if (this.hasModule('popup')) {
+      this._store.commit('popup/open')
+    }
+  }
+
+  closePopup () {
+    if (this.hasModule('popup')) {
+      this._store.commit('popup/close')
+    }
+  }
+
+  openToolbar () {
+    if (this.hasModule('toolbar')) {
+      this._store.commit('toolbar/open')
+    } else {
+      Logger.getInstance().warn('Toolbar cannot be opened because its module is not registered')
+    }
+  }
+
+  /**
+   * Opens an action panel.
+   *
+   * @param {object} panelOptions - An object that specifies parameters of an action panel (see below):
+   * @param {boolean} panelOptions.showLookup - Whether to show a lookup input when the action panel is opened.
+   * @param {boolean} panelOptions.showNav - Whether to show a nav toolbar when the action panel is opened.
+   */
+  openActionPanel (panelOptions = {}) {
+    if (this.hasModule('actionPanel')) {
+      this._store.commit('actionPanel/open', panelOptions)
+    } else {
+      Logger.getInstance().warn('Action panel cannot be opened because its module is not registered')
+    }
+  }
+
+  closeActionPanel () {
+    if (this.hasModule('actionPanel')) {
+      this._store.commit('actionPanel/close')
+    } else {
+      Logger.getInstance().warn('Action panel cannot be closed because its module is not registered')
+    }
+  }
+
+  toggleActionPanel () {
+    if (this.hasModule('actionPanel')) {
+      this._store.state.actionPanel.visible
+        ? this._store.commit('actionPanel/close')
+        : this._store.commit('actionPanel/open', {})
+    } else {
+      Logger.getInstance().warn('Action panel cannot be toggled because its module is not registered')
     }
   }
 }

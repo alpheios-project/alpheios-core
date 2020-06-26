@@ -457,6 +457,7 @@ Lexis.api = (moduleInstance, store) => {
           We do not want to run a lexical query for the same word that is already
           shown in a popup on desktop
            */
+          // TODO: Eliminate dependency of business logic on a UI state, if possible
           if (moduleInstance.config.platform.isDesktop && moduleInstance._uiApi.isPopupVisible()) {
             // Check if a selection is the same
             if (lastTextSelector.text === textSelector.text &&

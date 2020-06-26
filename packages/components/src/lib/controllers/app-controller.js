@@ -148,7 +148,12 @@ export default class AppController {
      *
      * @type {UIEventController}
      */
-    this.uic = new UIController({ platform: this.platform, queryParams: this.queryParams })
+    this.uic = new UIController({
+      platform: this.platform,
+      uiState: this.state,
+      queryParams: this.queryParams,
+      defaultTabName: this.options.overrideHelp ? 'settings' : 'info'
+    })
 
     /**
      * `evc` holds an instance of an event controller, if the latter is used in an application.
@@ -336,12 +341,6 @@ if you want to create a different configuration of an app controller.
     return result
   }
 
-  setDefaultPanelState () {
-    if (!this.uic.hasModule('panel')) { return this }
-    this.state.setPanelClosed()
-    return this
-  }
-
   /**
    * Checks whether an app is using a UI controller.
    *
@@ -512,6 +511,7 @@ if you want to create a different configuration of an app controller.
 
       // TODO: Some of the functions below should probably belong to other API groups.
       getDefaultLangCode: this.getDefaultLangCode.bind(this),
+      forceMouseMoveEvent: this.forceMouseMoveEvent.bind(this),
       getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
       clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
       featureOptionChange: this.featureOptionChange.bind(this),
@@ -758,18 +758,6 @@ if you want to create a different configuration of an app controller.
       hasModule: this.hasModule.bind(this), // Checks if a UI module is available
       getModule: this.getModule.bind(this), // Gets direct access to module.
 
-      // Actions
-      openPanel: this.openPanel.bind(this),
-      closePanel: this.closePanel.bind(this),
-      openPopup: this.openPopup.bind(this),
-      closePopup: this.closePopup.bind(this),
-      isPopupVisible: () => Boolean(this.store.state.popup && this.store.state.popup.visible),
-      openActionPanel: this.openActionPanel.bind(this),
-      closeActionPanel: this.closeActionPanel.bind(this),
-      toggleActionPanel: this.toggleActionPanel.bind(this),
-      changeTab: this.changeTab.bind(this),
-      showPanelTab: this.showPanelTab.bind(this),
-      togglePanelTab: this.togglePanelTab.bind(this),
       registerAndActivateGetSelectedText: this.registerAndActivateGetSelectedText.bind(this),
 
       optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
@@ -968,6 +956,15 @@ if you want to create a different configuration of an app controller.
     // Inject Alpheios CSS rules
     this.activateOnPage()
 
+    this.isActivated = true
+    this.isDeactivated = false
+
+    this.activateModules()
+    // this.state.activate()
+    if (this.hasUIController) {
+      this.uic.activate()
+    }
+
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
 
@@ -982,32 +979,6 @@ if you want to create a different configuration of an app controller.
     // textQueryTriggerDesktop  or support this type of dependency in the
     // EventListenerController
     this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-
-    this.isActivated = true
-    this.isDeactivated = false
-
-    this.activateModules()
-    // Activate an app first, then activate the UI
-    this.state.activate()
-    if (this.hasUIController) {
-      this.uic.activate()
-      this.state.activateUI()
-    }
-
-    if (this.state.isPanelStateDefault() || !this.state.isPanelStateValid()) {
-      this.setDefaultPanelState()
-    }
-    // If panel should be opened according to the state, open it
-    if (this.state.isPanelOpen()) {
-      if (this.uic.hasModule('panel')) { this.api.ui.openPanel(true) } // Force close the panel
-    }
-
-    if (this.state.tab) {
-      if (this.state.isTabStateDefault()) {
-        this.state.tab = this.tabs.DEFAULT
-      }
-      this.changeTab(this.state.tab)
-    }
 
     this.authUnwatch = this.store.watch((state) => state.auth.isAuthenticated, (newValue, oldValue) => {
       this.initUserDataManager(newValue)
@@ -1049,8 +1020,6 @@ if you want to create a different configuration of an app controller.
     this.deactivateModules()
     if (this.hasUIController) {
       this.uic.deactivate()
-      if (this.uic.hasModule('popup')) { this.api.ui.closePopup() }
-      if (this.uic.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
     }
 
     // Remove Alpheios CSS rules
@@ -1191,104 +1160,6 @@ if you want to create a different configuration of an app controller.
   // TODO: Do we need this function
   showImportantNotification (message) {
     this.store.commit('ui/setNotification', { text: message, important: true })
-  }
-
-  /**
-   * Checks wither a given tab is disabled.
-   *
-   * @param {string} tabName - A tab name  to be checked.
-   * @returns {boolean} - True if the given tab is disabled,
-   *         false otherwise (including if we have no disabling conditions on this tab).
-   */
-  isDisabledTab (tabName) {
-    /**
-     * A structure that defines availability condition for panel's tabs.
-     * The key is a tab name, and a value is the function that returns true if the tab is available.
-     */
-    const tabsCheck = {
-      definitions: () => this.store.getters['app/fullDefDataReady'],
-      inflections: () => this.store.state.app.hasInflData,
-      treebank: () => this.store.state.lexis.hasTreebankData,
-      wordUsage: () => this.store.state.app.wordUsageExampleEnabled,
-      status: () => this.api.settings.getUiOptions().items.verboseMode.currentValue === 'verbose',
-      wordlist: () => this.store.state.app.hasWordListsData
-    }
-    return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]() // eslint-disable-line no-prototype-builtins
-  }
-
-  /**
-   * Switched between tabs in a panel.
-   * All tab switching should be done through this function only as it performs safety check
-   * regarding wither or not current tab can be available.
-   *
-   * @param {string} tabName - A name of a tab to switch to.
-   * @returns {AppController} - An instance of an app controller, for chaining.
-   */
-  changeTab (tabName) {
-    // If tab is disabled, switch to a default one
-    if (this.isDisabledTab(tabName)) {
-      this.logger.warn(`Attempting to switch to a ${tabName} tab which is not available`)
-      tabName = this.tabs.DEFAULT
-    }
-    this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
-    // This is for compatibility with watchers in webextension that track tab changes
-    // and sends this into to a background script
-    this.state.changeTab(tabName)
-
-    if (tabName === 'treebank') {
-      // We need to refresh a treebank view if its tab becomes visible. Otherwise a view may not be displayed correctly
-      this.api.lexis.refreshTreebankView()
-    }
-    const isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
-
-    if (['inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
-      const message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
-      this.store.commit('ui/setHint', message, tabName)
-    } else if (this.forceMouseMoveEvent()) {
-      this.store.commit('ui/setHint', this.api.l10n.getMsg('TEXT_HINT_MOUSE_MOVE'))
-    } else {
-      this.store.commit('ui/resetHint')
-    }
-    return this
-  }
-
-  /**
-   * Opens a panel and switches tab to the one specified.
-   *
-   * @param {string} tabName - A name of a tab to switch to.
-   * @returns {AppController} - An app controller's instance reference, for chaining.
-   */
-  showPanelTab (tabName) {
-    this.api.ui.changeTab(tabName)
-    this.api.ui.openPanel()
-
-    return this
-  }
-
-  /**
-   * Reverses the current visibility state of a panel and switches it to the tab specified.
-   *
-   * @param {string} tabName - A name of a tab to switch to.
-   * @returns {AppController} - An app controller's instance reference, for chaining.
-   */
-  togglePanelTab (tabName) {
-    if (this.store.state.ui.activeTab === tabName) {
-      // If clicked on the tab matching a currently selected tab, close the panel
-      if (this.state.isPanelOpen()) {
-        this.api.ui.closePanel()
-      } else {
-        this.api.ui.openPanel()
-      }
-    } else {
-      if (!this.isDisabledTab(tabName)) {
-        // Do not switch to a tab and do not open a panel if a tab is disabled.
-        this.api.ui.changeTab(tabName)
-        if (!this.state.isPanelOpen()) {
-          this.api.ui.openPanel()
-        }
-      }
-    }
-    return this
   }
 
   sendFeature (feature) {
@@ -1449,104 +1320,12 @@ If no URLS are provided, will reset grammar data.
     if (this.uic.hasModule('panel') && this.platform.isMobile) {
       // This is a compact version of a UI
       this.api.ui.openPanel()
-      this.changeTab('morphology')
+      this.api.ui.changeTab('morphology')
     } else {
       if (this.uic.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
       if (this.uic.hasModule('popup')) { this.api.ui.openPopup() }
     }
     return this
-  }
-
-  /**
-   * Opens a panel. Used from a content script upon a panel status change request.
-   *
-   * @param forceOpen
-   */
-  openPanel (forceOpen = false) {
-    if (this.uic.hasModule('panel')) {
-      if (forceOpen || !this.state.isPanelOpen()) {
-        // If an active tab has been disabled previously, set it to a default one
-        if (this.store.getters['ui/isActiveTab'](this.tabs.DISABLED)) {
-          this.changeTab(this.tabs.DEFAULT)
-        }
-        this.store.commit('panel/open')
-        this.state.setPanelOpen()
-      }
-      if (this.hasModule('toolbar')) {
-        // Close a toolbar when a panel opens
-        this.store.commit('toolbar/close')
-      }
-    }
-  }
-
-  /**
-   * Closes a panel. Used from a content script upon a panel status change request.
-   *
-   * @param syncState
-   */
-  closePanel (syncState = true) {
-    if (this.uic.hasModule('panel')) {
-      this.store.commit('panel/close')
-      this.store.commit('ui/resetActiveTab')
-      if (syncState) { this.state.setPanelClosed() }
-      // Open a toolbar when a panel closes. Do not open if the toolbar is deactivated.
-      if (this.hasModule('toolbar') && this.getModule('toolbar').isActivated) {
-        this.store.commit('toolbar/open')
-      }
-    }
-  }
-
-  openPopup () {
-    if (this.uic.hasModule('popup')) {
-      this.store.commit('popup/open')
-    }
-  }
-
-  closePopup () {
-    if (this.uic.hasModule('popup')) {
-      this.store.commit('popup/close')
-    }
-  }
-
-  openToolbar () {
-    if (this.api.ui.hasModule('toolbar')) {
-      this.store.commit('toolbar/open')
-    } else {
-      this.logger.warn('Toolbar cannot be opened because its module is not registered')
-    }
-  }
-
-  /**
-   * Opens an action panel.
-   *
-   * @param {object} panelOptions - An object that specifies parameters of an action panel (see below):
-   * @param {boolean} panelOptions.showLookup - Whether to show a lookup input when the action panel is opened.
-   * @param {boolean} panelOptions.showNav - Whether to show a nav toolbar when the action panel is opened.
-   */
-  openActionPanel (panelOptions = {}) {
-    if (this.api.ui.hasModule('actionPanel')) {
-      this.store.commit('actionPanel/open', panelOptions)
-    } else {
-      this.logger.warn('Action panel cannot be opened because its module is not registered')
-    }
-  }
-
-  closeActionPanel () {
-    if (this.api.ui.hasModule('actionPanel')) {
-      this.store.commit('actionPanel/close')
-    } else {
-      this.logger.warn('Action panel cannot be closed because its module is not registered')
-    }
-  }
-
-  toggleActionPanel () {
-    if (this.api.ui.hasModule('actionPanel')) {
-      this.store.state.actionPanel.visible
-        ? this.store.commit('actionPanel/close')
-        : this.store.commit('actionPanel/open', {})
-    } else {
-      this.logger.warn('Action panel cannot be toggled because its module is not registered')
-    }
   }
 
   isGetSelectedTextEnabled (domEvent) {
@@ -1906,7 +1685,7 @@ If no URLS are provided, will reset grammar data.
 
     switch (settingName) {
       case 'fontSize':
-        this.uic.setFontSize(uiOptions)
+        this.uic.setFontSize()
         break
       case 'panelPosition':
         this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
