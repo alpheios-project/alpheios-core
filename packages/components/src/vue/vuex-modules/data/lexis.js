@@ -27,7 +27,6 @@ export default class Lexis extends Module {
     super(store, api, config)
     // APIs provided by the app controller
     this._appApi = api.app
-    this._uiApi = api.ui
     this._settingsApi = api.settings
     this._lexisConfig = (api.app.config && api.app.config['lexis-cs']) ? api.app.config['lexis-cs'] : null
 
@@ -443,8 +442,10 @@ Lexis.api = (moduleInstance, store) => {
      *
      * @param {EventElement} event - An event that initiated a query.
      * @param {Event} domEvent - A corresponding DOM event.
+     * @param {boolean} skipIfEqual - If true, `getSelectedText()` will do nothing if
+     *        selected text is the same as of the previous query.
      */
-    getSelectedText: (event, domEvent) => {
+    getSelectedText: (event, domEvent, { skipIfEqual = false } = {}) => {
       if (moduleInstance._appApi.isGetSelectedTextEnabled(domEvent)) {
         const defaultLangCode = moduleInstance._appApi.getDefaultLangCode()
         const htmlSelector = new HTMLSelector(event, defaultLangCode)
@@ -458,7 +459,7 @@ Lexis.api = (moduleInstance, store) => {
           shown in a popup on desktop
            */
           // TODO: Eliminate dependency of business logic on a UI state, if possible
-          if (moduleInstance.config.platform.isDesktop && moduleInstance._uiApi.isPopupVisible()) {
+          if (skipIfEqual) {
             // Check if a selection is the same
             if (lastTextSelector.text === textSelector.text &&
               lastTextSelector.languageID === textSelector.languageID) {

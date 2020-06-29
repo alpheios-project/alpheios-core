@@ -215,7 +215,7 @@ export default {
     },
 
     hideLoginPrompt: function () {
-      this.ui.optionChange('hideLoginPrompt', true)
+      this.settings.uiOptionChange('hideLoginPrompt', true)
     },
 
     showUserAccount: function () {

@@ -8,7 +8,7 @@ import { Logger } from 'alpheios-data-models'
  * A UI controller is a part of a higher-level app controller.
  */
 export default class UIController {
-  constructor ({ uiState, platform, queryParams = {}, defaultTabName = 'info' } = {}) {
+  constructor ({ uiState, platform, queryParams = {}, overrideHelp = false } = {}) {
     if (!platform) {
       throw new Error('No platform data provided for a UI controller')
     }
@@ -63,10 +63,15 @@ export default class UIController {
     // A shared Vuex store object
     this._store = null
 
+    // An object that stores config settings of a controller
+    this._config = {
+      overrideHelp
+    }
+
     // Options that are shown in a UI section of a Settings tab of the panel and control the visual representation
     this._uiOptions = null
 
-    this.TAB_NAMES_DEFAULT = defaultTabName
+    this.TAB_NAMES_DEFAULT = this._config.overrideHelp ? 'settings' : 'info'
     this.TAB_NAMES_DISABLED = 'disabled'
   }
 
@@ -87,22 +92,102 @@ export default class UIController {
 
     // region Public API of a UI controller
     // A public API must be defined before modules are created because modules may use it
-    this._api.ui.zIndex = HTMLPage.getZIndexMax()
-    this._api.ui.hasModule = this.hasModule.bind(this)
-    this._api.ui.getModule = this.getModule.bind(this)
-    this._api.ui.openPanel = this.openPanel.bind(this)
-    this._api.ui.closePanel = this.closePanel.bind(this)
-    this._api.ui.showPanelTab = this.showPanelTab.bind(this)
-    this._api.ui.changeTab = this.changeTab.bind(this)
-    this._api.ui.togglePanelTab = this.togglePanelTab.bind(this)
-    this._api.ui.openPopup = this.openPopup.bind(this)
-    this._api.ui.closePopup = this.closePopup.bind(this)
-    this._api.ui.isPopupVisible = () => Boolean(this.hasModule('popup') && this._store.state.popup.visible)
-    this._api.ui.openToolbar = this.openToolbar.bind(this)
-    this._api.ui.openActionPanel = this.openActionPanel.bind(this)
-    this._api.ui.closeActionPanel = this.closeActionPanel.bind(this)
-    this._api.ui.toggleActionPanel = this.toggleActionPanel.bind(this)
+    this._api.ui = {
+      zIndex: HTMLPage.getZIndexMax(),
+      hasModule: this.hasModule.bind(this),
+      getModule: this.getModule.bind(this),
+      registerModule: this.registerModule.bind(this),
+      open: this.open.bind(this),
+      openPanel: this.openPanel.bind(this),
+      closePanel: this.closePanel.bind(this),
+      showPanelTab: this.showPanelTab.bind(this),
+      changeTab: this.changeTab.bind(this),
+      togglePanelTab: this.togglePanelTab.bind(this),
+      openPopup: this.openPopup.bind(this),
+      closePopup: this.closePopup.bind(this),
+      isPopupVisible: () => Boolean(this.hasModule('popup') && this._store.state.popup.visible),
+      openToolbar: this.openToolbar.bind(this),
+      openActionPanel: this.openActionPanel.bind(this),
+      closeActionPanel: this.closeActionPanel.bind(this),
+      toggleActionPanel: this.toggleActionPanel.bind(this)
+    }
     // endregion Public API of a UI controller
+
+    // region Vuex store module
+    this._store.registerModule('ui', {
+      // All stores of modules are namespaced
+      namespaced: true,
+
+      state: {
+        activeTab: this.TAB_NAMES_DEFAULT, // A currently selected panel's tab
+        disabledTab: this.TAB_NAMES_DISABLED,
+        overrideHelp: this._config.overrideHelp,
+
+        messages: [],
+        // Panel and popup notifications
+        notification: {
+          visible: false,
+          important: false,
+          showLanguageSwitcher: false,
+          text: null
+        },
+
+        hint: {
+          visible: false,
+          text: null
+        }
+      },
+
+      getters: {
+        isActiveTab: (state) => (tabName) => {
+          return state.activeTab === tabName
+        }
+      },
+
+      mutations: {
+        setActiveTab (state, tabName) {
+          state.activeTab = tabName
+        },
+
+        // Set active tab name to `disabled` when panel is closed so that no selected tab be shown in a toolbar
+        resetActiveTab (state) {
+          state.activeTab = state.disabledTab
+        },
+
+        setNotification (state, data) {
+          state.notification.visible = true
+          state.notification.important = data.important || false
+          state.notification.showLanguageSwitcher = data.showLanguageSwitcher || false
+          state.notification.text = data.text || data
+        },
+
+        resetNotification (state) {
+          state.notification.visible = false
+          state.notification.important = false
+          state.notification.showLanguageSwitcher = false
+          state.notification.text = null
+        },
+
+        setHint (state, data) {
+          state.hint.visible = true
+          state.hint.text = data
+        },
+
+        resetHint (state) {
+          state.hint.visible = false
+          state.hint.text = null
+        },
+
+        addMessage (state, text) {
+          state.messages.push(text)
+        },
+
+        resetMessages (state) {
+          state.messages = []
+        }
+      }
+    })
+    // endregion Vuex store module
 
     // Set options of _modules before _modules are created
     if (this.hasModule('popup')) {
@@ -213,6 +298,18 @@ export default class UIController {
     } catch (error) {
       Logger.getInstance().error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
     }
+  }
+
+  open () {
+    if (this.hasModule('panel') && this._platform.isMobile) {
+      // This is a compact version of a UI
+      this.openPanel()
+      this.changeTab('morphology')
+    } else {
+      if (this.hasModule('panel') && this._uiState.isPanelOpen()) { this.closePanel() }
+      if (this.hasModule('popup')) { this.openPopup() }
+    }
+    return this
   }
 
   /**

@@ -76,10 +76,6 @@ export default class AppController {
     this.state = state
     this.options = AppController.setOptions(options, AppController.optionsDefaults)
 
-    this.tabs = {
-      DEFAULT: this.options.overrideHelp ? 'settings' : 'info',
-      DISABLED: 'disabled'
-    }
     /*
     Define defaults for resource options. If a app controller creator
     needs to provide its own defaults, they shall be defined in a `create()` function.
@@ -151,7 +147,7 @@ export default class AppController {
       platform: this.platform,
       uiState: this.state,
       queryParams: this.queryParams,
-      defaultTabName: this.options.overrideHelp ? 'settings' : 'info'
+      overrideHelp: this.options.overrideHelp
     })
 
     /**
@@ -451,7 +447,8 @@ if you want to create a different configuration of an app controller.
       // so they remain out of dynamic state for now - should eventually
       // refactor
       lookupResourceOptions: this.lookupResourceOptions,
-      siteOptions: this.siteOptions
+      siteOptions: this.siteOptions,
+      uiOptionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
 
     this.store.registerModule('settings', {
@@ -492,7 +489,6 @@ if you want to create a different configuration of an app controller.
       config: this.appConfig,
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
-      defaultTab: this.tabs.DEFAULT, // A name of a default tab (a string)
       state: this.state, // An app-level state
       homonym: null,
       inflectionsViewSet: null,
@@ -742,87 +738,6 @@ if you want to create a different configuration of an app controller.
 
         setMouseMoveOverrideUpdate (state) {
           state.mouseMoveOverrideUpdate = state.mouseMoveOverrideUpdate + 1
-        }
-      }
-    })
-
-    /**
-     * This is a UI-level public API of a UI controller. All objects should use this public API only.
-     */
-    this.api.ui = {
-      optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
-    }
-
-    this.store.registerModule('ui', {
-      // All stores of modules are namespaced
-      namespaced: true,
-
-      state: {
-        activeTab: this.tabs.DEFAULT, // A currently selected panel's tab
-        disabledTab: this.tabs.DISABLED,
-        overrideHelp: this.options.overrideHelp,
-
-        messages: [],
-        // Panel and popup notifications
-        notification: {
-          visible: false,
-          important: false,
-          showLanguageSwitcher: false,
-          text: null
-        },
-
-        hint: {
-          visible: false,
-          text: null
-        }
-      },
-
-      getters: {
-        isActiveTab: (state) => (tabName) => {
-          return state.activeTab === tabName
-        }
-      },
-
-      mutations: {
-        setActiveTab (state, tabName) {
-          state.activeTab = tabName
-        },
-
-        // Set active tab name to `disabled` when panel is closed so that no selected tab be shown in a toolbar
-        resetActiveTab (state) {
-          state.activeTab = state.disabledTab
-        },
-
-        setNotification (state, data) {
-          state.notification.visible = true
-          state.notification.important = data.important || false
-          state.notification.showLanguageSwitcher = data.showLanguageSwitcher || false
-          state.notification.text = data.text || data
-        },
-
-        resetNotification (state) {
-          state.notification.visible = false
-          state.notification.important = false
-          state.notification.showLanguageSwitcher = false
-          state.notification.text = null
-        },
-
-        setHint (state, data) {
-          state.hint.visible = true
-          state.hint.text = data
-        },
-
-        resetHint (state) {
-          state.hint.visible = false
-          state.hint.text = null
-        },
-
-        addMessage (state, text) {
-          state.messages.push(text)
-        },
-
-        resetMessages (state) {
-          state.messages = []
         }
       }
     })
@@ -1153,7 +1068,7 @@ if you want to create a different configuration of an app controller.
   }
 
   sendFeature (feature) {
-    if (this.uic.hasModule('panel')) {
+    if (this.api.ui.hasModule('panel')) {
       this.api.app.startResourceQuery(feature)
       this.api.ui.changeTab('grammar')
       this.api.ui.openPanel()
@@ -1193,7 +1108,7 @@ if you want to create a different configuration of an app controller.
     this.store.commit('app/lexicalRequestStarted', { targetWord: targetWord, source: source })
 
     // Right now we always need to open a UI with the new Lexical request, but we can make it configurable if needed
-    this.open()
+    this.api.ui.open()
     return this
   }
 
@@ -1306,18 +1221,6 @@ If no URLS are provided, will reset grammar data.
     this.store.commit('app/setWordUsageExamplesReady')
   }
 
-  open () {
-    if (this.uic.hasModule('panel') && this.platform.isMobile) {
-      // This is a compact version of a UI
-      this.api.ui.openPanel()
-      this.api.ui.changeTab('morphology')
-    } else {
-      if (this.uic.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
-      if (this.uic.hasModule('popup')) { this.api.ui.openPopup() }
-    }
-    return this
-  }
-
   isGetSelectedTextEnabled (domEvent) {
     return (this.state.isActive() &&
       this.state.uiIsActive() &&
@@ -1383,8 +1286,8 @@ If no URLS are provided, will reset grammar data.
     // TODO: Why does it not work on initial panel opening?
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
-        if (this.uic.hasModule('panel')) { this.api.ui.closePanel() }
-      } else if (this.uic.hasModule('popup')) {
+        if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel() }
+      } else if (this.api.ui.hasModule('popup')) {
         this.api.ui.closePopup()
       }
     }
@@ -1585,7 +1488,7 @@ If no URLS are provided, will reset grammar data.
       this.store.commit('settings/incrementResourceResetCounter')
     }
     for (const name of this.uiOptions.names) {
-      this.uiOptionStateChange(name)
+      this.applyUIOptions(name)
       this.store.commit('settings/incrementUiResetCounter')
     }
   }
@@ -1637,7 +1540,7 @@ If no URLS are provided, will reset grammar data.
   }
 
   /**
-   * Handle a change to a single ui option
+   * Handles a change of a single option from UI options.
    *
    * @param {string} name - A name of an option.
    * @param {string | value} value - A new value of an options.
@@ -1662,20 +1565,20 @@ If no URLS are provided, will reset grammar data.
     } else {
       uiOptions.items[name].setTextValue(value)
     }
-    this.uiOptionStateChange(name)
+    this.applyUIOptions(name)
   }
 
   /**
-   * Updates the state of a ui component to correspond to current options
+   * Updates the state of the UI to match the options settings.
    *
-   * @param {string} settingName the name of the setting
+   * @param {string} settingName - The name of the setting to apply.
    */
-  uiOptionStateChange (settingName) {
+  applyUIOptions (settingName) {
     const uiOptions = this.api.settings.getUiOptions()
 
     switch (settingName) {
       case 'fontSize':
-        this.uic.setFontSize()
+        this.api.ui.setFontSize()
         break
       case 'panelPosition':
         this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
@@ -1722,6 +1625,19 @@ If no URLS are provided, will reset grammar data.
     }
   }
 
+  /**
+   * This is a proxy for `getSelectedText method. Its purpose is to calculate
+   * a `skipIfEqual` parameter that depends on the state of the UI. Moving
+   * a calculation of this parameter here allow to decouple a Lexis module from the UI.
+   *
+   * @param {EventElement} event - An event that initiated a query.
+   * @param {Event} domEvent - A corresponding DOM event.
+   */
+  getSelectedTextHandler (event, domEvent) {
+    const skipIfEqual = this.platform.isDesktop && this.api.ui.isPopupVisible()
+    this.api.lexis.getSelectedText(event, domEvent, { skipIfEqual })
+  }
+
   registerGetSelectedText (listenerName, selector) {
     let ev
     let customEv
@@ -1756,10 +1672,10 @@ If no URLS are provided, will reset grammar data.
     }
     const lexisModule = this.getModule('lexis')
     if (ev) {
-      this.evc.registerListener(listenerName, selector, this.api.lexis.getSelectedText.bind(lexisModule), ev)
+      this.evc.registerListener(listenerName, selector, this.getSelectedTextHandler.bind(this), ev)
     } else {
       this.evc.registerListener(
-        listenerName, selector, this.api.lexis.getSelectedText.bind(lexisModule), GenericEvt, customEv)
+        listenerName, selector, this.getSelectedTextHandler.bind(this), GenericEvt, customEv)
     }
   }
 
@@ -1780,7 +1696,7 @@ If no URLS are provided, will reset grammar data.
         mouseMoveLimitedById: uiOptions.items.mouseMoveLimitedById.currentValue
       }
       const lexisModule = this.getModule('lexis')
-      this.evc.registerListener(listenerName + '-mousemove', selector, this.api.lexis.getSelectedText.bind(lexisModule), MouseMove, eventParams)
+      this.evc.registerListener(listenerName + '-mousemove', selector, this.getSelectedTextHandler.bind(this), MouseMove, eventParams)
       // when the mousemove event is activated, the regular listener needs to be deactivated
       this.evc.deactivateListener(listenerName)
       this.evc.activateListener(listenerName + '-mousemove')
