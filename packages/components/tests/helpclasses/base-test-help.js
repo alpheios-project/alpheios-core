@@ -277,7 +277,8 @@ export default class BaseTestHelp {
       getFeatureOptions: () => { return BaseTestHelp.defaultFeatureOptions },
       getResourceOptions: () => { return BaseTestHelp.defaultResourceOptions },
       getUiOptions: () => { return BaseTestHelp.defaultUIOptions },
-      verboseMode: () => { return false }
+      verboseMode: () => { return false },
+      uiOptionChange: () => {}
     }
     return Object.assign(defaultProps, props)
   }
