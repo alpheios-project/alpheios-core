@@ -33,6 +33,7 @@ import LocalStorage from '@/lib/options/local-storage-area.js'
 import RemoteAuthStorageArea from '@/lib/options/remote-auth-storage-area.js'
 import UIController from '@/lib/controllers/ui-controller.js'
 import UIEventController from '@/lib/controllers/ui-event-controller.js'
+import SelectionController from '@/lib/controllers/selection-controller.js'
 import QueryParams from '@/lib/utility/query-params.js'
 
 const languageNames = new Map([
@@ -151,19 +152,20 @@ export default class AppController {
     })
 
     /**
-     * `evc` holds an instance of an event controller, if the latter is used in an application.
+     * `evc` holds an instance of an event controller that handle key events.
      * It will be initialized at a later stage.
      *
      * @type {UIEventController}
      */
-    this.evc = null
+    this.evc = new UIEventController()
+    this.selc = new SelectionController()
 
     this.wordlistC = {} // This is a word list controller
   }
 
   /**
    * Creates an instance of an app controller with default options. Provide your own implementation of this method
-if you want to create a different configuration of an app controller.
+   * if you want to create a different configuration of an app controller.
    *
    * @param state
    * @param options
@@ -208,8 +210,8 @@ if you want to create a different configuration of an app controller.
     */
 
     // Creates on configures an event listener
-    appController.evc = new UIEventController()
     appController.evc.registerListener('HandleEscapeKey', document, appController.handleEscapeKey.bind(appController), GenericEvt, 'keydown')
+    SelectionController.evt.TEXT_SELECTED.sub(appController.onTextSelected.bind(appController))
 
     // Subscribe to LexicalQuery events
     LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(appController.onLexicalQueryComplete.bind(appController))
@@ -504,8 +506,10 @@ if you want to create a different configuration of an app controller.
 
       // TODO: Some of the functions below should probably belong to other API groups.
       getDefaultLangCode: this.getDefaultLangCode.bind(this),
-      registerAndActivateGetSelectedText: this.registerAndActivateGetSelectedText.bind(this),
-      forceMouseMoveEvent: this.forceMouseMoveEvent.bind(this),
+      registerTextSelector: this.registerTextSelector.bind(this),
+      activateTextSelector: this.activateTextSelector.bind(this),
+      // TODO: The following is used in a UI controller only. We should try to eliminate that dependency.
+      isMousemoveForced: this.isMousemoveForced.bind(this),
       getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
       clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
       featureOptionChange: this.featureOptionChange.bind(this),
@@ -523,13 +527,10 @@ if you want to create a different configuration of an app controller.
         if (!this.store.state.app.homonymDataReady || lexemes.length === 0) {
           return false
         }
-        if (Array.isArray(lexemes) && lexemes.length > 0 &&
+        return (Array.isArray(lexemes) && lexemes.length > 0 &&
           (lexemes[0].lemma.principalParts.length > 0 || lexemes[0].inflections.length > 0 || lexemes[0].inflections.length > 0 ||
             lexemes[0].meaning.fullDefs.length > 0 || lexemes[0].meaning.shortDefs.length > 0)
-        ) {
-          return true
-        }
-        return false
+        )
       },
       getWordUsageData: this.getWordUsageData.bind(this),
       getWordList: this.wordlistC.getWordList.bind(this.wordlistC),
@@ -760,19 +761,15 @@ if you want to create a different configuration of an app controller.
     this.featureOptions.items.lookupLanguage.setValue(defaultLangCode)
     this.updateLanguage(defaultLangID)
 
-    // Create registered UI modules
-    // this.createUiModules()
+    try {
+      this.registerTextSelector('GetSelectedText', this.options.textQuerySelector)
+    } catch (err) {
+      Logger.getInstance().error(err)
+    }
+
     if (this.hasUIController) { this.uic.init({ api: this.api, store: this.store, uiOptions: this.uiOptions }) }
 
-    // this.uiSetFontSize(this.uiOptions)
-
     this.updateLemmaTranslations()
-
-    // Get selected text must be registered after a Lexis data module is activated because it uses its functionality
-    if (!this.isGetSelectedTextRegistered) {
-      this.registerGetSelectedText('GetSelectedText', this.options.textQuerySelector)
-      this.isGetSelectedTextRegistered = true
-    }
 
     this.isInitialized = true
 
@@ -821,6 +818,51 @@ if you want to create a different configuration of an app controller.
       this.logger.error(`Unable to retrieve an app configuration from ${url}: ${err.message}`)
       return null
     }
+  }
+
+  get textSelectorParams () {
+    let event
+    let eventParams
+    if (this.platform.isMobile) {
+      if (['longTap', 'longtap', null].includes(this.options.textQueryTriggerMobile)) {
+        event = LongTap
+      } else {
+        event = GenericEvt
+        eventParams = this.options.textQueryTriggerMobile
+      }
+    } else if (this.isMousemoveEnabled) {
+      event = MouseMove
+      eventParams = {
+        mouseMoveDelay: this.uiOptions.items.mouseMoveDelay.currentValue,
+        mouseMoveAccuracy: this.uiOptions.items.mouseMoveAccuracy.currentValue,
+        enableMouseMoveLimitedByIdCheck: this.uiOptions.items.enableMouseMoveLimitedByIdCheck.currentValue,
+        mouseMoveLimitedById: this.uiOptions.items.mouseMoveLimitedById.currentValue
+      }
+    } else {
+      if (['dblClick', 'dblclick', null].includes(this.options.textQueryTriggerMobile)) {
+        event = MouseDblClick
+      } else {
+        event = GenericEvt
+        eventParams = this.options.textQueryTriggerDesktop
+      }
+    }
+    return [event, eventParams]
+  }
+
+  registerTextSelector (selectorName, selector) {
+    if (!this.selc) {
+      throw new Error(`Selection controller is missing. Cannot register a ${selectorName} selector`)
+    }
+    this.selc.registerSelector(selectorName, selector, ...this.textSelectorParams)
+    return this.api.app
+  }
+
+  activateTextSelector (selectorName) {
+    if (!this.selc) {
+      throw new Error(`Selection controller is missing. Cannot register a ${selectorName} selector`)
+    }
+    this.selc.activateSelector(selectorName)
+    return this.api.app
   }
 
   async initUserDataManager (isAuthenticated) {
@@ -872,18 +914,7 @@ if you want to create a different configuration of an app controller.
 
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
-
-    // we have to register and activate the mouse move event separately
-    // because when it is active the regular GetSelectedText listener needs
-    // to be diabled and vice-versa. We don't currently have a way to express
-    // this dependency between registered event listeners in the EventListenerController
-    // EventListController.activateListeners activates ALL registered listeners
-    // so we can't register the mouse move event and the regular get selected text
-    // event together. At some point we should refactor to either make the mousemove
-    // event handled by the regular get selected text listener as a valid value for
-    // textQueryTriggerDesktop  or support this type of dependency in the
-    // EventListenerController
-    this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+    if (this.selc) { this.selc.activate() }
 
     this.authUnwatch = this.store.watch((state) => state.auth.isAuthenticated, (newValue, oldValue) => {
       this.initUserDataManager(newValue)
@@ -921,6 +952,7 @@ if you want to create a different configuration of an app controller.
 
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
+    if (this.selc) { this.selc.deactivate() }
 
     this.deactivateModules()
     if (this.hasUIController) {
@@ -1221,10 +1253,11 @@ If no URLS are provided, will reset grammar data.
     this.store.commit('app/setWordUsageExamplesReady')
   }
 
+  // TODO: This is used in business logic of Lexis module. We should move this logic to the app controller and eliminate that dependency.
   isGetSelectedTextEnabled (domEvent) {
     return (this.state.isActive() &&
       this.state.uiIsActive() &&
-      (!this.options.triggerPreCallback || this.enableMouseMoveEvent() || this.options.triggerPreCallback(domEvent)))
+      (!this.options.triggerPreCallback || this.isMousemoveEnabled || this.options.triggerPreCallback(domEvent)))
   }
 
   getFeatureOptions () {
@@ -1534,7 +1567,9 @@ If no URLS are provided, will reset grammar data.
         // If user manually sets the mouse move option then this takes priority over the page override
         this.options.enableMouseMoveOverride = false
         this.store.commit('app/setMouseMoveOverrideUpdate')
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        if (this.selc) {
+          this.selc.replaceEventForAll(...this.textSelectorParams)
+        }
         break
     }
   }
@@ -1592,16 +1627,25 @@ If no URLS are provided, will reset grammar data.
         }
         break
       case 'mouseMoveDelay':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        if (this.selc && this.isMousemoveEnabled) {
+          this.selc.updateParamsForAll({ mouseMoveDelay: this.uiOptions.items.mouseMoveDelay.currentValue })
+        }
         break
       case 'mouseMoveAccuracy':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        if (this.selc && this.isMousemoveEnabled) {
+          this.selc.updateParamsForAll({ mouseMoveAccuracy: this.uiOptions.items.mouseMoveAccuracy.currentValue })
+        }
         break
       case 'enableMouseMoveLimitedByIdCheck':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        if (this.selc && this.isMousemoveEnabled) {
+          this.selc.updateParamsForAll({ enableMouseMoveLimitedByIdCheck: this.uiOptions.items.enableMouseMoveLimitedByIdCheck.currentValue })
+        }
         break
       case 'forceMouseMoveGoogleDocs':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        if (this.selc) {
+          // An event must be replaced because a change of this setting may cause an event change
+          this.selc.replaceEventForAll(...this.textSelectorParams)
+        }
         break
     }
   }
@@ -1630,88 +1674,21 @@ If no URLS are provided, will reset grammar data.
    * a `skipIfEqual` parameter that depends on the state of the UI. Moving
    * a calculation of this parameter here allow to decouple a Lexis module from the UI.
    *
-   * @param {EventElement} event - An event that initiated a query.
-   * @param {Event} domEvent - A corresponding DOM event.
+   * @param data - A text selection data.
+   * @param {EventElement} data.event - An event that initiated a query.
+   * @param {Event} data.domEvent - A corresponding DOM event.
    */
-  getSelectedTextHandler (event, domEvent) {
+  onTextSelected (data) {
+    // TODO: Can we eliminated dependency on the state of a UI?
     const skipIfEqual = this.platform.isDesktop && this.api.ui.isPopupVisible()
-    this.api.lexis.getSelectedText(event, domEvent, { skipIfEqual })
+    this.api.lexis.getSelectedText(data.event, data.domEvent, { skipIfEqual })
   }
 
-  registerGetSelectedText (listenerName, selector) {
-    let ev
-    let customEv
-    if (this.platform.isMobile) {
-      switch (this.options.textQueryTriggerMobile) {
-        case 'longTap':
-          ev = LongTap
-          break
-        case 'longtap':
-          ev = LongTap
-          break
-        case null:
-          ev = LongTap
-          break
-        default:
-          customEv = this.options.textQueryTriggerMobile
-      }
-    } else {
-      switch (this.options.textQueryTriggerDesktop) {
-        case 'dblClick':
-          ev = MouseDblClick
-          break
-        case 'dblclick':
-          ev = MouseDblClick
-          break
-        case null:
-          ev = MouseDblClick
-          break
-        default:
-          customEv = this.options.textQueryTriggerDesktop
-      }
-    }
-    const lexisModule = this.getModule('lexis')
-    if (ev) {
-      this.evc.registerListener(listenerName, selector, this.getSelectedTextHandler.bind(this), ev)
-    } else {
-      this.evc.registerListener(
-        listenerName, selector, this.getSelectedTextHandler.bind(this), GenericEvt, customEv)
-    }
+  get isMousemoveEnabled () {
+    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.isMousemoveForced())
   }
 
-  registerAndActivateGetSelectedText (listenerName, selector) {
-    this.registerGetSelectedText(listenerName, selector)
-    this.evc.activateListener(listenerName)
-    this.registerAndActivateMouseMove(listenerName, selector)
-  }
-
-  registerAndActivateMouseMove (listenerName, selector) {
-    if (this.enableMouseMoveEvent()) {
-      const uiOptions = this.api.settings.getUiOptions()
-
-      const eventParams = {
-        mouseMoveDelay: uiOptions.items.mouseMoveDelay.currentValue,
-        mouseMoveAccuracy: uiOptions.items.mouseMoveAccuracy.currentValue,
-        enableMouseMoveLimitedByIdCheck: uiOptions.items.enableMouseMoveLimitedByIdCheck.currentValue,
-        mouseMoveLimitedById: uiOptions.items.mouseMoveLimitedById.currentValue
-      }
-      const lexisModule = this.getModule('lexis')
-      this.evc.registerListener(listenerName + '-mousemove', selector, this.getSelectedTextHandler.bind(this), MouseMove, eventParams)
-      // when the mousemove event is activated, the regular listener needs to be deactivated
-      this.evc.deactivateListener(listenerName)
-      this.evc.activateListener(listenerName + '-mousemove')
-    } else {
-      // when the mousemove event is deactivated, the regular listener needs to be reactivated
-      this.evc.deactivateListener(listenerName + '-mousemove')
-      this.evc.activateListener(listenerName)
-    }
-  }
-
-  enableMouseMoveEvent () {
-    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.forceMouseMoveEvent())
-  }
-
-  forceMouseMoveEvent () {
+  isMousemoveForced () {
     return Boolean(this.platform.isDesktop && this.platform.isGoogleDocs && this.uiOptions.items.forceMouseMoveGoogleDocs.currentValue)
   }
 }

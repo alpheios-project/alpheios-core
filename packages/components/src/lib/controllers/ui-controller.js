@@ -109,7 +109,8 @@ export default class UIController {
       openToolbar: this.openToolbar.bind(this),
       openActionPanel: this.openActionPanel.bind(this),
       closeActionPanel: this.closeActionPanel.bind(this),
-      toggleActionPanel: this.toggleActionPanel.bind(this)
+      toggleActionPanel: this.toggleActionPanel.bind(this),
+      setFontSize: this.setFontSize.bind(this)
     }
     // endregion Public API of a UI controller
 
@@ -392,7 +393,7 @@ export default class UIController {
     if (['inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this._platform.isMobile && isPortrait) {
       const message = this._api.l10n.getMsg('HINT_LANDSCAPE_MODE')
       this._store.commit('ui/setHint', message, tabName)
-    } else if (this._api.app.forceMouseMoveEvent()) {
+    } else if (this._api.app.isMousemoveForced()) {
       this._store.commit('ui/setHint', this._api.l10n.getMsg('TEXT_HINT_MOUSE_MOVE'))
     } else {
       this._store.commit('ui/resetHint')

@@ -101,8 +101,8 @@
 <script>
 import WordUsageExamplesFilters from '@/vue/components/word-usage-examples/word-usage-examples-filters.vue'
 import WordUsageExamplesSorting from '@/vue/components/word-usage-examples/word-usage-examples-sorting.vue'
-
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import { Logger } from 'alpheios-data-models'
 
 export default {
   name: 'WordUsageExamples',
@@ -246,7 +246,12 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.app.registerAndActivateGetSelectedText('getSelectedText-usageExamples', '.alpheios-word-usage')
+      const selectorName = 'getSelectedText-usageExamples'
+      try {
+        this.app.registerTextSelector(selectorName, '.alpheios-word-usage').activateTextSelector(selectorName)
+      } catch (err) {
+        Logger.getInstance().error(err)
+      }
     })
   }
 }
