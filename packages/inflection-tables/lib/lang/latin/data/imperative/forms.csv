@@ -114,5 +114,11 @@ veneo,venire_venivi(ii)_venitus,vēnītōte,active,imperative,future,plural,2nd,
 veneo,venire_venivi(ii)_venitus,vēneuntō,active,imperative,future,plural,3rd,
 inquam,-_-_-,inque,,imperative,present,singular,2nd,16
 inquam,-_-_-,inquitō,,imperative,present,plural,2nd,16
+odeo,odire_odivi(ii)_-,odī,active,imperative,present,singular,2nd,
+odeo,odire_odivi(ii)_-,odīte,active,imperative,present,plural,2nd,
+odeo,odire_odivi(ii)_-,odītō,active,imperative,future,singular,2nd,
+odeo,odire_odivi(ii)_-,odītō,active,imperative,future,singular,3rd,
+odeo,odire_odivi(ii)_-,odītōte,active,imperative,future,plural,2nd,
+odeo,odire_odivi(ii)_-,odeuntō,active,imperative,future,plural,3rd,
 
 
