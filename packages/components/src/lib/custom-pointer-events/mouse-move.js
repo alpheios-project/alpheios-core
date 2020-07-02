@@ -16,7 +16,6 @@ export default class MouseMove extends PointerEvt {
     this.mouseMoveLimitedById = mouseMoveLimitedById
   }
 
-  // TODO: It is not used right now. Do we need to keep it?
   get limitedById () {
     return Platform.getIsGoogleDocs() && this.enableMouseMoveLimitedByIdCheck ? this.mouseMoveLimitedById : null
   }

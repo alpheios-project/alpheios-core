@@ -55,7 +55,7 @@ export default class UIEventController {
   }
 
   /**
-   * Updates events for a listener.
+   * Updates EventType and parameters for an existing listener.
    *
    * @param {string} name - A name of the listener or a group of listeners for which an event shall be replaced.
    * @param {PointerEvt} EventType - A constructor function of on of a custom pointer events that will do an event handling.
