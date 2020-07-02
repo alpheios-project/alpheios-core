@@ -1,10 +1,15 @@
 import EventElement from './event-element.js'
+import { Logger } from 'alpheios-data-models'
 
 export default class PointerEvt {
   constructor () {
     this.tracking = false
     this.start = new EventElement()
     this.end = new EventElement()
+  }
+
+  updateParams () {
+    Logger.getInstance().warn(`updateParams() is not implemented in ${this.constructor.name}`)
   }
 
   static alpheiosIgnoreAllTest (dataset) {

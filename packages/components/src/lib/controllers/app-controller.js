@@ -21,7 +21,6 @@ import SiteOptions from '@/settings/site-options.json'
 import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
 import UIOptionDefaults from '@/settings/ui-options-defaults.json'
 import TextSelector from '@/lib/selection/text-selector'
-import HTMLPage from '@/lib/utility/html-page.js'
 import Platform from '@/lib/utility/platform.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
 import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
@@ -34,6 +33,7 @@ import LocalStorage from '@/lib/options/local-storage-area.js'
 import RemoteAuthStorageArea from '@/lib/options/remote-auth-storage-area.js'
 import UIController from '@/lib/controllers/ui-controller.js'
 import UIEventController from '@/lib/controllers/ui-event-controller.js'
+import SelectionController from '@/lib/controllers/selection-controller.js'
 import QueryParams from '@/lib/utility/query-params.js'
 
 const languageNames = new Map([
@@ -77,10 +77,6 @@ export default class AppController {
     this.state = state
     this.options = AppController.setOptions(options, AppController.optionsDefaults)
 
-    this.tabs = {
-      DEFAULT: this.options.overrideHelp ? 'settings' : 'info',
-      DISABLED: 'disabled'
-    }
     /*
     Define defaults for resource options. If a app controller creator
     needs to provide its own defaults, they shall be defined in a `create()` function.
@@ -152,23 +148,24 @@ export default class AppController {
       platform: this.platform,
       uiState: this.state,
       queryParams: this.queryParams,
-      defaultTabName: this.options.overrideHelp ? 'settings' : 'info'
+      overrideHelp: this.options.overrideHelp
     })
 
     /**
-     * `evc` holds an instance of an event controller, if the latter is used in an application.
+     * `evc` holds an instance of an event controller that handle key events.
      * It will be initialized at a later stage.
      *
      * @type {UIEventController}
      */
-    this.evc = null
+    this.evc = new UIEventController()
+    this.selc = new SelectionController()
 
     this.wordlistC = {} // This is a word list controller
   }
 
   /**
    * Creates an instance of an app controller with default options. Provide your own implementation of this method
-if you want to create a different configuration of an app controller.
+   * if you want to create a different configuration of an app controller.
    *
    * @param state
    * @param options
@@ -213,8 +210,8 @@ if you want to create a different configuration of an app controller.
     */
 
     // Creates on configures an event listener
-    appController.evc = new UIEventController()
     appController.evc.registerListener('HandleEscapeKey', document, appController.handleEscapeKey.bind(appController), GenericEvt, 'keydown')
+    SelectionController.evt.TEXT_SELECTED.sub(appController.onTextSelected.bind(appController))
 
     // Subscribe to LexicalQuery events
     LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(appController.onLexicalQueryComplete.bind(appController))
@@ -424,8 +421,6 @@ if you want to create a different configuration of an app controller.
     // TODO: Site options should probably be initialized the same way as other options objects
     this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
-    this.zIndex = HTMLPage.getZIndexMax()
-
     // Will add morph adapter options to the `options` object of an app controller constructor as needed.
 
     // Inject HTML code of a plugin. Should go in reverse order.
@@ -454,7 +449,8 @@ if you want to create a different configuration of an app controller.
       // so they remain out of dynamic state for now - should eventually
       // refactor
       lookupResourceOptions: this.lookupResourceOptions,
-      siteOptions: this.siteOptions
+      siteOptions: this.siteOptions,
+      uiOptionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
 
     this.store.registerModule('settings', {
@@ -495,7 +491,6 @@ if you want to create a different configuration of an app controller.
       config: this.appConfig,
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
-      defaultTab: this.tabs.DEFAULT, // A name of a default tab (a string)
       state: this.state, // An app-level state
       homonym: null,
       inflectionsViewSet: null,
@@ -511,7 +506,10 @@ if you want to create a different configuration of an app controller.
 
       // TODO: Some of the functions below should probably belong to other API groups.
       getDefaultLangCode: this.getDefaultLangCode.bind(this),
-      forceMouseMoveEvent: this.forceMouseMoveEvent.bind(this),
+      registerTextSelector: this.registerTextSelector.bind(this),
+      activateTextSelector: this.activateTextSelector.bind(this),
+      // TODO: The following is used in a UI controller only. We should try to eliminate that dependency.
+      isMousemoveForced: this.isMousemoveForced.bind(this),
       getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
       clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
       featureOptionChange: this.featureOptionChange.bind(this),
@@ -529,13 +527,10 @@ if you want to create a different configuration of an app controller.
         if (!this.store.state.app.homonymDataReady || lexemes.length === 0) {
           return false
         }
-        if (Array.isArray(lexemes) && lexemes.length > 0 &&
+        return (Array.isArray(lexemes) && lexemes.length > 0 &&
           (lexemes[0].lemma.principalParts.length > 0 || lexemes[0].inflections.length > 0 || lexemes[0].inflections.length > 0 ||
             lexemes[0].meaning.fullDefs.length > 0 || lexemes[0].meaning.shortDefs.length > 0)
-        ) {
-          return true
-        }
-        return false
+        )
       },
       getWordUsageData: this.getWordUsageData.bind(this),
       getWordList: this.wordlistC.getWordList.bind(this.wordlistC),
@@ -748,95 +743,6 @@ if you want to create a different configuration of an app controller.
       }
     })
 
-    /**
-     * This is a UI-level public API of a UI controller. All objects should use this public API only.
-     */
-    this.api.ui = {
-      zIndex: this.zIndex, // A z-index of Alpheios UI elements
-
-      // Modules
-      hasModule: this.hasModule.bind(this), // Checks if a UI module is available
-      getModule: this.getModule.bind(this), // Gets direct access to module.
-
-      registerAndActivateGetSelectedText: this.registerAndActivateGetSelectedText.bind(this),
-
-      optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
-    }
-
-    this.store.registerModule('ui', {
-      // All stores of modules are namespaced
-      namespaced: true,
-
-      state: {
-        activeTab: this.tabs.DEFAULT, // A currently selected panel's tab
-        disabledTab: this.tabs.DISABLED,
-        overrideHelp: this.options.overrideHelp,
-
-        messages: [],
-        // Panel and popup notifications
-        notification: {
-          visible: false,
-          important: false,
-          showLanguageSwitcher: false,
-          text: null
-        },
-
-        hint: {
-          visible: false,
-          text: null
-        }
-      },
-
-      getters: {
-        isActiveTab: (state) => (tabName) => {
-          return state.activeTab === tabName
-        }
-      },
-
-      mutations: {
-        setActiveTab (state, tabName) {
-          state.activeTab = tabName
-        },
-
-        // Set active tab name to `disabled` when panel is closed so that no selected tab be shown in a toolbar
-        resetActiveTab (state) {
-          state.activeTab = state.disabledTab
-        },
-
-        setNotification (state, data) {
-          state.notification.visible = true
-          state.notification.important = data.important || false
-          state.notification.showLanguageSwitcher = data.showLanguageSwitcher || false
-          state.notification.text = data.text || data
-        },
-
-        resetNotification (state) {
-          state.notification.visible = false
-          state.notification.important = false
-          state.notification.showLanguageSwitcher = false
-          state.notification.text = null
-        },
-
-        setHint (state, data) {
-          state.hint.visible = true
-          state.hint.text = data
-        },
-
-        resetHint (state) {
-          state.hint.visible = false
-          state.hint.text = null
-        },
-
-        addMessage (state, text) {
-          state.messages.push(text)
-        },
-
-        resetMessages (state) {
-          state.messages = []
-        }
-      }
-    })
-
     // If `textLangCode` is set, use it over the `preferredLanguage`
     this.options.overridePreferredLanguage = Boolean(this.options.textLangCode)
     this.store.commit('app/setSelectedLookupLang', this.getDefaultLangCode())
@@ -855,19 +761,15 @@ if you want to create a different configuration of an app controller.
     this.featureOptions.items.lookupLanguage.setValue(defaultLangCode)
     this.updateLanguage(defaultLangID)
 
-    // Create registered UI modules
-    // this.createUiModules()
+    try {
+      this.registerTextSelector('GetSelectedText', this.options.textQuerySelector)
+    } catch (err) {
+      Logger.getInstance().error(err)
+    }
+
     if (this.hasUIController) { this.uic.init({ api: this.api, store: this.store, uiOptions: this.uiOptions }) }
 
-    // this.uiSetFontSize(this.uiOptions)
-
     this.updateLemmaTranslations()
-
-    // Get selected text must be registered after a Lexis data module is activated because it uses its functionality
-    if (!this.isGetSelectedTextRegistered) {
-      this.registerGetSelectedText('GetSelectedText', this.options.textQuerySelector)
-      this.isGetSelectedTextRegistered = true
-    }
 
     this.isInitialized = true
 
@@ -916,6 +818,51 @@ if you want to create a different configuration of an app controller.
       this.logger.error(`Unable to retrieve an app configuration from ${url}: ${err.message}`)
       return null
     }
+  }
+
+  get textSelectorParams () {
+    let event
+    let eventParams
+    if (this.platform.isMobile) {
+      if (['longTap', 'longtap', null].includes(this.options.textQueryTriggerMobile)) {
+        event = LongTap
+      } else {
+        event = GenericEvt
+        eventParams = this.options.textQueryTriggerMobile
+      }
+    } else if (this.isMousemoveEnabled) {
+      event = MouseMove
+      eventParams = {
+        mouseMoveDelay: this.uiOptions.items.mouseMoveDelay.currentValue,
+        mouseMoveAccuracy: this.uiOptions.items.mouseMoveAccuracy.currentValue,
+        enableMouseMoveLimitedByIdCheck: this.uiOptions.items.enableMouseMoveLimitedByIdCheck.currentValue,
+        mouseMoveLimitedById: this.uiOptions.items.mouseMoveLimitedById.currentValue
+      }
+    } else {
+      if (['dblClick', 'dblclick', null].includes(this.options.textQueryTriggerMobile)) {
+        event = MouseDblClick
+      } else {
+        event = GenericEvt
+        eventParams = this.options.textQueryTriggerDesktop
+      }
+    }
+    return [event, eventParams]
+  }
+
+  registerTextSelector (selectorName, selector) {
+    if (!this.selc) {
+      throw new Error(`Selection controller is missing. Cannot register a ${selectorName} selector`)
+    }
+    this.selc.registerSelector(selectorName, selector, ...this.textSelectorParams)
+    return this.api.app
+  }
+
+  activateTextSelector (selectorName) {
+    if (!this.selc) {
+      throw new Error(`Selection controller is missing. Cannot register a ${selectorName} selector`)
+    }
+    this.selc.activateSelector(selectorName)
+    return this.api.app
   }
 
   async initUserDataManager (isAuthenticated) {
@@ -967,18 +914,7 @@ if you want to create a different configuration of an app controller.
 
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
-
-    // we have to register and activate the mouse move event separately
-    // because when it is active the regular GetSelectedText listener needs
-    // to be diabled and vice-versa. We don't currently have a way to express
-    // this dependency between registered event listeners in the EventListenerController
-    // EventListController.activateListeners activates ALL registered listeners
-    // so we can't register the mouse move event and the regular get selected text
-    // event together. At some point we should refactor to either make the mousemove
-    // event handled by the regular get selected text listener as a valid value for
-    // textQueryTriggerDesktop  or support this type of dependency in the
-    // EventListenerController
-    this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+    if (this.selc) { this.selc.activate() }
 
     this.authUnwatch = this.store.watch((state) => state.auth.isAuthenticated, (newValue, oldValue) => {
       this.initUserDataManager(newValue)
@@ -1016,6 +952,7 @@ if you want to create a different configuration of an app controller.
 
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
+    if (this.selc) { this.selc.deactivate() }
 
     this.deactivateModules()
     if (this.hasUIController) {
@@ -1163,7 +1100,7 @@ if you want to create a different configuration of an app controller.
   }
 
   sendFeature (feature) {
-    if (this.uic.hasModule('panel')) {
+    if (this.api.ui.hasModule('panel')) {
       this.api.app.startResourceQuery(feature)
       this.api.ui.changeTab('grammar')
       this.api.ui.openPanel()
@@ -1203,7 +1140,7 @@ if you want to create a different configuration of an app controller.
     this.store.commit('app/lexicalRequestStarted', { targetWord: targetWord, source: source })
 
     // Right now we always need to open a UI with the new Lexical request, but we can make it configurable if needed
-    this.open()
+    this.api.ui.open()
     return this
   }
 
@@ -1316,22 +1253,11 @@ If no URLS are provided, will reset grammar data.
     this.store.commit('app/setWordUsageExamplesReady')
   }
 
-  open () {
-    if (this.uic.hasModule('panel') && this.platform.isMobile) {
-      // This is a compact version of a UI
-      this.api.ui.openPanel()
-      this.api.ui.changeTab('morphology')
-    } else {
-      if (this.uic.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
-      if (this.uic.hasModule('popup')) { this.api.ui.openPopup() }
-    }
-    return this
-  }
-
+  // TODO: This is used in business logic of Lexis module. We should move this logic to the app controller and eliminate that dependency.
   isGetSelectedTextEnabled (domEvent) {
     return (this.state.isActive() &&
       this.state.uiIsActive() &&
-      (!this.options.triggerPreCallback || this.enableMouseMoveEvent() || this.options.triggerPreCallback(domEvent)))
+      (!this.options.triggerPreCallback || this.isMousemoveEnabled || this.options.triggerPreCallback(domEvent)))
   }
 
   getFeatureOptions () {
@@ -1393,8 +1319,8 @@ If no URLS are provided, will reset grammar data.
     // TODO: Why does it not work on initial panel opening?
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
       if (this.state.isPanelOpen()) {
-        if (this.uic.hasModule('panel')) { this.api.ui.closePanel() }
-      } else if (this.uic.hasModule('popup')) {
+        if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel() }
+      } else if (this.api.ui.hasModule('popup')) {
         this.api.ui.closePopup()
       }
     }
@@ -1595,7 +1521,7 @@ If no URLS are provided, will reset grammar data.
       this.store.commit('settings/incrementResourceResetCounter')
     }
     for (const name of this.uiOptions.names) {
-      this.uiOptionStateChange(name)
+      this.applyUIOptions(name)
       this.store.commit('settings/incrementUiResetCounter')
     }
   }
@@ -1641,13 +1567,15 @@ If no URLS are provided, will reset grammar data.
         // If user manually sets the mouse move option then this takes priority over the page override
         this.options.enableMouseMoveOverride = false
         this.store.commit('app/setMouseMoveOverrideUpdate')
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        if (this.selc) {
+          this.selc.replaceEventForAll(...this.textSelectorParams)
+        }
         break
     }
   }
 
   /**
-   * Handle a change to a single ui option
+   * Handles a change of a single option from UI options.
    *
    * @param {string} name - A name of an option.
    * @param {string | value} value - A new value of an options.
@@ -1672,20 +1600,20 @@ If no URLS are provided, will reset grammar data.
     } else {
       uiOptions.items[name].setTextValue(value)
     }
-    this.uiOptionStateChange(name)
+    this.applyUIOptions(name)
   }
 
   /**
-   * Updates the state of a ui component to correspond to current options
+   * Updates the state of the UI to match the options settings.
    *
-   * @param {string} settingName the name of the setting
+   * @param {string} settingName - The name of the setting to apply.
    */
-  uiOptionStateChange (settingName) {
+  applyUIOptions (settingName) {
     const uiOptions = this.api.settings.getUiOptions()
 
     switch (settingName) {
       case 'fontSize':
-        this.uic.setFontSize()
+        this.api.ui.setFontSize()
         break
       case 'panelPosition':
         this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
@@ -1699,16 +1627,25 @@ If no URLS are provided, will reset grammar data.
         }
         break
       case 'mouseMoveDelay':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        if (this.selc && this.isMousemoveEnabled) {
+          this.selc.updateParamsForAll({ mouseMoveDelay: this.uiOptions.items.mouseMoveDelay.currentValue })
+        }
         break
       case 'mouseMoveAccuracy':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        if (this.selc && this.isMousemoveEnabled) {
+          this.selc.updateParamsForAll({ mouseMoveAccuracy: this.uiOptions.items.mouseMoveAccuracy.currentValue })
+        }
         break
       case 'enableMouseMoveLimitedByIdCheck':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        if (this.selc && this.isMousemoveEnabled) {
+          this.selc.updateParamsForAll({ enableMouseMoveLimitedByIdCheck: this.uiOptions.items.enableMouseMoveLimitedByIdCheck.currentValue })
+        }
         break
       case 'forceMouseMoveGoogleDocs':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        if (this.selc) {
+          // An event must be replaced because a change of this setting may cause an event change
+          this.selc.replaceEventForAll(...this.textSelectorParams)
+        }
         break
     }
   }
@@ -1732,80 +1669,26 @@ If no URLS are provided, will reset grammar data.
     }
   }
 
-  registerGetSelectedText (listenerName, selector) {
-    let ev
-    let customEv
-    if (this.platform.isMobile) {
-      switch (this.options.textQueryTriggerMobile) {
-        case 'longTap':
-          ev = LongTap
-          break
-        case 'longtap':
-          ev = LongTap
-          break
-        case null:
-          ev = LongTap
-          break
-        default:
-          customEv = this.options.textQueryTriggerMobile
-      }
-    } else {
-      switch (this.options.textQueryTriggerDesktop) {
-        case 'dblClick':
-          ev = MouseDblClick
-          break
-        case 'dblclick':
-          ev = MouseDblClick
-          break
-        case null:
-          ev = MouseDblClick
-          break
-        default:
-          customEv = this.options.textQueryTriggerDesktop
-      }
-    }
-    const lexisModule = this.getModule('lexis')
-    if (ev) {
-      this.evc.registerListener(listenerName, selector, this.api.lexis.getSelectedText.bind(lexisModule), ev)
-    } else {
-      this.evc.registerListener(
-        listenerName, selector, this.api.lexis.getSelectedText.bind(lexisModule), GenericEvt, customEv)
-    }
+  /**
+   * This is a proxy for `getSelectedText method. Its purpose is to calculate
+   * a `skipIfEqual` parameter that depends on the state of the UI. Moving
+   * a calculation of this parameter here allow to decouple a Lexis module from the UI.
+   *
+   * @param data - A text selection data.
+   * @param {EventElement} data.event - An event that initiated a query.
+   * @param {Event} data.domEvent - A corresponding DOM event.
+   */
+  onTextSelected (data) {
+    // TODO: Can we eliminated dependency on the state of a UI?
+    const skipIfEqual = this.platform.isDesktop && this.api.ui.isPopupVisible()
+    this.api.lexis.getSelectedText(data.event, data.domEvent, { skipIfEqual })
   }
 
-  registerAndActivateGetSelectedText (listenerName, selector) {
-    this.registerGetSelectedText(listenerName, selector)
-    this.evc.activateListener(listenerName)
-    this.registerAndActivateMouseMove(listenerName, selector)
+  get isMousemoveEnabled () {
+    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.isMousemoveForced())
   }
 
-  registerAndActivateMouseMove (listenerName, selector) {
-    if (this.enableMouseMoveEvent()) {
-      const uiOptions = this.api.settings.getUiOptions()
-
-      const eventParams = {
-        mouseMoveDelay: uiOptions.items.mouseMoveDelay.currentValue,
-        mouseMoveAccuracy: uiOptions.items.mouseMoveAccuracy.currentValue,
-        enableMouseMoveLimitedByIdCheck: uiOptions.items.enableMouseMoveLimitedByIdCheck.currentValue,
-        mouseMoveLimitedById: uiOptions.items.mouseMoveLimitedById.currentValue
-      }
-      const lexisModule = this.getModule('lexis')
-      this.evc.registerListener(listenerName + '-mousemove', selector, this.api.lexis.getSelectedText.bind(lexisModule), MouseMove, eventParams)
-      // when the mousemove event is activated, the regular listener needs to be deactivated
-      this.evc.deactivateListener(listenerName)
-      this.evc.activateListener(listenerName + '-mousemove')
-    } else {
-      // when the mousemove event is deactivated, the regular listener needs to be reactivated
-      this.evc.deactivateListener(listenerName + '-mousemove')
-      this.evc.activateListener(listenerName)
-    }
-  }
-
-  enableMouseMoveEvent () {
-    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.forceMouseMoveEvent())
-  }
-
-  forceMouseMoveEvent () {
+  isMousemoveForced () {
     return Boolean(this.platform.isDesktop && this.platform.isGoogleDocs && this.uiOptions.items.forceMouseMoveGoogleDocs.currentValue)
   }
 }

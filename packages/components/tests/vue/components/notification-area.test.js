@@ -164,10 +164,10 @@ describe('notification-area.test.js', () => {
       mocks: api
     })
 
-    api.ui.optionChange = jest.fn()
+    api.settings.uiOptionChange = jest.fn()
     
     cmp.vm.hideLoginPrompt()
-    expect(api.ui.optionChange).toHaveBeenCalledWith('hideLoginPrompt',true)
+    expect(api.settings.uiOptionChange).toHaveBeenCalledWith('hideLoginPrompt', true)
   })
 
 })

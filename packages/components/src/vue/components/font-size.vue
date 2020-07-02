@@ -27,7 +27,7 @@
 
 export default {
   name: 'ReskinFontColor',
-  inject: ['ui', 'l10n', 'settings'],
+  inject: ['l10n', 'settings'],
   data () {
     return {
       activeButton: this.settings.getUiOptions().items.fontSize.currentValue
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     changeFontSize (size) {
-      this.ui.optionChange('fontSize', size)
+      this.settings.uiOptionChange('fontSize', size)
       this.activeButton = size
     }
   }

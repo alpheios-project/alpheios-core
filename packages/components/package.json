@@ -121,6 +121,7 @@
     "moduleNameMapper": {
       "^@vue-runtime$": "vue/dist/vue.runtime.common.js",
       "^@[/](.+)": "<rootDir>/src/$1",
+      "^@comp[/](.+)": "<rootDir>/src/$1",
       "^@tests[/](.+)": "<rootDir>/tests/$1",
       "alpheios-data-models": "<rootDir>/node_modules/alpheios-data-models/dist/alpheios-data-models.js",
       "alpheios-messaging": "<rootDir>../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js",
