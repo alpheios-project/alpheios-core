@@ -6,8 +6,8 @@ describe('ui-event-controller.test.js', () => {
   console.log = function () {}
   console.warn = function () {}
   let evc
-  let listenerName = `Test Listener`
-  let className = `test`
+  const listenerName = 'Test Listener'
+  const className = 'test'
   let p
   let div
 
@@ -35,63 +35,65 @@ describe('ui-event-controller.test.js', () => {
   })
 
   it('UIEventController: should be created and listeners map should be empty', () => {
-    expect(evc.listeners.size).toEqual(0)
+    expect(evc.listenerNames.length).toEqual(0)
   })
 
   it('UIEventController.registerListener: if called for HTML node should add a single listener object', () => {
-    let TestEvent = jest.fn()
-    evc.registerListener(listenerName, document, () => {}, TestEvent, `param A`, `param B`)
-    expect(evc.listeners.get(listenerName)).toEqual([{}])
+    const TestEvent = jest.fn()
+    evc.registerListener(listenerName, document, () => {}, TestEvent, 'param A', 'param B')
+    expect(evc.listenerNames).toEqual([listenerName])
   })
 
   it('UIEventController.registerListener: if called for HTML node should create an Event object and pass parameters correctly to it', () => {
-    let TestEvent = jest.fn()
-    let evtHanlder = () => {}
-    evc.registerListener(listenerName, document, evtHanlder, TestEvent, `param A`, `param B`)
-    expect(TestEvent).toBeCalledWith(document, evtHanlder, `param A`, `param B`)
+    const TestEvent = jest.fn()
+    const evtHanlder = () => {}
+    evc.registerListener(listenerName, document, evtHanlder, TestEvent, 'param A', 'param B')
+    expect(TestEvent).toBeCalledWith(document, evtHanlder, 'param A', 'param B')
   })
 
   it('UIEventController.registerListener: if called for a CSS selector should add two listener objects', () => {
-    let TestEvent = jest.fn()
-    evc.registerListener(listenerName, `.${className}`, () => {}, TestEvent, `param A`, `param B`)
-    expect(evc.listeners.get(listenerName)).toEqual([{}, {}])
+    const TestEvent = jest.fn()
+    evc.registerListener(listenerName, `.${className}`, () => {}, TestEvent, 'param A', 'param B')
+    expect(evc._listeners.get(listenerName).events).toEqual([{}, {}])
   })
 
   it('UIEventController.registerListener: if called for a CSS selector should pass parameters to Events object correctly', () => {
-    let TestEvent = jest.fn()
-    let evtHanlder = () => {}
-    evc.registerListener(listenerName, `.${className}`, evtHanlder, TestEvent, `param A`, `param B`)
-    expect(TestEvent).lastCalledWith(div, evtHanlder, `param A`, `param B`)
+    const TestEvent = jest.fn()
+    const evtHanlder = () => {}
+    evc.registerListener(listenerName, `.${className}`, evtHanlder, TestEvent, 'param A', 'param B')
+    expect(TestEvent).lastCalledWith(div, evtHanlder, 'param A', 'param B')
   })
 
   it('UIEventController.unregisterListener: should remove a listener that was registered previously', () => {
-    let TestEvent = jest.fn().mockImplementation(() => {
+    const TestEvent = jest.fn().mockImplementation(() => {
       return {
         remove: () => {}
       }
     })
     evc.registerListener(listenerName, document, () => {}, TestEvent)
-    expect(evc.listeners.get(listenerName)).toBeTruthy() // To verify that the listener is registered
+    expect(evc.listenerNames).toEqual([listenerName]) // To verify that the listener is registered
     evc.unregisterListener(listenerName)
-    expect(evc.listeners.get(listenerName)).toBeFalsy() // To verify that the listener is unregistered
+    expect(evc.listenerNames).toEqual([]) // To verify that the listener is unregistered
   })
 
-  it('UIEventController.unregisterListener: should call remove() function of an event', () => {
-    let removeFn = jest.fn()
-    let TestEvent = jest.fn().mockImplementation(() => {
+  it('UIEventController.unregisterListener: should call remove() function of an activated event', () => {
+    const removeFn = jest.fn()
+    const TestEvent = jest.fn().mockImplementation(() => {
       return {
+        set: () => {},
         remove: removeFn
       }
     })
     evc.registerListener(listenerName, document, () => {}, TestEvent)
-    expect(evc.listeners.get(listenerName)).toBeTruthy() // To verify that the listener is registered
+    evc.activateListener(listenerName)
+    expect(evc.listenerNames).toEqual([listenerName]) // To verify that the listener is registered
     evc.unregisterListener(listenerName)
     expect(removeFn).toBeCalledTimes(1)
   })
 
   it('UIEventController.activateListener: should call a set() method on all event objects', () => {
-    let setlFn = jest.fn()
-    let TestEvent = jest.fn().mockImplementation(() => {
+    const setlFn = jest.fn()
+    const TestEvent = jest.fn().mockImplementation(() => {
       return {
         set: setlFn
       }
@@ -102,40 +104,74 @@ describe('ui-event-controller.test.js', () => {
   })
 
   it('UIEventController.activateListeners: should call a set() method on all event objects of all listeners', () => {
-    let setlFn = jest.fn()
-    let TestEvent = jest.fn().mockImplementation(() => {
+    const setlFn = jest.fn()
+    const TestEvent = jest.fn().mockImplementation(() => {
       return {
         set: setlFn
       }
     })
     evc.registerListener(listenerName, `.${className}`, () => {}, TestEvent)
-    evc.registerListener(`Document Listener`, document, () => {}, TestEvent)
+    evc.registerListener('Document Listener', document, () => {}, TestEvent)
     evc.activateListeners()
     expect(setlFn).toBeCalledTimes(3)
   })
 
-  it('UIEventController.deactivateListener: should call a remove() method on all event objects', () => {
-    let removeFn = jest.fn()
-    let TestEvent = jest.fn().mockImplementation(() => {
+  it('UIEventController.deactivateListener: should call a remove() method on all activated event objects', () => {
+    const removeFn = jest.fn()
+    const TestEvent = jest.fn().mockImplementation(() => {
+      return {
+        set: () => {},
+        remove: removeFn
+      }
+    })
+    evc.registerListener(listenerName, `.${className}`, () => {}, TestEvent)
+    evc.activateListener(listenerName)
+    evc.deactivateListener(listenerName)
+    expect(removeFn).toBeCalledTimes(2)
+  })
+
+  it('UIEventController.deactivateListener: should never call a remove() method if a registered listener was not activated', () => {
+    const removeFn = jest.fn()
+    const TestEvent = jest.fn().mockImplementation(() => {
       return {
         remove: removeFn
       }
     })
     evc.registerListener(listenerName, `.${className}`, () => {}, TestEvent)
     evc.deactivateListener(listenerName)
-    expect(removeFn).toBeCalledTimes(2)
+    expect(removeFn).toBeCalledTimes(0)
   })
 
-  it('UIEventController.deactivateListeners: should call a remove() method on all event objects of all listeners', () => {
-    let removeFn = jest.fn()
-    let TestEvent = jest.fn().mockImplementation(() => {
+  it('UIEventController.deactivateListeners: should call a remove() method on all event objects of all activated listeners', () => {
+    const removeFn = jest.fn()
+    const TestEvent = jest.fn().mockImplementation(() => {
       return {
+        set: () => {},
         remove: removeFn
       }
     })
+    const docListenerName = 'Document Listener'
     evc.registerListener(listenerName, `.${className}`, () => {}, TestEvent)
-    evc.registerListener(`Document Listener`, document, () => {}, TestEvent)
+    evc.activateListener(listenerName)
+    evc.registerListener(docListenerName, document, () => {}, TestEvent)
+    evc.activateListener(docListenerName)
     evc.deactivateListeners()
     expect(removeFn).toBeCalledTimes(3)
+  })
+
+  it('UIEventController.deactivateListeners: should call a remove() method on all event objects of all listeners that are activated', () => {
+    const removeFn = jest.fn()
+    const TestEvent = jest.fn().mockImplementation(() => {
+      return {
+        set: () => {},
+        remove: removeFn
+      }
+    })
+    const docListenerName = 'Document Listener'
+    evc.registerListener(listenerName, `.${className}`, () => {}, TestEvent)
+    evc.registerListener(docListenerName, document, () => {}, TestEvent)
+    evc.activateListener(docListenerName)
+    evc.deactivateListeners()
+    expect(removeFn).toBeCalledTimes(1)
   })
 })
