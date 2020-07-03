@@ -71,7 +71,17 @@ export default class UIController {
     // Options that are shown in a UI section of a Settings tab of the panel and control the visual representation
     this._uiOptions = null
 
-    this.TAB_NAMES_DEFAULT = this._config.overrideHelp ? 'settings' : 'info'
+    this.TAB_NAMES_DEFAULT = 'info' // This is a default tab in majority of use cases
+    if (this._config.overrideHelp) {
+      /*
+      When `overrideHelp` is enabled, the help button on the toolbar can be controlled by the client.
+      The client can provide its own function that will open the custom UI help element that client provides
+      instead of the `info` tab of the panel. In that case the toolbar will have its click handler disabled
+      (so that the client will be able to attach the one of its own), and the help tab in the panel
+      will be disabled too. This is the reason why the default tab will be `settings`, not the `info`.
+       */
+      this.TAB_NAMES_DEFAULT = 'settings'
+    }
     this.TAB_NAMES_DISABLED = 'disabled'
   }
 

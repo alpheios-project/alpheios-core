@@ -1,4 +1,4 @@
-import { Logger } from 'alpheios-data-models'
+import Logger from '../logging/logger.js'
 import IntlMessageFormat from 'intl-messageformat'
 
 /**
@@ -7,6 +7,7 @@ import IntlMessageFormat from 'intl-messageformat'
 export default class Message {
   /**
    * Creates a new Message object.
+   *
    * @param {object} message - A message object as read from JSON file.
    * @param {string} message.name - A message string.
    * @param {string[]} [message.params] - A list of message parameters (optional).
@@ -35,7 +36,8 @@ export default class Message {
 
   /**
    * Whether this message has any parameters or not.
-   * @return {boolean} True if message has any parameters, false otherwise.
+   *
+   * @returns {boolean} True if message has any parameters, false otherwise.
    */
   get hasParameters () {
     return Boolean(this.params.length > 0)
@@ -44,12 +46,13 @@ export default class Message {
   /**
    * Returns a formatted version of a message (if message has parameters) or
    * a message text (if parameters do not exist for a message).
+   *
    * @param {object} formatOptions - Options that can be used for message formatting in the following format:
    * {
    *     paramOneName: paramOneValue,
    *     paramTwoName: paramTwoValue
    * }.
-   * @return {string} A formatted message text
+   * @returns {string} A formatted message text
    */
   getMsg (formatOptions) {
     if (this.hasParameters && !this.formatFunc) {
@@ -62,12 +65,13 @@ export default class Message {
 
   /**
    * Returns an abbreviated version of a message (if defined) or a message itself otherwise.
+   *
    * @param {object} formatOptions - Options that can be used for message formatting in the following format:
    * {
    *     paramOneName: paramOneValue,
    *     paramTwoName: paramTwoValue
    * }.
-   * @return {string} Abbreviated or full message text.
+   * @returns {string} Abbreviated or full message text.
    */
   getAbbr (formatOptions) {
     return !this.hasParameters ? this.abbrFunc.format() : this.abbrFunc.format(formatOptions)

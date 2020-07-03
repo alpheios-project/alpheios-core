@@ -1,7 +1,6 @@
 /* global DEVELOPMENT_MODE_BUILD */
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
-import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
 import { Constants, TreebankDataItem, HomonymGroup, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
@@ -438,47 +437,28 @@ Lexis.store = (moduleInstance) => {
 Lexis.api = (moduleInstance, store) => {
   return {
     /**
+     * A selector for the last lexical query done via a `getSelectedText()`
+     *
+     * @type {TextSelector | null}
+     */
+    lastTextSelector: moduleInstance._lastTextSelector,
+
+    /**
      * Starts a lexical query from a page.
      *
-     * @param {EventElement} event - An event that initiated a query.
-     * @param {Event} domEvent - A corresponding DOM event.
-     * @param {boolean} skipIfEqual - If true, `getSelectedText()` will do nothing if
-     *        selected text is the same as of the previous query.
+     * @param {TextSelector} textSelector - A selector with the text selected.
+     * @param {HTMLElement} selectionTarget - An HTML element containing the selection.
      */
-    getSelectedText: (event, domEvent, { skipIfEqual = false } = {}) => {
-      if (moduleInstance._appApi.isGetSelectedTextEnabled(domEvent)) {
-        const defaultLangCode = moduleInstance._appApi.getDefaultLangCode()
-        const htmlSelector = new HTMLSelector(event, defaultLangCode)
-        const textSelector = htmlSelector.createTextSelector()
-
-        if (textSelector && !textSelector.isEmpty()) {
-          const lastTextSelector = moduleInstance._lastTextSelector || {}
-
-          /*
-          We do not want to run a lexical query for the same word that is already
-          shown in a popup on desktop
-           */
-          // TODO: Eliminate dependency of business logic on a UI state, if possible
-          if (skipIfEqual) {
-            // Check if a selection is the same
-            if (lastTextSelector.text === textSelector.text &&
-              lastTextSelector.languageID === textSelector.languageID) {
-              // Do nothing
-              return
-            }
-          }
-
-          moduleInstance._lastTextSelector = textSelector
-          moduleInstance.lexicalQuery({
-            store,
-            textSelector,
-            wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
-            checkContextForward: textSelector.checkContextForward,
-            treebankDataItem: TreebankDataItem.getTreebankData(htmlSelector.target),
-            source: LexicalQuery.sources.PAGE
-          })
-        }
-      }
+    getSelectedText: (textSelector, selectionTarget) => {
+      moduleInstance._lastTextSelector = textSelector
+      moduleInstance.lexicalQuery({
+        store,
+        textSelector,
+        wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
+        checkContextForward: textSelector.checkContextForward,
+        treebankDataItem: TreebankDataItem.getTreebankData(selectionTarget),
+        source: LexicalQuery.sources.PAGE
+      })
     },
 
     /**

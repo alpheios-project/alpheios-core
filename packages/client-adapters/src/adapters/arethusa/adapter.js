@@ -91,12 +91,12 @@ class ArethusaTreebankAdapter extends BaseAdapter {
       if (typeof sentenceId !== 'undefined' && typeof wordId !== 'undefined') {
         const tbRes = await this._fetchArethusaData(provider, sentenceId, wordId)
         if (!tbRes || Object.keys(tbRes).length === 0) {
-          this.addError(this.l10n.messages.MORPH_TREEBANK_NO_ANSWER_FOR_WORD.get(word))
+          this.addError(this.l10n.getMsg('MORPH_TREEBANK_NO_ANSWER_FOR_WORD', { word: word }))
           return
         }
         const languageModel = LanguageModelFactory.getLanguageModel(languageID)
         if (!languageModel) {
-          this.addError(this.l10n.messages.MORPH_TREEBANK_UNSUPPORTED_LANGUAGE.get(languageID))
+          this.addError(this.l10n.getMsg('MORPH_TREEBANK_UNSUPPORTED_LANGUAGE', { languageId: languageID.toString() }))
           return
         }
         let mapper = new ImportData(languageModel, 'arethusa') // eslint-disable-line prefer-const
@@ -120,10 +120,10 @@ class ArethusaTreebankAdapter extends BaseAdapter {
         }
         return homonym
       } else {
-        this.addError(this.l10n.messages.MORPH_TREEBANK_MISSING_REF.get(word))
+        this.addError(this.l10n.getMsg('MORPH_TREEBANK_MISSING_REF', { request: word }))
       }
     } catch (error) {
-      this.addError(this.l10n.messages.MORPH_TREEBANK_UNKNOWN_ERROR.get(error.mesage))
+      this.addError(this.l10n.getMsg('MORPH_TREEBANK_UNKNOWN_ERROR', { message: error.message }))
     }
   }
 

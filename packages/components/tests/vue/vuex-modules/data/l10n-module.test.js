@@ -1,10 +1,10 @@
 /* eslint-env jest */
 import { createLocalVue } from '@vue/test-utils'
+import { L10n } from 'alpheios-data-models'
 import Vuex from 'vuex'
 
-import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
-import L10n from '@/lib/l10n/l10n.js'
-import Locales from '@/locales/locales.js'
+import L10nModule from '@comp/vue/vuex-modules/data/l10n-module.js'
+import Locales from '@comp/locales/locales.js'
 
 describe('l10n-module.test.js', () => {
   const testMsgsEnUs = {

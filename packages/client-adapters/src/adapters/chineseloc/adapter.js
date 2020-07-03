@@ -77,17 +77,17 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
       }
 
       if (Object.keys(response.body).length === 0) {
-        this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
+        this.addError(this.l10n.getMsg('MORPH_NO_HOMONYM', { word: targetWord, languageId: this.languageID.toString() }))
         return
       }
       const homonym = this._transformData(response.body, targetWord)
       if (!homonym) {
-        this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
+        this.addError(this.l10n.getMsg('MORPH_NO_HOMONYM', { word: targetWord, languageId: this.languageID.toString() }))
         return
       }
       return homonym
     } catch (error) {
-      this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
+      this.addError(this.l10n.getMsg('MORPH_UNKNOWN_ERROR', { message: error.message }))
     }
   }
 
@@ -103,7 +103,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
         this.addRemoteError(response.errorCode, response.body.message)
       }
     } catch (error) {
-      this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
+      this.addError(this.l10n.getMsg('MORPH_UNKNOWN_ERROR', { message: error.message }))
     }
   }
 

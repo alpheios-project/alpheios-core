@@ -5,7 +5,7 @@ import EnUsWordList from './en-us/messages-word-list.json'
 import EnUsWordUsage from './en-us/messages-word-usage.json'
 import EnUsResourceOptions from './en-us/messages-resource-options.json'
 import EnGb from './en-gb/messages.json'
-import MessageBundle from '@/lib/l10n/message-bundle.js'
+import { MessageBundle } from 'alpheios-data-models'
 
 const localeEnUs = 'en-US'
 const localeEnGb = 'en-GB'

@@ -36,6 +36,9 @@ import WordList from './word-list.js'
 import TreebankDataItem from './treebank_data_item.js'
 import Logger from './logging/logger.js'
 
+import L10n from './l10n/l10n.js'
+import MessageBundle from './l10n/message-bundle.js'
+
 export {
   Constants,
   Definition,
@@ -69,5 +72,7 @@ export {
   WordItem,
   WordList,
   TreebankDataItem,
-  Logger
+  Logger,
+  L10n,
+  MessageBundle
 }

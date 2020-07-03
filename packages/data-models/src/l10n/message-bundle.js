@@ -7,6 +7,7 @@ import Message from './message.js'
 export default class MessageBundle {
   /**
    * Creates a message bundle (a list of messages) for a locale.
+   *
    * @param {string | object} messagesJSONorObj - Messages for a locale as a JSON string or as an object.
    * @param {string} locale - A locale code for a message group. IETF language tag format is recommended.
    * @param {Function} missingTranslationMsgFn - A placeholder message that will be shown if translation is not found.
@@ -23,6 +24,7 @@ export default class MessageBundle {
 
     /**
      * A map of message object. The key is a messageID
+     *
      * @type {Map<string, Message>}
      * @private
      */
@@ -38,6 +40,7 @@ export default class MessageBundle {
    * Appends messages from another bundle to the current message bundle.
    * If message has the same messageID that already exists in the
    * current bundle, it will be overwritten.
+   *
    * @param {MessageBundle} messageBundle - A bundle of messages.
    */
   appendFromBundle (messageBundle) {
@@ -48,6 +51,7 @@ export default class MessageBundle {
 
   /**
    * Appends a series of messages to the bundle
+   *
    * @param {string} messagesJSON - Messages as a JSON string or as a parsed JSON object
    */
   appendFromJSON (messagesJSON) {
@@ -59,6 +63,7 @@ export default class MessageBundle {
    * Appends a series of messages from an object. Object properties are message names, and
    * values are message objects. If appended message has the same key as en existing one,
    * an existing message will be overwritten.
+   *
    * @param {object} messages - An object containing messages.
    */
   append (messages) {
@@ -70,7 +75,8 @@ export default class MessageBundle {
 
   /**
    * Returns a list of message IDs that exist in a bundle.
-   * @return {string[]}
+   *
+   * @returns {string[]}
    */
   get messageIds () {
     return Array.from(this._messages.keys())
@@ -78,8 +84,9 @@ export default class MessageBundle {
 
   /**
    * Checks if message with a given message ID exists among the translated messages.
+   *
    * @param {string} messageID - A message ID of a message to be checked
-   * @return {boolean} True if message is present, false otherwise
+   * @returns {boolean} True if message is present, false otherwise
    */
   hasMsg (messageID) {
     return this._messages.has(messageID)
@@ -87,6 +94,7 @@ export default class MessageBundle {
 
   /**
    * Returns a (formatted) message for a message ID provided.
+   *
    * @see {@link Message#getMsg}
    * @param {string} messageID - An ID of a message.
    * @param {object} formatOptions - Options that can be used for message formatting in the following format:
@@ -115,11 +123,12 @@ export default class MessageBundle {
 
   /**
    * A wrapper around `get()` with a `passthrough` parameter set to `true`.
+   *
    * @see {@link MessageBundle#getMsg} for more information.
    * @param messageID
    * @param formatOptions
    * @param options
-   * @return {string}
+   * @returns {string}
    */
   getText (messageID, formatOptions, options = {}) {
     options.passthrough = true
@@ -128,6 +137,7 @@ export default class MessageBundle {
 
   /**
    * Returns an abbreviated version of a message for a message ID provided.
+   *
    * @see {@link Message#getAbbr}
    * @param messageID - An ID of a message.
    * @param formatOptions - Options that can be used for message formatting in the same order
@@ -146,8 +156,9 @@ export default class MessageBundle {
 
   /**
    * Returns a Message object for a given message ID.
+   *
    * @param {string} messageID - A message ID of a message object to be retrieved..
-   * @return {Message} A message object.
+   * @returns {Message} A message object.
    */
   getMessageObject (messageID) {
     return this.hasMsg(messageID) ? this._messages.get(messageID) : null
@@ -155,7 +166,8 @@ export default class MessageBundle {
 
   /**
    * Returns a locale of a current message bundle.
-   * @return {string} A locale of this message bundle.
+   *
+   * @returns {string} A locale of this message bundle.
    */
   get locale () {
     return this._locale

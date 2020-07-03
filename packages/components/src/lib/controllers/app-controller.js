@@ -158,7 +158,7 @@ export default class AppController {
      * @type {UIEventController}
      */
     this.evc = new UIEventController()
-    this.selc = new SelectionController()
+    this.selc = new SelectionController(this.getDefaultLangCode.bind(this))
 
     this.wordlistC = {} // This is a word list controller
   }
@@ -1253,7 +1253,6 @@ If no URLS are provided, will reset grammar data.
     this.store.commit('app/setWordUsageExamplesReady')
   }
 
-  // TODO: This is used in business logic of Lexis module. We should move this logic to the app controller and eliminate that dependency.
   isGetSelectedTextEnabled (domEvent) {
     return (this.state.isActive() &&
       this.state.uiIsActive() &&
@@ -1670,18 +1669,24 @@ If no URLS are provided, will reset grammar data.
   }
 
   /**
-   * This is a proxy for `getSelectedText method. Its purpose is to calculate
-   * a `skipIfEqual` parameter that depends on the state of the UI. Moving
-   * a calculation of this parameter here allow to decouple a Lexis module from the UI.
+   * This is a callback for the text selection done via a selection UI.
    *
-   * @param data - A text selection data.
-   * @param {EventElement} data.event - An event that initiated a query.
-   * @param {Event} data.domEvent - A corresponding DOM event.
+   * @param {TextSelector} textSelector - An object containing a text selection.
+   * @param {Event} domEvent - A DOM event that initiated a query.
    */
-  onTextSelected (data) {
-    // TODO: Can we eliminated dependency on the state of a UI?
-    const skipIfEqual = this.platform.isDesktop && this.api.ui.isPopupVisible()
-    this.api.lexis.getSelectedText(data.event, data.domEvent, { skipIfEqual })
+  onTextSelected ({ textSelector, domEvent }) {
+    if (this.isGetSelectedTextEnabled(domEvent) && textSelector && !textSelector.isEmpty()) {
+      const lastTextSelector = this.api.lexis.lastTextSelector || {}
+      // Do not run a lexical query if the same word is already shown in a popup on desktop
+      if (this.platform.isDesktop && this.api.ui.isPopupVisible()) {
+        if (lastTextSelector.text === textSelector.text &&
+          lastTextSelector.languageID === textSelector.languageID) {
+          // Do nothing
+          return
+        }
+      }
+      this.api.lexis.getSelectedText(textSelector, domEvent.target)
+    }
   }
 
   get isMousemoveEnabled () {

@@ -1,12 +1,25 @@
-import UIEventController from '@/lib/controllers/ui-event-controller.js'
+import UIEventController from '@comp/lib/controllers/ui-event-controller.js'
+import HTMLSelector from '@comp/lib/selection/media/html-selector.js'
 import { PsEvent } from 'alpheios-data-models'
 
 /**
  * `SelectionController` manages all aspects of text selection.
  */
 export default class SelectionController {
-  constructor () {
+  /**
+   * @param {Function} getDefaultLangCodeFn - A function that returns a default language code in ISO 639-3 format.
+   *        This language code will be used to determine a language if language info is not provided by the page.
+   */
+  constructor (getDefaultLangCodeFn = () => 'lat') {
     this._evc = new UIEventController()
+    /**
+     * A function that returns a default language code in ISO 639-3 format.
+     * This language code will be used to determine a language if language info is not provided by the page.
+     *
+     * @type {Function}
+     * @private
+     */
+    this._getDefaultLangCode = getDefaultLangCodeFn
   }
 
   /**
@@ -121,8 +134,10 @@ export default class SelectionController {
    * @param {Event} domEvent - A corresponding DOM event.
    */
   onTextSelected (event, domEvent) {
-    // TODO: Process selected text here
-    SelectionController.evt.TEXT_SELECTED.pub({ event, domEvent })
+    const defaultLangCode = this._getDefaultLangCode()
+    const htmlSelector = new HTMLSelector(event, defaultLangCode)
+    const textSelector = htmlSelector.createTextSelector()
+    SelectionController.evt.TEXT_SELECTED.pub({ textSelector, domEvent })
   }
 }
 
