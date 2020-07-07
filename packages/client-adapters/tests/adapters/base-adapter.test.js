@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
-import { L10n } from 'alpheios-data-models'
+import { L10n } from 'alpheios-l10n'
 
 describe('base-adapter.test.js', () => {
   console.error = function () {}

@@ -6,7 +6,7 @@ import ImportData from '@clAdapters/transformers/import-morph-data.js'
 import DefaultConfig from '@clAdapters/adapters/alpheiostb/config.json'
 import {
   MessagingService, WindowIframeDestination as Destination, RequestMessage, ResponseMessage
-} from 'alpheios-messaging/dist/dev/alpheios-messaging.js'
+} from 'alpheios-messaging'
 
 class ArethusaTreebankAdapter extends BaseAdapter {
   /**

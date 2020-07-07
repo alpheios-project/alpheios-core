@@ -13,7 +13,8 @@ import Locales from '@comp/locales/locales'
 import enUS from '@comp/locales/en-us/messages.json'
 import enGB from '@comp/locales/en-gb/messages.json'
 
-import { Constants, L10n } from 'alpheios-data-models'
+import { Constants } from 'alpheios-data-models'
+import { L10n } from 'alpheios-l10n'
 
 describe('ui-controller.test.js', () => {
   console.error = function () {}

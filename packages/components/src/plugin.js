@@ -41,7 +41,8 @@ import AuthData from '@/lib/auth/auth-data.js'
 import SessionAuthenticator from '@/lib/auth/session-authenticator.js'
 import AppAuthenticator from '@/lib/auth/app-authenticator.js'
 // Logger needs to be re-exported because clients of the components are using it
-import { Logger, L10n } from 'alpheios-data-models'
+import { Logger } from 'alpheios-data-models'
+import { L10n } from 'alpheios-l10n'
 
 export {
   Popup, Panel, L10n, Locales, enUS, enGB, AppController, UIEventController,

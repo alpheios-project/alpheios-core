@@ -1,5 +1,5 @@
 import Module from '@/vue/vuex-modules/module.js'
-import { L10n } from 'alpheios-data-models'
+import { L10n } from 'alpheios-l10n'
 import Locales from '@/locales/locales.js'
 import Platform from '@/lib/utility/platform.js'
 
@@ -7,9 +7,9 @@ export default class L10nModule extends Module {
   // defaultLocale = Locales.en_US, messageBundles = []
 
   /**
-   * @param {Object} store - A Vuex store.
-   * @param {Object} api - A public API object.
-   * @param {Object} config - A module's configuration object:
+   * @param {object} store - A Vuex store.
+   * @param {object} api - A public API object.
+   * @param {object} config - A module's configuration object:
    *        {string} defaultLocale - A default locale's code.
    */
   constructor (store, api, config) {
