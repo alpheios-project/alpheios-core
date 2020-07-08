@@ -1,6 +1,8 @@
 Ending,Number,Case,Declension,Gender,Type,Footnote
 ior,singular,nominative,3rd,feminine masculine,regular,
 ius,singular,nominative,3rd,neuter,regular,
+entior,singular,nominative,3rd,feminine masculine,irregular,1
+entius,singular,nominative,3rd,neuter,irregular,1
 is,singular,genitive,3rd,feminine masculine,regular,
 is,singular,genitive,3rd,neuter,regular,
 ī,singular,dative,3rd,feminine masculine,regular,
