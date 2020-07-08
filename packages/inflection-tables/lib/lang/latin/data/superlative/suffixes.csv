@@ -2,6 +2,15 @@ Ending,Number,Case,Declension,Gender,Type,Footnote
 issima,singular,nominative,1st,feminine,regular,
 issimus,singular,nominative,1st,masculine,regular,
 issimum,singular,nominative,1st,neuter,regular,
+entissima,singular,nominative,1st,feminine,irregular,1
+entissimus,singular,nominative,1st,masculine,irregular,1
+entissimum,singular,nominative,1st,neuter,irregular,1
+rima,singular,nominative,1st,feminine,irregular,2
+rimus,singular,nominative,1st,masculine,irregular,2
+rimum,singular,nominative,1st,neuter,irregular,2
+lima,singular,nominative,1st,feminine,irregular,3
+limus,singular,nominative,1st,masculine,irregular,3
+limum,singular,nominative,1st,neuter,irregular,3
 issimae,singular,genitive,1st,feminine,regular,
 issimī,singular,genitive,1st,masculine,regular,
 issimī,singular,genitive,1st,neuter,regular,
