@@ -119,7 +119,7 @@ export default {
             params: {
               text: this.valueText,
               lang: this.lang,
-              fetchOptions: this.app.config.logeion
+              fetchOptions: this.settings.getLogeionOptions()
             }
           })
 

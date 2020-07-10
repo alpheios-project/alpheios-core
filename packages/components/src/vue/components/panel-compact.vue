@@ -329,7 +329,6 @@ export default {
   inject: {
     app: 'app',
     ui: 'ui',
-    language: 'language',
     l10n: 'l10n',
     settings: 'settings',
     auth: 'auth'

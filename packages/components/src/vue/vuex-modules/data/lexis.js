@@ -17,17 +17,15 @@ export default class Lexis extends Module {
   /**
    * @param {object} store - A Vuex store.
    * @param {object} api - A public API object.
-   * @param {object} config - A module's configuration object:
-   *        {Function} config.getSelectedText - An app controller's function to start a lexical query.
-   *        This is a temporary solution until wil fully integrate lexical query functionality into
-   *        an app controller.
+   * @param {object} config - A module's configuration object
    */
   constructor (store, api, config = {}) {
     super(store, api, config)
     // APIs provided by the app controller
     this._appApi = api.app
     this._settingsApi = api.settings
-    this._lexisConfig = (api.app.config && api.app.config['lexis-cs']) ? api.app.config['lexis-cs'] : null
+    // TODO: Remove this direct dependency on `lexis-cs` branch of an app config
+    this._lexisConfig = api.settings.getLexisOptions()
 
     if (!this._lexisConfig) {
       // If Lexis configuration is not available we will disable any CEDICT-related functionality
@@ -343,7 +341,7 @@ export default class Lexis extends Module {
     const lexQuery = LexicalQuery.create(textSelector, {
       clientId: this._appApi.clientId,
       siteOptions,
-      verboseMode: this._settingsApi.verboseMode(),
+      verboseMode: this._settingsApi.isInVerboseMode(),
       lemmaTranslations,
       wordUsageExamples,
       resourceOptions: this._settingsApi.getResourceOptions(),

@@ -274,6 +274,7 @@ export default class BaseTestHelp {
   static settingsAPI (props) {
     const defaultProps = {
       lookupResourceOptions: BaseTestHelp.defaultResourceOptions,
+      getLexisOptions: () => { return { cedict: { target_url: 'http://target.url' } } },
       getFeatureOptions: () => { return BaseTestHelp.defaultFeatureOptions },
       getResourceOptions: () => { return BaseTestHelp.defaultResourceOptions },
       getUiOptions: () => { return BaseTestHelp.defaultUIOptions },
@@ -294,13 +295,6 @@ export default class BaseTestHelp {
       state: {
         lemmaTranslationLang: 'lat',
         selectedLookupLangCode: 'lat'
-      },
-      config: {
-        'lexis-cs': {
-          cedict: {
-            target_url: 'http://target.url'
-          }
-        }
       },
       wordUsageExamples: null,
 

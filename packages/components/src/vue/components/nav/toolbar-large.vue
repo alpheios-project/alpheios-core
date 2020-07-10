@@ -172,7 +172,7 @@
       <alph-tooltip
           :tooltip-text="l10n.getText('TOOLTIP_STATUS')"
           :tooltip-direction="tooltipDirection"
-          v-show="this.settings.verboseMode()"
+          v-show="this.settings.isInVerboseMode()"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('status') && $store.state.panel.open }"

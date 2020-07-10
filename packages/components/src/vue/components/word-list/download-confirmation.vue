@@ -40,159 +40,154 @@
     </div>
 </template>
 <script>
-  import Download from '@/lib/utility/download.js'
-  import CloseIcon from '@/images/inline-icons/x-close.svg'
-  import Tooltip from '@/vue/components/tooltip.vue'
+import Download from '@/lib/utility/download.js'
+import CloseIcon from '@/images/inline-icons/x-close.svg'
+import Tooltip from '@/vue/components/tooltip.vue'
 
-  import Options from '@/lib/options/options.js'
-  import TextSelector from '@/lib/selection/text-selector'
+import Options from '@/lib/options/options.js'
+import TextSelector from '@/lib/selection/text-selector'
 
-  import ProgressBar from '@/vue/components/progress-bar.vue'
-  import Setting from '@/vue/components/setting.vue'
+import ProgressBar from '@/vue/components/progress-bar.vue'
+import Setting from '@/vue/components/setting.vue'
 
-  import { LanguageModelFactory } from 'alpheios-data-models'
+import { LanguageModelFactory } from 'alpheios-data-models'
 
-
-  export default {
-    name: 'DownloadConfirmation',
-    inject: ['l10n', 'app', 'settings', 'lexis'],
-    storeModules: ['settings'],
-    components: {
-      closeIcon: CloseIcon,
-      setting: Setting,
-      progressBar: ProgressBar,
-      alphTooltip: Tooltip
+export default {
+  name: 'DownloadConfirmation',
+  inject: ['l10n', 'app', 'settings', 'lexis'],
+  storeModules: ['settings'],
+  components: {
+    closeIcon: CloseIcon,
+    setting: Setting,
+    progressBar: ProgressBar,
+    alphTooltip: Tooltip
+  },
+  props: {
+    languageCode: {
+      type: String,
+      required: true
     },
-    props: {
-      languageCode: {
-        type: String,
-        required: true
-      },
-      filteredWordItems: {
-        type: Array,
-        required: true
-      },
-      allWordItems: {
-        type: Array,
-        required: true
-      }
+    filteredWordItems: {
+      type: Array,
+      required: true
     },
-    data () {
+    allWordItems: {
+      type: Array,
+      required: true
+    }
+  },
+  data () {
+    return {
+      downloadWithFilter: false,
+      downloadForFlashcards: false,
+      showProgress: false,
+      defaultWordlistMaxFlashcardExport: 25
+    }
+  },
+  computed: {
+    downloadFilterId () {
+      return `alpheios-wordlist-download-with-filters-input-${this.languageCode}`
+    },
+    downloadFlashcardsId () {
+      return `alpheios-wordlist-download-for-flashcards-input-${this.languageCode}`
+    },
+    featureOptions () {
+      return this.$store.state.settings.featureResetCounter ? this.settings.getFeatureOptions() : null
+    },
+    maxFlashCardItems () {
+      return this.$store.state.settings.featureResetCounter ? this.featureOptions.items.wordlistMaxFlashcardExport.currentValue : this.defaultWordlistMaxFlashcardExport
+    },
+    maxFlashCardItemsNote () {
+      return this.maxFlashCardItems ? this.l10n.getText('WORDLIST_FLASHCARD_MAXDOWNLOAD_AMOUNT', { maxFlashCardItems: this.maxFlashCardItems }) : ''
+    },
+    languageID () {
+      return LanguageModelFactory.getLanguageIdFromCode(this.languageCode)
+    }
+  },
+  methods: {
+    prepareDownloadListFull () {
+      const exportFields = ['targetWord', 'languageCode', 'important', 'currentSession', 'lemmasList', 'context']
+      const source = this.downloadWithFilter ? this.filteredWordItems : this.allWordItems
+
+      const wordlistData = source.map(wordItem => {
+        return {
+          targetWord: wordItem.targetWord,
+          languageCode: wordItem.languageCode,
+          important: wordItem.important,
+          currentSession: wordItem.currentSession,
+          lemmasList: wordItem.lemmasList,
+          context: Object.keys(wordItem.formattedContext).join(' ')
+        }
+      })
+
       return {
-        downloadWithFilter: false,
-        downloadForFlashcards: false,
-        showProgress: false,
-        defaultWordlistMaxFlashcardExport: 25
+        exportFields,
+        wordlistData,
+        delimiter: ';',
+        fileExtension: 'csv',
+        withHeaders: true
       }
     },
-    computed: {
-      downloadFilterId () {
-        return `alpheios-wordlist-download-with-filters-input-${this.languageCode}`
-      },
-      downloadFlashcardsId () {
-        return `alpheios-wordlist-download-for-flashcards-input-${this.languageCode}`
-      },
-      featureOptions () {
-        return this.$store.state.settings.featureResetCounter ? this.settings.getFeatureOptions() : null
-      },
-      maxFlashCardItems () {
-        return this.$store.state.settings.featureResetCounter ? this.featureOptions.items.wordlistMaxFlashcardExport.currentValue : this.defaultWordlistMaxFlashcardExport
-      },
-      maxFlashCardItemsNote () {
-        return this.maxFlashCardItems ? this.l10n.getText('WORDLIST_FLASHCARD_MAXDOWNLOAD_AMOUNT', { maxFlashCardItems: this.maxFlashCardItems }) : ''
-      },
-      languageID () {
-        return LanguageModelFactory.getLanguageIdFromCode(this.languageCode)
-      }
-    },
-    methods: {
-      prepareDownloadListFull () {
-        const exportFields = [ 'targetWord', 'languageCode', 'important', 'currentSession', 'lemmasList', 'context' ]
-        let source = this.downloadWithFilter ? this.filteredWordItems : this.allWordItems
 
-        const wordlistData = source.map(wordItem => {
-            return {
-            targetWord: wordItem.targetWord,
-            languageCode: wordItem.languageCode,
-            important: wordItem.important,
-            currentSession: wordItem.currentSession,
-            lemmasList: wordItem.lemmasList,
-            context: Object.keys(wordItem.formattedContext).join(' ')
+    async prepareDownloadListFlashcards () {
+      const exportFields = ['word', 'definition']
+      let source = this.downloadWithFilter ? this.filteredWordItems : this.allWordItems
+
+      source = source.slice(0, this.maxFlashCardItems)
+
+      for (let i = 0; i < source.length; i++) {
+        const wordItem = source[i]
+        if (!wordItem.homonym || !wordItem.homonym.lexemes || !wordItem.homonym.hasShortDefs) {
+          this.showProgress = true
+          const textSelector = TextSelector.createObjectFromText(wordItem.targetWord, this.languageID)
+          await this.lexis.lookupForWordlist(textSelector)
+        }
+      }
+
+      this.showProgress = false
+      const wordlistData = []
+      source.forEach(wordItem => {
+        if (wordItem.homonym && wordItem.homonym.lexemes) {
+          wordItem.homonym.lexemes.forEach(lexeme => {
+            if (lexeme.hasShortDefs) {
+              lexeme.meaning.shortDefs.forEach(shortDef => {
+                wordlistData.push({
+                  word: `${wordItem.homonym.targetWord} (${lexeme.lemma.wordPrincipalParts})`,
+                  definition: shortDef.text
+                })
+              })
             }
-        })
-
-        return {
-            exportFields, wordlistData, delimiter: ';',
-            fileExtension: 'csv',
-            withHeaders: true
+          })
         }
-      },
+      })
 
-      async prepareDownloadListFlashcards () {
-        const exportFields = [ 'word', 'definition']
-        let source = this.downloadWithFilter ? this.filteredWordItems : this.allWordItems
-        
-        source = source.slice(0, this.maxFlashCardItems)
-
-        for(let i=0; i < source.length; i++) {
-          const wordItem = source[i]
-          if (!wordItem.homonym || !wordItem.homonym.lexemes || !wordItem.homonym.hasShortDefs) {
-            this.showProgress = true
-
-            const textSelector = TextSelector.createObjectFromText(wordItem.targetWord, this.languageID)
-            const resourceOptions = this.settings.getResourceOptions()
-
-            await this.lexis.lookupForWordlist(textSelector)
-          }
-        }
-
-        this.showProgress = false
-        let wordlistData = []
-        source.forEach(wordItem => {
-          if (wordItem.homonym && wordItem.homonym.lexemes) {
-            wordItem.homonym.lexemes.forEach(lexeme => {
-                if (lexeme.hasShortDefs) {
-                  lexeme.meaning.shortDefs.forEach(shortDef => {
-                    wordlistData.push({
-                    word: `${wordItem.homonym.targetWord} (${lexeme.lemma.wordPrincipalParts})`,
-                    definition: shortDef.text
-                    })
-                  })
-                }
-            })
-          }
-        })
-
-        return {
-            exportFields, wordlistData, 
-            delimiter: '\t',
-            fileExtension: 'tsv',
-            withHeaders: false
-        }
-      },
-
-      async downloadList () {
-        let dataForDownload
-
-        if (this.downloadForFlashcards) {
-          dataForDownload = await this.prepareDownloadListFlashcards()
-        } else {
-          dataForDownload = this.prepareDownloadListFull()
-        }
-
-        const result = Download.collectionToCSV(dataForDownload.delimiter, dataForDownload.exportFields, dataForDownload.withHeaders)(dataForDownload.wordlistData)
-        Download.downloadBlob(result, `wordlist-${this.languageCode}.${dataForDownload.fileExtension}`)
-        this.$emit('changeShowDownloadBox', false)
-      },
-      cancelDownloadList () {
-        this.$emit('changeShowDownloadBox', false)
-      },
-      featureOptionChanged (name, value) {
-        let keyinfo = Options.parseKey(name)
-        this.app.featureOptionChange(keyinfo.name, value)
+      return {
+        exportFields,
+        wordlistData,
+        delimiter: '\t',
+        fileExtension: 'tsv',
+        withHeaders: false
       }
+    },
+
+    async downloadList () {
+      let dataForDownload
+
+      if (this.downloadForFlashcards) {
+        dataForDownload = await this.prepareDownloadListFlashcards()
+      } else {
+        dataForDownload = this.prepareDownloadListFull()
+      }
+
+      const result = Download.collectionToCSV(dataForDownload.delimiter, dataForDownload.exportFields, dataForDownload.withHeaders)(dataForDownload.wordlistData)
+      Download.downloadBlob(result, `wordlist-${this.languageCode}.${dataForDownload.fileExtension}`)
+      this.$emit('changeShowDownloadBox', false)
+    },
+    cancelDownloadList () {
+      this.$emit('changeShowDownloadBox', false)
     }
   }
+}
 </script>
 <style lang="scss">
     @import "../../../styles/variables";

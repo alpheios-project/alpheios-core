@@ -297,10 +297,6 @@ export default {
 
     maxHeight () {
       return this.app.platform.viewport.innerHeight - 2 * this.moduleConfig.viewportMargin
-    },
-
-    verboseMode () {
-      return this.settings.getUiOptions().items.verboseMode.currentValue === 'verbose'
     }
   },
 

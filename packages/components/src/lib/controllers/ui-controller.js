@@ -2,6 +2,11 @@ import Platform from '@/lib/utility/platform.js'
 import HTMLPage from '@/lib/utility/html-page.js'
 import { Logger } from 'alpheios-data-models'
 
+const injectionClasses = {
+  ALPHEIOS: 'alpheios',
+  DISABLE_TEXT_SELECTION: 'alpheios-disable-user-selection'
+}
+
 /**
  * A UI controller class is responsible for coordination between all UI components,
  * such as Panel, Popup, Action Panel, and so on.
@@ -65,7 +70,13 @@ export default class UIController {
 
     // An object that stores config settings of a controller
     this._config = {
-      overrideHelp
+      overrideHelp,
+      /*
+      Whether text selection should be disabled on mobile devices upon a UI activation.
+      Alpheios UI will add a CSS class defined in injectionClasses.DISABLE_TEXT_SELECTION
+      to the page body to indicate that user text selection is disabled.
+       */
+      disableTextSelOnMobile: false
     }
 
     // Options that are shown in a UI section of a Settings tab of the panel and control the visual representation
@@ -85,20 +96,20 @@ export default class UIController {
     this.TAB_NAMES_DISABLED = 'disabled'
   }
 
-  init ({ api, store, uiOptions } = {}) {
+  init ({ api, store } = {}) {
     if (!api) {
       throw new Error('API object is required for a UI controller initialization')
     }
     if (!store) {
       throw new Error('Vuex store is required for a UI controller initialization')
     }
-    if (!uiOptions) {
-      throw new Error('UI options are required for a UI controller initialization')
-    }
 
     this._api = api
     this._store = store
-    this._uiOptions = uiOptions
+    this._uiOptions = this._api.settings.getUiOptions()
+
+    // Inject HTML code of a plugin. Should go in reverse order.
+    document.body.classList.add(injectionClasses.ALPHEIOS)
 
     // region Public API of a UI controller
     // A public API must be defined before modules are created because modules may use it
@@ -120,7 +131,7 @@ export default class UIController {
       openActionPanel: this.openActionPanel.bind(this),
       closeActionPanel: this.closeActionPanel.bind(this),
       toggleActionPanel: this.toggleActionPanel.bind(this),
-      setFontSize: this.setFontSize.bind(this)
+      applyFontSize: this.applyFontSize.bind(this)
     }
     // endregion Public API of a UI controller
 
@@ -224,10 +235,15 @@ export default class UIController {
       this._store.commit('panel/setPosition', this._uiOptions.items.panelPosition.currentValue)
     }
 
-    this.setFontSize(this._uiOptions)
+    this.applyFontSize(this._uiOptions.items.fontSize.currentValue)
   }
 
-  activate () {
+  activate ({ disableTextSelOnMobile = false } = {}) {
+    this._config.disableTextSelOnMobile = disableTextSelOnMobile
+
+    // Inject Alpheios CSS rules
+    this.activateOnPage()
+
     this._uiState.activate()
     this.activateModules()
     this._uiState.activateUI()
@@ -249,10 +265,37 @@ export default class UIController {
     }
   }
 
+  activateOnPage () {
+    if (document && document.body) {
+      if (this._config.disableTextSelOnMobile && this._platform.isMobile) {
+        // Disable text selection on mobile platforms when a corresponding option is set
+        document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
+      } else {
+        // If extension has been deactivated previously, deactivateOnPage() would be setting
+        // a DISABLE_TEXT_SELECTION for the page body. We shall remove it.
+        if (document.body.classList.contains(injectionClasses.DISABLE_TEXT_SELECTION)) {
+          document.body.classList.remove(injectionClasses.DISABLE_TEXT_SELECTION)
+        }
+      }
+    } else {
+      Logger.getInstance().warn('Cannot inject Alpheios CSS rules because either document or body do not exist')
+    }
+  }
+
   deactivate () {
     this.deactivateModules()
     if (this.hasModule('popup')) { this.closePopup() }
-    if (this.hasModule('panel')) { this.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
+    // Close panel without updating it's state so the state can be saved for later reactivation
+    if (this.hasModule('panel')) { this.closePanel(false) }
+
+    // Remove Alpheios CSS rules
+    this.deactivateOnPage()
+  }
+
+  deactivateOnPage () {
+    if (document && document.body) {
+      document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
+    }
   }
 
   /**
@@ -301,11 +344,11 @@ export default class UIController {
     this._modules.forEach(m => m.instance.deactivate())
   }
 
-  setFontSize () {
+  applyFontSize (fontSizeValue) {
     const FONT_SIZE_PROP = '--alpheios-base-text-size'
     try {
       document.documentElement.style.setProperty(FONT_SIZE_PROP,
-        `${this._uiOptions.items.fontSize.currentValue}px`)
+        `${fontSizeValue}px`)
     } catch (error) {
       Logger.getInstance().error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
     }
@@ -454,7 +497,7 @@ export default class UIController {
       inflections: () => this._store.state.app.hasInflData,
       treebank: () => this._store.state.lexis.hasTreebankData,
       wordUsage: () => this._store.state.app.wordUsageExampleEnabled,
-      status: () => this._api.settings.getUiOptions().items.verboseMode.currentValue === 'verbose',
+      status: () => this._api.settings.isInVerboseMode(),
       wordlist: () => this._store.state.app.hasWordListsData
     }
     return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]() // eslint-disable-line no-prototype-builtins

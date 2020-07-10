@@ -91,7 +91,7 @@
       <div @click="ui.changeTab('status')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('status') }"
             id="alpheios-panel-navbuttons-status"
-            v-show="this.settings.verboseMode()">
+            v-show="this.settings.isInVerboseMode()">
         <status-icon></status-icon>
       </div>
     </alph-tooltip>

@@ -21,7 +21,10 @@ describe('notification-area.test.js', () => {
   let store
   let api = {}
 
-  beforeEach(() => {
+  beforeEach/**
+             * @param ms
+             */
+  (() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
@@ -37,7 +40,6 @@ describe('notification-area.test.js', () => {
     BaseTestHelp.authModule(store, api)
     BaseTestHelp.l10nModule(store, api)
     BaseTestHelp.lexisModule(store, api)
-
   })
 
   function timeout (ms) {
@@ -45,7 +47,7 @@ describe('notification-area.test.js', () => {
   }
 
   it('1 NotificationArea - renders a vue instance (min requirements)', () => {
-    let cmp = mount(NotificationArea, {
+    const cmp = mount(NotificationArea, {
       store,
       localVue,
       mocks: api
@@ -54,18 +56,18 @@ describe('notification-area.test.js', () => {
   })
 
   it('2 NotificationArea - if there are no hints and notification in store - it is empty', () => {
-    let cmp = shallowMount(NotificationArea, {
+    const cmp = shallowMount(NotificationArea, {
       store,
       localVue,
       mocks: api
     })
 
     expect(cmp.findAll('.alpheios-notification-area__hint').isVisible()).toBeFalsy()
-    expect(cmp.findAll('.alpheios-notification-area__notification').isVisible()).toBeFalsy()    
+    expect(cmp.findAll('.alpheios-notification-area__notification').isVisible()).toBeFalsy()
   })
 
   it('3 NotificationArea - computed notificationClasses returns special classes for important and hidden notifications', () => {
-    let cmp = shallowMount(NotificationArea, {
+    const cmp = shallowMount(NotificationArea, {
       store,
       localVue,
       mocks: api
@@ -78,11 +80,11 @@ describe('notification-area.test.js', () => {
     expect(cmp.vm.notificationClasses).toEqual(['alpheios-notification-area__notification--important', 'alpheios-notification-area__notification--hidden'])
 
     store.commit('ui/setTestNotification', { visible: true, important: true })
-    expect(cmp.vm.notificationClasses).toEqual(['alpheios-notification-area__notification--important'])    
+    expect(cmp.vm.notificationClasses).toEqual(['alpheios-notification-area__notification--important'])
   })
 
   it('4 NotificationArea - computed showHint gives true if there is a hint and it is the first time to show on this tab', () => {
-    let cmp = shallowMount(NotificationArea, {
+    const cmp = shallowMount(NotificationArea, {
       store,
       localVue,
       mocks: api
@@ -109,9 +111,8 @@ describe('notification-area.test.js', () => {
     expect(cmp.vm.showHint).toBeFalsy()
   })
 
-
   it('5 NotificationArea - computed showNotification gives true if notification is visible and important', () => {
-    let cmp = shallowMount(NotificationArea, {
+    const cmp = shallowMount(NotificationArea, {
       store,
       localVue,
       mocks: api
@@ -127,16 +128,15 @@ describe('notification-area.test.js', () => {
     expect(cmp.vm.showNotification).toBeFalsy()
 
     store.commit('ui/setTestNotification', { visible: true, important: true })
-    expect(cmp.vm.showNotification).toBeTruthy()  
+    expect(cmp.vm.showNotification).toBeTruthy()
   })
 
   it('6 NotificationArea - computed showLoginNotification gives true if there is a notification from auth', () => {
-    let cmp = shallowMount(NotificationArea, {
+    const cmp = shallowMount(NotificationArea, {
       store,
       localVue,
       mocks: api
     })
-
 
     expect(cmp.vm.showLoginNotification).toBeFalsy()
 
@@ -144,30 +144,16 @@ describe('notification-area.test.js', () => {
     expect(cmp.vm.showLoginNotification).toBeTruthy()
   })
 
-  it('7 NotificationArea - method featureOptionChanged executes app.featureOptionChange', () => {
-    let cmp = shallowMount(NotificationArea, {
-      store,
-      localVue,
-      mocks: api
-    })
-
-    api.app.featureOptionChange = jest.fn()
-    
-    cmp.vm.featureOptionChanged('d__v__fooname__g', 'foovalue')
-    expect(api.app.featureOptionChange).toHaveBeenCalledWith('fooname', 'foovalue')
-  })
-
-  it('8 NotificationArea - method hideLoginPrompt executes ui.optionChange', () => {
-    let cmp = shallowMount(NotificationArea, {
+  it('7 NotificationArea - method hideLoginPrompt executes ui.optionChange', () => {
+    const cmp = shallowMount(NotificationArea, {
       store,
       localVue,
       mocks: api
     })
 
     api.settings.uiOptionChange = jest.fn()
-    
+
     cmp.vm.hideLoginPrompt()
     expect(api.settings.uiOptionChange).toHaveBeenCalledWith('hideLoginPrompt', true)
   })
-
 })

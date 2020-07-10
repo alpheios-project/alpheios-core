@@ -9,32 +9,33 @@ import Vue from '@vue-runtime'
 import Vuex from 'vuex'
 import interact from 'interactjs'
 // Modules and their support dependencies
-import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
-import LexisModule from '@/vue/vuex-modules/data/lexis.js'
-import Locales from '@/locales/locales.js'
+import L10nModule from '@comp/vue/vuex-modules/data/l10n-module.js'
+import LexisModule from '@comp/vue/vuex-modules/data/lexis.js'
+import Locales from '@comp/locales/locales.js'
 
-import EmbedLibWarning from '@/vue/components/embed-lib-warning.vue'
+import EmbedLibWarning from '@comp/vue/components/embed-lib-warning.vue'
 
-import LexicalQuery from '@/lib/queries/lexical-query.js'
-import ResourceQuery from '@/lib/queries/resource-query.js'
-import SiteOptions from '@/settings/site-options.json'
-import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
-import UIOptionDefaults from '@/settings/ui-options-defaults.json'
-import TextSelector from '@/lib/selection/text-selector'
-import Platform from '@/lib/utility/platform.js'
-import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
-import LongTap from '@/lib/custom-pointer-events/long-tap.js'
-import GenericEvt from '@/lib/custom-pointer-events/generic-evt.js'
-import MouseMove from '@/lib/custom-pointer-events/mouse-move.js'
+import LexicalQuery from '@comp/lib/queries/lexical-query.js'
+import ResourceQuery from '@comp/lib/queries/resource-query.js'
+import SiteOptions from '@comp/settings/site-options.json'
+import FeatureOptionDefaults from '@comp/settings/feature-options-defaults.json'
+import UIOptionDefaults from '@comp/settings/ui-options-defaults.json'
+import TextSelector from '@comp/lib/selection/text-selector'
+import Platform from '@comp/lib/utility/platform.js'
+import LanguageOptionDefaults from '@comp/settings/language-options-defaults.json'
+import MouseDblClick from '@comp/lib/custom-pointer-events/mouse-dbl-click.js'
+import LongTap from '@comp/lib/custom-pointer-events/long-tap.js'
+import GenericEvt from '@comp/lib/custom-pointer-events/generic-evt.js'
+import MouseMove from '@comp/lib/custom-pointer-events/mouse-move.js'
 
-import Options from '@/lib/options/options.js'
-import LocalStorage from '@/lib/options/local-storage-area.js'
-import RemoteAuthStorageArea from '@/lib/options/remote-auth-storage-area.js'
-import UIController from '@/lib/controllers/ui-controller.js'
-import UIEventController from '@/lib/controllers/ui-event-controller.js'
-import SelectionController from '@/lib/controllers/selection-controller.js'
-import QueryParams from '@/lib/utility/query-params.js'
+import Options from '@comp/lib/options/options.js'
+import LocalStorage from '@comp/lib/options/local-storage-area.js'
+import RemoteAuthStorageArea from '@comp/lib/options/remote-auth-storage-area.js'
+import SettingsController from '@comp/lib/controllers/settings-controller.js'
+import UIController from '@comp/lib/controllers/ui-controller.js'
+import UIEventController from '@comp/lib/controllers/ui-event-controller.js'
+import SelectionController from '@comp/lib/controllers/selection-controller.js'
+import QueryParams from '@comp/lib/utility/query-params.js'
 
 const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
@@ -49,10 +50,6 @@ const languageNames = new Map([
 const layoutClasses = {
   COMPACT: 'alpheios-layout-compact',
   LARGE: 'alpheios-layout-large'
-}
-
-const injectionClasses = {
-  DISABLE_TEXT_SELECTION: 'alpheios-disable-user-selection'
 }
 
 // Enable Vuex
@@ -85,17 +82,7 @@ export default class AppController {
     this.resourceOptionsDefaults = LanguageOptionDefaults
     this.uiOptionsDefaults = UIOptionDefaults
     this.siteOptionsDefaults = SiteOptions
-    /*
-    All following options will be created during an init phase.
-    This will allow creators of an app controller to provide their own options defaults
-    inside a `create()` builder function.
-     */
-    this.featureOptions = null
-    this.resourceOptions = null
-    this.uiOptions = null
-    this.siteOptions = null // Will be set during an `init` phase
 
-    this.irregularBaseFontSize = !AppController.hasRegularBaseFontSize()
     this.isInitialized = false
     this.isActivated = false
     this.isDeactivated = false
@@ -138,6 +125,10 @@ export default class AppController {
 
     // Get query parameters from the URL. Do this early so they will be available to modules during registration
     this.queryParams = QueryParams.parse()
+
+    this._stC = new SettingsController({
+      platform: this.platform
+    })
 
     /**
      * Holds an instance of a UI controller. Its purpose is to manage all UI components within an application.
@@ -403,82 +394,29 @@ export default class AppController {
 
   async init () {
     if (this.isInitialized) { return 'Already initialized' }
-    // Start loading options as early as possible
-    const optionLoadPromises = this.initOptions(this.options.storageAdapter)
-    const appConfigLoadPromise = this.loadAppConfig({
-      url: this.options.configServiceUrl,
+    // Initialize options
+    await this._stC.init({
+      api: this.api,
+      store: this.store,
+      configServiceUrl: this.options.configServiceUrl,
       clientId: this.options.clientId,
       appName: this.options.app.name,
       appVersion: this.options.app.version,
       branch: this.options.app.buildBranch,
-      buildNumber: this.options.app.buildNumber
+      buildNumber: this.options.app.buildNumber,
+      storageAdapter: this.options.storageAdapter,
+      featureOptionsDefaults: this.featureOptionsDefaults,
+      uiOptionsDefaults: this.uiOptionsDefaults,
+      resourceOptionsDefaults: this.resourceOptionsDefaults,
+      siteOptionsDefaults: this.siteOptionsDefaults
     })
-
-    // Create a copy of resource options for the lookup UI component
-    // this doesn't get reloaded from the storage adapter because
-    // we don't expose it to the user via preferences
-    this.lookupResourceOptions = new Options(this.resourceOptionsDefaults, new this.options.storageAdapter(this.resourceOptionsDefaults.domain)) // eslint-disable-line new-cap
-    // TODO: Site options should probably be initialized the same way as other options objects
-    this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
-
-    // Will add morph adapter options to the `options` object of an app controller constructor as needed.
-
-    // Inject HTML code of a plugin. Should go in reverse order.
-    document.body.classList.add('alpheios')
-
-    const [appConfig, ...options] = await Promise.all([appConfigLoadPromise, ...optionLoadPromises])
-    this.appConfig = appConfig
-
-    // All options has been loaded after this point
+    // All options has been loaded and initialized after this point
 
     // The following options will be applied to all logging done via a single Logger instance
     // Set the  logger verbose mode according to the settings
-    this.logger.setVerboseMode(this.verboseMode())
+    this.logger.setVerboseMode(this.api.settings.isInVerboseMode())
     this.logger.prependModeOn() // Set a prepend mode that will add an Alpheios prefix to the printed statements
     this.logger.traceModeOff() // Enable the log call stack tracing
-
-    /**
-     * This is a settings API. It exposes different options to modules and UI components.
-     */
-    this.api.settings = {
-      getFeatureOptions: this.getFeatureOptions.bind(this),
-      getResourceOptions: this.getResourceOptions.bind(this),
-      getUiOptions: this.getUiOptions.bind(this),
-      verboseMode: this.verboseMode.bind(this),
-      // we don't offer UI to change to lookupResourceOptions or siteOptions
-      // so they remain out of dynamic state for now - should eventually
-      // refactor
-      lookupResourceOptions: this.lookupResourceOptions,
-      siteOptions: this.siteOptions,
-      uiOptionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
-    }
-
-    this.store.registerModule('settings', {
-      // All stores of modules are namespaced
-      namespaced: true,
-      state: {
-        // these counters are used to enable the settings ui components
-        // to redraw themselves when settings are reset or reloaded
-        // it might be better if all settings were made into
-        // state variables but for now state is monitored at the domain level
-        uiResetCounter: 0,
-        featureResetCounter: 0,
-        resourceResetCounter: 0
-      },
-      mutations: {
-        incrementUiResetCounter (state) {
-          state.uiResetCounter += 1
-        },
-
-        incrementFeatureResetCounter (state) {
-          state.featureResetCounter += 1
-        },
-
-        incrementResourceResetCounter (state) {
-          state.resourceResetCounter += 1
-        }
-      }
-    })
 
     this.api.app = {
       name: this.options.app.name, // A name of a host application (embed lib or webextension)
@@ -488,7 +426,6 @@ export default class AppController {
       libName: AppController.libName, // A name of the components library
       libVersion: AppController.libVersion, // A version of the components library
       libBuildName: BUILD_NAME, // A name of a build of a components library that will be injected by Webpack
-      config: this.appConfig,
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
       state: this.state, // An app-level state
@@ -512,8 +449,8 @@ export default class AppController {
       isMousemoveForced: this.isMousemoveForced.bind(this),
       getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
       clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
-      featureOptionChange: this.featureOptionChange.bind(this),
-      resetAllOptions: this.resetAllOptions.bind(this),
+      applyOptions: this.applyOptions.bind(this),
+      applyUIOption: this.applyUIOption.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       notifyExperimental: this.notifyExperimental.bind(this),
       getLanguageName: AppController.getLanguageName,
@@ -746,11 +683,9 @@ export default class AppController {
     // If `textLangCode` is set, use it over the `preferredLanguage`
     this.options.overridePreferredLanguage = Boolean(this.options.textLangCode)
     this.store.commit('app/setSelectedLookupLang', this.getDefaultLangCode())
-    this.api.language = {
-      resourceSettingChange: this.resourceSettingChange.bind(this)
-    }
 
     // Create registered data modules
+    // Data modules and UI modules use the Settings Controller; it must be fully initialized at this point
     this.createModules()
 
     // The current language must be set after data modules are created (because it uses an L10n module)
@@ -758,66 +693,18 @@ export default class AppController {
     const defaultLangCode = this.getDefaultLangCode()
     const defaultLangID = LanguageModelFactory.getLanguageIdFromCode(defaultLangCode)
     // Set the lookup
-    this.featureOptions.items.lookupLanguage.setValue(defaultLangCode)
+    this.api.settings.getFeatureOptions().items.lookupLanguage.setValue(defaultLangCode)
     this.updateLanguage(defaultLangID)
+    if (this.hasUIController) { this.uic.init({ api: this.api, store: this.store }) }
 
     try {
       this.registerTextSelector('GetSelectedText', this.options.textQuerySelector)
     } catch (err) {
       Logger.getInstance().error(err)
     }
-
-    if (this.hasUIController) { this.uic.init({ api: this.api, store: this.store, uiOptions: this.uiOptions }) }
-
     this.updateLemmaTranslations()
-
     this.isInitialized = true
-
     return this
-  }
-
-  /**
-   * initialize the options using the supplied storage adapter class
-   *
-   * @param {Function<StorageAdapter>} StorageAdapter the adapter class to instantiate
-   * @param {object} authData optional authentication data if the adapter is one that requires it
-   * @returns Promise[] an array of promises to load the options data from the adapter
-   */
-  initOptions (StorageAdapter, authData = null) {
-    this.featureOptions = new Options(this.featureOptionsDefaults, new StorageAdapter(this.featureOptionsDefaults.domain, authData))
-    this.resourceOptions = new Options(this.resourceOptionsDefaults, new StorageAdapter(this.resourceOptionsDefaults.domain, authData))
-    this.uiOptions = new Options(this.uiOptionsDefaults, new StorageAdapter(this.uiOptionsDefaults.domain, authData))
-    return [this.featureOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
-  }
-
-  /**
-   * Loads an application wide configuration file in a JSON format.
-   *
-   * @param {string} url - A URL of an app config server.
-   * @param {string} clientId - A client ID.
-   * @param {string} appName - An application name, such as "Alpheios Reading Tools".
-   * @param {string} appVersion - An application version, following a semver specification.
-   * @param {string} branch - A name of a git branch that was used to build the code.
-   * @param {string} buildNumber - A build number in a YYYYMMDDCCC format.
-   *        See `node-build` package for a generator function.
-   * @returns {Promise<object> | Promise<null>} - A promise that is resolved with an app config in a JSON format
-   *          or is resolved with a `null` value if a config retrieval failed.
-   */
-  async loadAppConfig ({ url, clientId, appName, appVersion, branch, buildNumber } = {}) {
-    if (!url) {
-      throw new Error('An app config server URL is missing')
-    }
-    try {
-      const configUrl = `${url}?clientId=${encodeURIComponent(clientId)}&appName=${encodeURIComponent(appName)}` +
-        `&appVersion=${encodeURIComponent(appVersion)}&buildBranch=${encodeURIComponent(branch)}` +
-        `&buildNumber=${encodeURIComponent(buildNumber)}`
-      const request = new Request(configUrl)
-      const response = await fetch(request)
-      return response.json()
-    } catch (err) {
-      this.logger.error(`Unable to retrieve an app configuration from ${url}: ${err.message}`)
-      return null
-    }
   }
 
   get textSelectorParams () {
@@ -833,10 +720,10 @@ export default class AppController {
     } else if (this.isMousemoveEnabled) {
       event = MouseMove
       eventParams = {
-        mouseMoveDelay: this.uiOptions.items.mouseMoveDelay.currentValue,
-        mouseMoveAccuracy: this.uiOptions.items.mouseMoveAccuracy.currentValue,
-        enableMouseMoveLimitedByIdCheck: this.uiOptions.items.enableMouseMoveLimitedByIdCheck.currentValue,
-        mouseMoveLimitedById: this.uiOptions.items.mouseMoveLimitedById.currentValue
+        mouseMoveDelay: this.api.settings.getUiOptions().items.mouseMoveDelay.currentValue,
+        mouseMoveAccuracy: this.api.settings.getUiOptions().items.mouseMoveAccuracy.currentValue,
+        enableMouseMoveLimitedByIdCheck: this.api.settings.getUiOptions().items.enableMouseMoveLimitedByIdCheck.currentValue,
+        mouseMoveLimitedById: this.api.settings.getUiOptions().items.mouseMoveLimitedById.currentValue
       }
     } else {
       if (['dblClick', 'dblclick', null].includes(this.options.textQueryTriggerMobile)) {
@@ -873,7 +760,7 @@ export default class AppController {
       this.userDataManager = new UserDataManager(authData, WordlistController.evt)
       wordLists = await this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
-      optionLoadPromises = this.initOptions(RemoteAuthStorageArea, authData)
+      optionLoadPromises = this.api.settings.initOptions(RemoteAuthStorageArea, authData)
     } else {
       // TODO we need to make the UserDataManager a singleton that can
       // handle switching users gracefully
@@ -882,10 +769,10 @@ export default class AppController {
       wordLists = await this.wordlistC.initLists()
 
       // reload the user-configurable options
-      optionLoadPromises = this.initOptions(this.options.storageAdapter)
+      optionLoadPromises = this.api.settings.initOptions(this.options.storageAdapter)
     }
     await Promise.all(optionLoadPromises)
-    this.onOptionsReset()
+    this.applyOptions()
     this.store.commit('app/setWordLists', wordLists)
   }
 
@@ -900,16 +787,13 @@ export default class AppController {
 
     if (!this.isInitialized) { await this.init() }
 
-    // Inject Alpheios CSS rules
-    this.activateOnPage()
-
     this.isActivated = true
     this.isDeactivated = false
 
     this.activateModules()
 
     if (this.hasUIController) {
-      this.uic.activate()
+      this.uic.activate({ disableTextSelOnMobile: this.options.disableTextSelection })
     }
 
     // Activate listeners
@@ -917,6 +801,7 @@ export default class AppController {
     if (this.selc) { this.selc.activate() }
 
     this.authUnwatch = this.store.watch((state) => state.auth.isAuthenticated, (newValue, oldValue) => {
+      // Reinitialize data when user logged in
       this.initUserDataManager(newValue)
     })
 
@@ -929,7 +814,7 @@ export default class AppController {
   }
 
   getDefaultLangCode () {
-    return this.options.overridePreferredLanguage ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue
+    return this.options.overridePreferredLanguage ? this.options.textLangCode : this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue
   }
 
   getMouseMoveOverride () {
@@ -958,9 +843,6 @@ export default class AppController {
     if (this.hasUIController) {
       this.uic.deactivate()
     }
-
-    // Remove Alpheios CSS rules
-    this.deactivateOnPage()
 
     this.isActivated = false
     this.isDeactivated = true
@@ -996,50 +878,6 @@ export default class AppController {
       AppController.embedLibWarningInstance.$mount() // Render off-document to append afterwards
     }
     return AppController.embedLibWarningInstance
-  }
-
-  activateOnPage () {
-    if (document && document.body) {
-      if (this.options.disableTextSelection && this.platform.isMobile) {
-        // Disable text selection on mobile platforms when a corresponding option is set
-        document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
-      } else {
-        // If extension has been deactivated previously, deactivateOnPage() would be setting
-        // a DISABLE_TEXT_SELECTION for the page body. We shall remove it.
-        if (document.body.classList.contains(injectionClasses.DISABLE_TEXT_SELECTION)) {
-          document.body.classList.remove(injectionClasses.DISABLE_TEXT_SELECTION)
-        }
-      }
-    } else {
-      this.logger.warn('Cannot inject Alpheios CSS rules because either document or body do not exist')
-    }
-  }
-
-  deactivateOnPage () {
-    if (document && document.body) {
-      document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
-    }
-  }
-
-  /**
-   * Load site-specific settings
-   *
-   * @param {object[]} siteOptions - An array of site options
-   */
-  loadSiteOptions (siteOptions) {
-    let allSiteOptions = [] // eslint-disable-line prefer-const
-    for (const site of siteOptions) {
-      for (const domain of site.options) {
-        const siteOpts = new Options(domain, new this.options.storageAdapter(domain.domain)) // eslint-disable-line new-cap
-        allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
-      }
-    }
-    return allSiteOptions
-  }
-
-  static hasRegularBaseFontSize () {
-    const htmlElement = document.querySelector('html')
-    return window.getComputedStyle(htmlElement, null).getPropertyValue('font-size') === '16px'
   }
 
   /**
@@ -1175,7 +1013,7 @@ export default class AppController {
 
   /**
    * Updates grammar data with URLs supplied.
-If no URLS are provided, will reset grammar data.
+   * If no URLS are provided, will reset grammar data.
    *
    * @param data
    * @param {Array} urls
@@ -1236,8 +1074,8 @@ If no URLS are provided, will reset grammar data.
   }
 
   updateLemmaTranslations () {
-    if (this.featureOptions.items.enableLemmaTranslations.currentValue && !this.featureOptions.items.locale.currentValue.match(/en-/)) {
-      this.api.lexis.setLemmaTranslationLang(this.featureOptions.items.locale.currentValue)
+    if (this.api.settings.getFeatureOptions().items.enableLemmaTranslations.currentValue && !this.api.settings.getFeatureOptions().items.locale.currentValue.match(/en-/)) {
+      this.api.lexis.setLemmaTranslationLang(this.api.settings.getFeatureOptions().items.locale.currentValue)
     } else {
       this.api.lexis.setLemmaTranslationLang(null)
     }
@@ -1259,22 +1097,6 @@ If no URLS are provided, will reset grammar data.
       (!this.options.triggerPreCallback || this.isMousemoveEnabled || this.options.triggerPreCallback(domEvent)))
   }
 
-  getFeatureOptions () {
-    return this.featureOptions
-  }
-
-  getResourceOptions () {
-    return this.resourceOptions
-  }
-
-  getUiOptions () {
-    return this.uiOptions
-  }
-
-  verboseMode () {
-    return this.uiOptions.items.verboseMode.currentValue === 'verbose'
-  }
-
   async getWordUsageData (homonym, params = {}) {
     if (this.api.app.wordUsageExamplesCached && (this.api.app.wordUsageExamplesCached.targetWord === homonym.targetWord) && (Object.keys(params).length === 0)) {
       this.store.commit('app/setWordUsageExamplesReady', false)
@@ -1287,8 +1109,8 @@ If no URLS are provided, will reset grammar data.
 
     const wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
       ? {
-        paginationMax: this.featureOptions.items.wordUsageExamplesMax.currentValue,
-        paginationAuthMax: this.featureOptions.items.wordUsageExamplesAuthMax.currentValue
+        paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
+        paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
       }
       : null
 
@@ -1296,17 +1118,17 @@ If no URLS are provided, will reset grammar data.
   }
 
   enableWordUsageExamples (textSelector, requestType) {
-    const checkType = requestType === 'onLexicalQuery' ? this.featureOptions.items.wordUsageExamplesON.currentValue === requestType : true
+    const checkType = requestType === 'onLexicalQuery' ? this.api.settings.getFeatureOptions().items.wordUsageExamplesON.currentValue === requestType : true
     return textSelector.languageID === Constants.LANG_LATIN &&
-    this.featureOptions.items.enableWordUsageExamples.currentValue &&
+    this.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue &&
     checkType
   }
 
   getWordUsageExamplesQueryParams (textSelector) {
     if (this.enableWordUsageExamples(textSelector, 'onLexicalQuery')) {
       return {
-        paginationMax: this.featureOptions.items.wordUsageExamplesMax.currentValue,
-        paginationAuthMax: this.featureOptions.items.wordUsageExamplesAuthMax.currentValue
+        paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
+        paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
       }
     } else {
       return null
@@ -1330,7 +1152,7 @@ If no URLS are provided, will reset grammar data.
     // ExpObjMon.track(
     ResourceQuery.create(feature, {
       grammars: Grammars,
-      resourceOptions: this.getResourceOptions()
+      resourceOptions: this.api.settings.getResourceOptions()
     }).getData()
     //, {
     // experience: 'Get resource',
@@ -1364,14 +1186,14 @@ If no URLS are provided, will reset grammar data.
     this.store.commit('app/setQueryStillActive', true)
   }
 
-  onHomonymReady (homonym, source) {
+  onHomonymReady (homonym) {
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
 
     // Update status info with data from a morphological analyzer
     this.store.commit('app/setTextData', { text: homonym.targetWord, languageID: homonym.languageID })
 
     // Update inflections data
-    const inflectionsViewSet = ViewSetFactory.create(homonym, this.featureOptions.items.locale.currentValue)
+    const inflectionsViewSet = ViewSetFactory.create(homonym, this.api.settings.getFeatureOptions().items.locale.currentValue)
 
     if (inflectionsViewSet.hasMatchingViews) {
       this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
@@ -1497,51 +1319,20 @@ If no URLS are provided, will reset grammar data.
   }
 
   /**
-   * Resets all configurable options to the defaults, replacing user preferences
-   */
-  async resetAllOptions () {
-    await this.featureOptions.reset()
-    await this.resourceOptions.reset()
-    await this.uiOptions.reset()
-    // we don't reload lookupResourceOptions or siteOptions
-    // because we don't currently allow user configuration of these
-    this.onOptionsReset()
-  }
-
-  /**
    * Updates the Application State after settings have been reset or reloaded
    */
-  onOptionsReset () {
-    for (const name of this.featureOptions.names) {
-      this.featureOptionStateChange(name)
+  applyOptions () {
+    for (const name of this.api.settings.getFeatureOptions().names) {
+      this.applyFeatureOption(name)
       this.store.commit('settings/incrementFeatureResetCounter')
     }
-    for (const name of this.resourceOptions.names) { // eslint-disable-line no-unused-vars
+    for (const name of this.api.settings.getResourceOptions().names) { // eslint-disable-line no-unused-vars
       this.store.commit('settings/incrementResourceResetCounter')
     }
-    for (const name of this.uiOptions.names) {
-      this.applyUIOptions(name)
+    for (const name of this.api.settings.getUiOptions().names) {
+      this.applyUIOption(name, this.api.settings.getUiOptions().items[name].currentValue)
       this.store.commit('settings/incrementUiResetCounter')
     }
-  }
-
-  /**
-   * Handle a change to a single feature option
-   *
-   * @param {string} name the setting name
-   * @param {string} value the new value
-   */
-  featureOptionChange (name, value) {
-    let featureOptions = this.api.settings.getFeatureOptions() // eslint-disable-line prefer-const
-    // TODO we need to refactor handling of boolean options
-    const nonTextFeatures = ['enableLemmaTranslations', 'enableWordUsageExamples', 'wordUsageExamplesMax', 'wordUsageExamplesAuthMax',
-      'enableMouseMove', 'wordlistMaxFlashcardExport', 'enableLogeionAutoComplete', 'showBetaCodesInfo', 'useBetaCodes']
-    if (nonTextFeatures.includes(name)) {
-      featureOptions.items[name].setValue(value)
-    } else {
-      featureOptions.items[name].setTextValue(value)
-    }
-    this.featureOptionStateChange(name)
   }
 
   /**
@@ -1549,7 +1340,7 @@ If no URLS are provided, will reset grammar data.
    *
    * @param {string} settingName the name of the setting
    */
-  featureOptionStateChange (settingName) {
+  applyFeatureOption (settingName) {
     switch (settingName) {
       case 'locale':
         this.updateLemmaTranslations()
@@ -1573,71 +1364,53 @@ If no URLS are provided, will reset grammar data.
     }
   }
 
-  /**
-   * Handles a change of a single option from UI options.
-   *
-   * @param {string} name - A name of an option.
-   * @param {string | value} value - A new value of an options.
-   */
-  uiOptionChange (name, value) {
-    let uiOptions = this.api.settings.getUiOptions() // eslint-disable-line prefer-const
-    // TODO this should really be handled within OptionsItem
-    // the difference between value and textValues is a little confusing
-    // see issue #73
-    const nonTextFeatures = [
-      'fontSize',
-      'hideLoginPrompt',
-      'maxPopupWidth',
-      'mouseMoveDelay',
-      'mouseMoveAccuracy',
-      'enableMouseMoveLimitedByIdCheck',
-      'mouseMoveLimitedById',
-      'forceMouseMoveGoogleDocs'
-    ]
-    if (nonTextFeatures.includes(name)) {
-      uiOptions.items[name].setValue(value)
-    } else {
-      uiOptions.items[name].setTextValue(value)
+  applyResourceOption (name, value) {
+    // grouped setting are referenced under Options object
+    // by the parsed name but each individual setting in a group is referenced
+    // by its fullname (with version and groupname appended)
+    // multivalued settings are handled in the Options.setTextValue method which can take
+    // an array or an individual text value
+    const baseKey = Options.parseKey(name)
+    if (baseKey.name === 'grammars') {
+      this.initGrammar(baseKey.group)
     }
-    this.applyUIOptions(name)
   }
 
   /**
    * Updates the state of the UI to match the options settings.
    *
    * @param {string} settingName - The name of the setting to apply.
+   * @param value
    */
-  applyUIOptions (settingName) {
-    const uiOptions = this.api.settings.getUiOptions()
-
+  applyUIOption (settingName, value) {
     switch (settingName) {
       case 'fontSize':
-        this.api.ui.setFontSize()
+        this.api.ui.applyFontSize(value)
         break
       case 'panelPosition':
-        this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
+        this.store.commit('panel/setPosition', value)
         break
       case 'verboseMode':
-        this.logger.setVerboseMode(uiOptions.items.verboseMode.currentValue === 'verbose')
+        this.logger.setVerboseMode(this.api.settings.isInVerboseMode())
         break
       case 'hideLoginPrompt':
         if (this.api.auth) {
-          this.store.commit('auth/setHideLoginPrompt', uiOptions.items.hideLoginPrompt.currentValue)
+          this.store.commit('auth/setHideLoginPrompt', value)
         }
         break
       case 'mouseMoveDelay':
         if (this.selc && this.isMousemoveEnabled) {
-          this.selc.updateParamsForAll({ mouseMoveDelay: this.uiOptions.items.mouseMoveDelay.currentValue })
+          this.selc.updateParamsForAll({ mouseMoveDelay: value })
         }
         break
       case 'mouseMoveAccuracy':
         if (this.selc && this.isMousemoveEnabled) {
-          this.selc.updateParamsForAll({ mouseMoveAccuracy: this.uiOptions.items.mouseMoveAccuracy.currentValue })
+          this.selc.updateParamsForAll({ mouseMoveAccuracy: value })
         }
         break
       case 'enableMouseMoveLimitedByIdCheck':
         if (this.selc && this.isMousemoveEnabled) {
-          this.selc.updateParamsForAll({ enableMouseMoveLimitedByIdCheck: this.uiOptions.items.enableMouseMoveLimitedByIdCheck.currentValue })
+          this.selc.updateParamsForAll({ enableMouseMoveLimitedByIdCheck: value })
         }
         break
       case 'forceMouseMoveGoogleDocs':
@@ -1646,25 +1419,6 @@ If no URLS are provided, will reset grammar data.
           this.selc.replaceEventForAll(...this.textSelectorParams)
         }
         break
-    }
-  }
-
-  /**
-   * Handle a change to a single resource option
-   *
-   * @param {string} name - A name of an option.
-   * @param {string | value} value - A new value of an options.
-   */
-  resourceSettingChange (name, value) {
-    // grouped setting are referenced under Options object
-    // by the parsed name but each individual setting in a group is referenced
-    // by its fullname (with version and groupname appended)
-    // multivalued settings are handled in the Options.setTextValue method which can take
-    // an array or an individual text value
-    const baseKey = Options.parseKey(name)
-    this.api.settings.getResourceOptions().items[baseKey.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-    if (baseKey.name === 'grammars') {
-      this.initGrammar(baseKey.group)
     }
   }
 
@@ -1690,11 +1444,11 @@ If no URLS are provided, will reset grammar data.
   }
 
   get isMousemoveEnabled () {
-    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.isMousemoveForced())
+    return this.platform.isDesktop && (this.api.settings.getFeatureOptions().items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.isMousemoveForced())
   }
 
   isMousemoveForced () {
-    return Boolean(this.platform.isDesktop && this.platform.isGoogleDocs && this.uiOptions.items.forceMouseMoveGoogleDocs.currentValue)
+    return Boolean(this.platform.isDesktop && this.platform.isGoogleDocs && this.api.settings.getUiOptions().items.forceMouseMoveGoogleDocs.currentValue)
   }
 }
 
