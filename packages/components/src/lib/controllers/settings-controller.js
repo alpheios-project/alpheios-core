@@ -1,9 +1,5 @@
-// import Platform from '@/lib/utility/platform.js'
-// import { Logger } from 'alpheios-data-models'
 import Options from '@comp/lib/options/options.js'
 
-/**
- */
 export default class SettingsController {
   constructor ({ platform } = {}) {
     if (!platform) {
@@ -22,13 +18,6 @@ export default class SettingsController {
     this._featureOptions = null
     this._resourceOptions = null
     this._uiOptions = null
-
-    /*
-    A copy of resource options for the lookup UI component
-    This doesn't get reloaded from the storage adapter because
-    we don't expose it to the user via preferences
-     */
-    this._lookupResourceOptions = null
     this._siteOptions = null
 
     /**
@@ -77,7 +66,7 @@ export default class SettingsController {
     const appConfigPromise = this.requestAppOptions()
     const initOptionsPromise = this.initOptions()
     /*
-    We do not allow user to configure lookupResourceOptions or siteOptions currently.
+    We do not allow user to configure siteOptions currently.
     Because of this, they are initialized separately from the rest of the options.
     `initOptions()` will be called several times during the app's lifetime,
     after a user has been logged in, as one example.
@@ -98,10 +87,8 @@ export default class SettingsController {
       getFeatureOptions: this.getFeatureOptions.bind(this),
       getResourceOptions: this.getResourceOptions.bind(this),
       getUiOptions: this.getUiOptions.bind(this),
-      // we don't offer UI to change to lookupResourceOptions or siteOptions
-      // so they remain out of dynamic state for now - should eventually
-      // refactor
-      lookupResourceOptions: this._lookupResourceOptions, // TODO: This is not used at the moment, do we still need it?
+      // we don't offer UI to change to siteOptions
+      // so they remain out of dynamic state for now - should eventually refactor
       siteOptions: this._siteOptions, // Site options seems to be not used right now
       isInVerboseMode: () => this._uiOptions.items.verboseMode.currentValue === 'verbose',
       featureOptionChange: this.featureOptionChange.bind(this),
@@ -168,7 +155,6 @@ export default class SettingsController {
   }
 
   initNonConfigurableOptions () {
-    this._lookupResourceOptions = new Options(this._resourceOptionsDefaults, new this._storageAdapter(this._resourceOptionsDefaults.domain))
     this._siteOptions = [] // eslint-disable-line prefer-const
     for (const site of this._siteOptionsDefaults) {
       for (const domain of site.options) {
@@ -258,7 +244,7 @@ export default class SettingsController {
     await this._featureOptions.reset()
     await this._resourceOptions.reset()
     await this._uiOptions.reset()
-    // we don't reload lookupResourceOptions or siteOptions
+    // we don't reload siteOptions
     // because we don't currently allow user configuration of these
   }
 }
