@@ -443,4 +443,8 @@ export default class BaseTestHelp {
 
     return eventEl2
   }
+
+  static createUIState () {
+
+  }
 }

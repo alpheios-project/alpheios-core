@@ -1,3 +1,4 @@
+/** @module uiController */
 import Platform from '@/lib/utility/platform.js'
 import HTMLPage from '@/lib/utility/html-page.js'
 import { Logger } from 'alpheios-data-models'
@@ -11,8 +12,21 @@ const injectionClasses = {
  * A UI controller class is responsible for coordination between all UI components,
  * such as Panel, Popup, Action Panel, and so on.
  * A UI controller is a part of a higher-level app controller.
+ *
+ * @typedef {object} UIController
+ * @property {Function} init - A function to initialize a UIController.
  */
 export default class UIController {
+  /**
+   * @param {module:uiStateApi.UIStateAPI} uiState - An object that contains and controls the state of the UI.
+   * @param {module:platform.Platform} platform - A platform an app is running upon.
+   * @param {object.<string, string>} queryParams - An object containing URL parameters if any were used for
+   *        the page that is running the Alpheios app. Object keys are the names of params and their
+   *        values contain string values of the params.
+   * @param {boolean} overrideHelp - A parameter that specifies whether an Alpheios-specific help info
+   *        should be displayed. Turning the help off will allow clients to provide their own help info
+   *        instead of that of the Alpheios.
+   */
   constructor ({ uiState, platform, queryParams = {}, overrideHelp = false } = {}) {
     if (!platform) {
       throw new Error('No platform data provided for a UI controller')
@@ -25,14 +39,14 @@ export default class UIController {
     /**
      * An object with information about an app environment.
      *
-     * @type {Platform}
+     * @type {module:platform.Platform}
      */
     this._platform = platform
 
     /**
      * An object with parsed query parameters (if any).
      *
-     * @type {QueryParams}
+     * @type {object<string,string>}
      */
     this._queryParams = queryParams
 
@@ -46,14 +60,14 @@ export default class UIController {
      * On the other hand, whenever a UI state is changed by user actions, this state must be
      * reflected in the UI state object.
      *
-     * @type {UIStateAPI}
+     * @type {module:uiStateApi.UIStateAPI}
      */
     this._uiState = uiState
 
     /**
      * A map that holds instances of UI _modules of an application.
      *
-     * @type {Map<string, Module>}
+     * @type {Map<string, module:module.Module>}
      */
     this._modules = new Map()
 
