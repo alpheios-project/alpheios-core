@@ -445,6 +445,8 @@ export default class BaseTestHelp {
   }
 
   static createUIState () {
+    return {
 
+    }
   }
 }

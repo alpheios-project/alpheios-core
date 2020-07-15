@@ -16,14 +16,20 @@ const injectionClasses = {
  * @typedef {object} UIController
  * @property {Function} init - A function to initialize a UIController.
  */
+
+/**
+ * A class representing a platform the app is running upon.
+ *
+ * @typedef {object} UIController
+ */
 export default class UIController {
   /**
    * @param {module:uiStateApi.UIStateAPI} uiState - An object that contains and controls the state of the UI.
    * @param {module:platform.Platform} platform - A platform an app is running upon.
-   * @param {object.<string, string>} queryParams - An object containing URL parameters if any were used for
+   * @param {object.<string, string>} queryParams [{}] - An object containing URL parameters if any were used for
    *        the page that is running the Alpheios app. Object keys are the names of params and their
    *        values contain string values of the params.
-   * @param {boolean} overrideHelp - A parameter that specifies whether an Alpheios-specific help info
+   * @param {boolean} overrideHelp [false] - A parameter that specifies whether an Alpheios-specific help info
    *        should be displayed. Turning the help off will allow clients to provide their own help info
    *        instead of that of the Alpheios.
    */
