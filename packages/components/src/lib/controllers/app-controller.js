@@ -1391,6 +1391,13 @@ export default class AppController {
         this.store.commit('panel/setPosition', value)
         break
       case 'verboseMode':
+        /*
+        The value of the `verboseMode` option passed as an argument of this method is a string value.
+        The text of the string is specific to the options object and may change without notice.
+        The App Controller has no knowledge of what those string option values might be.
+        That's why we're using a `isInVerboseMode()` method of the Settings public API.
+        It returns a boolean and is much simpler and safer in use.
+         */
         this.logger.setVerboseMode(this.api.settings.isInVerboseMode())
         break
       case 'hideLoginPrompt':

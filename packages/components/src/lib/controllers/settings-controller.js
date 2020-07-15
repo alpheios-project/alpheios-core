@@ -130,7 +130,6 @@ export default class SettingsController {
     const configUrl = `${this._configServiceUrl}?clientId=${encodeURIComponent(this._clientId)}&appName=${encodeURIComponent(this._appName)}` +
       `&appVersion=${encodeURIComponent(this._appVersion)}&buildBranch=${encodeURIComponent(this._branch)}` +
       `&buildNumber=${encodeURIComponent(this._buildNumber)}`
-    console.info('config URL is', configUrl)
     const request = new Request(configUrl)
     return fetch(request)
   }
