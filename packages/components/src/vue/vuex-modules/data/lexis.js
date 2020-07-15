@@ -24,7 +24,6 @@ export default class Lexis extends Module {
     // APIs provided by the app controller
     this._appApi = api.app
     this._settingsApi = api.settings
-    // TODO: Remove this direct dependency on `lexis-cs` branch of an app config
     this._lexisConfig = api.settings.getLexisOptions()
 
     if (!this._lexisConfig) {

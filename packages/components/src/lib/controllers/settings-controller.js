@@ -1,18 +1,8 @@
 import Options from '@comp/lib/options/options.js'
+import { Logger } from 'alpheios-data-models'
 
 export default class SettingsController {
-  constructor ({ platform } = {}) {
-    if (!platform) {
-      throw new Error('No platform data provided for a settings controller')
-    }
-
-    /**
-     * An object with information about an app environment.
-     *
-     * @type {Platform}
-     */
-    this._platform = platform
-
+  constructor () {
     this._storageAdapter = null
 
     this._featureOptions = null
@@ -63,27 +53,31 @@ export default class SettingsController {
     this._uiOptionsDefaults = uiOptionsDefaults
     this._siteOptionsDefaults = siteOptionsDefaults
 
-    const appConfigPromise = this.requestAppOptions()
-    const initOptionsPromise = this.initOptions()
-    /*
-    We do not allow user to configure siteOptions currently.
-    Because of this, they are initialized separately from the rest of the options.
-    `initOptions()` will be called several times during the app's lifetime,
-    after a user has been logged in, as one example.
-    `initNonConfigurableOptions()` will be called only once,
-    during an initialization of the Settings Controller.
-     */
-    this.initNonConfigurableOptions()
-    const [appConfigResponse] = await Promise.all([appConfigPromise, ...initOptionsPromise])
-    this._appConfig = await appConfigResponse.json() // Parse an app config's response into JSON
+    try {
+      const appConfigPromise = this.requestAppOptions()
+      const initOptionsPromise = this.initOptions()
+      /*
+      We do not allow user to configure siteOptions currently.
+      Because of this, they are initialized separately from the rest of the options.
+      `initOptions()` will be called several times during the app's lifetime,
+      after a user has been logged in, as one example.
+      `initNonConfigurableOptions()` will be called only once,
+      during an initialization of the Settings Controller.
+       */
+      this.initNonConfigurableOptions()
+      const [appConfigResponse] = await Promise.all([appConfigPromise, ...initOptionsPromise])
+      this._appConfig = await appConfigResponse.json() // Parse an app config's response into JSON
+    } catch (err) {
+      Logger.getInstance().error(`Unable to retrieve an app configuration from ${this._configServiceUrl}: ${err.message}`)
+      this._appConfig = this._appConfig || {}
+    }
 
     // region Public API of a settings controller
     // A public API must be defined before modules are created because modules may use it
     this._api.settings = {
       initOptions: this.initOptions.bind(this),
       getLexisOptions: () => this._appConfig && this._appConfig['lexis-cs'] ? this._appConfig['lexis-cs'] : {},
-      // TODO: logeion options are currently under the `lexis-cs` branch, at least in a dev config. Shall we fix it?
-      getLogeionOptions: () => this._appConfig && this._appConfig['lexis-cs'] && this._appConfig['lexis-cs'].logeion ? this._appConfig['lexis-cs'].logeion : {},
+      getLogeionOptions: () => this._appConfig && this._appConfig.logeion ? this._appConfig.logeion : {},
       getFeatureOptions: this.getFeatureOptions.bind(this),
       getResourceOptions: this.getResourceOptions.bind(this),
       getUiOptions: this.getUiOptions.bind(this),
@@ -136,6 +130,7 @@ export default class SettingsController {
     const configUrl = `${this._configServiceUrl}?clientId=${encodeURIComponent(this._clientId)}&appName=${encodeURIComponent(this._appName)}` +
       `&appVersion=${encodeURIComponent(this._appVersion)}&buildBranch=${encodeURIComponent(this._branch)}` +
       `&buildNumber=${encodeURIComponent(this._buildNumber)}`
+    console.info('config URL is', configUrl)
     const request = new Request(configUrl)
     return fetch(request)
   }

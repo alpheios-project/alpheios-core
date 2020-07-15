@@ -449,7 +449,7 @@ export default class AppController {
       isMousemoveForced: this.isMousemoveForced.bind(this),
       getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
       clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
-      applyOptions: this.applyOptions.bind(this),
+      applyAllOptions: this.applyAllOptions.bind(this),
       applyUIOption: this.applyUIOption.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       notifyExperimental: this.notifyExperimental.bind(this),
@@ -772,7 +772,7 @@ export default class AppController {
       optionLoadPromises = this.api.settings.initOptions(this.options.storageAdapter)
     }
     await Promise.all(optionLoadPromises)
-    this.applyOptions()
+    this.applyAllOptions()
     this.store.commit('app/setWordLists', wordLists)
   }
 
@@ -1321,7 +1321,7 @@ export default class AppController {
   /**
    * Updates the Application State after settings have been reset or reloaded
    */
-  applyOptions () {
+  applyAllOptions () {
     for (const name of this.api.settings.getFeatureOptions().names) {
       this.applyFeatureOption(name)
       this.store.commit('settings/incrementFeatureResetCounter')

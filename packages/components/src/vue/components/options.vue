@@ -103,7 +103,7 @@ export default {
   methods: {
     resetAllOptions: function () {
       this.settings.resetAllOptions()
-      this.app.applyOptions()
+      this.app.applyAllOptions()
     }
   }
 }
