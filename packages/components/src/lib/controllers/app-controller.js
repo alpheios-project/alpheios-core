@@ -17,12 +17,8 @@ import EmbedLibWarning from '@comp/vue/components/embed-lib-warning.vue'
 
 import LexicalQuery from '@comp/lib/queries/lexical-query.js'
 import ResourceQuery from '@comp/lib/queries/resource-query.js'
-import SiteOptions from '@comp/settings/site-options.json'
-import FeatureOptionDefaults from '@comp/settings/feature-options-defaults.json'
-import UIOptionDefaults from '@comp/settings/ui-options-defaults.json'
 import TextSelector from '@comp/lib/selection/text-selector'
 import Platform from '@comp/lib/utility/platform.js'
-import LanguageOptionDefaults from '@comp/settings/language-options-defaults.json'
 import MouseDblClick from '@comp/lib/custom-pointer-events/mouse-dbl-click.js'
 import LongTap from '@comp/lib/custom-pointer-events/long-tap.js'
 import GenericEvt from '@comp/lib/custom-pointer-events/generic-evt.js'
@@ -73,15 +69,6 @@ export default class AppController {
   constructor (state, options = {}) {
     this.state = state
     this.options = AppController.setOptions(options, AppController.optionsDefaults)
-
-    /*
-    Define defaults for resource options. If a app controller creator
-    needs to provide its own defaults, they shall be defined in a `create()` function.
-     */
-    this.featureOptionsDefaults = FeatureOptionDefaults
-    this.resourceOptionsDefaults = LanguageOptionDefaults
-    this.uiOptionsDefaults = UIOptionDefaults
-    this.siteOptionsDefaults = SiteOptions
 
     this.isInitialized = false
     this.isActivated = false
@@ -163,11 +150,6 @@ export default class AppController {
    */
   static create (state, options) {
     let appController = new AppController(state, options) // eslint-disable-line prefer-const
-
-    /*
-    If necessary override defaults of an app controller's options objects here as:
-    appController.siteOptionsDefaults = mySiteDefaults
-     */
 
     // Register data modules
     appController.registerModule(L10nModule, {
@@ -404,11 +386,7 @@ export default class AppController {
       appVersion: this.options.app.version,
       branch: this.options.app.buildBranch,
       buildNumber: this.options.app.buildNumber,
-      storageAdapter: this.options.storageAdapter,
-      featureOptionsDefaults: this.featureOptionsDefaults,
-      uiOptionsDefaults: this.uiOptionsDefaults,
-      resourceOptionsDefaults: this.resourceOptionsDefaults,
-      siteOptionsDefaults: this.siteOptionsDefaults
+      storageAdapter: this.options.storageAdapter
     })
     // All options has been loaded and initialized after this point
 

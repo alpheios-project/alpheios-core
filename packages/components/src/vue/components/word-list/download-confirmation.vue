@@ -40,16 +40,11 @@
     </div>
 </template>
 <script>
-import Download from '@/lib/utility/download.js'
-import CloseIcon from '@/images/inline-icons/x-close.svg'
-import Tooltip from '@/vue/components/tooltip.vue'
-
-import Options from '@/lib/options/options.js'
-import TextSelector from '@/lib/selection/text-selector'
-
-import ProgressBar from '@/vue/components/progress-bar.vue'
-import Setting from '@/vue/components/setting.vue'
-
+import Download from '@comp/lib/utility/download.js'
+import CloseIcon from '@comp/images/inline-icons/x-close.svg'
+import Tooltip from '@comp/vue/components/tooltip.vue'
+import TextSelector from '@comp/lib/selection/text-selector'
+import ProgressBar from '@comp/vue/components/progress-bar.vue'
 import { LanguageModelFactory } from 'alpheios-data-models'
 
 export default {
@@ -58,7 +53,6 @@ export default {
   storeModules: ['settings'],
   components: {
     closeIcon: CloseIcon,
-    setting: Setting,
     progressBar: ProgressBar,
     alphTooltip: Tooltip
   },

@@ -1,5 +1,9 @@
 import Options from '@comp/lib/options/options.js'
 import { Logger } from 'alpheios-data-models'
+import FeatureOptionsDefaults from '@comp/settings/feature-options-defaults.json'
+import UIOptionsDefaults from '@comp/settings/ui-options-defaults.json'
+import ResourcesOptionsDefaults from '@comp/settings/language-options-defaults.json'
+import SiteOptionsDefaults from '@comp/settings/site-options.json'
 
 export default class SettingsController {
   constructor () {
@@ -26,10 +30,7 @@ export default class SettingsController {
     }
   }
 
-  async init ({
-    api, store, configServiceUrl, clientId, appName, appVersion, branch, buildNumber, storageAdapter,
-    featureOptionsDefaults, resourceOptionsDefaults, uiOptionsDefaults, siteOptionsDefaults
-  } = {}) {
+  async init ({ api, store, configServiceUrl, clientId, appName, appVersion, branch, buildNumber, storageAdapter } = {}) {
     if (!api) {
       throw new Error('API object is required for a settings controller initialization')
     }
@@ -47,11 +48,6 @@ export default class SettingsController {
     this._appVersion = appVersion
     this._branch = branch
     this._buildNumber = buildNumber
-
-    this._featureOptionsDefaults = featureOptionsDefaults
-    this._resourceOptionsDefaults = resourceOptionsDefaults
-    this._uiOptionsDefaults = uiOptionsDefaults
-    this._siteOptionsDefaults = siteOptionsDefaults
 
     try {
       const appConfigPromise = this.requestAppOptions()
@@ -76,8 +72,8 @@ export default class SettingsController {
     // A public API must be defined before modules are created because modules may use it
     this._api.settings = {
       initOptions: this.initOptions.bind(this),
-      getLexisOptions: () => this._appConfig && this._appConfig['lexis-cs'] ? this._appConfig['lexis-cs'] : {},
-      getLogeionOptions: () => this._appConfig && this._appConfig.logeion ? this._appConfig.logeion : {},
+      getLexisOptions: this.getLexisOptions.bind(this),
+      getLogeionOptions: this.getLogeionOptions.bind(this),
       getFeatureOptions: this.getFeatureOptions.bind(this),
       getResourceOptions: this.getResourceOptions.bind(this),
       getUiOptions: this.getUiOptions.bind(this),
@@ -142,20 +138,28 @@ export default class SettingsController {
    * @returns Promise[] an array of promises to load the options data from the adapter
    */
   initOptions (StorageAdapter = this._storageAdapter, authData = null) {
-    this._featureOptions = new Options(this._featureOptionsDefaults, new StorageAdapter(this._featureOptionsDefaults.domain, authData))
-    this._resourceOptions = new Options(this._resourceOptionsDefaults, new StorageAdapter(this._resourceOptionsDefaults.domain, authData))
-    this._uiOptions = new Options(this._uiOptionsDefaults, new StorageAdapter(this._uiOptionsDefaults.domain, authData))
+    this._featureOptions = new Options(FeatureOptionsDefaults, new StorageAdapter(FeatureOptionsDefaults.domain, authData))
+    this._resourceOptions = new Options(ResourcesOptionsDefaults, new StorageAdapter(ResourcesOptionsDefaults.domain, authData))
+    this._uiOptions = new Options(UIOptionsDefaults, new StorageAdapter(UIOptionsDefaults.domain, authData))
     return [this._featureOptions.load(), this._resourceOptions.load(), this._uiOptions.load()]
   }
 
   initNonConfigurableOptions () {
     this._siteOptions = [] // eslint-disable-line prefer-const
-    for (const site of this._siteOptionsDefaults) {
+    for (const site of SiteOptionsDefaults) {
       for (const domain of site.options) {
         const siteOpts = new Options(domain, new this._storageAdapter(domain.domain)) // eslint-disable-line new-cap
         this._siteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
+  }
+
+  getLexisOptions () {
+    return this._appConfig && this._appConfig['lexis-cs'] ? this._appConfig['lexis-cs'] : {}
+  }
+
+  getLogeionOptions () {
+    return this._appConfig && this._appConfig.logeion ? this._appConfig.logeion : {}
   }
 
   getFeatureOptions () {
