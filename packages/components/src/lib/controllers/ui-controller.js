@@ -128,7 +128,6 @@ export default class UIController {
     this._store = store
     this._uiOptions = this._api.settings.getUiOptions()
 
-    // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add(injectionClasses.ALPHEIOS)
 
     // region Public API of a UI controller

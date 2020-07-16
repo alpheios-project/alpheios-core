@@ -1,34 +1,17 @@
-// import Platform from '@/lib/utility/platform.js'
-// import { Logger } from 'alpheios-data-models'
 import Options from '@comp/lib/options/options.js'
+import { Logger } from 'alpheios-data-models'
+import FeatureOptionsDefaults from '@comp/settings/feature-options-defaults.json'
+import UIOptionsDefaults from '@comp/settings/ui-options-defaults.json'
+import ResourcesOptionsDefaults from '@comp/settings/language-options-defaults.json'
+import SiteOptionsDefaults from '@comp/settings/site-options.json'
 
-/**
- */
 export default class SettingsController {
-  constructor ({ platform } = {}) {
-    if (!platform) {
-      throw new Error('No platform data provided for a settings controller')
-    }
-
-    /**
-     * An object with information about an app environment.
-     *
-     * @type {Platform}
-     */
-    this._platform = platform
-
+  constructor () {
     this._storageAdapter = null
 
     this._featureOptions = null
     this._resourceOptions = null
     this._uiOptions = null
-
-    /*
-    A copy of resource options for the lookup UI component
-    This doesn't get reloaded from the storage adapter because
-    we don't expose it to the user via preferences
-     */
-    this._lookupResourceOptions = null
     this._siteOptions = null
 
     /**
@@ -47,10 +30,7 @@ export default class SettingsController {
     }
   }
 
-  async init ({
-    api, store, configServiceUrl, clientId, appName, appVersion, branch, buildNumber, storageAdapter,
-    featureOptionsDefaults, resourceOptionsDefaults, uiOptionsDefaults, siteOptionsDefaults
-  } = {}) {
+  async init ({ api, store, configServiceUrl, clientId, appName, appVersion, branch, buildNumber, storageAdapter } = {}) {
     if (!api) {
       throw new Error('API object is required for a settings controller initialization')
     }
@@ -69,39 +49,36 @@ export default class SettingsController {
     this._branch = branch
     this._buildNumber = buildNumber
 
-    this._featureOptionsDefaults = featureOptionsDefaults
-    this._resourceOptionsDefaults = resourceOptionsDefaults
-    this._uiOptionsDefaults = uiOptionsDefaults
-    this._siteOptionsDefaults = siteOptionsDefaults
-
-    const appConfigPromise = this.requestAppOptions()
-    const initOptionsPromise = this.initOptions()
-    /*
-    We do not allow user to configure lookupResourceOptions or siteOptions currently.
-    Because of this, they are initialized separately from the rest of the options.
-    `initOptions()` will be called several times during the app's lifetime,
-    after a user has been logged in, as one example.
-    `initNonConfigurableOptions()` will be called only once,
-    during an initialization of the Settings Controller.
-     */
-    this.initNonConfigurableOptions()
-    const [appConfigResponse] = await Promise.all([appConfigPromise, ...initOptionsPromise])
-    this._appConfig = await appConfigResponse.json() // Parse an app config's response into JSON
+    try {
+      const appConfigPromise = this.requestAppOptions()
+      const initOptionsPromise = this.initOptions()
+      /*
+      We do not allow user to configure siteOptions currently.
+      Because of this, they are initialized separately from the rest of the options.
+      `initOptions()` will be called several times during the app's lifetime,
+      after a user has been logged in, as one example.
+      `initNonConfigurableOptions()` will be called only once,
+      during an initialization of the Settings Controller.
+       */
+      this.initNonConfigurableOptions()
+      const [appConfigResponse] = await Promise.all([appConfigPromise, ...initOptionsPromise])
+      this._appConfig = await appConfigResponse.json() // Parse an app config's response into JSON
+    } catch (err) {
+      Logger.getInstance().error(`Unable to retrieve an app configuration from ${this._configServiceUrl}: ${err.message}`)
+      this._appConfig = this._appConfig || {}
+    }
 
     // region Public API of a settings controller
     // A public API must be defined before modules are created because modules may use it
     this._api.settings = {
       initOptions: this.initOptions.bind(this),
-      getLexisOptions: () => this._appConfig && this._appConfig['lexis-cs'] ? this._appConfig['lexis-cs'] : {},
-      // TODO: logeion options are currently under the `lexis-cs` branch, at least in a dev config. Shall we fix it?
-      getLogeionOptions: () => this._appConfig && this._appConfig['lexis-cs'] && this._appConfig['lexis-cs'].logeion ? this._appConfig['lexis-cs'].logeion : {},
+      getLexisOptions: this.getLexisOptions.bind(this),
+      getLogeionOptions: this.getLogeionOptions.bind(this),
       getFeatureOptions: this.getFeatureOptions.bind(this),
       getResourceOptions: this.getResourceOptions.bind(this),
       getUiOptions: this.getUiOptions.bind(this),
-      // we don't offer UI to change to lookupResourceOptions or siteOptions
-      // so they remain out of dynamic state for now - should eventually
-      // refactor
-      lookupResourceOptions: this._lookupResourceOptions, // TODO: This is not used at the moment, do we still need it?
+      // we don't offer UI to change to siteOptions
+      // so they remain out of dynamic state for now - should eventually refactor
       siteOptions: this._siteOptions, // Site options seems to be not used right now
       isInVerboseMode: () => this._uiOptions.items.verboseMode.currentValue === 'verbose',
       featureOptionChange: this.featureOptionChange.bind(this),
@@ -161,21 +138,28 @@ export default class SettingsController {
    * @returns Promise[] an array of promises to load the options data from the adapter
    */
   initOptions (StorageAdapter = this._storageAdapter, authData = null) {
-    this._featureOptions = new Options(this._featureOptionsDefaults, new StorageAdapter(this._featureOptionsDefaults.domain, authData))
-    this._resourceOptions = new Options(this._resourceOptionsDefaults, new StorageAdapter(this._resourceOptionsDefaults.domain, authData))
-    this._uiOptions = new Options(this._uiOptionsDefaults, new StorageAdapter(this._uiOptionsDefaults.domain, authData))
+    this._featureOptions = new Options(FeatureOptionsDefaults, new StorageAdapter(FeatureOptionsDefaults.domain, authData))
+    this._resourceOptions = new Options(ResourcesOptionsDefaults, new StorageAdapter(ResourcesOptionsDefaults.domain, authData))
+    this._uiOptions = new Options(UIOptionsDefaults, new StorageAdapter(UIOptionsDefaults.domain, authData))
     return [this._featureOptions.load(), this._resourceOptions.load(), this._uiOptions.load()]
   }
 
   initNonConfigurableOptions () {
-    this._lookupResourceOptions = new Options(this._resourceOptionsDefaults, new this._storageAdapter(this._resourceOptionsDefaults.domain))
     this._siteOptions = [] // eslint-disable-line prefer-const
-    for (const site of this._siteOptionsDefaults) {
+    for (const site of SiteOptionsDefaults) {
       for (const domain of site.options) {
         const siteOpts = new Options(domain, new this._storageAdapter(domain.domain)) // eslint-disable-line new-cap
         this._siteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
+  }
+
+  getLexisOptions () {
+    return this._appConfig && this._appConfig['lexis-cs'] ? this._appConfig['lexis-cs'] : {}
+  }
+
+  getLogeionOptions () {
+    return this._appConfig && this._appConfig.logeion ? this._appConfig.logeion : {}
   }
 
   getFeatureOptions () {
@@ -258,7 +242,7 @@ export default class SettingsController {
     await this._featureOptions.reset()
     await this._resourceOptions.reset()
     await this._uiOptions.reset()
-    // we don't reload lookupResourceOptions or siteOptions
+    // we don't reload siteOptions
     // because we don't currently allow user configuration of these
   }
 }

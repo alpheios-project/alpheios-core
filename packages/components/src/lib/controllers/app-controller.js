@@ -17,12 +17,8 @@ import EmbedLibWarning from '@comp/vue/components/embed-lib-warning.vue'
 
 import LexicalQuery from '@comp/lib/queries/lexical-query.js'
 import ResourceQuery from '@comp/lib/queries/resource-query.js'
-import SiteOptions from '@comp/settings/site-options.json'
-import FeatureOptionDefaults from '@comp/settings/feature-options-defaults.json'
-import UIOptionDefaults from '@comp/settings/ui-options-defaults.json'
 import TextSelector from '@comp/lib/selection/text-selector'
 import Platform from '@comp/lib/utility/platform.js'
-import LanguageOptionDefaults from '@comp/settings/language-options-defaults.json'
 import MouseDblClick from '@comp/lib/custom-pointer-events/mouse-dbl-click.js'
 import LongTap from '@comp/lib/custom-pointer-events/long-tap.js'
 import GenericEvt from '@comp/lib/custom-pointer-events/generic-evt.js'
@@ -73,15 +69,6 @@ export default class AppController {
   constructor (state, options = {}) {
     this.state = state
     this.options = AppController.setOptions(options, AppController.optionsDefaults)
-
-    /*
-    Define defaults for resource options. If a app controller creator
-    needs to provide its own defaults, they shall be defined in a `create()` function.
-     */
-    this.featureOptionsDefaults = FeatureOptionDefaults
-    this.resourceOptionsDefaults = LanguageOptionDefaults
-    this.uiOptionsDefaults = UIOptionDefaults
-    this.siteOptionsDefaults = SiteOptions
 
     this.isInitialized = false
     this.isActivated = false
@@ -163,11 +150,6 @@ export default class AppController {
    */
   static create (state, options) {
     let appController = new AppController(state, options) // eslint-disable-line prefer-const
-
-    /*
-    If necessary override defaults of an app controller's options objects here as:
-    appController.siteOptionsDefaults = mySiteDefaults
-     */
 
     // Register data modules
     appController.registerModule(L10nModule, {
@@ -404,11 +386,7 @@ export default class AppController {
       appVersion: this.options.app.version,
       branch: this.options.app.buildBranch,
       buildNumber: this.options.app.buildNumber,
-      storageAdapter: this.options.storageAdapter,
-      featureOptionsDefaults: this.featureOptionsDefaults,
-      uiOptionsDefaults: this.uiOptionsDefaults,
-      resourceOptionsDefaults: this.resourceOptionsDefaults,
-      siteOptionsDefaults: this.siteOptionsDefaults
+      storageAdapter: this.options.storageAdapter
     })
     // All options has been loaded and initialized after this point
 
@@ -449,7 +427,7 @@ export default class AppController {
       isMousemoveForced: this.isMousemoveForced.bind(this),
       getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
       clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
-      applyOptions: this.applyOptions.bind(this),
+      applyAllOptions: this.applyAllOptions.bind(this),
       applyUIOption: this.applyUIOption.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       notifyExperimental: this.notifyExperimental.bind(this),
@@ -772,7 +750,7 @@ export default class AppController {
       optionLoadPromises = this.api.settings.initOptions(this.options.storageAdapter)
     }
     await Promise.all(optionLoadPromises)
-    this.applyOptions()
+    this.applyAllOptions()
     this.store.commit('app/setWordLists', wordLists)
   }
 
@@ -1321,7 +1299,7 @@ export default class AppController {
   /**
    * Updates the Application State after settings have been reset or reloaded
    */
-  applyOptions () {
+  applyAllOptions () {
     for (const name of this.api.settings.getFeatureOptions().names) {
       this.applyFeatureOption(name)
       this.store.commit('settings/incrementFeatureResetCounter')
@@ -1391,6 +1369,13 @@ export default class AppController {
         this.store.commit('panel/setPosition', value)
         break
       case 'verboseMode':
+        /*
+        The value of the `verboseMode` option passed as an argument of this method is a string value.
+        The text of the string is specific to the options object and may change without notice.
+        The App Controller has no knowledge of what those string option values might be.
+        That's why we're using a `isInVerboseMode()` method of the Settings public API.
+        It returns a boolean and is much simpler and safer in use.
+         */
         this.logger.setVerboseMode(this.api.settings.isInVerboseMode())
         break
       case 'hideLoginPrompt':
