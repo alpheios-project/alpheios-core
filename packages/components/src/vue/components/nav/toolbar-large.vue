@@ -22,7 +22,7 @@
             @click="showHelp"
             id="alpheios-toolbar-navbuttons-info"
             class="alpheios-navbuttons__btn"
-            :class="{ active: $store.getters['ui/isActiveTab']('info') && $store.state.panel.open }"
+            :class="{ active: $store.getters['ui/isActiveTab']('info') && isPanelOpen }"
         >
           <help-icon/>
         </span>
@@ -107,7 +107,7 @@
             @click="ui.togglePanelTab('inflectionsbrowser')"
             id="alpheios-toolbar-navbuttons-inflectionsbrowser"
             class="alpheios-navbuttons__btn"
-            :class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') && $store.state.panel.open }"
+            :class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') && isPanelOpen }"
         >
           <inflections-browser-icon/>
         </span>
@@ -118,7 +118,7 @@
           :tooltip-direction="tooltipDirection"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('grammar') && $store.state.panel.open }"
+            :class="{ active: $store.getters['ui/isActiveTab']('grammar') && isPanelOpen }"
             class="alpheios-navbuttons__btn"
             id="alpheios-toolbar-navbuttons-grammar"
             @click="ui.togglePanelTab('grammar')"
@@ -132,7 +132,7 @@
           :tooltip-direction="tooltipDirection"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('wordlist') && $store.state.panel.open, disabled: !$store.state.app.hasWordListsData }"
+            :class="{ active: $store.getters['ui/isActiveTab']('wordlist') && isPanelOpen, disabled: !$store.state.app.hasWordListsData }"
             class="alpheios-navbuttons__btn"
             @click="ui.togglePanelTab('wordlist')"
             id="alpheios-toolbar-navbuttons-wordlist"
@@ -146,7 +146,7 @@
           :tooltip-direction="tooltipDirection"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('user') && $store.state.panel.open, disabled: !$store.state.auth.enableLogin }"
+            :class="{ active: $store.getters['ui/isActiveTab']('user') && isPanelOpen, disabled: !$store.state.auth.enableLogin }"
             class="alpheios-navbuttons__btn"
             id="alpheios-toolbar-navbuttons-user"
             @click="ui.togglePanelTab('user')"
@@ -160,7 +160,7 @@
           :tooltip-direction="tooltipDirection"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('options') && $store.state.panel.open }"
+            :class="{ active: $store.getters['ui/isActiveTab']('options') && isPanelOpen }"
             class="alpheios-navbuttons__btn"
             @click="ui.togglePanelTab('options')"
             id="alpheios-toolbar-navbuttons-options"
@@ -175,7 +175,7 @@
           v-show="this.settings.isInVerboseMode()"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('status') && $store.state.panel.open }"
+            :class="{ active: $store.getters['ui/isActiveTab']('status') && isPanelOpen }"
             class="alpheios-navbuttons__btn"
             @click="ui.togglePanelTab('status')"
             id="alpheios-toolbar-navbuttons-status"
@@ -220,7 +220,7 @@ export default {
     l10n: 'l10n',
     settings: 'settings'
   },
-  storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
+  storeModules: ['toolbar', 'app', 'ui', 'panel'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     lookup: Lookup,
@@ -274,9 +274,10 @@ export default {
       return this.moduleConfig.showNav
     },
     componentStyles: function () {
+      // eslint-disable-next-line prefer-const
       let styles = {
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
-        zIndex: this.ui.zIndex
+        zIndex: this.$store.state.ui.zIndexMax
       }
 
       if (this.moduleConfig) {
@@ -297,7 +298,7 @@ export default {
     },
 
     toolbarLookupClasses () {
-      return { 
+      return {
         'alpheios-toolbar__lookup-beta-codes': this.currentShowBetaCodesInfo,
         'alpheios-toolbar__lookup-change-lang': !this.currentShowBetaCodesInfo && this.showLangSelector && this.currentEnableLogeionAutoComplete
       }
@@ -326,6 +327,10 @@ export default {
     },
     currentEnableLogeionAutoComplete () {
       return this.featureOptions ? this.featureOptions.items.enableLogeionAutoComplete.currentValue : null
+    },
+
+    isPanelOpen () {
+      return this.$store.state.panel ? this.$store.state.panel.visible : false
     }
   },
 

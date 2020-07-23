@@ -5,7 +5,8 @@
   "main": "dist/alpheios-components.min.js",
   "scripts": {
     "test": "jest --coverage  && shx cat ./coverage/lcov.info | coveralls",
-    "test-no-coverage": "jest tests/lib && jest tests/vue  && jest tests/inflections",
+    "test-no-coverage": "jest tests/lib && jest tests/vue  && jest tests/inflections && jest tests/lib/controllers/ui-controller.test.js",
+    "test-ui-controller": "jest --verbose tests/lib/controllers/ui-controller.test.js",
     "test-ci": "npm run test-lib && npm run test-components ",
     "test-lib": "jest tests/lib --coverage",
     "test-components": "jest tests/vue --coverage",
@@ -55,6 +56,7 @@
     "alpheios-wordlist": "^3.3.0",
     "autoprefixer": "^9.8.5",
     "axios": "^0.19.2",
+    "babel-jest": "^26.0.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
@@ -116,7 +118,8 @@
     "transform": {
       "^.+\\.jsx?$": "babel-jest",
       ".*\\.(vue)$": "vue-jest",
-      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransform.js"
+      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransform.js",
+      "^.*\\.svg$": "<rootDir>/svgTransform.js"
     },
     "transformIgnorePatterns": [
       "!node_modules/alpheios-data-models/"

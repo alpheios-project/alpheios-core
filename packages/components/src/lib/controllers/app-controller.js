@@ -956,7 +956,7 @@ export default class AppController {
     this.store.commit('app/lexicalRequestStarted', { targetWord: targetWord, source: source })
 
     // Right now we always need to open a UI with the new Lexical request, but we can make it configurable if needed
-    this.api.ui.open()
+    this.api.ui.openLexQueryUI()
     return this
   }
 
@@ -1117,11 +1117,7 @@ export default class AppController {
     // TODO: Move to keypress as keyCode is deprecated
     // TODO: Why does it not work on initial panel opening?
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
-      if (this.state.isPanelOpen()) {
-        if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel() }
-      } else if (this.api.ui.hasModule('popup')) {
-        this.api.ui.closePopup()
-      }
+      this.api.ui.closeUI()
     }
     return true
   }
@@ -1363,7 +1359,7 @@ export default class AppController {
   applyUIOption (settingName, value) {
     switch (settingName) {
       case 'fontSize':
-        this.api.ui.applyFontSize(value)
+        UIController.applyFontSize(value)
         break
       case 'panelPosition':
         this.store.commit('panel/setPosition', value)

@@ -206,9 +206,6 @@ describe('panel-compact.test.js', () => {
 
   it('7 PanelCompact - computed componentStyles returns zIndex', () => {
     const api = {
-      ui: BaseTestHelp.uiAPI({
-        zIndex: 10
-      }),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI()
     }
@@ -225,7 +222,7 @@ describe('panel-compact.test.js', () => {
       mocks: api
     })
 
-    expect(cmp.vm.componentStyles).toEqual({ zIndex: 20 })
+    expect(cmp.vm.componentStyles).toEqual({ zIndex: 60 })
   })
 
   it('8 PanelCompact - computed isLandscape checks oriention and expanded', () => {
