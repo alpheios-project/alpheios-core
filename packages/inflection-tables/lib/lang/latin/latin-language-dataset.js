@@ -24,6 +24,10 @@ import verbSupineFormsCSV from '@lib/lang/latin/data/supine/forms.csv'
 import verbSupineFormFootnotesCSV from '@lib/lang/latin/data/supine/form_footnotes.csv'
 import gerundiveFormsCSV from '@lib/lang/latin/data/gerundive/forms.csv'
 import gerundiveFormFootnotesCSV from '@lib/lang/latin/data/gerundive/form_footnotes.csv'
+import imperativeFormsCSV from '@lib/lang/latin/data/imperative/forms.csv'
+import imperativeFormFootnotesCSV from '@lib/lang/latin/data/imperative/form_footnotes.csv'
+import infinitiveFormsCSV from '@lib/lang/latin/data/infinitive/forms.csv'
+import infinitiveFormFootnotesCSV from '@lib/lang/latin/data/infinitive/form_footnotes.csv'
 import papaparse from 'papaparse'
 
 /*
@@ -469,6 +473,20 @@ export default class LatinLanguageDataset extends LanguageDataset {
     footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
     forms = papaparse.parse(gerundiveFormsCSV, { skipEmptyLines: true })
     this.addSupineGerundiveForms(partOfSpeech, forms.data, footnotes)
+
+    // imperative
+    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
+    footnotesData = papaparse.parse(imperativeFormFootnotesCSV, { skipEmptyLines: true })
+    footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
+    forms = papaparse.parse(imperativeFormsCSV, { skipEmptyLines: true })
+    this.addVerbForms(partOfSpeech, forms.data, footnotes)
+
+    // infinitive
+    partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
+    footnotesData = papaparse.parse(infinitiveFormFootnotesCSV, { skipEmptyLines: true })
+    footnotes = this.addFootnotes(partOfSpeech, Form, footnotesData.data)
+    forms = papaparse.parse(infinitiveFormsCSV, { skipEmptyLines: true })
+    this.addVerbForms(partOfSpeech, forms.data, footnotes)
 
     this.dataLoaded = true
     return this

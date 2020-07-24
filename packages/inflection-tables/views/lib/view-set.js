@@ -34,6 +34,7 @@ export default class ViewSet {
                 dataset.setInflectionData(inflection, lexeme.lemma)
               })
             } catch (e) {
+              console.info(e)
               Logger.getInstance().error(`Cannot set inflection data: ${e}`)
             }
           }

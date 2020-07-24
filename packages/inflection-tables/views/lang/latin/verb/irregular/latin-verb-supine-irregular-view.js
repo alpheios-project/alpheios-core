@@ -61,6 +61,6 @@ export default class LatinVerbSupineIrregularView extends LatinVerbIrregularBase
    * @return {View[]}
    */
   static linkedViewConstructors (homonym) {
-    return [LatinVerbIrregularView, LatinVerbIrregularVoiceView, LatinVerbParticipleIrregularView]
+    return [LatinVerbIrregularView, LatinVerbIrregularVoiceView, LatinVerbParticipleIrregularView, LatinVerbInfinitiveIrregularView]
   }
 }

@@ -92,6 +92,8 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
     // this will fail if we want to link tables for irregular and regular verbs together this way
     const inflections = this.homonym.inflections.filter(infl => infl[Feature.types.part].value === this.constructor.mainPartOfSpeech && infl.constraints && infl.constraints.irregular)
     for (const Constructor of this.constructor.linkedViewConstructors(this.homonym)) {
+      try {
+      console.info("try creating",Constructor)
       let linkedViewInflections = [] // eslint-disable-line prefer-const
       for (const infl of inflections) {
         let clone = infl.clone()
@@ -107,7 +109,12 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
           infl[Feature.types.part] = infl[Feature.types.part].createFeature(this.constructor.mainPartOfSpeech)
         }
         views.push(view)
+      } else {
+        console.info("No match",Constructor)
       }
+    } catch (e) {
+      console.info(e)
+    }
     }
     this.linkedViews = views
     return views
