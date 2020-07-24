@@ -1,11 +1,11 @@
 import { Constants, Feature } from 'alpheios-data-models'
-import LatinVerbIrregularBaseView from '@views/lang/latin/verb/irregular/latin-verb-irregular-base-view.js'
+import LatinVerbIrregularLinkedBaseView from '@views/lang/latin/verb/irregular/latin-verb-irregular-linked-base-view.js'
 import LatinVerbIrregularView from '@views/lang/latin/verb/irregular/latin-verb-irregular-view.js'
 import LatinVerbIrregularVoiceView from '@views/lang/latin/verb/irregular/latin-verb-irregular-voice-view.js'
 import LatinVerbParticipleIrregularView from '@views/lang/latin/verb/irregular/latin-verb-participle-irregular-view.js'
 import Table from '@views/lib/table'
 
-export default class LatinVerbSupineIrregularView extends LatinVerbIrregularBaseView {
+export default class LatinVerbSupineIrregularView extends LatinVerbIrregularLinkedBaseView {
   constructor (homonym, inflectionData) {
     super(homonym, inflectionData)
 
@@ -61,6 +61,6 @@ export default class LatinVerbSupineIrregularView extends LatinVerbIrregularBase
    * @return {View[]}
    */
   static linkedViewConstructors (homonym) {
-    return [LatinVerbIrregularView, LatinVerbIrregularVoiceView, LatinVerbParticipleIrregularView, LatinVerbInfinitiveIrregularView]
+    return [LatinVerbIrregularView, LatinVerbIrregularVoiceView, LatinVerbParticipleIrregularView]
   }
 }

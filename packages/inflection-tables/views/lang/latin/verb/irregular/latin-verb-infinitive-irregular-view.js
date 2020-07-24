@@ -1,19 +1,14 @@
 import { Constants, Feature } from 'alpheios-data-models'
-import LatinVerbIrregularBaseView from '@views/lang/latin/verb/irregular/latin-verb-irregular-base-view.js'
-import LatinVerbIrregularVoiceView from '@views/lang/latin/verb/irregular/latin-verb-irregular-voice-view.js'
-import LatinVerbIrregularView from '@views/lang/latin/verb/irregular/latin-verb-irregular-view.js'
-import LatinVerbParticipleIrregularView from '@views/lang/latin/verb/irregular/latin-verb-participle-irregular-view.js'
-import LatinVerbSupineIrregularView from '@views/lang/latin/verb/irregular/latin-verb-supine-irregular-view.js'
+import LatinVerbIrregularLinkedBaseView from '@views/lang/latin/verb/irregular/latin-verb-irregular-linked-base-view.js'
 import Table from '@views/lib/table'
 
-export default class LatinVerbInfinitiveIrregularView extends LatinVerbIrregularBaseView {
+export default class LatinVerbInfinitiveIrregularView extends LatinVerbIrregularLinkedBaseView {
   constructor (homonym, inflectionData) {
     super(homonym, inflectionData)
 
     this.id = 'verbInfinitiveIrregular'
-    this.name = 'verbInfinitive-irregular'
+    this.name = 'verb-infinitive-irregular'
     this.title = 'Verb Infinitive Conjugation (Irregular)'
-
 
     if (this.isImplemented) {
       this.createTable()
@@ -22,12 +17,10 @@ export default class LatinVerbInfinitiveIrregularView extends LatinVerbIrregular
   }
 
   createTable () {
-    this.table = new Table([this.features.voices, this.features.conjugations,
-      this.features.tenses])
+    this.table = new Table([this.features.voices, this.features.tenses])
     let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
-      this.constructor.model.typeFeature(Feature.types.voice),
-      this.constructor.model.typeFeature(Feature.types.conjugation)
+      this.constructor.model.typeFeature(Feature.types.voice)
     ]
     features.rows = [this.constructor.model.typeFeature(Feature.types.tense)]
     features.columnRowTitles = [this.constructor.model.typeFeature(Feature.types.tense)]
@@ -36,6 +29,15 @@ export default class LatinVerbInfinitiveIrregularView extends LatinVerbIrregular
 
   static get viewID () {
     return 'latin_infinitive_irregular_view'
+  }
+
+  static enabledForLinking (inflection) {
+    return Boolean(
+      inflection[Feature.types.part].value === this.mainPartOfSpeech &&
+      inflection.constraints &&
+      inflection.constraints.irregular &&
+      inflection.word
+    )
   }
 
   static enabledForInflection (inflection) {
@@ -69,10 +71,6 @@ export default class LatinVerbInfinitiveIrregularView extends LatinVerbIrregular
   }
 
   static linkedViewConstructors (homonym) {
-    let views = [LatinVerbIrregularView, LatinVerbIrregularVoiceView, LatinVerbParticipleIrregularView] // eslint-disable-line prefer-const
-    if (homonym.inflections.some(i => this.supineEnabledHdwds.includes(i.word.value))) {
-      views.push(LatinVerbSupineIrregularView)
-    }
-    return views
+    return []
   }
 }

@@ -677,9 +677,10 @@ describe('verified-issues.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'sum, esse,fui,futurus',
-      linkedViewsLength: 1,
+      linkedViewsLength: 2,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)' }
       ]
     })
     const irregularViews = inflectionsViewSet.matchingViews.filter(v => v.constructor.name === 'LatinVerbIrregularView')

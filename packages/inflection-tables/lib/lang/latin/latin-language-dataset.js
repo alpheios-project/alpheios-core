@@ -79,7 +79,6 @@ export default class LatinLanguageDataset extends LanguageDataset {
       IRREG_POFS: [Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE, Constants.POFS_SUPINE, Constants.POFS_GERUNDIVE],
       ORD_1ST_2ND: '1st 2nd',
       GEND_MASCULINE_FEMININE: 'masculine feminine'
-
     }
   }
 

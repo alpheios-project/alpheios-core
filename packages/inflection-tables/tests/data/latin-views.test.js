@@ -589,7 +589,7 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'nolo, nolle,nolui,-',
-      linkedViewsLength: 1,
+      linkedViewsLength: 2,
       linkedViews: [
         { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
         { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'}
@@ -653,7 +653,7 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'malo, malle,malui,-',
-      linkedViewsLength: 1,
+      linkedViewsLength: 2,
       linkedViews: [
         { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
         { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'}
@@ -1666,6 +1666,90 @@ describe('latin-views.test.js', () => {
       inflectionsViewSet,
       viewName: 'LatinMoodConjugationVoiceView',
       title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+  })
+
+  it('30 - checked Latin Views - esse - Latin Verb Conjugation Irregular Infinitive', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('esse', Constants.LANG_LATIN)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews[1])
+
+    expect(inflectionsViewSet.matchingViews.length).toEqual(10)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinInfinitiveView',
+      title: 'Infinitive',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbInfinitiveIrregularView',
+      title: 'Verb Infinitive Conjugation (Irregular)',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbIrregularView',
+      title: 'Verb Conjugation (Irregular)',
+      additionalTitle: 'sum, esse,fui,futurus',
+      linkedViewsLength: 2,
+      linkedViews: [
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'}
+      ]
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVoiceConjugationMoodView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVoiceMoodConjugationView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinConjugationVoiceMoodView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinConjugationMoodVoiceView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinMoodVoiceConjugationView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinMoodConjugationVoiceView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbParticipleView',
+      title: 'Participle',
       linkedViewsLength: 0
     })
   })
