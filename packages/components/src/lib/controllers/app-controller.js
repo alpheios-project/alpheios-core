@@ -429,6 +429,7 @@ export default class AppController {
       clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
       applyAllOptions: this.applyAllOptions.bind(this),
       applyUIOption: this.applyUIOption.bind(this),
+      applyFeatureOption: this.applyFeatureOption.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       notifyExperimental: this.notifyExperimental.bind(this),
       getLanguageName: AppController.getLanguageName,
@@ -689,6 +690,7 @@ export default class AppController {
     let event
     let eventParams
     if (this.platform.isMobile) {
+      // A mobile platform
       if (['longTap', 'longtap', null].includes(this.options.textQueryTriggerMobile)) {
         event = LongTap
       } else {
@@ -696,6 +698,7 @@ export default class AppController {
         eventParams = this.options.textQueryTriggerMobile
       }
     } else if (this.isMousemoveEnabled) {
+      // A desktop platform with mousemove enabled
       event = MouseMove
       eventParams = {
         mouseMoveDelay: this.api.settings.getUiOptions().items.mouseMoveDelay.currentValue,
@@ -704,7 +707,8 @@ export default class AppController {
         mouseMoveLimitedById: this.api.settings.getUiOptions().items.mouseMoveLimitedById.currentValue
       }
     } else {
-      if (['dblClick', 'dblclick', null].includes(this.options.textQueryTriggerMobile)) {
+      // A desktop platform with mousemove disabled
+      if (['dblClick', 'dblclick', null].includes(this.options.textQueryTriggerDesktop)) {
         event = MouseDblClick
       } else {
         event = GenericEvt
