@@ -9,14 +9,6 @@ import { Logger } from 'alpheios-data-models'
  * A UI controller is a part of a higher-level app controller.
  *
  * @typedef {object} UIController
- * @property {Function} init - A function to initialize a UIController.
- */
-
-/**
- * A class representing a platform the app is running upon.
- *
- * @typedef {object} UIController
- * @property
  */
 export default class UIController {
   /**
