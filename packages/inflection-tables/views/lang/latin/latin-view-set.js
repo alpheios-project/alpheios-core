@@ -15,6 +15,9 @@ import LatinVerbParticipleView from '@views/lang/latin/verb/latin-verb-participl
 import LatinVerbParticipleIrregularView from '@views/lang/latin/verb/irregular/latin-verb-participle-irregular-view.js'
 import LatinVerbSupineIrregularView from '@views/lang/latin/verb/irregular/latin-verb-supine-irregular-view.js'
 import LatinVerbInfinitiveIrregularView from '@views/lang/latin/verb/irregular/latin-verb-infinitive-irregular-view.js'
+import LatinVerbInfinitiveIrregularVoiceView from '@views/lang/latin/verb/irregular/latin-verb-infinitive-irregular-voice-view.js'
+import LatinVerbImperativeIrregularView from '@views/lang/latin/verb/irregular/latin-verb-imperative-irregular-view.js'
+import LatinVerbImperativeIrregularVoiceView from '@views/lang/latin/verb/irregular/latin-verb-imperative-irregular-voice-view.js'
 // import LatinVerbGerundiveIrregularView from '@views/lang/latin/verb/irregular/latin-verb-gerundive-irregular-view.js'
 import LatinInfinitiveView from '@views/lang/latin/verb/latin-infinitive-view.js'
 export default class LatinViewSet extends ViewSet {
@@ -35,6 +38,9 @@ export default class LatinViewSet extends ViewSet {
       LatinVerbParticipleIrregularView,
       LatinVerbSupineIrregularView,
       LatinVerbInfinitiveIrregularView,
+      LatinVerbInfinitiveIrregularVoiceView,
+      LatinVerbImperativeIrregularView,
+      LatinVerbImperativeIrregularVoiceView,
       //      LatinVerbGerundiveIrregularView, // Gerundive table is eliminated for now as per discussion in https://github.com/alpheios-project/inflection-tables/issues/76
       LatinVoiceConjugationMoodView,
       LatinVoiceMoodConjugationView,

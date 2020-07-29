@@ -1,4 +1,5 @@
 import { Constants, Feature } from 'alpheios-data-models'
+import GroupFeatureType from '@views/lib/group-feature-type.js'
 import LatinVerbIrregularLinkedBaseView from '@views/lang/latin/verb/irregular/latin-verb-irregular-linked-base-view.js'
 import Table from '@views/lib/table'
 
@@ -9,6 +10,9 @@ export default class LatinVerbInfinitiveIrregularView extends LatinVerbIrregular
     this.id = 'verbInfinitiveIrregular'
     this.name = 'verb-infinitive-irregular'
     this.title = 'Verb Infinitive Conjugation (Irregular)'
+    this.features.moods =
+      new GroupFeatureType(Feature.types.mood, this.constructor.languageID, 'Mood', [
+        this.constructor.model.typeFeature(Feature.types.mood).createFeature(Constants.MOOD_INFINITIVE)])
 
     if (this.isImplemented) {
       this.createTable()
@@ -17,10 +21,10 @@ export default class LatinVerbInfinitiveIrregularView extends LatinVerbIrregular
   }
 
   createTable () {
-    this.table = new Table([this.features.voices, this.features.tenses])
+    this.table = new Table([this.features.moods, this.features.tenses])
     let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
-      this.constructor.model.typeFeature(Feature.types.voice)
+      this.constructor.model.typeFeature(Feature.types.mood)
     ]
     features.rows = [this.constructor.model.typeFeature(Feature.types.tense)]
     features.columnRowTitles = [this.constructor.model.typeFeature(Feature.types.tense)]
