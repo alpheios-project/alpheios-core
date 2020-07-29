@@ -29,9 +29,6 @@ describe('popup.test.js', () => {
     store = BaseTestHelp.baseVuexStore()
 
     api = {
-      ui: BaseTestHelp.uiAPI({
-        zIndex: 50
-      }),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI({
         platform: {
@@ -145,7 +142,7 @@ describe('popup.test.js', () => {
     expect(cmp.vm.componentStyles.width).toEqual(30) // widthDm
     expect(cmp.vm.componentStyles.height).toEqual(40) // heightDm
     expect(cmp.vm.componentStyles.zIndex).toEqual(50) // ui.zIndex
-    expect(cmp.vm.componentStyles.transform).toEqual('translate(60px, 70px)') // ui.zIndex
+    expect(cmp.vm.componentStyles.transform).toEqual('translate(60px, 70px)')
   })
 
   it('6 Popup - computed noLanguage checks if $store.state.app.currentLanguageName is defined, by default = true', () => {

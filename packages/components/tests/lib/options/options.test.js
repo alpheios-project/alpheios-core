@@ -1,10 +1,9 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { Logger } from 'alpheios-data-models'
-import Options from '@/lib/options/options'
-// import OptionItem from '@/lib/options/options-item'
-import StorageAdapter from '@/lib/options/storage-adapter'
-import LocalStorageArea from '@/lib/options/local-storage-area'
+import Options from '@comp/lib/options/options.js'
+import StorageAdapter from '@comp/lib/options/storage-adapter.js'
+import LocalStorageArea from '@comp/lib/options/local-storage-area.js'
 
 describe('options.test.js', () => {
   const logger = Logger.getInstance({ verbose: true })

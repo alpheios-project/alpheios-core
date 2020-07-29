@@ -248,7 +248,8 @@ export default {
     this.$nextTick(() => {
       const selectorName = 'getSelectedText-usageExamples'
       try {
-        this.app.registerTextSelector(selectorName, '.alpheios-word-usage').activateTextSelector(selectorName)
+        this.app.registerTextSelector(selectorName, '.alpheios-word-usage')
+        this.app.activateTextSelector(selectorName)
       } catch (err) {
         Logger.getInstance().error(err)
       }

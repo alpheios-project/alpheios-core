@@ -24,7 +24,8 @@ export default {
       if (LanguageModelFactory.supportsLanguage(this.definition.language)) {
         const selectorName = 'getSelectedText-shortDefinitions'
         try {
-          this.app.registerTextSelector(selectorName, '.alpheios-definition__short').activateTextSelector(selectorName)
+          this.app.registerTextSelector(selectorName, '.alpheios-definition__short')
+          this.app.activateTextSelector(selectorName)
         } catch (err) {
           Logger.getInstance().error(err)
         }

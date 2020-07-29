@@ -1,5 +1,13 @@
+/** @module platform */
 import { PsEvent, Logger } from 'alpheios-data-models'
 
+/**
+ * A class representing a platform the app is running upon.
+ *
+ * @typedef {object} Platform
+ * @property {Platform.appTypes} _appType - A type of a application.
+ * @private
+ */
 export default class Platform {
   constructor ({ setRootAttributes = false, appType = Platform.appTypes.OTHER } = {}) {
     this.getData()

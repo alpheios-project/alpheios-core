@@ -22,7 +22,6 @@ export default {
   // API modules that are required for this component
   inject: {
     app: 'app',
-    ui: 'ui',
     l10n: 'l10n'
   },
   storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
@@ -34,7 +33,7 @@ export default {
   computed: {
     componentStyles: function () {
       return {
-        zIndex: this.ui.zIndex
+        zIndex: this.$store.state.ui.zIndexMax
       }
     }
   }

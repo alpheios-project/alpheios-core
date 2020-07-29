@@ -63,7 +63,7 @@ ActionPanelModule.store = (moduleInstance) => {
        * @param {boolean} showLookup - Whether to show the lookup input
        * @param {boolean} showNav - Whether to show navigational buttons
        */
-      open (state, { showLookup, showNav }) {
+      open (state, { showLookup, showNav } = {}) {
         state.showLookup = typeof showLookup === 'undefined' ? moduleInstance.config.showLookup : showLookup
         state.showNav = typeof showNav === 'undefined' ? moduleInstance.config.showNav : showNav
         state.visible = true
