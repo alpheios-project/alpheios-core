@@ -1,6 +1,8 @@
 import ViewSet from '../../lib/view-set.js'
 import LatinNounView from '@views/lang/latin/noun/latin-noun-view.js'
 import LatinAdjectiveView from '@views/lang/latin/adjective/latin-adjective-view.js'
+import LatinAdjectiveComparativeView from '@views/lang/latin/adjective/latin-comparative-view.js'
+import LatinAdjectiveSuperlativeView from '@views/lang/latin/adjective/latin-superlative-view.js'
 import LatinVoiceConjugationMoodView from '@views/lang/latin/verb/latin-voice-conjugation-mood-view.js'
 import LatinVoiceMoodConjugationView from '@views/lang/latin/verb/latin-voice-mood-conjugation-view.js'
 import LatinConjugationVoiceMoodView from '@views/lang/latin/verb/latin-conjugation-voice-mood-view.js'
@@ -29,6 +31,8 @@ export default class LatinViewSet extends ViewSet {
     return [
       LatinNounView,
       LatinAdjectiveView,
+      LatinAdjectiveComparativeView,
+      LatinAdjectiveSuperlativeView,
       LatinVerbParticipleView,
       LatinSupineView,
       LatinInfinitiveView,

@@ -446,7 +446,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
     // Superlatives
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
-    extraFeature = this.features.get(Feature.types.comparison).createFeature(Constants.COMP_COMPARITIVE)
+    extraFeature = this.features.get(Feature.types.comparison).createFeature(Constants.COMP_SUPERLATIVE)
     footnotesData = papaparse.parse(adjectiveSuperlativeFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Suffix, footnotesData.data)
     suffixes = papaparse.parse(adjectiveSuperlativeSuffixesCSV, { skipEmptyLines: true })

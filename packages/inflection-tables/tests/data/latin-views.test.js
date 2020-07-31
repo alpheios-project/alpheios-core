@@ -1850,4 +1850,38 @@ describe('latin-views.test.js', () => {
       ]
     })
   })
+
+  it('33 - checked Latin Views - melior - LatinAdjectiveComparativeView', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('melior', Constants.LANG_LATIN)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
+
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinAdjectiveComparativeView',
+      title: 'Adjective Comparative Declension',
+      linkedViewsLength: 0
+    })
+  })
+
+  it('34 - checked Latin Views - levissimus - LatinAdjectiveSuperlativeView', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('levissimus', Constants.LANG_LATIN)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
+
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinAdjectiveSuperlativeView',
+      title: 'Adjective Superlative Declension',
+      linkedViewsLength: 0
+    })
+  })
 })
