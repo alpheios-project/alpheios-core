@@ -1,4 +1,4 @@
-import { Constants } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
 import Suffix from '../../../../lib/suffix.js'
 import LatinView from '../latin-view.js'
 
@@ -19,6 +19,7 @@ export default class LatinAdjectiveView extends LatinView {
 
     if (this.isImplemented) {
       this.createTable()
+      this.table.morphemeCellFilter = LatinAdjectiveView.morphemeCellFilter
     }
   }
 
@@ -55,5 +56,20 @@ export default class LatinAdjectiveView extends LatinView {
       this.featureMap.get(Constants.GEND_MASCULINE),
       this.featureMap.get(Constants.GEND_NEUTER)
     ]
+  }
+
+  static matchFilter (languageID, inflections) {
+    return Boolean(
+      this.languageID === languageID &&
+      inflections.some(i => this.enabledForInflection(i)))
+  }
+
+  static enabledForInflection (inflection) {
+    return inflection[Feature.types.part].value === this.mainPartOfSpeech &&
+      !inflection[Feature.types.comparison]
+  }
+
+  static morphemeCellFilter (form) {
+    return !form.features[Feature.types.comparison]
   }
 }
