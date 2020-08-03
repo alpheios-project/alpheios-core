@@ -220,7 +220,7 @@
                 "declension": "3rd",
                 "gender": "masculine",
                 "number": "dual",
-                "value": "dual"
+                "value": ""
             },
             {
                 "role": "label",
@@ -290,7 +290,7 @@
                 "declension": "3rd",
                 "gender": "masculine",
                 "number": "plural",
-                "value": "plural"
+                "value": ""
             },
             {
                 "role": "label",
@@ -325,7 +325,7 @@
                 "declension": "3rd",
                 "gender": "masculine",
                 "number": "plural",
-                "value": "plural"
+                "value": ""
             },
             {
                 "role": "label",
@@ -360,7 +360,7 @@
                 "declension": "3rd",
                 "gender": "masculine",
                 "number": "plural",
-                "value": "plural"
+                "value": ""
             },
             {
                 "role": "label",
