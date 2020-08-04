@@ -10,6 +10,14 @@
             {
               "viewID": "latin_adjective_view",
               "title": "Adjective declension"
+            },
+            {
+              "viewID": "latin_adjective_comparative_view",
+              "title": "Comparative Adjective Declension"
+            },
+            {
+              "viewID": "latin_adjective_superlative_view",
+              "title": "Superlative Adjective Declension"
             }
         ],
         "verb": [
