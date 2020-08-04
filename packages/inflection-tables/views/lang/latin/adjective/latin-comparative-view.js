@@ -1,4 +1,5 @@
 import { Constants, Feature } from 'alpheios-data-models'
+import Morpheme from '@lib/morpheme.js'
 import Suffix from '../../../../lib/suffix.js'
 import LatinView from '../latin-view.js'
 
@@ -13,9 +14,10 @@ export default class LatinAdjectiveComparativeView extends LatinView {
     this.features.declensions.getOrderedFeatures = this.constructor.getOrderedDeclensions
     this.features.declensions.getTitle = this.constructor.getDeclensionTitle
 
-    this.features.genders = this.features.genders.createOfSameType() // Create a copy so that original object will not be affected by a change
+    this.features.genders.addFeature(LatinView.datasetConsts.GEND_MASCULINE_FEMININE, [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
     this.features.genders.getOrderedFeatures = this.constructor.getOrderedGenders
     this.features.genders.getTitle = this.constructor.getGenderTitle
+    this.features.genders.comparisonType = Morpheme.comparisonTypes.ALL_VALUES
 
     if (this.isImplemented) {
       this.createTable()
@@ -52,8 +54,7 @@ export default class LatinAdjectiveComparativeView extends LatinView {
 
   static getOrderedGenders () {
     return [
-      this.featureMap.get(Constants.GEND_FEMININE),
-      this.featureMap.get(Constants.GEND_MASCULINE),
+      this.featureMap.get(LatinView.datasetConsts.GEND_MASCULINE_FEMININE),
       this.featureMap.get(Constants.GEND_NEUTER)
     ]
   }
