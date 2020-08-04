@@ -21,12 +21,12 @@ export default class LatinVerbImperativeIrregularView extends LatinVerbIrregular
   }
 
   createTable () {
-    this.table = new Table([this.features.moods, this.features.tenses])
+    this.table = new Table([this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
     let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.moods]
-    features.rows = [this.constructor.model.typeFeature(Feature.types.tense)]
-    features.columnRowTitles = [this.constructor.model.typeFeature(Feature.types.tense)]
-    features.fullWidthRowTitles = []
+    features.rows = [this.features.tenses, this.features.numbers, this.features.persons]
+    features.columnRowTitles = [this.features.numbers, this.features.persons]
+    features.fullWidthRowTitles = [this.features.tenses]
   }
 
   static get viewID () {
