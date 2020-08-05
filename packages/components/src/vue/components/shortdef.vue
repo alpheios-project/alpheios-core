@@ -7,11 +7,11 @@
   </div>
 </template>
 <script>
-import { LanguageModelFactory } from 'alpheios-data-models'
+import { LanguageModelFactory, Logger } from 'alpheios-data-models'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'ShortDef',
-  inject: ['ui'],
+  inject: ['app'],
   mixins: [DependencyCheck],
   props: ['definition', 'languageCode'],
   computed: {
@@ -22,7 +22,13 @@ export default {
   mounted () {
     this.$nextTick(() => {
       if (LanguageModelFactory.supportsLanguage(this.definition.language)) {
-        this.ui.registerAndActivateGetSelectedText('getSelectedText-shortDefinitions', '.alpheios-definition__short')
+        const selectorName = 'getSelectedText-shortDefinitions'
+        try {
+          this.app.registerTextSelector(selectorName, '.alpheios-definition__short')
+          this.app.activateTextSelector(selectorName)
+        } catch (err) {
+          Logger.getInstance().error(err)
+        }
       }
     })
   }

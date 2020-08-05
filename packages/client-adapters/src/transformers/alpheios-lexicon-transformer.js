@@ -161,7 +161,7 @@ class AlpheiosLexiconTransformer {
       const lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [inflectionsJSONTerm] : [])
       const language = this.defineLanguage(lemmaElements, inflectionsJSONTerm)
       if (!language) {
-        this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LANGUAGE)
+        this.adapter.addError(this.adapter.l10n.getMsg('MORPH_TRANSFORM_NO_LANGUAGE'))
         continue
       }
 
@@ -181,7 +181,7 @@ class AlpheiosLexiconTransformer {
         // and not a String
         const lemmaText = elem.hdwd && elem.hdwd.$ ? `${elem.hdwd.$}` : ''
         if (!lemmaText) {
-          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LEMMA)
+          this.adapter.addError(this.adapter.l10n.getMsg('MORPH_TRANSFORM_NO_LEMMA'))
           continue
         }
         const lemma = this.mappingData.parseLemma(lemmaText, language)
@@ -236,7 +236,7 @@ class AlpheiosLexiconTransformer {
         try {
           inflection = new Inflection(inflWord, this.mappingData.model.languageID, suffix, prefix, xmpl)
         } catch (e) {
-          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_INFLECTION_ERROR.get(e.message))
+          this.adapter.addError(this.adapter.l10n.getMsg('MORPH_TRANSFORM_INFLECTION_ERROR', { error: e.message }))
           continue
         }
         if (targetWord) {

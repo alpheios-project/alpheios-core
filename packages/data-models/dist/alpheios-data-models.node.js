@@ -16,8 +16,6 @@ return /******/ (() => { // webpackBootstrap
   !*** ../../../node_modules/uuid/index.js ***!
   \*******************************************/
 /*! unknown exports (runtime-defined) */
-/*! export v4 [maybe provided (runtime-defined)] [used] [usage and provision prevents renaming] */
-/*! other exports [maybe provided (runtime-defined)] [maybe used (runtime-defined)] */
 /*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -38,7 +36,6 @@ module.exports = uuid;
   !*** ../../../node_modules/uuid/lib/bytesToUuid.js ***!
   \*****************************************************/
 /*! unknown exports (runtime-defined) */
-/*! exports [maybe provided (runtime-defined)] [maybe used (runtime-defined)] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 
@@ -77,7 +74,6 @@ module.exports = bytesToUuid;
   !*** ../../../node_modules/uuid/lib/rng.js ***!
   \*********************************************/
 /*! unknown exports (runtime-defined) */
-/*! exports [maybe provided (runtime-defined)] [maybe used (runtime-defined)] */
 /*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -98,7 +94,6 @@ module.exports = function nodeRNG() {
   !*** ../../../node_modules/uuid/v1.js ***!
   \****************************************/
 /*! unknown exports (runtime-defined) */
-/*! exports [maybe provided (runtime-defined)] [maybe used (runtime-defined)] */
 /*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -220,7 +215,6 @@ module.exports = v1;
   !*** ../../../node_modules/uuid/v4.js ***!
   \****************************************/
 /*! unknown exports (runtime-defined) */
-/*! exports [maybe provided (runtime-defined)] [maybe used (runtime-defined)] */
 /*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -262,12 +256,13 @@ module.exports = v4;
   !*** ./arabic_language_model.js ***!
   \**********************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ ArabicLanguageModel
 /* harmony export */ });
@@ -410,12 +405,13 @@ for the current node
   !*** ./chinese_language_model.js ***!
   \***********************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ ChineseLanguageModel
 /* harmony export */ });
@@ -556,233 +552,233 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
   !*** ./constants.js ***!
   \**********************/
 /*! namespace exports */
-/*! export CASE_ABESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ABLATIVE [provided] [used] [usage prevents renaming] */
-/*! export CASE_ABSOLUTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ACCUSATIVE [provided] [used] [usage prevents renaming] */
-/*! export CASE_ADDIRECTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ADELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ADESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ADVERBIAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ALLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ANTESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_APUDESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_AVERSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_BENEFACTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_CARITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_CAUSAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_CAUSAL_FINAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_COMITATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_DATIVE [provided] [used] [usage prevents renaming] */
-/*! export CASE_DELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_DIRECT [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_DISTRIBUTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_DISTRIBUTIVE_TEMPORAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_EQUATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ERGATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ESSIVE_FORMAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_ESSIVE_MODAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_EVITATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_EXESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_FINAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_FORMAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_GENITIVE [provided] [used] [usage prevents renaming] */
-/*! export CASE_ILLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_INELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_INESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_INSTRUCTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_INSTRUMENTAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_INSTRUMENTAL_COMITATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_INTRANSITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_LATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_LOCATIVE [provided] [used] [usage prevents renaming] */
-/*! export CASE_MODAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_MULTIPLICATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_NOMINATIVE [provided] [used] [usage prevents renaming] */
-/*! export CASE_PARTITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_PEGATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_PERLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_POSSESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_POSTDIRECTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_POSTELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_POSTESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_POSTPOSITIONAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_PREPOSITIONAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_PRIVATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_PROLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_PROSECUTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_PROXIMATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_SEPARATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_SOCIATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_SUBDIRECTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_SUBELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_SUBESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_SUBLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_SUPERDIRECTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_SUPERESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_SUPERLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_SUPPRESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_TEMPORAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_TERMINATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_TRANSLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_VIALIS [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export CASE_VOCATIVE [provided] [used] [usage prevents renaming] */
-/*! export CLASS_DEMONSTRATIVE [provided] [used] [usage prevents renaming] */
-/*! export CLASS_GENERAL_RELATIVE [provided] [used] [usage prevents renaming] */
-/*! export CLASS_INDEFINITE [provided] [used] [usage prevents renaming] */
-/*! export CLASS_INTENSIVE [provided] [used] [usage prevents renaming] */
-/*! export CLASS_INTERROGATIVE [provided] [used] [usage prevents renaming] */
-/*! export CLASS_PERSONAL [provided] [used] [usage prevents renaming] */
-/*! export CLASS_POSSESSIVE [provided] [used] [usage prevents renaming] */
-/*! export CLASS_RECIPROCAL [provided] [used] [usage prevents renaming] */
-/*! export CLASS_REFLEXIVE [provided] [used] [usage prevents renaming] */
-/*! export CLASS_RELATIVE [provided] [used] [usage prevents renaming] */
-/*! export COMP_COMPARITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export COMP_POSITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export COMP_SUPERLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GEND_ANIMATE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GEND_ANIMATE_MASCULINE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GEND_COMMON [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GEND_FEMININE [provided] [used] [usage prevents renaming] */
-/*! export GEND_INANIMATE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GEND_INANIMATE_MASCULINE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GEND_MASCULINE [provided] [used] [usage prevents renaming] */
-/*! export GEND_NEUTER [provided] [used] [usage prevents renaming] */
-/*! export GEND_PERSONAL_MASCULINE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export LANG_ARABIC [provided] [used] [usage prevents renaming] */
-/*! export LANG_CHINESE [provided] [used] [usage prevents renaming] */
-/*! export LANG_DIR_LTR [provided] [used] [usage prevents renaming] */
-/*! export LANG_DIR_RTL [provided] [used] [usage prevents renaming] */
-/*! export LANG_GEEZ [provided] [used] [usage prevents renaming] */
-/*! export LANG_GREEK [provided] [used] [usage prevents renaming] */
-/*! export LANG_LATIN [provided] [used] [usage prevents renaming] */
-/*! export LANG_PERSIAN [provided] [used] [usage prevents renaming] */
-/*! export LANG_SYRIAC [provided] [used] [usage prevents renaming] */
-/*! export LANG_UNDEFINED [provided] [used] [usage prevents renaming] */
-/*! export LANG_UNIT_CHAR [provided] [used] [usage prevents renaming] */
-/*! export LANG_UNIT_WORD [provided] [used] [usage prevents renaming] */
-/*! export MOOD_ADMIRATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_COHORTATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_CONDITIONAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_DECLARATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_DUBITATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_ENERGETIC [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_EVENTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_GENERIC [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_GERUNDIVE [provided] [used] [usage prevents renaming] */
-/*! export MOOD_HYPOTHETICAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_IMPERATIVE [provided] [used] [usage prevents renaming] */
-/*! export MOOD_INDICATIVE [provided] [used] [usage prevents renaming] */
-/*! export MOOD_INFERENTIAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_INFINITIVE [provided] [used] [usage prevents renaming] */
-/*! export MOOD_INTERROGATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_JUSSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_NEGATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_OPTATIVE [provided] [used] [usage prevents renaming] */
-/*! export MOOD_PARTICIPLE [provided] [used] [usage prevents renaming] */
-/*! export MOOD_PRESUMPTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_RENARRATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MOOD_SUBJUNCTIVE [provided] [used] [usage prevents renaming] */
-/*! export MOOD_SUPINE [provided] [used] [usage prevents renaming] */
-/*! export NRL_CARDINAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export NRL_DISTRIBUTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export NRL_ORDINAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export NUM_COLLECTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export NUM_DISTRIBUTIVE_PLURAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export NUM_DUAL [provided] [used] [usage prevents renaming] */
-/*! export NUM_PAUCAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export NUM_PLURAL [provided] [used] [usage prevents renaming] */
-/*! export NUM_SINGULAR [provided] [used] [usage prevents renaming] */
-/*! export NUM_SINGULATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export NUM_TRIAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export NURL_NUMERAL_ADVERB [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export ORD_1ST [provided] [used] [usage prevents renaming] */
-/*! export ORD_2ND [provided] [used] [usage prevents renaming] */
-/*! export ORD_3RD [provided] [used] [usage prevents renaming] */
-/*! export ORD_4TH [provided] [used] [usage prevents renaming] */
-/*! export ORD_5TH [provided] [used] [usage prevents renaming] */
-/*! export ORD_6TH [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export ORD_7TH [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export ORD_8TH [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export ORD_9TH [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PARADIGM_CAT_KAYLO [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PARADIGM_CAT_STATE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export POFS_ADJECTIVE [provided] [used] [usage prevents renaming] */
-/*! export POFS_ADVERB [provided] [used] [usage prevents renaming] */
-/*! export POFS_ADVERBIAL [provided] [used] [usage prevents renaming] */
-/*! export POFS_ARTICLE [provided] [used] [usage prevents renaming] */
-/*! export POFS_CONJUNCTION [provided] [used] [usage prevents renaming] */
-/*! export POFS_DENOMINATIVE [provided] [used] [usage prevents renaming] */
-/*! export POFS_EXCLAMATION [provided] [used] [usage prevents renaming] */
-/*! export POFS_GERUNDIVE [provided] [used] [usage prevents renaming] */
-/*! export POFS_INTERJECTION [provided] [used] [usage prevents renaming] */
-/*! export POFS_NOUN [provided] [used] [usage prevents renaming] */
-/*! export POFS_NOUN_PROPER [provided] [used] [usage prevents renaming] */
-/*! export POFS_NUMERAL [provided] [used] [usage prevents renaming] */
-/*! export POFS_PARTICLE [provided] [used] [usage prevents renaming] */
-/*! export POFS_PREFIX [provided] [used] [usage prevents renaming] */
-/*! export POFS_PREPOSITION [provided] [used] [usage prevents renaming] */
-/*! export POFS_PRONOUN [provided] [used] [usage prevents renaming] */
-/*! export POFS_SUFFIX [provided] [used] [usage prevents renaming] */
-/*! export POFS_SUPINE [provided] [used] [usage prevents renaming] */
-/*! export POFS_VERB [provided] [used] [usage prevents renaming] */
-/*! export POFS_VERB_PARTICIPLE [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_AR [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_ARA [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_ENG [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export STR_LANG_CODE_FA [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_FAS [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_FA_IR [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_GEZ [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_GRC [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_LA [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_LAT [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_PER [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_SYC [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_SYR [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_SYR_SYRJ [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_UNDEFINED [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_ZH [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_ZHO [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_ZH_HANS [provided] [used] [usage prevents renaming] */
-/*! export STR_LANG_CODE_ZH_HANT [provided] [used] [usage prevents renaming] */
-/*! export TENSE_AORIST [provided] [used] [usage prevents renaming] */
-/*! export TENSE_FUTURE [provided] [used] [usage prevents renaming] */
-/*! export TENSE_FUTURE_PERFECT [provided] [used] [usage prevents renaming] */
-/*! export TENSE_IMPERFECT [provided] [used] [usage prevents renaming] */
-/*! export TENSE_PAST_ABSOLUTE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export TENSE_PERFECT [provided] [used] [usage prevents renaming] */
-/*! export TENSE_PLUPERFECT [provided] [used] [usage prevents renaming] */
-/*! export TENSE_PRESENT [provided] [used] [usage prevents renaming] */
-/*! export TYPE_IRREGULAR [provided] [used] [usage prevents renaming] */
-/*! export TYPE_REGULAR [provided] [used] [usage prevents renaming] */
-/*! export VKIND_COMPOUNDS_OF_TO_BE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VKIND_DEPONENT [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VKIND_IMPERSONAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VKIND_INTRANSITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VKIND_PERFECT_DEFINITE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VKIND_SEMIDEPONENT [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VKIND_TAKING_ABLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VKIND_TAKING_DATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VKIND_TAKING_GENITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VKIND_TO_BE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VKIND_TRANSITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VOICE_ACTIVE [provided] [used] [usage prevents renaming] */
-/*! export VOICE_ADJUTATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VOICE_ANTIPASSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VOICE_APPLICATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VOICE_CAUSATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VOICE_CIRCUMSTANTIAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VOICE_DEPONENT [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VOICE_IMPERSONAL_PASSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VOICE_MEDIOPASSIVE [provided] [used] [usage prevents renaming] */
-/*! export VOICE_MIDDLE [provided] [used] [usage prevents renaming] */
-/*! export VOICE_PASSIVE [provided] [used] [usage prevents renaming] */
-/*! export VOICE_RECIPROCAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export VOICE_REFLEXIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! other exports [not provided] [maybe used (runtime-defined)] */
+/*! export CASE_ABESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ABSOLUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ACCUSATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ADDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ADELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ADESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ADVERBIAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ALLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ANTESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_APUDESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_AVERSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_BENEFACTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_CARITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_CAUSAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_CAUSAL_FINAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_COMITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_DATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_DELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_DIRECT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_DISTRIBUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_DISTRIBUTIVE_TEMPORAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_EQUATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ERGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ESSIVE_FORMAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ESSIVE_MODAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_EVITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_EXESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_FINAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_FORMAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_GENITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_ILLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_INELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_INESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_INSTRUCTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_INSTRUMENTAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_INSTRUMENTAL_COMITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_INTRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_LATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_LOCATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_MODAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_MULTIPLICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_NOMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_PARTITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_PEGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_PERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_POSSESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_POSTDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_POSTELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_POSTESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_POSTPOSITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_PREPOSITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_PRIVATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_PROLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_PROSECUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_PROXIMATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_SEPARATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_SOCIATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_SUBDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_SUBELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_SUBESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_SUBLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_SUPERDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_SUPERESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_SUPERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_SUPPRESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_TEMPORAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_TERMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_TRANSLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_VIALIS [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CASE_VOCATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CLASS_DEMONSTRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CLASS_GENERAL_RELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CLASS_INDEFINITE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CLASS_INTENSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CLASS_INTERROGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CLASS_PERSONAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CLASS_POSSESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CLASS_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CLASS_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export CLASS_RELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export COMP_COMPARITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export COMP_POSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export COMP_SUPERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export GEND_ANIMATE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export GEND_ANIMATE_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export GEND_COMMON [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export GEND_FEMININE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export GEND_INANIMATE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export GEND_INANIMATE_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export GEND_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export GEND_NEUTER [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export GEND_PERSONAL_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_ARABIC [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_CHINESE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_DIR_LTR [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_DIR_RTL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_GEEZ [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_GREEK [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_LATIN [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_PERSIAN [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_SYRIAC [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_UNDEFINED [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_UNIT_CHAR [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export LANG_UNIT_WORD [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_ADMIRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_COHORTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_CONDITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_DECLARATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_DUBITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_ENERGETIC [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_EVENTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_GENERIC [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_GERUNDIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_HYPOTHETICAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_IMPERATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_INDICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_INFERENTIAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_INFINITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_INTERROGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_JUSSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_NEGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_OPTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_PARTICIPLE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_PRESUMPTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_RENARRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_SUBJUNCTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MOOD_SUPINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NRL_CARDINAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NRL_DISTRIBUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NRL_ORDINAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NUM_COLLECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NUM_DISTRIBUTIVE_PLURAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NUM_DUAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NUM_PAUCAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NUM_PLURAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NUM_SINGULAR [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NUM_SINGULATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NUM_TRIAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export NURL_NUMERAL_ADVERB [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export ORD_1ST [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export ORD_2ND [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export ORD_3RD [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export ORD_4TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export ORD_5TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export ORD_6TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export ORD_7TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export ORD_8TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export ORD_9TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export PARADIGM_CAT_KAYLO [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export PARADIGM_CAT_STATE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_ADJECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_ADVERB [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_ADVERBIAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_ARTICLE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_CONJUNCTION [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_DENOMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_EXCLAMATION [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_GERUNDIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_INTERJECTION [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_NOUN [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_NOUN_PROPER [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_NUMERAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_PARTICLE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_PREFIX [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_PREPOSITION [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_PRONOUN [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_SUFFIX [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_SUPINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_VERB [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export POFS_VERB_PARTICIPLE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_AR [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_ARA [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_ENG [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_FA [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_FAS [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_FA_IR [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_GEZ [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_GRC [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_LA [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_LAT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_PER [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_SYC [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_SYR [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_SYR_SYRJ [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_UNDEFINED [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_ZH [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_ZHO [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_ZH_HANS [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export STR_LANG_CODE_ZH_HANT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TENSE_AORIST [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TENSE_FUTURE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TENSE_FUTURE_PERFECT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TENSE_IMPERFECT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TENSE_PAST_ABSOLUTE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TENSE_PERFECT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TENSE_PLUPERFECT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TENSE_PRESENT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TYPE_IRREGULAR [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TYPE_REGULAR [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_COMPOUNDS_OF_TO_BE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_DEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_IMPERSONAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_INTRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_PERFECT_DEFINITE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_SEMIDEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_TAKING_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_TAKING_DATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_TAKING_GENITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_TO_BE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VKIND_TRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_ACTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_ADJUTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_ANTIPASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_APPLICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_CAUSATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_CIRCUMSTANTIAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_DEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_IMPERSONAL_PASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_MEDIOPASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_MIDDLE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_PASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export VOICE_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -1261,12 +1257,13 @@ const PARADIGM_CAT_STATE = 'state'
   !*** ./definition-set.js ***!
   \***************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ DefinitionSet
 /* harmony export */ });
@@ -1395,12 +1392,13 @@ class DefinitionSet {
   !*** ./definition.js ***!
   \***********************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -1462,267 +1460,267 @@ class Definition {
   !*** ./driver.js ***!
   \*******************/
 /*! namespace exports */
-/*! export ArabicLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Author [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export ChineseLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Constants [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ABESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ABLATIVE [provided] [used] [usage prevents renaming] */
-/*!   export CASE_ABSOLUTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ACCUSATIVE [provided] [used] [usage prevents renaming] */
-/*!   export CASE_ADDIRECTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ADELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ADESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ADVERBIAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ALLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ANTESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_APUDESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_AVERSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_BENEFACTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_CARITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_CAUSAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_CAUSAL_FINAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_COMITATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_DATIVE [provided] [used] [usage prevents renaming] */
-/*!   export CASE_DELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_DIRECT [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_DISTRIBUTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_DISTRIBUTIVE_TEMPORAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_EQUATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ERGATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ESSIVE_FORMAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_ESSIVE_MODAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_EVITATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_EXESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_FINAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_FORMAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_GENITIVE [provided] [used] [usage prevents renaming] */
-/*!   export CASE_ILLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_INELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_INESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_INSTRUCTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_INSTRUMENTAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_INSTRUMENTAL_COMITATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_INTRANSITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_LATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_LOCATIVE [provided] [used] [usage prevents renaming] */
-/*!   export CASE_MODAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_MULTIPLICATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_NOMINATIVE [provided] [used] [usage prevents renaming] */
-/*!   export CASE_PARTITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_PEGATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_PERLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_POSSESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_POSTDIRECTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_POSTELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_POSTESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_POSTPOSITIONAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_PREPOSITIONAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_PRIVATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_PROLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_PROSECUTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_PROXIMATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_SEPARATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_SOCIATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_SUBDIRECTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_SUBELATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_SUBESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_SUBLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_SUPERDIRECTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_SUPERESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_SUPERLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_SUPPRESSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_TEMPORAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_TERMINATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_TRANSLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_VIALIS [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export CASE_VOCATIVE [provided] [used] [usage prevents renaming] */
-/*!   export CLASS_DEMONSTRATIVE [provided] [used] [usage prevents renaming] */
-/*!   export CLASS_GENERAL_RELATIVE [provided] [used] [usage prevents renaming] */
-/*!   export CLASS_INDEFINITE [provided] [used] [usage prevents renaming] */
-/*!   export CLASS_INTENSIVE [provided] [used] [usage prevents renaming] */
-/*!   export CLASS_INTERROGATIVE [provided] [used] [usage prevents renaming] */
-/*!   export CLASS_PERSONAL [provided] [used] [usage prevents renaming] */
-/*!   export CLASS_POSSESSIVE [provided] [used] [usage prevents renaming] */
-/*!   export CLASS_RECIPROCAL [provided] [used] [usage prevents renaming] */
-/*!   export CLASS_REFLEXIVE [provided] [used] [usage prevents renaming] */
-/*!   export CLASS_RELATIVE [provided] [used] [usage prevents renaming] */
-/*!   export COMP_COMPARITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export COMP_POSITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export COMP_SUPERLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export GEND_ANIMATE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export GEND_ANIMATE_MASCULINE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export GEND_COMMON [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export GEND_FEMININE [provided] [used] [usage prevents renaming] */
-/*!   export GEND_INANIMATE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export GEND_INANIMATE_MASCULINE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export GEND_MASCULINE [provided] [used] [usage prevents renaming] */
-/*!   export GEND_NEUTER [provided] [used] [usage prevents renaming] */
-/*!   export GEND_PERSONAL_MASCULINE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export LANG_ARABIC [provided] [used] [usage prevents renaming] */
-/*!   export LANG_CHINESE [provided] [used] [usage prevents renaming] */
-/*!   export LANG_DIR_LTR [provided] [used] [usage prevents renaming] */
-/*!   export LANG_DIR_RTL [provided] [used] [usage prevents renaming] */
-/*!   export LANG_GEEZ [provided] [used] [usage prevents renaming] */
-/*!   export LANG_GREEK [provided] [used] [usage prevents renaming] */
-/*!   export LANG_LATIN [provided] [used] [usage prevents renaming] */
-/*!   export LANG_PERSIAN [provided] [used] [usage prevents renaming] */
-/*!   export LANG_SYRIAC [provided] [used] [usage prevents renaming] */
-/*!   export LANG_UNDEFINED [provided] [used] [usage prevents renaming] */
-/*!   export LANG_UNIT_CHAR [provided] [used] [usage prevents renaming] */
-/*!   export LANG_UNIT_WORD [provided] [used] [usage prevents renaming] */
-/*!   export MOOD_ADMIRATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_COHORTATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_CONDITIONAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_DECLARATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_DUBITATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_ENERGETIC [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_EVENTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_GENERIC [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_GERUNDIVE [provided] [used] [usage prevents renaming] */
-/*!   export MOOD_HYPOTHETICAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_IMPERATIVE [provided] [used] [usage prevents renaming] */
-/*!   export MOOD_INDICATIVE [provided] [used] [usage prevents renaming] */
-/*!   export MOOD_INFERENTIAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_INFINITIVE [provided] [used] [usage prevents renaming] */
-/*!   export MOOD_INTERROGATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_JUSSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_NEGATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_OPTATIVE [provided] [used] [usage prevents renaming] */
-/*!   export MOOD_PARTICIPLE [provided] [used] [usage prevents renaming] */
-/*!   export MOOD_PRESUMPTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_RENARRATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export MOOD_SUBJUNCTIVE [provided] [used] [usage prevents renaming] */
-/*!   export MOOD_SUPINE [provided] [used] [usage prevents renaming] */
-/*!   export NRL_CARDINAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export NRL_DISTRIBUTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export NRL_ORDINAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export NUM_COLLECTIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export NUM_DISTRIBUTIVE_PLURAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export NUM_DUAL [provided] [used] [usage prevents renaming] */
-/*!   export NUM_PAUCAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export NUM_PLURAL [provided] [used] [usage prevents renaming] */
-/*!   export NUM_SINGULAR [provided] [used] [usage prevents renaming] */
-/*!   export NUM_SINGULATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export NUM_TRIAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export NURL_NUMERAL_ADVERB [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export ORD_1ST [provided] [used] [usage prevents renaming] */
-/*!   export ORD_2ND [provided] [used] [usage prevents renaming] */
-/*!   export ORD_3RD [provided] [used] [usage prevents renaming] */
-/*!   export ORD_4TH [provided] [used] [usage prevents renaming] */
-/*!   export ORD_5TH [provided] [used] [usage prevents renaming] */
-/*!   export ORD_6TH [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export ORD_7TH [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export ORD_8TH [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export ORD_9TH [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export PARADIGM_CAT_KAYLO [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export PARADIGM_CAT_STATE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export POFS_ADJECTIVE [provided] [used] [usage prevents renaming] */
-/*!   export POFS_ADVERB [provided] [used] [usage prevents renaming] */
-/*!   export POFS_ADVERBIAL [provided] [used] [usage prevents renaming] */
-/*!   export POFS_ARTICLE [provided] [used] [usage prevents renaming] */
-/*!   export POFS_CONJUNCTION [provided] [used] [usage prevents renaming] */
-/*!   export POFS_DENOMINATIVE [provided] [used] [usage prevents renaming] */
-/*!   export POFS_EXCLAMATION [provided] [used] [usage prevents renaming] */
-/*!   export POFS_GERUNDIVE [provided] [used] [usage prevents renaming] */
-/*!   export POFS_INTERJECTION [provided] [used] [usage prevents renaming] */
-/*!   export POFS_NOUN [provided] [used] [usage prevents renaming] */
-/*!   export POFS_NOUN_PROPER [provided] [used] [usage prevents renaming] */
-/*!   export POFS_NUMERAL [provided] [used] [usage prevents renaming] */
-/*!   export POFS_PARTICLE [provided] [used] [usage prevents renaming] */
-/*!   export POFS_PREFIX [provided] [used] [usage prevents renaming] */
-/*!   export POFS_PREPOSITION [provided] [used] [usage prevents renaming] */
-/*!   export POFS_PRONOUN [provided] [used] [usage prevents renaming] */
-/*!   export POFS_SUFFIX [provided] [used] [usage prevents renaming] */
-/*!   export POFS_SUPINE [provided] [used] [usage prevents renaming] */
-/*!   export POFS_VERB [provided] [used] [usage prevents renaming] */
-/*!   export POFS_VERB_PARTICIPLE [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_AR [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_ARA [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_ENG [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_FA [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_FAS [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_FA_IR [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_GEZ [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_GRC [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_LA [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_LAT [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_PER [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_SYC [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_SYR [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_SYR_SYRJ [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_UNDEFINED [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_ZH [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_ZHO [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_ZH_HANS [provided] [used] [usage prevents renaming] */
-/*!   export STR_LANG_CODE_ZH_HANT [provided] [used] [usage prevents renaming] */
-/*!   export TENSE_AORIST [provided] [used] [usage prevents renaming] */
-/*!   export TENSE_FUTURE [provided] [used] [usage prevents renaming] */
-/*!   export TENSE_FUTURE_PERFECT [provided] [used] [usage prevents renaming] */
-/*!   export TENSE_IMPERFECT [provided] [used] [usage prevents renaming] */
-/*!   export TENSE_PAST_ABSOLUTE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export TENSE_PERFECT [provided] [used] [usage prevents renaming] */
-/*!   export TENSE_PLUPERFECT [provided] [used] [usage prevents renaming] */
-/*!   export TENSE_PRESENT [provided] [used] [usage prevents renaming] */
-/*!   export TYPE_IRREGULAR [provided] [used] [usage prevents renaming] */
-/*!   export TYPE_REGULAR [provided] [used] [usage prevents renaming] */
-/*!   export VKIND_COMPOUNDS_OF_TO_BE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VKIND_DEPONENT [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VKIND_IMPERSONAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VKIND_INTRANSITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VKIND_PERFECT_DEFINITE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VKIND_SEMIDEPONENT [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VKIND_TAKING_ABLATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VKIND_TAKING_DATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VKIND_TAKING_GENITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VKIND_TO_BE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VKIND_TRANSITIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VOICE_ACTIVE [provided] [used] [usage prevents renaming] */
-/*!   export VOICE_ADJUTATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VOICE_ANTIPASSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VOICE_APPLICATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VOICE_CAUSATIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VOICE_CIRCUMSTANTIAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VOICE_DEPONENT [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VOICE_IMPERSONAL_PASSIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VOICE_MEDIOPASSIVE [provided] [used] [usage prevents renaming] */
-/*!   export VOICE_MIDDLE [provided] [used] [usage prevents renaming] */
-/*!   export VOICE_PASSIVE [provided] [used] [usage prevents renaming] */
-/*!   export VOICE_RECIPROCAL [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   export VOICE_REFLEXIVE [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*!   other exports [not provided] [maybe used (runtime-defined)] */
-/*! export Definition [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export DefinitionSet [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Feature [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureImporter [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureList [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureType [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GeezLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GreekLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GrmFeature [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Homonym [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export HomonymGroup [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Inflection [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export LanguageModelFactory [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export LatinLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Lemma [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Lexeme [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Logger [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PersianLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PsEvent [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PsEventData [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export ResourceProvider [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export SyriacLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export TextQuoteSelector [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export TextWork [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Translation [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export TreebankDataItem [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export WordItem [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export WordList [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export WordUsageExample [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! other exports [not provided] [maybe used (runtime-defined)] */
+/*! export ArabicLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Author [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export ChineseLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Constants [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*!   export CASE_ABESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ABSOLUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ACCUSATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ADDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ADELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ADESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ADVERBIAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ALLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ANTESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_APUDESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_AVERSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_BENEFACTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_CARITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_CAUSAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_CAUSAL_FINAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_COMITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_DATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_DELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_DIRECT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_DISTRIBUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_DISTRIBUTIVE_TEMPORAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_EQUATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ERGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ESSIVE_FORMAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ESSIVE_MODAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_EVITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_EXESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_FINAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_FORMAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_GENITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_ILLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_INELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_INESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_INSTRUCTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_INSTRUMENTAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_INSTRUMENTAL_COMITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_INTRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_LATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_LOCATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_MODAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_MULTIPLICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_NOMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_PARTITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_PEGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_PERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_POSSESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_POSTDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_POSTELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_POSTESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_POSTPOSITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_PREPOSITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_PRIVATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_PROLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_PROSECUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_PROXIMATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_SEPARATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_SOCIATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_SUBDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_SUBELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_SUBESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_SUBLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_SUPERDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_SUPERESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_SUPERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_SUPPRESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_TEMPORAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_TERMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_TRANSLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_VIALIS [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CASE_VOCATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CLASS_DEMONSTRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CLASS_GENERAL_RELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CLASS_INDEFINITE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CLASS_INTENSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CLASS_INTERROGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CLASS_PERSONAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CLASS_POSSESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CLASS_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CLASS_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export CLASS_RELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export COMP_COMPARITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export COMP_POSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export COMP_SUPERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export GEND_ANIMATE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export GEND_ANIMATE_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export GEND_COMMON [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export GEND_FEMININE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export GEND_INANIMATE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export GEND_INANIMATE_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export GEND_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export GEND_NEUTER [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export GEND_PERSONAL_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_ARABIC [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_CHINESE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_DIR_LTR [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_DIR_RTL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_GEEZ [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_GREEK [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_LATIN [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_PERSIAN [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_SYRIAC [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_UNDEFINED [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_UNIT_CHAR [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export LANG_UNIT_WORD [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_ADMIRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_COHORTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_CONDITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_DECLARATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_DUBITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_ENERGETIC [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_EVENTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_GENERIC [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_GERUNDIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_HYPOTHETICAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_IMPERATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_INDICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_INFERENTIAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_INFINITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_INTERROGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_JUSSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_NEGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_OPTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_PARTICIPLE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_PRESUMPTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_RENARRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_SUBJUNCTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export MOOD_SUPINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NRL_CARDINAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NRL_DISTRIBUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NRL_ORDINAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NUM_COLLECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NUM_DISTRIBUTIVE_PLURAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NUM_DUAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NUM_PAUCAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NUM_PLURAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NUM_SINGULAR [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NUM_SINGULATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NUM_TRIAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export NURL_NUMERAL_ADVERB [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export ORD_1ST [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export ORD_2ND [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export ORD_3RD [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export ORD_4TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export ORD_5TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export ORD_6TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export ORD_7TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export ORD_8TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export ORD_9TH [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export PARADIGM_CAT_KAYLO [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export PARADIGM_CAT_STATE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_ADJECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_ADVERB [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_ADVERBIAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_ARTICLE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_CONJUNCTION [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_DENOMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_EXCLAMATION [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_GERUNDIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_INTERJECTION [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_NOUN [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_NOUN_PROPER [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_NUMERAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_PARTICLE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_PREFIX [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_PREPOSITION [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_PRONOUN [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_SUFFIX [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_SUPINE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_VERB [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export POFS_VERB_PARTICIPLE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_AR [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_ARA [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_ENG [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_FA [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_FAS [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_FA_IR [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_GEZ [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_GRC [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_LA [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_LAT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_PER [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_SYC [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_SYR [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_SYR_SYRJ [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_UNDEFINED [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_ZH [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_ZHO [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_ZH_HANS [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export STR_LANG_CODE_ZH_HANT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export TENSE_AORIST [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export TENSE_FUTURE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export TENSE_FUTURE_PERFECT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export TENSE_IMPERFECT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export TENSE_PAST_ABSOLUTE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export TENSE_PERFECT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export TENSE_PLUPERFECT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export TENSE_PRESENT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export TYPE_IRREGULAR [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export TYPE_REGULAR [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_COMPOUNDS_OF_TO_BE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_DEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_IMPERSONAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_INTRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_PERFECT_DEFINITE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_SEMIDEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_TAKING_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_TAKING_DATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_TAKING_GENITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_TO_BE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VKIND_TRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_ACTIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_ADJUTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_ANTIPASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_APPLICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_CAUSATIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_CIRCUMSTANTIAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_DEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_IMPERSONAL_PASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_MEDIOPASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_MIDDLE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_PASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export VOICE_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   other exports [not provided] [no usage info] */
+/*! export Definition [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export DefinitionSet [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Feature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export FeatureImporter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export FeatureList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export FeatureType [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export GeezLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export GreekLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export GrmFeature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Homonym [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export HomonymGroup [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Inflection [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export LanguageModelFactory [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export LatinLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Lemma [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Lexeme [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Logger [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export PersianLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export PsEvent [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export PsEventData [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export ResourceProvider [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export SyriacLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export TextQuoteSelector [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export TextWork [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Translation [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export TreebankDataItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export WordItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export WordList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export WordUsageExample [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! other exports [not provided] [maybe used in main (runtime-defined)] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -1844,12 +1842,13 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./feature.js ***!
   \********************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ Feature
 /* harmony export */ });
@@ -2387,12 +2386,13 @@ Feature.errMsgs = {
   !*** ./feature_importer.js ***!
   \*****************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -2469,12 +2469,13 @@ class FeatureImporter {
   !*** ./feature_list.js ***!
   \*************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -2550,12 +2551,13 @@ class FeatureList {
   !*** ./feature_type.js ***!
   \*************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -2820,12 +2822,13 @@ FeatureType.UNRESTRICTED_VALUE = Symbol('unrestricted')
   !*** ./geez_language_model.js ***!
   \********************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ GeezLanguageModel
 /* harmony export */ });
@@ -2926,12 +2929,13 @@ for the current node
   !*** ./greek_language_model.js ***!
   \*********************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ GreekLanguageModel
 /* harmony export */ });
@@ -3343,12 +3347,13 @@ for the current node
   !*** ./grm-feature.js ***!
   \************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -3530,12 +3535,13 @@ GrmFeature.types = {
   !*** ./homonym-group.js ***!
   \**************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ HomonymGroup
 /* harmony export */ });
@@ -3588,12 +3594,13 @@ HomonymGroup.errors = {
   !*** ./homonym.js ***!
   \********************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -3787,12 +3794,13 @@ class Homonym {
   !*** ./inflection.js ***!
   \***********************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -4185,12 +4193,13 @@ class Inflection {
   !*** ./inflection_group.js ***!
   \*****************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -4226,12 +4235,13 @@ class InflectionGroup {
   !*** ./inflection_grouping_key.js ***!
   \************************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -4293,12 +4303,13 @@ is included in the grouping key
   !*** ./language_model.js ***!
   \***************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -5000,12 +5011,13 @@ class LanguageModel {
   !*** ./language_model_factory.js ***!
   \***********************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -5183,12 +5195,13 @@ class LanguageModelFactory {
   !*** ./languages/greek-chars.js ***!
   \**********************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ GreekChars
 /* harmony export */ });
@@ -5515,12 +5528,13 @@ class GreekChars {
   !*** ./latin_language_model.js ***!
   \*********************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ LatinLanguageModel
 /* harmony export */ });
@@ -5743,12 +5757,13 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   !*** ./lemma.js ***!
   \******************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -6027,12 +6042,13 @@ class Lemma {
   !*** ./lexeme.js ***!
   \*******************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -6324,12 +6340,13 @@ class Lexeme {
   !*** ./logging/logger.js ***!
   \***************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ Logger
 /* harmony export */ });
@@ -6485,12 +6502,13 @@ class Logger {
   !*** ./persian_language_model.js ***!
   \***********************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ PersianLanguageModel
 /* harmony export */ });
@@ -6559,12 +6577,13 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
   !*** ./ps-events/ps-event-data.js ***!
   \************************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ PsEventData
 /* harmony export */ });
@@ -6613,12 +6632,13 @@ class PsEventData {
   !*** ./ps-events/ps-event.js ***!
   \*******************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ PsEvent
 /* harmony export */ });
@@ -6721,12 +6741,13 @@ class PsEvent {
   !*** ./resource_provider.js ***!
   \******************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -6807,12 +6828,13 @@ class ResourceProvider {
   !*** ./syriac_language_model.js ***!
   \**********************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ SyriacLanguageModel
 /* harmony export */ });
@@ -7054,12 +7076,13 @@ for the current node
   !*** ./texts/author.js ***!
   \*************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -7132,12 +7155,13 @@ class Author {
   !*** ./texts/text-work.js ***!
   \****************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -7221,12 +7245,13 @@ class TextWork {
   !*** ./texts/word-usage-example.js ***!
   \*************************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ WordUsageExample
 /* harmony export */ });
@@ -7330,12 +7355,13 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
   !*** ./translation.js ***!
   \************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
@@ -7412,12 +7438,13 @@ class Translation {
   !*** ./treebank_data_item.js ***!
   \*******************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ TreebankDataItem
 /* harmony export */ });
@@ -7598,12 +7625,13 @@ class TreebankDataItem {
   !*** ./w3c/text-quote-selector.js ***!
   \************************************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ TextQuoteSelector
 /* harmony export */ });
@@ -7668,12 +7696,13 @@ class TextQuoteSelector {
   !*** ./word-item.js ***!
   \**********************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ WordItem
 /* harmony export */ });
@@ -7832,12 +7861,13 @@ class WordItem {
   !*** ./word-list.js ***!
   \**********************/
 /*! namespace exports */
-/*! export default [provided] [used] [could be renamed] */
-/*! other exports [not provided] [unused] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ WordList
 /* harmony export */ });
@@ -7954,7 +7984,6 @@ class WordList {
   !*** external "crypto" ***!
   \*************************/
 /*! unknown exports (runtime-defined) */
-/*! exports [maybe provided (runtime-defined)] [maybe used (runtime-defined)] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 

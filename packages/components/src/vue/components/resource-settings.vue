@@ -15,70 +15,69 @@
   </div>
 </template>
 <script>
-  import Setting from './setting.vue'
-  import Options from '@/lib/options/options.js'
-  import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-  export default {
-    name: 'FeatureSettings',
-    // API modules that are required for this component
-    inject: {
-      language: 'language',
-      l10n: 'l10n',
-      settings: 'settings'
-    },
-    mixins: [DependencyCheck],
-    components: {
-      setting: Setting,
-    },
-    data () {
-      return {
-        settingsArray: [
-          {
-            typeLex: 'lexicons', // typeLex property should be uniqie
-            titleDefault: 'Lexicons (full)'
-          },
-          {
-            typeLex: 'lexiconsShort',
-            titleDefault: 'Lexicons (short)'
-          },
-          {
-            typeLex: 'grammars',
-            titleDefault: 'Grammars'
-          }
-        ]
-      }
-    },
-    methods: {
-      resourceSettingsTitle (typeLex) {
-        let resourceOptions = this.settings.getResourceOptions()
-
-        if (resourceOptions.items && resourceOptions.items[typeLex]) {
-          if (resourceOptions.defaults.items[typeLex].labelL10n) {
-            return this.l10n.getText(resourceOptions.defaults.items[typeLex].labelL10n)
-          } else if (resourceOptions.defaults.items[typeLex].labelText) {
-            return resourceOptions.defaults.items[typeLex].labelText
-          }
+import Setting from './setting.vue'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+export default {
+  name: 'FeatureSettings',
+  // API modules that are required for this component
+  inject: {
+    l10n: 'l10n',
+    app: 'app',
+    settings: 'settings'
+  },
+  mixins: [DependencyCheck],
+  components: {
+    setting: Setting
+  },
+  data () {
+    return {
+      settingsArray: [
+        {
+          typeLex: 'lexicons', // typeLex property should be uniqie
+          titleDefault: 'Lexicons (full)'
+        },
+        {
+          typeLex: 'lexiconsShort',
+          titleDefault: 'Lexicons (short)'
+        },
+        {
+          typeLex: 'grammars',
+          titleDefault: 'Grammars'
         }
-        return this.titleDefault[typeLex]
+      ]
+    }
+  },
+  methods: {
+    resourceSettingsTitle (typeLex) {
+      const resourceOptions = this.settings.getResourceOptions()
 
-      },
-
-      resourceSettingsLexicons (typeLex) {
-        let resourceOptions = this.settings.getResourceOptions()
-        return resourceOptions.items && resourceOptions.items[typeLex]
-          ? resourceOptions.items[typeLex].filter(item => item.values.length > 0)
-          : []
-      },
-
-      resourceSettingChanged: function (name, value) {
-        // we have to send the full name here and parse it where we set it
-        // because grouped setting are referenced under Options object
-        // by the parsed name but each individual setting in a group is referenced
-        // by its fullname (with version and groupname appended)
-        this.language.resourceSettingChange(name, value)
+      if (resourceOptions.items && resourceOptions.items[typeLex]) {
+        if (resourceOptions.defaults.items[typeLex].labelL10n) {
+          return this.l10n.getText(resourceOptions.defaults.items[typeLex].labelL10n)
+        } else if (resourceOptions.defaults.items[typeLex].labelText) {
+          return resourceOptions.defaults.items[typeLex].labelText
+        }
       }
+      return this.titleDefault[typeLex]
+    },
+
+    resourceSettingsLexicons (typeLex) {
+      const resourceOptions = this.settings.getResourceOptions()
+      return resourceOptions.items && resourceOptions.items[typeLex]
+        ? resourceOptions.items[typeLex].filter(item => item.values.length > 0)
+        : []
+    },
+
+    resourceSettingChanged: function (name, value) {
+      // we have to send the full name here and parse it where we set it
+      // because grouped setting are referenced under Options object
+      // by the parsed name but each individual setting in a group is referenced
+      // by its fullname (with version and groupname appended)
+      this.settings.resourceOptionChange(name, value)
+      this.app.applyResourceOption(name, value)
     }
   }
+}
 </script>
 <style lang="scss">
   @import "../../styles/variables";

@@ -1,7 +1,6 @@
 /* global DEVELOPMENT_MODE_BUILD */
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
-import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
 import { Constants, TreebankDataItem, HomonymGroup, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
@@ -18,18 +17,14 @@ export default class Lexis extends Module {
   /**
    * @param {object} store - A Vuex store.
    * @param {object} api - A public API object.
-   * @param {object} config - A module's configuration object:
-   *        {Function} config.getSelectedText - An app controller's function to start a lexical query.
-   *        This is a temporary solution until wil fully integrate lexical query functionality into
-   *        an app controller.
+   * @param {object} config - A module's configuration object
    */
   constructor (store, api, config = {}) {
     super(store, api, config)
     // APIs provided by the app controller
     this._appApi = api.app
-    this._uiApi = api.ui
     this._settingsApi = api.settings
-    this._lexisConfig = (api.app.config && api.app.config['lexis-cs']) ? api.app.config['lexis-cs'] : null
+    this._lexisConfig = api.settings.getLexisOptions()
 
     if (!this._lexisConfig) {
       // If Lexis configuration is not available we will disable any CEDICT-related functionality
@@ -345,7 +340,7 @@ export default class Lexis extends Module {
     const lexQuery = LexicalQuery.create(textSelector, {
       clientId: this._appApi.clientId,
       siteOptions,
-      verboseMode: this._settingsApi.verboseMode(),
+      verboseMode: this._settingsApi.isInVerboseMode(),
       lemmaTranslations,
       wordUsageExamples,
       resourceOptions: this._settingsApi.getResourceOptions(),
@@ -439,44 +434,28 @@ Lexis.store = (moduleInstance) => {
 Lexis.api = (moduleInstance, store) => {
   return {
     /**
+     * A selector for the last lexical query done via a `getSelectedText()`
+     *
+     * @type {TextSelector | null}
+     */
+    lastTextSelector: moduleInstance._lastTextSelector,
+
+    /**
      * Starts a lexical query from a page.
      *
-     * @param {EventElement} event - An event that initiated a query.
-     * @param {Event} domEvent - A corresponding DOM event.
+     * @param {TextSelector} textSelector - A selector with the text selected.
+     * @param {HTMLElement} selectionTarget - An HTML element containing the selection.
      */
-    getSelectedText: (event, domEvent) => {
-      if (moduleInstance._appApi.isGetSelectedTextEnabled(domEvent)) {
-        const defaultLangCode = moduleInstance._appApi.getDefaultLangCode()
-        const htmlSelector = new HTMLSelector(event, defaultLangCode)
-        const textSelector = htmlSelector.createTextSelector()
-
-        if (textSelector && !textSelector.isEmpty()) {
-          const lastTextSelector = moduleInstance._lastTextSelector || {}
-
-          /*
-          We do not want to run a lexical query for the same word that is already
-          shown in a popup on desktop
-           */
-          if (moduleInstance.config.platform.isDesktop && moduleInstance._uiApi.isPopupVisible()) {
-            // Check if a selection is the same
-            if (lastTextSelector.text === textSelector.text &&
-              lastTextSelector.languageID === textSelector.languageID) {
-              // Do nothing
-              return
-            }
-          }
-
-          moduleInstance._lastTextSelector = textSelector
-          moduleInstance.lexicalQuery({
-            store,
-            textSelector,
-            wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
-            checkContextForward: textSelector.checkContextForward,
-            treebankDataItem: TreebankDataItem.getTreebankData(htmlSelector.target),
-            source: LexicalQuery.sources.PAGE
-          })
-        }
-      }
+    getSelectedText: (textSelector, selectionTarget) => {
+      moduleInstance._lastTextSelector = textSelector
+      moduleInstance.lexicalQuery({
+        store,
+        textSelector,
+        wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
+        checkContextForward: textSelector.checkContextForward,
+        treebankDataItem: TreebankDataItem.getTreebankData(selectionTarget),
+        source: LexicalQuery.sources.PAGE
+      })
     },
 
     /**

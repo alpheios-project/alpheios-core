@@ -7,7 +7,7 @@
             { maxResults:settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
         }}
       </div>
-      <div v-else="!hasSelectedAuthor && !hasSelectedTextWork" class="alpheios_word_usage_hint">
+      <div v-else-if="!hasSelectedAuthor && !hasSelectedTextWork" class="alpheios_word_usage_hint">
         {{ l10n.getText('WORDUSAGE_HINT_INITIAL_SEARCH',
             { maxResults:settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue })
         }}
@@ -101,13 +101,12 @@
 <script>
 import WordUsageExamplesFilters from '@/vue/components/word-usage-examples/word-usage-examples-filters.vue'
 import WordUsageExamplesSorting from '@/vue/components/word-usage-examples/word-usage-examples-sorting.vue'
-
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import { Logger } from 'alpheios-data-models'
 
 export default {
   name: 'WordUsageExamples',
-  inject: ['ui', 'app', 'l10n','settings'],
-  storeModules: ['ui'],
+  inject: ['app', 'l10n', 'settings'],
   mixins: [DependencyCheck],
   components: {
     wordUsageExamplesFilters: WordUsageExamplesFilters,
@@ -247,7 +246,13 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.ui.registerAndActivateGetSelectedText('getSelectedText-usageExamples', '.alpheios-word-usage')
+      const selectorName = 'getSelectedText-usageExamples'
+      try {
+        this.app.registerTextSelector(selectorName, '.alpheios-word-usage')
+        this.app.activateTextSelector(selectorName)
+      } catch (err) {
+        Logger.getInstance().error(err)
+      }
     })
   }
 }

@@ -6,7 +6,9 @@ const webpack = {
     entry: './index.js',
     externals: {
       'alpheios-data-models': 'alpheios-data-models',
-      'alpheios-messaging': 'alpheios-messaging'
+      'alpheios-l10n': 'alpheios-l10n',
+      'alpheios-messaging': 'alpheios-messaging',
+      papaparse: 'papaparse'
     },
     resolve: {
       alias: {

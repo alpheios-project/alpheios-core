@@ -5,9 +5,9 @@ const webpack = {
     context: projectRoot,
     entry: './index.js',
     externals: {
-      'intl-messageformat': 'intl-messageformat',
       'alpheios-data-models': 'alpheios-data-models',
-      'uuid/v4': 'uuid/v4'
+      'uuid/v4': 'uuid/v4',
+      papaparse: 'papaparse'
     },
     resolve: {
       alias: {

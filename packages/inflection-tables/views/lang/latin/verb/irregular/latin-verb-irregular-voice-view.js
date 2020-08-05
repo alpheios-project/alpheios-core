@@ -2,6 +2,8 @@ import { Feature } from 'alpheios-data-models'
 import LatinVerbIrregularBaseView from '@views/lang/latin/verb/irregular/latin-verb-irregular-base-view.js'
 import LatinVerbParicipleIrregularView from '@views/lang/latin/verb/irregular/latin-verb-participle-irregular-view.js'
 import LatinVerbSupineIrregularView from '@views/lang/latin/verb/irregular/latin-verb-supine-irregular-view.js'
+import LatinVerbInfinitiveIrregularVoiceView from '@views/lang/latin/verb/irregular/latin-verb-infinitive-irregular-voice-view.js'
+import LatinVerbImperativeIrregularVoiceView from '@views/lang/latin/verb/irregular/latin-verb-imperative-irregular-voice-view.js'
 import Table from '@views/lib/table'
 
 /**
@@ -67,7 +69,7 @@ export default class LatinVerbIrregularVoiceView extends LatinVerbIrregularBaseV
    * @return {View[]}
    */
   static linkedViewConstructors (homonym) {
-    let views = [LatinVerbParicipleIrregularView] // eslint-disable-line prefer-const
+    let views = [LatinVerbParicipleIrregularView, LatinVerbInfinitiveIrregularVoiceView, LatinVerbImperativeIrregularVoiceView] // eslint-disable-line prefer-const
     if (homonym.inflections.some(i => this.supineEnabledHdwds.includes(i.word.value))) {
       views.push(LatinVerbSupineIrregularView)
     }

@@ -1,15 +1,15 @@
 /* eslint-env jest */
-import ResourceQuery from '@/lib/queries/resource-query'
-import Query from '@/lib/queries/query'
+import ResourceQuery from '@comp/lib/queries/resource-query'
+import Query from '@comp/lib/queries/query'
 
-import L10n from '@/lib/l10n/l10n'
-import Locales from '@/locales/locales'
-import enUS from '@/locales/en-us/messages.json'
-import enGB from '@/locales/en-gb/messages.json'
+import Locales from '@comp/locales/locales'
+import enUS from '@comp/locales/en-us/messages.json'
+import enGB from '@comp/locales/en-gb/messages.json'
 import { Constants, Feature } from 'alpheios-data-models'
-import Options from '@/lib/options/options'
-import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import LocalStorageArea from '@/lib/options/local-storage-area.js'
+import { L10n } from 'alpheios-l10n'
+import Options from '@comp/lib/options/options'
+import LanguageOptionDefaults from '@comp/settings/language-options-defaults.json'
+import LocalStorageArea from '@comp/lib/options/local-storage-area.js'
 
 describe('resource-query.test.js', () => {
   let l10n

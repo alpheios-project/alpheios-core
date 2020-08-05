@@ -329,7 +329,6 @@ export default {
   inject: {
     app: 'app',
     ui: 'ui',
-    language: 'language',
     l10n: 'l10n',
     settings: 'settings',
     auth: 'auth'
@@ -440,13 +439,13 @@ export default {
     componentStyles: function () {
       return {
         // It shall have a z-index higher than that of a popup
-        zIndex: (this.ui.zIndex || 0) + 10
+        zIndex: (this.$store.state.ui.zIndexMax || 0) + 10
       }
     },
 
     isLandscape: function () {
       // Have to use store prop to keep orientation reactive
-      let isLandscapeCheck = (this.$store.state.panel.orientation === Platform.orientations.LANDSCAPE)
+      const isLandscapeCheck = (this.$store.state.panel.orientation === Platform.orientations.LANDSCAPE)
 
       if ((this.prevOrientation !== Platform.orientations.LANDSCAPE) && isLandscapeCheck) {
         this.expanded = true

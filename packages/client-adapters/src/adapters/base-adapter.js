@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { Logger } from 'alpheios-data-models'
+import { L10n } from 'alpheios-l10n'
 import AdapterError from '@clAdapters/errors/adapter-error'
 import RemoteError from '@clAdapters/errors/remote-error.js'
 
-import L10n from '@clAdapters/l10n/l10n'
 import Locales from '@clAdapters/locales/locales.js'
 import enUS from '@clAdapters/locales/en-us/messages.json'
 import enGB from '@clAdapters/locales/en-gb/messages.json'
@@ -77,7 +77,7 @@ class BaseAdapter {
       try {
         const response = await window.fetch(url)
         if (!response.ok) {
-          this.addError(this.l10n.messages.BASIC_ADAPTER_URL_RESPONSE_FAILED.get(response.status, response.statusText))
+          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText: response.statusText }))
           return
         }
         if (options.type === 'xml') {
@@ -86,10 +86,10 @@ class BaseAdapter {
           return response.json()
         }
       } catch (error) {
-        this.addError(this.l10n.messages.BASIC_ADAPTER_NO_DATA_FROM_URL.get(url))
+        this.addError(this.l10n.getMsg('BASIC_ADAPTER_NO_DATA_FROM_URL', { url: url }))
       }
     } else {
-      this.addError(this.l10n.messages.BASIC_ADAPTER_EMPTY_URL)
+      this.addError(this.l10n.getMsg('BASIC_ADAPTER_EMPTY_URL'))
     }
   }
 
@@ -123,13 +123,13 @@ class BaseAdapter {
             }
           })
           .catch((err) => {
-            this.addError(this.l10n.messages.BASIC_ADAPTER_NO_DATA_FROM_URL.get(url))
+            this.addError(this.l10n.getMsg('BASIC_ADAPTER_NO_DATA_FROM_URL', { url: url }))
             if (didTimeOut) return
             reject(err)
           })
       })
     } else {
-      this.addError(this.l10n.messages.BASIC_ADAPTER_EMPTY_URL)
+      this.addError(this.l10n.getMsg('BASIC_ADAPTER_EMPTY_URL'))
     }
   }
 
@@ -151,10 +151,10 @@ class BaseAdapter {
         }
         return res.data
       } catch (error) {
-        this.addError(this.l10n.messages.BASIC_ADAPTER_NO_DATA_FROM_URL.get(url))
+        this.addError(this.l10n.getMsg('BASIC_ADAPTER_NO_DATA_FROM_URL', { url: url }))
       }
     } else {
-      this.addError(this.l10n.messages.BASIC_ADAPTER_EMPTY_URL)
+      this.addError(this.l10n.getMsg('BASIC_ADAPTER_EMPTY_URL'))
     }
   }
 
@@ -201,10 +201,10 @@ class BaseAdapter {
 
         return res
       } catch (error) {
-        this.addError(this.l10n.messages.BASIC_ADAPTER_UNKNOWN_ERROR.get(error.message))
+        this.addError(this.l10n.getMsg('BASIC_ADAPTER_UNKNOWN_ERROR', { message: error.message }))
       }
     } else {
-      this.addError(this.l10n.messages.BASIC_ADAPTER_EMPTY_URL)
+      this.addError(this.l10n.getMsg('BASIC_ADAPTER_EMPTY_URL'))
     }
   }
 }

@@ -87,6 +87,10 @@ export default {
       default: false
     },
 
+    /*
+    In what UI components results of the word lookup must be displayed.
+    Possible values are defined in @see {@link uiController:UIController.components}
+     */
     showResultsIn: {
       type: String,
       required: false,
@@ -158,24 +162,10 @@ export default {
         this.lexis.lookupText(textSelector)
         // Notify parent  that the lookup has been started so that the parent can close itself if necessary
         this.$emit('lookup-started')
-        this.showLookupResult()
+        this.ui.showLookupResultsUI(this.showResultsIn)
       } catch (err) {
         // Lookup request cannot be completed
         this.$options.logger.warn(`Lookup request cannot be completed: ${err.message}`)
-      }
-    },
-
-    showLookupResult () {
-      switch (this.showResultsIn) {
-        case 'popup':
-          this.ui.openPopup()
-          this.ui.closePanel()
-          break
-        case 'panel':
-          this.ui.showPanelTab('morphology')
-          break
-        default:
-          this.$options.logger.warn(`Unknown afterLookupAction value: ${this.showResultsIn}`)
       }
     },
 

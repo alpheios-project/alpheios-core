@@ -221,7 +221,7 @@ describe('lexicons/adapter.test.js', () => {
     adapter.addError = jest.fn()
 
     adapter.fetchDefinitions('fooHomonym', {}, 'fooLookupFunction')
-    expect(adapter.addError).toHaveBeenCalledWith(adapter.l10n.messages['LEXICONS_NO_ALLOWED_URL'])
+    expect(adapter.addError).toHaveBeenCalledWith(adapter.l10n.getMsg('LEXICONS_NO_ALLOWED_URL'))
   })
 
   it('10 AlpheiosLexiconsAdapter - fetchDefinitions with short lookupFunction, for each url it will be executed prepareShortDefPromise', async () => {
@@ -368,7 +368,7 @@ describe('lexicons/adapter.test.js', () => {
     let urlKey = 'https://github.com/alpheios-project/dod'
     adapter.addError = jest.fn()
     adapter.collectFullDefURLs({}, testSuccessHomonym, adapter.config[urlKey])
-    expect(adapter.addError).toHaveBeenCalledWith(adapter.l10n.messages['LEXICONS_NO_FULL_URL'])
+    expect(adapter.addError).toHaveBeenCalledWith(adapter.l10n.getMsg('LEXICONS_NO_FULL_URL'))
   })
 
   it('17 AlpheiosLexiconsAdapter - updateFullDefsAsync fetches each request and adds full definition to lexeme', async () => {

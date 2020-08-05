@@ -9,31 +9,29 @@ import Vue from '@vue-runtime'
 import Vuex from 'vuex'
 import interact from 'interactjs'
 // Modules and their support dependencies
-import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
-import LexisModule from '@/vue/vuex-modules/data/lexis.js'
-import Locales from '@/locales/locales.js'
+import L10nModule from '@comp/vue/vuex-modules/data/l10n-module.js'
+import LexisModule from '@comp/vue/vuex-modules/data/lexis.js'
+import Locales from '@comp/locales/locales.js'
 
-import EmbedLibWarning from '@/vue/components/embed-lib-warning.vue'
+import EmbedLibWarning from '@comp/vue/components/embed-lib-warning.vue'
 
-import LexicalQuery from '@/lib/queries/lexical-query.js'
-import ResourceQuery from '@/lib/queries/resource-query.js'
-import SiteOptions from '@/settings/site-options.json'
-import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
-import UIOptionDefaults from '@/settings/ui-options-defaults.json'
-import TextSelector from '@/lib/selection/text-selector'
-import HTMLPage from '@/lib/utility/html-page.js'
-import Platform from '@/lib/utility/platform.js'
-import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
-import LongTap from '@/lib/custom-pointer-events/long-tap.js'
-import GenericEvt from '@/lib/custom-pointer-events/generic-evt.js'
-import MouseMove from '@/lib/custom-pointer-events/mouse-move.js'
+import LexicalQuery from '@comp/lib/queries/lexical-query.js'
+import ResourceQuery from '@comp/lib/queries/resource-query.js'
+import TextSelector from '@comp/lib/selection/text-selector'
+import Platform from '@comp/lib/utility/platform.js'
+import MouseDblClick from '@comp/lib/custom-pointer-events/mouse-dbl-click.js'
+import LongTap from '@comp/lib/custom-pointer-events/long-tap.js'
+import GenericEvt from '@comp/lib/custom-pointer-events/generic-evt.js'
+import MouseMove from '@comp/lib/custom-pointer-events/mouse-move.js'
 
-import Options from '@/lib/options/options.js'
-import LocalStorage from '@/lib/options/local-storage-area.js'
-import RemoteAuthStorageArea from '@/lib/options/remote-auth-storage-area.js'
-import UIEventController from '@/lib/controllers/ui-event-controller.js'
-import QueryParams from '@/lib/utility/query-params.js'
+import Options from '@comp/lib/options/options.js'
+import LocalStorage from '@comp/lib/options/local-storage-area.js'
+import RemoteAuthStorageArea from '@comp/lib/options/remote-auth-storage-area.js'
+import SettingsController from '@comp/lib/controllers/settings-controller.js'
+import UIController from '@comp/lib/controllers/ui-controller.js'
+import UIEventController from '@comp/lib/controllers/ui-event-controller.js'
+import SelectionController from '@comp/lib/controllers/selection-controller.js'
+import QueryParams from '@comp/lib/utility/query-params.js'
 
 const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
@@ -48,10 +46,6 @@ const languageNames = new Map([
 const layoutClasses = {
   COMPACT: 'alpheios-layout-compact',
   LARGE: 'alpheios-layout-large'
-}
-
-const injectionClasses = {
-  DISABLE_TEXT_SELECTION: 'alpheios-disable-user-selection'
 }
 
 // Enable Vuex
@@ -76,29 +70,6 @@ export default class AppController {
     this.state = state
     this.options = AppController.setOptions(options, AppController.optionsDefaults)
 
-    this.tabs = {
-      DEFAULT: this.options.overrideHelp ? 'settings' : 'info',
-      DISABLED: 'disabled'
-    }
-    /*
-    Define defaults for resource options. If a app controller creator
-    needs to provide its own defaults, they shall be defined in a `create()` function.
-     */
-    this.featureOptionsDefaults = FeatureOptionDefaults
-    this.resourceOptionsDefaults = LanguageOptionDefaults
-    this.uiOptionsDefaults = UIOptionDefaults
-    this.siteOptionsDefaults = SiteOptions
-    /*
-    All following options will be created during an init phase.
-    This will allow creators of an app controller to provide their own options defaults
-    inside a `create()` builder function.
-     */
-    this.featureOptions = null
-    this.resourceOptions = null
-    this.uiOptions = null
-    this.siteOptions = null // Will be set during an `init` phase
-
-    this.irregularBaseFontSize = !AppController.hasRegularBaseFontSize()
     this.isInitialized = false
     this.isActivated = false
     this.isDeactivated = false
@@ -131,36 +102,54 @@ export default class AppController {
       strict: DEVELOPMENT_MODE_BUILD
     })
     this.api = {} // An API object for functions of registered modules and an app controller.
+
+    /**
+     * A map that holds data modules.
+     *
+     * @type {Map<string, Module>}
+     */
     this.modules = new Map()
 
     // Get query parameters from the URL. Do this early so they will be available to modules during registration
     this.queryParams = QueryParams.parse()
 
+    this._stC = new SettingsController({
+      platform: this.platform
+    })
+
     /**
-     * If an event controller be used with an instance of a UI Controller,
-     * this prop will hold an event controller instance. It is usually initialized within a `build` method.
+     * Holds an instance of a UI controller. Its purpose is to manage all UI components within an application.
      *
      * @type {UIEventController}
      */
-    this.evc = null
+    this.uic = new UIController({
+      platform: this.platform,
+      uiState: this.state,
+      queryParams: this.queryParams,
+      overrideHelp: this.options.overrideHelp
+    })
+
+    /**
+     * `evc` holds an instance of an event controller that handle key events.
+     * It will be initialized at a later stage.
+     *
+     * @type {UIEventController}
+     */
+    this.evc = new UIEventController()
+    this.selc = new SelectionController(this.getDefaultLangCode.bind(this))
 
     this.wordlistC = {} // This is a word list controller
   }
 
   /**
    * Creates an instance of an app controller with default options. Provide your own implementation of this method
-if you want to create a different configuration of an app controller.
+   * if you want to create a different configuration of an app controller.
    *
    * @param state
    * @param options
    */
   static create (state, options) {
     let appController = new AppController(state, options) // eslint-disable-line prefer-const
-
-    /*
-    If necessary override defaults of an app controller's options objects here as:
-    appController.siteOptionsDefaults = mySiteDefaults
-     */
 
     // Register data modules
     appController.registerModule(L10nModule, {
@@ -194,8 +183,8 @@ if you want to create a different configuration of an app controller.
     */
 
     // Creates on configures an event listener
-    appController.evc = new UIEventController()
     appController.evc.registerListener('HandleEscapeKey', document, appController.handleEscapeKey.bind(appController), GenericEvt, 'keydown')
+    SelectionController.evt.TEXT_SELECTED.sub(appController.onTextSelected.bind(appController))
 
     // Subscribe to LexicalQuery events
     LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(appController.onLexicalQueryComplete.bind(appController))
@@ -322,10 +311,13 @@ if you want to create a different configuration of an app controller.
     return result
   }
 
-  setDefaultPanelState () {
-    if (!this.hasModule('panel')) { return this }
-    this.state.setPanelClosed()
-    return this
+  /**
+   * Checks whether an app is using a UI controller.
+   *
+   * @returns {boolean} True if a UI controller is used, false otherwise.
+   */
+  get hasUIController () {
+    return Boolean(this.uic)
   }
 
   /**
@@ -337,13 +329,21 @@ if you want to create a different configuration of an app controller.
    * @returns {AppController} - A self reference for chaining.
    */
   registerModule (moduleClass, options = {}) {
-    if (moduleClass.isSupportedPlatform(this.platform)) {
-      // Add query parameters and platform info to module's options
+    if (!moduleClass.isSupportedPlatform(this.platform)) {
+      this.logger.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
+      return this
+    }
+
+    if (moduleClass.isDataModule) {
+      // Data modules are registered with an app controller
       options.queryParams = this.queryParams
       options.platform = this.platform
       this.modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
+    } else if (moduleClass.isUiModule) {
+      // UI modules belong to a UI controller
+      if (this.hasUIController) { this.uic.registerModule(moduleClass, options) }
     } else {
-      this.logger.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
+      this.logger.warn(`Skipping registration of a ${moduleClass.moduleName} of unkown type: ${moduleClass.moduleType}`)
     }
     return this
   }
@@ -352,38 +352,18 @@ if you want to create a different configuration of an app controller.
     return Array.from(this.modules.values()).filter(m => m.ModuleClass.isDataModule)
   }
 
-  get uiModules () {
-    return Array.from(this.modules.values()).filter(m => m.ModuleClass.isUiModule)
-  }
-
-  createDataModules () {
+  createModules () {
     this.dataModules.forEach((m) => {
       m.instance = new m.ModuleClass(this.store, this.api, m.options)
     })
   }
 
-  createUiModules () {
-    this.uiModules.forEach((m) => {
-      m.instance = new m.ModuleClass(this.store, this.api, m.options)
-    })
-  }
-
-  createModules () {
-    // Create data modules fist, UI modules after that because UI modules are dependent on data ones
-    this.createDataModules()
-    this.createUiModules()
-  }
-
   activateModules () {
-    // Activate data modules fist, UI modules after them because UI modules are dependent on data modules
     this.dataModules.forEach(m => m.instance.activate())
-    this.uiModules.forEach(m => m.instance.activate())
   }
 
   deactivateModules () {
-    // Deactivate data modules in reverse order: UI modules first, data modules after them.
     this.dataModules.forEach(m => m.instance.deactivate())
-    this.uiModules.forEach(m => m.instance.deactivate())
   }
 
   hasModule (moduleName) {
@@ -396,83 +376,25 @@ if you want to create a different configuration of an app controller.
 
   async init () {
     if (this.isInitialized) { return 'Already initialized' }
-    // Start loading options as early as possible
-    const optionLoadPromises = this.initOptions(this.options.storageAdapter)
-    const appConfigLoadPromise = this.loadAppConfig({
-      url: this.options.configServiceUrl,
+    // Initialize options
+    await this._stC.init({
+      api: this.api,
+      store: this.store,
+      configServiceUrl: this.options.configServiceUrl,
       clientId: this.options.clientId,
       appName: this.options.app.name,
       appVersion: this.options.app.version,
       branch: this.options.app.buildBranch,
-      buildNumber: this.options.app.buildNumber
+      buildNumber: this.options.app.buildNumber,
+      storageAdapter: this.options.storageAdapter
     })
-
-    // Create a copy of resource options for the lookup UI component
-    // this doesn't get reloaded from the storage adapter because
-    // we don't expose it to the user via preferences
-    this.lookupResourceOptions = new Options(this.resourceOptionsDefaults, new this.options.storageAdapter(this.resourceOptionsDefaults.domain)) // eslint-disable-line new-cap
-    // TODO: Site options should probably be initialized the same way as other options objects
-    this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
-
-    this.zIndex = HTMLPage.getZIndexMax()
-
-    // Will add morph adapter options to the `options` object of an app controller constructor as needed.
-
-    // Inject HTML code of a plugin. Should go in reverse order.
-    document.body.classList.add('alpheios')
-
-    const [appConfig, ...options] = await Promise.all([appConfigLoadPromise, ...optionLoadPromises])
-    this.appConfig = appConfig
-
-    // All options has been loaded after this point
+    // All options has been loaded and initialized after this point
 
     // The following options will be applied to all logging done via a single Logger instance
     // Set the  logger verbose mode according to the settings
-    this.logger.setVerboseMode(this.verboseMode())
+    this.logger.setVerboseMode(this.api.settings.isInVerboseMode())
     this.logger.prependModeOn() // Set a prepend mode that will add an Alpheios prefix to the printed statements
     this.logger.traceModeOff() // Enable the log call stack tracing
-
-    /**
-     * This is a settings API. It exposes different options to modules and UI components.
-     */
-    this.api.settings = {
-      getFeatureOptions: this.getFeatureOptions.bind(this),
-      getResourceOptions: this.getResourceOptions.bind(this),
-      getUiOptions: this.getUiOptions.bind(this),
-      verboseMode: this.verboseMode.bind(this),
-      // we don't offer UI to change to lookupResourceOptions or siteOptions
-      // so they remain out of dynamic state for now - should eventually
-      // refactor
-      lookupResourceOptions: this.lookupResourceOptions,
-      siteOptions: this.siteOptions
-    }
-
-    this.store.registerModule('settings', {
-      // All stores of modules are namespaced
-      namespaced: true,
-      state: {
-        // these counters are used to enable the settings ui components
-        // to redraw themselves when settings are reset or reloaded
-        // it might be better if all settings were made into
-        // state variables but for now state is monitored at the domain level
-        uiResetCounter: 0,
-        featureResetCounter: 0,
-        resourceResetCounter: 0
-      },
-      mutations: {
-        incrementUiResetCounter (state) {
-          state.uiResetCounter += 1
-        },
-
-        incrementFeatureResetCounter (state) {
-          state.featureResetCounter += 1
-        },
-
-        incrementResourceResetCounter (state) {
-          state.resourceResetCounter += 1
-        }
-      }
-    })
 
     this.api.app = {
       name: this.options.app.name, // A name of a host application (embed lib or webextension)
@@ -482,10 +404,8 @@ if you want to create a different configuration of an app controller.
       libName: AppController.libName, // A name of the components library
       libVersion: AppController.libVersion, // A version of the components library
       libBuildName: BUILD_NAME, // A name of a build of a components library that will be injected by Webpack
-      config: this.appConfig,
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
-      defaultTab: this.tabs.DEFAULT, // A name of a default tab (a string)
       state: this.state, // An app-level state
       homonym: null,
       inflectionsViewSet: null,
@@ -501,10 +421,15 @@ if you want to create a different configuration of an app controller.
 
       // TODO: Some of the functions below should probably belong to other API groups.
       getDefaultLangCode: this.getDefaultLangCode.bind(this),
+      registerTextSelector: this.registerTextSelector.bind(this),
+      activateTextSelector: this.activateTextSelector.bind(this),
+      // TODO: The following is used in a UI controller only. We should try to eliminate that dependency.
+      isMousemoveForced: this.isMousemoveForced.bind(this),
       getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
       clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
-      featureOptionChange: this.featureOptionChange.bind(this),
-      resetAllOptions: this.resetAllOptions.bind(this),
+      applyAllOptions: this.applyAllOptions.bind(this),
+      applyUIOption: this.applyUIOption.bind(this),
+      applyFeatureOption: this.applyFeatureOption.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       notifyExperimental: this.notifyExperimental.bind(this),
       getLanguageName: AppController.getLanguageName,
@@ -518,13 +443,10 @@ if you want to create a different configuration of an app controller.
         if (!this.store.state.app.homonymDataReady || lexemes.length === 0) {
           return false
         }
-        if (Array.isArray(lexemes) && lexemes.length > 0 &&
+        return (Array.isArray(lexemes) && lexemes.length > 0 &&
           (lexemes[0].lemma.principalParts.length > 0 || lexemes[0].inflections.length > 0 || lexemes[0].inflections.length > 0 ||
             lexemes[0].meaning.fullDefs.length > 0 || lexemes[0].meaning.shortDefs.length > 0)
-        ) {
-          return true
-        }
-        return false
+        )
       },
       getWordUsageData: this.getWordUsageData.bind(this),
       getWordList: this.wordlistC.getWordList.bind(this.wordlistC),
@@ -737,207 +659,79 @@ if you want to create a different configuration of an app controller.
       }
     })
 
-    /**
-     * This is a UI-level public API of a UI controller. All objects should use this public API only.
-     */
-    this.api.ui = {
-      zIndex: this.zIndex, // A z-index of Alpheios UI elements
-
-      // Modules
-      hasModule: this.hasModule.bind(this), // Checks if a UI module is available
-      getModule: this.getModule.bind(this), // Gets direct access to module.
-
-      // Actions
-      openPanel: this.openPanel.bind(this),
-      closePanel: this.closePanel.bind(this),
-      openPopup: this.openPopup.bind(this),
-      closePopup: this.closePopup.bind(this),
-      isPopupVisible: () => Boolean(this.store.state.popup && this.store.state.popup.visible),
-      openActionPanel: this.openActionPanel.bind(this),
-      closeActionPanel: this.closeActionPanel.bind(this),
-      toggleActionPanel: this.toggleActionPanel.bind(this),
-      changeTab: this.changeTab.bind(this),
-      showPanelTab: this.showPanelTab.bind(this),
-      togglePanelTab: this.togglePanelTab.bind(this),
-      registerAndActivateGetSelectedText: this.registerAndActivateGetSelectedText.bind(this),
-
-      optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
-    }
-
-    this.store.registerModule('ui', {
-      // All stores of modules are namespaced
-      namespaced: true,
-
-      state: {
-        activeTab: this.tabs.DEFAULT, // A currently selected panel's tab
-        disabledTab: this.tabs.DISABLED,
-        overrideHelp: this.options.overrideHelp,
-
-        messages: [],
-        // Panel and popup notifications
-        notification: {
-          visible: false,
-          important: false,
-          showLanguageSwitcher: false,
-          text: null
-        },
-
-        hint: {
-          visible: false,
-          text: null
-        }
-      },
-
-      getters: {
-        isActiveTab: (state) => (tabName) => {
-          return state.activeTab === tabName
-        }
-      },
-
-      mutations: {
-        setActiveTab (state, tabName) {
-          state.activeTab = tabName
-        },
-
-        // Set active tab name to `disabled` when panel is closed so that no selected tab be shown in a toolbar
-        resetActiveTab (state) {
-          state.activeTab = state.disabledTab
-        },
-
-        setNotification (state, data) {
-          state.notification.visible = true
-          state.notification.important = data.important || false
-          state.notification.showLanguageSwitcher = data.showLanguageSwitcher || false
-          state.notification.text = data.text || data
-        },
-
-        resetNotification (state) {
-          state.notification.visible = false
-          state.notification.important = false
-          state.notification.showLanguageSwitcher = false
-          state.notification.text = null
-        },
-
-        setHint (state, data) {
-          state.hint.visible = true
-          state.hint.text = data
-        },
-
-        resetHint (state) {
-          state.hint.visible = false
-          state.hint.text = null
-        },
-
-        addMessage (state, text) {
-          state.messages.push(text)
-        },
-
-        resetMessages (state) {
-          state.messages = []
-        }
-      }
-    })
-
     // If `textLangCode` is set, use it over the `preferredLanguage`
     this.options.overridePreferredLanguage = Boolean(this.options.textLangCode)
     this.store.commit('app/setSelectedLookupLang', this.getDefaultLangCode())
-    this.api.language = {
-      resourceSettingChange: this.resourceSettingChange.bind(this)
-    }
-
-    // Set options of modules before modules are created
-    if (this.hasModule('popup')) {
-      let popupOptions = this.modules.get('popup').options // eslint-disable-line prefer-const
-      popupOptions.initialShift = {
-        x: this.uiOptions.items.popupShiftX.currentValue,
-        y: this.uiOptions.items.popupShiftY.currentValue
-      }
-    }
-
-    if (this.hasModule('toolbar')) {
-      let toolbarOptions = this.modules.get('toolbar').options // eslint-disable-line prefer-const
-      toolbarOptions.initialShift = {
-        x: this.uiOptions.items.toolbarShiftX.currentValue,
-        y: this.uiOptions.items.toolbarShiftY.currentValue
-      }
-    }
 
     // Create registered data modules
-    this.createDataModules()
+    // Data modules and UI modules use the Settings Controller; it must be fully initialized at this point
+    this.createModules()
 
     // The current language must be set after data modules are created (because it uses an L10n module)
     // but before the UI modules are created (because UI modules use current language during rendering).
     const defaultLangCode = this.getDefaultLangCode()
     const defaultLangID = LanguageModelFactory.getLanguageIdFromCode(defaultLangCode)
     // Set the lookup
-    this.featureOptions.items.lookupLanguage.setValue(defaultLangCode)
+    this.api.settings.getFeatureOptions().items.lookupLanguage.setValue(defaultLangCode)
     this.updateLanguage(defaultLangID)
+    if (this.hasUIController) { this.uic.init({ api: this.api, store: this.store }) }
 
-    // Create registered UI modules
-    this.createUiModules()
-
-    // Adjust configuration of modules according to feature options
-    if (this.hasModule('panel')) {
-      this.store.commit('panel/setPosition', this.uiOptions.items.panelPosition.currentValue)
+    try {
+      this.registerTextSelector('GetSelectedText', this.options.textQuerySelector)
+    } catch (err) {
+      Logger.getInstance().error(err)
     }
-
-    this.uiSetFontSize(this.uiOptions)
-
     this.updateLemmaTranslations()
-
-    // Get selected text must be registered after a Lexis data module is activated because it uses its functionality
-    if (!this.isGetSelectedTextRegistered) {
-      this.registerGetSelectedText('GetSelectedText', this.options.textQuerySelector)
-      this.isGetSelectedTextRegistered = true
-    }
-
     this.isInitialized = true
-
     return this
   }
 
-  /**
-   * initialize the options using the supplied storage adapter class
-   *
-   * @param {Function<StorageAdapter>} StorageAdapter the adapter class to instantiate
-   * @param {object} authData optional authentication data if the adapter is one that requires it
-   * @returns Promise[] an array of promises to load the options data from the adapter
-   */
-  initOptions (StorageAdapter, authData = null) {
-    this.featureOptions = new Options(this.featureOptionsDefaults, new StorageAdapter(this.featureOptionsDefaults.domain, authData))
-    this.resourceOptions = new Options(this.resourceOptionsDefaults, new StorageAdapter(this.resourceOptionsDefaults.domain, authData))
-    this.uiOptions = new Options(this.uiOptionsDefaults, new StorageAdapter(this.uiOptionsDefaults.domain, authData))
-    return [this.featureOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
+  get textSelectorParams () {
+    let event
+    let eventParams
+    if (this.platform.isMobile) {
+      // A mobile platform
+      if (['longTap', 'longtap', null].includes(this.options.textQueryTriggerMobile)) {
+        event = LongTap
+      } else {
+        event = GenericEvt
+        eventParams = this.options.textQueryTriggerMobile
+      }
+    } else if (this.isMousemoveEnabled) {
+      // A desktop platform with mousemove enabled
+      event = MouseMove
+      eventParams = {
+        mouseMoveDelay: this.api.settings.getUiOptions().items.mouseMoveDelay.currentValue,
+        mouseMoveAccuracy: this.api.settings.getUiOptions().items.mouseMoveAccuracy.currentValue,
+        enableMouseMoveLimitedByIdCheck: this.api.settings.getUiOptions().items.enableMouseMoveLimitedByIdCheck.currentValue,
+        mouseMoveLimitedById: this.api.settings.getUiOptions().items.mouseMoveLimitedById.currentValue
+      }
+    } else {
+      // A desktop platform with mousemove disabled
+      if (['dblClick', 'dblclick', null].includes(this.options.textQueryTriggerDesktop)) {
+        event = MouseDblClick
+      } else {
+        event = GenericEvt
+        eventParams = this.options.textQueryTriggerDesktop
+      }
+    }
+    return [event, eventParams]
   }
 
-  /**
-   * Loads an application wide configuration file in a JSON format.
-   *
-   * @param {string} url - A URL of an app config server.
-   * @param {string} clientId - A client ID.
-   * @param {string} appName - An application name, such as "Alpheios Reading Tools".
-   * @param {string} appVersion - An application version, following a semver specification.
-   * @param {string} branch - A name of a git branch that was used to build the code.
-   * @param {string} buildNumber - A build number in a YYYYMMDDCCC format.
-   *        See `node-build` package for a generator function.
-   * @returns {Promise<object> | Promise<null>} - A promise that is resolved with an app config in a JSON format
-   *          or is resolved with a `null` value if a config retrieval failed.
-   */
-  async loadAppConfig ({ url, clientId, appName, appVersion, branch, buildNumber } = {}) {
-    if (!url) {
-      throw new Error('An app config server URL is missing')
+  registerTextSelector (selectorName, selector) {
+    if (!this.selc) {
+      throw new Error(`Selection controller is missing. Cannot register a ${selectorName} selector`)
     }
-    try {
-      const configUrl = `${url}?clientId=${encodeURIComponent(clientId)}&appName=${encodeURIComponent(appName)}` +
-        `&appVersion=${encodeURIComponent(appVersion)}&buildBranch=${encodeURIComponent(branch)}` +
-        `&buildNumber=${encodeURIComponent(buildNumber)}`
-      const request = new Request(configUrl)
-      const response = await fetch(request)
-      return response.json()
-    } catch (err) {
-      this.logger.error(`Unable to retrieve an app configuration from ${url}: ${err.message}`)
-      return null
+    this.selc.registerSelector(selectorName, selector, ...this.textSelectorParams)
+    return this.api.app
+  }
+
+  activateTextSelector (selectorName) {
+    if (!this.selc) {
+      throw new Error(`Selection controller is missing. Cannot register a ${selectorName} selector`)
     }
+    this.selc.activateSelector(selectorName)
+    return this.api.app
   }
 
   async initUserDataManager (isAuthenticated) {
@@ -948,7 +742,7 @@ if you want to create a different configuration of an app controller.
       this.userDataManager = new UserDataManager(authData, WordlistController.evt)
       wordLists = await this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
-      optionLoadPromises = this.initOptions(RemoteAuthStorageArea, authData)
+      optionLoadPromises = this.api.settings.initOptions(RemoteAuthStorageArea, authData)
     } else {
       // TODO we need to make the UserDataManager a singleton that can
       // handle switching users gracefully
@@ -957,10 +751,10 @@ if you want to create a different configuration of an app controller.
       wordLists = await this.wordlistC.initLists()
 
       // reload the user-configurable options
-      optionLoadPromises = this.initOptions(this.options.storageAdapter)
+      optionLoadPromises = this.api.settings.initOptions(this.options.storageAdapter)
     }
     await Promise.all(optionLoadPromises)
-    this.onOptionsReset()
+    this.applyAllOptions()
     this.store.commit('app/setWordLists', wordLists)
   }
 
@@ -975,48 +769,21 @@ if you want to create a different configuration of an app controller.
 
     if (!this.isInitialized) { await this.init() }
 
-    // Inject Alpheios CSS rules
-    this.activateOnPage()
-
-    // Activate listeners
-    if (this.evc) { this.evc.activateListeners() }
-
-    // we have to register and activate the mouse move event separately
-    // because when it is active the regular GetSelectedText listener needs
-    // to be diabled and vice-versa. We don't currently have a way to express
-    // this dependency between registered event listeners in the EventListenerController
-    // EventListController.activateListeners activates ALL registered listeners
-    // so we can't register the mouse move event and the regular get selected text
-    // event together. At some point we should refactor to either make the mousemove
-    // event handled by the regular get selected text listener as a valid value for
-    // textQueryTriggerDesktop  or support this type of dependency in the
-    // EventListenerController
-    this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-
     this.isActivated = true
     this.isDeactivated = false
 
     this.activateModules()
-    // Activate an app first, then activate the UI
-    this.state.activate()
-    this.state.activateUI()
 
-    if (this.state.isPanelStateDefault() || !this.state.isPanelStateValid()) {
-      this.setDefaultPanelState()
-    }
-    // If panel should be opened according to the state, open it
-    if (this.state.isPanelOpen()) {
-      if (this.api.ui.hasModule('panel')) { this.api.ui.openPanel(true) } // Force close the panel
+    if (this.hasUIController) {
+      this.uic.activate({ disableTextSelOnMobile: this.options.disableTextSelection })
     }
 
-    if (this.state.tab) {
-      if (this.state.isTabStateDefault()) {
-        this.state.tab = this.tabs.DEFAULT
-      }
-      this.changeTab(this.state.tab)
-    }
+    // Activate listeners
+    if (this.evc) { this.evc.activateListeners() }
+    if (this.selc) { this.selc.activate() }
 
     this.authUnwatch = this.store.watch((state) => state.auth.isAuthenticated, (newValue, oldValue) => {
+      // Reinitialize data when user logged in
       this.initUserDataManager(newValue)
     })
 
@@ -1029,7 +796,7 @@ if you want to create a different configuration of an app controller.
   }
 
   getDefaultLangCode () {
-    return this.options.overridePreferredLanguage ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue
+    return this.options.overridePreferredLanguage ? this.options.textLangCode : this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue
   }
 
   getMouseMoveOverride () {
@@ -1052,13 +819,12 @@ if you want to create a different configuration of an app controller.
 
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
+    if (this.selc) { this.selc.deactivate() }
 
     this.deactivateModules()
-    if (this.api.ui.hasModule('popup')) { this.api.ui.closePopup() }
-    if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
-
-    // Remove Alpheios CSS rules
-    this.deactivateOnPage()
+    if (this.hasUIController) {
+      this.uic.deactivate()
+    }
 
     this.isActivated = false
     this.isDeactivated = true
@@ -1094,50 +860,6 @@ if you want to create a different configuration of an app controller.
       AppController.embedLibWarningInstance.$mount() // Render off-document to append afterwards
     }
     return AppController.embedLibWarningInstance
-  }
-
-  activateOnPage () {
-    if (document && document.body) {
-      if (this.options.disableTextSelection && this.platform.isMobile) {
-        // Disable text selection on mobile platforms when a corresponding option is set
-        document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
-      } else {
-        // If extension has been deactivated previously, deactivateOnPage() would be setting
-        // a DISABLE_TEXT_SELECTION for the page body. We shall remove it.
-        if (document.body.classList.contains(injectionClasses.DISABLE_TEXT_SELECTION)) {
-          document.body.classList.remove(injectionClasses.DISABLE_TEXT_SELECTION)
-        }
-      }
-    } else {
-      this.logger.warn('Cannot inject Alpheios CSS rules because either document or body do not exist')
-    }
-  }
-
-  deactivateOnPage () {
-    if (document && document.body) {
-      document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
-    }
-  }
-
-  /**
-   * Load site-specific settings
-   *
-   * @param {object[]} siteOptions - An array of site options
-   */
-  loadSiteOptions (siteOptions) {
-    let allSiteOptions = [] // eslint-disable-line prefer-const
-    for (const site of siteOptions) {
-      for (const domain of site.options) {
-        const siteOpts = new Options(domain, new this.options.storageAdapter(domain.domain)) // eslint-disable-line new-cap
-        allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
-      }
-    }
-    return allSiteOptions
-  }
-
-  static hasRegularBaseFontSize () {
-    const htmlElement = document.querySelector('html')
-    return window.getComputedStyle(htmlElement, null).getPropertyValue('font-size') === '16px'
   }
 
   /**
@@ -1197,104 +919,6 @@ if you want to create a different configuration of an app controller.
     this.store.commit('ui/setNotification', { text: message, important: true })
   }
 
-  /**
-   * Checks wither a given tab is disabled.
-   *
-   * @param {string} tabName - A tab name  to be checked.
-   * @returns {boolean} - True if the given tab is disabled,
-   *         false otherwise (including if we have no disabling conditions on this tab).
-   */
-  isDisabledTab (tabName) {
-    /**
-     * A structure that defines availability condition for panel's tabs.
-     * The key is a tab name, and a value is the function that returns true if the tab is available.
-     */
-    const tabsCheck = {
-      definitions: () => this.store.getters['app/fullDefDataReady'],
-      inflections: () => this.store.state.app.hasInflData,
-      treebank: () => this.store.state.lexis.hasTreebankData,
-      wordUsage: () => this.store.state.app.wordUsageExampleEnabled,
-      status: () => this.api.settings.getUiOptions().items.verboseMode.currentValue === 'verbose',
-      wordlist: () => this.store.state.app.hasWordListsData
-    }
-    return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]() // eslint-disable-line no-prototype-builtins
-  }
-
-  /**
-   * Switched between tabs in a panel.
-   * All tab switching should be done through this function only as it performs safety check
-   * regarding wither or not current tab can be available.
-   *
-   * @param {string} tabName - A name of a tab to switch to.
-   * @returns {AppController} - An instance of an app controller, for chaining.
-   */
-  changeTab (tabName) {
-    // If tab is disabled, switch to a default one
-    if (this.isDisabledTab(tabName)) {
-      this.logger.warn(`Attempting to switch to a ${tabName} tab which is not available`)
-      tabName = this.tabs.DEFAULT
-    }
-    this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
-    // This is for compatibility with watchers in webextension that track tab changes
-    // and sends this into to a background script
-    this.state.changeTab(tabName)
-
-    if (tabName === 'treebank') {
-      // We need to refresh a treebank view if its tab becomes visible. Otherwise a view may not be displayed correctly
-      this.api.lexis.refreshTreebankView()
-    }
-    const isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
-
-    if (['inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
-      const message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
-      this.store.commit('ui/setHint', message, tabName)
-    } else if (this.forceMouseMoveEvent()) {
-      this.store.commit('ui/setHint', this.api.l10n.getMsg('TEXT_HINT_MOUSE_MOVE'))
-    } else {
-      this.store.commit('ui/resetHint')
-    }
-    return this
-  }
-
-  /**
-   * Opens a panel and switches tab to the one specified.
-   *
-   * @param {string} tabName - A name of a tab to switch to.
-   * @returns {AppController} - An app controller's instance reference, for chaining.
-   */
-  showPanelTab (tabName) {
-    this.api.ui.changeTab(tabName)
-    this.api.ui.openPanel()
-
-    return this
-  }
-
-  /**
-   * Reverses the current visibility state of a panel and switches it to the tab specified.
-   *
-   * @param {string} tabName - A name of a tab to switch to.
-   * @returns {AppController} - An app controller's instance reference, for chaining.
-   */
-  togglePanelTab (tabName) {
-    if (this.store.state.ui.activeTab === tabName) {
-      // If clicked on the tab matching a currently selected tab, close the panel
-      if (this.state.isPanelOpen()) {
-        this.api.ui.closePanel()
-      } else {
-        this.api.ui.openPanel()
-      }
-    } else {
-      if (!this.isDisabledTab(tabName)) {
-        // Do not switch to a tab and do not open a panel if a tab is disabled.
-        this.api.ui.changeTab(tabName)
-        if (!this.state.isPanelOpen()) {
-          this.api.ui.openPanel()
-        }
-      }
-    }
-    return this
-  }
-
   sendFeature (feature) {
     if (this.api.ui.hasModule('panel')) {
       this.api.app.startResourceQuery(feature)
@@ -1336,7 +960,7 @@ if you want to create a different configuration of an app controller.
     this.store.commit('app/lexicalRequestStarted', { targetWord: targetWord, source: source })
 
     // Right now we always need to open a UI with the new Lexical request, but we can make it configurable if needed
-    this.open()
+    this.api.ui.openLexQueryUI()
     return this
   }
 
@@ -1371,7 +995,7 @@ if you want to create a different configuration of an app controller.
 
   /**
    * Updates grammar data with URLs supplied.
-If no URLS are provided, will reset grammar data.
+   * If no URLS are provided, will reset grammar data.
    *
    * @param data
    * @param {Array} urls
@@ -1432,8 +1056,8 @@ If no URLS are provided, will reset grammar data.
   }
 
   updateLemmaTranslations () {
-    if (this.featureOptions.items.enableLemmaTranslations.currentValue && !this.featureOptions.items.locale.currentValue.match(/en-/)) {
-      this.api.lexis.setLemmaTranslationLang(this.featureOptions.items.locale.currentValue)
+    if (this.api.settings.getFeatureOptions().items.enableLemmaTranslations.currentValue && !this.api.settings.getFeatureOptions().items.locale.currentValue.match(/en-/)) {
+      this.api.lexis.setLemmaTranslationLang(this.api.settings.getFeatureOptions().items.locale.currentValue)
     } else {
       this.api.lexis.setLemmaTranslationLang(null)
     }
@@ -1449,130 +1073,10 @@ If no URLS are provided, will reset grammar data.
     this.store.commit('app/setWordUsageExamplesReady')
   }
 
-  open () {
-    if (this.api.ui.hasModule('panel') && this.platform.isMobile) {
-      // This is a compact version of a UI
-      this.api.ui.openPanel()
-      this.changeTab('morphology')
-    } else {
-      if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
-      if (this.api.ui.hasModule('popup')) { this.api.ui.openPopup() }
-    }
-    return this
-  }
-
-  /**
-   * Opens a panel. Used from a content script upon a panel status change request.
-   *
-   * @param forceOpen
-   */
-  openPanel (forceOpen = false) {
-    if (this.api.ui.hasModule('panel')) {
-      if (forceOpen || !this.state.isPanelOpen()) {
-        // If an active tab has been disabled previously, set it to a default one
-        if (this.store.getters['ui/isActiveTab'](this.tabs.DISABLED)) {
-          this.changeTab(this.tabs.DEFAULT)
-        }
-        this.store.commit('panel/open')
-        this.state.setPanelOpen()
-      }
-      if (this.hasModule('toolbar')) {
-        // Close a toolbar when a panel opens
-        this.store.commit('toolbar/close')
-      }
-    }
-  }
-
-  /**
-   * Closes a panel. Used from a content script upon a panel status change request.
-   *
-   * @param syncState
-   */
-  closePanel (syncState = true) {
-    if (this.api.ui.hasModule('panel')) {
-      this.store.commit('panel/close')
-      this.store.commit('ui/resetActiveTab')
-      if (syncState) { this.state.setPanelClosed() }
-      // Open a toolbar when a panel closes. Do not open if the toolbar is deactivated.
-      if (this.hasModule('toolbar') && this.getModule('toolbar').isActivated) {
-        this.store.commit('toolbar/open')
-      }
-    }
-  }
-
-  openPopup () {
-    if (this.api.ui.hasModule('popup')) {
-      this.store.commit('popup/open')
-    }
-  }
-
-  closePopup () {
-    if (this.api.ui.hasModule('popup')) {
-      this.store.commit('popup/close')
-    }
-  }
-
-  openToolbar () {
-    if (this.api.ui.hasModule('toolbar')) {
-      this.store.commit('toolbar/open')
-    } else {
-      this.logger.warn('Toolbar cannot be opened because its module is not registered')
-    }
-  }
-
-  /**
-   * Opens an action panel.
-   *
-   * @param {object} panelOptions - An object that specifies parameters of an action panel (see below):
-   * @param {boolean} panelOptions.showLookup - Whether to show a lookup input when the action panel is opened.
-   * @param {boolean} panelOptions.showNav - Whether to show a nav toolbar when the action panel is opened.
-   */
-  openActionPanel (panelOptions = {}) {
-    if (this.api.ui.hasModule('actionPanel')) {
-      this.store.commit('actionPanel/open', panelOptions)
-    } else {
-      this.logger.warn('Action panel cannot be opened because its module is not registered')
-    }
-  }
-
-  closeActionPanel () {
-    if (this.api.ui.hasModule('actionPanel')) {
-      this.store.commit('actionPanel/close')
-    } else {
-      this.logger.warn('Action panel cannot be closed because its module is not registered')
-    }
-  }
-
-  toggleActionPanel () {
-    if (this.api.ui.hasModule('actionPanel')) {
-      this.store.state.actionPanel.visible
-        ? this.store.commit('actionPanel/close')
-        : this.store.commit('actionPanel/open', {})
-    } else {
-      this.logger.warn('Action panel cannot be toggled because its module is not registered')
-    }
-  }
-
   isGetSelectedTextEnabled (domEvent) {
     return (this.state.isActive() &&
       this.state.uiIsActive() &&
-      (!this.options.triggerPreCallback || this.enableMouseMoveEvent() || this.options.triggerPreCallback(domEvent)))
-  }
-
-  getFeatureOptions () {
-    return this.featureOptions
-  }
-
-  getResourceOptions () {
-    return this.resourceOptions
-  }
-
-  getUiOptions () {
-    return this.uiOptions
-  }
-
-  verboseMode () {
-    return this.uiOptions.items.verboseMode.currentValue === 'verbose'
+      (!this.options.triggerPreCallback || this.isMousemoveEnabled || this.options.triggerPreCallback(domEvent)))
   }
 
   async getWordUsageData (homonym, params = {}) {
@@ -1587,8 +1091,8 @@ If no URLS are provided, will reset grammar data.
 
     const wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
       ? {
-        paginationMax: this.featureOptions.items.wordUsageExamplesMax.currentValue,
-        paginationAuthMax: this.featureOptions.items.wordUsageExamplesAuthMax.currentValue
+        paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
+        paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
       }
       : null
 
@@ -1596,17 +1100,17 @@ If no URLS are provided, will reset grammar data.
   }
 
   enableWordUsageExamples (textSelector, requestType) {
-    const checkType = requestType === 'onLexicalQuery' ? this.featureOptions.items.wordUsageExamplesON.currentValue === requestType : true
+    const checkType = requestType === 'onLexicalQuery' ? this.api.settings.getFeatureOptions().items.wordUsageExamplesON.currentValue === requestType : true
     return textSelector.languageID === Constants.LANG_LATIN &&
-    this.featureOptions.items.enableWordUsageExamples.currentValue &&
+    this.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue &&
     checkType
   }
 
   getWordUsageExamplesQueryParams (textSelector) {
     if (this.enableWordUsageExamples(textSelector, 'onLexicalQuery')) {
       return {
-        paginationMax: this.featureOptions.items.wordUsageExamplesMax.currentValue,
-        paginationAuthMax: this.featureOptions.items.wordUsageExamplesAuthMax.currentValue
+        paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
+        paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
       }
     } else {
       return null
@@ -1617,11 +1121,7 @@ If no URLS are provided, will reset grammar data.
     // TODO: Move to keypress as keyCode is deprecated
     // TODO: Why does it not work on initial panel opening?
     if (nativeEvent.keyCode === 27 && this.state.isActive()) {
-      if (this.state.isPanelOpen()) {
-        if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel() }
-      } else if (this.api.ui.hasModule('popup')) {
-        this.api.ui.closePopup()
-      }
+      this.api.ui.closeUI()
     }
     return true
   }
@@ -1630,7 +1130,7 @@ If no URLS are provided, will reset grammar data.
     // ExpObjMon.track(
     ResourceQuery.create(feature, {
       grammars: Grammars,
-      resourceOptions: this.getResourceOptions()
+      resourceOptions: this.api.settings.getResourceOptions()
     }).getData()
     //, {
     // experience: 'Get resource',
@@ -1664,14 +1164,14 @@ If no URLS are provided, will reset grammar data.
     this.store.commit('app/setQueryStillActive', true)
   }
 
-  onHomonymReady (homonym, source) {
+  onHomonymReady (homonym) {
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
 
     // Update status info with data from a morphological analyzer
     this.store.commit('app/setTextData', { text: homonym.targetWord, languageID: homonym.languageID })
 
     // Update inflections data
-    const inflectionsViewSet = ViewSetFactory.create(homonym, this.featureOptions.items.locale.currentValue)
+    const inflectionsViewSet = ViewSetFactory.create(homonym, this.api.settings.getFeatureOptions().items.locale.currentValue)
 
     if (inflectionsViewSet.hasMatchingViews) {
       this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
@@ -1797,51 +1297,20 @@ If no URLS are provided, will reset grammar data.
   }
 
   /**
-   * Resets all configurable options to the defaults, replacing user preferences
-   */
-  async resetAllOptions () {
-    await this.featureOptions.reset()
-    await this.resourceOptions.reset()
-    await this.uiOptions.reset()
-    // we don't reload lookupResourceOptions or siteOptions
-    // because we don't currently allow user configuration of these
-    this.onOptionsReset()
-  }
-
-  /**
    * Updates the Application State after settings have been reset or reloaded
    */
-  onOptionsReset () {
-    for (const name of this.featureOptions.names) {
-      this.featureOptionStateChange(name)
+  applyAllOptions () {
+    for (const name of this.api.settings.getFeatureOptions().names) {
+      this.applyFeatureOption(name)
       this.store.commit('settings/incrementFeatureResetCounter')
     }
-    for (const name of this.resourceOptions.names) { // eslint-disable-line no-unused-vars
+    for (const name of this.api.settings.getResourceOptions().names) { // eslint-disable-line no-unused-vars
       this.store.commit('settings/incrementResourceResetCounter')
     }
-    for (const name of this.uiOptions.names) {
-      this.uiOptionStateChange(name)
+    for (const name of this.api.settings.getUiOptions().names) {
+      this.applyUIOption(name, this.api.settings.getUiOptions().items[name].currentValue)
       this.store.commit('settings/incrementUiResetCounter')
     }
-  }
-
-  /**
-   * Handle a change to a single feature option
-   *
-   * @param {string} name the setting name
-   * @param {string} value the new value
-   */
-  featureOptionChange (name, value) {
-    let featureOptions = this.api.settings.getFeatureOptions() // eslint-disable-line prefer-const
-    // TODO we need to refactor handling of boolean options
-    const nonTextFeatures = ['enableLemmaTranslations', 'enableWordUsageExamples', 'wordUsageExamplesMax', 'wordUsageExamplesAuthMax',
-      'enableMouseMove', 'wordlistMaxFlashcardExport', 'enableLogeionAutoComplete', 'showBetaCodesInfo', 'useBetaCodes']
-    if (nonTextFeatures.includes(name)) {
-      featureOptions.items[name].setValue(value)
-    } else {
-      featureOptions.items[name].setTextValue(value)
-    }
-    this.featureOptionStateChange(name)
   }
 
   /**
@@ -1849,7 +1318,7 @@ If no URLS are provided, will reset grammar data.
    *
    * @param {string} settingName the name of the setting
    */
-  featureOptionStateChange (settingName) {
+  applyFeatureOption (settingName) {
     switch (settingName) {
       case 'locale':
         this.updateLemmaTranslations()
@@ -1866,182 +1335,105 @@ If no URLS are provided, will reset grammar data.
         // If user manually sets the mouse move option then this takes priority over the page override
         this.options.enableMouseMoveOverride = false
         this.store.commit('app/setMouseMoveOverrideUpdate')
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-        break
-    }
-  }
-
-  /**
-   * Handle a change to a single ui option
-   *
-   * @param {string} name - A name of an option.
-   * @param {string | value} value - A new value of an options.
-   */
-  uiOptionChange (name, value) {
-    let uiOptions = this.api.settings.getUiOptions() // eslint-disable-line prefer-const
-    // TODO this should really be handled within OptionsItem
-    // the difference between value and textValues is a little confusing
-    // see issue #73
-    const nonTextFeatures = [
-      'fontSize',
-      'hideLoginPrompt',
-      'maxPopupWidth',
-      'mouseMoveDelay',
-      'mouseMoveAccuracy',
-      'enableMouseMoveLimitedByIdCheck',
-      'mouseMoveLimitedById',
-      'forceMouseMoveGoogleDocs'
-    ]
-    if (nonTextFeatures.includes(name)) {
-      uiOptions.items[name].setValue(value)
-    } else {
-      uiOptions.items[name].setTextValue(value)
-    }
-    this.uiOptionStateChange(name)
-  }
-
-  /**
-   * Updates the state of a ui component to correspond to current options
-   *
-   * @param {string} settingName the name of the setting
-   */
-  uiOptionStateChange (settingName) {
-    const uiOptions = this.api.settings.getUiOptions()
-
-    switch (settingName) {
-      case 'fontSize':
-        this.uiSetFontSize(uiOptions)
-        break
-      case 'panelPosition':
-        this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
-        break
-      case 'verboseMode':
-        this.logger.setVerboseMode(uiOptions.items.verboseMode.currentValue === 'verbose')
-        break
-      case 'hideLoginPrompt':
-        if (this.api.auth) {
-          this.store.commit('auth/setHideLoginPrompt', uiOptions.items.hideLoginPrompt.currentValue)
+        if (this.selc) {
+          this.selc.replaceEventForAll(...this.textSelectorParams)
         }
         break
-      case 'mouseMoveDelay':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-        break
-      case 'mouseMoveAccuracy':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-        break
-      case 'enableMouseMoveLimitedByIdCheck':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-        break
-      case 'forceMouseMoveGoogleDocs':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-        break
     }
   }
 
-  uiSetFontSize (uiOptions) {
-    const FONT_SIZE_PROP = '--alpheios-base-text-size'
-    try {
-      document.documentElement.style.setProperty(FONT_SIZE_PROP,
-        `${uiOptions.items.fontSize.currentValue}px`)
-    } catch (error) {
-      this.logger.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
-    }
-  }
-
-  /**
-   * Handle a change to a single resource option
-   *
-   * @param {string} name - A name of an option.
-   * @param {string | value} value - A new value of an options.
-   */
-  resourceSettingChange (name, value) {
+  applyResourceOption (name, value) {
     // grouped setting are referenced under Options object
     // by the parsed name but each individual setting in a group is referenced
     // by its fullname (with version and groupname appended)
     // multivalued settings are handled in the Options.setTextValue method which can take
     // an array or an individual text value
     const baseKey = Options.parseKey(name)
-    this.api.settings.getResourceOptions().items[baseKey.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
     if (baseKey.name === 'grammars') {
       this.initGrammar(baseKey.group)
     }
   }
 
-  registerGetSelectedText (listenerName, selector) {
-    let ev
-    let customEv
-    if (this.platform.isMobile) {
-      switch (this.options.textQueryTriggerMobile) {
-        case 'longTap':
-          ev = LongTap
-          break
-        case 'longtap':
-          ev = LongTap
-          break
-        case null:
-          ev = LongTap
-          break
-        default:
-          customEv = this.options.textQueryTriggerMobile
-      }
-    } else {
-      switch (this.options.textQueryTriggerDesktop) {
-        case 'dblClick':
-          ev = MouseDblClick
-          break
-        case 'dblclick':
-          ev = MouseDblClick
-          break
-        case null:
-          ev = MouseDblClick
-          break
-        default:
-          customEv = this.options.textQueryTriggerDesktop
-      }
-    }
-    const lexisModule = this.getModule('lexis')
-    if (ev) {
-      this.evc.registerListener(listenerName, selector, this.api.lexis.getSelectedText.bind(lexisModule), ev)
-    } else {
-      this.evc.registerListener(
-        listenerName, selector, this.api.lexis.getSelectedText.bind(lexisModule), GenericEvt, customEv)
-    }
-  }
-
-  registerAndActivateGetSelectedText (listenerName, selector) {
-    this.registerGetSelectedText(listenerName, selector)
-    this.evc.activateListener(listenerName)
-    this.registerAndActivateMouseMove(listenerName, selector)
-  }
-
-  registerAndActivateMouseMove (listenerName, selector) {
-    if (this.enableMouseMoveEvent()) {
-      const uiOptions = this.api.settings.getUiOptions()
-
-      const eventParams = {
-        mouseMoveDelay: uiOptions.items.mouseMoveDelay.currentValue,
-        mouseMoveAccuracy: uiOptions.items.mouseMoveAccuracy.currentValue,
-        enableMouseMoveLimitedByIdCheck: uiOptions.items.enableMouseMoveLimitedByIdCheck.currentValue,
-        mouseMoveLimitedById: uiOptions.items.mouseMoveLimitedById.currentValue
-      }
-      const lexisModule = this.getModule('lexis')
-      this.evc.registerListener(listenerName + '-mousemove', selector, this.api.lexis.getSelectedText.bind(lexisModule), MouseMove, eventParams)
-      // when the mousemove event is activated, the regular listener needs to be deactivated
-      this.evc.deactivateListener(listenerName)
-      this.evc.activateListener(listenerName + '-mousemove')
-    } else {
-      // when the mousemove event is deactivated, the regular listener needs to be reactivated
-      this.evc.deactivateListener(listenerName + '-mousemove')
-      this.evc.activateListener(listenerName)
+  /**
+   * Updates the state of the UI to match the options settings.
+   *
+   * @param {string} settingName - The name of the setting to apply.
+   * @param value
+   */
+  applyUIOption (settingName, value) {
+    switch (settingName) {
+      case 'fontSize':
+        UIController.applyFontSize(value)
+        break
+      case 'panelPosition':
+        this.store.commit('panel/setPosition', value)
+        break
+      case 'verboseMode':
+        /*
+        The value of the `verboseMode` option passed as an argument of this method is a string value.
+        The text of the string is specific to the options object and may change without notice.
+        The App Controller has no knowledge of what those string option values might be.
+        That's why we're using a `isInVerboseMode()` method of the Settings public API.
+        It returns a boolean and is much simpler and safer in use.
+         */
+        this.logger.setVerboseMode(this.api.settings.isInVerboseMode())
+        break
+      case 'hideLoginPrompt':
+        if (this.api.auth) {
+          this.store.commit('auth/setHideLoginPrompt', value)
+        }
+        break
+      case 'mouseMoveDelay':
+        if (this.selc && this.isMousemoveEnabled) {
+          this.selc.updateParamsForAll({ mouseMoveDelay: value })
+        }
+        break
+      case 'mouseMoveAccuracy':
+        if (this.selc && this.isMousemoveEnabled) {
+          this.selc.updateParamsForAll({ mouseMoveAccuracy: value })
+        }
+        break
+      case 'enableMouseMoveLimitedByIdCheck':
+        if (this.selc && this.isMousemoveEnabled) {
+          this.selc.updateParamsForAll({ enableMouseMoveLimitedByIdCheck: value })
+        }
+        break
+      case 'forceMouseMoveGoogleDocs':
+        if (this.selc) {
+          // An event must be replaced because a change of this setting may cause an event change
+          this.selc.replaceEventForAll(...this.textSelectorParams)
+        }
+        break
     }
   }
 
-  enableMouseMoveEvent () {
-    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.forceMouseMoveEvent())
+  /**
+   * This is a callback for the text selection done via a selection UI.
+   *
+   * @param {TextSelector} textSelector - An object containing a text selection.
+   * @param {Event} domEvent - A DOM event that initiated a query.
+   */
+  onTextSelected ({ textSelector, domEvent }) {
+    if (this.isGetSelectedTextEnabled(domEvent) && textSelector && !textSelector.isEmpty()) {
+      const lastTextSelector = this.api.lexis.lastTextSelector || {}
+      // Do not run a lexical query if the same word is already shown in a popup on desktop
+      if (this.platform.isDesktop && this.api.ui.isPopupVisible()) {
+        if (lastTextSelector.text === textSelector.text &&
+          lastTextSelector.languageID === textSelector.languageID) {
+          // Do nothing
+          return
+        }
+      }
+      this.api.lexis.getSelectedText(textSelector, domEvent.target)
+    }
   }
 
-  forceMouseMoveEvent () {
-    return Boolean(this.platform.isDesktop && this.platform.isGoogleDocs && this.uiOptions.items.forceMouseMoveGoogleDocs.currentValue)
+  get isMousemoveEnabled () {
+    return this.platform.isDesktop && (this.api.settings.getFeatureOptions().items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.isMousemoveForced())
+  }
+
+  isMousemoveForced () {
+    return Boolean(this.platform.isDesktop && this.platform.isGoogleDocs && this.api.settings.getUiOptions().items.forceMouseMoveGoogleDocs.currentValue)
   }
 }
 

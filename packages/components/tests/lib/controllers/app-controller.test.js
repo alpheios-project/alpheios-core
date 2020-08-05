@@ -1,27 +1,20 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import AppController from '@/lib/controllers/app-controller.js'
-import State from '@/lib/state/tab-script.js'
+import AppController from '@comp/lib/controllers/app-controller.js'
+import State from '@comp/lib/state/tab-script.js'
 
-import OptionItem from '@/lib/options/options-item'
-import ResourceQuery from '@/lib/queries/resource-query'
+import Options from '@comp/lib/options/options.js'
+import LanguageOptionDefaults from '@comp/settings/language-options-defaults.json'
+import FeatureOptionDefaults from '@comp/settings/feature-options-defaults.json'
+import UIOptionDefaults from '@comp/settings/ui-options-defaults.json'
+import LocalStorageArea from '@comp/lib/options/local-storage-area.js'
 
-import Options from '@/lib/options/options.js'
-import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
-import UIOptionDefaults from '@/settings/ui-options-defaults.json'
-import LocalStorageArea from '@/lib/options/local-storage-area.js'
-import HTMLPage from '@/lib/utility/html-page.js'
+import Locales from '@comp/locales/locales'
+import enUS from '@comp/locales/en-us/messages.json'
+import enGB from '@comp/locales/en-gb/messages.json'
 
-import L10n from '@/lib/l10n/l10n'
-import Locales from '@/locales/locales'
-import enUS from '@/locales/en-us/messages.json'
-import enGB from '@/locales/en-gb/messages.json'
-
-import { LanguageModelFactory as LMF, Definition, Constants } from 'alpheios-data-models'
-
-import Panel from '@/vue/components/panel-large.vue'
-import Popup from '@/vue/components/popup.vue'
+import { Constants } from 'alpheios-data-models'
+import { L10n } from 'alpheios-l10n'
 
 describe('ui-controller.test.js', () => {
   console.error = function () {}

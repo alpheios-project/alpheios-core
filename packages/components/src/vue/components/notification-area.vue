@@ -211,11 +211,12 @@ export default {
   methods: {
     featureOptionChanged: function (name, value) {
       const keyinfo = Options.parseKey(name)
-      this.app.featureOptionChange(keyinfo.name, value)
+      this.settings.featureOptionChange(keyinfo.name, value)
+      this.app.applyFeatureOption(keyinfo.name)
     },
 
     hideLoginPrompt: function () {
-      this.ui.optionChange('hideLoginPrompt', true)
+      this.settings.uiOptionChange('hideLoginPrompt', true)
     },
 
     showUserAccount: function () {

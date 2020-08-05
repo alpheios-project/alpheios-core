@@ -126,7 +126,6 @@ import Lookup from '@/vue/components/lookup.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
-
 export default {
   name: 'ActionPanel',
   // API modules that are required for this component
@@ -134,7 +133,7 @@ export default {
     ui: 'ui',
     l10n: 'l10n'
   },
-  storeModules: ['actionPanel', 'app'], // Store modules that are required by this component
+  storeModules: ['actionPanel', 'app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     lookup: Lookup,
@@ -159,7 +158,7 @@ export default {
         y: 0
       },
 
-      tooltipDirection: 'top', 
+      tooltipDirection: 'top',
       showLangSelector: false
     }
   },
@@ -176,7 +175,7 @@ export default {
       let styles = {
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
         // Should stay on top of a toolbar
-        zIndex: this.ui.zIndex + 10
+        zIndex: this.$store.state.ui.zIndexMax + 10
       }
 
       if (this.$store.state.actionPanel.initialPos) {

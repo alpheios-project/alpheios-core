@@ -1,0 +1,79 @@
+{
+  "name": "alpheios-l10n",
+  "version": "3.3.0",
+  "description": "Alpheios Localization",
+  "private": true,
+  "main": "dist/alpheios-l10n.min.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
+    "test-no-coverage": "jest",
+    "build": "npm run build-dev && npm run build-prod",
+    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib -c config.mjs",
+    "build-dev": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p lib -c config.mjs",
+    "lint": "eslint --fix src/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpheios-project/alpheios-core/packages/l10n.git"
+  },
+  "author": "The Alpheios Project, Ltd.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alpheios-project/alpheios-core/packages/l10n/issues"
+  },
+  "homepage": "https://github.com/alpheios-project/alpheios-core/packages/l10n#readme",
+  "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/runtime": "^7.10.4",
+    "alpheios-node-build": "github:alpheios-project/node-build#v3",
+    "coveralls": "^3.1.0",
+    "eslint": "^7.4.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsdoc": "^29.2.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-scope": "^5.1.0",
+    "intl-messageformat": "^9.0.2",
+    "jest": "^26.1.0",
+    "shx": "^0.3.2",
+    "webpack": "^5.0.0-beta.22",
+    "webpack-merge": "^4.2.2"
+  },
+  "jest": {
+    "verbose": true,
+    "moduleNameMapper": {
+      "^@l10n[/](.+)": "<rootDir>/src/$1"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "plugin:jsdoc/recommended"
+    ],
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "parser": "babel-eslint",
+      "ecmaVersion": 2019,
+      "sourceType": "module",
+      "allowImportExportEverywhere": true
+    },
+    "rules": {
+      "no-prototype-builtins": "warn",
+      "dot-notation": "warn",
+      "accessor-pairs": "warn"
+    }
+  },
+  "eslintIgnore": [
+    "**/dist"
+  ]
+}
