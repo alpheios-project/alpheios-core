@@ -26,7 +26,7 @@ export default class Lexis extends Module {
     this._settingsApi = api.settings
     this._lexisConfig = api.settings.getLexisOptions()
 
-    if (!this._lexisConfig) {
+    if (!this.hasCedict) {
       // If Lexis configuration is not available we will disable any CEDICT-related functionality
       Logger.getInstance().warn('CEDICT functionality will be disabled because LexisCS configuration is not available')
     }
@@ -44,7 +44,7 @@ export default class Lexis extends Module {
     // Whether a treebank service has been loaded
     this._treebankServiceLoaded = false
     // Add an iframe with CEDICT service if Lexis config is available
-    if (this._lexisConfig) { this.createCedictIframe() }
+    if (this.hasCedict) { this.createCedictIframe() }
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
@@ -69,6 +69,10 @@ export default class Lexis extends Module {
         })
     }
     LexicalQuery.evt.CEDICT_SERVICE_UNINITIALIZED.sub(this.onCedictServiceUninitialized.bind(this, store))
+  }
+
+  hasCedict() {
+    return Boolean(this._lexisConfig && this._lexisConfig.cedict)
   }
 
   createCedictIframe () {
@@ -252,7 +256,8 @@ export default class Lexis extends Module {
           this._treebankAvailable = true
           this._lastTreebankDataItem = treebankDataItem
           // No need to update treebank sourceURL
-          store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData })
+          store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData,
+                                                  suppressTree: treebankDataItem.suppressTree })
         } catch (err) {
           // If refreshUntilLoaded failed treebank data will be unavailable
           Logger.getInstance().warn(err.message)
@@ -265,7 +270,8 @@ export default class Lexis extends Module {
       } else {
         // Do not update a treebankSrc in a store, it has not changed
         this._lastTreebankDataItem = treebankDataItem
-        store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData })
+        store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData,
+                                                 suppressTree: treebankDataItem.suppressTree })
       }
       try {
         if (!treebankDataItem.hasWordData) {
@@ -315,7 +321,7 @@ export default class Lexis extends Module {
     treebankDataItem = null,
     source = LexicalQuery.sources.PAGE // Values that are possible currently are: 'page', 'lookup', 'wordlist'
   } = {}) {
-    if (textSelector.languageID === Constants.LANG_CHINESE && !this._lexisConfig) {
+    if (textSelector.languageID === Constants.LANG_CHINESE && !this.hasCedict) {
       Logger.getInstance().warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
       return
     }
@@ -346,7 +352,7 @@ export default class Lexis extends Module {
       resourceOptions: this._settingsApi.getResourceOptions(),
       langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
       checkContextForward,
-      cedictServiceUrl: this._lexisConfig ? this._lexisConfig.cedict.target_url : null,
+      cedictServiceUrl: this.hasCedict ? this._lexisConfig.cedict.target_url : null,
       annotatedHomonyms,
       source
     })
@@ -408,16 +414,19 @@ Lexis.store = (moduleInstance) => {
        */
       setTreebankInfo (state, {
         treebankSrc = undefined,
-        hasTreebankData = undefined
+        hasTreebankData = undefined,
+        suppressTree = false
       } = {}) {
         // Update store variables only if some meaningful values are provided
         if (typeof hasTreebankData !== 'undefined') { state.hasTreebankData = hasTreebankData }
         if (typeof treebankSrc !== 'undefined') { state.treebankSrc = treebankSrc }
+        if (typeof suppressTree !== 'undefined') { state.suppressTree = suppressTree }
       },
 
       resetTreebankInfo (state) {
         state.hasTreebankData = false
         state.treebankSrc = null
+        state.treebankSrc = false
       },
 
       showTreebankFailedNotification (state) {
@@ -483,12 +492,12 @@ Lexis.api = (moduleInstance, store) => {
     },
 
     loadCedictData: async () => {
-      if (!moduleInstance._lexisConfig) { return } // Do nothing if Lexis configuration is not available
+      if (!moduleInstance.hasCedict) { return } // Do nothing if Lexis configuration is not available
       store.commit('lexis/setCedictInitInProgressState')
       const loadResult = await ClientAdapters.morphology.chineseloc({
         method: 'loadData',
         clientId,
-        serviceUrl: moduleInstance._lexisConfig ? moduleInstance._lexisConfig.cedict.target_url : null,
+        serviceUrl: moduleInstance._lexisConfig.cedict.target_url,
         params: {
           timeout: 60000 // Use a long timeout of 10 minutes because loading of CEDICT data may take a while
         }

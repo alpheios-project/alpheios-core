@@ -43,7 +43,7 @@
           </span>
         </div>
         <div class="alpheios-panel__header-btn alpheios-panel__header-btn--treebank-data"
-           v-show="$store.state.lexis.hasTreebankData && showMainTabIcons"
+           v-show="$store.state.lexis.hasTreebankData && !$store.state.lexis.suppressTree && showMainTabIcons"
            :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'treebank' }"
         >
           <span @click="changeTab('treebank')" class="alpheios-navbuttons__icon-span">
@@ -487,7 +487,7 @@ export default {
 
     formattedShortDefinitions () {
       let definitions = [] // eslint-disable-line prefer-const
-      
+
       if (this.$store.getters['app/shortDefDataReady'] && this.$store.state.app.homonymDataReady) {
         for (const lexeme of this.app.getHomonymLexemes()) {
           if (lexeme.meaning.shortDefs.length > 0) {
