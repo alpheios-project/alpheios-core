@@ -1460,10 +1460,10 @@ class Definition {
   !*** ./driver.js ***!
   \*******************/
 /*! namespace exports */
-/*! export ArabicLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Author [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export ChineseLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Constants [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
+/*! export ArabicLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Author [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export ChineseLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Constants [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
 /*!   export CASE_ABESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export CASE_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export CASE_ABSOLUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
@@ -1691,36 +1691,36 @@ class Definition {
 /*!   export VOICE_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export VOICE_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   other exports [not provided] [no usage info] */
-/*! export Definition [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export DefinitionSet [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Feature [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureImporter [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureList [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureType [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GeezLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GreekLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GrmFeature [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Homonym [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export HomonymGroup [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Inflection [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export LanguageModelFactory [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export LatinLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Lemma [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Lexeme [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Logger [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PersianLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PsEvent [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PsEventData [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export ResourceProvider [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export SyriacLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export TextQuoteSelector [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export TextWork [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Translation [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export TreebankDataItem [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export WordItem [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export WordList [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export WordUsageExample [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! other exports [not provided] [maybe used (runtime-defined)] */
+/*! export Definition [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export DefinitionSet [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Feature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export FeatureImporter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export FeatureList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export FeatureType [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export GeezLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export GreekLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export GrmFeature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Homonym [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export HomonymGroup [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Inflection [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export LanguageModelFactory [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export LatinLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Lemma [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Lexeme [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Logger [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export PersianLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export PsEvent [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export PsEventData [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export ResourceProvider [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export SyriacLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export TextQuoteSelector [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export TextWork [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Translation [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export TreebankDataItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export WordItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export WordList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export WordUsageExample [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! other exports [not provided] [maybe used in main (runtime-defined)] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 

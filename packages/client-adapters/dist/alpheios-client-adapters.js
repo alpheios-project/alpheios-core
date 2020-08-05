@@ -5132,9 +5132,9 @@ class WrongMethodError extends Error {
   !*** ./index.js ***!
   \******************/
 /*! namespace exports */
-/*! export ClientAdapters [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export RemoteError [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! other exports [not provided] [maybe used (runtime-defined)] */
+/*! export ClientAdapters [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export RemoteError [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! other exports [not provided] [maybe used in main (runtime-defined)] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 

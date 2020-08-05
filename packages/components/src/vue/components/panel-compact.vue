@@ -9,7 +9,7 @@
       v-show="$store.state.panel.visible"
   >
 
-    <div class="alpheios-panel__header" :data-tab="currentTab">
+    <div id="alpheios-panel__header" class="alpheios-panel__header" :data-tab="currentTab">
       <div class="alpheios-panel__header-btn-group--start" >
         <div class="alpheios-panel__header-btn" :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'morphology' }">
           <span @click="changeTab('morphology')" class="alpheios-navbuttons__icon-span">

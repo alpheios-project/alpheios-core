@@ -9,69 +9,160 @@
 	}
 })(window, function() {
 return /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "../../../node_modules/intl-format-cache/lib/index.js":
-/*!************************************************************!*\
-  !*** ../../../node_modules/intl-format-cache/lib/index.js ***!
-  \************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ "../../../node_modules/fast-memoize/src/index.js":
+/*!*******************************************************!*\
+  !*** ../../../node_modules/fast-memoize/src/index.js ***!
+  \*******************************************************/
+/*! unknown exports (runtime-defined) */
+/*! runtime requirements: module */
+/***/ ((module) => {
 
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/*
-Copyright (c) 2014, Yahoo! Inc. All rights reserved.
-Copyrights licensed under the New BSD License.
-See the accompanying LICENSE file for terms.
-*/
-var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
-// -- Utilities ----------------------------------------------------------------
-function getCacheId(inputs) {
-    return JSON.stringify(inputs.map(function (input) {
-        return input && typeof input === 'object' ? orderedProps(input) : input;
-    }));
+//
+// Main
+//
+
+function memoize (fn, options) {
+  var cache = options && options.cache
+    ? options.cache
+    : cacheDefault
+
+  var serializer = options && options.serializer
+    ? options.serializer
+    : serializerDefault
+
+  var strategy = options && options.strategy
+    ? options.strategy
+    : strategyDefault
+
+  return strategy(fn, {
+    cache: cache,
+    serializer: serializer
+  })
 }
-function orderedProps(obj) {
-    return Object.keys(obj)
-        .sort()
-        .map(function (k) {
-        var _a;
-        return (_a = {}, _a[k] = obj[k], _a);
-    });
+
+//
+// Strategy
+//
+
+function isPrimitive (value) {
+  return value == null || typeof value === 'number' || typeof value === 'boolean' // || typeof value === "string" 'unsafe' primitive for our needs
 }
-var memoizeFormatConstructor = function (FormatConstructor, cache) {
-    if (cache === void 0) { cache = {}; }
-    return function () {
-        var _a;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var cacheId = getCacheId(args);
-        var format = cacheId && cache[cacheId];
-        if (!format) {
-            format = new ((_a = FormatConstructor).bind.apply(_a, __spreadArrays([void 0], args)))();
-            if (cacheId) {
-                cache[cacheId] = format;
-            }
-        }
-        return format;
-    };
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (memoizeFormatConstructor);
+
+function monadic (fn, cache, serializer, arg) {
+  var cacheKey = isPrimitive(arg) ? arg : serializer(arg)
+
+  var computedValue = cache.get(cacheKey)
+  if (typeof computedValue === 'undefined') {
+    computedValue = fn.call(this, arg)
+    cache.set(cacheKey, computedValue)
+  }
+
+  return computedValue
+}
+
+function variadic (fn, cache, serializer) {
+  var args = Array.prototype.slice.call(arguments, 3)
+  var cacheKey = serializer(args)
+
+  var computedValue = cache.get(cacheKey)
+  if (typeof computedValue === 'undefined') {
+    computedValue = fn.apply(this, args)
+    cache.set(cacheKey, computedValue)
+  }
+
+  return computedValue
+}
+
+function assemble (fn, context, strategy, cache, serialize) {
+  return strategy.bind(
+    context,
+    fn,
+    cache,
+    serialize
+  )
+}
+
+function strategyDefault (fn, options) {
+  var strategy = fn.length === 1 ? monadic : variadic
+
+  return assemble(
+    fn,
+    this,
+    strategy,
+    options.cache.create(),
+    options.serializer
+  )
+}
+
+function strategyVariadic (fn, options) {
+  var strategy = variadic
+
+  return assemble(
+    fn,
+    this,
+    strategy,
+    options.cache.create(),
+    options.serializer
+  )
+}
+
+function strategyMonadic (fn, options) {
+  var strategy = monadic
+
+  return assemble(
+    fn,
+    this,
+    strategy,
+    options.cache.create(),
+    options.serializer
+  )
+}
+
+//
+// Serializer
+//
+
+function serializerDefault () {
+  return JSON.stringify(arguments)
+}
+
+//
+// Cache
+//
+
+function ObjectWithoutPrototypeCache () {
+  this.cache = Object.create(null)
+}
+
+ObjectWithoutPrototypeCache.prototype.has = function (key) {
+  return (key in this.cache)
+}
+
+ObjectWithoutPrototypeCache.prototype.get = function (key) {
+  return this.cache[key]
+}
+
+ObjectWithoutPrototypeCache.prototype.set = function (key, value) {
+  this.cache[key] = value
+}
+
+var cacheDefault = {
+  create: function create () {
+    return new ObjectWithoutPrototypeCache()
+  }
+}
+
+//
+// API
+//
+
+module.exports = memoize
+module.exports.strategies = {
+  variadic: strategyVariadic,
+  monadic: strategyMonadic
+}
 
 
 /***/ }),
@@ -105,6 +196,7 @@ var memoizeFormatConstructor = function (FormatConstructor, cache) {
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SKELETON_TYPE": () => /* reexport safe */ _src_types__WEBPACK_IMPORTED_MODULE_0__.SKELETON_TYPE,
@@ -158,6 +250,7 @@ function parse(input, opts) {
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "normalizeHashtagInPlural": () => /* binding */ normalizeHashtagInPlural
@@ -226,6 +319,7 @@ function normalizeHashtagInPlural(els) {
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SyntaxError": () => /* binding */ SyntaxError,
@@ -3378,6 +3472,7 @@ var pegParse = peg$parse;
 /*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "parseDateTimeSkeleton": () => /* binding */ parseDateTimeSkeleton,
@@ -3719,6 +3814,7 @@ function convertNumberSkeletonToNumberFormatOptions(tokens) {
 /*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "TYPE": () => /* binding */ TYPE,
@@ -3847,7 +3943,6 @@ function createNumberElement(value, style) {
 /*! export InvalidValueTypeError [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export MissingValueError [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export PART_TYPE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createDefaultFormatters [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export formatToParts [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export isFormatXMLElementFn [provided] [no usage info] [missing usage info prevents renaming] */
@@ -3855,13 +3950,13 @@ function createNumberElement(value, style) {
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PART_TYPE": () => /* reexport safe */ _src_formatters__WEBPACK_IMPORTED_MODULE_0__.PART_TYPE,
 /* harmony export */   "formatToParts": () => /* reexport safe */ _src_formatters__WEBPACK_IMPORTED_MODULE_0__.formatToParts,
 /* harmony export */   "isFormatXMLElementFn": () => /* reexport safe */ _src_formatters__WEBPACK_IMPORTED_MODULE_0__.isFormatXMLElementFn,
 /* harmony export */   "IntlMessageFormat": () => /* reexport safe */ _src_core__WEBPACK_IMPORTED_MODULE_1__.IntlMessageFormat,
-/* harmony export */   "createDefaultFormatters": () => /* reexport safe */ _src_core__WEBPACK_IMPORTED_MODULE_1__.createDefaultFormatters,
 /* harmony export */   "ErrorCode": () => /* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.ErrorCode,
 /* harmony export */   "FormatError": () => /* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.FormatError,
 /* harmony export */   "InvalidValueError": () => /* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.InvalidValueError,
@@ -3881,7 +3976,7 @@ See the accompanying LICENSE file for terms.
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_src_core__WEBPACK_IMPORTED_MODULE_1__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_src_core__WEBPACK_IMPORTED_MODULE_1__.IntlMessageFormat);
 
 
 /***/ }),
@@ -3892,20 +3987,18 @@ See the accompanying LICENSE file for terms.
   \****************************************************************/
 /*! namespace exports */
 /*! export IntlMessageFormat [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createDefaultFormatters [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createDefaultFormatters": () => /* binding */ createDefaultFormatters,
-/* harmony export */   "IntlMessageFormat": () => /* binding */ IntlMessageFormat,
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "IntlMessageFormat": () => /* binding */ IntlMessageFormat
 /* harmony export */ });
 /* harmony import */ var intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! intl-messageformat-parser */ "../../../node_modules/intl-messageformat-parser/lib/index.js");
-/* harmony import */ var intl_format_cache__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-format-cache */ "../../../node_modules/intl-format-cache/lib/index.js");
+/* harmony import */ var fast_memoize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fast-memoize */ "../../../node_modules/fast-memoize/src/index.js");
+/* harmony import */ var fast_memoize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fast_memoize__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _formatters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./formatters */ "../../../node_modules/intl-messageformat/lib/src/formatters.js");
 /*
 Copyright (c) 2014, Yahoo! Inc. All rights reserved.
@@ -3922,6 +4015,13 @@ var __assign = (undefined && undefined.__assign) || function () {
         return t;
     };
     return __assign.apply(this, arguments);
+};
+var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
 };
 
 
@@ -3945,6 +4045,26 @@ function mergeConfigs(defaultConfig, configs) {
         return all;
     }, __assign({}, defaultConfig));
 }
+function createFastMemoizeCache(store) {
+    return {
+        create: function () {
+            return {
+                has: function (key) {
+                    return key in store;
+                },
+                get: function (key) {
+                    return store[key];
+                },
+                set: function (key, value) {
+                    store[key] = value;
+                },
+            };
+        },
+    };
+}
+// @ts-ignore this is to deal with rollup's default import shenanigans
+var _memoizeIntl = (fast_memoize__WEBPACK_IMPORTED_MODULE_0___default()) || fast_memoize__WEBPACK_IMPORTED_MODULE_0__;
+var memoizeIntl = _memoizeIntl;
 function createDefaultFormatters(cache) {
     if (cache === void 0) { cache = {
         number: {},
@@ -3952,9 +4072,39 @@ function createDefaultFormatters(cache) {
         pluralRules: {},
     }; }
     return {
-        getNumberFormat: (0,intl_format_cache__WEBPACK_IMPORTED_MODULE_0__.default)(Intl.NumberFormat, cache.number),
-        getDateTimeFormat: (0,intl_format_cache__WEBPACK_IMPORTED_MODULE_0__.default)(Intl.DateTimeFormat, cache.dateTime),
-        getPluralRules: (0,intl_format_cache__WEBPACK_IMPORTED_MODULE_0__.default)(Intl.PluralRules, cache.pluralRules),
+        getNumberFormat: memoizeIntl(function () {
+            var _a;
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return new ((_a = Intl.NumberFormat).bind.apply(_a, __spreadArrays([void 0], args)))();
+        }, {
+            cache: createFastMemoizeCache(cache.number),
+            strategy: memoizeIntl.strategies.variadic,
+        }),
+        getDateTimeFormat: memoizeIntl(function () {
+            var _a;
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return new ((_a = Intl.DateTimeFormat).bind.apply(_a, __spreadArrays([void 0], args)))();
+        }, {
+            cache: createFastMemoizeCache(cache.dateTime),
+            strategy: memoizeIntl.strategies.variadic,
+        }),
+        getPluralRules: memoizeIntl(function () {
+            var _a;
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return new ((_a = Intl.PluralRules).bind.apply(_a, __spreadArrays([void 0], args)))();
+        }, {
+            cache: createFastMemoizeCache(cache.pluralRules),
+            strategy: memoizeIntl.strategies.variadic,
+        }),
     };
 }
 var IntlMessageFormat = /** @class */ (function () {
@@ -4094,7 +4244,6 @@ var IntlMessageFormat = /** @class */ (function () {
     return IntlMessageFormat;
 }());
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IntlMessageFormat);
 
 
 /***/ }),
@@ -4113,6 +4262,7 @@ var IntlMessageFormat = /** @class */ (function () {
 /*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ErrorCode": () => /* binding */ ErrorCode,
@@ -4197,6 +4347,7 @@ var MissingValueError = /** @class */ (function (_super) {
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PART_TYPE": () => /* binding */ PART_TYPE,
@@ -4387,12 +4538,13 @@ originalMessage) {
   !*** ../index.js ***!
   \*******************/
 /*! namespace exports */
-/*! export L10n [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export MessageBundle [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! other exports [not provided] [maybe used (runtime-defined)] */
+/*! export L10n [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export MessageBundle [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! other exports [not provided] [maybe used in main (runtime-defined)] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "L10n": () => /* reexport safe */ _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -4417,6 +4569,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ L10n
@@ -4537,6 +4690,7 @@ class L10n {
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ MessageBundle
@@ -4731,6 +4885,7 @@ class MessageBundle {
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ Message
@@ -4842,6 +4997,18 @@ class Message {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => module['default'] :
+/******/ 				() => module;
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
