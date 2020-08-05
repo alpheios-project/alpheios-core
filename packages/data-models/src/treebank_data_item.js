@@ -18,6 +18,10 @@ export default class TreebankDataItem {
     this.wordIds = []
     this.sentenceId = null
     this.doc = null
+    // Although not the normal scenario, a treebank data file may contain only
+    // morphological data and not syntactic relationships. In this case
+    // the page author can suppress the display of the tree but still allow the
+    // morphological data to be used for disambigutation
     this.suppressTree = false
     /*
       Treebank data on a page must have an element with the following obligatory data attributes:
@@ -25,6 +29,10 @@ export default class TreebankDataItem {
         data-alpheios_tb_app_version - a version of a data format (the latest version is 1);
         data-alpheios_tb_app_url - a schema of a treebank template URL;
         data-alpheios_tb_ref - a reference that will be used to load data into the iframe initially
+
+      The following attributes are data attributes are optional:
+        data-alpheios_morph_only - if set to anything other than "false" the tree display will be suppressed
+                                   and data used for morphological disambigutation only
       Example:
         data-alpheios_tb_app="perseids-treebank-template"
         data-alpheios_tb_app_version="1"
