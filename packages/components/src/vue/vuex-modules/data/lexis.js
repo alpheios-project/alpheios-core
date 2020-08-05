@@ -26,7 +26,7 @@ export default class Lexis extends Module {
     this._settingsApi = api.settings
     this._lexisConfig = api.settings.getLexisOptions()
 
-    if (!this.hasCedict) {
+    if (!this.hasCedict()) {
       // If Lexis configuration is not available we will disable any CEDICT-related functionality
       Logger.getInstance().warn('CEDICT functionality will be disabled because LexisCS configuration is not available')
     }
@@ -44,7 +44,7 @@ export default class Lexis extends Module {
     // Whether a treebank service has been loaded
     this._treebankServiceLoaded = false
     // Add an iframe with CEDICT service if Lexis config is available
-    if (this.hasCedict) { this.createCedictIframe() }
+    if (this.hasCedict()) { this.createCedictIframe() }
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
@@ -321,7 +321,7 @@ export default class Lexis extends Module {
     treebankDataItem = null,
     source = LexicalQuery.sources.PAGE // Values that are possible currently are: 'page', 'lookup', 'wordlist'
   } = {}) {
-    if (textSelector.languageID === Constants.LANG_CHINESE && !this.hasCedict) {
+    if (textSelector.languageID === Constants.LANG_CHINESE && !this.hasCedict()) {
       Logger.getInstance().warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
       return
     }
@@ -352,7 +352,7 @@ export default class Lexis extends Module {
       resourceOptions: this._settingsApi.getResourceOptions(),
       langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
       checkContextForward,
-      cedictServiceUrl: this.hasCedict ? this._lexisConfig.cedict.target_url : null,
+      cedictServiceUrl: this.hasCedict() ? this._lexisConfig.cedict.target_url : null,
       annotatedHomonyms,
       source
     })
@@ -492,7 +492,7 @@ Lexis.api = (moduleInstance, store) => {
     },
 
     loadCedictData: async () => {
-      if (!moduleInstance.hasCedict) { return } // Do nothing if Lexis configuration is not available
+      if (!moduleInstance.hasCedict()) { return } // Do nothing if Lexis configuration is not available
       store.commit('lexis/setCedictInitInProgressState')
       const loadResult = await ClientAdapters.morphology.chineseloc({
         method: 'loadData',
