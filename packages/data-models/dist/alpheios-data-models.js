@@ -7494,13 +7494,21 @@ class TreebankDataItem {
     this.wordIds = []
     this.sentenceId = null
     this.doc = null
-
+    // Although not the normal scenario, a treebank data file may contain only
+    // morphological data and not syntactic relationships. In this case
+    // the page author can suppress the display of the tree but still allow the
+    // morphological data to be used for disambigutation
+    this.suppressTree = false
     /*
       Treebank data on a page must have an element with the following obligatory data attributes:
         data-alpheios_tb_app - the only app currently supported is 'perseids-treebank-template'
         data-alpheios_tb_app_version - a version of a data format (the latest version is 1);
         data-alpheios_tb_app_url - a schema of a treebank template URL;
         data-alpheios_tb_ref - a reference that will be used to load data into the iframe initially
+
+      The following attributes are data attributes are optional:
+        data-alpheios_morph_only - if set to anything other than "false" the tree display will be suppressed
+                                   and data used for morphological disambigutation only
       Example:
         data-alpheios_tb_app="perseids-treebank-template"
         data-alpheios_tb_app_version="1"
@@ -7525,6 +7533,11 @@ class TreebankDataItem {
 
       if (!tbSrcElem.dataset.alpheios_tb_app_url) { throw new Error(`Missing treebank source URL in: ${tbSrcElem.outerHTML}`) }
       this.sourceUrl = tbSrcElem.dataset.alpheios_tb_app_url
+
+      if (tbSrcElem.dataset.alpheios_tb_morph_only) {
+        // any value other than false activates this flag
+        this.suppressTree = Boolean(tbSrcElem.dataset.alpheios_tb_morph_only !== 'false')
+      }
 
       // We'll search for any element with the treebank tags if `elem` is not provided.
       const tbRefElem = elem ? elem.closest('[data-alpheios_tb_ref]') : document.querySelector('[data-alpheios_tb_ref]')
