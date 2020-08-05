@@ -340,7 +340,7 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(15)
-    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularVoiceView')
     expect(wideTable.props().view.title).toEqual('Fero (ferre, tuli, latus)')
 
     wideTable.vm.getRenderedView = jest.fn()
@@ -598,7 +598,7 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(31)
-    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularVoiceView')
     expect(wideTable.props().view.title).toEqual('Queo (quire, quivi(ii), quitus)')
 
     wideTable.vm.getRenderedView = jest.fn()
@@ -630,7 +630,7 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(33)
-    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularVoiceView')
     expect(wideTable.props().view.title).toEqual('Adeo (adire, adivi(ii), aditus)')
 
     wideTable.vm.getRenderedView = jest.fn()
@@ -646,7 +646,7 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(34)
-    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularVoiceView')
     expect(wideTable.props().view.title).toEqual('Ineo (inire, inivi(ii), initus)')
 
     wideTable.vm.getRenderedView = jest.fn()
