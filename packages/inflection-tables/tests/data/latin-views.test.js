@@ -1822,6 +1822,7 @@ describe('latin-views.test.js', () => {
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(9)
 
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinImperativeView',
@@ -1849,6 +1850,12 @@ describe('latin-views.test.js', () => {
         { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
       ]
     })
+
+    // test the order
+    const allViews = inflectionsViewSet.getViews()
+    expect(allViews[0].name === 'verb-imperative-irregular')
+    expect(allViews[1].name === 'verb-irregular')
+    expect(allViews[2].name === 'imperative')
   })
 
   it('33 - checked Latin Views - melior - LatinAdjectiveComparativeView', async () => {
