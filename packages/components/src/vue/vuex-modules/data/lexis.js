@@ -71,7 +71,7 @@ export default class Lexis extends Module {
     LexicalQuery.evt.CEDICT_SERVICE_UNINITIALIZED.sub(this.onCedictServiceUninitialized.bind(this, store))
   }
 
-  hasCedict() {
+  hasCedict () {
     return Boolean(this._lexisConfig && this._lexisConfig.cedict)
   }
 
@@ -256,8 +256,10 @@ export default class Lexis extends Module {
           this._treebankAvailable = true
           this._lastTreebankDataItem = treebankDataItem
           // No need to update treebank sourceURL
-          store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData,
-                                                  suppressTree: treebankDataItem.suppressTree })
+          store.commit('lexis/setTreebankInfo', {
+            hasTreebankData: treebankDataItem.hasSentenceData,
+            suppressTree: treebankDataItem.suppressTree
+          })
         } catch (err) {
           // If refreshUntilLoaded failed treebank data will be unavailable
           Logger.getInstance().warn(err.message)
@@ -270,8 +272,10 @@ export default class Lexis extends Module {
       } else {
         // Do not update a treebankSrc in a store, it has not changed
         this._lastTreebankDataItem = treebankDataItem
-        store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData,
-                                                 suppressTree: treebankDataItem.suppressTree })
+        store.commit('lexis/setTreebankInfo', {
+          hasTreebankData: treebankDataItem.hasSentenceData,
+          suppressTree: treebankDataItem.suppressTree
+        })
       }
       try {
         if (!treebankDataItem.hasWordData) {
