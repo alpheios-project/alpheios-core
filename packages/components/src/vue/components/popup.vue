@@ -36,7 +36,7 @@
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
-                        v-show="showToolbar && $store.state.lexis.hasTreebankData">
+                        v-show="showToolbar && $store.state.lexis.hasTreebankData && !$store.state.lexis.suppressTree">
                 <div id="alpheios-popup-toolbar-btn-treebank" class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('treebank')">
                   <treebank-icon class="alpheios-navbuttons__icon" />
                 </div>

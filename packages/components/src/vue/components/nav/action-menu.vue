@@ -68,7 +68,7 @@
         <div
             @click.stop="showPanelTab('treebank')"
             class="alpheios-action-menu__navbutton"
-            :class="{ disabled: !$store.state.lexis.hasTreebankData }"
+            :class="{ disabled: !$store.state.lexis.hasTreebankData || $store.state.lexis.suppressTree }"
         >
           <treebank-icon/>
         </div>

@@ -185,7 +185,7 @@
     "component": "Popup"
   },
   "TOOLTIP_TREEBANK_SOURCE": {
-    "message": "Has treebank data",
+    "message": "Disambiguated with treebank data",
     "description": "A tooltip that will be shown for a treebank source icon in a popup",
     "component": "Popup"
   },

@@ -1460,10 +1460,10 @@ class Definition {
   !*** ./driver.js ***!
   \*******************/
 /*! namespace exports */
-/*! export ArabicLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Author [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export ChineseLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Constants [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
+/*! export ArabicLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Author [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export ChineseLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Constants [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
 /*!   export CASE_ABESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export CASE_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export CASE_ABSOLUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
@@ -1691,36 +1691,36 @@ class Definition {
 /*!   export VOICE_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export VOICE_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   other exports [not provided] [no usage info] */
-/*! export Definition [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export DefinitionSet [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Feature [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureImporter [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureList [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureType [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GeezLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GreekLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export GrmFeature [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Homonym [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export HomonymGroup [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Inflection [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export LanguageModelFactory [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export LatinLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Lemma [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Lexeme [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Logger [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PersianLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PsEvent [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export PsEventData [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export ResourceProvider [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export SyriacLanguageModel [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export TextQuoteSelector [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export TextWork [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export Translation [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export TreebankDataItem [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export WordItem [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export WordList [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! export WordUsageExample [provided] [maybe used (runtime-defined)] [usage prevents renaming] */
-/*! other exports [not provided] [maybe used (runtime-defined)] */
+/*! export Definition [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export DefinitionSet [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Feature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export FeatureImporter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export FeatureList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export FeatureType [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export GeezLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export GreekLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export GrmFeature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Homonym [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export HomonymGroup [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Inflection [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export LanguageModelFactory [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export LatinLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Lemma [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Lexeme [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Logger [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export PersianLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export PsEvent [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export PsEventData [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export ResourceProvider [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export SyriacLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export TextQuoteSelector [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export TextWork [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Translation [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export TreebankDataItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export WordItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export WordList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export WordUsageExample [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! other exports [not provided] [maybe used in main (runtime-defined)] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -7468,13 +7468,21 @@ class TreebankDataItem {
     this.wordIds = []
     this.sentenceId = null
     this.doc = null
-
+    // Although not the normal scenario, a treebank data file may contain only
+    // morphological data and not syntactic relationships. In this case
+    // the page author can suppress the display of the tree but still allow the
+    // morphological data to be used for disambigutation
+    this.suppressTree = false
     /*
       Treebank data on a page must have an element with the following obligatory data attributes:
         data-alpheios_tb_app - the only app currently supported is 'perseids-treebank-template'
         data-alpheios_tb_app_version - a version of a data format (the latest version is 1);
         data-alpheios_tb_app_url - a schema of a treebank template URL;
         data-alpheios_tb_ref - a reference that will be used to load data into the iframe initially
+
+      The following attributes are data attributes are optional:
+        data-alpheios_morph_only - if set to anything other than "false" the tree display will be suppressed
+                                   and data used for morphological disambigutation only
       Example:
         data-alpheios_tb_app="perseids-treebank-template"
         data-alpheios_tb_app_version="1"
@@ -7499,6 +7507,11 @@ class TreebankDataItem {
 
       if (!tbSrcElem.dataset.alpheios_tb_app_url) { throw new Error(`Missing treebank source URL in: ${tbSrcElem.outerHTML}`) }
       this.sourceUrl = tbSrcElem.dataset.alpheios_tb_app_url
+
+      if (tbSrcElem.dataset.alpheios_tb_morph_only) {
+        // any value other than false activates this flag
+        this.suppressTree = Boolean(tbSrcElem.dataset.alpheios_tb_morph_only !== 'false')
+      }
 
       // We'll search for any element with the treebank tags if `elem` is not provided.
       const tbRefElem = elem ? elem.closest('[data-alpheios_tb_ref]') : document.querySelector('[data-alpheios_tb_ref]')
