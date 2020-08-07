@@ -2319,12 +2319,7 @@ p.alpheios-grammar__block__title.open {
   height: 100% !important;
 }
 .alpheios-treebank__frame {
-  /*
-  A minimal height of the treebank's iframe, shall be no less than 43em,
-  but no more than that because max width of panel's content is 800px and
-  treebank frame will not if in if too wide
-  */
-  width: 690px !important;
+  width: 100% !important;
   flex: 1 1 100vh !important;
   height: 100% !important;
 }
