@@ -171,5 +171,31 @@ describe('treebank_data_item.test.js', () => {
     expect(item.doc).toEqual(docID)
     expect(item.sentenceId).toEqual(sentID)
     expect(item.wordIds).toMatchObject([wordID1, wordID2])
+    expect(item.suppressTree).toBeFalsy()
+  })
+
+  it('9 TreebankDataItem - suppressTree if morph only', () => {
+    const docID = 'treebank'
+    const sentID = '3'
+    const wordID1 = '5'
+    const wordID2 = '12'
+    const srcElem = document.createElement('div')
+    srcElem.setAttribute('data-alpheios_tb_app', 'perseids-treebank-template')
+    srcElem.setAttribute('data-alpheios_tb_app_version', '1')
+    srcElem.setAttribute('data-alpheios_tb_app_url', 'http://example.org/DOC/SENTENCE/')
+    srcElem.setAttribute('data-alpheios_tb_morph_only', 'true')
+    document.body.appendChild(srcElem)
+    const wdElem = document.createElement('span')
+    wdElem.setAttribute('data-alpheios_tb_doc', docID)
+    wdElem.setAttribute('data-alpheios_tb_sent', sentID)
+    wdElem.setAttribute('data-alpheios_tb_word', `${wordID1} ${wordID2}`)
+    srcElem.appendChild(wdElem)
+    const item = new TreebankDataItem(wdElem)
+    expect(item.provider).toEqual('http://example.org')
+    expect(item.docUrl).toEqual(`http://example.org/${docID}/SENTENCE/`)
+    expect(item.fullUrl).toEqual(`http://example.org/${docID}/${sentID}/`)
+    expect(item.doc).toEqual(docID)
+    expect(item.sentenceId).toEqual(sentID)
+    expect(item.suppressTree).toBeTruthy()
   })
 })

@@ -23,12 +23,7 @@ export default {
   }
 
   .alpheios-treebank__frame {
-    /*
-    A minimal height of the treebank's iframe, shall be no less than 43em,
-    but no more than that because max width of panel's content is 800px and
-    treebank frame will not if in if too wide
-    */
-    width: 690px;
+    width: 100%;
     flex: 1 1 100vh;
     height: 100%;
   }

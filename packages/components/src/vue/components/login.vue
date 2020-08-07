@@ -1,6 +1,7 @@
 <template>
   <div v-show="this.$store.state.auth.enableLogin">
     <button
+        id = "alpheios-user-auth__login-button"
         @click="logIn"
         :class="btnClass"
         v-show="! this.$store.state.auth.isAuthenticated && ! this.$store.state.auth.externalLoginUrl"
@@ -13,6 +14,7 @@
       </button>
     </a>
     <button
+        id = "alpheios-user-auth__logout-button"
         @click="logOut"
         :class="btnClass"
         v-show="this.$store.state.auth.isAuthenticated && !this.$store.state.auth.externalLogoutUrl"

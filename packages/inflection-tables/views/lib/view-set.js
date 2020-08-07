@@ -86,13 +86,18 @@ export default class ViewSet {
    * @return {View[]}
    */
   getViews (partOfSpeech = undefined) {
+    let viewsUnsorted // eslint-disable-line prefer-const
     if (partOfSpeech) {
       // Return views for a particular part of speech
-      return this.matchingViewsMap.has(partOfSpeech) ? this.matchingViewsMap.get(partOfSpeech) : []
+      viewsUnsorted = this.matchingViewsMap.has(partOfSpeech) ? this.matchingViewsMap.get(partOfSpeech) : []
     } else {
       // Return all matching views
-      return Array.from(this.matchingViewsMap.values()).reduce((acc, views) => acc.concat(...views), [])
+      viewsUnsorted = Array.from(this.matchingViewsMap.values()).reduce((acc, views) => acc.concat(...views), [])
     }
+    const viewList = this.constructor.views
+    return viewsUnsorted.sort(function (a, b) {
+      return viewList.indexOf(a.constructor) - viewList.indexOf(b.constructor)
+    })
   }
 
   static getViewByID (viewID) {

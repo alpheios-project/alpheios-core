@@ -317,9 +317,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'eo, ire,ivi(ii),itus',
-      linkedViewsLength: 2,
+      linkedViewsLength: 4,
       linkedViews: [
         { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'},
         { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
       ]
     })
@@ -388,9 +390,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'sum, esse,fui,futurus',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -451,9 +455,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'possum, posse,potui,-',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -521,9 +527,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'volo, velle,volui,-',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -585,9 +593,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'nolo, nolle,nolui,-',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -648,9 +658,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'malo, malle,malui,-',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -709,11 +721,13 @@ describe('latin-views.test.js', () => {
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularVoiceView',
-      title: 'Verb Conjugation (Irregular, with Voice Data)',
+      title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'fero, ferre,tuli,latus',
-      linkedViewsLength: 2,
+      linkedViewsLength: 4,
       linkedViews: [
         { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularVoiceView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularVoiceView', title: 'Verb Imperative Conjugation (Irregular)'},
         { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
       ]
     })
@@ -773,11 +787,13 @@ describe('latin-views.test.js', () => {
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularVoiceView',
-      title: 'Verb Conjugation (Irregular, with Voice Data)',
+      title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'fero, ferre,tuli,latus',
-      linkedViewsLength: 2,
+      linkedViewsLength: 4,
       linkedViews: [
         { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularVoiceView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularVoiceView', title: 'Verb Imperative Conjugation (Irregular)'},
         { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
       ]
     })
@@ -839,9 +855,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'veneo, venire,venivi(ii),venitus',
-      linkedViewsLength: 2,
+      linkedViewsLength: 4,
       linkedViews: [
         { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'},
         { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
       ]
     })
@@ -901,11 +919,13 @@ describe('latin-views.test.js', () => {
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularVoiceView',
-      title: 'Verb Conjugation (Irregular, with Voice Data)',
+      title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'ineo, inire,inivi(ii),initus',
-      linkedViewsLength: 2,
+      linkedViewsLength: 4,
       linkedViews: [
         { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularVoiceView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularVoiceView', title: 'Verb Imperative Conjugation (Irregular)'},
         { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
       ]
     })
@@ -965,11 +985,13 @@ describe('latin-views.test.js', () => {
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularVoiceView',
-      title: 'Verb Conjugation (Irregular, with Voice Data)',
+      title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'adeo, adire,adivi(ii),aditus',
-      linkedViewsLength: 2,
+      linkedViewsLength: 4,
       linkedViews: [
         { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularVoiceView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularVoiceView', title: 'Verb Imperative Conjugation (Irregular)'},
         { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
       ]
     })
@@ -1031,9 +1053,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'nequeo, nequire,nequivi(ii),nequitus',
-      linkedViewsLength: 2,
+      linkedViewsLength: 4,
       linkedViews: [
         { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'},
         { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
       ]
     })
@@ -1093,11 +1117,13 @@ describe('latin-views.test.js', () => {
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularVoiceView',
-      title: 'Verb Conjugation (Irregular, with Voice Data)',
+      title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'queo, quire,quivi(ii),quitus',
-      linkedViewsLength: 2,
+      linkedViewsLength: 4,
       linkedViews: [
         { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularVoiceView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularVoiceView', title: 'Verb Imperative Conjugation (Irregular)'},
         { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
       ]
     })
@@ -1159,9 +1185,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'praesum, praeesse,praefui,praefuturus',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -1222,9 +1250,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'obsum, obesse,obfui,obfuturus',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -1285,9 +1315,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'insum, inesse,infui,infuturus',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -1348,9 +1380,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'supersum, superesse,superfui,superfuturus',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -1411,9 +1445,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'subsum, subesse,subfui,subfuturus',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -1474,9 +1510,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'adsum, adesse,adfui,adfuturus',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -1537,9 +1575,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'absum, abesse,afui,afuturus',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -1600,9 +1640,11 @@ describe('latin-views.test.js', () => {
       viewName: 'LatinVerbIrregularView',
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'prosum, prodesse,profui,profuturus',
-      linkedViewsLength: 1,
+      linkedViewsLength: 3,
       linkedViews: [
-        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
       ]
     })
 
@@ -1649,4 +1691,204 @@ describe('latin-views.test.js', () => {
     })
   })
 
+  it('30 - checked Latin Views - esse - Latin Verb Conjugation Irregular Infinitive', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('esse', Constants.LANG_LATIN)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews[1])
+
+    expect(inflectionsViewSet.matchingViews.length).toEqual(10)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinInfinitiveView',
+      title: 'Infinitive',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbInfinitiveIrregularView',
+      title: 'Verb Infinitive Conjugation (Irregular)',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbIrregularView',
+      title: 'Verb Conjugation (Irregular)',
+      additionalTitle: 'sum, esse,fui,futurus',
+      linkedViewsLength: 3,
+      linkedViews: [
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
+      ]
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVoiceConjugationMoodView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVoiceMoodConjugationView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinConjugationVoiceMoodView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinConjugationMoodVoiceView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinMoodVoiceConjugationView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinMoodConjugationVoiceView',
+      title: 'Verb Conjugation',
+      linkedViewsLength: 0
+    })
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbParticipleView',
+      title: 'Participle',
+      linkedViewsLength: 0
+    })
+  })
+
+  it('31 - checked Latin Views - es - Latin Verb Conjugation Irregular Imperative', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('es', Constants.LANG_LATIN)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews[1])
+
+    expect(inflectionsViewSet.matchingViews.length).toEqual(9)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinImperativeView',
+      title: 'Imperative',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbImperativeIrregularView',
+      title: 'Verb Imperative Conjugation (Irregular)',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbIrregularView',
+      title: 'Verb Conjugation (Irregular)',
+      additionalTitle: 'sum, esse,fui,futurus',
+      linkedViewsLength: 3,
+      linkedViews: [
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularView', title: 'Verb Imperative Conjugation (Irregular)'}
+      ]
+    })
+  })
+
+  it('32 - checked Latin Views - fer - Latin Verb Conjugation Irregular Imperative Voice', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('fer', Constants.LANG_LATIN)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews[1])
+
+    expect(inflectionsViewSet.matchingViews.length).toEqual(9)
+
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinImperativeView',
+      title: 'Imperative',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbImperativeIrregularVoiceView',
+      title: 'Verb Imperative Conjugation (Irregular)',
+      linkedViewsLength: 0
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbIrregularVoiceView',
+      title: 'Verb Conjugation (Irregular)',
+      additionalTitle: 'fero, ferre,tuli,latus',
+      linkedViewsLength: 4,
+      linkedViews: [
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' },
+        { viewName: 'LatinVerbInfinitiveIrregularVoiceView', title: 'Verb Infinitive Conjugation (Irregular)'},
+        { viewName: 'LatinVerbImperativeIrregularVoiceView', title: 'Verb Imperative Conjugation (Irregular)'},
+        { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
+      ]
+    })
+
+    // test the order
+    const allViews = inflectionsViewSet.getViews()
+    expect(allViews[0].name === 'verb-imperative-irregular')
+    expect(allViews[1].name === 'verb-irregular')
+    expect(allViews[2].name === 'imperative')
+  })
+
+  it('33 - checked Latin Views - melior - LatinAdjectiveComparativeView', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('melior', Constants.LANG_LATIN)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
+
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinAdjectiveComparativeView',
+      title: 'Adjective Comparative Declension',
+      linkedViewsLength: 0
+    })
+  })
+
+  it('34 - checked Latin Views - levissimus - LatinAdjectiveSuperlativeView', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('levissimus', Constants.LANG_LATIN)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
+
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinAdjectiveSuperlativeView',
+      title: 'Adjective Superlative Declension',
+      linkedViewsLength: 0
+    })
+  })
 })

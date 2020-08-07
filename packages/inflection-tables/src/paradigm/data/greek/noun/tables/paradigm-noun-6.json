@@ -243,7 +243,7 @@
                 "role": "label",
                 "declension": "3rd",
                 "number": "dual",
-                "value": "dual"
+                "value": ""
             },
             {
                 "role": "label",
@@ -321,7 +321,7 @@
                 "role": "label",
                 "declension": "3rd",
                 "number": "plural",
-                "value": "plural"
+                "value": ""
             },
             {
                 "role": "label",
@@ -360,7 +360,7 @@
                 "role": "label",
                 "declension": "3rd",
                 "number": "plural",
-                "value": "plural"
+                "value": ""
             },
             {
                 "role": "label",
@@ -399,7 +399,7 @@
                 "role": "label",
                 "declension": "3rd",
                 "number": "plural",
-                "value": "plural"
+                "value": ""
             },
             {
                 "role": "label",
