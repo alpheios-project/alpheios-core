@@ -70,7 +70,7 @@
               "form": "sum", "title": "Sum (esse,fui,futurus)"
             },
             {
-              "viewID": "latin_verb_irregular_view",
+              "viewID": "latin_verb_irregular_voice_view",
               "form": "fero", "title": "Fero (ferre, tuli, latus)"
             },
             {
@@ -134,7 +134,7 @@
               "form": "supersum", "title": "Supersum (superesse, superfui, superfuturus)"
             },
             {
-              "viewID": "latin_verb_irregular_view",
+              "viewID": "latin_verb_irregular_voice_view",
               "form": "queo", "title": "Queo (quire, quivi(ii), quitus)"
             },
             {
@@ -142,11 +142,11 @@
               "form": "nequeo", "title": "Nequeo (nequire, nequivi(ii), nequitus)"
             },
             {
-              "viewID": "latin_verb_irregular_view",
+              "viewID": "latin_verb_irregular_voice_view",
               "form": "adeo", "title": "Adeo (adire, adivi(ii), aditus)"
             },
             {
-              "viewID": "latin_verb_irregular_view",
+              "viewID": "latin_verb_irregular_voice_view",
               "form": "ineo", "title": "Ineo (inire, inivi(ii), initus)"
             },
             {
@@ -154,7 +154,7 @@
               "form": "veneo", "title": "Veneo (venire, venivi(ii), venitus)"
             },
             {
-              "viewID": "latin_verb_irregular_view",
+              "viewID": "latin_verb_irregular_voice_view",
               "form": "odeo", "title": "Odeo (odire, odivi(ii), -)"
             },
             {
