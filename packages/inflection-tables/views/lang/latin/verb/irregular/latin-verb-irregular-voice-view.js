@@ -17,8 +17,8 @@ export default class LatinVerbIrregularVoiceView extends LatinVerbIrregularBaseV
     super(homonym, inflectionData)
 
     this.id = 'verbConjugationIrregularVoice'
-    this.name = 'verb-irregular-voice'
-    this.title = 'Verb Conjugation (Irregular, with Voice Data)'
+    this.name = 'verb-irregular'
+    this.title = 'Verb Conjugation (Irregular)'
 
     // Some irregular verbs can be unimplemented and shall be skipped
     const inflections = this.homonym.inflections.filter(item => item.constraints.implemented)

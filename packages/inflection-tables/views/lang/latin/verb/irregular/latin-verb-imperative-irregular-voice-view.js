@@ -7,8 +7,8 @@ export default class LatinVerbImperativeIrregularVoiceView extends LatinVerbIrre
     super(homonym, inflectionData)
 
     this.id = 'verbImperativeIrregularVoice'
-    this.name = 'verb-imperative-irregular-voice'
-    this.title = 'Verb Imperative Conjugation (Irregular with Voice)'
+    this.name = 'verb-imperative-irregular'
+    this.title = 'Verb Imperative Conjugation (Irregular)'
 
     if (this.isImplemented) {
       this.createTable()
