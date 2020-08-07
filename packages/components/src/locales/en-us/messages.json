@@ -380,6 +380,11 @@
     "description": "grammar retrieved notice",
     "component": "UI"
   },
+  "TEXT_NOTICE_GRAMMAR_NOT_FOUND": {
+    "message": "No grammar resources have been found",
+    "description": "A grammar retrieval notice",
+    "component": "UI"
+  },
   "TEXT_NOTICE_RESQUERY_COMPLETE": {
     "message": "All resource data retrieved",
     "description": "resource query complete notice",
