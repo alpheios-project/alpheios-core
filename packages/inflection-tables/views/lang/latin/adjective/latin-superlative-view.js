@@ -7,7 +7,7 @@ export default class LatinAdjectiveSuperlativeView extends LatinView {
   constructor (homonym, inflectionData) {
     super(homonym, inflectionData)
     this.id = 'adjectiveSuperlativeDeclension'
-    this.name = 'adjective suplerative declension'
+    this.name = 'adjective superlative declension'
     this.title = 'Adjective Superlative Declension'
 
     this.features.genders = this.features.genders.createOfSameType() // Create a copy so that original object will not be affected by a change
