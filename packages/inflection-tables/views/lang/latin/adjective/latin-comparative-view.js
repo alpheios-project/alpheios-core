@@ -2,6 +2,7 @@ import { Constants, Feature } from 'alpheios-data-models'
 import Morpheme from '@lib/morpheme.js'
 import Suffix from '../../../../lib/suffix.js'
 import LatinView from '../latin-view.js'
+import Table from '@views/lib/table.js'
 
 export default class LatinAdjectiveComparativeView extends LatinView {
   constructor (homonym, inflectionData) {
@@ -9,10 +10,6 @@ export default class LatinAdjectiveComparativeView extends LatinView {
     this.id = 'adjectiveComparativeDeclension'
     this.name = 'adjective comparative declension'
     this.title = 'Adjective Comparative Declension'
-
-    this.features.declensions.addFeature(LatinView.datasetConsts.ORD_1ST_2ND, [Constants.ORD_1ST, Constants.ORD_2ND])
-    this.features.declensions.getOrderedFeatures = this.constructor.getOrderedDeclensions
-    this.features.declensions.getTitle = this.constructor.getDeclensionTitle
 
     this.features.genders.addFeature(LatinView.datasetConsts.GEND_MASCULINE_FEMININE, [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
     this.features.genders.getOrderedFeatures = this.constructor.getOrderedGenders
@@ -37,19 +34,18 @@ export default class LatinAdjectiveComparativeView extends LatinView {
     return Suffix
   }
 
-  static getOrderedDeclensions () {
-    return [
-      this.featureMap.get(LatinView.datasetConsts.ORD_1ST_2ND),
-      this.featureMap.get(Constants.ORD_3RD)
-    ]
-  }
-
-  static getDeclensionTitle (featureValue) {
-    switch (featureValue) {
-      case LatinView.datasetConsts.ORD_1ST_2ND: return 'First/Second<br>ā and o'
-      case Constants.ORD_3RD: return 'Third<br>consonant and i'
-      default: return featureValue
-    }
+  createTable () {
+    this.table = new Table([this.features.genders, this.features.types,
+      this.features.numbers, this.features.cases])
+    let features = this.table.features // eslint-disable-line prefer-const
+    features.columns = [
+      this.constructor.model.typeFeature(Feature.types.gender),
+      this.constructor.model.typeFeature(Feature.types.type)]
+    features.rows = [
+      this.constructor.model.typeFeature(Feature.types.number),
+      this.constructor.model.typeFeature(Feature.types.grmCase)]
+    features.columnRowTitles = [this.constructor.model.typeFeature(Feature.types.grmCase)]
+    features.fullWidthRowTitles = [this.constructor.model.typeFeature(Feature.types.number)]
   }
 
   static getOrderedGenders () {
