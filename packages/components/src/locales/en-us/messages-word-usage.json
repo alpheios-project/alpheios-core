@@ -1,7 +1,7 @@
 {
     "TEXT_NOTICE_WORDUSAGE_READY": {
-        "message": "Word Usage Examples are recieved",
-        "description": "Word Usage Examples recieved flag",
+        "message": "Word Usage Examples are received",
+        "description": "Word Usage Examples received flag",
         "component": "UIController onWordUsageExamplesReady"
     },
     "TOOLTIP_WORD_USAGE": {

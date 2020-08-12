@@ -1,6 +1,8 @@
 import { Constants, Feature } from 'alpheios-data-models'
 import Suffix from '../../../../lib/suffix.js'
 import LatinView from '../latin-view.js'
+import LatinAdjectiveComparativeView from '@views/lang/latin/adjective/latin-comparative-view.js'
+import LatinAdjectiveSuperlativeView from '@views/lang/latin/adjective/latin-superlative-view.js'
 
 export default class LatinAdjectiveView extends LatinView {
   constructor (homonym, inflectionData) {
@@ -65,11 +67,27 @@ export default class LatinAdjectiveView extends LatinView {
   }
 
   static enabledForInflection (inflection) {
-    return inflection[Feature.types.part].value === this.mainPartOfSpeech &&
-      !inflection[Feature.types.comparison]
+    return inflection[Feature.types.part].value === this.mainPartOfSpeech
   }
 
   static morphemeCellFilter (form) {
     return !form.features[Feature.types.comparison]
+  }
+
+  static getMatchingInstances (homonym) {
+    try {
+      if (this.matchFilter(homonym.languageID, homonym.inflections)) {
+        const inflectionData = this.getInflectionsData(homonym)
+        let view = new this(homonym, inflectionData) // eslint-disable-line prefer-const
+        view.linkedViews = [
+          new LatinAdjectiveComparativeView(homonym, inflectionData),
+          new LatinAdjectiveSuperlativeView(homonym, inflectionData)
+        ]
+        return [view.render()]
+      }
+      return []
+    } catch (e) {
+      console.info(e)
+    }
   }
 }

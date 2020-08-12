@@ -9,13 +9,6 @@ import { Logger } from 'alpheios-data-models'
  * A UI controller is a part of a higher-level app controller.
  *
  * @typedef {object} UIController
- * @property {Function} init - A function to initialize a UIController.
- */
-
-/**
- * A class representing a platform the app is running upon.
- *
- * @typedef {object} UIController
  * @property
  */
 export default class UIController {
@@ -123,6 +116,10 @@ export default class UIController {
     this._store = store
     this._uiOptions = this._api.settings.getUiOptions()
 
+    // Assign a class that will specify what type of layout will be used
+    document.body.classList.add(this._platform.isMobile
+      ? UIController.styleProps.ALPHEIOS_COMPACT_CSS_CLASS
+      : UIController.styleProps.ALPHEIOS_LARGE_CSS_CLASS)
     document.body.classList.add(UIController.styleProps.ALPHEIOS_CSS_CLASS)
 
     // region Public API of a UI controller
@@ -258,7 +255,7 @@ export default class UIController {
     this.activateOnPage()
 
     this._uiState.activate()
-    this.activateModules()
+    this._activateModules()
     this._uiState.activateUI()
 
     if (this.hasModule('panel')) {
@@ -296,7 +293,7 @@ export default class UIController {
   }
 
   deactivate () {
-    this.deactivateModules()
+    this._deactivateModules()
     if (this.hasModule('popup')) { this._store.commit('popup/close') }
     // Close panel without updating it's state so the state can be saved for later reactivation
     if (this.hasModule('panel')) { this.closePanel(false) }
@@ -353,11 +350,11 @@ export default class UIController {
     }
   }
 
-  activateModules () {
+  _activateModules () {
     this._modules.forEach(m => { if (m.instance) { m.instance.activate() } })
   }
 
-  deactivateModules () {
+  _deactivateModules () {
     this._modules.forEach(m => { if (m.instance) { m.instance.deactivate() } })
   }
 
@@ -612,5 +609,7 @@ UIController.tabNames = {
 UIController.styleProps = {
   FONT_SIZE_PROP: '--alpheios-base-text-size',
   ALPHEIOS_CSS_CLASS: 'alpheios',
+  ALPHEIOS_COMPACT_CSS_CLASS: 'alpheios-layout-compact',
+  ALPHEIOS_LARGE_CSS_CLASS: 'alpheios-layout-large',
   DISABLE_TEXT_SELECTION_CSS_CLASS: 'alpheios-disable-user-selection'
 }

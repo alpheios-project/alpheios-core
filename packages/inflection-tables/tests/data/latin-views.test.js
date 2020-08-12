@@ -57,7 +57,11 @@ describe('latin-views.test.js', () => {
       inflectionsViewSet,
       viewName: 'LatinAdjectiveView',
       title: 'Adjective declension',
-      linkedViewsLength: 0
+      linkedViewsLength: 2,
+      linkedViews: [
+        { viewName: 'LatinAdjectiveComparativeView', title: 'Adjective Comparative Declension' },
+        { viewName: 'LatinAdjectiveSuperlativeView', title: 'Adjective Superlative Declension' }
+      ]
     })
   })
 
@@ -209,7 +213,11 @@ describe('latin-views.test.js', () => {
       inflectionsViewSet,
       viewName: 'LatinAdjectiveView',
       title: 'Adjective declension',
-      linkedViewsLength: 0
+      linkedViewsLength: 2,
+      linkedViews: [
+        { viewName: 'LatinAdjectiveComparativeView', title: 'Adjective Comparative Declension' },
+        { viewName: 'LatinAdjectiveSuperlativeView', title: 'Adjective Superlative Declension' }
+      ]
     })
 
     BaseTestHelp.checkView({
@@ -1865,7 +1873,18 @@ describe('latin-views.test.js', () => {
 
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
-    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(2)
+    
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinAdjectiveView',
+      title: 'Adjective declension',
+      linkedViewsLength: 2,
+      linkedViews: [
+        { viewName: 'LatinAdjectiveComparativeView', title: 'Adjective Comparative Declension' },
+        { viewName: 'LatinAdjectiveSuperlativeView', title: 'Adjective Superlative Declension' }
+      ]
+    })
 
     BaseTestHelp.checkView({
       inflectionsViewSet,
@@ -1882,7 +1901,18 @@ describe('latin-views.test.js', () => {
 
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
-    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(2)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinAdjectiveView',
+      title: 'Adjective declension',
+      linkedViewsLength: 2,
+      linkedViews: [
+        { viewName: 'LatinAdjectiveComparativeView', title: 'Adjective Comparative Declension' },
+        { viewName: 'LatinAdjectiveSuperlativeView', title: 'Adjective Superlative Declension' }
+      ]
+    })
 
     BaseTestHelp.checkView({
       inflectionsViewSet,
