@@ -1,0 +1,19 @@
+name: Build
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: '14'
+        
+    - name: build
+      id: run_build
+      run: npm run set-node-build-deps && npm run bootstrap
+    
+    - name: test
+      run: npm run test
