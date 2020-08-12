@@ -86,7 +86,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
   }
 
   // For noun and adjectives
-  addSuffixes (partOfSpeech, data, pofsFootnotes, extraFeatures) {
+  addSuffixes (partOfSpeech, data, pofsFootnotes) {
     // An order of columns in a data CSV file
     const n = {
       suffix: 0,
@@ -116,9 +116,48 @@ export default class LatinLanguageDataset extends LanguageDataset {
         this.features.get(Feature.types.declension).createFromImporter(item[n.declension]),
         this.features.get(Feature.types.gender).createFromImporter(item[n.gender]),
         this.features.get(Feature.types.type).createFromImporter(item[n.type])]
-      if (extraFeatures && extraFeatures.length > 0) {
-        features.push(...extraFeatures)
+      if (item[n.footnote]) {
+        // There can be multiple footnote indexes separated by spaces
+        const indexes = item[n.footnote].split(' ')
+        features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
+        footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
+      this.addInflectionData(partOfSpeech.value, Suffix, suffix, features, footnotes)
+    }
+  }
+
+  // For comparatives and superlatives
+  addCompSuffixes (partOfSpeech, data, pofsFootnotes, compFeature) {
+    // An order of columns in a data CSV file
+
+    // no declension for comparatives and superlatives
+    const n = {
+      suffix: 0,
+      number: 1,
+      grmCase: 2,
+      gender: 3,
+      type: 4,
+      footnote: 5
+    }
+    // Some suffix values will mean a lack of suffix, they will be mapped to a null
+    const noSuffixValue = '-'
+    let footnotes = []
+
+    // First row are headers
+    for (let i = 1; i < data.length; i++) {
+      const item = data[i]
+      let suffix = item[n.suffix]
+      // Handle special suffix values
+      if (!suffix || suffix === noSuffixValue) {
+        suffix = null
+      }
+
+      let features = [partOfSpeech, // eslint-disable-line prefer-const
+        this.features.get(Feature.types.number).createFromImporter(item[n.number]),
+        this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
+        this.features.get(Feature.types.gender).createFromImporter(item[n.gender]),
+        this.features.get(Feature.types.type).createFromImporter(item[n.type]),
+        compFeature]
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
         const indexes = item[n.footnote].split(' ')
@@ -416,7 +455,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
     let forms
     let footnotesData
     let footnotes
-    let extraFeature
+    let compFeature
 
     // Nouns
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
@@ -441,19 +480,19 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
     // Comparatives
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
-    extraFeature = this.features.get(Feature.types.comparison).createFeature(Constants.COMP_COMPARITIVE)
+    compFeature = this.features.get(Feature.types.comparison).createFeature(Constants.COMP_COMPARITIVE)
     footnotesData = papaparse.parse(adjectiveComparativeFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Suffix, footnotesData.data)
     suffixes = papaparse.parse(adjectiveComparativeSuffixesCSV, { skipEmptyLines: true })
-    this.addSuffixes(partOfSpeech, suffixes.data, footnotes, [extraFeature])
+    this.addCompSuffixes(partOfSpeech, suffixes.data, footnotes, compFeature)
 
     // Superlatives
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
-    extraFeature = this.features.get(Feature.types.comparison).createFeature(Constants.COMP_SUPERLATIVE)
+    compFeature = this.features.get(Feature.types.comparison).createFeature(Constants.COMP_SUPERLATIVE)
     footnotesData = papaparse.parse(adjectiveSuperlativeFootnotesCSV, { skipEmptyLines: true })
     footnotes = this.addFootnotes(partOfSpeech, Suffix, footnotesData.data)
     suffixes = papaparse.parse(adjectiveSuperlativeSuffixesCSV, { skipEmptyLines: true })
-    this.addSuffixes(partOfSpeech, suffixes.data, footnotes, [extraFeature])
+    this.addCompSuffixes(partOfSpeech, suffixes.data, footnotes, compFeature)
 
     // Verbs
     partOfSpeech = this.features.get(Feature.types.part).createFeature(Constants.POFS_VERB)
