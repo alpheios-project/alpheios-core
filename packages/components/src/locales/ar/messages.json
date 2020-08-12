@@ -1,0 +1,735 @@
+{
+  "COOKIE_TEST_MESSAGE": {
+    "message": "This is a test message about a cookie.",
+    "description": "A test message that is shown in a panel",
+    "component": "Panel"
+  },
+  "NUM_LINES_TEST_MESSAGE": {
+    "message": "There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.",
+    "description": "A test message that is shown in a panel",
+    "component": "Panel",
+    "params": ["numLines"]
+  },
+  "TITLE_HELP_PANEL": {
+    "message": "Help",
+    "description": "A title of a help panel",
+    "component": "Panel"
+  },
+  "TITLE_INFLECTIONS_PANEL": {
+    "message": "Inflection tables",
+    "description": "A title of an inflections panel",
+    "component": "Panel"
+  },
+  "TITLE_INFLECTIONS_BROWSER_PANEL": {
+    "message": "Browse inflection tables",
+    "description": "A title of an inflections browser panel",
+    "component": "Panel"
+  },
+  "TOOLTIP_MOVE_PANEL_LEFT": {
+    "message": "Move Panel to Left",
+    "description": "tooltip for moving the panel to the left",
+    "component": "Panel"
+  },
+  "TOOLTIP_MOVE_PANEL_RIGHT": {
+    "message": "Move Panel to Right",
+    "description": "tooltip for moving the panel to the right",
+    "component": "Panel"
+  },
+  "TOOLTIP_CLOSE_PANEL": {
+    "message": "Close Panel",
+    "description": "tooltip for closing the panel",
+    "component": "Panel"
+  },
+  "TOOLTIP_HELP": {
+    "message": "Help",
+    "description": "tooltip for help tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_INFLECT": {
+    "message": "Inflections",
+    "description": "tooltip for inflections tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_INFLECT_BROWSER": {
+    "message": "Browse Inflection Tables",
+    "description": "tooltip for inflections browser tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_DEFINITIONS": {
+    "message": "Definitions",
+    "description": "tooltip for definitions tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_GRAMMAR": {
+    "message": "Browse Grammar",
+    "description": "tooltip for grammar tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_TREEBANK": {
+    "message": "Diagram",
+    "description": "tooltip for treebank tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_OPTIONS": {
+    "message": "Options",
+    "description": "tooltip for options tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_STATUS": {
+    "message": "Status Messages",
+    "description": "tooltip for status tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_WORDLIST": {
+    "message": "User Word List",
+    "description": "tooltip for user word list tab",
+    "component": "Panel"
+  },
+  "TOOLTIP_USER": {
+    "message": "User Account",
+    "description": "tooltip for a user info tab",
+    "component": "Panel"
+  },
+
+  "TOOLTIP_SHOW_INFLECTIONS": {
+    "message": "Show inflections",
+    "description": "tooltip for button inflections",
+    "component": "Popup"
+  },
+  "TOOLTIP_SHOW_DEFINITIONS": {
+    "message": "Show definitions",
+    "description": "tooltip for button definitions",
+    "component": "Popup"
+  },
+  "TOOLTIP_SHOW_OPTIONS": {
+    "message": "Show options",
+    "description": "tooltip for button options",
+    "component": "Popup"
+  },
+  "TOOLTIP_SHOW_USAGEEXAMPLES": {
+    "message": "Show example usages of this word",
+    "description": "tooltop for word usage examples button",
+    "component": "Popup"
+  },
+  "TOOLTIP_MORPHOLOGY": {
+    "message": "Lemma",
+    "description": "tooltop for a morphology button",
+    "component": "Panel"
+  },
+  "TOOLTIP_NOT_AVAIL_POSTFIX": {
+    "message": "not available",
+    "description": "A postix added to tooltips when they are not available",
+    "component": "Any"
+  },
+  "PLACEHOLDER_DEFINITIONS":  {
+    "message": "Lookup a word to show definitions...",
+    "description": "placeholder for definitions panel",
+    "component": "Panel"
+  },
+  "PLACEHOLDER_INFLECT_IN_PROGRESS":  {
+    "message": "Lookup a word to show inflections...",
+    "description": "placeholder for inflections panel",
+    "component": "Panel"
+  },
+  "LABEL_INFLECT_SELECT_POFS":  {
+    "message": "Part of speech:",
+    "description": "label for part of speech selector on inflections panel",
+    "component": "Panel"
+  },
+  "LABEL_INFLECT_SHOWFULL": {
+    "message": "Expand",
+    "description": "label for expand button on inflections panel",
+    "component": "Panel"
+  },
+  "LABEL_INFLECT_COLLAPSE": {
+    "message": "Collapse",
+    "description": "label for collapse table button on inflections panel",
+    "component": "Panel"
+  },
+
+  "TOOLTIP_INFLECT_SHOWFULL": {
+    "message": "This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table",
+    "description": "tooltip for show full table button on inflections panel",
+    "component": "Panel"
+  },
+  "TOOLTIP_INFLECT_COLLAPSE": {
+    "message": "This table shows all its columns. Click 'Collapse' to show the ones with matching endings only",
+    "description": "tooltip for collapse table button on inflections panel",
+    "component": "Panel"
+  },
+
+  "LABEL_INFLECT_HIDEEMPTY": {
+    "message": "Hide empty columns",
+    "description": "label for hide empty columns button on inflections panel",
+    "component": "Panel"
+  },
+  "LABEL_INFLECT_SHOWEMPTY": {
+    "message": "Show empty columns",
+    "description": "label for show empty columns button on inflections panel",
+    "component": "Panel"
+  },
+
+  "TOOLTIP_INFLECT_HIDEEMPTY": {
+    "message": "Show table without empty columns",
+    "description": "tooltip for hide empty columns button on inflections panel",
+    "component": "Panel"
+  },
+  "TOOLTIP_INFLECT_SHOWEMPTY": {
+    "message": "Show table with empty columns",
+    "description": "tooltip for show empty columns button on inflections panel",
+    "component": "Panel"
+  },
+  "TOOLTIP_DISAMBIGUATED": {
+    "message": "Disambiguated",
+    "description": "A tooltip that will be shown for a disambiguated icon in a popup",
+    "component": "Popup"
+  },
+  "TOOLTIP_TREEBANK_SOURCE": {
+    "message": "Disambiguated with treebank data",
+    "description": "A tooltip that will be shown for a treebank source icon in a popup",
+    "component": "Popup"
+  },
+  "INFLECT_MSG_TABLE_NOT_IMPLEMENTED": {
+    "message": "This table has not been implemented yet",
+    "description": "tooltip to show instead of inflection table if the latter is not implemented",
+    "component": "Panel"
+  },
+
+  "TEXT_INFO_GETTINGSTARTED": {
+    "message": "Getting Started",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_ACTIVATE": {
+    "message": "Click on the Alpheios icon in the browser toolbar to turn the Alpheios tools on and off.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_CLICK": {
+    "message": "Double-click on a word to see lemmas, morphology, short definitions and icons for additional resources, such as long definitions, and, when available, inflection tables, usage examples, and sentence diagrams.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_LOOKUP": {
+    "message": "Opens a lookup box in which you can enter any word to see its lemmas, morphology etc, just as if you had double-clicked on it in a text. Note that you can change the language in which the word will be searched.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_TIPS": {
+    "message": "Usage Tips",
+    "description": "info tips text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_ABOUT": {
+    "message": "About Alpheios",
+    "description": "info tips text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_LANGDETECT": {
+    "message": "If a web page identifies its language, Alpheios will use that language, otherwise it will use its default language - initially set to Latin. You can change this default in the settings options.",
+    "description": "info text",
+    "component": "Panel",
+    "params": ["languageName"]
+  },
+  "LABEL_INFO_CURRENTLANGUAGE": {
+    "message": "Current language:",
+    "description": "label for current language in info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_TOOLBAR": {
+    "message": "Shows a series of icons for other resources, including browsable inflection tables and grammars, setting options, and, if you have logged in, your word lists and profile.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_ARROW": {
+    "message": "Moves this panel from side to side of your browser window.",
+    "description": "info text",
+    "component": "Panel"
+  },
+  "TOOLTIP_POPUP_CLOSE": {
+    "message": "Close Popup",
+    "description": "tooltip for closing the popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_TREEBANK": {
+    "message": "Diagram",
+    "description": "label for treebank button on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_INFLECT": {
+    "message": "Inflect",
+    "description": "label for inflect button on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_OPTIONS": {
+    "message": "Options",
+    "description": "label for options button on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_DEFINE": {
+    "message": "Define",
+    "description": "label for define button on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_USAGEEXAMPLES": {
+    "message": "Examples",
+    "description": "label for usage examples button on popup",
+    "component": "Popup"
+  },
+  "PLACEHOLDER_LEX_DATA_LOADING": {
+    "message": "Lexical data is loading",
+    "description": "placeholder text for popup data",
+    "component": "Popup"
+  },
+  "PLACEHOLDER_NO_LANGUAGE_DATA": {
+    "message": "Lexical data couldn't be populated because page language is not defined",
+    "description": "placeholder text for popup data when language is not defined",
+    "component": "Popup"
+  },
+  "PLACEHOLDER_NO_MORPH_DATA": {
+    "message": "Lexical query produced no results",
+    "description": "placeholder text for popup data",
+    "component": "Popup"
+  },
+  "LABEL_PROVIDERS_CREDITS": {
+    "message": "Credits",
+    "description": "label for credits on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_SHOWCREDITS": {
+    "message": "Show",
+    "description": "label for show credits link on popup",
+    "component": "Popup"
+  },
+  "LABEL_POPUP_HIDECREDITS": {
+    "message": "Hide",
+    "description": "label for hide credits link on popup",
+    "component": "Popup"
+  },
+  "TEXT_NOTICE_EXPIRIMENTAL_LANGUAGE": {
+    "message": "Support for {languageName} is experimental.",
+    "description": "Notice when changing to an experimental language",
+    "params": ["languageName"]
+  },
+  "TEXT_NOTICE_SUGGEST_LOGIN": {
+    "message": "Login to save your words to your wordlist.",
+    "description": "login notification",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_CHANGE_LANGUAGE": {
+    "message": "'<span lang='\"{langCode}\"'>'&#39;{targetWord}&#39;'</span>' was not found in our {languageName} resources. Wrong language? Change to:",
+    "description": "language notification",
+    "component": "UI",
+    "params": ["targetWord", "languageName", "langCode"]
+  },
+  "TEXT_NOTICE_NOT_FOUND": {
+    "message": "'<span lang='\"{langCode}\"'>'&#39;{targetWord}&#39;'</span>' was not found in our {languageName} resources.",
+    "description": "language notification",
+    "component": "UI",
+    "params": ["targetWord", "languageName", "langCode"]
+  },
+  "TEXT_NOTICE_LANGUAGE_UNKNOWN": {
+    "message": "unknown",
+    "description": "unknown language notification",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_MORPHDATA_READY": {
+    "message": "Morphological analyzer data is ready",
+    "description": "morph data ready notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_MORPHDATA_NOTFOUND": {
+    "message": "Morphological data not found. Definition queries pending.",
+    "description": "morph data not found notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_INFLDATA_READY": {
+    "message": "Inflection data is ready",
+    "description": "inflection data ready notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_DEFSDATA_READY": {
+    "message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"",
+    "description": "definition request success notice",
+    "component": "UI",
+    "params": ["requestType","lemma"]
+  },
+  "TEXT_NOTICE_DEFSDATA_NOTFOUND": {
+    "message":"{requestType} request failed. Lemma not found for: \"{word}\"",
+    "description": "definition request success notice",
+    "component": "UI",
+    "params": ["requestType","word"]
+  },
+  "TEXT_NOTICE_NO_DEFS_FOUND": {
+    "message":"No definitions found",
+    "description": "displayed by the morph compoennt when there are no definition data exist",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_LEXQUERY_COMPLETE": {
+    "message": "All lexical queries complete.",
+    "description": "lexical queries complete notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_GRAMMAR_READY": {
+    "message": "Grammar resource retrieved",
+    "description": "grammar retrieved notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_GRAMMAR_COMPLETE": {
+    "message": "All grammar resource data retrieved",
+    "description": "grammar retrieved notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_RESQUERY_COMPLETE": {
+    "message": "All resource data retrieved",
+    "description": "resource query complete notice",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS": {
+    "message": "Please wait while data is retrieved ...",
+    "description": "Data retrieval is in progress",
+    "component": "UI"
+  },
+  "TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS": {
+    "message": "Please wait while data is retrieved ...",
+    "description": "Resource retrieval is in progress",
+    "component": "UI"
+  },
+  "TEXT_HINT_MOUSE_MOVE": {
+    "message": "Mouse movement selection has been automatically enabled for this page.",
+    "description": "popup hint",
+    "component": "UI"
+  },
+  "TEXT_CEDICT_LOAD_DATA_NOTICE": {
+    "message": "Chinese data has not been loaded yet. Do you want to load it?",
+    "description": "A question about whether Chinese data needs to be loaded",
+    "component": "UI"
+  },
+  "LABEL_CEDICT_LOAD_DATA_BTN": {
+    "message": "Load Chinese data",
+    "description": "A message on a button to load Chinese data",
+    "component": "UI"
+  },
+  "TEXT_CEDICT_LOADING_IN_PROGRESS": {
+    "message": "Please wait while Chinese data is loaded ...",
+    "description": "A message about Chinese data retrieval being in progress",
+    "component": "UI"
+  },
+  "TEXT_CEDICT_HAS_BEEN_LOADED": {
+    "message": "Chinese data is finished loading! Please retry your lookup request.",
+    "description": "A message about Chinese data has been loaded",
+    "component": "UI"
+  },
+  "TEXT_TREEBANK_NOT_AVAILABLE": {
+    "message": "Some of the resources referenced by this page for refining lookup results are not responding. Results may be less precise than expected.",
+    "description": "A notification shown when a treebank remote resource is not available",
+    "component": "UI"
+  },
+  "LABEL_BROWSERACTION_DEACTIVATE": {
+    "message": "Deactivate Alpheios",
+    "description": "Deactivate browser action title",
+    "component": "UI"
+  },
+  "LABEL_BROWSERACTION_ACTIVATE": {
+    "message": "Activate Alpheios",
+    "description": "Activate browser action title",
+    "component": "UI"
+  },
+  "LABEL_BROWSERACTION_DISABLED": {
+    "message": "(Alpheios Extension Disabled For Page)",
+    "description": "Disabled browser action title",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_DEACTIVATE": {
+    "message": "Deactivate",
+    "description": "Deactivate context menu label",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_ACTIVATE": {
+    "message": "Activate",
+    "description": "Activate context menu label",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_DISABLED": {
+    "message": "(Disabled)",
+    "description": "Disabled context menu label",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_OPENPANEL": {
+    "message": "Open Panel",
+    "description": "Open Panel context menu label",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_INFO": {
+    "message": "Info",
+    "description": "Info context menu label",
+    "component": "UI"
+  },
+  "LABEL_CTXTMENU_SENDEXP": {
+    "message": "Send Experiences to remote server",
+    "description": "send exp data context menu label",
+    "component": "UI"
+  },
+  "LABEL_TOOLS_CONTROL": {
+    "message": "Additional Resources",
+    "description": "A tooltip for the reading tools icon on the toolbar",
+    "component": "Toolbar"
+  },
+  "LABEL_TOOLS_BRAND": {
+    "message": "Alpheios Toolbar",
+    "description": "A tooltip for the reading tools icon on the toolbar when it's just for branding",
+    "component": "Toolbar"
+  },
+  "LABEL_LOOKUP_CONTROL": {
+    "message": "Word Lookup",
+    "description": "A tooltip for the button that turns the lookup panel on and off",
+    "component": "Toolbar"
+  },
+  "LABEL_LOOKUP_BUTTON": {
+    "message": "Lookup",
+    "description": "lookup button in lookup.vue",
+    "component": "Popup"
+  },
+  "HINT_LOOKUP_LANGUAGE": {
+    "message": "({language})",
+    "description": "lookup language hint in lookup.vue",
+    "component": "Popup",
+    "params": ["language"]
+  },
+  "LABEL_LOOKUP_CHANGE_LANGUAGE": {
+    "message": "Change Language",
+    "description": "change language link label in lookup.vue",
+    "component": "Popup"
+  },
+  "TOOLTIP_LOOKUP_BUTTON": {
+    "message": "Lookup word",
+    "description": "Tooltip for the lookup button in lookup.vue",
+    "component": "Lookup"
+  },
+  "LABEL_LOOKUP_SETTINGS": {
+    "message": "Using Language...",
+    "description": "Settings link-label in the lookup block in lookup.vue",
+    "component": "Lookup"
+  },
+  "LABEL_RESKIN_SETTINGS": {
+    "message": "Resize options",
+    "description": "Label for Resize component",
+    "component": "ReskinFontColor"
+  },
+  "LABEL_RESET_OPTIONS": {
+    "message": "Reset All",
+    "description": "Label for Reset button",
+    "component": "Options"
+  },
+  "TOOLTIP_RESKIN_SMALLFONT": {
+    "message": "Small font",
+    "description": "Tooltip for small font icon",
+    "component": "ReskinFontColor"
+  },
+  "TOOLTIP_RESKIN_MEDIUMFONT": {
+    "message": "Medium font",
+    "description": "Tooltip for medium font icon",
+    "component": "ReskinFontColor"
+  },
+  "TOOLTIP_RESKIN_LARGEFONT": {
+    "message": "Large font",
+    "description": "Tooltip for large font icon",
+    "component": "ReskinFontColor"
+  },
+  "TOOLTIP_RESKIN_LIGHTBG": {
+    "message": "Light background",
+    "description": "Tooltip for light colors schema icon",
+    "component": "ReskinFontColor"
+  },
+  "TOOLTIP_RESKIN_DARKBG": {
+    "message": "Dark background",
+    "description": "Tooltip for dark colors schema icon",
+    "component": "ReskinFontColor"
+  },
+  "INFLECTIONS_CREDITS_TITLE": {
+    "message": "Credits",
+    "description": "Title of credits section on inflection tables panel",
+    "component": "InflectionTables"
+  },
+  "INFLECTIONS_PARADIGMS_EXPLANATORY_HINT": {
+    "message": "The following table(s) show conjugation patterns for verbs which are similar to those of '<span>'{word}'</span>'",
+    "description": "A hint that indicates that the current table is representative pattern for verbs similar to the one chosen",
+    "component": "InflectionTables",
+    "params": ["word"]
+  },
+  "INFLECTIONS_MAIN_TABLE_LINK_TEXT": {
+    "message": "Back to main",
+    "description": "A link pointing to a main inflection table",
+    "component": "InflectionTables"
+  },
+  "INFL_ATTRIBUTE_LINK_TEXT_SOURCE": {
+    "message": "Source",
+    "description": "A link pointing to the source of a lemma or inflection",
+    "component": "InflAttribute"
+  },
+  "EMBED_LIB_WARNING_TEXT": {
+    "message": "This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.",
+    "description": "A message that is shown when an Alpheios extension is disabled due to embedded library presence",
+    "component": "EmbedLibWarning"
+  },
+  "AUTH_HIDE_LOGIN_BTN_LABEL": {
+    "message": "Don't Ask Again",
+    "description": "button to hide login",
+    "component": "Notification Area Vue Component"
+  },
+  "AUTH_LOGIN_BTN_LABEL": {
+    "message": "Log In",
+    "description": "A message shown on a log in button",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_USER_ACCOUNT_BTN_LABEL": {
+    "message": "User Account",
+    "description": "A message shown on a user account button. It is displayed instead of a log in one within a Safari App Extension",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_LOGOUT_BTN_LABEL": {
+    "message": "Log Out",
+    "description": "A message shown on a log out button",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_LOGIN_PROGRESS_MSG": {
+    "message": "Please be patient while we are logging you in ...",
+    "description": "A message shown to the user while he or she is waiting for an authentication to complete",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_LOGIN_SUCCESS_MSG": {
+    "message": "Congratulations! You are logged in successfully.",
+    "description": "A message shown to the user if he or she logged in successfully",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_LOGIN_AUTH_FAILURE_MSG": {
+    "message": "Authentication failed",
+    "description": "A message shown to the user if his or her authentication failed",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_SESSION_EXPIRED_MSG": {
+    "message": "Your user session has expired. Please log in again.",
+    "description": "A message shown to the user if his or her authentication session has been expired",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_PROFILE_NICKNAME_LABEL": {
+    "message": "Nickname",
+    "description": "A user's profile nickname filed label",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_PROFILE_NAME_LABEL": {
+    "message": "Name",
+    "description": "A user's profile name filed label",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_LOGOUT_SUCCESS_MSG": {
+    "message": "You have been logged out.",
+    "description": "A message shown to the user if he or she logged out successfully",
+    "component": "UserAuth Vue Component"
+  },
+  "FONTSIZE_TEXT_SMALL": {
+    "message": "Small",
+    "description": "Description of a text size option within a button",
+    "component": "Font size component"
+  },
+  "FONTSIZE_TEXT_MEDIUM": {
+    "message": "Medium",
+    "description": "Description of a text size option within a button",
+    "component": "Font size component"
+  },
+  "FONTSIZE_TEXT_LARGE": {
+    "message": "Large",
+    "description": "Description of a text size option within a button",
+    "component": "Font size component"
+  },
+  "TOOLTIP_BACK_TO_INDEX": {
+    "message": "Back to index",
+    "description": "Description of back to index button",
+    "component": "Grammar Tab"
+  },
+  "LABEL_FIELDSET_USAGEEXAMPLES": {
+    "message": "Latin Word Usage Examples (Concordance)",
+    "description": "Legend for options fieldset",
+    "component": "Options Tab"
+  },
+  "LABEL_FIELDSET_WORDSELECT": {
+    "message": "Word Selection",
+    "description": "Legend for options fieldset",
+    "component": "Options Tab"
+  },
+  "LABEL_FIELDSET_MOUSEMOVE": {
+    "message": "Mouse Movement Selection Options",
+    "description": "Legend for options fieldset",
+    "component": "Options Tab"
+  },
+  "LABEL_FIELDSET_BETACODES": {
+    "message": "Greek Betacodes Options",
+    "description": "Legend for options fieldset",
+    "component": "Options Tab"
+  },
+  "OPTIONS_TAB_UI": {
+    "message": "User Interface Options",
+    "description": "Tooltip for the show UI options icon",
+    "component": "Options Tab"
+  },
+  "OPTIONS_TAB_FEATURE": {
+    "message": "Feature Options",
+    "description": "Tooltip for the show Feature options icon",
+    "component": "Options Tab"
+  },
+  "OPTIONS_TAB_RESOURCE": {
+    "message": "Resource Options",
+    "description": "Tooltip for the show Resource options icon",
+    "component": "Options Tab"
+  },
+  "OPTIONS_TAB_ADVANCED": {
+    "message": "Advanced Options",
+    "description": "Tooltip for the show Advanced options icon",
+    "component": "Options Tab"
+  },
+  "OPTIONS_TAB_RESET_ALL_TITLE": {
+    "message": "Apply to all options",
+    "description": "Reset All description title",
+    "component": "Options Tab"
+  },
+  "HINT_LANDSCAPE_MODE": {
+    "message": "🛈 This view is best in landscape mode with the panel expanded to full screen",
+    "description": "hint to switch to landscape mode for a mobile view",
+    "component": "Compact Panel"
+  },
+  "LABEL_INFO_FAQ": {
+    "message": "FAQ/Known Issues",
+    "description": "Faq button label",
+    "component": "info panel"
+  },
+  "PLACEHOLDER_GRAMMAR_DATA_LOADING": {
+    "message": "Grammar data is loading",
+    "description": "placeholder text for grammar data",
+    "component": "Grammar"
+  },
+  "LABEL_BROWSE_GRAMMAR": {
+    "message": "Browse Language Grammar",
+    "description": "Panel title for grammar tab",
+    "component": "Grammar"
+  },
+  "TOOLTIP_HIDE_GRAMMAR_TITLES": {
+    "message": "Hide Language Selector",
+    "description": "Tooltip for Hide Languges Titles Block",
+    "component": "Grammar"
+  },
+  "TOOLTIP_SHOW_GRAMMAR_TITLES": {
+    "message": "Show Language Selector",
+    "description": "Tooltip for Show Languges Titles Block",
+    "component": "Grammar"
+  },
+  "LOOKUP_USE_BETA_CODES_CHECK": {
+    "message": "Input Betacode",
+    "description": "Update beta codes to greek chars",
+    "component": "Lookup"
+  },
+  "LOOKUP_USE_BETA_CODES_INFO_FIRST": {
+    "message": "Betacode input will be converted to Greek Unicode. Use upper-case for capitals letters. Apply diacritics <b>before</b> vowels and combine as shown.",
+    "description": "First row inside beta codes info",
+    "component": "Lookup"
+  }
+}

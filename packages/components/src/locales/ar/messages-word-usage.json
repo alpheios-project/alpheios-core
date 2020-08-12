@@ -1,0 +1,154 @@
+{
+    "TEXT_NOTICE_WORDUSAGE_READY": {
+        "message": "Word Usage Examples are recieved",
+        "description": "Word Usage Examples recieved flag",
+        "component": "UIController onWordUsageExamplesReady"
+    },
+    "TOOLTIP_WORD_USAGE": {
+        "message": "Word Usage Examples",
+        "description": "Word Usage Examples tooltip",
+        "component": "Panel"
+    },
+    "WORDUSAGE_FILTERS_HIDE": {
+        "message": "hide",
+        "description": "Word Usage Examples Filters Hide link",
+        "component": "WordUsageExamplesHeader"
+    },
+    "WORDUSAGE_FILTERS_SHOW": {
+        "message": "show",
+        "description": "Word Usage Examples Filters Show Link",
+        "component": "WordUsageExamplesHeader"
+    },
+    "WORDUSAGE_GET_RESULTS": {
+        "message": "Get results",
+        "description": "Word Usage Examples Filters Get results button",
+        "component": "WordUsageExamplesHeader"
+    },
+    "WORDUSAGE_NO_RESULTS": {
+        "message": "There are no results.",
+        "description": "Word Usage Examples No results text",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_SORT_BY": {
+        "message": "Sort by:",
+        "description": "Word Usage Examples Sort by Title",
+        "component": "WordUsageExamplesHeader"
+    },
+    "WORDUSAGE_SORT_BY_AUTHOR": {
+        "message": "Author",
+        "description": "Word Usage Examples Sort by author",
+        "component": "WordUsageExamplesFilters"
+    },
+    "WORDUSAGE_SORT_BY_TEXTWORK": {
+        "message": "Work",
+        "description": "Word Usage Examples Sort by text work",
+        "component": "WordUsageExamplesFilters"
+    },
+    "WORDUSAGE_SORT_BY_PREFIX": {
+        "message": "Preceding word",
+        "description": "Word Usage Examples Sort by prefix",
+        "component": "WordUsageExamplesHeader"
+    },
+    "WORDUSAGE_SORT_BY_SUFFIX": {
+        "message": "Following word",
+        "description": "Word Usage Examples Sort by suffix",
+        "component": "WordUsageExamplesHeader"
+    },
+    "WORDUSAGE_FILTERS_TYPE_NO_FILTERS": {
+        "message": "Get results without limits",
+        "description": "Word Usage Examples Type filter",
+        "component": "WordUsageExamplesFilters"
+    },
+    "WORDUSAGE_FILTERS_TYPE_MORE_RESULTS": {
+        "message": "See more results for a specific Author and/or Work",
+        "description": "Word Usage Examples Type filter",
+        "component": "WordUsageExamplesFilters"
+    },
+    "WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS": {
+        "message": "Limit these results by Author and/or Work",
+        "description": "Word Usage Examples Type filter",
+        "component": "WordUsageExamplesFilters"
+    },
+    "WORDUSAGE_FILTERS_AUTHOR_CLEAR": {
+        "message": "Clear author",
+        "description": "Word Usage Examples Type filter",
+        "component": "WordUsageExamplesFilters"
+    },
+    "WORDUSAGE_FILTERS_TEXTWORK_CLEAR": {
+        "message": "Clear work",
+        "description": "Word Usage Examples Type filter",
+        "component": "WordUsageExamplesFilters"
+    },
+    "WORDUSAGE_SORTING_AUTHOR_CLEAR": {
+        "message": "Clear sorting",
+        "description": "Word Usage Examples Sorting",
+        "component": "WordUsageExamplesSorting"
+    },
+    "WORDUSAGE_SHOW_SOURCE_LINKS": {
+        "message": "Show source links",
+        "description": "Message on a button that toggles source links on or off",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_SHOW_FILTERS_TEXT": {
+        "message": "Show Search/Sort Options",
+        "description": "Show filters/sorting block",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_HIDE_FILTERS_TEXT": {
+        "message": "Hide Search/Sort Options",
+        "description": "Hide filters/sorting block",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_FILTERS_AUTHOR_PLACEHOLDER": {
+        "message": "Select an author",
+        "description": "Placeholder for author selection",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_FILTERS_TEXTWORK_PLACEHOLDER": {
+        "message": "Select a work",
+        "description": "Placeholder for textwork selection",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_SORT_BY_PLACEHOLDER": {
+        "message": "Author+Work",
+        "description": "Placeholder for sorting selection",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_SORT_BY_TEXTWORK": {
+        "message": "Work",
+        "description": "Placeholder for sorting selection",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_GETTING_RESULT": {
+        "message": "Retrieving results ...",
+        "description": "Placeholder for getting data",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_FOCUS_AUTHOR": {
+        "message": "Choose an Author<br/>:(up to {maxResults} examples, default sort by work)",
+        "description": "Title for the author's filter",
+        "component": "WordUsageExamples",
+        "params": ["maxResults"]
+    },
+    "WORDUSAGE_FOCUS_WORK": {
+        "message": "Focus on Work<br/>:(up to {maxResults} examples, default sort by preceding word)",
+        "description": "Title for the textwork's filter",
+        "component": "WordUsageExamples",
+        "params": ["maxResults"]
+    },
+    "WORDUSAGE_HINT_INITIAL_SEARCH": {
+        "message": "(default display: all available authors, up to {maxResults} examples each)",
+        "description": "Hint for initial search results",
+        "params": ["maxResults"]
+    },
+    "WORDUSAGE_HINT_FOCUS_SEARCH": {
+        "message": "(results may be truncated - maximum {maxResults})",
+        "description": "Hint for focus author results",
+        "params": ["maxResults","author"]
+    },
+    "WORDUSAGE_HINT_AUTHOR_WORK_FOCUS_SEARCH_NONE": {
+        "message": "There are no usages of {word} by {author} in {work}.",
+        "description": "Hint for focus author work results",
+        "params": ["word","maxResults","author","work"]
+    }
+}
