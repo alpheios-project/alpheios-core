@@ -353,8 +353,8 @@ describe('AppController', () => {
     expect(eventParams).toBeUndefined()
   })
 
-  it('AppController - textSelectorParams: should return correct parameters no trigger is specified on mobile', async () => {
-    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
+  it('AppController - textSelectorParams: should return correct parameters if no trigger is specified on mobile', async () => {
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     appC._platform = { isMobile: true, isDektop: false }
     const [event, eventParams] = appC.textSelectorParams
@@ -376,7 +376,7 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters if mousemove is enabled', async () => {
-    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerDesktop: null })
     await appC.init()
     appC._platform = { isMobile: false, isDektop: true }
     Object.defineProperty(appC, 'isMousemoveEnabled', { get: () => true })
@@ -386,16 +386,7 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters for the "dblClick" trigger on desktop', async () => {
-    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: 'dblClick' })
-    await appC.init()
-    appC._platform = { isMobile: false, isDektop: true }
-    const [event, eventParams] = appC.textSelectorParams
-    expect(event.name).toBe('MouseDblClick')
-    expect(eventParams).toBeUndefined()
-  })
-
-  it('AppController - textSelectorParams: should return correct parameters for the "dblclick" trigger on desktop', async () => {
-    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: 'dblclick' })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerDesktop: 'dblClick' })
     await appC.init()
     appC._platform = { isMobile: false, isDektop: true }
     const [event, eventParams] = appC.textSelectorParams
@@ -404,7 +395,7 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters for the null trigger on desktop', async () => {
-    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerDesktop: null })
     await appC.init()
     appC._platform = { isMobile: false, isDektop: true }
     const [event, eventParams] = appC.textSelectorParams
@@ -412,8 +403,8 @@ describe('AppController', () => {
     expect(eventParams).toBeUndefined()
   })
 
-  it('AppController - textSelectorParams: should return correct parameters no trigger is specified on desktop', async () => {
-    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
+  it('AppController - textSelectorParams: should return correct parameters if no trigger is specified on desktop', async () => {
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     appC._platform = { isMobile: false, isDektop: true }
     const [event, eventParams] = appC.textSelectorParams
@@ -1010,6 +1001,8 @@ describe('AppController', () => {
     const nativeEvent = {
       keyCode: 27
     }
+    // Redefine `isActive()` method of the UI state so it will be reported as inactive to the UI controller.
+    // This will allow us to emulate the inactive state of the `uiState` object.
     const uiState = BaseTestHelp.createUIState({ isActive: () => false })
     appC = AppController.jestCreate(uiState)
     await appC.init()

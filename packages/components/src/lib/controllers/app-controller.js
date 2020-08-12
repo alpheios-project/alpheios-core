@@ -129,6 +129,10 @@ export default class AppController {
   /**
    * Creates an instance of an app controller with default options. Provide your own implementation of this method
    * if you want to create a different configuration of an app controller.
+   * TODO: Right now the app controller's tests has its own `create()` method with some listeners not registered.
+   *       That's needed for tests to pass in a Jest environment. This creates a problem, however, because
+   *       the test setup is becoming different from the production one. We should, in the future,
+   *       try to come up with the way of using the same setup in both production and test environments.
    *
    * @param state
    * @param options

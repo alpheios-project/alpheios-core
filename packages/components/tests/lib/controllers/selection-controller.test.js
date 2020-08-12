@@ -14,19 +14,19 @@ describe('SelectionController', () => {
     jest.clearAllMocks()
   })
 
-  it('UIController - constructor: should create an instance with default arguments', () => {
+  it('SelectionController - constructor: should create an instance with default arguments', () => {
     selC = new SelectionController()
     expect(selC._evc).toBeInstanceOf(UIEventController)
     expect(selC._getDefaultLangCode).toBeInstanceOf(Function)
   })
 
-  it('UIController - constructor: should create an instance with a specified language function', () => {
+  it('SelectionController - constructor: should create an instance with a specified language function', () => {
     const langFn = jest.fn(() => 'grc')
     selC = new SelectionController(langFn)
     expect(selC._getDefaultLangCode).toBe(langFn)
   })
 
-  it('UIController - registerSelector: should register a single text selector', () => {
+  it('SelectionController - registerSelector: should register a single text selector', () => {
     const selectorName = 'Test Selector'
     const selector = '.selector'
     const eventConstructor = MouseDblClick
@@ -38,7 +38,7 @@ describe('SelectionController', () => {
     expect(registerListenerSpy).toBeCalledWith(selectorName, selector, expect.any(Function), eventConstructor, eventParms)
   })
 
-  it('UIController - replaceEventForAll: should update events for all registered selectors', () => {
+  it('SelectionController - replaceEventForAll: should update events for all registered selectors', () => {
     const selectorName = 'Test Selector'
     const selectorNameTwo = 'Test Selector Two'
     const selector = '.selector'
@@ -55,7 +55,7 @@ describe('SelectionController', () => {
     expect(updateEventSpy).toBeCalledWith(selectorNameTwo, eventConstructor, eventParms)
   })
 
-  it('UIController - updateParams: should update event parameters of a single text selector', () => {
+  it('SelectionController - updateParams: should update event parameters of a single text selector', () => {
     const selectorName = 'Test Selector'
     const selector = '.selector'
     const eventConstructor = MouseDblClick
@@ -69,7 +69,7 @@ describe('SelectionController', () => {
     expect(updateEventParamsSpy).toBeCalledWith(selectorName, eventParmsTwo)
   })
 
-  it('UIController - updateParamsForAll: should update event parameters of all registered selectors', () => {
+  it('SelectionController - updateParamsForAll: should update event parameters of all registered selectors', () => {
     const selectorName = 'Test Selector'
     const selectorNameTwo = 'Test Selector Two'
     const selector = '.selector'
@@ -87,7 +87,7 @@ describe('SelectionController', () => {
     expect(updateEventParamsSpy).toBeCalledWith(selectorNameTwo, eventParmsTwo)
   })
 
-  it('UIController - activateSelector: should activate a specific text selector', () => {
+  it('SelectionController - activateSelector: should activate a specific text selector', () => {
     const selectorName = 'Test Selector'
     const selector = '.selector'
     const eventConstructor = MouseDblClick
@@ -100,7 +100,7 @@ describe('SelectionController', () => {
     expect(activateListenerSpy).toBeCalledWith(selectorName)
   })
 
-  it('UIController - activate: should activate all registered text selectors', () => {
+  it('SelectionController - activate: should activate all registered text selectors', () => {
     const selectorName = 'Test Selector'
     const selectorNameTwo = 'Test Selector Two'
     const selector = '.selector'
@@ -116,7 +116,7 @@ describe('SelectionController', () => {
     expect(activateListenersSpy).toBeCalledWith()
   })
 
-  it('UIController - deactivateSelector: should deactivate a specific text selector', () => {
+  it('SelectionController - deactivateSelector: should deactivate a specific text selector', () => {
     const selectorName = 'Test Selector'
     const selector = '.selector'
     const eventConstructor = MouseDblClick
@@ -129,7 +129,7 @@ describe('SelectionController', () => {
     expect(deactivateListenerSpy).toBeCalledWith(selectorName)
   })
 
-  it('UIController - deactivate: should deactivate all registered text selectors', () => {
+  it('SelectionController - deactivate: should deactivate all registered text selectors', () => {
     const selectorName = 'Test Selector'
     const selectorNameTwo = 'Test Selector Two'
     const selector = '.selector'
@@ -145,7 +145,7 @@ describe('SelectionController', () => {
     expect(deactivateListenersSpy).toBeCalledWith()
   })
 
-  it('UIController - onTextSelected: should publish a TEXT_SELECTED event', () => {
+  it('SelectionController - onTextSelected: should publish a TEXT_SELECTED event', () => {
     let event = new Event('test') // eslint-disable-line prefer-const
     // target.ownerDocument.location.href
     event.end = {
