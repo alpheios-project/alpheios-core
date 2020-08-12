@@ -14,9 +14,11 @@ jobs:
       with:
         node-version: '14'
         
-    - name: build
-      id: run_build
+    - name: prepare for build
       run: npm run set-node-build-deps && npm run bootstrap
     
     - name: test
       run: npm run test
+
+    - name: build
+      run: npm run github-build
