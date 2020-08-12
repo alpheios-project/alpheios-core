@@ -51,6 +51,8 @@ export default class LatinLanguageDataset extends LanguageDataset {
     // Create importer mapping for special language-specific values
     this.features.get(Feature.types.declension).getImporter()
       .map(this.constructor.constants.ORD_1ST_2ND, [Constants.ORD_1ST, Constants.ORD_2ND])
+    this.features.get(Feature.types.declension).getImporter()
+      .map(this.constructor.constants.ORD_1ST_2ND_3RD, [Constants.ORD_1ST, Constants.ORD_2ND, Constants.ORD_3RD])
     this.features.get(Feature.types.gender).getImporter()
       .map(this.constructor.constants.GEND_MASCULINE_FEMININE, [Constants.GEND_MASCULINE, Constants.GEND_FEMININE])
 
@@ -78,6 +80,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       // Parts of speech that could have irregular forms
       IRREG_POFS: [Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE, Constants.POFS_SUPINE, Constants.POFS_GERUNDIVE],
       ORD_1ST_2ND: '1st 2nd',
+      ORD_1ST_2ND_3RD: '1st 2nd 3rd',
       GEND_MASCULINE_FEMININE: 'masculine feminine'
     }
   }
