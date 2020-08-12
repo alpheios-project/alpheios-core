@@ -484,32 +484,6 @@ describe('UIController', () => {
     expect(uiC.getModule(PopupModule.moduleName)).toBeFalsy()
   })
 
-  it('UIController - activateModules: should activate all modules that have been instantiated', async () => {
-    uiC = getUiController({ uiState, platform: desktopPlatform })
-    await uiC.init({ store, api })
-    uiC.registerModule(PopupModule)
-    uiC.registerModule(PanelModule)
-    uiC.createModules()
-    const popupSpy = jest.spyOn(uiC._modules.get(PopupModule.moduleName).instance, 'activate')
-    const panelSpy = jest.spyOn(uiC._modules.get(PanelModule.moduleName).instance, 'activate')
-    uiC.activateModules()
-    expect(popupSpy).toBeCalledTimes(1)
-    expect(panelSpy).toBeCalledTimes(1)
-  })
-
-  it('UIController - deactivateModules: should deactivate all modules that have been instantiated', async () => {
-    uiC = getUiController({ uiState, platform: desktopPlatform })
-    await uiC.init({ store, api })
-    uiC.registerModule(PopupModule)
-    uiC.registerModule(PanelModule)
-    uiC.createModules()
-    const popupSpy = jest.spyOn(uiC._modules.get(PopupModule.moduleName).instance, 'deactivate')
-    const panelSpy = jest.spyOn(uiC._modules.get(PanelModule.moduleName).instance, 'deactivate')
-    uiC.deactivateModules()
-    expect(popupSpy).toBeCalledTimes(1)
-    expect(panelSpy).toBeCalledTimes(1)
-  })
-
   it('UIController - applyFontSize: must set the font size within the document to the specified value', async () => {
     const fontSize = 14
     UIController.applyFontSize(fontSize)

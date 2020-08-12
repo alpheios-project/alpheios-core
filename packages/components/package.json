@@ -5,10 +5,10 @@
   "main": "dist/alpheios-components.min.js",
   "scripts": {
     "test": "jest --coverage  && shx cat ./coverage/lcov.info | coveralls",
-    "test-no-coverage": "jest tests/lib && jest tests/vue  && jest tests/inflections && jest tests/lib/controllers/ui-controller.test.js",
-    "test-controllers": "jest tests/lib/controllers/",
-    "test-ci": "npm run test-lib && npm run test-components ",
+    "test-no-coverage": "jest tests/lib && jest tests/vue && jest tests/inflections && jest tests/lib/controllers",
+    "test-ci": "npm run test-lib && npm run test-components && npm run test-controllers",
     "test-lib": "jest tests/lib --coverage",
+    "test-controllers": "jest tests/lib/controllers/",
     "test-components": "jest tests/vue --coverage",
     "test-inflections-1": "jest tests/inflections/inflections-browser-1.test.js --coverage",
     "test-inflections-2": "jest tests/inflections/inflections-browser-2.test.js --coverage",

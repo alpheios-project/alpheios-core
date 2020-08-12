@@ -1,15 +1,19 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import AppController from '@comp/lib/controllers/app-controller.js'
-import State from '@comp/lib/state/tab-script.js'
+import L10nModule from '@comp/vue/vuex-modules/data/l10n-module.js'
+import LexisModule from '@comp/vue/vuex-modules/data/lexis.js'
 import AuthModule from '@comp/vue/vuex-modules/data/auth-module.js'
 import Module from '@comp/vue/vuex-modules/module.js'
+import Locales from '@comp/locales/locales.js'
 import Platform from '@comp/lib/utility/platform.js'
 import Vue from '@vue-runtime'
 import MouseDblClick from '@comp/lib/custom-pointer-events/mouse-dbl-click.js'
 import LongTap from '@comp/lib/custom-pointer-events/long-tap.js'
 import GenericEvt from '@comp/lib/custom-pointer-events/generic-evt.js'
-import { Constants } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory } from 'alpheios-data-models'
+import SelectionController from '@comp/lib/controllers/selection-controller.js'
+import { WordlistController } from 'alpheios-wordlist'
 import LexicalQuery from '@comp/lib/queries/lexical-query.js'
 import ResourceQuery from '@comp/lib/queries/resource-query.js'
 
@@ -24,14 +28,61 @@ describe('AppController', () => {
     mouseMoveLimitedById: 'docs-editor-container'
   }
 
+  /*
+  Since events are asynchronous, their listeners may be called in a test environment
+  after the application is tear down. To prevent errors related to this, a special
+  version of the create() method is created for the test environment. In it, event listeners
+  that may have issues like described above are not registered.
+   */
+  AppController.jestCreate = (state, options) => {
+    let appController = new AppController(state, options) // eslint-disable-line prefer-const
+
+    // Register data modules
+    appController.registerModule(L10nModule, {
+      defaultLocale: Locales.en_US,
+      messageBundles: Locales.bundleArr()
+    })
+
+    appController.registerModule(LexisModule, {
+      arethusaTbRefreshRetryCount: appController._options.arethusaTbRefreshRetryCount,
+      arethusaTbRefreshDelay: appController._options.arethusaTbRefreshDelay
+    })
+
+    // Creates on configures an event listener
+    appController._evc.registerListener('HandleEscapeKey', document, appController.handleEscapeKey.bind(appController), GenericEvt, 'keydown')
+    SelectionController.evt.TEXT_SELECTED.sub(appController.onTextSelected.bind(appController))
+
+    // Subscribe to LexicalQuery events
+    // LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(appController.onLexicalQueryComplete.bind(appController))
+    LexicalQuery.evt.MORPH_DATA_READY.sub(appController.onMorphDataReady.bind(appController))
+    LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.sub(appController.onMorphDataNotFound.bind(appController))
+    LexicalQuery.evt.HOMONYM_READY.sub(appController.onHomonymReady.bind(appController))
+    LexicalQuery.evt.LEMMA_TRANSL_READY.sub(appController.updateTranslations.bind(appController))
+    LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.sub(appController.updateWordUsageExamples.bind(appController))
+    LexicalQuery.evt.SHORT_DEFS_READY.sub(appController.onShortDefinitionsReady.bind(appController))
+    LexicalQuery.evt.FULL_DEFS_READY.sub(appController.onFullDefinitionsReady.bind(appController))
+    LexicalQuery.evt.SHORT_DEFS_NOT_FOUND.sub(appController.onDefinitionsNotFound.bind(appController))
+    LexicalQuery.evt.FULL_DEFS_NOT_FOUND.sub(appController.onDefinitionsNotFound.bind(appController))
+
+    // Subscribe to ResourceQuery events
+    // ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.sub(appController.onResourceQueryComplete.bind(appController))
+    // ResourceQuery.evt.GRAMMAR_AVAILABLE.sub(appController.onGrammarAvailable.bind(appController))
+    ResourceQuery.evt.GRAMMAR_NOT_FOUND.sub(appController.onGrammarNotFound.bind(appController))
+
+    appController._wordlistC = new WordlistController(LanguageModelFactory.availableLanguages(), LexicalQuery.evt)
+    // WordlistController.evt.WORDLIST_UPDATED.sub(appController.onWordListUpdated.bind(appController))
+    WordlistController.evt.WORDITEM_SELECTED.sub(appController.onWordItemSelected.bind(appController))
+
+    return appController
+  }
+
   beforeAll(() => {
     Vue.config.productionTip = false // Disable a Vue production mode warning
     Vue.config.devtools = false // Disable a Devtools extension warning
-    uiState = BaseTestHelp.createUIState()
   })
 
   beforeEach(() => {
-    state = new State()
+    uiState = BaseTestHelp.createUIState()
   })
 
   afterEach(() => {
@@ -68,13 +119,13 @@ describe('AppController', () => {
   })
 
   it('AppController - create: should create an instance with default arguments', () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     appC.registerModule(AuthModule)
     expect(appC).toBeInstanceOf(AppController)
   })
 
   it('AppController - create: an instance created should have L10n and Lexis modules', () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     expect(appC.hasModule('l10n')).toBeTruthy()
     expect(appC.hasModule('lexis')).toBeTruthy()
   })
@@ -91,13 +142,13 @@ describe('AppController', () => {
   })
 
   it('AppController - hasUIController: should return true if the UI controller is present', () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     // UIController are registered during an instance construction by the AppController
     expect(appC.hasUIController).toBeTruthy()
   })
 
   it('AppController - registerModule: should register a specified module', () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     expect(appC.hasModule(AuthModule.moduleName)).toBeFalsy()
     appC.registerModule(AuthModule)
     expect(appC.hasModule(AuthModule.moduleName)).toBeTruthy()
@@ -106,40 +157,40 @@ describe('AppController', () => {
   })
 
   it('AppController - dataModules: returns a list of registered data modules', () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     // L10n and Lexis modules are registered by the constructor of the AppController
     expect(appC.dataModules.map(m => m.ModuleClass.moduleName)).toEqual(['l10n', 'lexis'])
   })
 
   it('AppController - hasModule: returns true if module has been registered', () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     // L10n is registered by the constructor of the AppController
     expect(appC.hasModule('l10n')).toBeTruthy()
   })
 
   it('AppController - hasModule: returns false if module is not present', () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     expect(appC.hasModule('Some other module')).toBeFalsy()
   })
 
   it('AppController - getModule: returns an instance of the module', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC.getModule('l10n')).toBeInstanceOf(Module)
   })
 
   it('AppController - getModule: returns null if module has not been created', () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     expect(appC.getModule('l10n')).toBeNull()
   })
 
   it('AppController - getModule: throws an error if module does not exist', () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     expect(() => appC.getModule('Unknown module')).toThrowError()
   })
 
   it('AppController - init: should create the App API', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC.api.app).toEqual({
       name: expect.any(String),
@@ -153,7 +204,6 @@ describe('AppController', () => {
       mode: expect.any(String),
       state: expect.any(Object),
       homonym: null,
-      inflectionsViewSet: null,
       wordUsageExamplesCached: null,
       wordUsageExamples: null,
       wordUsageAuthors: [],
@@ -195,13 +245,13 @@ describe('AppController', () => {
   })
 
   it('AppController - init: should create an "app" module in the Vuex store', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC._store.hasModule('app')).toBeTruthy()
   })
 
   it('AppController - init: should create a Vuex module with the set of state items', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC._store.state.app).toEqual({
       currentLanguageID: expect.anything(),
@@ -243,7 +293,7 @@ describe('AppController', () => {
   })
 
   it('AppController - init: should create a Vuex module with the set of getters', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC._store.getters['app/shortDefDataReady']).toBeDefined()
     expect(appC._store.getters['app/fullDefDataReady']).toBeDefined()
@@ -251,7 +301,7 @@ describe('AppController', () => {
   })
 
   it('AppController - init: should create a Vuex module with the set of mutations', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC._store._mutations['app/setEmbedLibActive']).toBeDefined()
     expect(appC._store._mutations['app/setCurrentLanguage']).toBeDefined()
@@ -277,7 +327,7 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters for the "longTap" trigger on mobile', async () => {
-    appC = AppController.create(uiState, { textQueryTriggerMobile: 'longTap' })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: 'longTap' })
     await appC.init()
     appC._platform = { isMobile: true, isDektop: false }
     const [event, eventParams] = appC.textSelectorParams
@@ -286,7 +336,7 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters for the "longtap" trigger on mobile', async () => {
-    appC = AppController.create(uiState, { textQueryTriggerMobile: 'longtap' })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: 'longtap' })
     await appC.init()
     appC._platform = { isMobile: true, isDektop: false }
     const [event, eventParams] = appC.textSelectorParams
@@ -295,7 +345,7 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters for the null trigger on mobile', async () => {
-    appC = AppController.create(uiState, { textQueryTriggerMobile: null })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
     await appC.init()
     appC._platform = { isMobile: true, isDektop: false }
     const [event, eventParams] = appC.textSelectorParams
@@ -304,7 +354,7 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters no trigger is specified on mobile', async () => {
-    appC = AppController.create(uiState, { textQueryTriggerMobile: null })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
     await appC.init()
     appC._platform = { isMobile: true, isDektop: false }
     const [event, eventParams] = appC.textSelectorParams
@@ -317,7 +367,7 @@ describe('AppController', () => {
       a: 'value of A',
       b: 'value of B'
     }
-    appC = AppController.create(uiState, { textQueryTriggerMobile: triggerParams })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: triggerParams })
     await appC.init()
     appC._platform = { isMobile: true, isDektop: false }
     const [event, eventParams] = appC.textSelectorParams
@@ -326,17 +376,17 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters if mousemove is enabled', async () => {
-    appC = AppController.create(uiState, { textQueryTriggerMobile: null })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
     await appC.init()
     appC._platform = { isMobile: false, isDektop: true }
     Object.defineProperty(appC, 'isMousemoveEnabled', { get: () => true })
     const [event, eventParams] = appC.textSelectorParams
-    expect(event.name).toBe('MouseDblClick')
+    expect(event.name).toBe('MouseMove')
     expect(eventParams).toEqual(defaultMousemoveParams)
   })
 
   it('AppController - textSelectorParams: should return correct parameters for the "dblClick" trigger on desktop', async () => {
-    appC = AppController.create(uiState, { textQueryTriggerMobile: 'dblClick' })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: 'dblClick' })
     await appC.init()
     appC._platform = { isMobile: false, isDektop: true }
     const [event, eventParams] = appC.textSelectorParams
@@ -345,7 +395,7 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters for the "dblclick" trigger on desktop', async () => {
-    appC = AppController.create(uiState, { textQueryTriggerMobile: 'dblclick' })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: 'dblclick' })
     await appC.init()
     appC._platform = { isMobile: false, isDektop: true }
     const [event, eventParams] = appC.textSelectorParams
@@ -354,7 +404,7 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters for the null trigger on desktop', async () => {
-    appC = AppController.create(uiState, { textQueryTriggerMobile: null })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
     await appC.init()
     appC._platform = { isMobile: false, isDektop: true }
     const [event, eventParams] = appC.textSelectorParams
@@ -363,7 +413,7 @@ describe('AppController', () => {
   })
 
   it('AppController - textSelectorParams: should return correct parameters no trigger is specified on desktop', async () => {
-    appC = AppController.create(uiState, { textQueryTriggerMobile: null })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
     await appC.init()
     appC._platform = { isMobile: false, isDektop: true }
     const [event, eventParams] = appC.textSelectorParams
@@ -376,7 +426,7 @@ describe('AppController', () => {
       a: 'value of A',
       b: 'value of B'
     }
-    appC = AppController.create(uiState, { textQueryTriggerDesktop: triggerParams })
+    appC = AppController.jestCreate(uiState, { textQueryTriggerDesktop: triggerParams })
     await appC.init()
     appC._platform = { isMobile: false, isDektop: true }
     const [event, eventParams] = appC.textSelectorParams
@@ -385,7 +435,7 @@ describe('AppController', () => {
   })
 
   it('AppController - registerTextSelector: should call registerSelector on the selection controller', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     const registerSelectorSpy = jest.spyOn(appC._selc, 'registerSelector')
     appC.registerTextSelector()
@@ -393,7 +443,7 @@ describe('AppController', () => {
   })
 
   it('AppController - activateTextSelector: should call activateSelector on the selection controller', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     const activateSelectorSpy = jest.spyOn(appC._selc, 'activateSelector')
     appC.activateTextSelector()
@@ -401,7 +451,7 @@ describe('AppController', () => {
   })
 
   it('AppController - activateTextSelector: should call activateSelector on the selection controller', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     const activateSelectorSpy = jest.spyOn(appC._selc, 'activateSelector')
     appC.activateTextSelector()
@@ -411,7 +461,7 @@ describe('AppController', () => {
   // TODO: Add tests for initUserDataManager() after it will be updated
 
   it('AppController - activate: should change the state props', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC.isActivated).toBeFalsy()
     await appC.activate()
@@ -420,14 +470,14 @@ describe('AppController', () => {
   })
 
   it('AppController - activate: should call init() if has not been instantiated', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     const initSpy = jest.spyOn(appC, 'init')
     await appC.activate()
     expect(initSpy).toBeCalledTimes(1)
   })
 
   it('AppController - activate: should activate modules', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     const l10nModule = appC.getModule('l10n')
     expect(l10nModule.isActivated).toBeFalsy()
@@ -436,7 +486,7 @@ describe('AppController', () => {
   })
 
   it('AppController - activate: should activate the UI controller', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     const uicActivateSpy = jest.spyOn(appC._uic, 'activate')
     await appC.activate()
@@ -444,7 +494,7 @@ describe('AppController', () => {
   })
 
   it('AppController - activate: should activate listeners of the event controller', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     const evcActivateSpy = jest.spyOn(appC._evc, 'activateListeners')
     await appC.activate()
@@ -452,7 +502,7 @@ describe('AppController', () => {
   })
 
   it('AppController - activate: should activate the selection controller', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     const selcActivateSpy = jest.spyOn(appC._selc, 'activate')
     await appC.activate()
@@ -460,25 +510,25 @@ describe('AppController', () => {
   })
 
   it('AppController - getDefaultLangCode: should return a valid value of the language code', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC.getDefaultLangCode()).toBe('lat')
   })
 
   it('AppController - getMouseMoveOverride: should return a default value of the mousemoveOverride', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC.getMouseMoveOverride()).toBeFalsy()
   })
 
   it('AppController - getMouseMoveOverride: should return a value of the mousemoveOverride from options', async () => {
-    appC = AppController.create(uiState, { enableMouseMoveOverride: true })
+    appC = AppController.jestCreate(uiState, { enableMouseMoveOverride: true })
     await appC.init()
     expect(appC.getMouseMoveOverride()).toBeTruthy()
   })
 
   it('AppController - clearMouseMoveOverride: should reset the mousemoveOverride option', async () => {
-    appC = AppController.create(uiState, { enableMouseMoveOverride: true })
+    appC = AppController.jestCreate(uiState, { enableMouseMoveOverride: true })
     await appC.init()
     expect(appC.getMouseMoveOverride()).toBeTruthy()
     appC.clearMouseMoveOverride()
@@ -486,7 +536,7 @@ describe('AppController', () => {
   })
 
   it('AppController - deactivate: should change the state props', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC.isActivated).toBeTruthy()
@@ -496,7 +546,7 @@ describe('AppController', () => {
   })
 
   it('AppController - deactivate: should deactivate the UI state', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const deactivateSpy = jest.spyOn(uiState, 'deactivate')
@@ -505,7 +555,7 @@ describe('AppController', () => {
   })
 
   it('AppController - deactivate: should deactivate modules', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const l10nModule = appC.getModule('l10n')
@@ -515,7 +565,7 @@ describe('AppController', () => {
   })
 
   it('AppController - deactivate: should deactivate the UI controller', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const uicDeactivateSpy = jest.spyOn(appC._uic, 'deactivate')
@@ -524,7 +574,7 @@ describe('AppController', () => {
   })
 
   it('AppController - deactivate: should deactivate listeners of the event controller', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const evcDeactivateSpy = jest.spyOn(appC._evc, 'deactivateListeners')
@@ -533,7 +583,7 @@ describe('AppController', () => {
   })
 
   it('AppController - deactivate: should deactivate the selection controller', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const selcDeactivateSpy = jest.spyOn(appC._selc, 'deactivate')
@@ -541,14 +591,14 @@ describe('AppController', () => {
     expect(selcDeactivateSpy).toBeCalledTimes(1)
   })
 
-  it('AppController - getEmbedLibWarning: should return an instance of an EmbedLibWarning component', async () => {
+  it('AppController - getEmbedLibWarning: should return an instance of an EmbedLibWarning component', () => {
     const msg = 'Test message'
     const instance = AppController.getEmbedLibWarning(msg)
     expect(instance.constructor.name).toBe('VueComponent')
     expect(instance.text).toBe(msg)
   })
 
-  it('AppController - getLanguageName: should return a name of the language', async () => {
+  it('AppController - getLanguageName: should return a name of the language', () => {
     const langCode = 'lat'
     expect(AppController.getLanguageName(langCode)).toEqual({
       code: langCode,
@@ -558,7 +608,7 @@ describe('AppController', () => {
   })
 
   it('AppController - showLanguageInfo: should create a notification message', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.notification.visible).toBeFalsy()
@@ -572,7 +622,7 @@ describe('AppController', () => {
 
   it('AppController - showErrorInfo: should create an error message', async () => {
     const errorMessage = 'Error message'
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.notification.visible).toBeFalsy()
@@ -586,7 +636,7 @@ describe('AppController', () => {
 
   it('AppController - showImportantNotification: should create a notification message', async () => {
     const notificationMessage = 'Notification message'
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.notification.visible).toBeFalsy()
@@ -599,19 +649,25 @@ describe('AppController', () => {
   })
 
   it('AppController - sendFeature: should start a resource query', async () => {
-    appC = AppController.create(uiState)
+    const feature = {
+      propA: 'Value of A',
+      languageID: Constants.LANG_GREEK
+    }
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     appC.api.ui.hasModule = () => true // To emulate a presence of the UI modules
-    const startResourceQuerySpy = jest.spyOn(appC, 'startResourceQuery')
-    appC.sendFeature()
+    const startResourceQuerySpy = jest.fn(() => {})
+    appC.startResourceQuery = startResourceQuerySpy
+    appC.sendFeature(feature)
     expect(startResourceQuerySpy).toBeCalledTimes(1)
+    expect(startResourceQuerySpy).toBeCalledWith(feature)
   })
 
   // TODO: Add tests for the newLexicalRequest() after its refactoring is complete
 
   it('AppController - setEmbedLibActive: should set an active status of the embedded library', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.app.embedLibActive).toBeFalsy()
@@ -620,7 +676,7 @@ describe('AppController', () => {
   })
 
   it('AppController - resetInflData: should clear an inflection data', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     appC._inflectionsViewSet = []
@@ -658,7 +714,7 @@ describe('AppController', () => {
         }
       ]
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     appC.updateProviders(homonym)
@@ -675,7 +731,7 @@ describe('AppController', () => {
         urlOne
       ]
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.app.updatedGrammar).toBe(0)
@@ -688,7 +744,7 @@ describe('AppController', () => {
   })
 
   it('AppController - initGrammar: should initialize the grammar data', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.app.updatedGrammar).toBe(0)
@@ -727,7 +783,7 @@ describe('AppController', () => {
         }
       ]
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const updateProvidersSpy = jest.spyOn(appC, 'updateProviders')
@@ -739,7 +795,7 @@ describe('AppController', () => {
   })
 
   it('AppController - notifyExperimental: should set a notification if the language is experimental', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.notification.visible).toBeFalsy()
@@ -752,7 +808,7 @@ describe('AppController', () => {
   })
 
   it('AppController - notifyExperimental: should do nothing for non-experimental language', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.notification.visible).toBeFalsy()
@@ -765,7 +821,7 @@ describe('AppController', () => {
   })
 
   it('AppController - updateLanguage: should update language information in the Vuex store', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.app.currentLanguageID).toBe(Constants.LANG_LATIN)
@@ -778,7 +834,7 @@ describe('AppController', () => {
   })
 
   it('AppController - updateLanguage: should call corresponding methods', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const notifyExperimentalSpy = jest.spyOn(appC, 'notifyExperimental')
@@ -796,7 +852,7 @@ describe('AppController', () => {
 
   it('AppController - restoreGrammarIndex: should start a resource query', async () => {
     const langID = Constants.LANG_GREEK
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const startResourceQuerySpy = jest.spyOn(appC, 'startResourceQuery')
@@ -806,7 +862,7 @@ describe('AppController', () => {
   })
 
   it('AppController - updateLemmaTranslations: should set a lemma translation language', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const setLemmaTranslationLangSpy = jest.spyOn(appC.api.lexis, 'setLemmaTranslationLang')
@@ -818,7 +874,7 @@ describe('AppController', () => {
     const data = {
       propA: 'Value of A'
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.messages).toEqual([])
@@ -836,7 +892,7 @@ describe('AppController', () => {
     const params = {
       paramA: 'Value of A'
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const enableWordUsageExamplesSpy = jest.spyOn(appC, 'enableWordUsageExamples')
@@ -853,7 +909,7 @@ describe('AppController', () => {
     const textSelector = {
       languageID: Constants.LANG_LATIN
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     appC.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue = true
@@ -864,7 +920,7 @@ describe('AppController', () => {
     const textSelector = {
       languageID: Constants.LANG_LATIN
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     appC.api.settings.getFeatureOptions().items.wordUsageExamplesON.currentValue = 'onLexicalQuery'
@@ -876,7 +932,7 @@ describe('AppController', () => {
     const textSelector = {
       languageID: Constants.LANG_GREEK
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     appC.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue = true
@@ -887,7 +943,7 @@ describe('AppController', () => {
     const textSelector = {
       languageID: Constants.LANG_LATIN
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     appC.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue = false
@@ -898,7 +954,7 @@ describe('AppController', () => {
     const textSelector = {
       languageID: Constants.LANG_LATIN
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     appC.api.settings.getFeatureOptions().items.wordUsageExamplesON.currentValue = 'onDemand'
@@ -910,7 +966,7 @@ describe('AppController', () => {
     const textSelector = {
       languageID: Constants.LANG_LATIN
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     appC.api.settings.getFeatureOptions().items.wordUsageExamplesON.currentValue = 'onLexicalQuery'
@@ -926,7 +982,7 @@ describe('AppController', () => {
     const textSelector = {
       languageID: Constants.LANG_LATIN
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     appC.api.settings.getFeatureOptions().items.wordUsageExamplesON.currentValue = 'onDemand'
@@ -941,7 +997,7 @@ describe('AppController', () => {
       keyCode: 27
     }
     const uiState = BaseTestHelp.createUIState({ isActive: () => true })
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const closeUISpy = jest.spyOn(appC.api.ui, 'closeUI')
@@ -955,7 +1011,7 @@ describe('AppController', () => {
       keyCode: 27
     }
     const uiState = BaseTestHelp.createUIState({ isActive: () => false })
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const closeUISpy = jest.spyOn(appC.api.ui, 'closeUI')
@@ -969,7 +1025,7 @@ describe('AppController', () => {
       keyCode: 10
     }
     const uiState = BaseTestHelp.createUIState({ isActive: () => true })
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const closeUISpy = jest.spyOn(appC.api.ui, 'closeUI')
@@ -979,9 +1035,10 @@ describe('AppController', () => {
 
   it('AppController - startResourceQuery: should start a resource query', async () => {
     const feature = {
-      propA: 'Value of A'
+      propA: 'Value of A',
+      languageID: Constants.LANG_GREEK
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const resourceQuerySpy = jest.spyOn(ResourceQuery, 'create')
@@ -992,9 +1049,10 @@ describe('AppController', () => {
 
   it('AppController - startResourceQuery: should produce a message', async () => {
     const feature = {
-      propA: 'Value of A'
+      propA: 'Value of A',
+      languageID: Constants.LANG_GREEK
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.messages).toEqual([])
@@ -1007,7 +1065,7 @@ describe('AppController', () => {
       homonym: { propA: 'Value of A' },
       resultStatus: LexicalQuery.resultStatus.SUCCEEDED
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const showLanguageInfoSpy = jest.spyOn(appC, 'showLanguageInfo')
@@ -1029,7 +1087,7 @@ describe('AppController', () => {
       homonym: { propA: 'Value of A' },
       resultStatus: LexicalQuery.resultStatus.FAILED
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const showLanguageInfoSpy = jest.spyOn(appC, 'showLanguageInfo')
@@ -1047,7 +1105,7 @@ describe('AppController', () => {
   })
 
   it('AppController - onMorphDataReady: should render a message', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.messages).toEqual([])
@@ -1056,7 +1114,7 @@ describe('AppController', () => {
   })
 
   it('AppController - onMorphDataNotFound: should update the app and the UI states', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.notification.visible).toBeFalsy()
@@ -1081,7 +1139,7 @@ describe('AppController', () => {
       hasShortDefs: () => true
     }
     const sortSpy = jest.spyOn(homonym.lexemes, 'sort')
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.app.languageName).toBe('')
@@ -1114,7 +1172,7 @@ describe('AppController', () => {
     const wordList = [
       {}
     ]
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.app.hasWordListsData).toBeFalsy()
@@ -1128,7 +1186,7 @@ describe('AppController', () => {
     const homonym = {
       lexemes: []
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const updateTranslationsSpy = jest.spyOn(appC, 'updateTranslations')
@@ -1141,7 +1199,7 @@ describe('AppController', () => {
     const homonym = {
       lexemes: []
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const updateProvidersSpy = jest.spyOn(appC, 'updateProviders')
@@ -1163,7 +1221,7 @@ describe('AppController', () => {
     const homonym = {
       lexemes: []
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const updateProvidersSpy = jest.spyOn(appC, 'updateProviders')
@@ -1181,7 +1239,7 @@ describe('AppController', () => {
       requestType: 'Test request type',
       word: 'Test word'
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.messages).toEqual([])
@@ -1190,7 +1248,7 @@ describe('AppController', () => {
   })
 
   it('AppController - onResourceQueryComplete: should commit a message', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.ui.messages).toEqual([])
@@ -1208,7 +1266,7 @@ describe('AppController', () => {
         urlOne
       ]
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const updateGrammarSpy = jest.spyOn(appC, 'updateGrammar')
@@ -1220,7 +1278,7 @@ describe('AppController', () => {
   })
 
   it('AppController - onGrammarNotFound: should reset grammar and commit a message', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const updateGrammarSpy = jest.spyOn(appC, 'updateGrammar')
@@ -1249,7 +1307,7 @@ describe('AppController', () => {
         hasShortDefs: () => true
       }
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const newLexicalRequestSpy = jest.spyOn(appC, 'newLexicalRequest')
@@ -1290,7 +1348,7 @@ describe('AppController', () => {
         hasShortDefs: () => true
       }
     }
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const lookupTextSpy = jest.spyOn(appC.api.lexis, 'lookupText')
@@ -1299,7 +1357,7 @@ describe('AppController', () => {
   })
 
   it('AppController - applyAllOptions: should update all feature options', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const applyFeatureOptionSpy = jest.spyOn(appC, 'applyFeatureOption')
@@ -1310,7 +1368,7 @@ describe('AppController', () => {
   })
 
   it('AppController - applyAllOptions: should update the resource reset counter', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     expect(appC._store.state.settings.resourceResetCounter).toBe(0)
@@ -1319,7 +1377,7 @@ describe('AppController', () => {
   })
 
   it('AppController - applyAllOptions: should update all UI options', async () => {
-    appC = AppController.create(uiState)
+    appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
     const applyFeatureOptionSpy = jest.spyOn(appC, 'applyFeatureOption')
