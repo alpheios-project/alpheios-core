@@ -64,7 +64,7 @@ jobs:
         prerelease: true
         
     - name: set token
-      run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >  $HOME/.npmrc 2> /dev/null
+      run: echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} >  $HOME/.npmrc 2> /dev/null
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       
