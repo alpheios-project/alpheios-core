@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - 14.1
+cache: npm
+install:
+  - npm run set-node-build-deps
+  - npm run bootstrap
+script:
+  - env
+  - npm run test
+jobs:
+  include:
+    - script: npm run test-l10n
+    - script: npm run test-data-models
+    - script: npm run test-client-adapters
+    - script: npm run test-inflection-tables
+    - script: npm run test-components
+    - script: npm run test-res-client
+    - script: npm run test-wordlist
