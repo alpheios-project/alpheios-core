@@ -32,9 +32,11 @@
     "version-set-major-dev": "npx lerna version major --no-push",
     "version-set-minor-dev": "npx lerna version minor --no-push",
     "version-set-patch-dev": "npx lerna version patch --no-push",
+    "github-build": "node --experimental-modules --experimental-json-modules ./github-build.mjs",
     "tagged-commit": "node --experimental-modules --experimental-json-modules ./tagged-commit.mjs"
   },
   "devDependencies": {
+    "@actions/core": "^1.2.4",
     "@babel/core": "^7.10.5",
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "@babel/plugin-transform-runtime": "^7.10.5",
