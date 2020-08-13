@@ -17,26 +17,26 @@ jobs:
     - name: prepare for build
       run: npm run set-node-build-deps && npm run bootstrap
     
-    - name: test-data-models
-      run: npm run test-data-models
-
-    - name: test-res-client
-      run: npm run test-res-client
-
     - name: test-word-list
-      run: npm run test-word-list
+      run: npm --prefix packages/word-list run test-no-coverage
     
+    - name: test-data-models
+      run: npm --prefix packages/data-models run test-no-coverage
+      
+    - name: test-res-client
+      run: npm --prefix packages/res-client run test-no-coverage
+
     - name: test-components
-      run: npm run test-components
+      run: npm --prefix packages/components run test-no-coverage
 
     - name: test-client-adapters
-      run: npm run test-client-adapters
+      run: npm --prefix packages/client-adapters run test-no-coverage
   
     - name: test-inflection-tables
-      run: npm run test-inflection-tables
+      run: npm --prefix packages/inflection-tables run test-no-coverage
 
     - name: test-l10n
-      run: npm run test-l10n
+      run: npm --prefix packages/l10n run test-no-coverage
 
     - name: build
       id: run_build
