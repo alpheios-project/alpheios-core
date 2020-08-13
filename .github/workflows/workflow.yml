@@ -17,8 +17,26 @@ jobs:
     - name: prepare for build
       run: npm run set-node-build-deps && npm run bootstrap
     
-    - name: test
-      run: npm run test
+    - name: test-data-models
+      run: npm run test-data-models
+
+    - name: test-res-client
+      run: npm run test-res-client
+
+    - name: test-word-list
+      run: npm run test-word-list
+    
+    - name: test-components
+      run: npm run test-components
+
+    - name: test-client-adapters
+      run: npm run test-client-adapters
+  
+    - name: test-inflection-tables
+      run: npm run test-inflection-tables
+
+    - name: test-l10n
+      run: npm run test-l10n
 
     - name: build
       id: run_build
@@ -31,3 +49,23 @@ jobs:
         add: "lerna.json packages/*/package/*.json packages/components/dist"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.run_build.outputs.buildName }}
+        release_name: Release ${{ steps.run_build.outputs.buildName }}
+        draft: false
+        prerelease: true
+        
+    - name: set token
+      run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+    - name: publish
+      run: npx lerna publish from-package --yes --dist-tag dev
+     
