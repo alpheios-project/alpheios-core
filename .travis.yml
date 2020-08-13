@@ -8,33 +8,6 @@ install:
 script:
   - env
   - npm run test
-before_deploy:
-  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
-deploy:
-  - provider: script
-    script: "npx lerna publish from-package --yes --dist-tag qa"
-    on:
-      all_branches: true
-      tags: on
-      condition: $TRAVIS_TAG =~ ^qa
-  - provider: script
-    script: "npx lerna publish from-package --yes --dist-tag ftqa"
-    on:
-      all_branches: true
-      tags: on
-      condition: $TRAVIS_TAG =~ ^ftqa
-  - provider: script
-    script: "npx lerna publish from-package --yes --dist-tag rc"
-    on:
-      branch: production
-      tags: true
-  - provider: releases
-    api_key:
-      secure: DdHAgl1PnkmEwP79Dtm+PRSy9D5E133avH9a4/qV1KqMChBik1wA7GcU/mZEAwsi8In/k9B98tjQgAMtWThJ9d0JmzZ7qF7gRq9Z1cBEhmCgyYfLteYWfQcxcIuFQQVmowD83a/1M9RYREH86aDD/4VghFLq1UmBJL0o8J8M/3ncFCx2ngmUISSgG+Ybo4Q4Aw2ThIUYoXS830d5YQFXRqbuHDnP6RBPaMU1iD7qcsTkUZ0aGJy8+HOt/3OYmJ1sKgAZlSXSPCog2dlQ5Y/7HvNJA2UCtS+jsAd9A6WE98o1vuS6U9ywSpkLUNykIRWCIqiuM75BBrfRFw0F3bvphM++6DzSXo7oLaHGlbtBspibus6v0zPh8FP70xYJhnJsL313yLwMuZT0gCj9vKIsqKF2UqlVZi1PXjar6CJP9yc4eJEqhWrvjXTiN8bjn2sk3dGXeqrroyK+Yxv7mY6bmY+Lf8f6sShwCyjCAfUPluuTSFjdFQbHouI59CLjPM3d5qbwqQdQifySc68NTPNAFURiWN3VbyRkfccIDJpiOCnJwhAS2LYiO6C2CQBuO0xs3vv/tNpji1mh3F7/6dP64t/JQZ1D0ezgqGATqD3E+P9Z/FeLO8Rm8aHeiEBQrbPnP3+zxMDLdqFWFL6dV6y/V3yTbuprzyuylNVdsFSEMVI=
-    on:
-      repo: alpheios-project/alpheios-core
-      all_branches: true
-      tags: true
 jobs:
   include:
     - script: npm run test-l10n
