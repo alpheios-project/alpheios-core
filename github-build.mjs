@@ -37,5 +37,11 @@ import * as core from '@actions/core'
     process.exit(2)
   }
   console.log('Rebuilding of a components library has been completed')
-
+  try {
+    console.info(core)
+    core.default.setOutput('buildName',buildInfo.name)
+  } catch (error) {
+    console.error('Failed to set output variable:', error)
+    process.exit(1)
+  }
 })()
