@@ -42,6 +42,6 @@ import * as core from '@actions/core'
     core.default.setOutput('buildName',buildInfo.name)
   } catch (error) {
     console.error('Failed to set output variable:', error)
-    process.exit(1)
+    process.exit(3)
   }
 })()
