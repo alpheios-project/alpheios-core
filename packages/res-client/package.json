@@ -1,6 +1,6 @@
 {
   "name": "alpheios-res-client",
-  "version": "3.3.0-qa.20200812380",
+  "version": "3.3.0-qa.20200813544",
   "description": "Alpheios Resource Client Library",
   "private": true,
   "main": "dist/alpheios-res-client.min.js",

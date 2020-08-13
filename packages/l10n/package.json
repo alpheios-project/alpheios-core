@@ -1,6 +1,6 @@
 {
   "name": "alpheios-l10n",
-  "version": "3.3.0-qa.20200812380",
+  "version": "3.3.0-qa.20200813544",
   "description": "Alpheios Localization",
   "private": true,
   "main": "dist/alpheios-l10n.min.js",
