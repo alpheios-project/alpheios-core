@@ -22,7 +22,8 @@ export default {
   // API modules that are required for this component
   inject: {
     app: 'app',
-    l10n: 'l10n'
+    l10n: 'l10n',
+    ui: 'ui'
   },
   storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
