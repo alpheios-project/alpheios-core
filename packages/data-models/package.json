@@ -1,6 +1,6 @@
 {
   "name": "alpheios-data-models",
-  "version": "3.3.0-githubactions.20200813456",
+  "version": "3.3.0-githubactions.20200813469",
   "description": "Alpheios Data Models",
   "private": true,
   "main": "dist/alpheios-data-models.min.js",
