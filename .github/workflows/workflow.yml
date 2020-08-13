@@ -46,7 +46,7 @@ jobs:
       uses: EndBug/add-and-commit@v4
       with:
         message: "Commit files for build ${{ steps.run_build.outputs.buildName }}"
-        add: "lerna.json packages/*/package/*.json packages/components/dist"
+        add: "lerna.json packages/*/package*.json packages/components/dist"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
 
