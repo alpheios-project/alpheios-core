@@ -30,9 +30,9 @@ export default class LatinViewSet extends ViewSet {
   static get views () {
     return [
       LatinNounView,
-      LatinAdjectiveView,
       LatinAdjectiveComparativeView,
       LatinAdjectiveSuperlativeView,
+      LatinAdjectiveView,
       LatinVerbParticipleIrregularView,
       LatinVerbParticipleView,
       LatinVerbSupineIrregularView,
