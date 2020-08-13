@@ -69,5 +69,5 @@ jobs:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       
     - name: publish
-      run: npx lerna publish from-package --yes --dist-tag dev
+      run: npx lerna publish from-package --yes --dist-tag qa
      
