@@ -50,6 +50,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
 
+    - name: revert package.json
+      run: git checkout -- package.json && git checkout -- package-lock.json
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -62,7 +64,7 @@ jobs:
         prerelease: true
         
     - name: set token
-      run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+      run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} >  $HOME/.npmrc 2> /dev/null
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       
