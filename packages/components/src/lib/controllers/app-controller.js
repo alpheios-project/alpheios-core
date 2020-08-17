@@ -1057,7 +1057,9 @@ export default class AppController {
   }
 
   updateCurrentLocale() {
-    this.api.l10n.setLocale(this.api.settings.getFeatureOptions().items.locale.currentValue)
+    if (this.api.settings.getFeatureOptions().items.locale.currentValue) {
+      this.api.l10n.setLocale(this.api.settings.getFeatureOptions().items.locale.currentValue)
+    }
   }
 
   async updateWordUsageExamples (wordUsageExamplesData) {
