@@ -1062,7 +1062,7 @@ export default class AppController {
     }
   }
 
-  async updateWordUsageExamples (wordUsageExamplesData) {
+  updateWordUsageExamples (wordUsageExamplesData) {
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
     this.api.app.wordUsageExamples = wordUsageExamplesData
 
