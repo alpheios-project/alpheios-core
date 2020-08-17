@@ -1,15 +1,12 @@
 {
  "adjective":{
-    "message":"صفة",
-    "abbr":""
+    "message":"صفة"
   },
  "adverb":{
-    "message":"ظرف",
-    "abbr":""
+    "message":"ظرف"
   },
   "adverbial":{
-    "message":"ظرفى",
-    "abbr":""
+    "message":"ظرفى"
   },
   "article":{
     "message":"أداة"
@@ -57,16 +54,13 @@
     "message":"إسم فاعل"
   },
   "masculine":{
-    "message":"مذكر",
-    "abbr":"m."
+    "message":"مذكر"
   },
   "feminine":{
-    "message":"مؤنث",
-    "abbr": "f."
+    "message":"مؤنث"
   },
   "neuter":{
-    "message":"محايد",
-    "abbr":"n."
+    "message":"محايد"
   },
   "common":{
     "message":"مشترك"
@@ -87,31 +81,26 @@
     "message":"مذكر غير حى"
   },
   "positive":{
-    "message":"صفة درجة أولى",
-    "abbr":"pos."
+    "message":"صفة درجة أولى"
   },
   "comparitive":{
-    "message":"صفة درجة ثانية",
-    "abbr":"comp"
+    "message":"صفة درجة ثانية"
   },
   "superlative":{
-    "message":"صفة درجة ثالثة",
-    "abbr":"super."
+    "message":"صفة درجة ثالثة"
   },
   "abessive":{
     "message":"نافية"
   },
   "ablative":{
-    "message":"مفعول الأداة",
-    "abbr":"abl."
+    "message":"مفعول الأداة"
 
   },
   "absolutive":{
     "message":"مطلق"
   },
   "accusative":{
-    "message":"مفعول به",
-    "abbr":"acc."
+    "message":"مفعول به"
   },
   "addirective":{
     "message":"addirective"
@@ -150,8 +139,7 @@
     "message":"comitative"
   },
   "dative":{
-    "message":"قابل",
-    "abbr":"dat."
+    "message":"قابل"
   },
   "delative":{
     "message":"delative"
@@ -196,8 +184,7 @@
     "message":"رسمي"
   },
   "genitive":{
-    "message":"مضاف إليه",
-    "abbr":"gen."
+    "message":"مضاف إليه"
   },
   "illative":{
     "message":"illative"
@@ -224,8 +211,7 @@
     "message":"lative"
   },
   "locative":{
-    "message":"مكانى",
-    "abbr":"loc."
+    "message":"مكانى"
   },
   "modal":{
     "message":"شرطى"
@@ -234,8 +220,7 @@
     "message":"multiplicative"
   },
   "nominative":{
-    "message":"فاعل",
-    "abbr":"nom."
+    "message":"فاعل"
   },
   "partitive":{
     "message":"جزئى"
@@ -316,8 +301,7 @@
     "message":"vialis"
   },
   "vocative":{
-    "message":"منادى",
-    "abbr":"voc."
+    "message":"منادى"
   },
   "admirative":{
     "message":"admirative"
@@ -347,19 +331,16 @@
     "message":"إفتراضى"
   },
   "imperative":{
-    "message":"أمر",
-    "abbr":"imp."
+    "message":"أمر"
   },
   "indicative":{
-    "message":"إخبارى",
-    "abbr":"ind."
+    "message":"إخبارى"
   },
   "inferential":{
     "message":"إستنتاجي"
   },
   "infinitive":{
-    "message":"مصدرى",
-    "abbr":"infin."
+    "message":"مصدرى"
   },
   "interrogative":{
     "message":"إستفهامى"
@@ -371,12 +352,10 @@
     "message":"النفى"
   },
   "optative":{
-    "message":"التمنى",
-    "abbr":"opt."
+    "message":"التمنى"
   },
   "participle":{
-    "message":"إسم فاعل",
-    "abbr":"part,"
+    "message":"إسم فاعل"
   },
   "presumptive":{
     "message":"presumptive"
@@ -385,24 +364,19 @@
     "message":"renarrative"
   },
   "subjunctive":{
-    "message":"الحالة المصدرية",
-    "abbr":"sub."
-  },
+    "message": "الحالة المصدرية"
+  } ,
   "supine":{
-    "message":"السوبينم",
-    "abbr":"sup."
+    "message":"السوبينم"
   },
   "singular":{
-    "message":"مفرد",
-    "abbr":"sing."
+    "message":"مفرد"
   },
   "plural":{
-    "message":"مذكر",
-    "abbr":"plur."
+    "message":"مذكر"
   },
   "dual":{
-    "message":"مثنى",
-    "abbr":"dl."
+    "message":"مثنى"
   },
   "trial":{
     "message":"trial"
@@ -456,39 +430,31 @@
     "message":"9th"
   },
   "aorist":{
-    "message":"ماضى تام",
-    "abbr":"aor."
+    "message":"ماضى تام"
   },
   "future":{
-    "message":"مستقبل",
-    "abbr":"fut."
+    "message":"مستقبل"
   },
   "future_perfect":{
-    "message":"مستقبل تام",
-    "abbr":"fut. perf."
+    "message":"مستقبل تام"
   },
   "imperfect":{
-    "message":"ماضى ناقص",
-    "abbr":"impf."
+    "message":"ماضى ناقص"
   },
   "past_absolute":{
     "message":"ماضى مطلق"
   },
   "perfect":{
-    "message":"مضارع تام",
-    "abbr": "perf."
+    "message":"مضارع تام"
   },
   "pluperfect":{
-    "message":"مضارع أتم",
-    "abbr": "plup."
+    "message":"مضارع أتم"
   },
   "plusquamperfect":{
-    "message": "ماضى أتم",
-    "abbr": "pqpf."
+    "message": "ماضى أتم"
   },
   "present":{
-    "message":"مضارع",
-    "abbr":"pres."
+    "message":"مضارع"
   },
   "to_be":{
     "message":"فعل الكون"
@@ -521,23 +487,19 @@
     "message":"perfect definite"
   },
   "active":{
-    "message":"معلوم",
-    "abbr":"act."
+    "message":"معلوم"
   },
   "passive":{
-    "message":"مجهول",
-    "abbr":"pass."
+    "message":"مجهول"
   },
   "mediopassive":{
-    "message":"مجهول ووسط",
-    "abbr": "mp."
+    "message":"مجهول ووسط"
   },
   "impersonal_passive":{
     "message":"مجهول غير شخصى"
   },
   "middle":{
-    "message":"وسط",
-    "abbr":"mid."
+    "message":"وسط"
   },
   "antipassive":{
     "message":"antipassive"
@@ -608,5 +570,13 @@
   },
   "emphatic": {
     "message": "تأكيدى"
+  },
+  "declension": {
+    "message": "{data} declension",
+    "params": ["data"]
+  },
+  "conjugation": {
+    "message": "{data} conjugation",
+    "params": ["data"]
   }
 }
