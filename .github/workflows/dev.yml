@@ -1,10 +1,11 @@
 name: Dev Build
 on: 
   workflow_dispatch:
-    inputs: "npmtag"
-    description: "tag to be applied to the package(s) published in npm"
-    default: 'dev'
-    required: true
+    inputs: 
+      npmtag:
+        description: "tag to be applied to the package(s) published in npm"
+        default: 'dev'
+        required: true
 jobs:
   build:
     runs-on: ubuntu-latest
