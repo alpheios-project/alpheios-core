@@ -1865,7 +1865,14 @@ describe('latin-views.test.js', () => {
 
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
-    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(2)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinAdjectiveView',
+      title: 'Adjective declension',
+      linkedViewsLength: 0
+    })
 
     BaseTestHelp.checkView({
       inflectionsViewSet,
@@ -1882,7 +1889,14 @@ describe('latin-views.test.js', () => {
 
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
-    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(2)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinAdjectiveView',
+      title: 'Adjective declension',
+      linkedViewsLength: 0
+    })
 
     BaseTestHelp.checkView({
       inflectionsViewSet,
