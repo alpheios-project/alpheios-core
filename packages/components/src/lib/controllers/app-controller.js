@@ -1063,7 +1063,7 @@ export default class AppController {
   }
 
   updateWordUsageExamples (wordUsageExamplesData) {
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
     this.api.app.wordUsageExamples = wordUsageExamplesData
 
     if (!this.api.app.wordUsageExamplesCached || this.api.app.wordUsageExamplesCached.targetWord !== this.api.app.wordUsageExamples.targetWord) {
