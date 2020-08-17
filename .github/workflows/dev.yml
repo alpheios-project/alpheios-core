@@ -49,5 +49,5 @@ jobs:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       
     - name: publish
-      run: npx lerna publish from-package --yes --dist-tag ${{github.event.inputs.version}}
+      run: npx lerna publish from-package --yes --dist-tag ${{ github.event.inputs.npmtag }}
      
