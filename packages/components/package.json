@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --coverage  && shx cat ./coverage/lcov.info | coveralls",
     "test-no-coverage": "jest tests/lib && jest tests/vue && jest tests/inflections && jest tests/lib/controllers",
-    "test-ci": "npm run test-lib && npm run test-components && npm run test-controllers",
+    "test-ci": "npm run test-lib && npm run test-components",
     "test-lib": "jest tests/lib --coverage",
     "test-controllers": "jest tests/lib/controllers/",
     "test-components": "jest tests/vue --coverage",
@@ -53,7 +53,7 @@
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
     "alpheios-node-build": "github:alpheios-project/node-build#v3",
     "alpheios-res-client": "^3.3.0",
-    "alpheios-wordlist": "^3.3.0",
+    "alpheios-wordlist-next": "^3.3.0",
     "autoprefixer": "^9.8.5",
     "axios": "^0.19.2",
     "babel-jest": "^26.0.1",
@@ -134,6 +134,7 @@
       "alpheios-l10n": "<rootDir>/node_modules/alpheios-l10n/dist/alpheios-l10n.js",
       "alpheios-messaging": "<rootDir>../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js",
       "alpheios-morph-client": "<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js",
+      "alpheios-wordlist": "<rootDir>/node_modules/alpheios-wordlist-next/dist/alpheios-wordlist.js",
       "alpheios-inflection-tables": "<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js"
     },
     "moduleFileExtensions": [
