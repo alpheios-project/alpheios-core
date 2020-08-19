@@ -1,0 +1,53 @@
+name: Dev Build
+on: 
+  workflow_dispatch:
+    inputs: 
+      npmtag:
+        description: "tag to be applied to the package(s) published in npm"
+        default: 'dev'
+        required: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: '14'
+        
+    - name: prepare for build
+      run: npm run set-node-build-deps && npm run bootstrap
+    
+    - name: test-wordlist
+      run: npm --prefix packages/wordlist run test-no-coverage
+    
+    - name: test-data-models
+      run: npm --prefix packages/data-models run test-no-coverage
+      
+    - name: test-res-client
+      run: npm --prefix packages/res-client run test-no-coverage
+
+    - name: test-components
+      run: npm --prefix packages/components run test-no-coverage
+
+    - name: test-client-adapters
+      run: npm --prefix packages/client-adapters run test-no-coverage
+  
+    - name: test-inflection-tables
+      run: npm --prefix packages/inflection-tables run test-no-coverage
+
+    - name: test-l10n
+      run: npm --prefix packages/l10n run test-no-coverage
+
+    - name: build
+      id: run_build
+      run: npm run github-build
+
+    - name: set token
+      run: echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} >  $HOME/.npmrc 2> /dev/null
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+    - name: publish
+      run: npx lerna publish from-package --yes --dist-tag ${{ github.event.inputs.npmtag }}
+     

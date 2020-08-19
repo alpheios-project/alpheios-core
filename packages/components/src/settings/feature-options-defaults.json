@@ -48,6 +48,10 @@
         {
           "value": "ca",
           "text": "Catalonian"
+        },
+        {
+          "value": "ar",
+           "text": "Arabic"
         }
       ]
     },

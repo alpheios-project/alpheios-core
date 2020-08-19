@@ -1,839 +1,1382 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import AppController from '@comp/lib/controllers/app-controller.js'
-import State from '@comp/lib/state/tab-script.js'
+import L10nModule from '@comp/vue/vuex-modules/data/l10n-module.js'
+import LexisModule from '@comp/vue/vuex-modules/data/lexis.js'
+import AuthModule from '@comp/vue/vuex-modules/data/auth-module.js'
+import Module from '@comp/vue/vuex-modules/module.js'
+import Locales from '@comp/locales/locales.js'
+import Platform from '@comp/lib/utility/platform.js'
+import Vue from '@vue-runtime'
+import MouseDblClick from '@comp/lib/custom-pointer-events/mouse-dbl-click.js'
+import LongTap from '@comp/lib/custom-pointer-events/long-tap.js'
+import GenericEvt from '@comp/lib/custom-pointer-events/generic-evt.js'
+import { Constants, LanguageModelFactory } from 'alpheios-data-models'
+import SelectionController from '@comp/lib/controllers/selection-controller.js'
+import { WordlistController } from 'alpheios-wordlist'
+import LexicalQuery from '@comp/lib/queries/lexical-query.js'
+import ResourceQuery from '@comp/lib/queries/resource-query.js'
 
-import Options from '@comp/lib/options/options.js'
-import LanguageOptionDefaults from '@comp/settings/language-options-defaults.json'
-import FeatureOptionDefaults from '@comp/settings/feature-options-defaults.json'
-import UIOptionDefaults from '@comp/settings/ui-options-defaults.json'
-import LocalStorageArea from '@comp/lib/options/local-storage-area.js'
+import BaseTestHelp from '@compTests/helpclasses/base-test-help.js'
 
-import Locales from '@comp/locales/locales'
-import enUS from '@comp/locales/en-us/messages.json'
-import enGB from '@comp/locales/en-gb/messages.json'
+describe('AppController', () => {
+  let appC, uiState, state
+  const defaultMousemoveParams = {
+    enableMouseMoveLimitedByIdCheck: true,
+    mouseMoveAccuracy: 10,
+    mouseMoveDelay: 1000,
+    mouseMoveLimitedById: 'docs-editor-container'
+  }
 
-import { Constants } from 'alpheios-data-models'
-import { L10n } from 'alpheios-l10n'
+  /*
+  Since events are asynchronous, their listeners may be called in a test environment
+  after the application is tear down. To prevent errors related to this, a special
+  version of the create() method is created for the test environment. In it, event listeners
+  that may have issues like described above are not registered.
+   */
+  AppController.jestCreate = (state, options) => {
+    let appController = new AppController(state, options) // eslint-disable-line prefer-const
 
-describe('ui-controller.test.js', () => {
-  console.error = function () {}
-  console.log = function () {}
-  console.warn = function () {}
+    // Register data modules
+    appController.registerModule(L10nModule, {
+      defaultLocale: Locales.en_US,
+      messageBundles: Locales.bundleArr()
+    })
 
-  let uiC, featureOptions, resourceOptions, state
+    appController.registerModule(LexisModule, {
+      arethusaTbRefreshRetryCount: appController._options.arethusaTbRefreshRetryCount,
+      arethusaTbRefreshDelay: appController._options.arethusaTbRefreshDelay
+    })
 
-  beforeEach(async (done) => {
-    jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
-    jest.spyOn(console, 'warn')
-    jest.spyOn(Options, 'initItems')
+    // Creates on configures an event listener
+    appController._evc.registerListener('HandleEscapeKey', document, appController.handleEscapeKey.bind(appController), GenericEvt, 'keydown')
+    SelectionController.evt.TEXT_SELECTED.sub(appController.onTextSelected.bind(appController))
 
-    state = new State()
-    let sa1 = new LocalStorageArea('alpheios-feature-settings')
-    let sa2 = new LocalStorageArea('alpheios-resource-settings')
-    let sa3 = new LocalStorageArea('alpheios-ui-settings')
-    featureOptions = new Options(FeatureOptionDefaults, sa1)
-    resourceOptions = new Options(LanguageOptionDefaults, sa2)
-    let uiOptions = new Options(UIOptionDefaults, sa3)
-/*
-    uiC = new AppController(state, LocalStorageArea, {})
-    uiC.featureOptions = featureOptions
-    uiC.resourceOptions = resourceOptions
-    uiC.uiOptions = uiOptions
+    // Subscribe to LexicalQuery events
+    // LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(appController.onLexicalQueryComplete.bind(appController))
+    LexicalQuery.evt.MORPH_DATA_READY.sub(appController.onMorphDataReady.bind(appController))
+    LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.sub(appController.onMorphDataNotFound.bind(appController))
+    LexicalQuery.evt.HOMONYM_READY.sub(appController.onHomonymReady.bind(appController))
+    LexicalQuery.evt.LEMMA_TRANSL_READY.sub(appController.updateTranslations.bind(appController))
+    //LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.sub(appController.updateWordUsageExamples.bind(appController))
+    LexicalQuery.evt.SHORT_DEFS_READY.sub(appController.onShortDefinitionsReady.bind(appController))
+    LexicalQuery.evt.FULL_DEFS_READY.sub(appController.onFullDefinitionsReady.bind(appController))
+    LexicalQuery.evt.SHORT_DEFS_NOT_FOUND.sub(appController.onDefinitionsNotFound.bind(appController))
+    LexicalQuery.evt.FULL_DEFS_NOT_FOUND.sub(appController.onDefinitionsNotFound.bind(appController))
 
-    await uiC.init()
-    await uiC.activate()
-*/
-    done()
+    // Subscribe to ResourceQuery events
+    // ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.sub(appController.onResourceQueryComplete.bind(appController))
+    // ResourceQuery.evt.GRAMMAR_AVAILABLE.sub(appController.onGrammarAvailable.bind(appController))
+    ResourceQuery.evt.GRAMMAR_NOT_FOUND.sub(appController.onGrammarNotFound.bind(appController))
+
+    appController._wordlistC = new WordlistController(LanguageModelFactory.availableLanguages(), LexicalQuery.evt)
+    // WordlistController.evt.WORDLIST_UPDATED.sub(appController.onWordListUpdated.bind(appController))
+    WordlistController.evt.WORDITEM_SELECTED.sub(appController.onWordItemSelected.bind(appController))
+
+    return appController
+  }
+
+  beforeAll(() => {
+    Vue.config.productionTip = false // Disable a Vue production mode warning
+    Vue.config.devtools = false // Disable a Devtools extension warning
   })
+
+  beforeEach(() => {
+    uiState = BaseTestHelp.createUIState()
+  })
+
   afterEach(() => {
     jest.resetModules()
-    uiC = undefined
   })
+
   afterAll(() => {
     jest.clearAllMocks()
   })
 
-  let l10n = new L10n()
-    .addMessages(enUS, Locales.en_US)
-    .addMessages(enGB, Locales.en_GB)
-    .setLocale(Locales.en_US)
-
-  let latID = Constants.LANG_LATIN
-  let araID = Constants.LANG_ARABIC
-/*
-  it('1 AppController - create object with min arguments', async () => {
-    expect(uiC.options).toHaveProperty('uiTypePanel')
-    expect(uiC.options).toHaveProperty('uiTypePopup')
-
-    expect(uiC.options.irregularBaseFontSizeClassName.length).toBeGreaterThan(0)
-    expect(uiC.irregularBaseFontSize).toBeDefined()
-    expect(uiC.options.app).toBeDefined()
-
-    expect(uiC.options.template).toHaveProperty('html')
-    expect(uiC.options.template).toHaveProperty('panelId')
-
-    expect(uiC.options.template).toHaveProperty('defaultPanelComponent')
-    expect(uiC.options.template).toHaveProperty('popupId')
-
-    expect(uiC.options.template).toHaveProperty('defaultPopupComponent')
-    expect(uiC.options.template).toHaveProperty('draggable')
-    expect(uiC.options.template).toHaveProperty('resizable')
-
-    expect(uiC.zIndex).toBeGreaterThan(0)
-
-    expect(uiC.l10n).toBeInstanceOf(L10n)
-
-    expect(document.body.classList.contains('alpheios')).toBeTruthy()
-    expect(document.getElementById('alpheios-popup')).not.toBeNull()
-    expect(document.getElementById('alpheios-panel')).not.toBeNull()
+  it('AppController - constructor: should create an instance with default arguments', () => {
+    appC = new AppController(uiState)
+    expect(appC).toBeInstanceOf(AppController)
   })
 
-  it('2 AppController - static methods', () => {
-    expect(AppController.optionsDefaults).toHaveProperty('irregularBaseFontSizeClassName')
-
-    document.querySelector('html').style['font-size'] = '16px'
-    expect(AppController.hasRegularBaseFontSize()).toBeTruthy()
-
-    document.querySelector('html').style['font-size'] = '14px'
-    expect(AppController.hasRegularBaseFontSize()).toBeFalsy()
-
-    expect(AppController.getLanguageName()).toEqual({name: '', code: undefined})
-    expect(AppController.getLanguageName(latID)).toEqual({name: 'Latin', code: 'lat'})
-    expect(AppController.getLanguageName('pppp')).toEqual({name: '', code: 'pppp'})
+  it('AppController - constructor: should initialize all properties', () => {
+    appC = new AppController(uiState)
+    expect(appC.state).toBe(uiState)
+    expect(appC.api).toEqual({})
+    expect(appC.isInitialized).toBeFalsy()
+    expect(appC.isActivated).toBeFalsy()
+    expect(appC.isDeactivated).toBeFalsy()
   })
 
-  it('3 AppController - getZIndexMax method', () => {
-
-    uiC.zIndex = HTMLPage.getZIndexMax(2000)
-    expect(uiC.zIndex).toEqual(2001)
-
-    uiC.zIndex = HTMLPage.getZIndexMax(2010)
-    expect(uiC.zIndex).toEqual(2010)
-
-    uiC.zIndex = HTMLPage.zIndexRecursion(document.querySelector('body'), Number.NEGATIVE_INFINITY)
-    expect(uiC.zIndex).toEqual(2000)
+  it('AppController - constructor: should initialize internal options with the constructor arguments', () => {
+    const customOptions = {
+      clientId: 'alpheios-components',
+      app: {
+        name: 'Test App'
+      }
+    }
+    appC = new AppController(uiState, customOptions)
+    expect(appC._options).toMatchObject(customOptions)
   })
 
-  it('4 AppController - formatFullDefinitions method', () => {
-    let testLexeme = {
-      lemma: {
-        word: 'fooword'
+  it('AppController - create: should create an instance with default arguments', () => {
+    appC = AppController.jestCreate(uiState)
+    appC.registerModule(AuthModule)
+    expect(appC).toBeInstanceOf(AppController)
+  })
+
+  it('AppController - create: an instance created should have L10n and Lexis modules', () => {
+    appC = AppController.jestCreate(uiState)
+    expect(appC.hasModule('l10n')).toBeTruthy()
+    expect(appC.hasModule('lexis')).toBeTruthy()
+  })
+
+  it('AppController - setOptions: should combine options provided and the default ones', () => {
+    const customOptions = {
+      clientId: 'alpheios-components',
+      app: {
+        name: 'Test App'
+      }
+    }
+    const options = AppController.setOptions(customOptions, AppController.optionsDefaults)
+    expect(options).toMatchObject(customOptions)
+  })
+
+  it('AppController - hasUIController: should return true if the UI controller is present', () => {
+    appC = AppController.jestCreate(uiState)
+    // UIController are registered during an instance construction by the AppController
+    expect(appC.hasUIController).toBeTruthy()
+  })
+
+  it('AppController - registerModule: should register a specified module', () => {
+    appC = AppController.jestCreate(uiState)
+    expect(appC.hasModule(AuthModule.moduleName)).toBeFalsy()
+    appC.registerModule(AuthModule)
+    expect(appC.hasModule(AuthModule.moduleName)).toBeTruthy()
+    // UIController is created during an instance construction by default
+    expect(appC.hasUIController).toBeTruthy()
+  })
+
+  it('AppController - dataModules: returns a list of registered data modules', () => {
+    appC = AppController.jestCreate(uiState)
+    // L10n and Lexis modules are registered by the constructor of the AppController
+    expect(appC.dataModules.map(m => m.ModuleClass.moduleName)).toEqual(['l10n', 'lexis'])
+  })
+
+  it('AppController - hasModule: returns true if module has been registered', () => {
+    appC = AppController.jestCreate(uiState)
+    // L10n is registered by the constructor of the AppController
+    expect(appC.hasModule('l10n')).toBeTruthy()
+  })
+
+  it('AppController - hasModule: returns false if module is not present', () => {
+    appC = AppController.jestCreate(uiState)
+    expect(appC.hasModule('Some other module')).toBeFalsy()
+  })
+
+  it('AppController - getModule: returns an instance of the module', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    expect(appC.getModule('l10n')).toBeInstanceOf(Module)
+  })
+
+  it('AppController - getModule: returns null if module has not been created', () => {
+    appC = AppController.jestCreate(uiState)
+    expect(appC.getModule('l10n')).toBeNull()
+  })
+
+  it('AppController - getModule: throws an error if module does not exist', () => {
+    appC = AppController.jestCreate(uiState)
+    expect(() => appC.getModule('Unknown module')).toThrowError()
+  })
+
+  it('AppController - init: should create the App API', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    expect(appC.api.app).toEqual({
+      name: expect.any(String),
+      version: expect.any(String),
+      buildName: null,
+      clientId: expect.any(String),
+      libName: expect.any(String),
+      libVersion: expect.any(String),
+      libBuildName: expect.any(String),
+      platform: expect.any(Platform),
+      mode: expect.any(String),
+      state: expect.any(Object),
+      homonym: null,
+      wordUsageExamplesCached: null,
+      wordUsageExamples: null,
+      wordUsageAuthors: [],
+      grammarData: {},
+      queryParams: expect.any(Object),
+      isDevMode: expect.any(Function),
+      getDefaultLangCode: expect.any(Function),
+      registerTextSelector: expect.any(Function),
+      activateTextSelector: expect.any(Function),
+      isMousemoveForced: expect.any(Function),
+      getMouseMoveOverride: expect.any(Function),
+      clearMouseMoveOverride: expect.any(Function),
+      applyAllOptions: expect.any(Function),
+      applyUIOption: expect.any(Function),
+      applyFeatureOption: expect.any(Function),
+      updateLanguage: expect.any(Function),
+      notifyExperimental: expect.any(Function),
+      getLanguageName: expect.any(Function),
+      startResourceQuery: expect.any(Function),
+      sendFeature: expect.any(Function),
+      getHomonymLexemes: expect.any(Function),
+      getInflectionsViewSet: expect.any(Function),
+      getInflectionViews: expect.any(Function),
+      hasMorphData: expect.any(Function),
+      getWordUsageData: expect.any(Function),
+      getWordList: expect.any(Function),
+      selectWordItem: expect.any(Function),
+      updateAllImportant: expect.any(Function),
+      updateWordItemImportant: expect.any(Function),
+      removeWordListItem: expect.any(Function),
+      removeWordList: expect.any(Function),
+      getAllWordLists: expect.any(Function),
+      enableWordUsageExamples: expect.any(Function),
+      isGetSelectedTextEnabled: expect.any(Function),
+      newLexicalRequest: expect.any(Function),
+      getWordUsageExamplesQueryParams: expect.any(Function),
+      restoreGrammarIndex: expect.any(Function)
+    })
+  })
+
+  it('AppController - init: should create an "app" module in the Vuex store', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    expect(appC._store.hasModule('app')).toBeTruthy()
+  })
+
+  it('AppController - init: should create a Vuex module with the set of state items', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    expect(appC._store.state.app).toEqual({
+      currentLanguageID: expect.anything(),
+      currentLanguageCode: expect.any(String),
+      currentLanguageName: expect.any(String),
+      embedLibActive: false,
+      selectedText: '',
+      languageName: '',
+      languageCode: '',
+      selectedLookupLangCode: expect.any(String),
+      targetWord: '',
+      homonymDataReady: false,
+      wordUsageExampleEnabled: false,
+      linkedFeatures: [],
+      shortDefUpdateTime: 0,
+      fullDefUpdateTime: 0,
+      lexicalRequest: {
+        source: null,
+        startTime: 0,
+        endTime: 0,
+        outcome: null
       },
-      meaning: {
-        fullDefs: [
-          { text: 'fooText1' },
-          { text: 'fooText2' }
-        ]
-      }
+      inflectionsWaitState: false,
+      hasInflData: false,
+      morphDataReady: false,
+      translationsDataReady: false,
+
+      updatedGrammar: 0,
+
+      wordUsageExamplesReady: false,
+      wordUsageAuthorsReady: false,
+      hasWordListsData: false,
+      wordListUpdateTime: 0,
+      providers: [],
+      queryStillActive: false,
+
+      mouseMoveOverrideUpdate: 1
+    })
+  })
+
+  it('AppController - init: should create a Vuex module with the set of getters', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    expect(appC._store.getters['app/shortDefDataReady']).toBeDefined()
+    expect(appC._store.getters['app/fullDefDataReady']).toBeDefined()
+    expect(appC._store.getters['app/lexicalRequestInProgress']).toBeDefined()
+  })
+
+  it('AppController - init: should create a Vuex module with the set of mutations', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    expect(appC._store._mutations['app/setEmbedLibActive']).toBeDefined()
+    expect(appC._store._mutations['app/setCurrentLanguage']).toBeDefined()
+    expect(appC._store._mutations['app/setSelectedLookupLang']).toBeDefined()
+    expect(appC._store._mutations['app/setTextData']).toBeDefined()
+    expect(appC._store._mutations['app/lexicalRequestStarted']).toBeDefined()
+    expect(appC._store._mutations['app/resetWordData']).toBeDefined()
+    expect(appC._store._mutations['app/lexicalRequestFinished']).toBeDefined()
+    expect(appC._store._mutations['app/setHomonym']).toBeDefined()
+    expect(appC._store._mutations['app/setWordUsageExampleEnabled']).toBeDefined()
+    expect(appC._store._mutations['app/setInflData']).toBeDefined()
+    expect(appC._store._mutations['app/resetInflData']).toBeDefined()
+    expect(appC._store._mutations['app/setUpdatedGrammar']).toBeDefined()
+    expect(appC._store._mutations['app/setWordUsageExamplesReady']).toBeDefined()
+    expect(appC._store._mutations['app/setWordUsageAuthorsReady']).toBeDefined()
+    expect(appC._store._mutations['app/setWordLists']).toBeDefined()
+    expect(appC._store._mutations['app/shortDefsUpdated']).toBeDefined()
+    expect(appC._store._mutations['app/fullDefsUpdated']).toBeDefined()
+    expect(appC._store._mutations['app/setMorphDataReady']).toBeDefined()
+    expect(appC._store._mutations['app/setTranslDataReady']).toBeDefined()
+    expect(appC._store._mutations['app/setQueryStillActive']).toBeDefined()
+    expect(appC._store._mutations['app/setMouseMoveOverrideUpdate']).toBeDefined()
+  })
+
+  it('AppController - textSelectorParams: should return correct parameters for the "longTap" trigger on mobile', async () => {
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: 'longTap' })
+    await appC.init()
+    appC._platform = { isMobile: true, isDektop: false }
+    const [event, eventParams] = appC.textSelectorParams
+    expect(event.name).toBe('LongTap')
+    expect(eventParams).toBeUndefined()
+  })
+
+  it('AppController - textSelectorParams: should return correct parameters for the "longtap" trigger on mobile', async () => {
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: 'longtap' })
+    await appC.init()
+    appC._platform = { isMobile: true, isDektop: false }
+    const [event, eventParams] = appC.textSelectorParams
+    expect(event.name).toBe('LongTap')
+    expect(eventParams).toBeUndefined()
+  })
+
+  it('AppController - textSelectorParams: should return correct parameters for the null trigger on mobile', async () => {
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
+    await appC.init()
+    appC._platform = { isMobile: true, isDektop: false }
+    const [event, eventParams] = appC.textSelectorParams
+    expect(event.name).toBe('LongTap')
+    expect(eventParams).toBeUndefined()
+  })
+
+  it('AppController - textSelectorParams: should return correct parameters if no trigger is specified on mobile', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    appC._platform = { isMobile: true, isDektop: false }
+    const [event, eventParams] = appC.textSelectorParams
+    expect(event.name).toBe('LongTap')
+    expect(eventParams).toBeUndefined()
+  })
+
+  it('AppController - textSelectorParams: should return correct parameters if some other trigger is specified on mobile', async () => {
+    const triggerParams = {
+      a: 'value of A',
+      b: 'value of B'
     }
-    let res = uiC.formatFullDefinitions(testLexeme)
-
-    expect(res).toEqual('<h3>fooword</h3>\nfooText1<br>\nfooText2<br>\n')
+    appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: triggerParams })
+    await appC.init()
+    appC._platform = { isMobile: true, isDektop: false }
+    const [event, eventParams] = appC.textSelectorParams
+    expect(event.name).toBe('GenericEvt')
+    expect(eventParams).toBe(triggerParams)
   })
 
-  it('5 AppController - messages methods', () => {
-    uiC.message('foomessage1')
-
-    expect(uiC.panel.panelData.messages).toEqual([ 'foomessage1' ])
-
-    uiC.addMessage('foomessage2')
-    expect(uiC.panel.panelData.messages).toEqual([ 'foomessage1', 'foomessage2' ])
-
-    uiC.addImportantMessage('fooImportant1')
-    expect(uiC.panel.panelData.messages).toEqual([ 'foomessage1', 'foomessage2', 'fooImportant1' ])
-
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeTruthy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.panel.panelData.notification.text).toEqual('fooImportant1')
-
-    expect(uiC.popup.vi.messages).toEqual([ 'fooImportant1' ])
-
-    expect(uiC.popup.vi.popupData.notification.visible).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual('fooImportant1')
+  it('AppController - textSelectorParams: should return correct parameters if mousemove is enabled', async () => {
+    appC = AppController.jestCreate(uiState, { textQueryTriggerDesktop: null })
+    await appC.init()
+    appC._platform = { isMobile: false, isDektop: true }
+    Object.defineProperty(appC, 'isMousemoveEnabled', { get: () => true })
+    const [event, eventParams] = appC.textSelectorParams
+    expect(event.name).toBe('MouseMove')
+    expect(eventParams).toEqual(defaultMousemoveParams)
   })
 
-  it('6 AppController - showLanguageInfo methods', () => {
-    uiC.showLanguageInfo()
-    let languageName = AppController.getLanguageName(LMF.getLanguageIdFromCode(uiC.panel.options.items.preferredLanguage.currentValue)).name
+  it('AppController - textSelectorParams: should return correct parameters for the "dblClick" trigger on desktop', async () => {
+    appC = AppController.jestCreate(uiState, { textQueryTriggerDesktop: 'dblClick' })
+    await appC.init()
+    appC._platform = { isMobile: false, isDektop: true }
+    const [event, eventParams] = appC.textSelectorParams
+    expect(event.name).toBe('MouseDblClick')
+    expect(eventParams).toBeUndefined()
+  })
 
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeTruthy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeTruthy()
-    expect(uiC.panel.panelData.notification.text).toEqual(l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName))
+  it('AppController - textSelectorParams: should return correct parameters for the null trigger on desktop', async () => {
+    appC = AppController.jestCreate(uiState, { textQueryTriggerDesktop: null })
+    await appC.init()
+    appC._platform = { isMobile: false, isDektop: true }
+    const [event, eventParams] = appC.textSelectorParams
+    expect(event.name).toBe('MouseDblClick')
+    expect(eventParams).toBeUndefined()
+  })
 
-    expect(uiC.popup.vi.popupData.notification.visible).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual(l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName))
+  it('AppController - textSelectorParams: should return correct parameters if no trigger is specified on desktop', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    appC._platform = { isMobile: false, isDektop: true }
+    const [event, eventParams] = appC.textSelectorParams
+    expect(event.name).toBe('MouseDblClick')
+    expect(eventParams).toBeUndefined()
+  })
 
-    let testHomonym = {
+  it('AppController - textSelectorParams: should return correct parameters if some other trigger is specified on desktop', async () => {
+    const triggerParams = {
+      a: 'value of A',
+      b: 'value of B'
+    }
+    appC = AppController.jestCreate(uiState, { textQueryTriggerDesktop: triggerParams })
+    await appC.init()
+    appC._platform = { isMobile: false, isDektop: true }
+    const [event, eventParams] = appC.textSelectorParams
+    expect(event.name).toBe('GenericEvt')
+    expect(eventParams).toBe(triggerParams)
+  })
+
+  it('AppController - registerTextSelector: should call registerSelector on the selection controller', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    const registerSelectorSpy = jest.spyOn(appC._selc, 'registerSelector')
+    appC.registerTextSelector()
+    expect(registerSelectorSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - activateTextSelector: should call activateSelector on the selection controller', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    const activateSelectorSpy = jest.spyOn(appC._selc, 'activateSelector')
+    appC.activateTextSelector()
+    expect(activateSelectorSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - activateTextSelector: should call activateSelector on the selection controller', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    const activateSelectorSpy = jest.spyOn(appC._selc, 'activateSelector')
+    appC.activateTextSelector()
+    expect(activateSelectorSpy).toBeCalledTimes(1)
+  })
+
+  // TODO: Add tests for initUserDataManager() after it will be updated
+
+  it('AppController - activate: should change the state props', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    expect(appC.isActivated).toBeFalsy()
+    await appC.activate()
+    expect(appC.isActivated).toBeTruthy()
+    expect(appC.isDeactivated).toBeFalsy()
+  })
+
+  it('AppController - activate: should call init() if has not been instantiated', async () => {
+    appC = AppController.jestCreate(uiState)
+    const initSpy = jest.spyOn(appC, 'init')
+    await appC.activate()
+    expect(initSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - activate: should activate modules', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    const l10nModule = appC.getModule('l10n')
+    expect(l10nModule.isActivated).toBeFalsy()
+    await appC.activate()
+    expect(l10nModule.isActivated).toBeTruthy()
+  })
+
+  it('AppController - activate: should activate the UI controller', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    const uicActivateSpy = jest.spyOn(appC._uic, 'activate')
+    await appC.activate()
+    expect(uicActivateSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - activate: should activate listeners of the event controller', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    const evcActivateSpy = jest.spyOn(appC._evc, 'activateListeners')
+    await appC.activate()
+    expect(evcActivateSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - activate: should activate the selection controller', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    const selcActivateSpy = jest.spyOn(appC._selc, 'activate')
+    await appC.activate()
+    expect(selcActivateSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - getDefaultLangCode: should return a valid value of the language code', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    expect(appC.getDefaultLangCode()).toBe('lat')
+  })
+
+  it('AppController - getMouseMoveOverride: should return a default value of the mousemoveOverride', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    expect(appC.getMouseMoveOverride()).toBeFalsy()
+  })
+
+  it('AppController - getMouseMoveOverride: should return a value of the mousemoveOverride from options', async () => {
+    appC = AppController.jestCreate(uiState, { enableMouseMoveOverride: true })
+    await appC.init()
+    expect(appC.getMouseMoveOverride()).toBeTruthy()
+  })
+
+  it('AppController - clearMouseMoveOverride: should reset the mousemoveOverride option', async () => {
+    appC = AppController.jestCreate(uiState, { enableMouseMoveOverride: true })
+    await appC.init()
+    expect(appC.getMouseMoveOverride()).toBeTruthy()
+    appC.clearMouseMoveOverride()
+    expect(appC.getMouseMoveOverride()).toBeFalsy()
+  })
+
+  it('AppController - deactivate: should change the state props', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC.isActivated).toBeTruthy()
+    await appC.deactivate()
+    expect(appC.isActivated).toBeFalsy()
+    expect(appC.isDeactivated).toBeTruthy()
+  })
+
+  it('AppController - deactivate: should deactivate the UI state', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const deactivateSpy = jest.spyOn(uiState, 'deactivate')
+    await appC.deactivate()
+    expect(deactivateSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - deactivate: should deactivate modules', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const l10nModule = appC.getModule('l10n')
+    expect(l10nModule.isActivated).toBeTruthy()
+    await appC.deactivate()
+    expect(l10nModule.isActivated).toBeFalsy()
+  })
+
+  it('AppController - deactivate: should deactivate the UI controller', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const uicDeactivateSpy = jest.spyOn(appC._uic, 'deactivate')
+    await appC.deactivate()
+    expect(uicDeactivateSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - deactivate: should deactivate listeners of the event controller', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const evcDeactivateSpy = jest.spyOn(appC._evc, 'deactivateListeners')
+    await appC.deactivate()
+    expect(evcDeactivateSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - deactivate: should deactivate the selection controller', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const selcDeactivateSpy = jest.spyOn(appC._selc, 'deactivate')
+    await appC.deactivate()
+    expect(selcDeactivateSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - getEmbedLibWarning: should return an instance of an EmbedLibWarning component', () => {
+    const msg = 'Test message'
+    const instance = AppController.getEmbedLibWarning(msg)
+    expect(instance.constructor.name).toBe('VueComponent')
+    expect(instance.text).toBe(msg)
+  })
+
+  it('AppController - getLanguageName: should return a name of the language', () => {
+    const langCode = 'lat'
+    expect(AppController.getLanguageName(langCode)).toEqual({
+      code: langCode,
+      id: expect.anything(),
+      name: 'Latin'
+    })
+  })
+
+  it('AppController - showLanguageInfo: should create a notification message', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.notification.visible).toBeFalsy()
+    expect(appC._store.state.ui.notification.important).toBeFalsy()
+    expect(appC._store.state.ui.notification.text).toBeNull()
+    appC.showLanguageInfo()
+    expect(appC._store.state.ui.notification.visible).toBeTruthy()
+    expect(appC._store.state.ui.notification.important).toBeTruthy()
+    expect(appC._store.state.ui.notification.text).toMatch(/was not found/)
+  })
+
+  it('AppController - showErrorInfo: should create an error message', async () => {
+    const errorMessage = 'Error message'
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.notification.visible).toBeFalsy()
+    expect(appC._store.state.ui.notification.important).toBeFalsy()
+    expect(appC._store.state.ui.notification.text).toBeNull()
+    appC.showErrorInfo(errorMessage)
+    expect(appC._store.state.ui.notification.visible).toBeTruthy()
+    expect(appC._store.state.ui.notification.important).toBeTruthy()
+    expect(appC._store.state.ui.notification.text).toBe(errorMessage)
+  })
+
+  it('AppController - showImportantNotification: should create a notification message', async () => {
+    const notificationMessage = 'Notification message'
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.notification.visible).toBeFalsy()
+    expect(appC._store.state.ui.notification.important).toBeFalsy()
+    expect(appC._store.state.ui.notification.text).toBeNull()
+    appC.showImportantNotification(notificationMessage)
+    expect(appC._store.state.ui.notification.visible).toBeTruthy()
+    expect(appC._store.state.ui.notification.important).toBeTruthy()
+    expect(appC._store.state.ui.notification.text).toBe(notificationMessage)
+  })
+
+  it('AppController - sendFeature: should start a resource query', async () => {
+    const feature = {
+      propA: 'Value of A',
+      languageID: Constants.LANG_GREEK
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    appC.api.ui.hasModule = () => true // To emulate a presence of the UI modules
+    const startResourceQuerySpy = jest.fn(() => {})
+    appC.startResourceQuery = startResourceQuerySpy
+    appC.sendFeature(feature)
+    expect(startResourceQuerySpy).toBeCalledTimes(1)
+    expect(startResourceQuerySpy).toBeCalledWith(feature)
+  })
+
+  // TODO: Add tests for the newLexicalRequest() after its refactoring is complete
+
+  it('AppController - setEmbedLibActive: should set an active status of the embedded library', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.app.embedLibActive).toBeFalsy()
+    appC.setEmbedLibActive()
+    expect(appC._store.state.app.embedLibActive).toBeTruthy()
+  })
+
+  it('AppController - resetInflData: should clear an inflection data', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    appC._inflectionsViewSet = []
+    appC._store.commit('app/setInflData', true)
+    appC.resetInflData()
+    expect(appC._inflectionsViewSet).toBeNull()
+    expect(appC._store.state.app.inflectionsWaitState).toBeFalsy()
+    expect(appC._store.state.app.hasInflData).toBeFalsy()
+  })
+
+  it('AppController - updateProviders: should set provider information', async () => {
+    const provider1 = { uri: 'url1' }
+    const provider2 = { uri: 'url2' }
+    const provider3 = { uri: 'url3' }
+    const homonym = {
       lexemes: [
         {
-          isPopulated: function () { return true },
-          languageID: LMF.getLanguageIdFromCode('lat')
-        }
-      ]
-    }
-    uiC.showLanguageInfo(testHomonym)
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeFalsy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeFalsy()
-
-    expect(uiC.popup.vi.popupData.notification.visible).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeFalsy()
-
-    // in this case, the language shown in the language notification should be
-    // the language actually tried, not the default from options
-    let testHomonymNoLexemes = {
-      languageID: LMF.getLanguageIdFromCode('grc')
-    }
-    uiC.showLanguageInfo(testHomonymNoLexemes)
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeTruthy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual(l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(AppController.getLanguageName(testHomonymNoLexemes.languageID).name))
-  })
-
-  it('7 AppController - showStatusInfo methods', () => {
-    uiC.showStatusInfo('fooSelectionText', latID)
-    expect(uiC.panel.panelData.status.languageName).toEqual('Latin')
-    expect(uiC.panel.panelData.status.selectedText).toEqual('fooSelectionText')
-
-    expect(uiC.popup.vi.popupData.status.languageName).toEqual('Latin')
-    expect(uiC.popup.vi.popupData.status.selectedText).toEqual('fooSelectionText')
-  })
-
-  it('8 AppController - showErrorInfo methods', () => {
-    uiC.showErrorInfo('fooError')
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeTruthy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.panel.panelData.notification.text).toEqual('fooError')
-  })
-
-  it('9 AppController - showImportantNotification methods', () => {
-    uiC.showImportantNotification('fooImportant')
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeTruthy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.panel.panelData.notification.text).toEqual('fooImportant')
-
-    expect(uiC.popup.vi.popupData.notification.visible).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual('fooImportant')
-  })
-
-  it('10 AppController - changeTab methods', () => {
-    uiC.changeTab('options')
-
-    for (let tab in uiC.panel.panelData.tabs) {
-      if (tab === 'options') {
-        expect(uiC.panel.panelData.tabs[tab]).toBeTruthy()
-      } else {
-        expect(uiC.panel.panelData.tabs[tab]).toBeFalsy()
-      }
-    }
-  })
-
-  it('11 AppController - setTargetRect methods', () => {
-    expect(uiC.popup.vi.popupData.targetRect).toEqual({})
-
-    let testRect = {
-      left: 10,
-      top: 10
-    }
-    uiC.setTargetRect(testRect)
-
-    expect(uiC.popup.vi.popupData.targetRect).toEqual(testRect)
-  })
-
-  it('12 AppController - newLexicalRequest methods', () => {
-    let oldRT = uiC.popup.vi.popupData.requestStartTime
-
-    uiC.newLexicalRequest(latID)
-    expect(uiC.popup.vi.popupData.requestStartTime).toBeGreaterThan(oldRT)
-
-    expect(uiC.popup.vi.definitions).toEqual({})
-    expect(uiC.popup.vi.translations).toEqual({})
-    expect(uiC.popup.vi.lexemes).toEqual([])
-    expect(uiC.popup.vi.popupData.providers).toEqual([])
-
-    expect(uiC.popup.vi.popupData.defDataReady).toBeFalsy()
-    expect(uiC.popup.vi.popupData.inflDataReady).toBeFalsy()
-    expect(uiC.popup.vi.popupData.morphDataReady).toBeFalsy()
-    expect(uiC.popup.vi.popupData.translationsDataReady).toBeFalsy()
-    expect(uiC.popup.vi.popupData.showProviders).toBeFalsy()
-    expect(uiC.popup.vi.popupData.hasTreebank).toBeFalsy()
-
-    expect(uiC.popup.vi.popupData.notification.visible).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual('')
-
-    expect(uiC.popup.vi.popupData.status.languageName).toEqual('')
-    expect(uiC.popup.vi.popupData.status.selectedText).toEqual('')
-
-    expect(uiC.popup.vi.visible).toBeTruthy()
-
-    expect(uiC.panel.panelData.shortDefinitions).toEqual([])
-    expect(uiC.panel.panelData.fullDefinitions).toEqual('')
-    expect(uiC.panel.panelData.messages).toEqual('')
-    expect(uiC.panel.panelData.treebankComponentData.data.word).toEqual({})
-    expect(uiC.panel.panelData.treebankComponentData.visible).toBeFalsy()
-
-    expect(uiC.panel.panelData.notification.visible).toBeFalsy()
-    expect(uiC.panel.panelData.notification.important).toBeFalsy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.panel.panelData.notification.text).toEqual('')
-
-    expect(uiC.panel.panelData.status.languageName).toEqual('')
-    expect(uiC.panel.panelData.status.selectedText).toEqual('')
-
-    expect(uiC.panel.visible).toBeFalsy()
-    expect(uiC.panel.panelData.tabs.definitions).toBeTruthy()
-  })
-
-  it('13 AppController - updateMorphology, updateProviders methods', () => {
-    let testHomonymEmpty = {
-      lexemes: []
-    }
-
-    let testHomonym = {
-      lexemes: [
+          provider: provider1
+        },
         {
-          sort: function () { },
-          lemma: {
-            languageID: latID
-          },
           meaning: {
             shortDefs: [
               {
-                provider: 'fooProvider1'
+                provider: provider2
               }
             ]
-          },
-          provider: 'fooProvider2'
-        }
-      ]
-    }
-    uiC.popup.vi.popupData.updates = 1
-
-    uiC.updateMorphology(testHomonymEmpty)
-
-    expect(uiC.popup.vi.linkedFeatures).toEqual([])
-    expect(uiC.popup.vi.popupData.updates).toEqual(2)
-    expect(uiC.popup.vi.popupData.providers).toEqual([])
-
-    uiC.updateMorphology(testHomonym)
-
-    expect(uiC.popup.vi.linkedFeatures).toEqual(LMF.getLanguageModel(latID).grammarFeatures())
-    expect(uiC.popup.vi.lexemes).toEqual(testHomonym.lexemes)
-    expect(uiC.popup.vi.popupData.morphDataReady).toBeTruthy()
-    expect(uiC.panel.panelData.lexemes).toEqual(testHomonym.lexemes)
-    expect(uiC.popup.vi.popupData.updates).toEqual(3)
-    expect(uiC.popup.vi.popupData.providers).toEqual(['fooProvider2', 'fooProvider1'])
-  })
-
-  it('14 AppController - updateGrammar methods', () => {
-    uiC.updateGrammar([])
-
-    let message = l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND.get()
-
-    expect(uiC.panel.panelData.grammarRes).toEqual({ provider: message })
-
-    uiC.updateGrammar([ 'fooUrl1', 'fooUrl2' ])
-    expect(uiC.panel.panelData.grammarRes).toEqual('fooUrl1')
-  })
-
-  it('15 AppController - updateDefinitions methods', () => {
-    let testHomonym = {
-      lexemes: [
+          }
+        },
         {
           lemma: {
-            features: {}
-          },
-          meaning: {
-            shortDefs: [],
-            fullDefs: []
+            translation: {
+              provider: provider3
+            }
           }
         }
       ]
     }
-    uiC.popup.vi.popupData.updates = 1
-    uiC.updateDefinitions(testHomonym)
-
-    expect(uiC.popup.vi.definitions).toEqual({})
-    expect(uiC.popup.vi.popupData.defDataReady).toBeFalsy()
-    expect(uiC.popup.vi.popupData.updates).toEqual(2)
-
-    testHomonym.lexemes[0].lemma = {
-      ID: 'f1',
-      word: 'fooword',
-      features: {
-        fooFeature: {}
-      }
-    }
-
-    uiC.updateDefinitions(testHomonym)
-    expect(uiC.popup.vi.definitions.f1).toEqual([new Definition('No definition found.', 'en-US', 'text/plain', 'fooword')])
-
-    testHomonym.lexemes[0].meaning.fullDefs = [
-      { text: 'fooFullDefinition' }
-    ]
-
-    uiC.updateDefinitions(testHomonym)
-
-    expect(uiC.panel.panelData.fullDefinitions).toContain('fooFullDefinition')
-    expect(uiC.popup.vi.popupData.defDataReady).toBeTruthy()
-
-    testHomonym.lexemes[0].meaning.shortDefs = [
-      { text: 'fooShortDefinition' }
-    ]
-
-    uiC.updateDefinitions(testHomonym)
-    expect(uiC.popup.vi.definitions).toEqual({ f1: [{ text: 'fooShortDefinition' }] })
-    expect(uiC.panel.panelData.shortDefinitions).toEqual([{ text: 'fooShortDefinition' }])
-
-    let testShortDef = {
-      text: 'fooShortDefinition',
-      language: 'en-US',
-      format: 'text/plain',
-      lemmaText: 'fooword',
-
-      provider: { uri: 'fooprovideruri' }
-    }
-    testHomonym.lexemes[0].meaning.shortDefs = [ testShortDef ]
-    testHomonym.lexemes[0].provider = { uri: 'fooprovideruri' }
-
-    let testDefinition = new Definition('fooShortDefinition', 'en-US', 'text/plain', 'fooword')
-    uiC.updateDefinitions(testHomonym)
-
-    expect(uiC.popup.vi.definitions).toEqual({ f1: [ testDefinition ] })
-    expect(uiC.panel.panelData.shortDefinitions).toEqual([ testShortDef ])
-
-    testHomonym.lexemes[0].provider = { uri: 'fooprovideruri1' }
-    uiC.updateDefinitions(testHomonym)
-
-    expect(uiC.popup.vi.definitions).toEqual({ f1: [ testShortDef ] })
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    appC.updateProviders(homonym)
+    expect(appC._store.state.app.providers).toEqual([provider1, provider2, provider3])
   })
 
-  it('16 AppController - updateTranslations methods', () => {
-    let testHomonym = {
+  it('AppController - updateGrammar: should update the grammar data', async () => {
+    const urlOne = 'url1'
+    const urlTwo = 'url2'
+    const data = {
+      languageID: Constants.LANG_LATIN,
+      urls: [
+        urlTwo,
+        urlOne
+      ]
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.app.updatedGrammar).toBe(0)
+    appC.updateGrammar(data)
+    expect(appC.api.app.grammarData).toEqual({
+      lat: urlTwo
+    })
+    // Should increase a grammar update counter
+    expect(appC._store.state.app.updatedGrammar).toBe(1)
+  })
+
+  it('AppController - initGrammar: should initialize the grammar data', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.app.updatedGrammar).toBe(0)
+    appC.initGrammar('lat')
+    expect(appC.api.app.grammarData).toEqual({
+      lat: null
+    })
+    // Should increase a grammar update counter
+    expect(appC._store.state.app.updatedGrammar).toBe(1)
+  })
+
+  it('AppController - updateTranslations: should set the translations data', async () => {
+    const provider1 = { uri: 'url1' }
+    const provider2 = { uri: 'url2' }
+    const provider3 = { uri: 'url3' }
+    const homonym = {
       lexemes: [
         {
-          lemma: {}
+          provider: provider1
+        },
+        {
+          meaning: {
+            shortDefs: [
+              {
+                provider: provider2
+              }
+            ]
+          }
+        },
+        {
+          lemma: {
+            translation: {
+              provider: provider3
+            }
+          }
         }
       ]
     }
-    uiC.popup.vi.popupData.updates = 1
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const updateProvidersSpy = jest.spyOn(appC, 'updateProviders')
+    expect(appC._store.state.app.translationsDataReady).toBeFalsy()
+    appC.updateTranslations(homonym)
+    expect(appC._store.state.app.translationsDataReady).toBeTruthy()
+    expect(updateProvidersSpy).toBeCalledTimes(1)
+    expect(updateProvidersSpy).toBeCalledWith(homonym)
+  })
 
-    uiC.updateTranslations(testHomonym)
+  it('AppController - notifyExperimental: should set a notification if the language is experimental', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.notification.visible).toBeFalsy()
+    expect(appC._store.state.ui.notification.important).toBeFalsy()
+    expect(appC._store.state.ui.notification.text).toBeNull()
+    appC.notifyExperimental(Constants.LANG_GEEZ)
+    expect(appC._store.state.ui.notification.visible).toBeTruthy()
+    expect(appC._store.state.ui.notification.important).toBeTruthy()
+    expect(appC._store.state.ui.notification.text).toMatch(/Support for .+ is experimental/)
+  })
 
-    expect(uiC.popup.vi.translations).toEqual({})
-    expect(uiC.popup.vi.popupData.translationsDataReady).toBeTruthy()
-    expect(uiC.popup.vi.popupData.updates).toEqual(2)
+  it('AppController - notifyExperimental: should do nothing for non-experimental language', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.notification.visible).toBeFalsy()
+    expect(appC._store.state.ui.notification.important).toBeFalsy()
+    expect(appC._store.state.ui.notification.text).toBeNull()
+    appC.notifyExperimental(Constants.LANG_LATIN)
+    expect(appC._store.state.ui.notification.visible).toBeFalsy()
+    expect(appC._store.state.ui.notification.important).toBeFalsy()
+    expect(appC._store.state.ui.notification.text).toBeNull()
+  })
 
-    testHomonym.lexemes[0].lemma = {
-      ID: 'f1',
-      translation: 'footranslation'
+  it('AppController - updateLanguage: should update language information in the Vuex store', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.app.currentLanguageID).toBe(Constants.LANG_LATIN)
+    expect(appC._store.state.app.currentLanguageName).toBe('Latin')
+    expect(appC._store.state.app.currentLanguageCode).toBe('lat')
+    appC.updateLanguage(Constants.LANG_GREEK)
+    expect(appC._store.state.app.currentLanguageID).toBe(Constants.LANG_GREEK)
+    expect(appC._store.state.app.currentLanguageName).toBe('Greek')
+    expect(appC._store.state.app.currentLanguageCode).toBe('grc')
+  })
+
+  it('AppController - updateLanguage: should call corresponding methods', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const notifyExperimentalSpy = jest.spyOn(appC, 'notifyExperimental')
+    const setItemSpy = jest.spyOn(uiState, 'setItem')
+    const resetInflData = jest.spyOn(appC, 'resetInflData')
+    appC.updateLanguage(Constants.LANG_GREEK)
+    expect(appC._store.state.app.currentLanguageID).toBe(Constants.LANG_GREEK)
+    expect(appC._store.state.app.currentLanguageName).toBe('Greek')
+    expect(appC._store.state.app.currentLanguageCode).toBe('grc')
+    expect(notifyExperimentalSpy).toBeCalledTimes(1)
+    expect(setItemSpy).toBeCalledTimes(1)
+    expect(setItemSpy).toBeCalledWith('currentLanguage', 'grc')
+    expect(resetInflData).toBeCalledTimes(1)
+  })
+
+  it('AppController - restoreGrammarIndex: should start a resource query', async () => {
+    const langID = Constants.LANG_GREEK
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const startResourceQuerySpy = jest.spyOn(appC, 'startResourceQuery')
+    appC.restoreGrammarIndex(langID)
+    expect(startResourceQuerySpy).toBeCalledTimes(1)
+    expect(startResourceQuerySpy).toBeCalledWith({ type: 'table-of-contents', value: '', languageID: langID })
+  })
+
+  it('AppController - updateLemmaTranslations: should set a lemma translation language', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const setLemmaTranslationLangSpy = jest.spyOn(appC.api.lexis, 'setLemmaTranslationLang')
+    appC.updateLemmaTranslations()
+    expect(setLemmaTranslationLangSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - updateWordUsageExamples: should update the usage examples data', async () => {
+    const data = {
+      propA: 'Value of A'
     }
-
-    uiC.updateTranslations(testHomonym)
-
-    expect(uiC.popup.vi.translations).toEqual({ f1: 'footranslation' })
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.messages).toEqual([])
+    expect(appC._store.state.app.wordUsageExamplesReady).toBeFalsy()
+    appC.updateWordUsageExamples(data)
+    expect(appC._store.state.ui.messages).toEqual(['Word Usage Examples are received'])
+    expect(appC.api.app.wordUsageExamples).toBe(data)
+    expect(appC._store.state.app.wordUsageExamplesReady).toBeTruthy()
   })
 
-  it('17 AppController - updatePageAnnotationData, updateWordAnnotationData methods', () => {
-    uiC.updatePageAnnotationData({ treebank: {} })
-    expect(uiC.panel.panelData.treebankComponentData.data.page).toEqual({})
-
-    uiC.updatePageAnnotationData({ treebank: { page: 'foopage' } })
-    expect(uiC.panel.panelData.treebankComponentData.data.page).toEqual('foopage')
-
-    uiC.updateWordAnnotationData()
-    expect(uiC.panel.panelData.treebankComponentData.data.word).toEqual({})
-    expect(uiC.popup.vi.popupData.hasTreebank).toBeFalsy()
-
-    uiC.updateWordAnnotationData({})
-    expect(uiC.panel.panelData.treebankComponentData.data.word).toEqual({})
-    expect(uiC.popup.vi.popupData.hasTreebank).toBeFalsy()
-
-    uiC.updateWordAnnotationData({ treebank: { word: 'fooword' } })
-    expect(uiC.panel.panelData.treebankComponentData.data.word).toEqual('fooword')
-    expect(uiC.popup.vi.popupData.hasTreebank).toBeTruthy()
-  })
-
-  it('18 AppController - updateLanguage', () => {
-    uiC.panel.requestGrammar = jest.fn(function () { })
-    uiC.updateLanguage(Constants.LANG_LATIN)
-
-    expect(uiC.panel.requestGrammar).toHaveBeenCalled()
-    expect(uiC.panel.panelData.infoComponentData.languageName).toEqual('Latin')
-    expect(uiC.popup.vi.popupData.currentLanguageName).toEqual('Latin')
-
-    uiC.updateLanguage(Constants.LANG_ARABIC)
-    expect(uiC.panel.panelData.inflectionComponentData.enabled).toBeFalsy()
-  })
-
-  // TODO: Rewrite after updateInflection changes are finalized
-  it.skip('19 AppController - updateInflections', () => {
-    let testHomonym = {
-      languageID: latID
+  it('AppController - getWordUsageData: starts a getWordUsageData request', async () => {
+    const homonym = {
+      languageID: Constants.LANG_GREEK
     }
-    let testInflectionData = {
-      hasInflectionSets: true
+    const params = {
+      paramA: 'Value of A'
     }
-
-    uiC.updateInflections(testHomonym)
-
-    expect(uiC.panel.panelData.inflectionComponentData.enabled).toBeTruthy()
-    expect(uiC.panel.panelData.inflectionComponentData.inflectionData).toEqual(testInflectionData)
-    expect(uiC.popup.vi.popupData.inflDataReady).toBeTruthy()
-
-    testInflectionData.hasInflectionSets = false
-
-    uiC.updateInflections(testInflectionData, testHomonym)
-    expect(uiC.popup.vi.popupData.inflDataReady).toBeFalsy()
-
-    testHomonym.languageID = araID
-    testInflectionData.hasInflectionSets = true
-
-    uiC.updateInflections(testInflectionData, testHomonym)
-    expect(uiC.panel.panelData.inflectionComponentData.enabled).toBeFalsy()
-    expect(uiC.popup.vi.popupData.inflDataReady).toBeFalsy()
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const enableWordUsageExamplesSpy = jest.spyOn(appC, 'enableWordUsageExamples')
+    const getWordUsageDataSpy = jest.spyOn(LexicalQuery, 'getWordUsageData')
+    await appC.getWordUsageData(homonym, params)
+    expect(appC._store.state.app.wordUsageExamplesReady).toBeFalsy()
+    expect(enableWordUsageExamplesSpy).toBeCalledTimes(1)
+    expect(enableWordUsageExamplesSpy).toBeCalledWith({ languageID: homonym.languageID }, 'onDemand')
+    expect(getWordUsageDataSpy).toBeCalledTimes(1)
+    expect(getWordUsageDataSpy).toBeCalledWith(homonym, null, params)
   })
 
-  it('20 AppController - clear, open', () => {
-    uiC.panel.clearContent = jest.fn(() => { })
-    uiC.popup.vi.clearContent = jest.fn(() => { })
-
-    uiC.clear()
-    expect(uiC.panel.clearContent).toHaveBeenCalled()
-    expect(uiC.popup.vi.clearContent).toHaveBeenCalled()
-
-    uiC.panel.panelData.isOpen = false
-    uiC.panel.visible = false
-    uiC.popup.vi.visible = false
-
-    uiC.featureOptions.items.uiType.setValue('popup')
-    uiC.featureOptions.uiTypePanel = 'panel'
-
-    uiC.open()
-    expect(uiC.panel.panelData.isOpen).toBeFalsy()
-    expect(uiC.popup.vi.visible).toBeTruthy()
-
-    //* **********************************************
-    uiC.panel.isOpen = true
-
-    uiC.open()
-    expect(uiC.panel.panelData.isOpen).toBeFalsy()
-    expect(uiC.popup.vi.visible).toBeTruthy()
-
-    //* **********************************************
-    uiC.featureOptions.items.uiType.setValue('panel')
-
-    uiC.open()
-    expect(uiC.panel.panelData.isOpen).toBeTruthy()
-    expect(uiC.popup.vi.visible).toBeTruthy()
+  it('AppController - enableWordUsageExamples: should return a truthy value when all conditions are met', async () => {
+    const textSelector = {
+      languageID: Constants.LANG_LATIN
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    appC.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue = true
+    expect(appC.enableWordUsageExamples(textSelector, 'onDemand')).toBeTruthy()
   })
 
-  it.skip('21 AppController - setRootComponentClasses', () => {
-    let emptyPromise = () => { return new Promise((resolve, reject) => {}) }
-    let stAdapter = { domain: 'alpheios-feature-options', set: emptyPromise }
-
-    document.querySelector('html').style['font-size'] = '16px'
-
-    let uiOptions1 = new Options(UIOptionDefaults, LocalStorageArea)
-    uiOptions1.items.skin = undefined
-    uiOptions1.items.fontSize = undefined
-    uiOptions1.items.colorSchema = undefined
-
-    let uiC1 = new AppController(state, featureOptions, resourceOptions, uiOptions1)
-    uiC1.setRootComponentClasses()
-    let resClasses = ['alpheios-irregular-base-font-size', 'auk--default']
-    expect(uiC1.popup.vi.popupData.classes).toEqual(resClasses)
-    expect(uiC1.panel.panelData.classes).toEqual(resClasses)
-
-    //* ****************************************************************
-    uiOptions1.items.skin = new OptionItem({ defaultValue: 'fooskin' }, 'skin', stAdapter)
-
-    let uiC2 = new AppController(state, featureOptions, resourceOptions, uiOptions1)
-    uiC2.setRootComponentClasses()
-    resClasses.push('auk--fooskin')
-
-    expect(uiC2.popup.vi.popupData.classes).toEqual(resClasses)
-    expect(uiC2.panel.panelData.classes).toEqual(resClasses)
-
-    //* ****************************************************************
-    uiC.uiOptions.items.fontSize = new OptionItem({ defaultValue: 'foofontsize' }, 'fontSize', stAdapter)
-
-    uiC.setRootComponentClasses()
-
-    resClasses.push(`alpheios-font_foofontsize_class`)
-
-    expect(uiC.popup.vi.popupData.classes).toEqual(resClasses)
-    expect(uiC.panel.panelData.classes).toEqual(resClasses)
-
-    //* ****************************************************************
-    uiC.uiOptions.items.colorSchema = new OptionItem({ defaultValue: 'foocolorSchema' }, 'colorSchema', stAdapter)
-
-    uiC.setRootComponentClasses()
-    resClasses.push(`alpheios-color_schema_foocolorSchema_class`)
-
-    expect(uiC.popup.vi.popupData.classes).toEqual(resClasses)
-    expect(uiC.panel.panelData.classes).toEqual(resClasses)
+  it('AppController - enableWordUsageExamples: should return a truthy value when all conditions are met for "onLexicalQuery" type', async () => {
+    const textSelector = {
+      languageID: Constants.LANG_LATIN
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    appC.api.settings.getFeatureOptions().items.wordUsageExamplesON.currentValue = 'onLexicalQuery'
+    appC.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue = true
+    expect(appC.enableWordUsageExamples(textSelector, 'onLexicalQuery')).toBeTruthy()
   })
 
-  it('22 AppController - updateStyleClass', () => {
-    uiC.popup.vi.popupData.classes = []
-    uiC.panel.panelData.classes = []
-
-    uiC.updateStyleClass('alpheios-font_', 'footype')
-
-    expect(uiC.popup.vi.popupData.classes).toEqual([])
-    expect(uiC.panel.panelData.classes).toEqual([])
-
-    uiC.popup.vi.popupData.classes = [ 'alpheios-font_footype2_class' ]
-    uiC.panel.panelData.classes = [ 'alpheios-font_footype2_class' ]
-
-    uiC.updateStyleClass('alpheios-font_', 'footype2')
-    expect(uiC.popup.vi.popupData.classes).toEqual([ 'alpheios-font_footype2_class' ])
-    expect(uiC.panel.panelData.classes).toEqual([ 'alpheios-font_footype2_class' ])
+  it('AppController - enableWordUsageExamples: should return a falsy value if language is not Latin', async () => {
+    const textSelector = {
+      languageID: Constants.LANG_GREEK
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    appC.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue = true
+    expect(appC.enableWordUsageExamples(textSelector, 'onDemand')).toBeFalsy()
   })
 
-  it('23 AppController - updateFontSizeClass, updateColorSchemaClass, changeSkin', () => {
-    uiC.updateStyleClass = jest.fn(function () { })
-    uiC.setRootComponentClasses = jest.fn(function () { })
-
-    uiC.updateFontSizeClass('footype')
-    expect(uiC.updateStyleClass).toHaveBeenCalled()
-
-    uiC.updateColorSchemaClass('footype')
-    expect(uiC.updateStyleClass).toHaveBeenCalled()
-
-    uiC.changeSkin()
-    expect(uiC.setRootComponentClasses).toHaveBeenCalled()
+  it('AppController - enableWordUsageExamples: should return a falsy value if enableWordUsageExamples is not set', async () => {
+    const textSelector = {
+      languageID: Constants.LANG_LATIN
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    appC.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue = false
+    expect(appC.enableWordUsageExamples(textSelector, 'onDemand')).toBeFalsy()
   })
 
-  it('24 AppController - panel methods - setPositionTo, attachToLeft, attachToRight', () => {
-    uiC.panel.setPositionTo('right')
-
-    expect(uiC.panel.options.items.panelPosition.currentValue).toEqual('right')
-
-    uiC.panel.attachToLeft()
-    expect(uiC.panel.options.items.panelPosition.currentValue).toEqual('left')
-
-    uiC.panel.attachToRight()
-    expect(uiC.panel.options.items.panelPosition.currentValue).toEqual('right')
+  it('AppController - enableWordUsageExamples: should return a falsy value when not all conditions are met for "onLexicalQuery" type', async () => {
+    const textSelector = {
+      languageID: Constants.LANG_LATIN
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    appC.api.settings.getFeatureOptions().items.wordUsageExamplesON.currentValue = 'onDemand'
+    appC.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue = true
+    expect(appC.enableWordUsageExamples(textSelector, 'onLexicalQuery')).toBeFalsy()
   })
 
-  it('25 AppController - panel methods - isOpen, toggle, requestGrammar, showMessage, appendMessage, clearMessages', () => {
-    uiC.panel.open = jest.fn(() => { })
-    uiC.panel.close = jest.fn(() => { })
-
-    uiC.state.isPanelOpen = () => true
-
-    expect(uiC.panel.isOpen()).toBeTruthy()
-
-    uiC.panel.toggle()
-
-    uiC.state.isPanelOpen = () => false
-
-    expect(uiC.panel.isOpen()).toBeFalsy()
-
-    uiC.panel.toggle()
-
-    expect(uiC.panel.open).toHaveBeenCalledTimes(1)
-    expect(uiC.panel.close).toHaveBeenCalledTimes(1)
-
-    ResourceQuery.create = jest.fn(() => { return { getData: () => {} } })
-
-    uiC.panel.requestGrammar()
-    expect(ResourceQuery.create).toHaveBeenCalled()
-
-    uiC.panel.panelData.messages = []
-    uiC.panel.showMessage('fooMessage')
-    expect(uiC.panel.panelData.messages).toEqual([ 'fooMessage' ])
-
-    uiC.panel.appendMessage('fooMessage1')
-    expect(uiC.panel.panelData.messages).toEqual([ 'fooMessage', 'fooMessage1' ])
-
-    uiC.panel.clearMessages()
-    expect(uiC.panel.panelData.messages).toEqual([])
+  it('AppController - getWordUsageExamplesQueryParams: should return an object if word usage examples are enabled', async () => {
+    const textSelector = {
+      languageID: Constants.LANG_LATIN
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    appC.api.settings.getFeatureOptions().items.wordUsageExamplesON.currentValue = 'onLexicalQuery'
+    appC.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue = true
+    appC.getWordUsageExamplesQueryParams(textSelector)
+    expect(appC.getWordUsageExamplesQueryParams(textSelector)).toEqual({
+      paginationMax: appC.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
+      paginationAuthMax: appC.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
+    })
   })
 
-  it('26 AppController - panel methods - settingChange', () => {
-    uiC.panel.settingChange('locale', 'French')
-    expect(uiC.panel.options.items.locale.currentValue).toEqual('fr')
-
-    let setLocaleFN = jest.fn(() => { })
-    uiC.presenter = { setLocale: setLocaleFN }
-    uiC.panel.settingChange('locale', 'English (US)')
-    expect(uiC.presenter.setLocale).toHaveBeenCalled()
-
-    uiC.updateLanguage = jest.fn(() => { })
-    uiC.panel.settingChange('preferredLanguage', 'Greek')
-    expect(uiC.panel.options.items.preferredLanguage.currentValue).toEqual('grc')
-    expect(uiC.updateLanguage).toHaveBeenCalled()
-
-    uiC.updateVerboseMode = jest.fn(() => { })
-    uiC.panel.settingChange('verboseMode', 'Normal')
-    expect(uiC.panel.options.items.verboseMode.currentValue).toEqual('normal')
-    expect(uiC.updateVerboseMode).toHaveBeenCalled()
+  it('AppController - getWordUsageExamplesQueryParams: should null if word usage examples are disabled', async () => {
+    const textSelector = {
+      languageID: Constants.LANG_LATIN
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    appC.api.settings.getFeatureOptions().items.wordUsageExamplesON.currentValue = 'onDemand'
+    appC.api.settings.getFeatureOptions().items.enableWordUsageExamples.currentValue = false
+    appC.getWordUsageExamplesQueryParams(textSelector)
+    expect(appC.getWordUsageExamplesQueryParams(textSelector)).toBeNull()
   })
 
-  it('27 AppController - panel methods - resourceSettingChange', () => {
-    let testName = 'lexicons-grc'
-    let testValues = ['Liddell, Scott, Jones']
-
-    let checkValues = uiC.resourceOptions.items.lexicons.filter((f) => f.name === testName)[0].values.filter(f => testValues.indexOf(f.text) > -1)
-    uiC.panel.resourceSettingChange(testName, testValues)
-    expect(uiC.panel.resourceOptions.items.lexicons.filter((f) => f.name === testName)[0].currentValue).toEqual(checkValues.map(f => f.value))
+  it('AppController - handleEscapeKey: should close the UI if the UI is active', async () => {
+    const event = {}
+    const nativeEvent = {
+      keyCode: 27
+    }
+    const uiState = BaseTestHelp.createUIState({ isActive: () => true })
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const closeUISpy = jest.spyOn(appC.api.ui, 'closeUI')
+    appC.handleEscapeKey(event, nativeEvent)
+    expect(closeUISpy).toBeCalledTimes(1)
   })
 
-  it('28 AppController - panel methods - uiOptionChange', () => {
-    uiC.updateFontSizeClass = jest.fn(() => { })
-    uiC.updateColorSchemaClass = jest.fn(() => { })
-    uiC.changeSkin = jest.fn(() => { })
-    uiC.popup.close = jest.fn(() => { })
-    uiC.popup.open = jest.fn(() => { })
-
-    uiC.panel.uiOptionChange('fontSize', 'medium')
-    expect(uiC.uiOptions.items.fontSize.currentValue).toEqual('medium')
-    expect(uiC.updateFontSizeClass).toHaveBeenCalled()
-
-    uiC.panel.uiOptionChange('colorSchema', 'light')
-    expect(uiC.uiOptions.items.colorSchema.currentValue).toEqual('light')
-    expect(uiC.updateColorSchemaClass).toHaveBeenCalled()
-
-    uiC.panel.uiOptionChange('skin', 'Alpheios Default Skin')
-    expect(uiC.uiOptions.items.skin.currentValue).toEqual('default')
-    expect(uiC.changeSkin).toHaveBeenCalled()
-
-    uiC.panel.uiOptionChange('popup', 'Default Popup Layout')
-    // expect(uiC.popup.close).toHaveBeenCalled()
-    expect(uiC.popup.currentPopupComponent).toEqual('popup')
-    // expect(uiC.popup.open).toHaveBeenCalled()
+  it('AppController - handleEscapeKey: should do nothing if the UI is inactive', async () => {
+    const event = {}
+    const nativeEvent = {
+      keyCode: 27
+    }
+    // Redefine `isActive()` method of the UI state so it will be reported as inactive to the UI controller.
+    // This will allow us to emulate the inactive state of the `uiState` object.
+    const uiState = BaseTestHelp.createUIState({ isActive: () => false })
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const closeUISpy = jest.spyOn(appC.api.ui, 'closeUI')
+    appC.handleEscapeKey(event, nativeEvent)
+    expect(closeUISpy).toBeCalledTimes(0)
   })
 
-  it('29 AppController - popup methods - showMessage, clearMessages', () => {
-    uiC.popup.vi.showMessage('fooMessage')
-    expect(uiC.popup.vi.messages).toEqual([ 'fooMessage' ])
-
-    uiC.popup.vi.appendMessage('fooMessage1')
-    expect(uiC.popup.vi.messages).toEqual([ 'fooMessage', 'fooMessage1' ])
-
-    uiC.popup.vi.clearMessages()
-    expect(uiC.popup.vi.messages).toEqual([])
+  it('AppController - handleEscapeKey: should do nothing if not the ESC key is pressed', async () => {
+    const event = {}
+    const nativeEvent = {
+      keyCode: 10
+    }
+    const uiState = BaseTestHelp.createUIState({ isActive: () => true })
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const closeUISpy = jest.spyOn(appC.api.ui, 'closeUI')
+    appC.handleEscapeKey(event, nativeEvent)
+    expect(closeUISpy).toBeCalledTimes(0)
   })
 
-  it('30 AppController - popup methods - close', () => {
-    uiC.popup.vi.visible = true
-    uiC.popup.vi.close()
-    expect(uiC.popup.vi.visible).toBeFalsy()
+  it('AppController - startResourceQuery: should start a resource query', async () => {
+    const feature = {
+      propA: 'Value of A',
+      languageID: Constants.LANG_GREEK
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const resourceQuerySpy = jest.spyOn(ResourceQuery, 'create')
+    appC.startResourceQuery(feature)
+    expect(resourceQuerySpy).toBeCalledTimes(1)
+    expect(resourceQuerySpy).toBeCalledWith(feature, { grammars: expect.anything(), resourceOptions: expect.anything() })
   })
 
-  it('31 AppController - popup methods - showErrorInformation', () => {
-    uiC.popup.vi.showErrorInformation('fooError')
-    expect(uiC.popup.vi.popupData.notification.visible).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual('fooError')
+  it('AppController - startResourceQuery: should produce a message', async () => {
+    const feature = {
+      propA: 'Value of A',
+      languageID: Constants.LANG_GREEK
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.messages).toEqual([])
+    appC.startResourceQuery(feature)
+    expect(appC._store.state.ui.messages).toEqual(['Please wait while data is retrieved ...'])
   })
 
-  it('32 AppController - popup methods - sendFeature, showPanelTab', () => {
-    uiC.panel.requestGrammar = jest.fn(() => { })
-    uiC.panel.changeTab = jest.fn(() => { })
-    uiC.panel.open = jest.fn(() => { })
-
-    uiC.popup.vi.sendFeature()
-    uiC.popup.vi.showPanelTab()
-    expect(uiC.panel.requestGrammar).toHaveBeenCalledTimes(1)
-    expect(uiC.panel.changeTab).toHaveBeenCalledTimes(2)
-    expect(uiC.panel.open).toHaveBeenCalledTimes(2)
+  it('AppController - onLexicalQueryComplete: should handle a successful completion', async () => {
+    const data = {
+      homonym: { propA: 'Value of A' },
+      resultStatus: LexicalQuery.resultStatus.SUCCEEDED
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const showLanguageInfoSpy = jest.spyOn(appC, 'showLanguageInfo')
+    expect(appC._store.state.app.inflectionsWaitState).toBeFalsy()
+    expect(appC._store.state.app.morphDataReady).toBeFalsy()
+    expect(appC._store.state.app.lexicalRequest.endTime).toBe(0)
+    expect(appC._store.state.ui.messages).toEqual([])
+    appC.onLexicalQueryComplete(data)
+    expect(showLanguageInfoSpy).toBeCalledTimes(1)
+    expect(showLanguageInfoSpy).toBeCalledWith(data.homonym)
+    expect(appC._store.state.ui.messages).toEqual(['All lexical queries complete.'])
+    expect(appC._store.state.app.inflectionsWaitState).toBeFalsy()
+    expect(appC._store.state.app.morphDataReady).toBeTruthy()
+    expect(appC._store.state.app.lexicalRequest.endTime).toBeGreaterThan(0)
   })
 
-  it('33 AppController - popup methods - settingChange', () => {
-    uiC.popup.vi.settingChange('locale', 'French')
-    expect(uiC.popup.vi.options.items.locale.currentValue).toEqual('fr')
-
-    let setLocaleFN = jest.fn(() => { })
-    uiC.presenter = { setLocale: setLocaleFN }
-    uiC.popup.vi.settingChange('locale', 'English (US)')
-    expect(uiC.presenter.setLocale).toHaveBeenCalled()
-
-    uiC.updateLanguage = jest.fn(() => { })
-    uiC.popup.vi.settingChange('preferredLanguage', 'Greek')
-    expect(uiC.popup.vi.options.items.preferredLanguage.currentValue).toEqual('grc')
-    expect(uiC.updateLanguage).toHaveBeenCalled()
+  it('AppController - onLexicalQueryComplete: should handle a failure', async () => {
+    const data = {
+      homonym: { propA: 'Value of A' },
+      resultStatus: LexicalQuery.resultStatus.FAILED
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const showLanguageInfoSpy = jest.spyOn(appC, 'showLanguageInfo')
+    expect(appC._store.state.app.inflectionsWaitState).toBeFalsy()
+    expect(appC._store.state.app.morphDataReady).toBeFalsy()
+    expect(appC._store.state.app.lexicalRequest.endTime).toBe(0)
+    expect(appC._store.state.ui.messages).toEqual([])
+    appC.onLexicalQueryComplete(data)
+    expect(showLanguageInfoSpy).toBeCalledTimes(1)
+    expect(showLanguageInfoSpy).toBeCalledWith(data.homonym)
+    expect(appC._store.state.ui.messages).toEqual(['All lexical queries complete.'])
+    expect(appC._store.state.app.inflectionsWaitState).toBeFalsy()
+    expect(appC._store.state.app.morphDataReady).toBeTruthy()
+    expect(appC._store.state.app.lexicalRequest.endTime).toBeGreaterThan(0)
   })
 
-  it('34 AppController - popup methods - resourceSettingChange', () => {
-    let testName = 'lexicons-grc'
-    let testValues = ['Liddell, Scott, Jones']
-
-    let checkValues = uiC.resourceOptions.items.lexicons.filter((f) => f.name === testName)[0].values.filter(f => testValues.indexOf(f.text) > -1)
-    uiC.popup.vi.resourceSettingChange(testName, testValues)
-    expect(uiC.popup.vi.resourceOptions.items.lexicons.filter((f) => f.name === testName)[0].currentValue).toEqual(checkValues.map(f => f.value))
+  it('AppController - onMorphDataReady: should render a message', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.messages).toEqual([])
+    appC.onMorphDataReady()
+    expect(appC._store.state.ui.messages).toEqual(['Morphological analyzer data is ready'])
   })
 
-  it('35 AppController - popup methods - uiOptionChange', () => {
-    uiC.updateFontSizeClass = jest.fn(() => { })
-    uiC.updateColorSchemaClass = jest.fn(() => { })
-    uiC.changeSkin = jest.fn(() => { })
-    uiC.popup.vi.close = jest.fn(() => { })
-    uiC.popup.vi.open = jest.fn(() => { })
-
-    uiC.popup.vi.uiOptionChange('fontSize', 'medium')
-    expect(uiC.uiOptions.items.fontSize.currentValue).toEqual('medium')
-    expect(uiC.updateFontSizeClass).toHaveBeenCalled()
-
-    uiC.popup.vi.uiOptionChange('colorSchema', 'light')
-    expect(uiC.uiOptions.items.colorSchema.currentValue).toEqual('light')
-    expect(uiC.updateColorSchemaClass).toHaveBeenCalled()
-
-    uiC.popup.vi.uiOptionChange('skin', 'Alpheios Default Skin')
-    expect(uiC.uiOptions.items.skin.currentValue).toEqual('default')
-    expect(uiC.changeSkin).toHaveBeenCalled()
-
-    uiC.popup.vi.uiOptionChange('popup', 'Default Popup Layout')
-    expect(uiC.popup.vi.close).toHaveBeenCalled()
-    expect(uiC.popup.vi.currentPopupComponent).toEqual('popup')
-    expect(uiC.popup.vi.open).toHaveBeenCalled()
+  it('AppController - onMorphDataNotFound: should update the app and the UI states', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.notification.visible).toBeFalsy()
+    expect(appC._store.state.ui.notification.important).toBeFalsy()
+    expect(appC._store.state.ui.notification.text).toBeNull()
+    expect(appC._store.state.app.queryStillActive).toBeFalsy()
+    appC.onMorphDataNotFound()
+    expect(appC._store.state.ui.notification.visible).toBeTruthy()
+    expect(appC._store.state.ui.notification.important).toBeTruthy()
+    expect(appC._store.state.ui.notification.text).toMatch(/Morphological data not found. Definition queries pending/)
+    expect(appC._store.state.app.queryStillActive).toBeTruthy()
   })
 
-  it('36 AppController -overrideHelp option affects default tab', () => {
-    let uiC = AppController.create(state, { overrideHelp: true})
-    expect(uiC.tabs.DEFAULT).toEqual('settings')
-    let uiC2 = AppController.create(state, { overrideHelp: false})
-    expect(uiC2.tabs.DEFAULT).toEqual('info')
+  it('AppController - onHomonymReady: should process the homonym data', async () => {
+    const targetWord = 'Target word'
+    const languageID = Constants.LANG_GREEK
+    const homonym = {
+      lexemes: [],
+      inflections: [],
+      targetWord,
+      languageID,
+      hasShortDefs: () => true
+    }
+    const sortSpy = jest.spyOn(homonym.lexemes, 'sort')
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.app.languageName).toBe('')
+    expect(appC._store.state.app.languageCode).toBe('')
+    expect(appC._store.state.app.selectedText).toBe('')
+    const enableWordUsageExamplesSpy = jest.spyOn(appC, 'enableWordUsageExamples')
+    expect(appC._store.state.app.homonymDataReady).toBeFalsy()
+    expect(appC._store.state.app.linkedFeatures).toEqual([])
+    expect(appC._store.state.app.morphDataReady).toBeFalsy()
+    const updateProvidersSpy = jest.spyOn(appC, 'updateProviders')
+    expect(appC._store.state.app.shortDefUpdateTime).toBe(0)
+    appC.onHomonymReady(homonym)
+    expect(sortSpy).toBeCalledTimes(1)
+    expect(appC._store.state.app.languageName).toBe('Greek')
+    expect(appC._store.state.app.languageCode).toBe('grc')
+    expect(appC._store.state.app.selectedText).toBe(targetWord)
+    expect(appC.api.app.homonym).toBe(homonym)
+    expect(enableWordUsageExamplesSpy).toBeCalledTimes(1)
+    expect(enableWordUsageExamplesSpy).toBeCalledWith({ languageID: languageID })
+    expect(appC._store.state.app.homonymDataReady).toBeTruthy()
+    expect(appC._store.state.app.linkedFeatures).toEqual(['part of speech', 'case', 'mood', 'declension', 'tense', 'voice'])
+    expect(appC._store.state.app.wordUsageExampleEnabled).toBeFalsy()
+    expect(appC._store.state.app.morphDataReady).toBeTruthy()
+    expect(updateProvidersSpy).toBeCalledTimes(1)
+    expect(updateProvidersSpy).toBeCalledWith(homonym)
+    expect(appC._store.state.app.shortDefUpdateTime).toBeGreaterThan(0)
   })
-*/
-  it('37 AppController - method getLanguageName returns language data', () => {
-    let latData = AppController.getLanguageName(Constants.LANG_LATIN)
-    expect(latData.name).toEqual('Latin')
-    
-    let grcData = AppController.getLanguageName(Constants.LANG_GREEK)
-    expect(grcData.name).toEqual('Greek')
 
-    let araData = AppController.getLanguageName(Constants.LANG_ARABIC)
-    expect(araData.name).toEqual('Arabic')
-
-    let perData = AppController.getLanguageName(Constants.LANG_PERSIAN)
-    expect(perData.name).toEqual('Persian')
-
-    let gezData = AppController.getLanguageName(Constants.LANG_GEEZ)
-    expect(gezData.name).toEqual('Ancient Ethiopic (Ge\'ez)')
-
-    let zhoData = AppController.getLanguageName(Constants.LANG_CHINESE)
-    expect(zhoData.name).toEqual('Chinese')
+  it('AppController - onWordListUpdated: should update wordlist data', async () => {
+    const wordList = [
+      {}
+    ]
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.app.hasWordListsData).toBeFalsy()
+    expect(appC._store.state.app.wordListUpdateTime).toBe(0)
+    appC.onWordListUpdated(wordList)
+    expect(appC._store.state.app.hasWordListsData).toBeTruthy()
+    expect(appC._store.state.app.wordListUpdateTime).toBeGreaterThan(0)
   })
 
+  it('AppController - onLemmaTranslationsReady: should call updateTranslations()', async () => {
+    const homonym = {
+      lexemes: []
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const updateTranslationsSpy = jest.spyOn(appC, 'updateTranslations')
+    appC.onLemmaTranslationsReady(homonym)
+    expect(updateTranslationsSpy).toBeCalledTimes(1)
+    expect(updateTranslationsSpy).toBeCalledWith(homonym)
+  })
+
+  it('AppController - onShortDefinitionsReady: should update the short definitions data', async () => {
+    const homonym = {
+      lexemes: []
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const updateProvidersSpy = jest.spyOn(appC, 'updateProviders')
+    const showLanguageInfoSpy = jest.spyOn(appC, 'showLanguageInfo')
+    expect(appC._store.state.ui.messages).toEqual([])
+    expect(appC._store.state.app.shortDefUpdateTime).toBe(0)
+    appC.onShortDefinitionsReady({ homonym })
+    expect(appC.api.app.homonym).toBe(homonym)
+    expect(updateProvidersSpy).toBeCalledTimes(1)
+    expect(updateProvidersSpy).toBeCalledWith(homonym)
+    expect(appC._store.state.app.queryStillActive).toBeFalsy()
+    expect(showLanguageInfoSpy).toBeCalledTimes(1)
+    expect(showLanguageInfoSpy).toBeCalledWith(homonym)
+    expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('request is completed successfully. Lemma')])
+    expect(appC._store.state.app.shortDefUpdateTime).toBeGreaterThan(0)
+  })
+
+  it('AppController - onFullDefinitionsReady: should update the full definitions data', async () => {
+    const homonym = {
+      lexemes: []
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const updateProvidersSpy = jest.spyOn(appC, 'updateProviders')
+    expect(appC._store.state.ui.messages).toEqual([])
+    expect(appC._store.state.app.fullDefUpdateTime).toBe(0)
+    appC.onFullDefinitionsReady({ homonym })
+    expect(updateProvidersSpy).toBeCalledTimes(1)
+    expect(updateProvidersSpy).toBeCalledWith(homonym)
+    expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('request is completed successfully. Lemma')])
+    expect(appC._store.state.app.fullDefUpdateTime).toBeGreaterThan(0)
+  })
+
+  it('AppController - onDefinitionsNotFound: should commit a message', async () => {
+    const data = {
+      requestType: 'Test request type',
+      word: 'Test word'
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.messages).toEqual([])
+    appC.onDefinitionsNotFound(data)
+    expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('request failed. Lemma not found')])
+  })
+
+  it('AppController - onResourceQueryComplete: should commit a message', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.ui.messages).toEqual([])
+    appC.onResourceQueryComplete()
+    expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('All grammar resource data retrieved')])
+  })
+
+  it('AppController - onGrammarAvailable: should update grammar and commit a message', async () => {
+    const urlOne = 'url1'
+    const urlTwo = 'url2'
+    const data = {
+      languageID: Constants.LANG_LATIN,
+      urls: [
+        urlTwo,
+        urlOne
+      ]
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const updateGrammarSpy = jest.spyOn(appC, 'updateGrammar')
+    expect(appC._store.state.ui.messages).toEqual([])
+    appC.onGrammarAvailable(data)
+    expect(updateGrammarSpy).toBeCalledTimes(1)
+    expect(updateGrammarSpy).toBeCalledWith(data)
+    expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('Grammar resource retrieved')])
+  })
+
+  it('AppController - onGrammarNotFound: should reset grammar and commit a message', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const updateGrammarSpy = jest.spyOn(appC, 'updateGrammar')
+    expect(appC._store.state.ui.messages).toEqual([])
+    appC.onGrammarNotFound()
+    expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('No grammar resources have been found')])
+    expect(updateGrammarSpy).toBeCalledTimes(1)
+    expect(updateGrammarSpy).toBeCalledWith()
+  })
+
+  it('AppController - onWordItemSelected: should update homonym data if the homonym data is present', async () => {
+    const languageID = Constants.LANG_LATIN
+    const wordItem = {
+      targetWord: 'A test word',
+      languageCode: 'lat',
+      homonym: {
+        lexemes: [
+          {
+            inflections: [],
+            isPopulated: () => true
+          }
+        ],
+        inflections: [],
+        targetWord: 'A test word',
+        languageID,
+        hasShortDefs: () => true
+      }
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const newLexicalRequestSpy = jest.spyOn(appC, 'newLexicalRequest')
+    const onHomonymReadySpy = jest.spyOn(appC, 'onHomonymReady')
+    const wlHomonymReadySpy = jest.spyOn(appC._wordlistC, 'onHomonymReady')
+    const updateProvidersSpy = jest.spyOn(appC, 'updateProviders')
+    const updateTranslationsSpy = jest.spyOn(appC, 'updateTranslations')
+    expect(appC._store.state.app.shortDefUpdateTime).toBe(0)
+    expect(appC._store.state.app.fullDefUpdateTime).toBe(0)
+    await appC.onWordItemSelected(wordItem)
+    expect(newLexicalRequestSpy).toBeCalledTimes(1)
+    expect(newLexicalRequestSpy).toBeCalledWith(wordItem.targetWord, languageID, null, 'wordlist')
+    expect(onHomonymReadySpy).toBeCalledTimes(1)
+    expect(onHomonymReadySpy).toBeCalledWith(wordItem.homonym)
+    expect(wlHomonymReadySpy).toBeCalledTimes(1)
+    expect(wlHomonymReadySpy).toBeCalledWith(wordItem.homonym)
+    expect(updateProvidersSpy).toBeCalled()
+    expect(updateProvidersSpy).toBeCalledWith(wordItem.homonym)
+    expect(appC._store.state.app.shortDefUpdateTime).toBeGreaterThan(0)
+    expect(appC._store.state.app.fullDefUpdateTime).toBeGreaterThan(0)
+    expect(updateTranslationsSpy).toBeCalled()
+    expect(updateTranslationsSpy).toBeCalledWith(wordItem.homonym)
+    expect(appC._store.state.app.inflectionsWaitState).toBeFalsy()
+    expect(appC._store.state.app.morphDataReady).toBeTruthy()
+    expect(appC._store.state.app.lexicalRequest.endTime).toBeGreaterThan(0)
+  })
+
+  it('AppController - onWordItemSelected: should start a lookup request if homonym data is incomplete', async () => {
+    const languageID = Constants.LANG_LATIN
+    const wordItem = {
+      targetWord: 'A test word',
+      languageCode: 'lat',
+      homonym: {
+        lexemes: [],
+        inflections: [],
+        targetWord: 'A test word',
+        languageID,
+        hasShortDefs: () => true
+      }
+    }
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const lookupTextSpy = jest.spyOn(appC.api.lexis, 'lookupText')
+    await appC.onWordItemSelected(wordItem)
+    expect(lookupTextSpy).toBeCalledTimes(1)
+  })
+
+  it('AppController - applyAllOptions: should update all feature options', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const applyFeatureOptionSpy = jest.spyOn(appC, 'applyFeatureOption')
+    expect(appC._store.state.settings.featureResetCounter).toBe(0)
+    appC.applyAllOptions()
+    expect(applyFeatureOptionSpy).toBeCalledTimes(14)
+    expect(appC._store.state.settings.featureResetCounter).toBeGreaterThan(0)
+  })
+
+  it('AppController - applyAllOptions: should update the resource reset counter', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    expect(appC._store.state.settings.resourceResetCounter).toBe(0)
+    appC.applyAllOptions()
+    expect(appC._store.state.settings.resourceResetCounter).toBeGreaterThan(0)
+  })
+
+  it('AppController - applyAllOptions: should update all UI options', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+    const applyFeatureOptionSpy = jest.spyOn(appC, 'applyFeatureOption')
+    expect(appC._store.state.settings.uiResetCounter).toBe(0)
+    appC.applyAllOptions()
+    expect(applyFeatureOptionSpy).toBeCalledTimes(14)
+    expect(appC._store.state.settings.uiResetCounter).toBeGreaterThan(0)
+  })
 })

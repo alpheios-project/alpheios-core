@@ -66,18 +66,22 @@ export default {
         if (this.decorators.includes('abbreviate') && this.l10n.hasMsg(v)) {
           decorated = this.l10n.getAbbr(v)
         }
-        if (this.decorators.includes('link') && decorated.match(/^http/)) {
+        else if (this.decorators.includes('link') && decorated.match(/^http/)) {
           const linkText = this.l10n.hasMsg('INFL_ATTRIBUTE_LINK_TEXT_TYPE') ? this.l10n.getMsg('INFL_ATTRIBUTE_LINK_TEXT_TYPE') : type
           decorated = `<a class="alpheios-morph__linkedattr" target="_blank" href="${decorated}">${linkText}</a>`
+        } else if (this.l10n.hasMsg(v)) {
+          decorated = this.l10n.getMsg(v)
         }
         decoratedValues.push(decorated)
       }
       let decorated = decoratedValues.join(' ')
       if (this.decorators.includes('appendtype')) {
-        decorated = `${decorated} ${type}`
+        decorated = this.l10n.hasMsg(`append_${type}`) ?
+          this.l10n.getMsg(`append_${type}`,{ data: decorated }) : `${decorated} ${type}`
       }
       if (this.decorators.includes('prefixtype')) {
-        decorated = `${type} ${decorated}`
+        decorated = this.l10n.hasMsg(`prefix_${type}`) ?
+          this.l10n.getMsg(`prefix_${type}`,{ data: decorated }) : `${type} ${decorated}`
       }
       if (this.decorators.includes('parenthesize')) {
         decorated = `(${decorated})`

@@ -1,117 +1,106 @@
 {
  "adjective":{
-    "message":"adjective",
-    "abbr":""
+    "message":"صفة"
   },
  "adverb":{
-    "message":"adverb",
-    "abbr":""
+    "message":"ظرف"
   },
   "adverbial":{
-    "message":"adverbial",
-    "abbr":""
+    "message":"ظرفى"
   },
   "article":{
-    "message":"article"
+    "message":"أداة"
   },
   "conjunction":{
-      "message":"conjunction"
+      "message":"حرف عطف"
   },
   "exclamation":{
-    "message":"exclamation"
+    "message":"تعجب"
   },
   "interjection":{
-    "message":"interjection"
+    "message":"أداة تعجب"
   },
   "noun":{
-    "message":"noun"
+    "message":"إسم"
   },
   "noun_proper":{
-    "message":"proper noun"
+    "message":"إسم علم"
   },
   "numeral":{
-    "message":"numeral"
+    "message":"رقم"
   },
   "particle":{
-    "message":"particle"
+    "message":"أداة"
   },
   "prefix":{
-    "message":"prefix"
+    "message":"بادئة"
   },
   "preposition":{
-    "message":"preposition"
+    "message":"حرف جر"
   } ,
   "pronoun":{
-    "message":"pronoun"
+    "message":"ضمير"
   },
   "suffix":{
-    "message":"suffix"
+    "message":"لاحقة"
   },
   "gerundive":{
-    "message":"gerundive"
+    "message":"جرانديوم"
   },
   "verb":{
-    "message":"verb"
+    "message":"فعل"
   },
   "verb_participle":{
-    "message":"verb participle"
+    "message":"إسم فاعل"
   },
   "masculine":{
-    "message":"masculine",
-    "abbr":"m."
+    "message":"مذكر"
   },
   "feminine":{
-    "message":"feminine",
-    "abbr": "f."
+    "message":"مؤنث"
   },
   "neuter":{
-    "message":"neuter",
-    "abbr":"n."
+    "message":"محايد"
   },
   "common":{
-    "message":"common"
+    "message":"مشترك"
   },
   "animate":{
-    "message":"animate"
+    "message":"حى"
   },
   "inanimate":{
-    "message":"inanimate"
+    "message":"غير حى"
   },
   "personal_masculine":{
-    "message":"personal masculine"
+    "message":"شخص مذكر"
   },
   "animate_masculine":{
-    "message":"animate masculine"
+    "message":"مذكر حى"
   },
   "inanimate_masculine":{
-    "message":"inanimate masculine"
+    "message":"مذكر غير حى"
   },
   "positive":{
-    "message":"positive",
-    "abbr":"pos."
+    "message":"صفة درجة أولى"
   },
   "comparitive":{
-    "message":"comparative",
-    "abbr":"comp"
+    "message":"صفة درجة ثانية"
   },
   "superlative":{
-    "message":"superlative",
-    "abbr":"super."
+    "message":"صفة درجة ثالثة"
   },
   "abessive":{
-    "message":"abessive"
+    "message":"نافية"
   },
   "ablative":{
-    "message":"ablative",
-    "abbr":"abl."
+    "message":"مفعول الأداة"
 
   },
   "absolutive":{
-    "message":"absolutive"
+    "message":"مطلق"
   },
   "accusative":{
-    "message":"accusative",
-    "abbr":"acc."
+    "message":"مفعول به"
   },
   "addirective":{
     "message":"addirective"
@@ -141,29 +130,28 @@
     "message":"caritive"
   },
   "causal":{
-    "message":"causal"
+    "message":"سببى"
   },
   "causal_final":{
-    "message":"causal-final"
+    "message":"سببى-غائى"
   },
   "comitative":{
     "message":"comitative"
   },
   "dative":{
-    "message":"dative",
-    "abbr":"dat."
+    "message":"قابل"
   },
   "delative":{
     "message":"delative"
   },
   "direct":{
-    "message":"direct"
+    "message":"مباشر"
   },
   "distributive":{
-    "message":"distributive"
+    "message":"توزيعى"
   },
   "distributive_temporal":{
-    "message":"distributive-temporal"
+    "message":"توزيعى-زمنى"
   },
   "elative":{
     "message":"elative"
@@ -190,14 +178,13 @@
     "message":"exessive"
   },
   "final":{
-    "message":"final"
+    "message":"نهائى-غائى"
   },
   "formal":{
-    "message":"formal"
+    "message":"رسمي"
   },
   "genitive":{
-    "message":"genitive",
-    "abbr":"gen."
+    "message":"مضاف إليه"
   },
   "illative":{
     "message":"illative"
@@ -209,36 +196,34 @@
     "message":"inessive"
   },
   "instructive":{
-    "message":"instructive"
+    "message":"توضيحي"
   },
   "instrumental":{
-    "message":"instrumental"
+    "message":"أداتي"
   },
   "instrumental_comitative":{
-    "message":"instrumental-comitative"
+    "message":"أداتى-مصاحب"
   },
   "intransitive":{
-    "message":"intransitive"
+    "message":"لازم"
   },
   "lative":{
     "message":"lative"
   },
   "locative":{
-    "message":"locative",
-    "abbr":"loc."
+    "message":"مكانى"
   },
   "modal":{
-    "message":"modal"
+    "message":"شرطى"
   },
   "multiplicative":{
     "message":"multiplicative"
   },
   "nominative":{
-    "message":"nominative",
-    "abbr":"nom."
+    "message":"فاعل"
   },
   "partitive":{
-    "message":"partitive"
+    "message":"جزئى"
   },
   "pegative":{
     "message":"pegative"
@@ -247,7 +232,7 @@
     "message":"perlative"
   },
   "possessive":{
-    "message":"possessive"
+    "message":"ملكية"
   },
   "postelative":{
     "message":"postelative"
@@ -259,10 +244,10 @@
     "message":"postessive"
   },
   "postpositional":{
-    "message":"postpositional"
+    "message":"حرف جر يأتى بعد الإسم"
   },
   "prepositional":{
-    "message":"prepositional"
+    "message":"حرف جر قبل الإسم"
   },
   "privative":{
     "message":"privative"
@@ -304,7 +289,7 @@
     "message":"suppressive"
   },
   "temporal":{
-    "message":"temporal"
+    "message":"زمنى"
   },
   "terminative":{
     "message":"terminative"
@@ -316,8 +301,7 @@
     "message":"vialis"
   },
   "vocative":{
-    "message":"vocative",
-    "abbr":"voc."
+    "message":"منادى"
   },
   "admirative":{
     "message":"admirative"
@@ -326,7 +310,7 @@
     "message":"cohortative"
   },
   "conditional":{
-    "message":"conditional"
+    "message":"شرطى"
   },
   "declarative":{
     "message":"declarative"
@@ -344,39 +328,34 @@
     "message":"generic"
   },
   "hypothetical":{
-    "message":"hypothetical"
+    "message":"إفتراضى"
   },
   "imperative":{
-    "message":"imperative",
-    "abbr":"imp."
+    "message":"أمر"
   },
   "indicative":{
-    "message":"indicative",
-    "abbr":"ind."
+    "message":"إخبارى"
   },
   "inferential":{
-    "message":"inferential"
+    "message":"إستنتاجي"
   },
   "infinitive":{
-    "message":"infinitive",
-    "abbr":"infin."
+    "message":"مصدرى"
   },
   "interrogative":{
-    "message":"interrogative"
+    "message":"إستفهامى"
   },
   "jussive":{
-    "message":"jussive"
+    "message":"الجزم"
   },
   "negative":{
-    "message":"negative"
+    "message":"النفى"
   },
   "optative":{
-    "message":"optative",
-    "abbr":"opt."
+    "message":"التمنى"
   },
   "participle":{
-    "message":"participle",
-    "abbr":"part,"
+    "message":"إسم فاعل"
   },
   "presumptive":{
     "message":"presumptive"
@@ -385,24 +364,19 @@
     "message":"renarrative"
   },
   "subjunctive":{
-    "message":"subjunctive",
-    "abbr":"sub."
-  },
+    "message": "الحالة المصدرية"
+  } ,
   "supine":{
-    "message":"supine",
-    "abbr":"sup."
+    "message":"السوبينم"
   },
   "singular":{
-    "message":"singular",
-    "abbr":"sing."
+    "message":"مفرد"
   },
   "plural":{
-    "message":"plural",
-    "abbr":"plur."
+    "message":"مذكر"
   },
   "dual":{
-    "message":"dual",
-    "abbr":"dl."
+    "message":"مثنى"
   },
   "trial":{
     "message":"trial"
@@ -420,13 +394,13 @@
     "message":"distributive plural"
   },
   "cardinal":{
-    "message":"cardinal"
+    "message":"من الأعداد الأصلية"
   },
   "ordinal":{
-    "message":"ordinal"
+    "message":"من الأعداد الترتيبية"
   },
   "numeral_adverb":{
-    "message":"numeral adverb"
+    "message":"رقم على شكل ظرف"
   },
   "1st":{
     "message":"1st"
@@ -456,97 +430,85 @@
     "message":"9th"
   },
   "aorist":{
-    "message":"aorist",
-    "abbr":"aor."
+    "message":"ماضى تام"
   },
   "future":{
-    "message":"future",
-    "abbr":"fut."
+    "message":"مستقبل"
   },
   "future_perfect":{
-    "message":"future perfect",
-    "abbr":"fut. perf."
+    "message":"مستقبل تام"
   },
   "imperfect":{
-    "message":"imperfect",
-    "abbr":"impf."
+    "message":"ماضى ناقص"
   },
   "past_absolute":{
-    "message":"past absolute"
+    "message":"ماضى مطلق"
   },
   "perfect":{
-    "message":"perfect",
-    "abbr": "perf."
+    "message":"مضارع تام"
   },
   "pluperfect":{
-    "message":"pluperfect",
-    "abbr": "plup."
+    "message":"مضارع أتم"
   },
   "plusquamperfect":{
-    "message": "plusquamperfect",
-    "abbr": "pqpf."
+    "message": "ماضى أتم"
   },
   "present":{
-    "message":"present",
-    "abbr":"pres."
+    "message":"مضارع"
   },
   "to_be":{
-    "message":"to be"
+    "message":"فعل الكون"
   },
   "compounds_of_to_be":{
-    "message":"compounds of to be"
+    "message":"تركيبة من فعل الكون"
   },
   "taking_ablative":{
-    "message":"taking ablative"
+    "message":"يأخذ مفعول أداة"
   },
   "taking_dative":{
-    "message":"taking dative"
+    "message":"يأخذ قابل"
   },
   "taking_genitive":{
-    "message":"taking genitive"
+    "message":"يأخذ مضاف إليه"
   },
   "transitive":{
-    "message":"transitive"
+    "message":"متعدى"
   },
   "impersonal":{
-    "message":"impersonal"
+    "message":"غير شخصى"
   },
   "deponent":{
-    "message":"deponent"
+    "message":"معلوم المعنى مجهول أو وسط فى تصريفه"
   },
   "semideponent":{
-    "message":"semideponent"
+    "message":"شبه معلوم فى المعنى مجهول أو وسط فى تصريفه"
   },
   "perfect_definite":{
     "message":"perfect definite"
   },
   "active":{
-    "message":"active",
-    "abbr":"act."
+    "message":"معلوم"
   },
   "passive":{
-    "message":"passive",
-    "abbr":"pass."
+    "message":"مجهول"
   },
   "mediopassive":{
-    "message":"mediopassive",
-    "abbr": "mp."
+    "message":"مجهول ووسط"
   },
   "impersonal_passive":{
-    "message":"impersonal passive"
+    "message":"مجهول غير شخصى"
   },
   "middle":{
-    "message":"middle",
-    "abbr":"mid."
+    "message":"وسط"
   },
   "antipassive":{
     "message":"antipassive"
   },
   "reflexive":{
-    "message":"reflexive"
+    "message":"عكسى"
   },
   "reciprocal":{
-    "message":"reciprocal"
+    "message":"تبادلى"
   },
   "causative":{
     "message":"causative"
@@ -558,32 +520,32 @@
     "message":"applicative"
   },
   "circumstantial":{
-    "message":"circumstantial"
+    "message":"ظرفى"
   },
   "deponens":{
     "message":"deponen",
     "abbr":"dep."
   },
   "irregular":{
-    "message":"irregular"
+    "message":"غير قياسى"
   },
   "regular":{
-    "message":"regular"
+    "message":"قياسى"
   },
   "personal":{
-    "message":"personal"
+    "message":"شخصى"
   },
   "demonstrative":{
-    "message":"demonstrative"
+    "message":"إسم إشارة"
   },
   "relative":{
-    "message":"relative"
+    "message":"إسم موصول"
   },
   "general_relative":{
     "message":"general relative"
   },
   "indefinite":{
-    "message":"indefinite"
+    "message":"غير معلوم"
   },
   "intensive":{
     "message":"intensive"
@@ -601,12 +563,20 @@
     "message": "denominative"
   },
   "absolute": {
-    "message": "absolute"
+    "message": "مطلق"
   },
   "construct": {
     "message": "construct"
   },
   "emphatic": {
-    "message": "emphatic"
+    "message": "تأكيدى"
+  },
+  "declension": {
+    "message": "{data} declension",
+    "params": ["data"]
+  },
+  "conjugation": {
+    "message": "{data} conjugation",
+    "params": ["data"]
   }
 }

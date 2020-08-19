@@ -43,11 +43,6 @@ const languageNames = new Map([
   [Constants.LANG_CHINESE, 'Chinese']
 ])
 
-const layoutClasses = {
-  COMPACT: 'alpheios-layout-compact',
-  LARGE: 'alpheios-layout-large'
-}
-
 // Enable Vuex
 Vue.use(Vuex)
 
@@ -68,33 +63,23 @@ export default class AppController {
    */
   constructor (state, options = {}) {
     this.state = state
-    this.options = AppController.setOptions(options, AppController.optionsDefaults)
+    this._options = AppController.setOptions(options, AppController.optionsDefaults)
 
     this.isInitialized = false
     this.isActivated = false
     this.isDeactivated = false
-    // The following indicate whether we're registered getSelectedText callback
-    // TODO: this will probably be not needed in the long run as this functionality will go to a Lexis data module
-    this.isGetSelectedTextRegistered = false
-    this.userDataManager = null
-
-    // Obtain the logger instance
-    this.logger = Logger.getInstance()
+    this._inflectionsViewSet = null // Stores the inflections view set, will be set during the lexical query execution
+    this._userDataManager = null
 
     /**
      * Information about the platform an app is running upon.
      *
      * @type {Platform} - A an object containing data about the platform.
      */
-    this.platform = new Platform({ setRootAttributes: true, appType: this.options.appType })
-    // Assign a class that will specify what type of layout will be used
-    const layoutClassName = (this.platform.isMobile)
-      ? layoutClasses.COMPACT
-      : layoutClasses.LARGE
-    document.body.classList.add(layoutClassName)
+    this._platform = new Platform({ setRootAttributes: true, appType: this._options.appType })
 
     // Vuex store. A public API for data and UI module interactions.
-    this.store = new Vuex.Store({
+    this._store = new Vuex.Store({
       /*
       Strict mode is ON for a development build to add safety checks
       and is OFF for a production build to not slow the app down.
@@ -108,13 +93,13 @@ export default class AppController {
      *
      * @type {Map<string, Module>}
      */
-    this.modules = new Map()
+    this._modules = new Map()
 
     // Get query parameters from the URL. Do this early so they will be available to modules during registration
-    this.queryParams = QueryParams.parse()
+    this._queryParams = QueryParams.parse()
 
     this._stC = new SettingsController({
-      platform: this.platform
+      platform: this._platform
     })
 
     /**
@@ -122,11 +107,11 @@ export default class AppController {
      *
      * @type {UIEventController}
      */
-    this.uic = new UIController({
-      platform: this.platform,
+    this._uic = new UIController({
+      platform: this._platform,
       uiState: this.state,
-      queryParams: this.queryParams,
-      overrideHelp: this.options.overrideHelp
+      queryParams: this._queryParams,
+      overrideHelp: this._options.overrideHelp
     })
 
     /**
@@ -135,15 +120,19 @@ export default class AppController {
      *
      * @type {UIEventController}
      */
-    this.evc = new UIEventController()
-    this.selc = new SelectionController(this.getDefaultLangCode.bind(this))
+    this._evc = new UIEventController()
+    this._selc = new SelectionController(this.getDefaultLangCode.bind(this))
 
-    this.wordlistC = {} // This is a word list controller
+    this._wordlistC = {} // This is a word list controller
   }
 
   /**
    * Creates an instance of an app controller with default options. Provide your own implementation of this method
    * if you want to create a different configuration of an app controller.
+   * TODO: Right now the app controller's tests has its own `create()` method with some listeners not registered.
+   *       That's needed for tests to pass in a Jest environment. This creates a problem, however, because
+   *       the test setup is becoming different from the production one. We should, in the future,
+   *       try to come up with the way of using the same setup in both production and test environments.
    *
    * @param state
    * @param options
@@ -158,8 +147,8 @@ export default class AppController {
     })
 
     appController.registerModule(LexisModule, {
-      arethusaTbRefreshRetryCount: appController.options.arethusaTbRefreshRetryCount,
-      arethusaTbRefreshDelay: appController.options.arethusaTbRefreshDelay
+      arethusaTbRefreshRetryCount: appController._options.arethusaTbRefreshRetryCount,
+      arethusaTbRefreshDelay: appController._options.arethusaTbRefreshDelay
     })
 
     /*
@@ -183,7 +172,7 @@ export default class AppController {
     */
 
     // Creates on configures an event listener
-    appController.evc.registerListener('HandleEscapeKey', document, appController.handleEscapeKey.bind(appController), GenericEvt, 'keydown')
+    appController._evc.registerListener('HandleEscapeKey', document, appController.handleEscapeKey.bind(appController), GenericEvt, 'keydown')
     SelectionController.evt.TEXT_SELECTED.sub(appController.onTextSelected.bind(appController))
 
     // Subscribe to LexicalQuery events
@@ -203,7 +192,7 @@ export default class AppController {
     ResourceQuery.evt.GRAMMAR_AVAILABLE.sub(appController.onGrammarAvailable.bind(appController))
     ResourceQuery.evt.GRAMMAR_NOT_FOUND.sub(appController.onGrammarNotFound.bind(appController))
 
-    appController.wordlistC = new WordlistController(LanguageModelFactory.availableLanguages(), LexicalQuery.evt)
+    appController._wordlistC = new WordlistController(LanguageModelFactory.availableLanguages(), LexicalQuery.evt)
     WordlistController.evt.WORDLIST_UPDATED.sub(appController.onWordListUpdated.bind(appController))
     WordlistController.evt.WORDITEM_SELECTED.sub(appController.onWordItemSelected.bind(appController))
 
@@ -317,7 +306,7 @@ export default class AppController {
    * @returns {boolean} True if a UI controller is used, false otherwise.
    */
   get hasUIController () {
-    return Boolean(this.uic)
+    return Boolean(this._uic)
   }
 
   /**
@@ -329,49 +318,49 @@ export default class AppController {
    * @returns {AppController} - A self reference for chaining.
    */
   registerModule (moduleClass, options = {}) {
-    if (!moduleClass.isSupportedPlatform(this.platform)) {
-      this.logger.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
+    if (!moduleClass.isSupportedPlatform(this._platform)) {
+      Logger.getInstance().warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this._platform.deviceType} type of devices`)
       return this
     }
 
+    options.queryParams = this._queryParams
+    options.platform = this._platform
     if (moduleClass.isDataModule) {
       // Data modules are registered with an app controller
-      options.queryParams = this.queryParams
-      options.platform = this.platform
-      this.modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
+      this._modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
     } else if (moduleClass.isUiModule) {
       // UI modules belong to a UI controller
-      if (this.hasUIController) { this.uic.registerModule(moduleClass, options) }
+      if (this.hasUIController) { this._uic.registerModule(moduleClass, options) }
     } else {
-      this.logger.warn(`Skipping registration of a ${moduleClass.moduleName} of unkown type: ${moduleClass.moduleType}`)
+      Logger.getInstance().warn(`Skipping registration of a ${moduleClass.moduleName} of unkown type: ${moduleClass.moduleType}`)
     }
     return this
   }
 
   get dataModules () {
-    return Array.from(this.modules.values()).filter(m => m.ModuleClass.isDataModule)
+    return Array.from(this._modules.values()).filter(m => m.ModuleClass.isDataModule)
   }
 
-  createModules () {
+  _createModules () {
     this.dataModules.forEach((m) => {
-      m.instance = new m.ModuleClass(this.store, this.api, m.options)
+      m.instance = new m.ModuleClass(this._store, this.api, m.options)
     })
   }
 
-  activateModules () {
+  _activateModules () {
     this.dataModules.forEach(m => m.instance.activate())
   }
 
-  deactivateModules () {
+  _deactivateModules () {
     this.dataModules.forEach(m => m.instance.deactivate())
   }
 
   hasModule (moduleName) {
-    return this.modules.has(moduleName)
+    return this._modules.has(moduleName)
   }
 
   getModule (moduleName) {
-    return this.modules.get(moduleName).instance
+    return this._modules.get(moduleName).instance
   }
 
   async init () {
@@ -379,44 +368,43 @@ export default class AppController {
     // Initialize options
     await this._stC.init({
       api: this.api,
-      store: this.store,
-      configServiceUrl: this.options.configServiceUrl,
-      clientId: this.options.clientId,
-      appName: this.options.app.name,
-      appVersion: this.options.app.version,
-      branch: this.options.app.buildBranch,
-      buildNumber: this.options.app.buildNumber,
-      storageAdapter: this.options.storageAdapter
+      store: this._store,
+      configServiceUrl: this._options.configServiceUrl,
+      clientId: this._options.clientId,
+      appName: this._options.app.name,
+      appVersion: this._options.app.version,
+      branch: this._options.app.buildBranch,
+      buildNumber: this._options.app.buildNumber,
+      storageAdapter: this._options.storageAdapter
     })
     // All options has been loaded and initialized after this point
 
     // The following options will be applied to all logging done via a single Logger instance
     // Set the  logger verbose mode according to the settings
-    this.logger.setVerboseMode(this.api.settings.isInVerboseMode())
-    this.logger.prependModeOn() // Set a prepend mode that will add an Alpheios prefix to the printed statements
-    this.logger.traceModeOff() // Enable the log call stack tracing
+    Logger.getInstance().setVerboseMode(this.api.settings.isInVerboseMode())
+    Logger.getInstance().prependModeOn() // Set a prepend mode that will add an Alpheios prefix to the printed statements
+    Logger.getInstance().traceModeOff() // Enable the log call stack tracing
 
     this.api.app = {
-      name: this.options.app.name, // A name of a host application (embed lib or webextension)
-      version: this.options.app.version, // An version of a host application (embed lib or webextension)
-      buildName: this.options.app.buildName, // A build number of a host application
-      clientId: this.options.clientId, // alpheios api client identifier
+      name: this._options.app.name, // A name of a host application (embed lib or webextension)
+      version: this._options.app.version, // An version of a host application (embed lib or webextension)
+      buildName: this._options.app.buildName, // A build number of a host application
+      clientId: this._options.clientId, // alpheios api client identifier
       libName: AppController.libName, // A name of the components library
       libVersion: AppController.libVersion, // A version of the components library
-      libBuildName: BUILD_NAME, // A name of a build of a components library that will be injected by Webpack
-      platform: this.platform,
-      mode: this.options.mode, // Mode of an application: `production` or `development`
+      libBuildName: typeof BUILD_NAME !== 'undefined' ? BUILD_NAME : '', // A name of a build of a components library that will be injected by Webpack
+      platform: this._platform,
+      mode: this._options.mode, // Mode of an application: `production` or `development`
       state: this.state, // An app-level state
       homonym: null,
-      inflectionsViewSet: null,
       wordUsageExamplesCached: null,
       wordUsageExamples: null,
       wordUsageAuthors: [],
       grammarData: {},
       // Exposes parsed query parameters to other components
-      queryParams: this.queryParams,
+      queryParams: this._queryParams,
       isDevMode: () => {
-        return this.options.mode === 'development'
+        return this._options.mode === 'development'
       },
 
       // TODO: Some of the functions below should probably belong to other API groups.
@@ -436,11 +424,11 @@ export default class AppController {
       startResourceQuery: this.startResourceQuery.bind(this),
       sendFeature: this.sendFeature.bind(this),
       getHomonymLexemes: () => this.api.app.homonym ? this.api.app.homonym.lexemes : [],
-      getInflectionsViewSet: () => this.api.app.inflectionsViewSet,
-      getInflectionViews: (partOfSpeech) => this.api.app.inflectionsViewSet ? this.api.app.inflectionsViewSet.getViews(partOfSpeech) : [],
+      getInflectionsViewSet: () => this._inflectionsViewSet,
+      getInflectionViews: (partOfSpeech) => this._inflectionsViewSet ? this._inflectionsViewSet.getViews(partOfSpeech) : [],
       hasMorphData: () => {
         const lexemes = this.api.app.getHomonymLexemes()
-        if (!this.store.state.app.homonymDataReady || lexemes.length === 0) {
+        if (!this._store.state.app.homonymDataReady || lexemes.length === 0) {
           return false
         }
         return (Array.isArray(lexemes) && lexemes.length > 0 &&
@@ -449,13 +437,13 @@ export default class AppController {
         )
       },
       getWordUsageData: this.getWordUsageData.bind(this),
-      getWordList: this.wordlistC.getWordList.bind(this.wordlistC),
-      selectWordItem: this.wordlistC.selectWordItem.bind(this.wordlistC),
-      updateAllImportant: this.wordlistC.updateAllImportant.bind(this.wordlistC),
-      updateWordItemImportant: this.wordlistC.updateWordItemImportant.bind(this.wordlistC),
-      removeWordListItem: this.wordlistC.removeWordListItem.bind(this.wordlistC),
-      removeWordList: this.wordlistC.removeWordList.bind(this.wordlistC),
-      getAllWordLists: () => this.wordlistC ? this.wordlistC.wordLists : [],
+      getWordList: this._wordlistC.getWordList.bind(this._wordlistC),
+      selectWordItem: this._wordlistC.selectWordItem.bind(this._wordlistC),
+      updateAllImportant: this._wordlistC.updateAllImportant.bind(this._wordlistC),
+      updateWordItemImportant: this._wordlistC.updateWordItemImportant.bind(this._wordlistC),
+      removeWordListItem: this._wordlistC.removeWordListItem.bind(this._wordlistC),
+      removeWordList: this._wordlistC.removeWordList.bind(this._wordlistC),
+      getAllWordLists: () => this._wordlistC ? this._wordlistC.wordLists : [],
 
       enableWordUsageExamples: this.enableWordUsageExamples.bind(this),
       isGetSelectedTextEnabled: this.isGetSelectedTextEnabled.bind(this),
@@ -465,7 +453,7 @@ export default class AppController {
       restoreGrammarIndex: this.restoreGrammarIndex.bind(this)
     }
 
-    this.store.registerModule('app', {
+    this._store.registerModule('app', {
       // All stores of modules are namespaced
       namespaced: true,
 
@@ -660,12 +648,12 @@ export default class AppController {
     })
 
     // If `textLangCode` is set, use it over the `preferredLanguage`
-    this.options.overridePreferredLanguage = Boolean(this.options.textLangCode)
-    this.store.commit('app/setSelectedLookupLang', this.getDefaultLangCode())
+    this._options.overridePreferredLanguage = Boolean(this._options.textLangCode)
+    this._store.commit('app/setSelectedLookupLang', this.getDefaultLangCode())
 
     // Create registered data modules
     // Data modules and UI modules use the Settings Controller; it must be fully initialized at this point
-    this.createModules()
+    this._createModules()
 
     // The current language must be set after data modules are created (because it uses an L10n module)
     // but before the UI modules are created (because UI modules use current language during rendering).
@@ -674,14 +662,15 @@ export default class AppController {
     // Set the lookup
     this.api.settings.getFeatureOptions().items.lookupLanguage.setValue(defaultLangCode)
     this.updateLanguage(defaultLangID)
-    if (this.hasUIController) { this.uic.init({ api: this.api, store: this.store }) }
+    if (this.hasUIController) { this._uic.init({ api: this.api, store: this._store }) }
 
     try {
-      this.registerTextSelector('GetSelectedText', this.options.textQuerySelector)
+      this.registerTextSelector('GetSelectedText', this._options.textQuerySelector)
     } catch (err) {
       Logger.getInstance().error(err)
     }
     this.updateLemmaTranslations()
+    this.updateCurrentLocale()
     this.isInitialized = true
     return this
   }
@@ -689,13 +678,13 @@ export default class AppController {
   get textSelectorParams () {
     let event
     let eventParams
-    if (this.platform.isMobile) {
+    if (this._platform.isMobile) {
       // A mobile platform
-      if (['longTap', 'longtap', null].includes(this.options.textQueryTriggerMobile)) {
+      if (['longTap', 'longtap', null].includes(this._options.textQueryTriggerMobile)) {
         event = LongTap
       } else {
         event = GenericEvt
-        eventParams = this.options.textQueryTriggerMobile
+        eventParams = this._options.textQueryTriggerMobile
       }
     } else if (this.isMousemoveEnabled) {
       // A desktop platform with mousemove enabled
@@ -708,29 +697,29 @@ export default class AppController {
       }
     } else {
       // A desktop platform with mousemove disabled
-      if (['dblClick', 'dblclick', null].includes(this.options.textQueryTriggerDesktop)) {
+      if (['dblClick', 'dblclick', null].includes(this._options.textQueryTriggerDesktop)) {
         event = MouseDblClick
       } else {
         event = GenericEvt
-        eventParams = this.options.textQueryTriggerDesktop
+        eventParams = this._options.textQueryTriggerDesktop
       }
     }
     return [event, eventParams]
   }
 
   registerTextSelector (selectorName, selector) {
-    if (!this.selc) {
+    if (!this._selc) {
       throw new Error(`Selection controller is missing. Cannot register a ${selectorName} selector`)
     }
-    this.selc.registerSelector(selectorName, selector, ...this.textSelectorParams)
+    this._selc.registerSelector(selectorName, selector, ...this.textSelectorParams)
     return this.api.app
   }
 
   activateTextSelector (selectorName) {
-    if (!this.selc) {
+    if (!this._selc) {
       throw new Error(`Selection controller is missing. Cannot register a ${selectorName} selector`)
     }
-    this.selc.activateSelector(selectorName)
+    this._selc.activateSelector(selectorName)
     return this.api.app
   }
 
@@ -739,23 +728,23 @@ export default class AppController {
     let optionLoadPromises
     if (isAuthenticated) {
       const authData = await this.api.auth.getUserData()
-      this.userDataManager = new UserDataManager(authData, WordlistController.evt)
-      wordLists = await this.wordlistC.initLists(this.userDataManager)
-      this.store.commit('app/setWordLists', wordLists)
+      this._userDataManager = new UserDataManager(authData, WordlistController.evt)
+      wordLists = await this._wordlistC.initLists(this._userDataManager)
+      this._store.commit('app/setWordLists', wordLists)
       optionLoadPromises = this.api.settings.initOptions(RemoteAuthStorageArea, authData)
     } else {
       // TODO we need to make the UserDataManager a singleton that can
       // handle switching users gracefully
-      this.userDataManager.clear()
-      this.userDataManager = null
-      wordLists = await this.wordlistC.initLists()
+      this._userDataManager.clear()
+      this._userDataManager = null
+      wordLists = await this._wordlistC.initLists()
 
       // reload the user-configurable options
-      optionLoadPromises = this.api.settings.initOptions(this.options.storageAdapter)
+      optionLoadPromises = this.api.settings.initOptions(this._options.storageAdapter)
     }
     await Promise.all(optionLoadPromises)
     this.applyAllOptions()
-    this.store.commit('app/setWordLists', wordLists)
+    this._store.commit('app/setWordLists', wordLists)
   }
 
   /**
@@ -772,22 +761,22 @@ export default class AppController {
     this.isActivated = true
     this.isDeactivated = false
 
-    this.activateModules()
+    this._activateModules()
 
     if (this.hasUIController) {
-      this.uic.activate({ disableTextSelOnMobile: this.options.disableTextSelection })
+      this._uic.activate({ disableTextSelOnMobile: this._options.disableTextSelection })
     }
 
     // Activate listeners
-    if (this.evc) { this.evc.activateListeners() }
-    if (this.selc) { this.selc.activate() }
+    if (this._evc) { this._evc.activateListeners() }
+    if (this._selc) { this._selc.activate() }
 
-    this.authUnwatch = this.store.watch((state) => state.auth.isAuthenticated, (newValue, oldValue) => {
-      // Reinitialize data when user logged in
-      this.initUserDataManager(newValue)
-    })
+    if (this.hasModule('auth')) {
+      this.authUnwatch = this._store.watch((state) => state.auth.isAuthenticated, (newIsAuthenticatedStatus) => {
+        // Reinitialize data when user logged in
+        this.initUserDataManager(newIsAuthenticatedStatus)
+      })
 
-    if (this.api.auth) {
       // initiate session check so that user data is available
       // if we have an active session
       this.api.auth.session()
@@ -796,16 +785,16 @@ export default class AppController {
   }
 
   getDefaultLangCode () {
-    return this.options.overridePreferredLanguage ? this.options.textLangCode : this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue
+    return this._options.overridePreferredLanguage ? this._options.textLangCode : this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue
   }
 
   getMouseMoveOverride () {
-    return this.options.enableMouseMoveOverride
+    return this._options.enableMouseMoveOverride
   }
 
   clearMouseMoveOverride () {
-    this.options.enableMouseMoveOverride = undefined
-    this.store.commit('app/setMouseMoveOverrideUpdate')
+    this._options.enableMouseMoveOverride = undefined
+    this._store.commit('app/setMouseMoveOverrideUpdate')
   }
 
   /**
@@ -818,12 +807,12 @@ export default class AppController {
     if (this.isDeactivated) { return 'Already deactivated' }
 
     // Deactivate event listeners
-    if (this.evc) { this.evc.deactivateListeners() }
-    if (this.selc) { this.selc.deactivate() }
+    if (this._evc) { this._evc.deactivateListeners() }
+    if (this._selc) { this._selc.deactivate() }
 
-    this.deactivateModules()
+    this._deactivateModules()
     if (this.hasUIController) {
-      this.uic.deactivate()
+      this._uic.deactivate()
     }
 
     this.isActivated = false
@@ -882,46 +871,46 @@ export default class AppController {
       !homonym.lexemes ||
       homonym.lexemes.length < 1 ||
       homonym.lexemes.filter((l) => l.isPopulated()).length < 1
-    if (notFound && !this.store.state.app.queryStillActive) {
+    if (notFound && !this._store.state.app.queryStillActive) {
       let languageName
       if (homonym) {
         languageName = this.api.app.getLanguageName(homonym.languageID).name
-      } else if (this.store.state.app.currentLanguageName) {
-        languageName = this.store.state.app.currentLanguageName
+      } else if (this._store.state.app.currentLanguageName) {
+        languageName = this._store.state.app.currentLanguageName
       } else {
         languageName = this.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
       }
-      if (this.store.state.app.lexicalRequest.source === LexicalQuery.sources.PAGE) {
+      if (this._store.state.app.lexicalRequest.source === LexicalQuery.sources.PAGE) {
         // we offer change language here when the lookup was from the page because the language used for the
         // lookup is deduced from the page and might be wrong
         const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE',
-          { targetWord: this.store.state.app.targetWord, languageName: languageName, langCode: homonym.language })
-        this.store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: true })
+          { targetWord: this._store.state.app.targetWord, languageName: languageName, langCode: homonym.language })
+        this._store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: true })
       } else {
         // if we are coming from e.g. the lookup or the wordlist, offering change language
         // here creates some confusion and the language was explicit upon lookup so it is not necessary
         const message = this.api.l10n.getMsg('TEXT_NOTICE_NOT_FOUND',
-          { targetWord: this.store.state.app.targetWord, languageName: languageName, langCode: homonym.language })
-        this.store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: false })
+          { targetWord: this._store.state.app.targetWord, languageName: languageName, langCode: homonym ? homonym.language : '' })
+        this._store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: false })
       }
-    } else if (!this.store.state.app.queryStillActive) {
-      this.store.commit('ui/resetNotification')
+    } else if (!this._store.state.app.queryStillActive) {
+      this._store.commit('ui/resetNotification')
     }
   }
 
   // TODO: Do we need this function
   showErrorInfo (errorText) {
-    this.store.commit('ui/setNotification', { text: errorText, important: true })
+    this._store.commit('ui/setNotification', { text: errorText, important: true })
   }
 
   // TODO: Do we need this function
   showImportantNotification (message) {
-    this.store.commit('ui/setNotification', { text: message, important: true })
+    this._store.commit('ui/setNotification', { text: message, important: true })
   }
 
   sendFeature (feature) {
     if (this.api.ui.hasModule('panel')) {
-      this.api.app.startResourceQuery(feature)
+      this.startResourceQuery(feature)
       this.api.ui.changeTab('grammar')
       this.api.ui.openPanel()
     }
@@ -940,39 +929,43 @@ export default class AppController {
   newLexicalRequest (targetWord, languageID, data = null, source = LexicalQuery.sources.PAGE) {
     // Reset old word-related data
     this.api.app.homonym = null
-    this.store.commit('app/resetWordData')
+    this._store.commit('app/resetWordData')
     this.resetInflData()
-    this.store.commit('ui/resetNotification')
-    this.store.commit('ui/resetMessages')
+    this._store.commit('ui/resetNotification')
+    this._store.commit('ui/resetMessages')
     /*
     Do not reset authentication notification if there is an expired user session:
     in this case we always need to show a login prompt to the user
      */
-    if (!this.store.state.auth.isSessionExpired) {
-      this.store.commit('auth/resetNotification')
+    if (this.hasModule('auth') && !this._store.state.auth.isSessionExpired) {
+      this._store.commit('auth/resetNotification')
     }
 
     // Set new data values
-    this.store.commit('app/setTextData', { text: targetWord, languageID: languageID })
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
+    this._store.commit('app/setTextData', { text: targetWord, languageID: languageID })
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
     this.updateLanguage(languageID)
     // this.updateWordAnnotationData(data)
-    this.store.commit('app/lexicalRequestStarted', { targetWord: targetWord, source: source })
+    this._store.commit('app/lexicalRequestStarted', { targetWord: targetWord, source: source })
 
     // Right now we always need to open a UI with the new Lexical request, but we can make it configurable if needed
     this.api.ui.openLexQueryUI()
     return this
   }
 
+  /**
+   * Used by the embedded library to set an active status.
+   */
   setEmbedLibActive () {
-    this.store.commit('app/setEmbedLibActive', true)
+    this._store.commit('app/setEmbedLibActive', true)
   }
 
   resetInflData () {
-    this.api.app.inflectionsViewSet = null
-    this.store.commit('app/resetInflData')
+    this._inflectionsViewSet = null
+    this._store.commit('app/resetInflData')
   }
 
+  // TODO: Update logic should probably go to the homonym-related objects
   updateProviders (homonym) {
     let providers = new Map() // eslint-disable-line prefer-const
     homonym.lexemes.forEach((l) => {
@@ -990,7 +983,7 @@ export default class AppController {
         providers.set(l.lemma.translation.provider.uri, l.lemma.translation.provider)
       }
     })
-    this.store.commit('app/setProviders', Array.from(providers.values()))
+    this._store.commit('app/setProviders', Array.from(providers.values()))
   }
 
   /**
@@ -1005,7 +998,7 @@ export default class AppController {
       const langCode = LanguageModelFactory.getLanguageCodeFromId(data.languageID)
       this.api.app.grammarData[langCode] = data.urls[0]
 
-      this.store.commit('app/setUpdatedGrammar')
+      this._store.commit('app/setUpdatedGrammar')
     }
   }
 
@@ -1016,11 +1009,11 @@ export default class AppController {
    */
   initGrammar (langCode) {
     this.api.app.grammarData[langCode] = null
-    this.store.commit('app/setUpdatedGrammar')
+    this._store.commit('app/setUpdatedGrammar')
   }
 
   updateTranslations (homonym) {
-    this.store.commit('app/setTranslDataReady')
+    this._store.commit('app/setTranslDataReady')
     this.updateProviders(homonym)
   }
 
@@ -1030,7 +1023,7 @@ export default class AppController {
     }
     if (LanguageModelFactory.isExperimentalLanguage(languageID)) {
       const langDetails = AppController.getLanguageName(languageID)
-      this.store.commit('ui/setNotification',
+      this._store.commit('ui/setNotification',
         { text: this.api.l10n.getMsg('TEXT_NOTICE_EXPIRIMENTAL_LANGUAGE', { languageName: langDetails.name }), important: true })
     }
   }
@@ -1039,10 +1032,10 @@ export default class AppController {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
-      this.logger.warn('updateLanguage was called with a string value')
+      Logger.getInstance().warn('updateLanguage was called with a string value')
       currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
     }
-    this.store.commit('app/setCurrentLanguage', currentLanguageID)
+    this._store.commit('app/setCurrentLanguage', currentLanguageID)
     this.notifyExperimental(currentLanguageID)
     const newLanguageCode = LanguageModelFactory.getLanguageCodeFromId(currentLanguageID)
     if (this.state.currentLanguage !== newLanguageCode) {
@@ -1063,31 +1056,37 @@ export default class AppController {
     }
   }
 
-  async updateWordUsageExamples (wordUsageExamplesData) {
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
+  updateCurrentLocale() {
+    if (this.api.settings.getFeatureOptions().items.locale.currentValue) {
+      this.api.l10n.setLocale(this.api.settings.getFeatureOptions().items.locale.currentValue)
+    }
+  }
+
+  updateWordUsageExamples (wordUsageExamplesData) {
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
     this.api.app.wordUsageExamples = wordUsageExamplesData
 
     if (!this.api.app.wordUsageExamplesCached || this.api.app.wordUsageExamplesCached.targetWord !== this.api.app.wordUsageExamples.targetWord) {
       this.api.app.wordUsageExamplesCached = wordUsageExamplesData
     }
-    this.store.commit('app/setWordUsageExamplesReady')
+    this._store.commit('app/setWordUsageExamplesReady')
   }
 
   isGetSelectedTextEnabled (domEvent) {
     return (this.state.isActive() &&
       this.state.uiIsActive() &&
-      (!this.options.triggerPreCallback || this.isMousemoveEnabled || this.options.triggerPreCallback(domEvent)))
+      (!this._options.triggerPreCallback || this.isMousemoveEnabled || this._options.triggerPreCallback(domEvent)))
   }
 
   async getWordUsageData (homonym, params = {}) {
     if (this.api.app.wordUsageExamplesCached && (this.api.app.wordUsageExamplesCached.targetWord === homonym.targetWord) && (Object.keys(params).length === 0)) {
-      this.store.commit('app/setWordUsageExamplesReady', false)
+      this._store.commit('app/setWordUsageExamplesReady', false)
       this.api.app.wordUsageExamples = this.api.app.wordUsageExamplesCached
-      this.store.commit('app/setWordUsageExamplesReady', true)
+      this._store.commit('app/setWordUsageExamplesReady', true)
       return
     }
 
-    this.store.commit('app/setWordUsageExamplesReady', false)
+    this._store.commit('app/setWordUsageExamplesReady', false)
 
     const wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
       ? {
@@ -1139,55 +1138,55 @@ export default class AppController {
     //    { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
     // ]
     // }).getData()
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS'))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS'))
   }
 
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
       case LexicalQuery.resultStatus.SUCCEEDED:
         this.showLanguageInfo(data.homonym)
-        this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
+        this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         break
       case LexicalQuery.resultStatus.FAILED:
         this.showLanguageInfo(data.homonym)
-        this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
+        this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
-    this.store.commit('app/lexicalRequestFinished')
+    this._store.commit('app/lexicalRequestFinished')
   }
 
   onMorphDataReady () {
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
   }
 
   onMorphDataNotFound () {
-    this.store.commit('ui/setNotification', { text: this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'), important: true })
-    this.store.commit('app/setQueryStillActive', true)
+    this._store.commit('ui/setNotification', { text: this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'), important: true })
+    this._store.commit('app/setQueryStillActive', true)
   }
 
   onHomonymReady (homonym) {
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
 
     // Update status info with data from a morphological analyzer
-    this.store.commit('app/setTextData', { text: homonym.targetWord, languageID: homonym.languageID })
+    this._store.commit('app/setTextData', { text: homonym.targetWord, languageID: homonym.languageID })
 
     // Update inflections data
     const inflectionsViewSet = ViewSetFactory.create(homonym, this.api.settings.getFeatureOptions().items.locale.currentValue)
 
     if (inflectionsViewSet.hasMatchingViews) {
-      this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
+      this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
     this.api.app.homonym = homonym
     const wordUsageExampleEnabled = this.enableWordUsageExamples({ languageID: homonym.languageID })
 
-    this.store.commit('app/setHomonym', homonym)
-    this.store.commit('app/setWordUsageExampleEnabled', wordUsageExampleEnabled)
+    this._store.commit('app/setHomonym', homonym)
+    this._store.commit('app/setWordUsageExampleEnabled', wordUsageExampleEnabled)
 
-    this.store.commit('app/setMorphDataReady')
+    this._store.commit('app/setMorphDataReady')
 
     let inflDataReady = false
-    if (LanguageModelFactory.getLanguageModel(this.store.state.app.currentLanguageID).canInflect()) {
+    if (LanguageModelFactory.getLanguageModel(this._store.state.app.currentLanguageID).canInflect()) {
       inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
-      this.api.app.inflectionsViewSet = inflectionsViewSet
+      this._inflectionsViewSet = inflectionsViewSet
     }
 
     // TODO: Shall we make this delay conditional to avoid performance degradation?
@@ -1205,20 +1204,20 @@ export default class AppController {
       To prevent this, we introduce a delay that will allow Vue to notice a prop change
       and call a watcher function.
        */
-      this.store.commit('app/setInflData', inflDataReady)
+      this._store.commit('app/setInflData', inflDataReady)
     })
 
     // The homonym can already has short defs data
     if (homonym.hasShortDefs) {
       this.updateProviders(homonym)
-      this.store.commit('app/shortDefsUpdated')
+      this._store.commit('app/shortDefsUpdated')
     }
   }
 
   onWordListUpdated (wordList) {
-    this.store.commit('app/setWordLists', wordList)
-    if (this.store.state.auth.enableLogin && !this.store.state.auth.isAuthenticated && !this.store.state.auth.isSessionExpired) {
-      this.store.commit('auth/setNotification', { text: 'TEXT_NOTICE_SUGGEST_LOGIN', showLogin: true, count: this.wordlistC.getWordListItemCount() })
+    this._store.commit('app/setWordLists', wordList)
+    if (this.hasModule('auth') && this._store.state.auth.enableLogin && !this._store.state.auth.isAuthenticated && !this._store.state.auth.isSessionExpired) {
+      this._store.commit('auth/setNotification', { text: 'TEXT_NOTICE_SUGGEST_LOGIN', showLogin: true, count: this._wordlistC.getWordListItemCount() })
     }
   }
 
@@ -1228,49 +1227,49 @@ export default class AppController {
 
   onShortDefinitionsReady (data) {
     this.api.app.homonym = data.homonym
-    this.store.commit('app/setQueryStillActive', false)
+    this._store.commit('app/setQueryStillActive', false)
     this.showLanguageInfo(data.homonym)
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
     this.updateProviders(data.homonym)
-    this.store.commit('app/shortDefsUpdated')
+    this._store.commit('app/shortDefsUpdated')
   }
 
   onFullDefinitionsReady (data) {
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
     this.updateProviders(data.homonym)
-    this.store.commit('app/fullDefsUpdated')
+    this._store.commit('app/fullDefsUpdated')
   }
 
   onDefinitionsNotFound (data) {
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
   }
 
   onResourceQueryComplete () {
     // We don't check result status for now. We always output the same message.
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_COMPLETE'))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_COMPLETE'))
   }
 
   onGrammarAvailable (data) {
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_READY'))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_READY'))
     this.updateGrammar(data)
   }
 
   onGrammarNotFound () {
     this.updateGrammar()
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND'))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOT_FOUND'))
   }
 
   async onWordItemSelected (wordItem) {
-    if (!this.userDataManager && !wordItem.homonym) {
-      this.logger.warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
+    if (!this._userDataManager && !wordItem.homonym) {
+      Logger.getInstance().warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
       return
     }
     const languageID = LanguageModelFactory.getLanguageIdFromCode(wordItem.languageCode)
     this.newLexicalRequest(wordItem.targetWord, languageID, null, 'wordlist')
 
     let homonym
-    if (this.userDataManager) {
-      const wordItemFull = await this.userDataManager.query({ dataType: 'WordItem', params: { wordItem } }, { type: 'full' })
+    if (this._userDataManager) {
+      const wordItemFull = await this._userDataManager.query({ dataType: 'WordItem', params: { wordItem } }, { type: 'full' })
       homonym = wordItemFull[0].homonym
     } else {
       homonym = wordItem.homonym
@@ -1281,14 +1280,17 @@ export default class AppController {
       this.onHomonymReady(homonym)
       // we still need to notify the wordlist controller that an onHomonymReady event
       // was received so that it can update the wordlist item as appropriate
-      this.wordlistC.onHomonymReady(homonym)
+      this._wordlistC.onHomonymReady(homonym)
+
+      // TODO: updateProvides is already called by the onHomonymReady() (if there are short definitions)
+      //       and by the updateTranslations(). We should try to optimize that flow.
       this.updateProviders(homonym)
       // We already have both short and full definitions so we can update the status of both
-      this.store.commit('app/shortDefsUpdated')
-      this.store.commit('app/fullDefsUpdated')
+      this._store.commit('app/shortDefsUpdated')
+      this._store.commit('app/fullDefsUpdated')
       // this.updateDefinitions(homonym)
       this.updateTranslations(homonym)
-      this.store.commit('app/lexicalRequestFinished')
+      this._store.commit('app/lexicalRequestFinished')
     } else {
       // otherwise we can query for it as usual
       const textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID)
@@ -1302,14 +1304,14 @@ export default class AppController {
   applyAllOptions () {
     for (const name of this.api.settings.getFeatureOptions().names) {
       this.applyFeatureOption(name)
-      this.store.commit('settings/incrementFeatureResetCounter')
+      this._store.commit('settings/incrementFeatureResetCounter')
     }
     for (const name of this.api.settings.getResourceOptions().names) { // eslint-disable-line no-unused-vars
-      this.store.commit('settings/incrementResourceResetCounter')
+      this._store.commit('settings/incrementResourceResetCounter')
     }
     for (const name of this.api.settings.getUiOptions().names) {
       this.applyUIOption(name, this.api.settings.getUiOptions().items[name].currentValue)
-      this.store.commit('settings/incrementUiResetCounter')
+      this._store.commit('settings/incrementUiResetCounter')
     }
   }
 
@@ -1322,21 +1324,22 @@ export default class AppController {
     switch (settingName) {
       case 'locale':
         this.updateLemmaTranslations()
+        this.updateCurrentLocale()
         break
       case 'preferredLanguage':
         this.updateLanguage(this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue)
         // If user manually sets the preferred language option then the language chosen must have priority over the `textLang`
-        this.options.overridePreferredLanguage = false
+        this._options.overridePreferredLanguage = false
         break
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()
         break
       case 'enableMouseMove':
         // If user manually sets the mouse move option then this takes priority over the page override
-        this.options.enableMouseMoveOverride = false
-        this.store.commit('app/setMouseMoveOverrideUpdate')
-        if (this.selc) {
-          this.selc.replaceEventForAll(...this.textSelectorParams)
+        this._options.enableMouseMoveOverride = false
+        this._store.commit('app/setMouseMoveOverrideUpdate')
+        if (this._selc) {
+          this._selc.replaceEventForAll(...this.textSelectorParams)
         }
         break
     }
@@ -1366,7 +1369,9 @@ export default class AppController {
         UIController.applyFontSize(value)
         break
       case 'panelPosition':
-        this.store.commit('panel/setPosition', value)
+        if (this.hasModule('panel')) {
+          this._store.commit('panel/setPosition', value)
+        }
         break
       case 'verboseMode':
         /*
@@ -1376,32 +1381,32 @@ export default class AppController {
         That's why we're using a `isInVerboseMode()` method of the Settings public API.
         It returns a boolean and is much simpler and safer in use.
          */
-        this.logger.setVerboseMode(this.api.settings.isInVerboseMode())
+        Logger.getInstance().setVerboseMode(this.api.settings.isInVerboseMode())
         break
       case 'hideLoginPrompt':
         if (this.api.auth) {
-          this.store.commit('auth/setHideLoginPrompt', value)
+          this._store.commit('auth/setHideLoginPrompt', value)
         }
         break
       case 'mouseMoveDelay':
-        if (this.selc && this.isMousemoveEnabled) {
-          this.selc.updateParamsForAll({ mouseMoveDelay: value })
+        if (this._selc && this.isMousemoveEnabled) {
+          this._selc.updateParamsForAll({ mouseMoveDelay: value })
         }
         break
       case 'mouseMoveAccuracy':
-        if (this.selc && this.isMousemoveEnabled) {
-          this.selc.updateParamsForAll({ mouseMoveAccuracy: value })
+        if (this._selc && this.isMousemoveEnabled) {
+          this._selc.updateParamsForAll({ mouseMoveAccuracy: value })
         }
         break
       case 'enableMouseMoveLimitedByIdCheck':
-        if (this.selc && this.isMousemoveEnabled) {
-          this.selc.updateParamsForAll({ enableMouseMoveLimitedByIdCheck: value })
+        if (this._selc && this.isMousemoveEnabled) {
+          this._selc.updateParamsForAll({ enableMouseMoveLimitedByIdCheck: value })
         }
         break
       case 'forceMouseMoveGoogleDocs':
-        if (this.selc) {
+        if (this._selc) {
           // An event must be replaced because a change of this setting may cause an event change
-          this.selc.replaceEventForAll(...this.textSelectorParams)
+          this._selc.replaceEventForAll(...this.textSelectorParams)
         }
         break
     }
@@ -1417,7 +1422,7 @@ export default class AppController {
     if (this.isGetSelectedTextEnabled(domEvent) && textSelector && !textSelector.isEmpty()) {
       const lastTextSelector = this.api.lexis.lastTextSelector || {}
       // Do not run a lexical query if the same word is already shown in a popup on desktop
-      if (this.platform.isDesktop && this.api.ui.isPopupVisible()) {
+      if (this._platform.isDesktop && this.api.ui.isPopupVisible()) {
         if (lastTextSelector.text === textSelector.text &&
           lastTextSelector.languageID === textSelector.languageID) {
           // Do nothing
@@ -1429,11 +1434,11 @@ export default class AppController {
   }
 
   get isMousemoveEnabled () {
-    return this.platform.isDesktop && (this.api.settings.getFeatureOptions().items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.isMousemoveForced())
+    return this._platform.isDesktop && (this.api.settings.getFeatureOptions().items.enableMouseMove.currentValue || this._options.enableMouseMoveOverride || this.isMousemoveForced())
   }
 
   isMousemoveForced () {
-    return Boolean(this.platform.isDesktop && this.platform.isGoogleDocs && this.api.settings.getUiOptions().items.forceMouseMoveGoogleDocs.currentValue)
+    return Boolean(this._platform.isDesktop && this._platform.isGoogleDocs && this.api.settings.getUiOptions().items.forceMouseMoveGoogleDocs.currentValue)
   }
 }
 

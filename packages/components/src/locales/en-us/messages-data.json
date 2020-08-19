@@ -608,5 +608,15 @@
   },
   "emphatic": {
     "message": "emphatic"
+  },
+  "append_declension": {
+    "message": "{data} declension",
+    "description": "used to append the type classifier 'declension' to a declension data value (e.g. 1st)",
+    "params": ["data"]
+  },
+  "conjugation": {
+    "message": "{data} conjugation",
+    "description": "used to append the type classifier 'conjugation' to a conjugation data value (e.g. 1st)",
+    "params": ["data"]
   }
 }

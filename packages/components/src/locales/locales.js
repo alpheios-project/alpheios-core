@@ -5,18 +5,27 @@ import EnUsWordList from './en-us/messages-word-list.json'
 import EnUsWordUsage from './en-us/messages-word-usage.json'
 import EnUsResourceOptions from './en-us/messages-resource-options.json'
 import EnGb from './en-gb/messages.json'
+import Ar from './ar/messages.json'
+import ArData from './ar/messages-data.json'
+import ArInflections from './ar/messages-inflections.json'
+import ArWordList from './ar/messages-word-list.json'
+import ArWordUsage from './ar/messages-word-usage.json'
+import ArResourceOptions from './ar/messages-resource-options.json'
 import { MessageBundle } from 'alpheios-l10n'
 
 const localeEnUs = 'en-US'
 const localeEnGb = 'en-GB'
+const localeArabic = 'ar'
 const availableMessages = {
   [localeEnUs]: [EnUs, EnUsData, EnUsInflectons, EnUsWordList, EnUsWordUsage, EnUsResourceOptions],
-  [localeEnGb]: [EnGb]
+  [localeEnGb]: [EnGb],
+  [localeArabic]: [Ar, ArData, ArInflections, ArWordList, ArWordUsage, ArResourceOptions]
 }
 
 export default {
   en_US: localeEnUs,
   en_GB: localeEnGb,
+  ar: localeArabic,
   availableMessages: availableMessages,
   /**
    * A helper function that creates a message bundle out of a messages JSON and a locale.

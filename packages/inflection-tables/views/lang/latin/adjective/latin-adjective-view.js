@@ -65,8 +65,7 @@ export default class LatinAdjectiveView extends LatinView {
   }
 
   static enabledForInflection (inflection) {
-    return inflection[Feature.types.part].value === this.mainPartOfSpeech &&
-      !inflection[Feature.types.comparison]
+    return inflection[Feature.types.part].value === this.mainPartOfSpeech
   }
 
   static morphemeCellFilter (form) {

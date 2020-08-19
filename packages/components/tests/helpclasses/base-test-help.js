@@ -266,6 +266,7 @@ export default class BaseTestHelp {
       namespaced: true,
       state: function () {
         return {
+          isAuthenticated: false,
           notification: {
             visible: false,
             important: false,
@@ -535,6 +536,7 @@ export default class BaseTestHelp {
     return Object.assign({
       tab: 'info',
       activate: () => {},
+      deactivate: () => {},
       activateUI: () => {},
       isPanelStateDefault: () => true,
       isPanelStateValid: () => true,
@@ -543,7 +545,10 @@ export default class BaseTestHelp {
       openPanel: () => {},
       isTabStateDefault: () => false,
       setPanelOpen: () => {},
-      changeTab: () => {}
+      changeTab: () => {},
+      setItem: () => {},
+      isDisabled: () => false,
+      isActive: () => true
     }, props)
   }
 }
