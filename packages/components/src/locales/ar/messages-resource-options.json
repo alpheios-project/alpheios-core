@@ -1,56 +1,56 @@
 {
   "LEXICONS_FULL_TITLE": {
-    "message": "Lexicons (Full Definitions)",
+    "message": "(المعاجم (المداخل الكاملة",
     "description": "The label of the fieldset for full definitions on resource settings tab",
     "component": "Settings Tab"
   },
   "LEXICONS_FULL_GREEK_TITLE": {
-    "message": "Greek",
+    "message": "اليونانية",
     "description": "The label of the setting for greek full definitions on resource settings tab",
     "component": "Settings Tab"
   },
   "LEXICONS_FULL_LATIN_TITLE": {
-    "message": "Latin",
+    "message": "اللاتينية",
     "description": "The label of the setting for latin full definitions on resource settings tab",
     "component": "Settings Tab"
   },
   "LEXICONS_FULL_ARABIC_TITLE": {
-    "message": "Arabic",
+    "message": "العربية",
     "description": "The label of the setting for arabic full definitions on resource settings tab",
     "component": "Settings Tab"
   },
   "LEXICONS_FULL_PERSIAN_TITLE": {
-    "message": "Persian",
+    "message": "الفارسية",
     "description": "The label of the setting for persian full definitions on resource settings tab",
     "component": "Settings Tab"
   },
   "LEXICONS_SHORT_TITLE": {
-    "message": "Lexicons (Short Definitions)",
+    "message": "(المعاجم (مداخل مختصرة",
     "description": "The label of thr fieldset for short definitions on resource settings tab",
     "component": "Settings Tab"
   },
   "LEXICONS_SHORT_GREEK_TITLE": {
-    "message": "Greek",
+    "message": "اليونانية",
     "description": "The label of the setting for greek sort definitions on resource settings tab",
     "component": "Settings Tab"
   },
   "LEXICONS_SHORT_PERSIAN_TITLE": {
-    "message": "Persian",
+    "message": "الفارسية",
     "description": "The label of the setting for persian short definitions on resource settings tab",
     "component": "Settings Tab"
   },
   "GRAMMARS_TITLE": {
-    "message": "Grammars",
+    "message": "القواعد النحوية",
     "description": "The label for the setting of preferred Grammar",
     "component": "Options Tab"
   },
   "GRAMMARS_LATIN_TITLE": {
-    "message": "Latin",
+    "message": "اللاتينية",
     "description": "The label for the setting of preferred Latin Grammar",
     "component": "Options Tab"
   },
   "GRAMMARS_GREEK_TITLE": {
-    "message": "Greek",
+    "message": "اليونانية",
     "description": "The label for the setting of preferred Greek Grammar",
     "component": "Options Tab"
   }
