@@ -1,38 +1,38 @@
 {
   "Number": {
-    "message": "Number"
+    "message": "العدد"
   },
   "Case": {
-    "message": "Case"
+    "message": "الحالة الإعرابية"
   },
   "Declension": {
-    "message": "Declension"
+    "message": "الإعراب"
   },
   "Declension Stem": {
-    "message": "Declension Stem"
+    "message": "جذر الإعراب"
   },
   "Gender": {
-     "message" : "Gender"
+     "message" : "الجنس"
   },
   "Type": {
-    "message": "Type"
+    "message": "النوع"
   },
   "Voice": {
-    "message": "Voice"
+    "message": "البناء"
   },
   "Conjugation Stem": {
-    "message": "Conjugation Stem"
+    "message": "جذر التصريف"
   },
   "Mood": {
-    "message": "Mood"
+    "message": "الصيغة"
   },
   "Person": {
-    "message": "Person"
+    "message": "الشخص"
   },
   "Lemma": {
-    "message": "Lemma"
+    "message": "المدخل المعجمي"
   },
   "Paradigm": {
-    "messaage": "Paradigm"
+    "messaage": "مثال"
   }
 }
