@@ -403,31 +403,31 @@
     "message":"رقم على شكل ظرف"
   },
   "1st":{
-    "message":"1st"
+    "message":"الأول"
   },
   "2nd":{
-    "message":"2nd"
+    "message":"الثانى"
   },
   "3rd":{
-    "message":"3rd"
+    "message":"الثالث"
   },
   "4th":{
-    "message":"4th"
+    "message":"الرابع"
   },
   "5th":{
-    "message":"5th"
+    "message":"الخامس"
   },
   "6th":{
-    "message":"6th"
+    "message":"السادس"
   },
   "7th":{
-    "message":"7th"
+    "message":"السابع"
   },
   "8th":{
-    "message":"8th"
+    "message":"الثامن"
   },
   "9th":{
-    "message":"9th"
+    "message":"التاسع"
   },
   "aorist":{
     "message":"ماضى تام"
@@ -572,11 +572,11 @@
     "message": "تأكيدى"
   },
   "declension": {
-    "message": "{data} declension",
+    "message": "{data} الإعراب",
     "params": ["data"]
   },
   "conjugation": {
-    "message": "{data} conjugation",
+    "message": "{data} التصريف",
     "params": ["data"]
   }
 }

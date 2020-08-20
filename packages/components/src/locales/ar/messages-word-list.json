@@ -1,180 +1,180 @@
 {
     "WORDLIST_TOOLTIP_ALL_IMPORTANT": {
-        "message": "Make all important ",
+        "message": "إعتبار كل الكلمات فى هذه القائمة كلمات مهمة",
         "description": "Make all words inside language block important",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_TOOLTIP_NO_IMPORTANT": {
-        "message": "Remove all important ",
+        "message": "إلغاء علامة أهمية الكلمات فى هذه القائمة وإختيار المهم  كل على حدة",
         "description": "Remove important mark from all words inside language block",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_TOOLTIP_REMOVE_ALL": {
-        "message": "Remove all word items",
+        "message": "حذف جميع الكلمات بالقائمة",
         "description": "Remove all words inside language block",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_TOOLTIP_CHANGE_IMPORTANT": {
-        "message": "Change important status",
+        "message": "تغيير أهمية الكلمة فى القائمة",
         "description": "Change important status for the WordItem",
         "component": "WordItemPanel"
     },
     "WORDLIST_TOOLTIP_REMOVE": {
-        "message": "Remove word item",
+        "message": "حذف الكلمة من القائمة",
         "description": "Remove the WordItem form the list",
         "component": "WordItemPanel"
     },
     "WORDLIST_TOOLTIP_TEXT_CONTEXT": {
-        "message": "Show contexts",
+        "message": "إظهار السياق أو السياقات التى ظهرت فيه هذه الكلمة",
         "description": "Show panel with contexts for the wordItem",
         "component": "WordItemPanel"
     },
 
     "WORDLIST_TOOLTIP_FREQUENCY": {
-        "message": "The number of times you have looked up this word.",
+        "message": "عدد المرات التى بحثت فيها عن معنى هذه الكلمة",
         "description": "Tooltip text for frequency column",
         "component": "WordItemPanel"
     },
 
     "WORDLIST_TOOLTIP_UPDATEDDT": {
-        "message": "The date this entry was added or updated.",
+        "message": "تاريخ إضافة أو تحديث هذه الكلمة",
         "description": "Tooltip text for updateddt column",
         "component": "WordItemPanel"
     },
 
     "WORDLIST_TOOLTIP_BACK": {
-        "message": "Back to word list",
+        "message": "الرجوع إلى قائمة الكلمات",
         "description": "Back to the WordList Tab",
         "component": "WordContextPanel"
     },
     "WORDLIST_DELETE_CONFIRM_MESSAGE": {
-        "message": "Do you really want to delete all word items from the list?",
+        "message": "هل تريد بالفعل أن تحذف جميع الكلمات فى هذه القائمة؟?",
         "description": "Delete all confirmation message",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_BUTTON_DELETE": {
-        "message": "Delete",
+        "message": "الحذف",
         "description": "Button title for delete all",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_BUTTON_CANCEL_DELETE": {
-        "message": "Cancel",
+        "message": "إلغاء الأمر",
         "description": "Button title for cancel delete all",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL": {
-        "message": "Cancel remove all word items",
+        "message": "التراجع عن حذف جميع الكلمات",
         "description": "Cancel remove all words inside language block",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_FILTER_BYCURRENTSESSION": {
-        "message": "this session",
+        "message": "إظهار الكلمات التى بحثت عنها فى هذه الساعة",
         "description": "Filter only those words that were selected in the current session",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYIMPORTANT": {
-        "message": "important",
+        "message": "إظهار الكلمات المهمة فقط",
         "description": "Filter only those words that has an important flag",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYWORDFORM_FULL": {
-        "message": "exact word",
+        "message": "إظهار كلمة معينة",
         "description": "Filter only those words that has this word word",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYWORDFORM_PART": {
-        "message": "word form (part)",
+        "message": "إظهار جزء من كلمة أو تصريفها",
         "description": "Filter only those words that has this part of word form",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYLEMMA_FULL": {
-        "message": "lemma",
+        "message": "المدخل المعجمي",
         "description": "Filter only those words that has this lemma",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYLEMMA_PART": {
-        "message": "lemma (part)",
+        "message": "جزء من المدخل المعجمي",
         "description": "Filter only those words that has this part of lemma",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER": {
-        "message": "type exact word here",
+        "message": "أكتب كلمة معينة هنا",
         "description": "Placeholder for the text input for filter by word",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER": {
-        "message": "type lemma here",
+        "message": "أكتب مدخل معجمي هنا",
         "description": "Placeholder for the text input for filter by lemma",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BY": {
-        "message": "Limit to",
+        "message": "قم بتحديد الكلمات من خلال",
         "description": "Filter by label on the panel",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_CLEAR": {
-        "message": "Clear limits",
+        "message": "إلغاء التحديد وإظهار كل الكلمات",
         "description": "Tooltip for clear filter icon",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER": {
-        "message": "Limit",
+        "message": "قم بتحديد",
         "description": "Tooltip for filter icon",
         "component": "WordFilterPanel"
     },
     "WORDLIST_CURRENT_SESSION": {
-        "message": "Added in the current session",
+        "message": "الكلمات المضافة فى الساعة الحالية",
         "description": "Icon indicates, thats it was retrieved durent the current session",
         "component": "WordItemPanel"
     },
     "WORDLIST_FILTER_PLACEHOLDER": {
-        "message": "Select a limit",
+        "message": "إختيار تحديد معين",
         "description": "Placeholder for filter selection",
         "component": "WordFilterPanel"
     },
     "WORDLIST_TOOLTIP_DOWNLOAD": {
-        "message": "Download wordlist ({lang})",
+        "message": "تحميل قائمة الكلمات ({lang})",
         "description": "Placeholder for filter selection",
         "component": "WordFilterPanel",
         "params": ["lang"]
     },
     "WORDLIST_DOWNLOAD_BUTTON": {
-        "message": "Download",
+        "message": "تحميل",
         "description": "Download list button",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_DOWNLOAD_NOTICE": {
-        "message": "Your wordlist will be downloaded as tabular data file. It can be imported into a spreadsheet program. Columns are separated by semi-colons. (This feature may not work on iOS devices.)",
+        "message": ".iosقائمة الكلمات التى بحثت عنها سوف يتم تحميلها فى ملف على هيئة  بيانات مجدولة حيث يمكنك بعد ذلك بنقلها إلى أى برنامج معالجة الجداول مثل ميكرسوفت إيكسل. تفصل بين الأعمدة فى هذا الملف فاصلة ونقطة. قد لا تعمل هذه الميزة إذا كانت تستخدم أجهزة أبل",
         "description": "Download notice",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_DOWNLOAD_FILTERING_CHECK": {
-        "message": "with filtering",
+        "message": "تحميل القائمة بالتحديدات",
         "description": "Download list filtering check",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_DOWNLOAD_FLASHCARDS_CHECK": {
-        "message": "for flashcards",
+        "message": "لإستخدامها بطاقة تعليمية ",
         "description": "Download list for flashcards",
         "component": "WordLanguagePanel"
     },
     "WORDLIST_FILTER_BYMOSTRECENT": {
-        "message": "most recent",
+        "message": "بآخر التحديثات",
         "description": "Filter by max amount with sorting by updatedDT desc",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_AMOUNT_PLACEHOLDER": {
-        "message": "number of words to show",
+        "message": "عدد الكلمات التى سوف تظهر",
         "description": "Placeholder for filter amount",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYMOSTOFTEN": {
-        "message": "most often",
+        "message": "بأكثر الكلمات إستخداماً",
         "description": "Filter by max amount with sorting by frequency desc",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FLASHCARD_MAXDOWNLOAD_AMOUNT": {
-        "message": "Note: the Flashcard export is limited to a maximum of {maxFlashCardItems} words.",
+        "message": "لاحظ أن تحميل القائمة كبطاقات تعليمية لا يمكن أن يتعدى عدد {maxFlashCardItems} كلمة.",
         "description": "Max download for flashcard",
         "component": "DownloadConfirmation",
         "params": ["maxFlashCardItems"]
