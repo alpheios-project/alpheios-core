@@ -26,7 +26,7 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
   async getHomonym (languageID, wordref) {
     const server = this.prepareRequest(wordref)
     if (!server.url) {
-      this.addError(this.l10n.messages.MORPH_TREEBANK_NO_URL.get(wordref))
+      this.addError(this.l10n.getMsg('MORPH_TREEBANK_NO_URL', { word: wordref }))
       return
     }
     try {
@@ -45,10 +45,10 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
         const homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text, server.config)
         return homonym
       } else {
-        this.addError(this.l10n.messages.MORPH_TREEBANK_NO_ANSWER_FOR_WORD.get(wordref))
+        this.addError(this.l10n.getMsg('MORPH_TREEBANK_NO_ANSWER_FOR_WORD', { word: wordref }))
       }
     } catch (error) {
-      this.addError(this.l10n.messages.MORPH_TREEBANK_UNKNOWN_ERROR.get(error.mesage))
+      this.addError(this.l10n.getMsg('MORPH_TREEBANK_UNKNOWN_ERROR', { message: error.message }))
     }
   }
 

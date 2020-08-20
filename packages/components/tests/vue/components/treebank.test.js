@@ -28,9 +28,7 @@ describe('treebank.test.js', () => {
 
     store = BaseTestHelp.baseVuexStore()
     api = {
-      settings: {
-        experimentalResetTreebankURL: false
-      },
+      settings: BaseTestHelp.settingsAPI({ experimentalResetTreebankURL: false }),
       app: BaseTestHelp.appAPI()
     }
 

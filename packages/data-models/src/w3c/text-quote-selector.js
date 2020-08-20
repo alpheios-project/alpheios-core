@@ -1,7 +1,7 @@
 /**
  * Implements a W3C Text Quote Selector (https://www.w3.org/TR/annotation-model/#h-text-quote-selector)
  */
-import uuidv4 from 'uuid/v4'
+import { v4 as uuidv4 } from 'uuid'
 
 export default class TextQuoteSelector {
   constructor (languageCode, normalizedText, prefix = null, suffix = null, source = null) {

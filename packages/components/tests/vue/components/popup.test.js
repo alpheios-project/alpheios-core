@@ -29,9 +29,6 @@ describe('popup.test.js', () => {
     store = BaseTestHelp.baseVuexStore()
 
     api = {
-      ui: BaseTestHelp.uiAPI({
-        zIndex: 50
-      }),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI({
         platform: {
@@ -145,7 +142,7 @@ describe('popup.test.js', () => {
     expect(cmp.vm.componentStyles.width).toEqual(30) // widthDm
     expect(cmp.vm.componentStyles.height).toEqual(40) // heightDm
     expect(cmp.vm.componentStyles.zIndex).toEqual(50) // ui.zIndex
-    expect(cmp.vm.componentStyles.transform).toEqual('translate(60px, 70px)') // ui.zIndex
+    expect(cmp.vm.componentStyles.transform).toEqual('translate(60px, 70px)')
   })
 
   it('6 Popup - computed noLanguage checks if $store.state.app.currentLanguageName is defined, by default = true', () => {
@@ -346,42 +343,7 @@ describe('popup.test.js', () => {
     cmp.destroy()
   })
 
-  it('16 Popup - computed verboseMode checks if verboseMode is turned on', () => {
-    const cmp = shallowMount(Popup, {
-      data () {
-        return defaultData
-      },
-      store,
-      localVue,
-      mocks: api
-    })
-
-    cmp.vm.settings.getUiOptions = () => {
-      return {
-        items: {
-          verboseMode: {
-            currentValue: null
-          }
-        }
-      }
-    }
-
-    expect(cmp.vm.verboseMode).toBeFalsy()
-
-    cmp.vm.settings.getUiOptions = () => {
-      return {
-        items: {
-          verboseMode: {
-            currentValue: 'verbose'
-          }
-        }
-      }
-    }
-
-    expect(cmp.vm.verboseMode).toBeTruthy()
-  })
-
-  it('17 Popup - method switchProviders changes showProviders to oposite (showProviders = false by default)', () => {
+  it('16 Popup - method switchProviders changes showProviders to oposite (showProviders = false by default)', () => {
     const cmp = shallowMount(Popup, {
       data () {
         return defaultData
@@ -402,7 +364,7 @@ describe('popup.test.js', () => {
     expect(cmp.vm.showProviders).toBeFalsy()
   })
 
-  it('18 Popup - method resizableSettings returns result with enough properties', () => {
+  it('17 Popup - method resizableSettings returns result with enough properties', () => {
     const cmp = shallowMount(Popup, {
       data () {
         return defaultData
@@ -424,7 +386,7 @@ describe('popup.test.js', () => {
     expect(props.restrictEdges.endOnly).toBeDefined()
   })
 
-  it('19 Popup - method draggableSettings returns result with enough properties', () => {
+  it('18 Popup - method draggableSettings returns result with enough properties', () => {
     const cmp = shallowMount(Popup, {
       data () {
         return defaultData
@@ -440,7 +402,7 @@ describe('popup.test.js', () => {
     expect(props.ignoreFrom).toBeDefined()
   })
 
-  it('20 Popup - method isWithinBounds define if viewport is enough for the element', () => {
+  it('19 Popup - method isWithinBounds define if viewport is enough for the element', () => {
     const api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
@@ -514,7 +476,7 @@ describe('popup.test.js', () => {
     cmp.destroy()
   })
 
-  it('21 Popup - method resizeListener updates resized and shift properties only if resizable = true', () => {
+  it('20 Popup - method resizeListener updates resized and shift properties only if resizable = true', () => {
     Object.assign(defaultData, {
       resizable: false,
       resizedWidth: 100,
@@ -562,7 +524,7 @@ describe('popup.test.js', () => {
     expect(cmp.vm.shift.y).toEqual(140)
   })
 
-  it('22 Popup - method dragMoveListener updates shift properties only if draggable = true, if drag mount more then 100, than it won\'t move  and saves a error to properties', () => {
+  it('21 Popup - method dragMoveListener updates shift properties only if draggable = true, if drag mount more then 100, than it won\'t move  and saves a error to properties', () => {
     Object.assign(defaultData, {
       draggable: false,
       moduleConfig: {
@@ -609,7 +571,7 @@ describe('popup.test.js', () => {
     expect(cmp.vm.dragErrorY).toBeTruthy()
   })
 
-  it('23 Popup - method dragEndListener updates shift properties according to isWithinBounds', () => {
+  it('22 Popup - method dragEndListener updates shift properties according to isWithinBounds', () => {
     const cmp = shallowMount(Popup, {
       data () {
         return defaultData
@@ -649,7 +611,7 @@ describe('popup.test.js', () => {
     expect(cmp.vm.shift.y).toEqual(60)
   })
 
-  it('24 Popup - method resetPopupDimensions sets 0 to size/position properties', () => {
+  it('23 Popup - method resetPopupDimensions sets 0 to size/position properties', () => {
     Object.assign(defaultData, {
       resizeCount: 10,
       widthValue: 20,

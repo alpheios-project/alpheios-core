@@ -35,7 +35,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
       }
       return this.authors
     } catch (error) {
-      this.addError(this.l10n.messages.CONCORDANCE_AUTHOR_UPLOAD_ERROR.get(error.message))
+      this.addError(this.l10n.getMsg('CONCORDANCE_AUTHOR_UPLOAD_ERROR', { message: error.message }))
     }
   }
 
@@ -70,7 +70,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
         return []
       }
     } catch (error) {
-      this.addError(this.l10n.messages.CONCORDANCE_WORD_USAGE_FETCH_ERROR.get(error.message))
+      this.addError(this.l10n.getMsg('CONCORDANCE_WORD_USAGE_FETCH_ERROR', { message: error.message }))
     }
   }
 

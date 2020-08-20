@@ -30,7 +30,7 @@ export default class HTMLPage {
 
   /**
    * Checks wither the current browsing content (represented by window object)
-   * is a valid target for a UI controller activation.
+   * is a valid target for an app controller activation.
    * The browsing context could be either the topmost window within a browser tab
    * or a window within a frame that is part of the topmost or any other window.
    * @returns {boolean} - True if the browsing content is valid, false otherwise.

@@ -1,4 +1,4 @@
-import MessageBundle from './message-bundle'
+import MessageBundle from '@l10n/message-bundle'
 
 /**
  * Combines several message bundles of different locales.
@@ -13,10 +13,11 @@ export default class L10n {
   /**
    * Adds, or appends, one or several messages for a locale specified.
    * This method is chainable.
+   *
    * @param {string} messageJSON - Messages in a JSON string
    * @param {string} locale - A locale of the messages
    * @param {Function} missingTranslationMsgFn - A placeholder message that will be shown if translation is not found.
-   * @return {L10n} - Self reference (for chaining)
+   * @returns {L10n} - Self reference (for chaining)
    */
   addMessages (messageJSON, locale, missingTranslationMsgFn) {
     let messageBundle
@@ -37,8 +38,9 @@ export default class L10n {
   /**
    * Adds a message bundle to a L10n object. If selected locale is not set, sets it to the locale of the message bundle.
    * This function is chainable.
+   *
    * @param {MessageBundle} messageBundle - A message bundle that will be stored within an L10n object.
-   * @return {L10n} - Returns self for chaining.
+   * @returns {L10n} - Returns self for chaining.
    */
   addMessageBundle (messageBundle) {
     const locale = messageBundle.locale
@@ -56,7 +58,8 @@ export default class L10n {
 
   /**
    * Returns an array of locales supported by the L10n object.
-   * @return {string[]}
+   *
+   * @returns {string[]}
    */
   get locales () {
     return Array.from(this.bundles.keys())
@@ -64,7 +67,8 @@ export default class L10n {
 
   /**
    * Returns a message bundle for a currently selected locale
-   * @return {MessageBundle | undefined} A message bundle object or undefined if selectedLocale is not set
+   *
+   * @returns {MessageBundle | undefined} A message bundle object or undefined if selectedLocale is not set
    */
   get bundle () {
     return this.bundles.get(this.selectedLocale)
@@ -73,6 +77,8 @@ export default class L10n {
   /**
    * Returns a message from a bundle for a current locale.
    * A wrapper for {@link MessageBundle#getMsg}
+   *
+   * @param {...any} params
    */
   getMsg (...params) {
     return this.bundles.has(this.selectedLocale) ? this.bundles.get(this.selectedLocale).getMsg(...params) : {}
@@ -82,8 +88,9 @@ export default class L10n {
    * Sets, or switches a locale that is currently selected. If message bundle for such locale
    * does not exist, does nothing.
    * This method is chainable.
+   *
    * @param {string} locale - A locale to be set as currently selected.
-   * @return {L10n} Reference to self for chaining
+   * @returns {L10n} Reference to self for chaining
    */
   setLocale (locale) {
     if (this.bundles.has(locale)) {

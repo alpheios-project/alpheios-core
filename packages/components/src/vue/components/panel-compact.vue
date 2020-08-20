@@ -9,7 +9,7 @@
       v-show="$store.state.panel.visible"
   >
 
-    <div class="alpheios-panel__header" :data-tab="currentTab">
+    <div id="alpheios-panel__header" class="alpheios-panel__header" :data-tab="currentTab">
       <div class="alpheios-panel__header-btn-group--start" >
         <div class="alpheios-panel__header-btn" :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'morphology' }">
           <span @click="changeTab('morphology')" class="alpheios-navbuttons__icon-span">
@@ -43,7 +43,7 @@
           </span>
         </div>
         <div class="alpheios-panel__header-btn alpheios-panel__header-btn--treebank-data"
-           v-show="$store.state.lexis.hasTreebankData && showMainTabIcons"
+           v-show="$store.state.lexis.hasTreebankData && !$store.state.lexis.suppressTree && showMainTabIcons"
            :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'treebank' }"
         >
           <span @click="changeTab('treebank')" class="alpheios-navbuttons__icon-span">
@@ -329,7 +329,6 @@ export default {
   inject: {
     app: 'app',
     ui: 'ui',
-    language: 'language',
     l10n: 'l10n',
     settings: 'settings',
     auth: 'auth'
@@ -440,13 +439,13 @@ export default {
     componentStyles: function () {
       return {
         // It shall have a z-index higher than that of a popup
-        zIndex: (this.ui.zIndex || 0) + 10
+        zIndex: (this.$store.state.ui.zIndexMax || 0) + 10
       }
     },
 
     isLandscape: function () {
       // Have to use store prop to keep orientation reactive
-      let isLandscapeCheck = (this.$store.state.panel.orientation === Platform.orientations.LANDSCAPE)
+      const isLandscapeCheck = (this.$store.state.panel.orientation === Platform.orientations.LANDSCAPE)
 
       if ((this.prevOrientation !== Platform.orientations.LANDSCAPE) && isLandscapeCheck) {
         this.expanded = true
@@ -488,7 +487,7 @@ export default {
 
     formattedShortDefinitions () {
       let definitions = [] // eslint-disable-line prefer-const
-      
+
       if (this.$store.getters['app/shortDefDataReady'] && this.$store.state.app.homonymDataReady) {
         for (const lexeme of this.app.getHomonymLexemes()) {
           if (lexeme.meaning.shortDefs.length > 0) {

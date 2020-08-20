@@ -1,846 +1,853 @@
 /* eslint-env jest */
-/* eslint-disable no-unused-vars */
-import UIController from '@/lib/controllers/ui-controller'
-import State from '@/lib/state/tab-script.js'
+import UIController from '@comp/lib/controllers/ui-controller.js'
+import Platform from '@comp/lib/utility/platform.js'
+import PanelModule from '@comp/vue/vuex-modules/ui/panel-module.js'
+import PopupModule from '@comp/vue/vuex-modules/ui/popup-module.js'
+import ToolbarModule from '@comp/vue/vuex-modules/ui/toolbar-module.js'
+import ActionPanelModule from '@comp/vue/vuex-modules/ui/action-panel-module.js'
+import BaseTestHelp from '@compTests/helpclasses/base-test-help.js'
 
-import OptionItem from '@/lib/options/options-item'
-import ResourceQuery from '@/lib/queries/resource-query'
+describe('UIController', () => {
+  let uiC, uiState, desktopPlatform, mobilePlatform, store, api, appAPI, settingsAPI, l10nAPI, authAPI, lexisAPI
+  const baseStoreModules = ['app', 'auth', 'lexis', 'settings']
 
-import Options from '@/lib/options/options.js'
-import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
-import UIOptionDefaults from '@/settings/ui-options-defaults.json'
-import LocalStorageArea from '@/lib/options/local-storage-area.js'
-import HTMLPage from '@/lib/utility/html-page.js'
+  const getUiController = (options) => {
+    // eslint-disable-next-line prefer-const
+    let uiC = new UIController(options)
+    /*
+    Recursive traversing of all HTML element in a Jest environment is slow. It could take up to
+    the thousands of milliseconds. Because of this, an original method should be replaced with the fast mock.
+     */
+    uiC._getZIndexMax = () => 2000
+    return uiC
+  }
 
-import L10n from '@/lib/l10n/l10n'
-import Locales from '@/locales/locales'
-import enUS from '@/locales/en-us/messages.json'
-import enGB from '@/locales/en-gb/messages.json'
-
-import { LanguageModelFactory as LMF, Definition, Constants } from 'alpheios-data-models'
-
-import Panel from '@/vue/components/panel-large.vue'
-import Popup from '@/vue/components/popup.vue'
-
-describe('ui-controller.test.js', () => {
-  console.error = function () {}
-  console.log = function () {}
-  console.warn = function () {}
-
-  let uiC, featureOptions, resourceOptions, state
-
-  beforeEach(async (done) => {
-    jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
-    jest.spyOn(console, 'warn')
-    jest.spyOn(Options, 'initItems')
-
-    state = new State()
-    let sa1 = new LocalStorageArea('alpheios-feature-settings')
-    let sa2 = new LocalStorageArea('alpheios-resource-settings')
-    let sa3 = new LocalStorageArea('alpheios-ui-settings')
-    featureOptions = new Options(FeatureOptionDefaults, sa1)
-    resourceOptions = new Options(LanguageOptionDefaults, sa2)
-    let uiOptions = new Options(UIOptionDefaults, sa3)
-/*
-    uiC = new UIController(state, LocalStorageArea, {})
-    uiC.featureOptions = featureOptions
-    uiC.resourceOptions = resourceOptions
-    uiC.uiOptions = uiOptions
-
-    await uiC.init()
-    await uiC.activate()
-*/
-    done()
+  beforeAll(() => {
+    uiState = BaseTestHelp.createUIState()
+    desktopPlatform = new Platform()
+    desktopPlatform.deviceType = Platform.deviceTypes.DESKTOP // Requires desktop to be able to register the popup module
+    mobilePlatform = new Platform()
+    mobilePlatform.deviceType = Platform.deviceTypes.MOBILE
+    settingsAPI = BaseTestHelp.settingsAPI()
+    appAPI = BaseTestHelp.appAPI()
+    l10nAPI = BaseTestHelp.l10nAPI()
+    authAPI = BaseTestHelp.appAPI()
   })
+
+  beforeEach(() => {
+    store = BaseTestHelp.baseVuexStore(baseStoreModules)
+    api = {
+      app: appAPI,
+      settings: settingsAPI,
+      l10n: l10nAPI,
+      auth: authAPI,
+      lexis: lexisAPI
+    }
+  })
+
   afterEach(() => {
     jest.resetModules()
-    uiC = undefined
   })
+
   afterAll(() => {
     jest.clearAllMocks()
   })
 
-  let l10n = new L10n()
-    .addMessages(enUS, Locales.en_US)
-    .addMessages(enGB, Locales.en_GB)
-    .setLocale(Locales.en_US)
+  it('UIController - constructor: should create an instance with default arguments', () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    expect(uiC.TAB_NAMES_DEFAULT).toBe(UIController.tabNames.DEFAULT)
+  })
 
-  let latID = Constants.LANG_LATIN
-  let araID = Constants.LANG_ARABIC
-/*
-  it('1 UIController - create object with min arguments', async () => {
-    expect(uiC.options).toHaveProperty('uiTypePanel')
-    expect(uiC.options).toHaveProperty('uiTypePopup')
+  it('UIController - constructor: should create an instance with overrideHelp on', () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform, overrideHelp: true })
+    expect(uiC.TAB_NAMES_DEFAULT).toBe(UIController.tabNames.DEFAULT_HELP_OVERRIDDEN)
+  })
 
-    expect(uiC.options.irregularBaseFontSizeClassName.length).toBeGreaterThan(0)
-    expect(uiC.irregularBaseFontSize).toBeDefined()
-    expect(uiC.options.app).toBeDefined()
+  it('UIController - constructor: should throw an error if called with no uiState parameter', () => {
+    const errMessage = 'No UI state data provided for a UI controller'
+    expect(() => getUiController({ platform: desktopPlatform })).toThrowError(errMessage)
+  })
 
-    expect(uiC.options.template).toHaveProperty('html')
-    expect(uiC.options.template).toHaveProperty('panelId')
+  it('UIController - constructor: should throw an error if called with no platform parameter', () => {
+    const errMessage = 'No platform data provided for a UI controller'
+    expect(() => getUiController({ uiState })).toThrowError(errMessage)
+  })
 
-    expect(uiC.options.template).toHaveProperty('defaultPanelComponent')
-    expect(uiC.options.template).toHaveProperty('popupId')
+  it('UIController - init: must define a public UI API', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
+    expect(api.ui).toEqual({
+      hasModule: expect.any(Function),
+      getModule: expect.any(Function),
+      registerModule: expect.any(Function),
+      openLexQueryUI: expect.any(Function),
+      closeUI: expect.any(Function),
+      openPanel: expect.any(Function),
+      closePanel: expect.any(Function),
+      showPanelTab: expect.any(Function),
+      changeTab: expect.any(Function),
+      togglePanelTab: expect.any(Function),
+      isPopupVisible: expect.any(Function),
+      openToolbar: expect.any(Function),
+      openActionPanel: expect.any(Function),
+      closeActionPanel: expect.any(Function),
+      toggleActionPanel: expect.any(Function),
+      showLookupResultsUI: expect.any(Function)
+    })
+  })
 
-    expect(uiC.options.template).toHaveProperty('defaultPopupComponent')
-    expect(uiC.options.template).toHaveProperty('draggable')
-    expect(uiC.options.template).toHaveProperty('resizable')
-
-    expect(uiC.zIndex).toBeGreaterThan(0)
-
-    expect(uiC.l10n).toBeInstanceOf(L10n)
-
+  it('UIController - init: must add an alpheios class to the body of the document', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
     expect(document.body.classList.contains('alpheios')).toBeTruthy()
-    expect(document.getElementById('alpheios-popup')).not.toBeNull()
-    expect(document.getElementById('alpheios-panel')).not.toBeNull()
   })
 
-  it('2 UIController - static methods', () => {
-    expect(UIController.optionsDefaults).toHaveProperty('irregularBaseFontSizeClassName')
+  it('UIController - init: must create a UI Vuex store module with the state items', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
 
-    document.querySelector('html').style['font-size'] = '16px'
-    expect(UIController.hasRegularBaseFontSize()).toBeTruthy()
-
-    document.querySelector('html').style['font-size'] = '14px'
-    expect(UIController.hasRegularBaseFontSize()).toBeFalsy()
-
-    expect(UIController.getLanguageName()).toEqual({name: '', code: undefined})
-    expect(UIController.getLanguageName(latID)).toEqual({name: 'Latin', code: 'lat'})
-    expect(UIController.getLanguageName('pppp')).toEqual({name: '', code: 'pppp'})
-  })
-
-  it('3 UIController - getZIndexMax method', () => {
-
-    uiC.zIndex = HTMLPage.getZIndexMax(2000)
-    expect(uiC.zIndex).toEqual(2001)
-
-    uiC.zIndex = HTMLPage.getZIndexMax(2010)
-    expect(uiC.zIndex).toEqual(2010)
-
-    uiC.zIndex = HTMLPage.zIndexRecursion(document.querySelector('body'), Number.NEGATIVE_INFINITY)
-    expect(uiC.zIndex).toEqual(2000)
-  })
-
-  it('4 UIController - formatFullDefinitions method', () => {
-    let testLexeme = {
-      lemma: {
-        word: 'fooword'
+    // Check Vuex state
+    expect(store.state.ui).toEqual({
+      zIndexMax: expect.any(Number),
+      activeTab: UIController.tabNames.DEFAULT,
+      disabledTab: UIController.tabNames.DISABLED,
+      hint: {
+        text: null,
+        visible: false
       },
-      meaning: {
-        fullDefs: [
-          { text: 'fooText1' },
-          { text: 'fooText2' }
-        ]
-      }
+      messages: [],
+      notification: {
+        important: false,
+        showLanguageSwitcher: false,
+        text: null,
+        visible: false
+      },
+      overrideHelp: false
+    })
+  })
+
+  it('UIController - init: must create a UI Vuex store module with the set of getters', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
+
+    // Check Vuex getters
+    expect(store.getters['ui/isActiveTab']).toBeInstanceOf(Function)
+  })
+
+  it('UIController - init: must create a UI Vuex store module with the set of mutations', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
+
+    // Check Vuex mutations
+    expect(store._mutations['ui/setActiveTab']).toBeDefined()
+    expect(store._mutations['ui/resetActiveTab']).toBeDefined()
+    expect(store._mutations['ui/setNotification']).toBeDefined()
+    expect(store._mutations['ui/resetNotification']).toBeDefined()
+    expect(store._mutations['ui/setHint']).toBeDefined()
+    expect(store._mutations['ui/resetHint']).toBeDefined()
+    expect(store._mutations['ui/addMessage']).toBeDefined()
+    expect(store._mutations['ui/resetMessages']).toBeDefined()
+  })
+
+  it('UIController - init: must call createModules()', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    const createModulesSpy = jest.spyOn(uiC, 'createModules')
+    await uiC.init({ store, api })
+    expect(createModulesSpy).toBeCalledTimes(1)
+  })
+
+  it('UIController - init: must create instance of all registered modules', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    uiC.registerModule(PopupModule, {})
+    await uiC.init({ store, api })
+    expect(uiC.hasModule(PanelModule.moduleName)).toBeTruthy()
+    expect(uiC.getModule(PanelModule.moduleName)).toBeDefined()
+    expect(uiC.hasModule(PopupModule.moduleName)).toBeTruthy()
+    expect(uiC.getModule(PopupModule.moduleName)).toBeDefined()
+  })
+
+  it('UIController - init: must set options of a panel module', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    await uiC.init({ store, api })
+    const uiOptions = settingsAPI.getUiOptions()
+    expect(store.state.panel.position).toEqual(uiOptions.items.panelPosition.currentValue)
+  })
+
+  it('UIController - init: must set options of a popup module', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PopupModule, {})
+    await uiC.init({ store, api })
+    const uiOptions = settingsAPI.getUiOptions()
+    expect(uiC._modules.get(PopupModule.moduleName).options.initialShift).toEqual({
+      x: uiOptions.items.popupShiftX.currentValue,
+      y: uiOptions.items.popupShiftY.currentValue
+    })
+  })
+
+  it('UIController - init: must set options of a toolbar module', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {}) // Toolbar module uses some functionality of the panel
+    uiC.registerModule(ToolbarModule, {})
+    await uiC.init({ store, api })
+    const uiOptions = settingsAPI.getUiOptions()
+    expect(uiC._modules.get(ToolbarModule.moduleName).options.initialShift).toEqual({
+      x: uiOptions.items.toolbarShiftX.currentValue,
+      y: uiOptions.items.toolbarShiftY.currentValue
+    })
+  })
+
+  it('UIController - init: must set font size within the document', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    const fontSize = settingsAPI.getUiOptions().items.fontSize.currentValue
+    await uiC.init({ store, api })
+    expect(document.documentElement.style.getPropertyValue(UIController.styleProps.FONT_SIZE_PROP)).toBe(`${fontSize}px`)
+  })
+
+  it('UIController - activate: should remove a disabled class if text selection is enabled', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
+    document.body.classList.add(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+    uiC.activate()
+    expect(document.body.classList.contains(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)).toBeFalsy()
+    // Remove the add class in case activate() fail to do so
+    document.body.classList.remove(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+  })
+
+  it('UIController - activate: should NOT remove a disabled class if text selection is disabled on mobile', async () => {
+    uiC = getUiController({ uiState, platform: mobilePlatform })
+    await uiC.init({ store, api })
+    document.body.classList.add(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+    uiC.activate({ disableTextSelOnMobile: true })
+    expect(document.body.classList.contains(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)).toBeTruthy()
+    document.body.classList.remove(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+  })
+
+  it('UIController - activate: should call activate() and activateUI() on a UI state', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
+    const activateSpy = jest.spyOn(uiState, 'activate')
+    const activateUiSpy = jest.spyOn(uiState, 'activateUI')
+    uiC.activate()
+    expect(activateSpy).toBeCalledTimes(1)
+    expect(activateUiSpy).toBeCalledTimes(1)
+  })
+
+  it('UIController - activate: must activate registered modules', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    uiC.registerModule(PopupModule, {})
+    await uiC.init({ store, api })
+    const panelSpy = jest.spyOn(uiC._modules.get(PanelModule.moduleName).instance, 'activate')
+    const popupSpy = jest.spyOn(uiC._modules.get(PopupModule.moduleName).instance, 'activate')
+    expect(panelSpy).toBeCalledTimes(0)
+    expect(popupSpy).toBeCalledTimes(0)
+    uiC.activate()
+    expect(panelSpy).toBeCalledTimes(1)
+    expect(popupSpy).toBeCalledTimes(1)
+  })
+
+  it('UIController - activate: should NOT close a panel the UI state is not default or invalid', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelStateDefault: () => false,
+      isPanelStateValid: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    await uiC.init({ store, api })
+    const setPanelClosedSpy = jest.spyOn(uiState, 'setPanelClosed')
+    uiC.activate()
+    expect(setPanelClosedSpy).toBeCalledTimes(0)
+  })
+
+  it('UIController - activate: should close a panel if the UI state is default', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelStateDefault: () => true,
+      isPanelStateValid: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    await uiC.init({ store, api })
+    const setPanelClosedSpy = jest.spyOn(uiState, 'setPanelClosed')
+    uiC.activate()
+    expect(setPanelClosedSpy).toBeCalledTimes(1)
+  })
+
+  it('UIController - activate: should close a panel if the UI state is invalid', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelStateDefault: () => false,
+      isPanelStateValid: () => false
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    await uiC.init({ store, api })
+    const setPanelClosedSpy = jest.spyOn(uiState, 'setPanelClosed')
+    uiC.activate()
+    expect(setPanelClosedSpy).toBeCalledTimes(1)
+  })
+
+  it('UIController - activate: should open a panel if it is open in the UI state', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelStateDefault: () => false,
+      isPanelStateValid: () => true,
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    await uiC.init({ store, api })
+    const openPanelSpy = jest.spyOn(uiC, 'openPanel')
+    uiC.activate()
+    expect(openPanelSpy).toBeCalledTimes(1)
+    expect(openPanelSpy).toBeCalledWith(true) // Should be called with the forceOpen argument
+  })
+
+  it('UIController - activate: should NOT open a panel if it is not open in the UI state', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelStateDefault: () => false,
+      isPanelStateValid: () => true,
+      isPanelOpen: () => false
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    await uiC.init({ store, api })
+    const openPanelSpy = jest.spyOn(uiC, 'openPanel')
+    uiC.activate()
+    expect(openPanelSpy).toBeCalledTimes(0)
+  })
+
+  it('UIController - activate: should switch UI to the tab specified', async () => {
+    const tabName = 'test'
+    const uiState = BaseTestHelp.createUIState({
+      tab: tabName
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    await uiC.init({ store, api })
+    const changeTabSpy = jest.spyOn(uiC, 'changeTab')
+    uiC.activate()
+    expect(changeTabSpy).toBeCalledTimes(1)
+    expect(changeTabSpy).toBeCalledWith(tabName)
+  })
+
+  it('UIController - activate: should switch UI to a default tab if the tab in the UI state is set to default', async () => {
+    const tabName = 'test'
+    const uiState = BaseTestHelp.createUIState({
+      tab: tabName,
+      isTabStateDefault: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    await uiC.init({ store, api })
+    const changeTabSpy = jest.spyOn(uiC, 'changeTab')
+    uiC.activate()
+    expect(changeTabSpy).toBeCalledTimes(1)
+    expect(changeTabSpy).toBeCalledWith(uiC.TAB_NAMES_DEFAULT)
+  })
+
+  it('UIController - activateOnPage: should remove a disabled class if text selection is enabled', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
+    document.body.classList.add(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+    uiC.activateOnPage()
+    expect(document.body.classList.contains(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)).toBeFalsy()
+    // Remove the add class in case activate() fail to do so
+    document.body.classList.remove(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+  })
+
+  it('UIController - activateOnPage: should NOT remove a disabled class if text selection is disabled on mobile', async () => {
+    uiC = getUiController({ uiState, platform: mobilePlatform })
+    await uiC.init({ store, api })
+    uiC._config.disableTextSelOnMobile = true
+    document.body.classList.add(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+    uiC.activateOnPage({ disableTextSelOnMobile: true })
+    expect(document.body.classList.contains(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)).toBeTruthy()
+    document.body.classList.remove(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+  })
+
+  it('UIController - deactivate: should deactivate modules', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    uiC.registerModule(PopupModule, {})
+    await uiC.init({ store, api })
+    uiC.activate()
+    const panelSpy = jest.spyOn(uiC._modules.get(PanelModule.moduleName).instance, 'deactivate')
+    const popupSpy = jest.spyOn(uiC._modules.get(PopupModule.moduleName).instance, 'deactivate')
+    expect(panelSpy).toBeCalledTimes(0)
+    expect(popupSpy).toBeCalledTimes(0)
+    uiC.deactivate()
+    expect(panelSpy).toBeCalledTimes(1)
+    expect(popupSpy).toBeCalledTimes(1)
+  })
+
+  it('UIController - deactivate: should add a disabled CSS class', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
+    uiC.activate()
+    expect(document.body.classList.contains(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)).toBeFalsy()
+    uiC.deactivate()
+    expect(document.body.classList.contains(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)).toBeTruthy()
+    // Remove the class added to remove initial state of the document
+    document.body.classList.remove(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+  })
+
+  it('UIController - deactivate: should close a popup', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PopupModule, {})
+    await uiC.init({ store, api })
+    uiC.activate()
+    store.commit('popup/open')
+    expect(store.state.popup.visible).toBeTruthy()
+    uiC.deactivate()
+    expect(store.state.popup.visible).toBeFalsy()
+  })
+
+  it('UIController - deactivate: should close a panel', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule, {})
+    await uiC.init({ store, api })
+    uiC.activate()
+    const closePanelSpy = jest.spyOn(uiC, 'closePanel')
+    uiC.deactivate()
+    expect(closePanelSpy).toBeCalledTimes(1)
+    expect(closePanelSpy).toBeCalledWith(false) // Should be called with syncState off
+  })
+
+  it('UIController - deactivateOnPage: should add a disabled CSS class', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    // Make sure disabled class is not set before the test
+    document.body.classList.remove(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+    await uiC.init({ store, api })
+    expect(document.body.classList.contains(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)).toBeFalsy()
+    uiC.deactivateOnPage()
+    expect(document.body.classList.contains(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)).toBeTruthy()
+    // Remove the class added to remove initial state of the document
+    document.body.classList.remove(UIController.styleProps.DISABLE_TEXT_SELECTION_CSS_CLASS)
+  })
+
+  it('UIController - registerModule: should add module to the modules list', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    expect(uiC.hasModule(PopupModule.moduleName)).toBeFalsy()
+    uiC.registerModule(PopupModule)
+    expect(uiC.hasModule(PopupModule.moduleName)).toBeTruthy()
+  })
+
+  it('UIController - registerModule: should set options of the module', async () => {
+    const options = {
+      optionOne: 'one',
+      optionTwo: 'two'
     }
-    let res = uiC.formatFullDefinitions(testLexeme)
-
-    expect(res).toEqual('<h3>fooword</h3>\nfooText1<br>\nfooText2<br>\n')
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PopupModule, options)
+    expect(uiC._modules.get(PopupModule.moduleName).options).toBe(options)
   })
 
-  it('5 UIController - messages methods', () => {
-    uiC.message('foomessage1')
-
-    expect(uiC.panel.panelData.messages).toEqual([ 'foomessage1' ])
-
-    uiC.addMessage('foomessage2')
-    expect(uiC.panel.panelData.messages).toEqual([ 'foomessage1', 'foomessage2' ])
-
-    uiC.addImportantMessage('fooImportant1')
-    expect(uiC.panel.panelData.messages).toEqual([ 'foomessage1', 'foomessage2', 'fooImportant1' ])
-
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeTruthy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.panel.panelData.notification.text).toEqual('fooImportant1')
-
-    expect(uiC.popup.vi.messages).toEqual([ 'fooImportant1' ])
-
-    expect(uiC.popup.vi.popupData.notification.visible).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual('fooImportant1')
+  it('UIController - createModules: should create instances of all registered modules', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
+    uiC.registerModule(PopupModule)
+    uiC.registerModule(PanelModule)
+    expect(uiC._modules.get(PopupModule.moduleName).instance).toBeFalsy()
+    expect(uiC._modules.get(PanelModule.moduleName).instance).toBeFalsy()
+    uiC.createModules()
+    expect(uiC._modules.get(PopupModule.moduleName).instance).toBeTruthy()
+    expect(uiC._modules.get(PanelModule.moduleName).instance).toBeTruthy()
   })
 
-  it('6 UIController - showLanguageInfo methods', () => {
-    uiC.showLanguageInfo()
-    let languageName = UIController.getLanguageName(LMF.getLanguageIdFromCode(uiC.panel.options.items.preferredLanguage.currentValue)).name
-
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeTruthy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeTruthy()
-    expect(uiC.panel.panelData.notification.text).toEqual(l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName))
-
-    expect(uiC.popup.vi.popupData.notification.visible).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual(l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(languageName))
-
-    let testHomonym = {
-      lexemes: [
-        {
-          isPopulated: function () { return true },
-          languageID: LMF.getLanguageIdFromCode('lat')
-        }
-      ]
-    }
-    uiC.showLanguageInfo(testHomonym)
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeFalsy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeFalsy()
-
-    expect(uiC.popup.vi.popupData.notification.visible).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeFalsy()
-
-    // in this case, the language shown in the language notification should be
-    // the language actually tried, not the default from options
-    let testHomonymNoLexemes = {
-      languageID: LMF.getLanguageIdFromCode('grc')
-    }
-    uiC.showLanguageInfo(testHomonymNoLexemes)
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeTruthy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual(l10n.messages.TEXT_NOTICE_CHANGE_LANGUAGE.get(UIController.getLanguageName(testHomonymNoLexemes.languageID).name))
+  it('UIController - hasModule: should return true if the module has been registered', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PopupModule)
+    expect(uiC.hasModule(PopupModule.moduleName)).toBeTruthy()
   })
 
-  it('7 UIController - showStatusInfo methods', () => {
-    uiC.showStatusInfo('fooSelectionText', latID)
-    expect(uiC.panel.panelData.status.languageName).toEqual('Latin')
-    expect(uiC.panel.panelData.status.selectedText).toEqual('fooSelectionText')
-
-    expect(uiC.popup.vi.popupData.status.languageName).toEqual('Latin')
-    expect(uiC.popup.vi.popupData.status.selectedText).toEqual('fooSelectionText')
+  it('UIController - hasModule: should return false if the module has not been registered', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    expect(uiC.hasModule(PopupModule.moduleName)).toBeFalsy()
   })
 
-  it('8 UIController - showErrorInfo methods', () => {
-    uiC.showErrorInfo('fooError')
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeTruthy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.panel.panelData.notification.text).toEqual('fooError')
+  it('UIController - getModule: should return an instance of the module that has been created', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    await uiC.init({ store, api })
+    uiC.registerModule(PopupModule)
+    uiC.createModules()
+    expect(uiC.getModule(PopupModule.moduleName)).toBeInstanceOf(PopupModule)
   })
 
-  it('9 UIController - showImportantNotification methods', () => {
-    uiC.showImportantNotification('fooImportant')
-    expect(uiC.panel.panelData.notification.visible).toBeTruthy()
-    expect(uiC.panel.panelData.notification.important).toBeTruthy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.panel.panelData.notification.text).toEqual('fooImportant')
-
-    expect(uiC.popup.vi.popupData.notification.visible).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual('fooImportant')
+  it('UIController - getModule: should throw an error if the module has not been registered', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    expect(() => uiC.getModule(PopupModule.moduleName)).toThrowError(`UI controller has no ${PopupModule.moduleName} module`)
   })
 
-  it('10 UIController - changeTab methods', () => {
-    uiC.changeTab('options')
-
-    for (let tab in uiC.panel.panelData.tabs) {
-      if (tab === 'options') {
-        expect(uiC.panel.panelData.tabs[tab]).toBeTruthy()
-      } else {
-        expect(uiC.panel.panelData.tabs[tab]).toBeFalsy()
-      }
-    }
+  it('UIController - getModule: should return null if the module has been registered but not instantiated', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PopupModule)
+    expect(uiC.getModule(PopupModule.moduleName)).toBeFalsy()
   })
 
-  it('11 UIController - setTargetRect methods', () => {
-    expect(uiC.popup.vi.popupData.targetRect).toEqual({})
-
-    let testRect = {
-      left: 10,
-      top: 10
-    }
-    uiC.setTargetRect(testRect)
-
-    expect(uiC.popup.vi.popupData.targetRect).toEqual(testRect)
+  it('UIController - applyFontSize: must set the font size within the document to the specified value', async () => {
+    const fontSize = 14
+    UIController.applyFontSize(fontSize)
+    expect(document.documentElement.style.getPropertyValue(UIController.styleProps.FONT_SIZE_PROP)).toBe(`${fontSize}px`)
   })
 
-  it('12 UIController - newLexicalRequest methods', () => {
-    let oldRT = uiC.popup.vi.popupData.requestStartTime
-
-    uiC.newLexicalRequest(latID)
-    expect(uiC.popup.vi.popupData.requestStartTime).toBeGreaterThan(oldRT)
-
-    expect(uiC.popup.vi.definitions).toEqual({})
-    expect(uiC.popup.vi.translations).toEqual({})
-    expect(uiC.popup.vi.lexemes).toEqual([])
-    expect(uiC.popup.vi.popupData.providers).toEqual([])
-
-    expect(uiC.popup.vi.popupData.defDataReady).toBeFalsy()
-    expect(uiC.popup.vi.popupData.inflDataReady).toBeFalsy()
-    expect(uiC.popup.vi.popupData.morphDataReady).toBeFalsy()
-    expect(uiC.popup.vi.popupData.translationsDataReady).toBeFalsy()
-    expect(uiC.popup.vi.popupData.showProviders).toBeFalsy()
-    expect(uiC.popup.vi.popupData.hasTreebank).toBeFalsy()
-
-    expect(uiC.popup.vi.popupData.notification.visible).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual('')
-
-    expect(uiC.popup.vi.popupData.status.languageName).toEqual('')
-    expect(uiC.popup.vi.popupData.status.selectedText).toEqual('')
-
-    expect(uiC.popup.vi.visible).toBeTruthy()
-
-    expect(uiC.panel.panelData.shortDefinitions).toEqual([])
-    expect(uiC.panel.panelData.fullDefinitions).toEqual('')
-    expect(uiC.panel.panelData.messages).toEqual('')
-    expect(uiC.panel.panelData.treebankComponentData.data.word).toEqual({})
-    expect(uiC.panel.panelData.treebankComponentData.visible).toBeFalsy()
-
-    expect(uiC.panel.panelData.notification.visible).toBeFalsy()
-    expect(uiC.panel.panelData.notification.important).toBeFalsy()
-    expect(uiC.panel.panelData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.panel.panelData.notification.text).toEqual('')
-
-    expect(uiC.panel.panelData.status.languageName).toEqual('')
-    expect(uiC.panel.panelData.status.selectedText).toEqual('')
-
-    expect(uiC.panel.visible).toBeFalsy()
-    expect(uiC.panel.panelData.tabs.definitions).toBeTruthy()
+  it('UIController - openLexQueryUI: should open the panel on mobile', async () => {
+    uiC = getUiController({ uiState, platform: mobilePlatform })
+    uiC.registerModule(PopupModule)
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const openPanelSpy = jest.spyOn(uiC, 'openPanel')
+    const changeTabSpy = jest.spyOn(uiC, 'changeTab')
+    uiC.openLexQueryUI()
+    expect(openPanelSpy).toBeCalledTimes(1)
+    expect(changeTabSpy).toBeCalledTimes(1)
+    expect(changeTabSpy).toBeCalledWith(UIController.tabNames.LEX_RESULTS_MOBILE)
   })
 
-  it('13 UIController - updateMorphology, updateProviders methods', () => {
-    let testHomonymEmpty = {
-      lexemes: []
-    }
-
-    let testHomonym = {
-      lexemes: [
-        {
-          sort: function () { },
-          lemma: {
-            languageID: latID
-          },
-          meaning: {
-            shortDefs: [
-              {
-                provider: 'fooProvider1'
-              }
-            ]
-          },
-          provider: 'fooProvider2'
-        }
-      ]
-    }
-    uiC.popup.vi.popupData.updates = 1
-
-    uiC.updateMorphology(testHomonymEmpty)
-
-    expect(uiC.popup.vi.linkedFeatures).toEqual([])
-    expect(uiC.popup.vi.popupData.updates).toEqual(2)
-    expect(uiC.popup.vi.popupData.providers).toEqual([])
-
-    uiC.updateMorphology(testHomonym)
-
-    expect(uiC.popup.vi.linkedFeatures).toEqual(LMF.getLanguageModel(latID).grammarFeatures())
-    expect(uiC.popup.vi.lexemes).toEqual(testHomonym.lexemes)
-    expect(uiC.popup.vi.popupData.morphDataReady).toBeTruthy()
-    expect(uiC.panel.panelData.lexemes).toEqual(testHomonym.lexemes)
-    expect(uiC.popup.vi.popupData.updates).toEqual(3)
-    expect(uiC.popup.vi.popupData.providers).toEqual(['fooProvider2', 'fooProvider1'])
+  it('UIController - openLexQueryUI: should close the panel if it was opened and show the popup on desktop', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PopupModule)
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const closePanelSpy = jest.spyOn(uiC, 'closePanel')
+    expect(store.state.popup.visible).toBeFalsy()
+    uiC.openLexQueryUI()
+    expect(closePanelSpy).toBeCalledTimes(1)
+    expect(store.state.popup.visible).toBeTruthy()
   })
 
-  it('14 UIController - updateGrammar methods', () => {
-    uiC.updateGrammar([])
-
-    let message = l10n.messages.TEXT_NOTICE_GRAMMAR_NOTFOUND.get()
-
-    expect(uiC.panel.panelData.grammarRes).toEqual({ provider: message })
-
-    uiC.updateGrammar([ 'fooUrl1', 'fooUrl2' ])
-    expect(uiC.panel.panelData.grammarRes).toEqual('fooUrl1')
+  it('UIController - openLexQueryUI: should open the popup it the panel is closed', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelOpen: () => false
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PopupModule)
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const closePanelSpy = jest.spyOn(uiC, 'closePanel')
+    expect(store.state.popup.visible).toBeFalsy()
+    uiC.openLexQueryUI()
+    expect(closePanelSpy).toBeCalledTimes(0)
+    expect(store.state.popup.visible).toBeTruthy()
   })
 
-  it('15 UIController - updateDefinitions methods', () => {
-    let testHomonym = {
-      lexemes: [
-        {
-          lemma: {
-            features: {}
-          },
-          meaning: {
-            shortDefs: [],
-            fullDefs: []
-          }
-        }
-      ]
-    }
-    uiC.popup.vi.popupData.updates = 1
-    uiC.updateDefinitions(testHomonym)
-
-    expect(uiC.popup.vi.definitions).toEqual({})
-    expect(uiC.popup.vi.popupData.defDataReady).toBeFalsy()
-    expect(uiC.popup.vi.popupData.updates).toEqual(2)
-
-    testHomonym.lexemes[0].lemma = {
-      ID: 'f1',
-      word: 'fooword',
-      features: {
-        fooFeature: {}
-      }
-    }
-
-    uiC.updateDefinitions(testHomonym)
-    expect(uiC.popup.vi.definitions.f1).toEqual([new Definition('No definition found.', 'en-US', 'text/plain', 'fooword')])
-
-    testHomonym.lexemes[0].meaning.fullDefs = [
-      { text: 'fooFullDefinition' }
-    ]
-
-    uiC.updateDefinitions(testHomonym)
-
-    expect(uiC.panel.panelData.fullDefinitions).toContain('fooFullDefinition')
-    expect(uiC.popup.vi.popupData.defDataReady).toBeTruthy()
-
-    testHomonym.lexemes[0].meaning.shortDefs = [
-      { text: 'fooShortDefinition' }
-    ]
-
-    uiC.updateDefinitions(testHomonym)
-    expect(uiC.popup.vi.definitions).toEqual({ f1: [{ text: 'fooShortDefinition' }] })
-    expect(uiC.panel.panelData.shortDefinitions).toEqual([{ text: 'fooShortDefinition' }])
-
-    let testShortDef = {
-      text: 'fooShortDefinition',
-      language: 'en-US',
-      format: 'text/plain',
-      lemmaText: 'fooword',
-
-      provider: { uri: 'fooprovideruri' }
-    }
-    testHomonym.lexemes[0].meaning.shortDefs = [ testShortDef ]
-    testHomonym.lexemes[0].provider = { uri: 'fooprovideruri' }
-
-    let testDefinition = new Definition('fooShortDefinition', 'en-US', 'text/plain', 'fooword')
-    uiC.updateDefinitions(testHomonym)
-
-    expect(uiC.popup.vi.definitions).toEqual({ f1: [ testDefinition ] })
-    expect(uiC.panel.panelData.shortDefinitions).toEqual([ testShortDef ])
-
-    testHomonym.lexemes[0].provider = { uri: 'fooprovideruri1' }
-    uiC.updateDefinitions(testHomonym)
-
-    expect(uiC.popup.vi.definitions).toEqual({ f1: [ testShortDef ] })
+  it('UIController - openPanel: should open the panel if it is closed', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelOpen: () => false
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const setPanelOpenSpy = jest.spyOn(uiState, 'setPanelOpen')
+    expect(store.state.panel.visible).toBeFalsy()
+    uiC.openPanel()
+    expect(setPanelOpenSpy).toBeCalledTimes(1)
+    expect(store.state.panel.visible).toBeTruthy()
   })
 
-  it('16 UIController - updateTranslations methods', () => {
-    let testHomonym = {
-      lexemes: [
-        {
-          lemma: {}
-        }
-      ]
-    }
-    uiC.popup.vi.popupData.updates = 1
-
-    uiC.updateTranslations(testHomonym)
-
-    expect(uiC.popup.vi.translations).toEqual({})
-    expect(uiC.popup.vi.popupData.translationsDataReady).toBeTruthy()
-    expect(uiC.popup.vi.popupData.updates).toEqual(2)
-
-    testHomonym.lexemes[0].lemma = {
-      ID: 'f1',
-      translation: 'footranslation'
-    }
-
-    uiC.updateTranslations(testHomonym)
-
-    expect(uiC.popup.vi.translations).toEqual({ f1: 'footranslation' })
+  it('UIController - openPanel: should not open the panel if it already has been opened', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const setPanelOpenSpy = jest.spyOn(uiState, 'setPanelOpen')
+    expect(store.state.panel.visible).toBeTruthy()
+    uiC.openPanel()
+    expect(setPanelOpenSpy).toBeCalledTimes(0)
   })
 
-  it('17 UIController - updatePageAnnotationData, updateWordAnnotationData methods', () => {
-    uiC.updatePageAnnotationData({ treebank: {} })
-    expect(uiC.panel.panelData.treebankComponentData.data.page).toEqual({})
-
-    uiC.updatePageAnnotationData({ treebank: { page: 'foopage' } })
-    expect(uiC.panel.panelData.treebankComponentData.data.page).toEqual('foopage')
-
-    uiC.updateWordAnnotationData()
-    expect(uiC.panel.panelData.treebankComponentData.data.word).toEqual({})
-    expect(uiC.popup.vi.popupData.hasTreebank).toBeFalsy()
-
-    uiC.updateWordAnnotationData({})
-    expect(uiC.panel.panelData.treebankComponentData.data.word).toEqual({})
-    expect(uiC.popup.vi.popupData.hasTreebank).toBeFalsy()
-
-    uiC.updateWordAnnotationData({ treebank: { word: 'fooword' } })
-    expect(uiC.panel.panelData.treebankComponentData.data.word).toEqual('fooword')
-    expect(uiC.popup.vi.popupData.hasTreebank).toBeTruthy()
+  it('UIController - openPanel: with forceOpen on should open the panel even if it is open', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const setPanelOpenSpy = jest.spyOn(uiState, 'setPanelOpen')
+    expect(store.state.panel.visible).toBeTruthy()
+    uiC.openPanel(true)
+    expect(setPanelOpenSpy).toBeCalledTimes(1)
+    expect(store.state.panel.visible).toBeTruthy()
   })
 
-  it('18 UIController - updateLanguage', () => {
-    uiC.panel.requestGrammar = jest.fn(function () { })
-    uiC.updateLanguage(Constants.LANG_LATIN)
-
-    expect(uiC.panel.requestGrammar).toHaveBeenCalled()
-    expect(uiC.panel.panelData.infoComponentData.languageName).toEqual('Latin')
-    expect(uiC.popup.vi.popupData.currentLanguageName).toEqual('Latin')
-
-    uiC.updateLanguage(Constants.LANG_ARABIC)
-    expect(uiC.panel.panelData.inflectionComponentData.enabled).toBeFalsy()
+  it('UIController - openPanel: should switch to a default tab if the active tab is in a disabled state', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      tab: UIController.tabNames.DISABLED,
+      isPanelOpen: () => false
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const changeTabSpy = jest.spyOn(uiC, 'changeTab')
+    uiC.openPanel()
+    expect(changeTabSpy).toBeCalledTimes(1)
+    expect(changeTabSpy).toBeCalledWith(uiC.TAB_NAMES_DEFAULT)
   })
 
-  // TODO: Rewrite after updateInflection changes are finalized
-  it.skip('19 UIController - updateInflections', () => {
-    let testHomonym = {
-      languageID: latID
-    }
-    let testInflectionData = {
-      hasInflectionSets: true
-    }
-
-    uiC.updateInflections(testHomonym)
-
-    expect(uiC.panel.panelData.inflectionComponentData.enabled).toBeTruthy()
-    expect(uiC.panel.panelData.inflectionComponentData.inflectionData).toEqual(testInflectionData)
-    expect(uiC.popup.vi.popupData.inflDataReady).toBeTruthy()
-
-    testInflectionData.hasInflectionSets = false
-
-    uiC.updateInflections(testInflectionData, testHomonym)
-    expect(uiC.popup.vi.popupData.inflDataReady).toBeFalsy()
-
-    testHomonym.languageID = araID
-    testInflectionData.hasInflectionSets = true
-
-    uiC.updateInflections(testInflectionData, testHomonym)
-    expect(uiC.panel.panelData.inflectionComponentData.enabled).toBeFalsy()
-    expect(uiC.popup.vi.popupData.inflDataReady).toBeFalsy()
+  it('UIController - openPanel: should close the toolbar if the toolbar is present', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      tab: UIController.tabNames.DISABLED,
+      isPanelOpen: () => false
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const changeTabSpy = jest.spyOn(uiC, 'changeTab')
+    uiC.openPanel()
+    expect(changeTabSpy).toBeCalledTimes(1)
+    expect(changeTabSpy).toBeCalledWith(uiC.TAB_NAMES_DEFAULT)
   })
 
-  it('20 UIController - clear, open', () => {
-    uiC.panel.clearContent = jest.fn(() => { })
-    uiC.popup.vi.clearContent = jest.fn(() => { })
-
-    uiC.clear()
-    expect(uiC.panel.clearContent).toHaveBeenCalled()
-    expect(uiC.popup.vi.clearContent).toHaveBeenCalled()
-
-    uiC.panel.panelData.isOpen = false
-    uiC.panel.visible = false
-    uiC.popup.vi.visible = false
-
-    uiC.featureOptions.items.uiType.setValue('popup')
-    uiC.featureOptions.uiTypePanel = 'panel'
-
-    uiC.open()
-    expect(uiC.panel.panelData.isOpen).toBeFalsy()
-    expect(uiC.popup.vi.visible).toBeTruthy()
-
-    //* **********************************************
-    uiC.panel.isOpen = true
-
-    uiC.open()
-    expect(uiC.panel.panelData.isOpen).toBeFalsy()
-    expect(uiC.popup.vi.visible).toBeTruthy()
-
-    //* **********************************************
-    uiC.featureOptions.items.uiType.setValue('panel')
-
-    uiC.open()
-    expect(uiC.panel.panelData.isOpen).toBeTruthy()
-    expect(uiC.popup.vi.visible).toBeTruthy()
+  it('UIController - closePanel: should close the panel and disable the active tab', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      tab: UIController.tabNames.DEFAULT,
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    expect(store.state.panel.visible).toBeTruthy()
+    expect(store.state.ui.activeTab).toBe(UIController.tabNames.DEFAULT)
+    const setPanelClosedSpy = jest.spyOn(uiState, 'setPanelClosed')
+    uiC.closePanel()
+    expect(store.state.panel.visible).toBeFalsy()
+    expect(store.state.ui.activeTab).toBe(UIController.tabNames.DISABLED)
+    expect(setPanelClosedSpy).toBeCalledTimes(1)
   })
 
-  it.skip('21 UIController - setRootComponentClasses', () => {
-    let emptyPromise = () => { return new Promise((resolve, reject) => {}) }
-    let stAdapter = { domain: 'alpheios-feature-options', set: emptyPromise }
-
-    document.querySelector('html').style['font-size'] = '16px'
-
-    let uiOptions1 = new Options(UIOptionDefaults, LocalStorageArea)
-    uiOptions1.items.skin = undefined
-    uiOptions1.items.fontSize = undefined
-    uiOptions1.items.colorSchema = undefined
-
-    let uiC1 = new UIController(state, featureOptions, resourceOptions, uiOptions1)
-    uiC1.setRootComponentClasses()
-    let resClasses = ['alpheios-irregular-base-font-size', 'auk--default']
-    expect(uiC1.popup.vi.popupData.classes).toEqual(resClasses)
-    expect(uiC1.panel.panelData.classes).toEqual(resClasses)
-
-    //* ****************************************************************
-    uiOptions1.items.skin = new OptionItem({ defaultValue: 'fooskin' }, 'skin', stAdapter)
-
-    let uiC2 = new UIController(state, featureOptions, resourceOptions, uiOptions1)
-    uiC2.setRootComponentClasses()
-    resClasses.push('auk--fooskin')
-
-    expect(uiC2.popup.vi.popupData.classes).toEqual(resClasses)
-    expect(uiC2.panel.panelData.classes).toEqual(resClasses)
-
-    //* ****************************************************************
-    uiC.uiOptions.items.fontSize = new OptionItem({ defaultValue: 'foofontsize' }, 'fontSize', stAdapter)
-
-    uiC.setRootComponentClasses()
-
-    resClasses.push(`alpheios-font_foofontsize_class`)
-
-    expect(uiC.popup.vi.popupData.classes).toEqual(resClasses)
-    expect(uiC.panel.panelData.classes).toEqual(resClasses)
-
-    //* ****************************************************************
-    uiC.uiOptions.items.colorSchema = new OptionItem({ defaultValue: 'foocolorSchema' }, 'colorSchema', stAdapter)
-
-    uiC.setRootComponentClasses()
-    resClasses.push(`alpheios-color_schema_foocolorSchema_class`)
-
-    expect(uiC.popup.vi.popupData.classes).toEqual(resClasses)
-    expect(uiC.panel.panelData.classes).toEqual(resClasses)
+  it('UIController - closePanel: should not update the UI state if syncState is false', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      tab: UIController.tabNames.DEFAULT,
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const setPanelClosedSpy = jest.spyOn(uiState, 'setPanelClosed')
+    uiC.closePanel(false)
+    expect(setPanelClosedSpy).toBeCalledTimes(0)
   })
 
-  it('22 UIController - updateStyleClass', () => {
-    uiC.popup.vi.popupData.classes = []
-    uiC.panel.panelData.classes = []
-
-    uiC.updateStyleClass('alpheios-font_', 'footype')
-
-    expect(uiC.popup.vi.popupData.classes).toEqual([])
-    expect(uiC.panel.panelData.classes).toEqual([])
-
-    uiC.popup.vi.popupData.classes = [ 'alpheios-font_footype2_class' ]
-    uiC.panel.panelData.classes = [ 'alpheios-font_footype2_class' ]
-
-    uiC.updateStyleClass('alpheios-font_', 'footype2')
-    expect(uiC.popup.vi.popupData.classes).toEqual([ 'alpheios-font_footype2_class' ])
-    expect(uiC.panel.panelData.classes).toEqual([ 'alpheios-font_footype2_class' ])
+  it('UIController - closePanel: should open the toolbar if the toolbar is present', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      tab: UIController.tabNames.DEFAULT,
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    uiC.registerModule(ToolbarModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    expect(store.state.toolbar.visible).toBeFalsy()
+    uiC.closePanel()
+    expect(store.state.toolbar.visible).toBeTruthy()
   })
 
-  it('23 UIController - updateFontSizeClass, updateColorSchemaClass, changeSkin', () => {
-    uiC.updateStyleClass = jest.fn(function () { })
-    uiC.setRootComponentClasses = jest.fn(function () { })
-
-    uiC.updateFontSizeClass('footype')
-    expect(uiC.updateStyleClass).toHaveBeenCalled()
-
-    uiC.updateColorSchemaClass('footype')
-    expect(uiC.updateStyleClass).toHaveBeenCalled()
-
-    uiC.changeSkin()
-    expect(uiC.setRootComponentClasses).toHaveBeenCalled()
+  it('UIController - showPanelTab: should change to the specified tab and open the panel', async () => {
+    const targetTab = 'inflections'
+    const uiState = BaseTestHelp.createUIState({
+      tab: UIController.tabNames.DEFAULT,
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const changeTabSpy = jest.spyOn(uiC, 'changeTab')
+    const openPanelSpy = jest.spyOn(uiC, 'openPanel')
+    uiC.showPanelTab(targetTab)
+    expect(changeTabSpy).toBeCalledTimes(1)
+    expect(changeTabSpy).toBeCalledWith(targetTab)
+    expect(openPanelSpy).toBeCalledTimes(1)
   })
 
-  it('24 UIController - panel methods - setPositionTo, attachToLeft, attachToRight', () => {
-    uiC.panel.setPositionTo('right')
-
-    expect(uiC.panel.options.items.panelPosition.currentValue).toEqual('right')
-
-    uiC.panel.attachToLeft()
-    expect(uiC.panel.options.items.panelPosition.currentValue).toEqual('left')
-
-    uiC.panel.attachToRight()
-    expect(uiC.panel.options.items.panelPosition.currentValue).toEqual('right')
+  it('UIController - changeTab: should change tab to the one specified', async () => {
+    const targetTab = 'settings'
+    const uiState = BaseTestHelp.createUIState({
+      tab: UIController.tabNames.DEFAULT,
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    expect(store.state.ui.activeTab).toBe(UIController.tabNames.DEFAULT)
+    const changeTabSpy = jest.spyOn(uiC, 'changeTab')
+    uiC.changeTab(targetTab)
+    expect(store.state.ui.activeTab).toBe(targetTab)
+    expect(changeTabSpy).toBeCalledTimes(1)
+    expect(changeTabSpy).toBeCalledWith(targetTab)
   })
 
-  it('25 UIController - panel methods - isOpen, toggle, requestGrammar, showMessage, appendMessage, clearMessages', () => {
-    uiC.panel.open = jest.fn(() => { })
-    uiC.panel.close = jest.fn(() => { })
-
-    uiC.state.isPanelOpen = () => true
-
-    expect(uiC.panel.isOpen()).toBeTruthy()
-
-    uiC.panel.toggle()
-
-    uiC.state.isPanelOpen = () => false
-
-    expect(uiC.panel.isOpen()).toBeFalsy()
-
-    uiC.panel.toggle()
-
-    expect(uiC.panel.open).toHaveBeenCalledTimes(1)
-    expect(uiC.panel.close).toHaveBeenCalledTimes(1)
-
-    ResourceQuery.create = jest.fn(() => { return { getData: () => {} } })
-
-    uiC.panel.requestGrammar()
-    expect(ResourceQuery.create).toHaveBeenCalled()
-
-    uiC.panel.panelData.messages = []
-    uiC.panel.showMessage('fooMessage')
-    expect(uiC.panel.panelData.messages).toEqual([ 'fooMessage' ])
-
-    uiC.panel.appendMessage('fooMessage1')
-    expect(uiC.panel.panelData.messages).toEqual([ 'fooMessage', 'fooMessage1' ])
-
-    uiC.panel.clearMessages()
-    expect(uiC.panel.panelData.messages).toEqual([])
+  it('UIController - togglePanelTab: should switch panel to the specified tab', async () => {
+    const targetTab = 'settings'
+    const uiState = BaseTestHelp.createUIState({
+      tab: UIController.tabNames.DEFAULT,
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const changeTabSpy = jest.spyOn(uiC, 'changeTab')
+    uiC.togglePanelTab(targetTab)
+    expect(changeTabSpy).toBeCalledTimes(1)
+    expect(changeTabSpy).toBeCalledWith(targetTab)
   })
 
-  it('26 UIController - panel methods - settingChange', () => {
-    uiC.panel.settingChange('locale', 'French')
-    expect(uiC.panel.options.items.locale.currentValue).toEqual('fr')
-
-    let setLocaleFN = jest.fn(() => { })
-    uiC.presenter = { setLocale: setLocaleFN }
-    uiC.panel.settingChange('locale', 'English (US)')
-    expect(uiC.presenter.setLocale).toHaveBeenCalled()
-
-    uiC.updateLanguage = jest.fn(() => { })
-    uiC.panel.settingChange('preferredLanguage', 'Greek')
-    expect(uiC.panel.options.items.preferredLanguage.currentValue).toEqual('grc')
-    expect(uiC.updateLanguage).toHaveBeenCalled()
-
-    uiC.updateVerboseMode = jest.fn(() => { })
-    uiC.panel.settingChange('verboseMode', 'Normal')
-    expect(uiC.panel.options.items.verboseMode.currentValue).toEqual('normal')
-    expect(uiC.updateVerboseMode).toHaveBeenCalled()
+  it('UIController - togglePanelTab: should open a panel if it is closed', async () => {
+    const targetTab = 'settings'
+    const uiState = BaseTestHelp.createUIState({
+      tab: UIController.tabNames.DEFAULT,
+      isPanelOpen: () => false
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const openPanelSpy = jest.spyOn(uiC, 'openPanel')
+    uiC.togglePanelTab(targetTab)
+    expect(openPanelSpy).toBeCalledTimes(1)
   })
 
-  it('27 UIController - panel methods - resourceSettingChange', () => {
-    let testName = 'lexicons-grc'
-    let testValues = ['Liddell, Scott, Jones']
-
-    let checkValues = uiC.resourceOptions.items.lexicons.filter((f) => f.name === testName)[0].values.filter(f => testValues.indexOf(f.text) > -1)
-    uiC.panel.resourceSettingChange(testName, testValues)
-    expect(uiC.panel.resourceOptions.items.lexicons.filter((f) => f.name === testName)[0].currentValue).toEqual(checkValues.map(f => f.value))
+  it('UIController - togglePanelTab: if the tab does not change, it should open the panel if it is closed', async () => {
+    const targetTab = 'settings'
+    const uiState = BaseTestHelp.createUIState({
+      tab: targetTab,
+      isPanelOpen: () => false
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const openPanelSpy = jest.spyOn(uiC, 'openPanel')
+    uiC.togglePanelTab(targetTab)
+    expect(openPanelSpy).toBeCalledTimes(1)
   })
 
-  it('28 UIController - panel methods - uiOptionChange', () => {
-    uiC.updateFontSizeClass = jest.fn(() => { })
-    uiC.updateColorSchemaClass = jest.fn(() => { })
-    uiC.changeSkin = jest.fn(() => { })
-    uiC.popup.close = jest.fn(() => { })
-    uiC.popup.open = jest.fn(() => { })
-
-    uiC.panel.uiOptionChange('fontSize', 'medium')
-    expect(uiC.uiOptions.items.fontSize.currentValue).toEqual('medium')
-    expect(uiC.updateFontSizeClass).toHaveBeenCalled()
-
-    uiC.panel.uiOptionChange('colorSchema', 'light')
-    expect(uiC.uiOptions.items.colorSchema.currentValue).toEqual('light')
-    expect(uiC.updateColorSchemaClass).toHaveBeenCalled()
-
-    uiC.panel.uiOptionChange('skin', 'Alpheios Default Skin')
-    expect(uiC.uiOptions.items.skin.currentValue).toEqual('default')
-    expect(uiC.changeSkin).toHaveBeenCalled()
-
-    uiC.panel.uiOptionChange('popup', 'Default Popup Layout')
-    // expect(uiC.popup.close).toHaveBeenCalled()
-    expect(uiC.popup.currentPopupComponent).toEqual('popup')
-    // expect(uiC.popup.open).toHaveBeenCalled()
+  it('UIController - togglePanelTab: if tab does not change, it should close the panel if it is open', async () => {
+    const targetTab = 'settings'
+    const uiState = BaseTestHelp.createUIState({
+      tab: targetTab,
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const closePanelSpy = jest.spyOn(uiC, 'closePanel')
+    uiC.togglePanelTab(targetTab)
+    expect(closePanelSpy).toBeCalledTimes(1)
   })
 
-  it('29 UIController - popup methods - showMessage, clearMessages', () => {
-    uiC.popup.vi.showMessage('fooMessage')
-    expect(uiC.popup.vi.messages).toEqual([ 'fooMessage' ])
-
-    uiC.popup.vi.appendMessage('fooMessage1')
-    expect(uiC.popup.vi.messages).toEqual([ 'fooMessage', 'fooMessage1' ])
-
-    uiC.popup.vi.clearMessages()
-    expect(uiC.popup.vi.messages).toEqual([])
+  it('UIController - openToolbar: should open the toolbar', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule) // Toolbar module depends on the state of the panel
+    uiC.registerModule(ToolbarModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    store.commit('toolbar/close')
+    expect(store.state.toolbar.visible).toBeFalsy()
+    uiC.openToolbar()
+    expect(store.state.toolbar.visible).toBeTruthy()
   })
 
-  it('30 UIController - popup methods - close', () => {
-    uiC.popup.vi.visible = true
-    uiC.popup.vi.close()
-    expect(uiC.popup.vi.visible).toBeFalsy()
+  it('UIController - openActionPanel: should open the action panel', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(ActionPanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    expect(store.state.actionPanel.visible).toBeFalsy()
+    uiC.openActionPanel()
+    expect(store.state.actionPanel.visible).toBeTruthy()
   })
 
-  it('31 UIController - popup methods - showErrorInformation', () => {
-    uiC.popup.vi.showErrorInformation('fooError')
-    expect(uiC.popup.vi.popupData.notification.visible).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.important).toBeTruthy()
-    expect(uiC.popup.vi.popupData.notification.showLanguageSwitcher).toBeFalsy()
-    expect(uiC.popup.vi.popupData.notification.text).toEqual('fooError')
+  it('UIController - closeActionPanel: should close the action panel', async () => {
+    const store = BaseTestHelp.baseVuexStore([...baseStoreModules, 'toolbar'])
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(ActionPanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    store.commit('actionPanel/open')
+    expect(store.state.actionPanel.visible).toBeTruthy()
+    uiC.closeActionPanel()
+    expect(store.state.actionPanel.visible).toBeFalsy()
   })
 
-  it('32 UIController - popup methods - sendFeature, showPanelTab', () => {
-    uiC.panel.requestGrammar = jest.fn(() => { })
-    uiC.panel.changeTab = jest.fn(() => { })
-    uiC.panel.open = jest.fn(() => { })
-
-    uiC.popup.vi.sendFeature()
-    uiC.popup.vi.showPanelTab()
-    expect(uiC.panel.requestGrammar).toHaveBeenCalledTimes(1)
-    expect(uiC.panel.changeTab).toHaveBeenCalledTimes(2)
-    expect(uiC.panel.open).toHaveBeenCalledTimes(2)
+  it('UIController -  toggleActionPanel: should open the action panel if it was closed', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(ActionPanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    expect(store.state.actionPanel.visible).toBeFalsy()
+    uiC.toggleActionPanel()
+    expect(store.state.actionPanel.visible).toBeTruthy()
   })
 
-  it('33 UIController - popup methods - settingChange', () => {
-    uiC.popup.vi.settingChange('locale', 'French')
-    expect(uiC.popup.vi.options.items.locale.currentValue).toEqual('fr')
-
-    let setLocaleFN = jest.fn(() => { })
-    uiC.presenter = { setLocale: setLocaleFN }
-    uiC.popup.vi.settingChange('locale', 'English (US)')
-    expect(uiC.presenter.setLocale).toHaveBeenCalled()
-
-    uiC.updateLanguage = jest.fn(() => { })
-    uiC.popup.vi.settingChange('preferredLanguage', 'Greek')
-    expect(uiC.popup.vi.options.items.preferredLanguage.currentValue).toEqual('grc')
-    expect(uiC.updateLanguage).toHaveBeenCalled()
+  it('UIController -  toggleActionPanel: should close the action panel if it was open', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(ActionPanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    store.commit('actionPanel/open')
+    expect(store.state.actionPanel.visible).toBeTruthy()
+    uiC.toggleActionPanel()
+    expect(store.state.actionPanel.visible).toBeFalsy()
   })
 
-  it('34 UIController - popup methods - resourceSettingChange', () => {
-    let testName = 'lexicons-grc'
-    let testValues = ['Liddell, Scott, Jones']
-
-    let checkValues = uiC.resourceOptions.items.lexicons.filter((f) => f.name === testName)[0].values.filter(f => testValues.indexOf(f.text) > -1)
-    uiC.popup.vi.resourceSettingChange(testName, testValues)
-    expect(uiC.popup.vi.resourceOptions.items.lexicons.filter((f) => f.name === testName)[0].currentValue).toEqual(checkValues.map(f => f.value))
+  it('UIController -  closeUI: should close the panel if it was open', async () => {
+    const uiState = BaseTestHelp.createUIState({
+      isPanelOpen: () => true
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    const closePanelSpy = jest.spyOn(uiC, 'closePanel')
+    uiC.closeUI()
+    expect(closePanelSpy).toBeCalledTimes(1)
   })
 
-  it('35 UIController - popup methods - uiOptionChange', () => {
-    uiC.updateFontSizeClass = jest.fn(() => { })
-    uiC.updateColorSchemaClass = jest.fn(() => { })
-    uiC.changeSkin = jest.fn(() => { })
-    uiC.popup.vi.close = jest.fn(() => { })
-    uiC.popup.vi.open = jest.fn(() => { })
-
-    uiC.popup.vi.uiOptionChange('fontSize', 'medium')
-    expect(uiC.uiOptions.items.fontSize.currentValue).toEqual('medium')
-    expect(uiC.updateFontSizeClass).toHaveBeenCalled()
-
-    uiC.popup.vi.uiOptionChange('colorSchema', 'light')
-    expect(uiC.uiOptions.items.colorSchema.currentValue).toEqual('light')
-    expect(uiC.updateColorSchemaClass).toHaveBeenCalled()
-
-    uiC.popup.vi.uiOptionChange('skin', 'Alpheios Default Skin')
-    expect(uiC.uiOptions.items.skin.currentValue).toEqual('default')
-    expect(uiC.changeSkin).toHaveBeenCalled()
-
-    uiC.popup.vi.uiOptionChange('popup', 'Default Popup Layout')
-    expect(uiC.popup.vi.close).toHaveBeenCalled()
-    expect(uiC.popup.vi.currentPopupComponent).toEqual('popup')
-    expect(uiC.popup.vi.open).toHaveBeenCalled()
+  it('UIController -  showLookupResultsUI: with the "popup" option, should open the popup', async () => {
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PopupModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    expect(store.state.popup.visible).toBeFalsy()
+    uiC.showLookupResultsUI(UIController.components.POPUP)
+    expect(store.state.popup.visible).toBeTruthy()
   })
 
-  it('36 UIController -overrideHelp option affects default tab', () => {
-    let uiC = UIController.create(state, { overrideHelp: true})
-    expect(uiC.tabs.DEFAULT).toEqual('settings')
-    let uiC2 = UIController.create(state, { overrideHelp: false})
-    expect(uiC2.tabs.DEFAULT).toEqual('info')
+  it('UIController -  showLookupResultsUI: with the "panel" option, should open the panel and switch to the "morphology" tab', async () => {
+    const targetTab = 'morphology'
+    const uiState = BaseTestHelp.createUIState({
+      tab: UIController.tabNames.DEFAULT
+    })
+    uiC = getUiController({ uiState, platform: desktopPlatform })
+    uiC.registerModule(PanelModule)
+    await uiC.init({ store, api })
+    uiC.activate()
+    expect(store.state.panel.visible).toBeFalsy()
+    expect(uiState.tab).toBe(UIController.tabNames.DEFAULT)
+    const changeTabSpy = jest.spyOn(uiState, 'changeTab')
+    uiC.showLookupResultsUI(UIController.components.PANEL)
+    expect(store.state.panel.visible).toBeTruthy()
+    expect(changeTabSpy).toBeCalledTimes(1)
+    expect(changeTabSpy).toBeCalledWith(targetTab)
+    expect(store.state.ui.activeTab).toBe(targetTab)
   })
-*/
-  it('37 UIController - method getLanguageName returns language data', () => {
-    let latData = UIController.getLanguageName(Constants.LANG_LATIN)
-    expect(latData.name).toEqual('Latin')
-    
-    let grcData = UIController.getLanguageName(Constants.LANG_GREEK)
-    expect(grcData.name).toEqual('Greek')
-
-    let araData = UIController.getLanguageName(Constants.LANG_ARABIC)
-    expect(araData.name).toEqual('Arabic')
-
-    let perData = UIController.getLanguageName(Constants.LANG_PERSIAN)
-    expect(perData.name).toEqual('Persian')
-
-    let gezData = UIController.getLanguageName(Constants.LANG_GEEZ)
-    expect(gezData.name).toEqual('Ancient Ethiopic (Ge\'ez)')
-
-    let zhoData = UIController.getLanguageName(Constants.LANG_CHINESE)
-    expect(zhoData.name).toEqual('Chinese')
-  })
-
 })

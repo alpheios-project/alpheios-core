@@ -1,52 +1,60 @@
 /* eslint-env jest */
-import ResourceQuery from '@/lib/queries/resource-query'
-import Query from '@/lib/queries/query'
+import ResourceQuery from '@comp/lib/queries/resource-query'
+import Query from '@comp/lib/queries/query'
 
-import L10n from '@/lib/l10n/l10n'
-import Locales from '@/locales/locales'
-import enUS from '@/locales/en-us/messages.json'
-import enGB from '@/locales/en-gb/messages.json'
+import Locales from '@comp/locales/locales'
+import enUS from '@comp/locales/en-us/messages.json'
+import enGB from '@comp/locales/en-gb/messages.json'
 import { Constants, Feature } from 'alpheios-data-models'
-import Options from '@/lib/options/options'
-import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import LocalStorageArea from '@/lib/options/local-storage-area.js'
+import { L10n } from 'alpheios-l10n'
+import Options from '@comp/lib/options/options'
+import LanguageOptionDefaults from '@comp/settings/language-options-defaults.json'
+import LocalStorageArea from '@comp/lib/options/local-storage-area.js'
 
 describe('resource-query.test.js', () => {
-  let l10n = new L10n()
-    .addMessages(enUS, Locales.en_US)
-    .addMessages(enGB, Locales.en_GB)
-    .setLocale(Locales.en_US)
+  let l10n
+  let testUi
+  let resourceOptions
+  let testFeature
 
-  let testUi = {
-    message: function () { },
-    updateGrammar: function () { },
-    addMessage: function () { },
-    l10n: l10n
-  }
+  beforeAll(() => {
+    l10n = new L10n()
+      .addMessages(enUS, Locales.en_US)
+      .addMessages(enGB, Locales.en_GB)
+      .setLocale(Locales.en_US)
 
-  let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
+    testUi = {
+      message: function () { },
+      updateGrammar: function () { },
+      addMessage: function () { },
+      l10n: l10n
+    }
 
-  let testFeature = new Feature(Feature.types.part, 'verb', Constants.LANG_LATIN)
+    resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
+    testFeature = new Feature(Feature.types.part, 'verb', Constants.LANG_LATIN)
 
-  console.error = function () {}
-  console.log = function () {}
-  console.warn = function () {}
+    console.error = function () {}
+    console.log = function () {}
+    console.warn = function () {}
+  })
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
   })
+
   afterEach(() => {
     jest.resetModules()
   })
+
   afterAll(() => {
     jest.clearAllMocks()
   })
 
   it('1 ResourceQuery - create method returns a new ResourceQuery with params', () => {
-    let query = ResourceQuery.create(testFeature, { grammars: 'foo grammars', resourceOptions: resourceOptions })
+    const query = ResourceQuery.create(testFeature, { grammars: 'foo grammars', resourceOptions: resourceOptions })
 
     expect(typeof query).toEqual('object')
     expect(query.constructor.name).toEqual('ResourceQuery')
@@ -57,7 +65,7 @@ describe('resource-query.test.js', () => {
   })
 
   it('2 ResourceQuery - getData method executes steps: ResourceQuery.evt.GRAMMAR_NOT_FOUND.pub, finalize (when fetchResources returns [])', async () => {
-    let testGrammars = {
+    const testGrammars = {
       fetchResources: function () {
         return []
       }
@@ -65,6 +73,7 @@ describe('resource-query.test.js', () => {
 
     jest.spyOn(ResourceQuery.evt.GRAMMAR_NOT_FOUND, 'pub')
 
+    // eslint-disable-next-line prefer-const
     let query = ResourceQuery.create(testFeature, { grammars: testGrammars, resourceOptions: resourceOptions })
     jest.spyOn(query, 'finalize')
 
@@ -75,7 +84,7 @@ describe('resource-query.test.js', () => {
   })
 
   it('3 ResourceQuery - getData method publishes GRAMMAR_AVAILABLE event with a url as an argument (when fetchResources returns a request url)', async () => {
-    let testGrammars = {
+    const testGrammars = {
       fetchResources: function () {
         return [
           new Promise((resolve, reject) => { resolve('http:/testurl.com') })
@@ -83,7 +92,8 @@ describe('resource-query.test.js', () => {
       }
     }
 
-    let query = ResourceQuery.create( testFeature, { grammars: testGrammars, resourceOptions: resourceOptions })
+    // eslint-disable-next-line prefer-const
+    let query = ResourceQuery.create(testFeature, { grammars: testGrammars, resourceOptions: resourceOptions })
     jest.spyOn(ResourceQuery.evt.GRAMMAR_AVAILABLE, 'pub')
     jest.spyOn(ResourceQuery.evt.RESOURCE_QUERY_COMPLETE, 'pub')
 
@@ -93,8 +103,8 @@ describe('resource-query.test.js', () => {
   })
 
   it('4 ResourceQuery - getData method throws error to console when fetchResources returns error', async () => {
-    let testError = new Error('test error')
-    let testGrammars = {
+    const testError = new Error('test error')
+    const testGrammars = {
       fetchResources: function () {
         return [
           new Promise((resolve, reject) => { reject(testError) })
@@ -102,35 +112,36 @@ describe('resource-query.test.js', () => {
       }
     }
 
-    let query = ResourceQuery.create(testFeature, { uiController: testUi, grammars: testGrammars, resourceOptions:resourceOptions })
-
+    const query = ResourceQuery.create(testFeature, { uiController: testUi, grammars: testGrammars, resourceOptions: resourceOptions })
     await query.getData()
 
-    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/retrieving/),testError)
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/retrieving/), testError)
   })
 
   it('5 ResourceQuery - On finalize Query.destroy executes', async () => {
-    let testGrammars = {
+    const testGrammars = {
       fetchResources: function () {
         return []
       }
     }
 
     jest.spyOn(Query, 'destroy')
+
+    // eslint-disable-next-line prefer-const
     let query = ResourceQuery.create(testFeature, { uiController: testUi, grammars: testGrammars, resourceOptions: resourceOptions })
     query.finalize()
     expect(Query.destroy).toHaveBeenCalled()
   })
 
   it('6 ResourceQuery - getGrammarOptions sets preferred grammar)', async () => {
-    let testGrammars = {
+    const testGrammars = {
       fetchResources: function () {
         return []
       }
     }
 
-    let query = ResourceQuery.create(testFeature, { uiController: testUi, grammars: testGrammars, resourceOptions:resourceOptions })
-    expect(query.getGrammarOptions(Constants.LANG_LATIN)).toEqual({prefer:"https://github.com/alpheios-project/grammar-allen-greenough"})
+    // eslint-disable-next-line prefer-const
+    let query = ResourceQuery.create(testFeature, { uiController: testUi, grammars: testGrammars, resourceOptions: resourceOptions })
+    expect(query.getGrammarOptions(Constants.LANG_LATIN)).toEqual({ prefer: 'https://github.com/alpheios-project/grammar-allen-greenough' })
   })
-
 })

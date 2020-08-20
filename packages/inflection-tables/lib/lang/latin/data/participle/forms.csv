@@ -15,6 +15,7 @@ eo,ire_ivi(ii)_itus,iēns,active,,present,,,
 eo,ire_ivi(ii)_itus,euntis,active,,present,,,13
 eo,ire_ivi(ii)_itus,itūrus,active,,future,,,
 eo,ire_ivi(ii)_itus,eundum,passive,,future,,,4
+eo,ire_ivi(ii)_itus,itus,passive,,perfect,,,17
 possum,posse_potui_-,potēns,active,,present,,,
 insum,inesse_infui_infuturus,infutūrus,active,,future,,,
 prosum,prodesse_profui_profuturus,profutūrus,active,,future,,,
@@ -46,3 +47,4 @@ ineo,inire_inivi(ii)_initus,initus,passive,,perfect,,,
 ineo,inire_inivi(ii)_initus,ineundus,passive,,future,,,
 veneo,venire_venivi(ii)_venitus,vēniēns,active,,present,,,
 veneo,venire_venivi(ii)_venitus,vēnitūrus,active,,future,,,
+veneo,venire_venivi(ii)_venitus,vēnitus,passive,,perfect,,,17

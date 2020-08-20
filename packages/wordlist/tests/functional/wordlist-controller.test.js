@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import WordlistController from '@wordlist/controllers/wordlist-controller.js'
-import { WordList, WordItem, TextQuoteSelector, Constants } from 'alpheios-data-models'
+import { WordItem, TextQuoteSelector, Constants } from 'alpheios-data-models'
 
 
 describe('wordlist-controller.test.js', () => {

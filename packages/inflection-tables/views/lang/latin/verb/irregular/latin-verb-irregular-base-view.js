@@ -8,7 +8,7 @@ import Table from '@views/lib/table'
  * It is supposed to serve as a base view only and never created directly.
  * That's why its match filter will always return false.
  */
-export default class LatinVerbIrregularVoiceView extends LatinView {
+export default class LatinVerbIrregularBaseView extends LatinView {
   constructor (homonym, inflectionData) {
     super(homonym, inflectionData)
 
@@ -30,7 +30,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
   }
 
   static get voiceEnabledHdwds () {
-    return ['fero', 'queo', 'adeo', 'ineo']
+    return ['fero', 'queo', 'adeo', 'ineo', 'odeo']
   }
 
   /**
@@ -92,21 +92,27 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
     // this will fail if we want to link tables for irregular and regular verbs together this way
     const inflections = this.homonym.inflections.filter(infl => infl[Feature.types.part].value === this.constructor.mainPartOfSpeech && infl.constraints && infl.constraints.irregular)
     for (const Constructor of this.constructor.linkedViewConstructors(this.homonym)) {
-      let linkedViewInflections = [] // eslint-disable-line prefer-const
-      for (const infl of inflections) {
-        let clone = infl.clone()
-        clone[Feature.types.part] = clone[Feature.types.part].createFeature(Constructor.mainPartOfSpeech)
+      try {
+        let linkedViewInflections = [] // eslint-disable-line prefer-const
+        for (const infl of inflections) {
+          let clone = infl.clone()
+          clone[Feature.types.part] = clone[Feature.types.part].createFeature(Constructor.mainPartOfSpeech)
 
-        clone = this.constructor.dataset.setInflectionData(clone, infl.lemma)
-        linkedViewInflections.push(clone)
-      }
-      const inflectionData = this.constructor.dataset.createInflectionSet(Constructor.mainPartOfSpeech, linkedViewInflections, { findMorphologyMatches: false })
-      if (Constructor.matchFilter(this.homonym.languageID, linkedViewInflections)) {
-        const view = new Constructor(this.homonym, inflectionData)
-        for (let infl of inflections) { // eslint-disable-line prefer-const
-          infl[Feature.types.part] = infl[Feature.types.part].createFeature(this.constructor.mainPartOfSpeech)
+          clone = this.constructor.dataset.setInflectionData(clone, infl.lemma)
+          linkedViewInflections.push(clone)
         }
-        views.push(view)
+        const inflectionData = this.constructor.dataset.createInflectionSet(Constructor.mainPartOfSpeech, linkedViewInflections, { findMorphologyMatches: false })
+        if (Constructor.matchFilterForLink(this.homonym.languageID, linkedViewInflections)) {
+          const view = new Constructor(this.homonym, inflectionData)
+          for (let infl of inflections) { // eslint-disable-line prefer-const
+            infl[Feature.types.part] = infl[Feature.types.part].createFeature(this.constructor.mainPartOfSpeech)
+          }
+          views.push(view)
+        } else {
+          console.info('No match', Constructor)
+        }
+      } catch (e) {
+        console.info(e)
       }
     }
     this.linkedViews = views

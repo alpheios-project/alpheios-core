@@ -1,7 +1,7 @@
 {
     "TEXT_NOTICE_WORDUSAGE_READY": {
-        "message": "Word Usage Examples are recieved",
-        "description": "Word Usage Examples recieved flag",
+        "message": "Word Usage Examples are received",
+        "description": "Word Usage Examples received flag",
         "component": "UIController onWordUsageExamplesReady"
     },
     "TOOLTIP_WORD_USAGE": {
@@ -125,13 +125,13 @@
         "component": "WordUsageExamples"
     },
     "WORDUSAGE_FOCUS_AUTHOR": {
-        "message": "Choose an Author:<br>(up to {maxResults} examples, default sort by work)",
+        "message": "Choose an Author<br/>:(up to {maxResults} examples, default sort by work)",
         "description": "Title for the author's filter",
         "component": "WordUsageExamples",
         "params": ["maxResults"]
     },
     "WORDUSAGE_FOCUS_WORK": {
-        "message": "Focus on Work:<br>(up to {maxResults} examples, default sort by preceding word)",
+        "message": "Focus on Work<br/>:(up to {maxResults} examples, default sort by preceding word)",
         "description": "Title for the textwork's filter",
         "component": "WordUsageExamples",
         "params": ["maxResults"]

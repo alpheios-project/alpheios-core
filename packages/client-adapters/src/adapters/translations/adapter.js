@@ -24,7 +24,7 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
   async getTranslationsList (homonym, browserLang) {
     let lemmaList = [] // eslint-disable-line prefer-const
     if (!homonym || !homonym.lexemes) {
-      this.addError(this.l10n.messages.TRANSLATION_INCORRECT_LEXEMES)
+      this.addError(this.l10n.getMsg('TRANSLATION_INCORRECT_LEXEMES'))
       return
     }
 
@@ -38,7 +38,7 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
     const input = this.prepareInput(lemmaList)
 
     if (!input) {
-      this.addError(this.l10n.messages.TRANSLATION_INPUT_PREPARE_ERROR.get(input.toString()))
+      this.addError(this.l10n.getMsg('TRANSLATION_INPUT_PREPARE_ERROR', { input: input.toString() }))
       return
     }
 
@@ -65,11 +65,11 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
             Translation.loadTranslations(lemma, outLang, translationsList, this.provider)
           }
         } catch (error) {
-          this.addError(this.l10n.messages.TRANSLATION_UNKNOWN_ERROR.get(error.message))
+          this.addError(this.l10n.getMsg('TRANSLATION_UNKNOWN_ERROR', { message: error.message }))
         }
       }
     } catch (error) {
-      this.addError(this.l10n.messages.TRANSLATION_UNKNOWN_ERROR.get(error.message))
+      this.addError(this.l10n.getMsg('TRANSLATION_UNKNOWN_ERROR', { message: error.message }))
     }
   }
 

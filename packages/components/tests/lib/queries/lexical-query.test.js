@@ -1,18 +1,18 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import LexicalQuery from '@/lib/queries/lexical-query'
-import L10n from '@/lib/l10n/l10n'
-import Locales from '@/locales/locales'
-import enUS from '@/locales/en-us/messages.json'
-import enGB from '@/locales/en-gb/messages.json'
-// import Query from '@/lib/queries/query'
+import LexicalQuery from '@comp/lib/queries/lexical-query'
+import Locales from '@comp/locales/locales'
+import enUS from '@comp/locales/en-us/messages.json'
+import enGB from '@comp/locales/en-gb/messages.json'
+// import Query from '@comp/lib/queries/query'
 
-import Options from '@/lib/options/options'
-import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import LocalStorageArea from '@/lib/options/local-storage-area.js'
+import Options from '@comp/lib/options/options'
+import LanguageOptionDefaults from '@comp/settings/language-options-defaults.json'
+import LocalStorageArea from '@comp/lib/options/local-storage-area.js'
 import SiteOptions from './fixtures/site-options-shortlex.json'
 
 import { Constants, LanguageModelFactory as LMF, Homonym } from 'alpheios-data-models'
+import { L10n } from 'alpheios-l10n'
 
 import { ClientAdapters } from 'alpheios-client-adapters'
 

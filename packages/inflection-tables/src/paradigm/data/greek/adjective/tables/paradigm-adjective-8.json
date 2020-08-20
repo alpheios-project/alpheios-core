@@ -107,7 +107,7 @@
                 "role": "label",
                 "declension": "1st 2nd",
                 "number": "singular",
-                "value": "singular"
+                "value": ""
             },
             {
                 "role": "label",
@@ -167,7 +167,7 @@
                 "role": "label",
                 "declension": "1st 2nd",
                 "number": "singular",
-                "value": "singular"
+                "value": ""
             },
             {
                 "role": "label",
@@ -227,7 +227,7 @@
                 "role": "label",
                 "declension": "1st 2nd",
                 "number": "singular",
-                "value": "singular"
+                "value": ""
             },
             {
                 "role": "label",
@@ -347,7 +347,7 @@
                 "role": "label",
                 "declension": "1st 2nd",
                 "number": "dual",
-                "value": "dual"
+                "value": ""
             },
             {
                 "role": "label",
@@ -467,7 +467,7 @@
                 "role": "label",
                 "declension": "1st 2nd",
                 "number": "plural",
-                "value": "plural"
+                "value": ""
             },
             {
                 "role": "label",
@@ -527,7 +527,7 @@
                 "role": "label",
                 "declension": "1st 2nd",
                 "number": "plural",
-                "value": "plural"
+                "value": ""
             },
             {
                 "role": "label",
@@ -587,7 +587,7 @@
                 "role": "label",
                 "declension": "1st 2nd",
                 "number": "plural",
-                "value": "plural"
+                "value": ""
             },
             {
                 "role": "label",

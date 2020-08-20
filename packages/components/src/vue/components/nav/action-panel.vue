@@ -23,7 +23,6 @@
           v-show="$store.state.actionPanel.showLookup"
       >
 
-
         <lookup
             class="alpheios-action-panel__lookup"
             :name-base="`action-panel`"
@@ -48,6 +47,7 @@
         >
           <div
               @click.stop="openTab('inflectionsbrowser')"
+              id="alpheios-action-panel-inflectionsbrowser"
               class="alpheios-action-panel__navbutton"
           >
             <inflections-browser-icon/>
@@ -60,6 +60,7 @@
         >
           <div
               class="alpheios-action-panel__navbutton"
+              id="alpheios-action-panel-grammar"
               @click.stop="openTab('grammar')"
           >
             <grammar-icon/>
@@ -73,6 +74,7 @@
           <div
               :class="{ disabled: !$store.state.app.hasWordListsData }"
               class="alpheios-action-panel__navbutton"
+              id="alpheios-action-panel-wordlist"
               @click.stop="$store.state.app.hasWordListsData ? openTab('wordlist') : null"
           >
             <wordlist-icon/>
@@ -86,6 +88,7 @@
           <div
               :class="{ disabled: !$store.state.auth.enableLogin }"
               class="alpheios-action-panel__navbutton"
+              id="alpheios-action-panel-user"
               @click.stop="$store.state.auth.enableLogin ? openTab('user') : null"
           >
             <user-icon/>
@@ -98,6 +101,7 @@
         >
           <div
               class="alpheios-action-panel__navbutton"
+              id="alpheios-action-panel-options"
               @click.stop="openTab('options')"
           >
             <options-icon/>
@@ -122,7 +126,6 @@ import Lookup from '@/vue/components/lookup.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
-
 export default {
   name: 'ActionPanel',
   // API modules that are required for this component
@@ -130,7 +133,7 @@ export default {
     ui: 'ui',
     l10n: 'l10n'
   },
-  storeModules: ['actionPanel', 'app'], // Store modules that are required by this component
+  storeModules: ['actionPanel', 'app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     lookup: Lookup,
@@ -155,7 +158,7 @@ export default {
         y: 0
       },
 
-      tooltipDirection: 'top', 
+      tooltipDirection: 'top',
       showLangSelector: false
     }
   },
@@ -168,10 +171,11 @@ export default {
 
   computed: {
     componentStyles: function () {
+      // eslint-disable-next-line prefer-const
       let styles = {
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
         // Should stay on top of a toolbar
-        zIndex: this.ui.zIndex + 10
+        zIndex: this.$store.state.ui.zIndexMax + 10
       }
 
       if (this.$store.state.actionPanel.initialPos) {
@@ -259,7 +263,6 @@ export default {
     height: uisize(100px);
     width: uisize(280px);
   }
-
 
   .alpheios-action-panel.alpheios-action-panel--lookup-visible.alpheios-action-panel--nav-visible {
     height: uisize(270px);

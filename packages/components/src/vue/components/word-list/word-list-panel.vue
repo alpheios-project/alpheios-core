@@ -3,6 +3,7 @@
     <div class="alpheios-wordlist" v-if="!showContext" >
         <div class="alpheios-wordlist-language" 
           :class="{ 'alpheios-rtl': defineDirection(languageCode)}"
+          :id="languageBlockId(languageCode)"
           v-for="(languageCode, langIndex) in languagesList" v-bind:key="langIndex">
           <word-language
             :languageCode = "languageCode"
@@ -58,6 +59,9 @@ export default {
     defineDirection (languageCode) {
       let model = LanguageModelFactory.getLanguageModelFromCode(languageCode)
       return model.direction === Constants.LANG_DIR_RTL
+    },
+    languageBlockId (languageCode) {
+      return `alpheios-wordlist-language-${languageCode}`
     }
   }
 }

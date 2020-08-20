@@ -1,7 +1,6 @@
 /* global DEVELOPMENT_MODE_BUILD */
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
-import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
 import { Constants, TreebankDataItem, HomonymGroup, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
@@ -18,22 +17,18 @@ export default class Lexis extends Module {
   /**
    * @param {object} store - A Vuex store.
    * @param {object} api - A public API object.
-   * @param {object} config - A module's configuration object:
-   *        {Function} config.getSelectedText - A UI controller's function to start a lexical query.
-   *        This is a temporary solution until wil fully integrate lexical query functionality into a
-   *        UI controller.
+   * @param {object} config - A module's configuration object
    */
   constructor (store, api, config = {}) {
     super(store, api, config)
-    // APIs provided by the UI controller
+    // APIs provided by the app controller
     this._appApi = api.app
-    this._uiApi = api.ui
     this._settingsApi = api.settings
-    this._lexisConfig = (api.app.config && api.app.config['lexis-cs']) ? api.app.config['lexis-cs'] : null
+    this._lexisConfig = api.settings.getLexisOptions()
 
-    if (!this._lexisConfig) {
-      // If Lexis configuration is not available we will disable any CEDICT-related functionality
-      Logger.getInstance().warn('CEDICT functionality will be disabled because LexisCS configuration is not available')
+    if (!this.hasCedict()) {
+      // If CEDICT configuration is not available we will disable any CEDICT-related functionality
+      Logger.getInstance().warn('CEDICT functionality will be disabled because CEDICT configuration is not available')
     }
 
     // A locale for lemma translations (e.g. 'en-US')
@@ -48,8 +43,8 @@ export default class Lexis extends Module {
     this._lastTreebankDataItem = null
     // Whether a treebank service has been loaded
     this._treebankServiceLoaded = false
-    // Add an iframe with CEDICT service if Lexis config is available
-    if (this._lexisConfig) { this.createCedictIframe() }
+    // Add an iframe with CEDICT service if CEDICT config is available
+    if (this.hasCedict()) { this.createCedictIframe() }
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
@@ -74,6 +69,10 @@ export default class Lexis extends Module {
         })
     }
     LexicalQuery.evt.CEDICT_SERVICE_UNINITIALIZED.sub(this.onCedictServiceUninitialized.bind(this, store))
+  }
+
+  hasCedict () {
+    return Boolean(this._lexisConfig && this._lexisConfig.cedict)
   }
 
   createCedictIframe () {
@@ -257,7 +256,10 @@ export default class Lexis extends Module {
           this._treebankAvailable = true
           this._lastTreebankDataItem = treebankDataItem
           // No need to update treebank sourceURL
-          store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData })
+          store.commit('lexis/setTreebankInfo', {
+            hasTreebankData: treebankDataItem.hasSentenceData,
+            suppressTree: treebankDataItem.suppressTree
+          })
         } catch (err) {
           // If refreshUntilLoaded failed treebank data will be unavailable
           Logger.getInstance().warn(err.message)
@@ -270,7 +272,10 @@ export default class Lexis extends Module {
       } else {
         // Do not update a treebankSrc in a store, it has not changed
         this._lastTreebankDataItem = treebankDataItem
-        store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData })
+        store.commit('lexis/setTreebankInfo', {
+          hasTreebankData: treebankDataItem.hasSentenceData,
+          suppressTree: treebankDataItem.suppressTree
+        })
       }
       try {
         if (!treebankDataItem.hasWordData) {
@@ -320,8 +325,8 @@ export default class Lexis extends Module {
     treebankDataItem = null,
     source = LexicalQuery.sources.PAGE // Values that are possible currently are: 'page', 'lookup', 'wordlist'
   } = {}) {
-    if (textSelector.languageID === Constants.LANG_CHINESE && !this._lexisConfig) {
-      Logger.getInstance().warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
+    if (textSelector.languageID === Constants.LANG_CHINESE && !this.hasCedict()) {
+      Logger.getInstance().warn('Lookup request cannot be completed: CEDICT configuration is unavailable')
       return
     }
 
@@ -345,13 +350,13 @@ export default class Lexis extends Module {
     const lexQuery = LexicalQuery.create(textSelector, {
       clientId: this._appApi.clientId,
       siteOptions,
-      verboseMode: this._settingsApi.verboseMode(),
+      verboseMode: this._settingsApi.isInVerboseMode(),
       lemmaTranslations,
       wordUsageExamples,
       resourceOptions: this._settingsApi.getResourceOptions(),
       langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
       checkContextForward,
-      cedictServiceUrl: this._lexisConfig ? this._lexisConfig.cedict.target_url : null,
+      cedictServiceUrl: this.hasCedict() ? this._lexisConfig.cedict.target_url : null,
       annotatedHomonyms,
       source
     })
@@ -413,16 +418,19 @@ Lexis.store = (moduleInstance) => {
        */
       setTreebankInfo (state, {
         treebankSrc = undefined,
-        hasTreebankData = undefined
+        hasTreebankData = undefined,
+        suppressTree = false
       } = {}) {
         // Update store variables only if some meaningful values are provided
         if (typeof hasTreebankData !== 'undefined') { state.hasTreebankData = hasTreebankData }
         if (typeof treebankSrc !== 'undefined') { state.treebankSrc = treebankSrc }
+        if (typeof suppressTree !== 'undefined') { state.suppressTree = suppressTree }
       },
 
       resetTreebankInfo (state) {
         state.hasTreebankData = false
         state.treebankSrc = null
+        state.treebankSrc = false
       },
 
       showTreebankFailedNotification (state) {
@@ -439,44 +447,28 @@ Lexis.store = (moduleInstance) => {
 Lexis.api = (moduleInstance, store) => {
   return {
     /**
+     * A selector for the last lexical query done via a `getSelectedText()`
+     *
+     * @type {TextSelector | null}
+     */
+    lastTextSelector: moduleInstance._lastTextSelector,
+
+    /**
      * Starts a lexical query from a page.
      *
-     * @param {EventElement} event - An event that initiated a query.
-     * @param {Event} domEvent - A corresponding DOM event.
+     * @param {TextSelector} textSelector - A selector with the text selected.
+     * @param {HTMLElement} selectionTarget - An HTML element containing the selection.
      */
-    getSelectedText: (event, domEvent) => {
-      if (moduleInstance._appApi.isGetSelectedTextEnabled(domEvent)) {
-        const defaultLangCode = moduleInstance._appApi.getDefaultLangCode()
-        const htmlSelector = new HTMLSelector(event, defaultLangCode)
-        const textSelector = htmlSelector.createTextSelector()
-
-        if (textSelector && !textSelector.isEmpty()) {
-          const lastTextSelector = moduleInstance._lastTextSelector || {}
-
-          /*
-          We do not want to run a lexical query for the same word that is already
-          shown in a popup on desktop
-           */
-          if (moduleInstance.config.platform.isDesktop && moduleInstance._uiApi.isPopupVisible()) {
-            // Check if a selection is the same
-            if (lastTextSelector.text === textSelector.text &&
-              lastTextSelector.languageID === textSelector.languageID) {
-              // Do nothing
-              return
-            }
-          }
-
-          moduleInstance._lastTextSelector = textSelector
-          moduleInstance.lexicalQuery({
-            store,
-            textSelector,
-            wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
-            checkContextForward: textSelector.checkContextForward,
-            treebankDataItem: TreebankDataItem.getTreebankData(htmlSelector.target),
-            source: LexicalQuery.sources.PAGE
-          })
-        }
-      }
+    getSelectedText: (textSelector, selectionTarget) => {
+      moduleInstance._lastTextSelector = textSelector
+      moduleInstance.lexicalQuery({
+        store,
+        textSelector,
+        wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
+        checkContextForward: textSelector.checkContextForward,
+        treebankDataItem: TreebankDataItem.getTreebankData(selectionTarget),
+        source: LexicalQuery.sources.PAGE
+      })
     },
 
     /**
@@ -504,12 +496,12 @@ Lexis.api = (moduleInstance, store) => {
     },
 
     loadCedictData: async () => {
-      if (!moduleInstance._lexisConfig) { return } // Do nothing if Lexis configuration is not available
+      if (!moduleInstance.hasCedict()) { return } // Do nothing if CEDICT configuration is not available
       store.commit('lexis/setCedictInitInProgressState')
       const loadResult = await ClientAdapters.morphology.chineseloc({
         method: 'loadData',
         clientId,
-        serviceUrl: moduleInstance._lexisConfig ? moduleInstance._lexisConfig.cedict.target_url : null,
+        serviceUrl: moduleInstance._lexisConfig.cedict.target_url,
         params: {
           timeout: 60000 // Use a long timeout of 10 minutes because loading of CEDICT data may take a while
         }

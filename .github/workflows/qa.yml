@@ -1,0 +1,73 @@
+name: QA Build
+on: 
+  push:
+    branches: [ qa ]
+  
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: '14'
+        
+    - name: prepare for build
+      run: npm run set-node-build-deps && npm run bootstrap
+    
+    - name: test-wordlist
+      run: npm --prefix packages/wordlist run test-no-coverage
+    
+    - name: test-data-models
+      run: npm --prefix packages/data-models run test-no-coverage
+      
+    - name: test-res-client
+      run: npm --prefix packages/res-client run test-no-coverage
+
+    - name: test-components
+      run: npm --prefix packages/components run test-no-coverage
+
+    - name: test-client-adapters
+      run: npm --prefix packages/client-adapters run test-no-coverage
+  
+    - name: test-inflection-tables
+      run: npm --prefix packages/inflection-tables run test-no-coverage
+
+    - name: test-l10n
+      run: npm --prefix packages/l10n run test-no-coverage
+
+    - name: build
+      id: run_build
+      run: npm run github-build
+
+    - name: commit
+      uses: EndBug/add-and-commit@v4
+      with:
+        message: "Commit files for build ${{ steps.run_build.outputs.buildName }}"
+        add: "lerna.json packages/*/package*.json packages/components/dist"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
+
+    - name: revert package.json
+      run: git checkout -- package.json && git checkout -- package-lock.json
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.run_build.outputs.buildName }}
+        release_name: Release ${{ steps.run_build.outputs.buildName }}
+        draft: false
+        prerelease: true
+        
+    - name: set token
+      run: echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} >  $HOME/.npmrc 2> /dev/null
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+    - name: publish
+      run: npx lerna publish from-package --yes --dist-tag qa
+     

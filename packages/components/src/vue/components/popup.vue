@@ -36,13 +36,13 @@
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
-                        v-show="showToolbar && $store.state.lexis.hasTreebankData">
+                        v-show="showToolbar && $store.state.lexis.hasTreebankData && !$store.state.lexis.suppressTree">
                 <div id="alpheios-popup-toolbar-btn-treebank" class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('treebank')">
                   <treebank-icon class="alpheios-navbuttons__icon" />
                 </div>
           </alph-tooltip>
 
-          <div @click="ui.closePopup" class="alpheios-popup__close-btn" id="alpheios-popup-toolbar-btn-close">
+          <div @click="closePopup" class="alpheios-popup__close-btn" id="alpheios-popup-toolbar-btn-close">
             <close-icon></close-icon>
           </div>
       </div>
@@ -219,7 +219,7 @@ export default {
         top: this.positionTopDm,
         width: this.widthDm,
         height: this.heightDm,
-        zIndex: this.ui.zIndex,
+        zIndex: this.$store.state.ui.zIndexMax,
         maxWidth: maxWidthVal,
         maxHeight: `${this.maxHeight}px`,
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
@@ -297,10 +297,6 @@ export default {
 
     maxHeight () {
       return this.app.platform.viewport.innerHeight - 2 * this.moduleConfig.viewportMargin
-    },
-
-    verboseMode () {
-      return this.settings.getUiOptions().items.verboseMode.currentValue === 'verbose'
     }
   },
 
@@ -500,8 +496,12 @@ export default {
         event.clientY >= 0 &&
         event.clientY <= this.app.platform.viewport.height
       ) {
-        this.ui.closePopup()
+        this.closePopup()
       }
+    },
+
+    closePopup () {
+      this.$store.commit('popup/close')
     }
   },
 

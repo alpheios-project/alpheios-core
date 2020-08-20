@@ -30,7 +30,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('treebank') }"
-         v-show="$store.state.lexis.hasTreebankData" @click="changeTab('treebank')">
+         v-show="$store.state.lexis.hasTreebankData && !$store.state.lexis.suppressTree" @click="changeTab('treebank')">
       <div class="alpheios-navbuttons__icon-cont">
         <treebank-icon class="alpheios-navbuttons__icon"></treebank-icon>
       </div>
@@ -88,7 +88,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('status') }"
-         v-show="this.settings.verboseMode()"
+         v-show="this.settings.isInVerboseMode()"
          @click="changeTab('status')">
       <div class="alpheios-navbuttons__icon-cont">
         <status-icon class="alpheios-navbuttons__icon"></status-icon>

@@ -49,7 +49,6 @@ export default {
   // API modules that are required for this component
   inject: {
     app: 'app',
-    ui: 'ui',
     l10n: 'l10n',
     settings: 'settings'
   },
@@ -76,13 +75,13 @@ export default {
   watch: {
     maxPopupWidth: function (value) {
       // A value of maxPopupWidth has changed
-      this.ui.optionChange('maxPopupWidth', value)
+      this.settings.uiOptionChange('maxPopupWidth', value)
     }
   },
   methods: {
     uiOptionChanged: function (name, value) {
       const keyinfo = Options.parseKey(name)
-      this.ui.optionChange(keyinfo.name, value)
+      this.settings.uiOptionChange(keyinfo.name, value)
     }
   }
 }

@@ -1,5 +1,3 @@
-// import TextSelector from './text-selector'
-
 export default class TextRangeSelector {
   constructor () {
     this.ranges = []

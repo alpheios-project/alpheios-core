@@ -56,7 +56,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         }
       },
       error => {
-        this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+        this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error.message }))
         this.prepareFailedCallback(requestType, homonym)
       }
     )
@@ -78,13 +78,13 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
           const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
           const resFullDefs = this.updateFullDefsAsync(fullDefsRequests, this.config[urlKey], homonym)
           resFullDefs.catch(error => {
-            this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+            this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error.message }))
             this.prepareFailedCallback(requestType, homonym)
           })
         }
       },
       error => {
-        this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+        this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error.message }))
         this.prepareFailedCallback(requestType, homonym)
       }
     )
@@ -128,7 +128,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   async fetchDefinitions (homonym, options, lookupFunction) {
     Object.assign(this.options, options)
     if (!this.options.allow || this.options.allow.length === 0) {
-      this.addError(this.l10n.messages.LEXICONS_NO_ALLOWED_URL)
+      this.addError(this.l10n.getMsg('LEXICONS_NO_ALLOWED_URL'))
       return
     }
 
@@ -162,7 +162,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         }
       }
     } catch (error) {
-      this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+      this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error.message }))
     }
   }
 
@@ -231,7 +231,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         cachedDefinitions.set(url, data)
         uploadStarted.set(url, false)
       } catch (error) {
-        this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+        this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error.message }))
         uploadStarted.set(url, false)
         return false
       }
@@ -272,13 +272,13 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
             const definition = ResourceProvider.getProxy(provider, def)
             lexeme.meaning.appendShortDefs(definition)
           } catch (error) {
-            this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
+            this.addError(this.l10n.getMsg('LEXICONS_FAILED_APPEND_DEFS', { message: error.message }))
             continue
           }
         }
       } else {
         const url = config.urls.short
-        this.addError(this.l10n.messages.LEXICONS_NO_DATA_FROM_URL.get(url))
+        this.addError(this.l10n.getMsg('LEXICONS_NO_DATA_FROM_URL', { url: url }))
         this.prepareFailedCallback('shortDefs', homonym)
       }
     }
@@ -297,7 +297,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     const urlFull = config.urls.full
 
     if (!urlFull) {
-      this.addError(this.l10n.messages.LEXICONS_NO_FULL_URL)
+      this.addError(this.l10n.getMsg('LEXICONS_NO_FULL_URL'))
       return
     }
 
@@ -334,7 +334,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         async (fullDefData) => {
           if (fullDefData && fullDefData.match(/alph:error|alpheios-lex-error/)) {
             const error = fullDefData.match(/no entries found/i) ? 'No entries found.' : fullDefData
-            this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error))
+            this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error }))
             this.prepareFailedCallback('fullDefs', homonym)
           } else {
             const provider = new ResourceProvider(config.urls.full, config.rights)
@@ -345,7 +345,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
           }
         },
         error => {
-          this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
+          this.addError(this.l10n.getMsg('LEXICONS_FAILED_APPEND_DEFS', { message: error.message }))
         }
       )
     }
@@ -369,7 +369,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       try {
         if (fullDefData && fullDefData.match(/alph:error|alpheios-lex-error/)) {
           const error = fullDefData.match(/no entries found/i) ? 'No entries found.' : fullDefData
-          this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error))
+          this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error }))
         } else {
           const provider = new ResourceProvider(config.urls.full, config.rights)
           const def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
@@ -377,7 +377,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
           request.lexeme.meaning.appendFullDefs(definition)
         }
       } catch (error) {
-        this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
+        this.addError(this.l10n.getMsg('LEXICONS_FAILED_APPEND_DEFS', { message: error.message }))
       }
     }
   }

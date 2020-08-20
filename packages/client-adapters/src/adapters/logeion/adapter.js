@@ -26,7 +26,7 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
     try {
       const url = this.createFetchURL(text)
       if (!url) {
-        this.addError(this.l10n.messages.LOGEION_FETCH_OPTIONS_ERROR.get())
+        this.addError(this.l10n.getMsg('LOGEION_FETCH_OPTIONS_ERROR'))
         return
       }
 
@@ -42,7 +42,7 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
         }
       }
     } catch (error) {
-      this.addError(this.l10n.messages.LOGEION_FETCH_ERROR.get(error.message))
+      this.addError(this.l10n.getMsg('LOGEION_FETCH_ERROR', { message: error.message }))
     }
   }
 

@@ -1,5 +1,6 @@
+/** @module module */
 import Vue from '@vue-runtime'
-import Platform from '@/lib/utility/platform.js'
+import Platform from '@comp/lib/utility/platform.js'
 // This is a root Vue instance that is a common parent for all modules, and correspondingly, all UI components.
 // It is used to share information across all Vue instances created.
 let rootVi = null
@@ -7,12 +8,15 @@ let rootVi = null
 /**
  * A base class for all data and UI modules. Its role is to define common features that are shared
  * across instances of al module types.
+ *
+ * @typedef {object} Module
+ * @property {boolean} isActivated - Whether a module has been activated..
  */
 export default class Module {
   /**
-   * @param {Object} store - A Vuex store.
-   * @param {Object} api - A public API object.
-   * @param {Object} config - A module's configuration object
+   * @param {object} store - A Vuex store.
+   * @param {object} api - A public API object.
+   * @param {object} config - A module's configuration object
    */
   constructor (store, api, config = {}) {
     if (!rootVi) {
@@ -66,8 +70,9 @@ export default class Module {
 
   /**
    * Checks whether a specified platform is supported by the module.
-   * @param {Platform.deviceTypes} platform - A name of a deviceTypes.
-   * @return {boolean} True if platform is supported, false otherwise.
+   *
+   * @param {module:platform.Platform.deviceTypes} platform - A name of a deviceTypes.
+   * @returns {boolean} True if platform is supported, false otherwise.
    */
   static isSupportedPlatform (platform) {
     if (this._configDefaults._supportedDeviceTypes.includes(Platform.deviceTypes.ANY)) {
@@ -81,7 +86,7 @@ export default class Module {
 
 /**
  * Specifies a generic API of a function that returns a module's Vuex store object
- * that will be integrated into a global Vuex store of a UI controller.
+ * that will be integrated into a global Vuex store of an app controller.
  */
 Module.store = (moduleInstance) => {
   return {
@@ -91,9 +96,9 @@ Module.store = (moduleInstance) => {
 
 /**
  * Specifies a generic API of a function that returns a module's public API object
- * that will be integrated into a global Vuex store of a UI controller.
+ * that will be integrated into a global Vuex store of an app controller.
  * An API object groups all publicly available methods of a module.
- * They will be exposed to UI components by the UI controller.
+ * They will be exposed to UI components by the app controller.
  * In order to use methods of a module, a UI component must inject them with `inject['moduleName']`.
  * Methods of a module will be available within a UI component after injection as
  * `this.moduleName.methodName`.
@@ -117,7 +122,7 @@ Module.types = {
 
 Module._configDefaults = {
   /**
-   * A name by which a store of the module will be visible inside a UI controller's Vuex store,
+   * A name by which a store of the module will be visible inside an app controller's Vuex store,
    * It is also used as a prefix for any global function a module may install on Vue instances.
    * Dynamic module names are not supported
    * @type {string}

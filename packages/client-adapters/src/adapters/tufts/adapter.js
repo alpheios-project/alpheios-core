@@ -53,7 +53,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
       } else {
         const url = this.prepareRequestUrl(languageID, word)
         if (!url) {
-          this.addError(this.l10n.messages.MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE.get(languageID.toString()))
+          this.addError(this.l10n.getMsg('MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE', { languageID: languageID.toString() }))
           return
         }
         res = await this.fetch(url)
@@ -65,14 +65,14 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
       if (res) {
         const mappingData = this.engineSet.getEngineByCode(languageID)
         if (!mappingData) {
-          this.addError(this.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(languageID.toString()))
+          this.addError(this.l10n.getMsg('MORPH_TRANSFORM_NO_MAPPING_DATA', { language: languageID.toString() }))
           return
         }
         const transformAdapter = new AlpheiosLexiconTransformer(this, mappingData, this)
         let homonym = transformAdapter.transformData(res, word) // eslint-disable-line prefer-const
 
         if (!homonym) {
-          this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(word, languageID.toString()))
+          this.addError(this.l10n.getMsg('MORPH_NO_HOMONYM', { word: word, languageID: languageID.toString() }))
           return
         }
 
@@ -83,7 +83,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
         return homonym
       }
     } catch (error) {
-      this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
+      this.addError(this.l10n.getMsg('MORPH_UNKNOWN_ERROR', { message: error.message }))
     }
   }
 

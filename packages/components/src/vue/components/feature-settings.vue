@@ -78,7 +78,7 @@
         @change="featureOptionChanged"
       >
       </setting>
-      
+
       <setting
         class="alpheios-feature-options__item"
         :data="featureOptions.items.showBetaCodesInfo"
@@ -97,40 +97,41 @@
   </div>
 </template>
 <script>
-  import Setting from './setting.vue'
-  import Options from '@/lib/options/options.js'
-  import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-  export default {
-    name: 'FeatureSettings',
-    // API modules that are required for this component
-    inject: {
-      app: 'app',
-      l10n: 'l10n',
-      settings: 'settings'
+import Setting from './setting.vue'
+import Options from '@/lib/options/options.js'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+export default {
+  name: 'FeatureSettings',
+  // API modules that are required for this component
+  inject: {
+    app: 'app',
+    l10n: 'l10n',
+    settings: 'settings'
+  },
+  storeModules: ['app'], // Store modules that are required by this component
+  mixins: [DependencyCheck],
+  components: {
+    setting: Setting
+  },
+  computed: {
+    mouseMoveChecked: function () {
+      return this.$store.state.app.mouseMoveOverrideUpdate && this.app.getMouseMoveOverride() ? 'true' : false
     },
-    storeModules: ['app'], // Store modules that are required by this component
-    mixins: [DependencyCheck],
-    components: {
-      setting: Setting,
+    featureOptions () {
+      return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
+    }
+  },
+  methods: {
+    featureOptionChanged: function (name, value) {
+      const keyinfo = Options.parseKey(name)
+      this.settings.featureOptionChange(keyinfo.name, value)
+      this.app.applyFeatureOption(keyinfo.name)
     },
-    computed: {
-      mouseMoveChecked: function() {
-        return this.$store.state.app.mouseMoveOverrideUpdate &&  this.app.getMouseMoveOverride() ? 'true' : false
-      },
-      featureOptions () {
-        return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
-      }
-    },
-    methods: {
-      featureOptionChanged: function (name, value) {
-        let keyinfo = Options.parseKey(name)
-        this.app.featureOptionChange(keyinfo.name, value)
-      },
-      clearMouseMoveOverride () {
-        this.app.clearMouseMoveOverride()
-      }
+    clearMouseMoveOverride () {
+      this.app.clearMouseMoveOverride()
     }
   }
+}
 </script>
 <style lang="scss">
   @import "../../styles/variables";

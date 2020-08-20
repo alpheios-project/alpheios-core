@@ -1,10 +1,17 @@
+/** @module uiStateApi */
+
 /**
- * Interface for a State Object to manage Alpheios UI State
+ * An interface for a State object that controls the Alpheios UI State.
+ *
+ * @typedef {object} UIStateAPI
+ * @property {Language} selectionLang - A language of a selection.
+ * @property {Map<string, Function>} watchers - Watchers of state changes.
  */
 export default class UIStateAPI {
   constructor () {
     /**
-     * A language of a latest lexical query
+     * A language of a latest lexical query.
+     *
      * @type {Language}
      */
     this.selectionLang = undefined

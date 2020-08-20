@@ -2,7 +2,8 @@ export default class QueryParams {
   /**
    * Parses a URL of the current window and return results as a key-value pair object.
    * The key is the name of the query parameter, and the value is the parsed value of the parameter.
-   * @return {Object} An object containing parsed parameters.
+   *
+   * @returns {object.<string, string>} An object containing parsed parameters.
    */
   static parse () {
     let params = {} // eslint-disable-line prefer-const

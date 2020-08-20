@@ -57,7 +57,7 @@ export default {
     advancedSettings: AdvancedSettings,
     alphTooltip: Tooltip
   },
-  inject: ['l10n', 'app'],
+  inject: ['l10n', 'app', 'settings'],
   data: function () {
     return {
       currentTab: 1
@@ -102,7 +102,8 @@ export default {
   },
   methods: {
     resetAllOptions: function () {
-      this.app.resetAllOptions()
+      this.settings.resetAllOptions()
+      this.app.applyAllOptions()
     }
   }
 }

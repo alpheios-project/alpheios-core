@@ -20,7 +20,7 @@ import Platform from '@/lib/utility/platform.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
 import { Lexeme, Lemma, Homonym, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
-import UIController from '@/lib/controllers/ui-controller.js'
+import UIController from '@/lib/controllers/app-controller.js'
 
 import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
 import { Fixture } from 'alpheios-fixtures'
@@ -41,223 +41,279 @@ export default class BaseTestHelp {
     return new Options(UIOptionDefaults, ta)
   }
 
-  static baseVuexStore () {
-    return new Vuex.Store({
-      modules: {
-        popup: {
-          namespaced: true,
-          state: {
-            visible: false
+  /**
+   * Creates a Vuex store with modules registered dynamically.
+   *
+   * @param {string[]} modules [['all']] - Names of store modules to register.
+   *        Default value will register all available modules to the store.
+   * @returns {Store} - A Vuex store object that was created.
+   */
+  static baseVuexStore (modules = ['all']) {
+    const appModule = {
+      namespaced: true,
+      state: function () {
+        return {
+          selectedText: '',
+          languageName: '',
+          languageCode: '',
+          currentLanguageName: '',
+          morphDataReady: false,
+          homonymDataReady: false,
+          shortDefUpdateTime: 0,
+          fullDefUpdateTime: 0,
+          hasInflData: false,
+          embedLibActive: false,
+          currentLanguageID: null,
+          wordUsageExamplesReady: false,
+          wordListUpdateTime: 0,
+          grammarRes: {},
+          updatedGrammar: 0,
+          linkedFeatures: [],
+          selectedLookupLangCode: 'lat',
+          translationsDataReady: false,
+          lexicalRequest: {
+            startTime: 0
           },
-          actions: {},
-          getters: {},
-          mutations: {
-            setPopupVisible (state, value) {
-              state.visible = value
-            }
-          }
+          currentLanguageCode: null
+        }
+      },
+      mutations: {
+        setTestCurrentLanguageName (state, value) {
+          state.currentLanguageName = value
         },
-        panel: {
-          namespaced: true,
-          state: {
-            visible: false,
-            position: 'left',
-            orientation: Platform.orientations.PORTRAIT,
-            visibleFootnoteId: null
-          },
-          mutations: {
-            setTestOrientation (state, value) {
-              state.orientation = value
-            },
-            setTestPanelPosition (state, value) {
-              state.position = value
-            },
-            setVisibleFootnote (state, value) {
-              state.visibleFootnoteId = value
-            },
-            setVisible (state, value) {
-              state.visible = value
-            }
-          },
-          actions: {},
-          getters: {}
+        setTestCurrentLanguageID (state, value) {
+          state.currentLanguageID = value
         },
-        actionPanel: {
-          namespaced: true,
-          state: {
-            moduleConfig: {
-              initialShift: {
-                x: 0, y: 0
-              }
-            },
-            initialPos: {},
-            visible: false
-          },
-          mutations: {
-            setInitialPos (state, value) {
-              state.initialPos = value
-            },
-            setVisible (state, value) {
-              state.visible = value
-            }
-          }
+        setCurrentLanguage (state, data) {
+          state.currentLanguageID = data.languageID
+          state.currentLanguageCode = data.languageCode
         },
-        app: {
-          namespaced: true,
-          state: {
-            selectedText: '',
-            languageName: '',
-            languageCode: '',
-            currentLanguageName: '',
-            morphDataReady: false,
-            homonymDataReady: false,
-            shortDefUpdateTime: 0,
-            fullDefUpdateTime: 0,
-            hasInflData: false,
-            embedLibActive: false,
-            currentLanguageID: null,
-            wordUsageExamplesReady: false,
-            wordListUpdateTime: 0,
-            grammarRes: {},
-            updatedGrammar: 0,
-            linkedFeatures: [],
-            selectedLookupLangCode: 'lat',
-            translationsDataReady: false,
-            lexicalRequest: {
-              startTime: 0
-            },
-            currentLanguageCode: null
-          },
-          mutations: {
-            setTestCurrentLanguageName (state, value) {
-              state.currentLanguageName = value
-            },
-            setTestCurrentLanguageID (state, value) {
-              state.currentLanguageID = value
-            },
-            setCurrentLanguage (state, data) {
-              state.currentLanguageID = data.languageID
-              state.currentLanguageCode = data.languageCode
-            },
-            setTestMorphDataReady (state, value) {
-              state.morphDataReady = value
-            },
-            setTestShortDefUpdateTime (state, value) {
-              state.shortDefUpdateTime = value
-            },
-            setTestFullDefUpdateTime (state, value) {
-              state.fullDefUpdateTime = value
-            },
-            setTestHomonymDataReady (state, value) {
-              state.homonymDataReady = value
-            },
-            setTestHasInflData (state, value) {
-              state.hasInflData = value
-            },
-            setTestEmbedLibActive (state, value) {
-              state.embedLibActive = value
-            },
-            setTestWordUsageExamplesReady (state, value) {
-              state.wordUsageExamplesReady = value
-            },
-            setTestWordListUpdateTime (state, value) {
-              state.wordListUpdateTime = value
-            },
-            setGrammarProvider (state, value) {
-              state.grammarRes = value
-            },
-            setLinkedFeatures (state, value) {
-              state.linkedFeatures = value
-            },
-            setSelectedLookupLang (state, value) {
-              state.selectedLookupLangCode = value
-            },
-            setTranslationsDataReady (state, value) {
-              state.translationsDataReady = value
-            },
-            lexicalRequestStarted (state, data) {
-              state.lexicalRequest.startTime = Date.now()
-            },
-            setUpdatedGrammar (state) {
-              state.updatedGrammar = state.updatedGrammar + 1
-            }
-          },
-          getters: {
-            shortDefDataReady: (state) => {
-              return state.shortDefUpdateTime > 0
-            },
-            fullDefDataReady: (state) => {
-              return state.fullDefUpdateTime > 0
-            }
-          }
+        setTestMorphDataReady (state, value) {
+          state.morphDataReady = value
         },
-        ui: {
-          namespaced: true,
-          state: {
-            activeTab: 'info',
-            rootClasses: [],
-            messages: [],
-            notification: {
-              visible: false,
-              important: false,
-              showLanguageSwitcher: false,
-              text: null
-            },
-            hint: {
-              visible: false,
-              text: null
-            }
-          },
-          mutations: {
-            setTestCurrentTab (state, name) {
-              state.activeTab = name
-            },
-            setTestNotification (state, value) {
-              const currentData = state.notification
-              state.notification = Object.assign(currentData, value)
-            },
-            setTestHint (state, value) {
-              const currentData = state.hint
-              state.hint = Object.assign(currentData, value)
-            }
-          },
-          getters: {
-            isActiveTab: (state) => (tabName) => {
-              return state.activeTab === tabName
-            }
-          }
+        setTestShortDefUpdateTime (state, value) {
+          state.shortDefUpdateTime = value
         },
-        auth: {
-          namespaced: true,
-          state: {
-            notification: {
-              visible: false,
-              important: false,
-              showLanguageSwitcher: false,
-              text: null
-            }
-          },
-          mutations: {
-            setTestNotification (state, value) {
-              const currentData = state.notification
-              state.notification = Object.assign(currentData, value)
-            }
-          }
+        setTestFullDefUpdateTime (state, value) {
+          state.fullDefUpdateTime = value
         },
-        lexis: {
-          namespaced: true,
-          state: {
-            hasTreebankData: false
-          }
+        setTestHomonymDataReady (state, value) {
+          state.homonymDataReady = value
         },
-        settings: {
-          namespaced: true,
-          state: {
-            featureResetCounter: 1
-          }
+        setTestHasInflData (state, value) {
+          state.hasInflData = value
+        },
+        setTestEmbedLibActive (state, value) {
+          state.embedLibActive = value
+        },
+        setTestWordUsageExamplesReady (state, value) {
+          state.wordUsageExamplesReady = value
+        },
+        setTestWordListUpdateTime (state, value) {
+          state.wordListUpdateTime = value
+        },
+        setGrammarProvider (state, value) {
+          state.grammarRes = value
+        },
+        setLinkedFeatures (state, value) {
+          state.linkedFeatures = value
+        },
+        setSelectedLookupLang (state, value) {
+          state.selectedLookupLangCode = value
+        },
+        setTranslationsDataReady (state, value) {
+          state.translationsDataReady = value
+        },
+        lexicalRequestStarted (state, data) {
+          state.lexicalRequest.startTime = Date.now()
+        },
+        setUpdatedGrammar (state) {
+          state.updatedGrammar = state.updatedGrammar + 1
+        }
+      },
+      getters: {
+        shortDefDataReady: (state) => {
+          return state.shortDefUpdateTime > 0
+        },
+        fullDefDataReady: (state) => {
+          return state.fullDefUpdateTime > 0
         }
       }
-    })
+    }
+
+    const popupModule = {
+      namespaced: true,
+      state: function () {
+        return {
+          visible: false
+        }
+      },
+      actions: {},
+      getters: {},
+      mutations: {
+        setPopupVisible (state, value) {
+          state.visible = value
+        }
+      }
+    }
+
+    const panelModule = {
+      namespaced: true,
+      state: function () {
+        return {
+          visible: false,
+          position: 'left',
+          orientation: Platform.orientations.PORTRAIT,
+          visibleFootnoteId: null
+        }
+      },
+      mutations: {
+        setTestOrientation (state, value) {
+          state.orientation = value
+        },
+        setTestPanelPosition (state, value) {
+          state.position = value
+        },
+        setVisibleFootnote (state, value) {
+          state.visibleFootnoteId = value
+        },
+        setVisible (state, value) {
+          state.visible = value
+        },
+        open (state) {
+          state.visible = true
+        }
+      },
+      actions: {},
+      getters: {}
+    }
+
+    const toolbarModule = {
+      namespaced: true,
+      state: function () {
+        return {
+        }
+      },
+      actions: {},
+      getters: {},
+      mutations: {}
+    }
+
+    const actionPanelModule = {
+      namespaced: true,
+      state: function () {
+        return {
+          moduleConfig: {
+            initialShift: {
+              x: 0, y: 0
+            }
+          },
+          initialPos: {},
+          visible: false
+        }
+      },
+      mutations: {
+        setInitialPos (state, value) {
+          state.initialPos = value
+        },
+        setVisible (state, value) {
+          state.visible = value
+        }
+      }
+    }
+
+    const uiModule = {
+      namespaced: true,
+      state: function () {
+        return {
+          activeTab: 'info',
+          rootClasses: [],
+          messages: [],
+          notification: {
+            visible: false,
+            important: false,
+            showLanguageSwitcher: false,
+            text: null
+          },
+          hint: {
+            visible: false,
+            text: null
+          },
+          zIndexMax: 50
+        }
+      },
+      mutations: {
+        setTestCurrentTab (state, name) {
+          state.activeTab = name
+        },
+        setTestNotification (state, value) {
+          const currentData = state.notification
+          state.notification = Object.assign(currentData, value)
+        },
+        setTestHint (state, value) {
+          const currentData = state.hint
+          state.hint = Object.assign(currentData, value)
+        }
+      },
+      getters: {
+        isActiveTab: (state) => (tabName) => {
+          return state.activeTab === tabName
+        }
+      }
+    }
+
+    const authModule = {
+      namespaced: true,
+      state: function () {
+        return {
+          isAuthenticated: false,
+          notification: {
+            visible: false,
+            important: false,
+            showLanguageSwitcher: false,
+            text: null
+          }
+        }
+      },
+      mutations: {
+        setTestNotification (state, value) {
+          const currentData = state.notification
+          state.notification = Object.assign(currentData, value)
+        }
+      }
+    }
+
+    const lexisModule = {
+      namespaced: true,
+      state: function () {
+        return {
+          hasTreebankData: false
+        }
+      }
+    }
+
+    const settingsModule = {
+      namespaced: true,
+      state: function () {
+        return {
+          uiResetCounter: 0,
+          featureResetCounter: 1
+        }
+      }
+    }
+
+    const store = new Vuex.Store({})
+    // Register a UI module dynamically depending on the needs of the client
+    if (modules.includes('all') || modules.includes('app')) { store.registerModule('app', appModule) }
+    if (modules.includes('all') || modules.includes('settings')) { store.registerModule('settings', settingsModule) }
+    if (modules.includes('all') || modules.includes('ui')) { store.registerModule('ui', uiModule) }
+    if (modules.includes('all') || modules.includes('popup')) { store.registerModule('popup', popupModule) }
+    if (modules.includes('all') || modules.includes('panel')) { store.registerModule('panel', panelModule) }
+    if (modules.includes('all') || modules.includes('toolber')) { store.registerModule('toolbar', toolbarModule) }
+    if (modules.includes('all') || modules.includes('actionPanel')) { store.registerModule('actionPanel', actionPanelModule) }
+    if (modules.includes('all') || modules.includes('lexis')) { store.registerModule('lexis', lexisModule) }
+    if (modules.includes('all') || modules.includes('auth')) { store.registerModule('auth', authModule) }
+    return store
   }
 
   static uiAPI (props) {
@@ -274,16 +330,22 @@ export default class BaseTestHelp {
   static settingsAPI (props) {
     const defaultProps = {
       lookupResourceOptions: BaseTestHelp.defaultResourceOptions,
+      getLexisOptions: () => { return { cedict: { target_url: 'http://target.url' } } },
       getFeatureOptions: () => { return BaseTestHelp.defaultFeatureOptions },
       getResourceOptions: () => { return BaseTestHelp.defaultResourceOptions },
       getUiOptions: () => { return BaseTestHelp.defaultUIOptions },
-      verboseMode: () => { return false }
+      isInVerboseMode: () => { return false },
+      uiOptionChange: () => {}
     }
     return Object.assign(defaultProps, props)
   }
 
   static appAPI (props) {
     const defaultProps = {
+      name: 'name',
+      version: 'version',
+      libVersion: 'libVersion',
+      libBuildName: 'libBuildName',
       platform: {
         viewport: {
           width: 0,
@@ -293,13 +355,6 @@ export default class BaseTestHelp {
       state: {
         lemmaTranslationLang: 'lat',
         selectedLookupLangCode: 'lat'
-      },
-      config: {
-        'lexis-cs': {
-          cedict: {
-            target_url: 'http://target.url'
-          }
-        }
       },
       wordUsageExamples: null,
 
@@ -312,13 +367,41 @@ export default class BaseTestHelp {
       enableWordUsageExamples: () => true,
       setSelectedLookupLang: () => true,
 
-      newLexicalRequest: () => true
+      newLexicalRequest: () => true,
+      registerTextSelector: () => {},
+      activateTextSelector: () => {},
+
+      isMousemoveForced: () => false
     }
     return Object.assign(defaultProps, props)
   }
 
   static authModule (store, api) {
     return new AuthModule(store, api, { auth: null })
+  }
+
+  static lexisAPI () {
+    return {
+      lastTextSelector: null,
+      getSelectedText: () => {},
+      lookupText: () => {},
+      lookupForWordlist: () => {},
+      setLemmaTranslationLang: () => {},
+      loadCedictData: () => {},
+      hideCedictNotification: () => {},
+      refreshTreebankView: () => {}
+    }
+  }
+
+  static l10nAPI () {
+    return {
+      getLocale: () => {},
+      setLocale: () => {},
+      hasMsg: () => true,
+      getMsg: () => '',
+      getText: () => '',
+      getAbbr: () => ''
+    }
   }
 
   static l10nModule (store, api) {
@@ -447,5 +530,25 @@ export default class BaseTestHelp {
     })
 
     return eventEl2
+  }
+
+  static createUIState (props) {
+    return Object.assign({
+      tab: 'info',
+      activate: () => {},
+      deactivate: () => {},
+      activateUI: () => {},
+      isPanelStateDefault: () => true,
+      isPanelStateValid: () => true,
+      setPanelClosed: () => {},
+      isPanelOpen: () => false,
+      openPanel: () => {},
+      isTabStateDefault: () => false,
+      setPanelOpen: () => {},
+      changeTab: () => {},
+      setItem: () => {},
+      isDisabled: () => false,
+      isActive: () => true
+    }, props)
   }
 }
