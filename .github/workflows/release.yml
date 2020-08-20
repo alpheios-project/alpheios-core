@@ -17,10 +17,6 @@ jobs:
     - name: prepare for build
       run: npm run set-node-build-deps && npm run bootstrap
 
-    - name: get npm tag
-      id: get_npm_tag
-      run: npm run get-npm-tag
-    
     - name: test-wordlist
       run: npm --prefix packages/wordlist run test-no-coverage
     
