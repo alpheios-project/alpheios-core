@@ -107,7 +107,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: [test_components_1, test_components_2, test_components_3, test_components_4, test_components_5, test_others]
+    needs: [test_components_1, test_components_2, test_components_4, test_components_5, test_others]
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2-beta
