@@ -571,11 +571,11 @@
   "emphatic": {
     "message": "تأكيدى"
   },
-  "declension": {
+  "append_declension": {
     "message": "{data} الإعراب",
     "params": ["data"]
   },
-  "conjugation": {
+  "append_conjugation": {
     "message": "{data} التصريف",
     "params": ["data"]
   }
