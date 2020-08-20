@@ -1,7 +1,7 @@
-name: QA Build
+name: Release Build
 on: 
   push:
-    branches: [ qa ]
+    branches: [ qa, ftqa, production ]
   
   workflow_dispatch:
   
@@ -16,6 +16,10 @@ jobs:
         
     - name: prepare for build
       run: npm run set-node-build-deps && npm run bootstrap
+
+    - name: get npm tag
+      id: get_npm_tag
+      run: npm run get-npm-tag
     
     - name: test-wordlist
       run: npm --prefix packages/wordlist run test-no-coverage
@@ -69,5 +73,5 @@ jobs:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       
     - name: publish
-      run: npx lerna publish from-package --yes --dist-tag qa
+      run: npx lerna publish from-package --yes --dist-tag ${{ steps.run_build.outputs.npmTag }}
      

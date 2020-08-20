@@ -7,6 +7,7 @@ import * as core from '@actions/core'
 (async function() {
   const buildDT = Date.now()
   const buildInfo = generateBuildInfo(buildDT)
+  const npmTag = buildInfo.branch === 'production' ? 'rc' : buildInfo.branch
   console.log(`Starting build ${buildInfo.name}`)
 
   const baseVersion = pkg.version.split('-')[0]
@@ -40,6 +41,7 @@ import * as core from '@actions/core'
   try {
     console.info(core)
     core.default.setOutput('buildName',buildInfo.name)
+    core.default.setOutput('npmTag',npmTag)
   } catch (error) {
     console.error('Failed to set output variable:', error)
     process.exit(3)
