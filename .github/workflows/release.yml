@@ -18,7 +18,7 @@ jobs:
       run: npm run set-node-build-deps && npm run bootstrap
 
     - name: test
-      run: npm --prefix packages/components run test-ci-components
+      run: npm --prefix packages/components run test-ci-controllers
 
   test_components_2: 
     runs-on: ubuntu-latest
