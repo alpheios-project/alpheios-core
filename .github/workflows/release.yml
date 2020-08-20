@@ -8,6 +8,7 @@ on:
 jobs:
   test_components: 
     runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2-beta
       with:
@@ -21,6 +22,7 @@ jobs:
 
   test_others:
     runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2-beta
       with:
