@@ -6,15 +6,27 @@ on:
   workflow_dispatch:
   
 jobs:
-  build:
+  test_components: 
     runs-on: ubuntu-latest
-    steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '14'
         
-    - name: prepare for build
+    - name: prepare for tests
+      run: npm run set-node-build-deps && npm run bootstrap
+
+    - name: test-components
+      run: npm --prefix packages/components run test-no-coverage
+
+  test_others:
+    runs-on: ubuntu-latest
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: '14'
+        
+    - name: prepare for tests
       run: npm run set-node-build-deps && npm run bootstrap
 
     - name: test-wordlist
@@ -26,9 +38,6 @@ jobs:
     - name: test-res-client
       run: npm --prefix packages/res-client run test-no-coverage
 
-    - name: test-components
-      run: npm --prefix packages/components run test-no-coverage
-
     - name: test-client-adapters
       run: npm --prefix packages/client-adapters run test-no-coverage
   
@@ -37,6 +46,18 @@ jobs:
 
     - name: test-l10n
       run: npm --prefix packages/l10n run test-no-coverage
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test_components, test_others]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: '14'
+        
+    - name: prepare for build
+      run: npm run set-node-build-deps && npm run bootstrap
 
     - name: build
       id: run_build
