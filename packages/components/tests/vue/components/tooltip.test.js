@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import Vuex from 'vuex'
 import { mount, createLocalVue } from '@vue/test-utils'
+import BaseTestHelp from '@tests/helpclasses/base-test-help'
 import Tooltip from '@/vue/components/tooltip.vue'
 import Vue from 'vue/dist/vue'
 
@@ -20,27 +21,10 @@ describe('tooltip.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    store = new Vuex.Store({
-      modules: {
-        ui: {
-          namespaced: true,
-          state: {}
-        },
-        app: {
-          platform: {
-            isMobile: false
-          }
-        }
-      }
-    })
-
+    store = BaseTestHelp.baseVuexStore()
     api = {
-      app: {
-        homonymDataReady: false,
-        homonym: {}
-      }
+      app: BaseTestHelp.appAPI()
     }
-
   })
   afterEach(() => {
     jest.resetModules()
@@ -48,6 +32,10 @@ describe('tooltip.test.js', () => {
   afterAll(() => {
     jest.clearAllMocks()
   })
+
+  function timeout (ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
 
   it('1 Tooltip - renders a vue instance (min requirements)', () => {
     let cmp = mount(Tooltip, {
@@ -113,7 +101,7 @@ describe('tooltip.test.js', () => {
     Vue.nextTick().then(() => {
       expect(cmp.find('.tooltiptext').element.style.color).toEqual('red')
     })
-    
+
 
     cmp.setProps({
       tooltipDirection: 'bottom-wide'
