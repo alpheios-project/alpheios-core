@@ -46,7 +46,7 @@ jobs:
       run: npm run set-node-build-deps && npm run bootstrap
 
     - name: test
-      run: echo "skip npm --prefix packages/components run test-ci-vue-c"
+      run: npm --prefix packages/components run test-ci-vue-c
 
   test_components_4: 
     runs-on: ubuntu-latest
