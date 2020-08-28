@@ -115,16 +115,22 @@ Commit built files to the development branch.
 
 ## Building for QA
 
-Until the QA build is fully automated, these are the steps to build a package for QA
+1. merge the `master` branch to the `qa` branch and push to GitHub
+2. GitHub Actions will execute the release.yml workflow to inject the build
+number, build the distribution files, tag a pre-release in GitHub and push the
+components package to npm tagged as `@qa`
 
-1. If the `qa` branch is not created, create it, and push it to GitHub
-2. merge `master` to the the `qa` branch.
-3. run `npm clean` && `npm set-node-build-deps` && `npm bootstrap`
-4. run `npm tagged-commit`
-5. run `git push && git push --tag`
+## Building and Versioning for Production
+
+1. merge the `qa` branch to the `production` branch (but don't push it)
+2. run `npx lerna version` and increase the version number as appropriate for release.
+This will also push the change to GitHub.
+3. GitHub Actions will execute the release.yml workflow to inject the build
+number, build the distribution files, tag a pre-release in GitHub and push the
+components package to npm tagged as `@rc`
+4. When ready to release the code, manually tag the npm package as `@latest` using
+`npm --dist-tag` and remove the "Pre-release" flag from the Release in GitHub.
+5. Merge the version and any other code changes from `production` back to `master`
 
 See also the [Git Workflow Documentation](https://github.com/alpheios-project/documentation/tree/master/development/git-workflow)
 
-## Versioning and Building for Production
-
-TBD
