@@ -1,5 +1,6 @@
 import { PsEvent, WordList, WordItem, TextQuoteSelector, LanguageModelFactory, Logger } from 'alpheios-data-models'
 import Utility from '@wordlist/common/utility.js'
+import { gql } from '@apollo/client/core'
 
 export default class WordlistController {
   /**
@@ -8,6 +9,7 @@ export default class WordlistController {
    * @param {PSEvent[]} events events that the controller can subscribe to
    */
   constructor (availableLangs, events) {
+    console.info('WLC constructor')
     this.wordLists = {}
     this.availableLangs = availableLangs
     events.TEXT_QUOTE_SELECTOR_RECEIVED.sub(this.onTextQuoteSelectorReceived.bind(this))
@@ -27,10 +29,29 @@ export default class WordlistController {
    * Emits a WORDLIST_UPDATED event when the wordlists are available
    */
   async initLists (dataManager) {
+    console.info('WLC: initLists')
     if (! dataManager) {
       // if we don't have a data manager we don't need to preserve any existing data, just clear it out
       this.wordLists = {} // clear out any existing lists
     } else {
+      let results
+      try {
+        results = await dataManager.gql.query({
+          query: gql`
+            query WordItemsQUery($langCode: Language, $userID: String) {
+              lang(langCode: $langCode, userID: $userID)
+            }
+          `,
+          variables: {
+            userID: 'dev|mockUserId',
+            langCode: 'LAT'
+          }
+        })
+      } catch (err) {
+        Logger.getInstance().error('WordList GQL query failed:', err)
+      }
+
+      console.info('Test results are:', results)
       for (let languageCode of this.availableLangs) {
         let cachedList = this.wordLists[languageCode]
         delete this.wordLists[languageCode]

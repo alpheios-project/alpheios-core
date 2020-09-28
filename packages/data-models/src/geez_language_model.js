@@ -9,6 +9,8 @@ let typeFeaturesInitialized = false
  * @class  GezLanguageModel is the lass for Ge'ez specific behavior
  */
 export default class GeezLanguageModel extends LanguageModel {
+  static get language () { return Constants.Lang.GEEZ }
+
   static get languageID () { return Constants.LANG_GEEZ }
 
   static get languageCode () { return Constants.STR_LANG_CODE_GEZ }

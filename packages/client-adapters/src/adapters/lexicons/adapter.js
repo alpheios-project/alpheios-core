@@ -422,6 +422,8 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
    * @return {string} the index entry as a text string
    */
   lookupInDataIndex (data, lemma, model) {
+    if (!data) { return undefined }
+
     // legacy behavior from Alpheios lemma data file indices
     // first look to see if we explicitly have an instance of this lemma
     // with capitalization retained

@@ -13,6 +13,7 @@ import Homonym from './homonym.js'
 import Lexeme from './lexeme.js'
 import Lemma from './lemma.js'
 import Inflection from './inflection.js'
+import Language from './language.js'
 import LatinLanguageModel from './latin_language_model.js'
 import GreekLanguageModel from './greek_language_model.js'
 import ArabicLanguageModel from './arabic_language_model.js'
@@ -35,6 +36,7 @@ import WordList from './word-list.js'
 
 import TreebankDataItem from './treebank_data_item.js'
 import Logger from './logging/logger.js'
+import Digest from './digest.js'
 
 export {
   Constants,
@@ -51,6 +53,7 @@ export {
   Homonym,
   Lexeme,
   Lemma,
+  Language,
   LatinLanguageModel,
   GreekLanguageModel,
   ArabicLanguageModel,
@@ -69,5 +72,6 @@ export {
   WordItem,
   WordList,
   TreebankDataItem,
-  Logger
+  Logger,
+  Digest
 }

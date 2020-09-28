@@ -1,3 +1,5 @@
+// TODO: This creates a circular dependency and probably prevent Jest tests to succeed
+import Language from './language.js'
 /* eslint-disable no-unused-vars */
 export const LANG_UNIT_WORD = Symbol('word')
 export const LANG_UNIT_CHAR = Symbol('char')
@@ -11,6 +13,20 @@ export const LANG_PERSIAN = Symbol('persian')
 export const LANG_GEEZ = Symbol('ge\'ez')
 export const LANG_CHINESE = Symbol('chinese')
 export const LANG_SYRIAC = Symbol('syriac')
+
+/**
+ * Constants that define a macrolanguage.
+ *
+ * @enum {string} */
+export const Lang = {
+  LATIN: new Language('lat'),
+  GREEK: new Language('grc'),
+  ARABIC: new Language('ara'),
+  PERSIAN: new Language('per'),
+  GEEZ: new Language('gez'),
+  CHINESE: new Language('zho'),
+  SYRIAC: new Language('syr')
+}
 
 export const STR_LANG_CODE_UNDEFINED = 'undefined'
 export const STR_LANG_CODE_LAT = 'lat'

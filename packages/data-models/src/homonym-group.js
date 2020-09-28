@@ -1,7 +1,22 @@
 import Homonym from './homonym.js'
 
 export default class HomonymGroup {
+  /**
+   * Creates an instance of a HomonymGroup object.
+   *
+   * @param {Homonym[]} homonyms - Homonyms to include into the homonym group.
+   */
   constructor (homonyms = []) {
+    if (!homonyms) {
+      throw new Error('Homonyms are required to create a HomonymGroup')
+    }
+    if (!Array.isArray(homonyms)) {
+      throw new Error('An array of homonyms is required to create a HomonymGroup')
+    }
+    /**
+     @type {Homonym[]}
+     @private
+     */
     this._homonyms = homonyms
   }
 
@@ -31,6 +46,28 @@ export default class HomonymGroup {
       lexemes.forEach(lexeme => { lexeme.disambiguated = true })
     }
     return new Homonym(lexemes, targetWord)
+  }
+
+  /**
+   * Converts the homonym group into a serializable JSON object.
+   *
+   * @returns {object} - A serializable JSON object.
+   */
+  toJsonObject () {
+    return {
+      homonyms: this._homonyms.map(h => h.convertToJSONObject(true))
+    }
+  }
+
+  /**
+   * Creates a HomonymGroup object from its JSON representation.
+   *
+   * @param {object} jsonObj - A deserialized JSON object representing the homonym group.
+   * @returns {HomonymGroup} - An instance representing a deserialized JSON object.
+   */
+  static fromJsonObject (jsonObj) {
+    const homonyms = jsonObj.homonyms.map(h => Homonym.readObject(h))
+    return new HomonymGroup(homonyms)
   }
 }
 

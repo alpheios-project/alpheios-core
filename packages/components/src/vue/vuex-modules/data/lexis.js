@@ -25,6 +25,7 @@ export default class Lexis extends Module {
     this._appApi = api.app
     this._settingsApi = api.settings
     this._lexisConfig = api.settings.getLexisOptions()
+    this._adapters = config.adapters
 
     if (!this.hasCedict()) {
       // If CEDICT configuration is not available we will disable any CEDICT-related functionality
@@ -211,7 +212,20 @@ export default class Lexis extends Module {
     textSelector,
     treebankDataItem = null
   } = {}) {
-    let annotatedHomonyms
+    const wordIDs = await this.getTreebankWordIDs({
+      store,
+      textSelector,
+      treebankDataItem
+    })
+    return wordIDs.length > 0 ? Lexis.getHomonymsFromTreebank(treebankDataItem, textSelector) : null
+  }
+
+  async getTreebankWordIDs ({
+    store,
+    textSelector,
+    treebankDataItem = null
+  } = {}) {
+    let wordIDs = []
 
     this._treebankDataItem = treebankDataItem
 
@@ -285,7 +299,7 @@ export default class Lexis extends Module {
             treebankDataItem.setWordData(wordIDs)
           }
         }
-        annotatedHomonyms = await Lexis.getHomonymsFromTreebank(treebankDataItem, textSelector)
+        wordIDs = treebankDataItem.wordIds
       } catch (err) {
         // Treebank data is unavailable
         store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
@@ -312,7 +326,61 @@ export default class Lexis extends Module {
       store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       this._treebankDataItem = null
     }
-    return annotatedHomonyms
+    return wordIDs
+  }
+
+  async getWordQueryData ({ variables, pollInterval = 1000, maxIterations = 10, source, languageId } = {}) {
+    return new Promise((resolve, reject) => {
+      try {
+        this._adapters.wordQuery.observableQuery({
+          variables,
+          // This callback is called every time the GraphQL query is updated, until the query is complete.
+          dataCallback: (data, state, errors) => { // TODO: How the errors object should be handled?
+            // Data would contain an array of homonyms
+            let homonym = null
+            if (!state.lexemes.loading) {
+              if (state.lexemes.available) {
+                const homonymGroup = HomonymGroup.fromJsonObject({ homonyms: data })
+                if (homonymGroup.homonyms.length > 1) {
+                  Logger.getInstance().warn('Multiple homonyms are not supported at the moment. Only the first homonym will be used')
+                }
+                homonym = homonymGroup.homonyms[0]
+              }
+              if (source !== LexicalQuery.sources.WORDLIST) {
+                if (state.lexemes.available) {
+                  LexicalQuery.evt.MORPH_DATA_READY.pub()
+                  LexicalQuery.evt.HOMONYM_READY.pub(homonym)
+                } else {
+                  LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
+                    targetWord: variables.word,
+                    languageId: languageId
+                  })
+                }
+              }
+            }
+            if (!state.shortDefs.loading) {
+              if (source !== LexicalQuery.sources.WORDLIST) {
+                if (state.shortDefs.available) {
+                  LexicalQuery.evt.SHORT_DEFS_READY.pub({
+                    requestType: 'short',
+                    homonym: homonym,
+                    word: variables.word
+                  })
+                }
+              }
+            }
+            if (!state.loading) {
+              // A GraphQL query is complete
+              resolve(homonym)
+            }
+          },
+          pollInterval,
+          maxIterations
+        })
+      } catch (err) {
+        reject(err)
+      }
+    })
   }
 
   async lexicalQuery ({
@@ -340,27 +408,108 @@ export default class Lexis extends Module {
       this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
     }
 
-    let annotatedHomonyms
+    let treebankWordIDs = []
     if (source === LexicalQuery.sources.PAGE) {
-      annotatedHomonyms = await this.getTreebankData({
-        store, textSelector, treebankDataItem
+      treebankWordIDs = await this.getTreebankWordIDs({
+        store,
+        textSelector,
+        treebankDataItem
       })
     }
 
-    const lexQuery = LexicalQuery.create(textSelector, {
-      clientId: this._appApi.clientId,
-      siteOptions,
-      verboseMode: this._settingsApi.isInVerboseMode(),
-      lemmaTranslations,
-      wordUsageExamples,
-      resourceOptions: this._settingsApi.getResourceOptions(),
-      langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
-      checkContextForward,
-      cedictServiceUrl: this.hasCedict() ? this._lexisConfig.cedict.target_url : null,
-      annotatedHomonyms,
-      source
-    })
-    const result = lexQuery.getData()
+    /*
+    TODO: Retrieve lemma, then merge with resources available
+     */
+
+    const language = LMF.getLanguageModel(textSelector.languageID).language
+    const word = textSelector.normalizedText
+
+    let result
+    let homonym
+    // This is a bypass of an old workflow for Latin and Greek
+    if (language.isOneOf([Constants.Lang.LATIN, Constants.Lang.GREEK])) {
+      // The new workflow is enabled for Latin only
+      let variables = {
+        language: language.toCode(),
+        location: textSelector.location,
+        word,
+        getLexemes: true,
+        getShortDefs: true,
+        useMorphService: true
+      }
+
+      if (language.equals(Constants.Lang.PERSIAN)) { variables.useWordAsLexeme = true }
+
+      if (treebankWordIDs.length > 0) {
+        // There is treebank data available on the page
+        const treebankVariables = {
+          useTreebankData: true,
+          treebankProvider: treebankDataItem.provider,
+          treebankSentenceID: treebankDataItem.sentenceId,
+          treebankWordIDs
+        }
+        variables = { ...variables, ...treebankVariables }
+      }
+
+      try {
+        homonym = await this.getWordQueryData({
+          variables,
+          source
+        })
+      } catch (err) {
+        Logger.getInstance().error('Observable word query error', err)
+      }
+
+      if (homonym) {
+        // A lexical query will be used to retrieve data that is not served by GraphQL currently.
+        const lexQuery = LexicalQuery.create(textSelector, {
+          clientId: this._appApi.clientId,
+          siteOptions,
+          verboseMode: this._settingsApi.isInVerboseMode(),
+          lemmaTranslations,
+          wordUsageExamples,
+          resourceOptions: this._settingsApi.getResourceOptions(),
+          langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
+          checkContextForward,
+          cedictServiceUrl: this.hasCedict() ? this._lexisConfig.cedict.target_url : null,
+          source,
+          hasLexemes: true,
+          homonym
+        })
+        result = lexQuery.getData()
+      } else {
+        Logger.getInstance().error('Homonym is not available')
+        if (this._source !== LexicalQuery.sources.WORDLIST) {
+          LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.pub({
+            resultStatus: LexicalQuery.resultStatus.FAILED
+          })
+        }
+      }
+    } else {
+      /*
+      Use the old workflow for Chinese for now.
+       */
+      let annotatedHomonyms
+      if (treebankWordIDs.length > 0) {
+        annotatedHomonyms = await this.getTreebankData({
+          store, textSelector, treebankDataItem
+        })
+      }
+      const lexQuery = LexicalQuery.create(textSelector, {
+        clientId: this._appApi.clientId,
+        siteOptions,
+        verboseMode: this._settingsApi.isInVerboseMode(),
+        lemmaTranslations,
+        wordUsageExamples,
+        resourceOptions: this._settingsApi.getResourceOptions(),
+        langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
+        checkContextForward,
+        cedictServiceUrl: this.hasCedict() ? this._lexisConfig.cedict.target_url : null,
+        annotatedHomonyms,
+        source
+      })
+      result = lexQuery.getData()
+    }
 
     // Hide a CEDICT notification on a new lexical query
     store.commit('lexis/hideCedictNotification')
@@ -414,7 +563,8 @@ Lexis.store = (moduleInstance) => {
        * @param {object} data - A data object.
        * @param {string} data.treebankSrc - A URL of a treebank app.
        * @param {boolean} data.hasTreebankData - Whether there is any treebank word or sentence data
-       *        to show on a diagram.
+       * to show on a diagram.
+       * @param data.suppressTree
        */
       setTreebankInfo (state, {
         treebankSrc = undefined,

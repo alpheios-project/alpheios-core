@@ -173,7 +173,6 @@
       }
     },
     "treebanks": {
-      "labelText": "Treebanks",
       "defaultValue": [],
       "labelText": "Latin Treebanks",
       "multiValue": true,

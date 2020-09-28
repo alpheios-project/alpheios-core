@@ -12,6 +12,7 @@ let typeFeaturesInitialized = false
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
 export default class GreekLanguageModel extends LanguageModel {
+  static get language () { return Constants.Lang.GREEK }
   static get languageID () { return Constants.LANG_GREEK }
   static get languageCode () { return Constants.STR_LANG_CODE_GRC }
   static get languageCodes () { return [Constants.STR_LANG_CODE_GRC] }

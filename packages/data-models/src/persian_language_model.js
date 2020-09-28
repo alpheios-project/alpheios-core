@@ -8,6 +8,8 @@ let typeFeaturesInitialized = false
  * @class  PersianLanguageModel is the lass for Persian specific behavior
  */
 export default class PersianLanguageModel extends LanguageModel {
+  static get language () { return Constants.Lang.PERSIAN }
+
   static get languageID () { return Constants.LANG_PERSIAN }
 
   static get languageCode () { return Constants.STR_LANG_CODE_PER }

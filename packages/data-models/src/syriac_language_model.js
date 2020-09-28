@@ -11,6 +11,8 @@ let typeFeaturesInitialized = false
  * @class  GezLanguageModel is the lass for Ge'ez specific behavior
  */
 export default class SyriacLanguageModel extends LanguageModel {
+  static get language () { return Constants.Lang.SYRIAC }
+
   static get languageID () { return Constants.LANG_SYRIAC }
 
   static get languageCode () { return Constants.STR_LANG_CODE_SYR }

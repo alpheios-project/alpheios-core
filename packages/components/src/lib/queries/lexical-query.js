@@ -1,11 +1,11 @@
 import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent, Constants, Logger } from 'alpheios-data-models'
 import Query from './query.js'
-import Options from '@/lib/options/options.js'
+import Options from '@comp/lib/options/options.js'
 import { ClientAdapters, RemoteError } from 'alpheios-client-adapters'
 import { ResponseMessage } from 'alpheios-messaging'
 
 export default class LexicalQuery extends Query {
-  constructor (name, selector, options) {
+  constructor (name, selector, options = {}) {
     super(name)
     this.selector = selector
     this.clientId = options.clientId
@@ -19,6 +19,8 @@ export default class LexicalQuery extends Query {
     this.cedictServiceUrl = options.cedictServiceUrl
     this._annotatedHomonyms = options.annotatedHomonyms
     this._source = options.source
+    this._hasLexemes = options.hasLexemes || false
+    this.homonym = options.homonym || null
 
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
@@ -99,24 +101,29 @@ export default class LexicalQuery extends Query {
 
   async getData () {
     this.languageID = this.selector.languageID
-    const iterator = this.iterations()
+    if (this._hasLexemes) {
+      // Some lexical data is available, do a partial data retrieval
+      await this.partialDataRetrieval()
+    } else {
+      const iterator = this.iterations()
 
-    let result = iterator.next()
-    while (true) {
-      if (!this.active) { this.finalize() }
-      if (Query.isPromise(result.value)) {
-        try {
-          const resolvedValue = await result.value
-          result = iterator.next(resolvedValue)
-        } catch (error) {
-          iterator.return()
-          this.finalize(error)
-          break
+      let result = iterator.next()
+      while (true) {
+        if (!this.active) { this.finalize() }
+        if (Query.isPromise(result.value)) {
+          try {
+            const resolvedValue = await result.value
+            result = iterator.next(resolvedValue)
+          } catch (error) {
+            iterator.return()
+            this.finalize(error)
+            break
+          }
+        } else {
+          result = iterator.next(result.value)
         }
-      } else {
-        result = iterator.next(result.value)
+        if (result.done) { break }
       }
-      if (result.done) { break }
     }
   }
 
@@ -352,6 +359,87 @@ export default class LexicalQuery extends Query {
       }
     } else {
       yield 'Finalizing'
+      this.finalize('Success-NoDefs')
+    }
+  }
+
+  async partialDataRetrieval () {
+    const lexiconFullOpts = this.getLexiconOptions('lexicons')
+
+    if (this.lemmaTranslations) {
+      const adapterTranslationRes = await ClientAdapters.lemmatranslation.alpheios({
+        method: 'fetchTranslations',
+        clientId: this.clientId,
+        params: {
+          homonym: this.homonym,
+          browserLang: this.lemmaTranslations.locale
+        }
+      })
+      if (adapterTranslationRes.errors.length > 0) {
+        adapterTranslationRes.errors.forEach(error => this.logger.log(error.message))
+      }
+      // Suppress events that will trigger UI messages if source is wordlist
+      if (this._source !== LexicalQuery.sources.WORDLIST) {
+        LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
+      } else {
+        LexicalQuery.evt.WORDLIST_UPDATE_LEMMA_TRANSL_READY.pub(this.homonym)
+      }
+    }
+
+    if (this.wordUsageExamples) {
+      // the default query for usage examples should be to request all examples
+      // for all authors, with user pagination preference for max number of examples
+      // per author applied. Total max across all authors will be enforced on the
+      // client adapter side. Different pagination options may apply when working
+      // directly with the usage examples display
+      const adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
+        method: 'getWordUsageExamples',
+        clientId: this.clientId,
+        params: {
+          homonym: this.homonym,
+          pagination: {
+            property: 'authmax',
+            value: this.wordUsageExamples.paginationAuthMax
+          }
+        }
+      })
+
+      if (adapterConcordanceRes.errors.length > 0) {
+        adapterConcordanceRes.errors.forEach(error => this.logger.log(error))
+      }
+
+      LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
+    }
+
+    if (!this.startedDefinitionsQueries.has(this.homonym.targetWord)) {
+      this.startedDefinitionsQueries.set(this.homonym.targetWord, true)
+
+      let adapterLexiconResFull = {}
+      // Do not retrieve full definition for wordlist requests
+      if (this._source !== LexicalQuery.sources.WORDLIST) {
+        adapterLexiconResFull = await ClientAdapters.lexicon.alpheios({
+          method: 'fetchFullDefs',
+          clientId: this.clientId,
+          params: {
+            opts: lexiconFullOpts,
+            homonym: this.homonym,
+            callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
+            callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
+          }
+        })
+
+        if (adapterLexiconResFull.errors.length > 0) {
+          adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
+        }
+      }
+
+      if (adapterLexiconResFull.result) {
+        this.finalize('Success')
+      }
+      if (!adapterLexiconResFull.result) {
+        this.finalize('Success-NoDefs')
+      }
+    } else {
       this.finalize('Success-NoDefs')
     }
   }
