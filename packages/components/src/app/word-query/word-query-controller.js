@@ -13,7 +13,7 @@ const WORD_QUERY =
  * Converts a results of GraphQL word query into JS objects.
  * Provides several methods to retrieve data via GraphQL word query.
  */
-export default class WordQueryAdapter {
+export default class WordQueryController {
   constructor ({ wordQueryResolver } = {}) {
     const resolvers = {}
 
@@ -38,7 +38,7 @@ export default class WordQueryAdapter {
 
   static getInstance () {
     if (!singleInstance) {
-      singleInstance = new WordQueryAdapter()
+      singleInstance = new WordQueryController()
     }
     return singleInstance
   }
@@ -59,7 +59,10 @@ export default class WordQueryAdapter {
   }
 
   /**
-   * An asynchronous GraphQL query. Data is returned when the query is fully completed.
+   * A representation of a GraphQL query. `observableQuery()` knows that the query is "live"
+   * and it polls the query data every X milliseconds or until the maximum number of poll attempts is reached.
+   * It also monitors the `state.loading` filed of the query response. When it would change its value
+   * from `true` to `false` it would mean that the query is complete and all query data is fully retrieved.
    *
    * @param {object} options - Data that will be passed to the GraphQL query.
    * @param {object} options.variables - Variables to be passed to the GraphQL query.

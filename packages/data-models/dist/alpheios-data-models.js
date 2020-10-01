@@ -7,7 +7,7 @@
 		var a = factory();
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function() {
+})(self, function() {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -17,6 +17,7 @@ return /******/ (() => { // webpackBootstrap
   \*******************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 8:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var v1 = __webpack_require__(/*! ./v1 */ "../../../node_modules/uuid/v1.js");
@@ -37,6 +38,7 @@ module.exports = uuid;
   \*****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 26:0-14 */
 /***/ ((module) => {
 
 /**
@@ -75,6 +77,8 @@ module.exports = bytesToUuid;
   \*****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 15:2-16 */
+/*! CommonJS bailout: module.exports is used directly at 26:2-16 */
 /***/ ((module) => {
 
 // Unique ID creation requires a high quality random # generator.  In the
@@ -121,6 +125,7 @@ if (getRandomValues) {
   \****************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 109:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var rng = __webpack_require__(/*! ./lib/rng */ "../../../node_modules/uuid/lib/rng-browser.js");
@@ -242,6 +247,7 @@ module.exports = v1;
   \****************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 29:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var rng = __webpack_require__(/*! ./lib/rng */ "../../../node_modules/uuid/lib/rng-browser.js");
@@ -1557,10 +1563,10 @@ class Digest {
   !*** ./driver.js ***!
   \*******************/
 /*! namespace exports */
-/*! export ArabicLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Author [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export ChineseLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Constants [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export ArabicLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./arabic_language_model.js .default */
+/*! export Author [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./texts/author.js .default */
+/*! export ChineseLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./chinese_language_model.js .default */
+/*! export Constants [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./constants.js */
 /*!   export CASE_ABESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export CASE_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export CASE_ABSOLUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
@@ -1789,37 +1795,37 @@ class Digest {
 /*!   export VOICE_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export VOICE_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   other exports [not provided] [no usage info] */
-/*! export Definition [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export DefinitionSet [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Digest [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Feature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureImporter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureType [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export GeezLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export GreekLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export GrmFeature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Homonym [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export HomonymGroup [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Inflection [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Language [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export LanguageModelFactory [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export LatinLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Lemma [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Lexeme [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Logger [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export PersianLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export PsEvent [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export PsEventData [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export ResourceProvider [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export SyriacLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export TextQuoteSelector [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export TextWork [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Translation [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export TreebankDataItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export WordItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export WordList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export WordUsageExample [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Definition [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./definition.js .default */
+/*! export DefinitionSet [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./definition-set.js .default */
+/*! export Digest [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./digest.js .default */
+/*! export Feature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature.js .default */
+/*! export FeatureImporter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature_importer.js .default */
+/*! export FeatureList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature_list.js .default */
+/*! export FeatureType [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature_type.js .default */
+/*! export GeezLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./geez_language_model.js .default */
+/*! export GreekLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./greek_language_model.js .default */
+/*! export GrmFeature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./grm-feature.js .default */
+/*! export Homonym [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./homonym.js .default */
+/*! export HomonymGroup [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./homonym-group.js .default */
+/*! export Inflection [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./inflection.js .default */
+/*! export Language [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./language.js .default */
+/*! export LanguageModelFactory [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./language_model_factory.js .default */
+/*! export LatinLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./latin_language_model.js .default */
+/*! export Lemma [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./lemma.js .default */
+/*! export Lexeme [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./lexeme.js .default */
+/*! export Logger [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./logging/logger.js .default */
+/*! export PersianLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./persian_language_model.js .default */
+/*! export PsEvent [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./ps-events/ps-event.js .default */
+/*! export PsEventData [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./ps-events/ps-event-data.js .default */
+/*! export ResourceProvider [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./resource_provider.js .default */
+/*! export SyriacLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./syriac_language_model.js .default */
+/*! export TextQuoteSelector [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./w3c/text-quote-selector.js .default */
+/*! export TextWork [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./texts/text-work.js .default */
+/*! export Translation [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./translation.js .default */
+/*! export TreebankDataItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./treebank_data_item.js .default */
+/*! export WordItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./word-item.js .default */
+/*! export WordList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./word-list.js .default */
+/*! export WordUsageExample [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./texts/word-usage-example.js .default */
 /*! other exports [not provided] [maybe used in main (runtime-defined)] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {

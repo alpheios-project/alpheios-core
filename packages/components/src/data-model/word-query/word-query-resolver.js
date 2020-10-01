@@ -28,25 +28,29 @@ export default class WordQueryResolver {
       const wqResultWatcher = {
         // This function will track changes in the top-level props of the result object
         set: function (obj, prop, value) {
-          let wordReactive = storage.words.get(key) // eslint-disable-line prefer-const
-          let word = wordReactive() // eslint-disable-line prefer-const
-          if (prop === 'homonymGroup') {
-            // Update the value of the reactive variable
-            const homonyms = value.toJsonObject().homonyms
-            // Need to recreate an object on order for reactive var to be updated
-            wordReactive({ ...word, homonyms })
-          } else if (prop === 'state') {
-            // Update the value of the reactive variable
-            const state = WordQueryResult.stateToJsonObject(value)
-            // Need to recreate an object on order for reactive var to be updated
-            wordReactive({ ...word, state })
-          } else if (prop === 'errors') {
-            // Update the value of the reactive variable
-            const errors = WordQueryResult.errorsToJsonObject(value)
-            // Need to recreate an object on order for reactive var to be updated
-            wordReactive({ ...word, errors })
+          if (storage.words.has(key)) {
+            let wordReactive = storage.words.get(key) // eslint-disable-line prefer-const
+            let word = wordReactive() // eslint-disable-line prefer-const
+            if (prop === 'homonymGroup') {
+              // Update the value of the reactive variable
+              const homonyms = WordQueryResult.homonymGroupToJsonObject(value)
+              // Need to recreate an object on order for reactive var to be updated
+              wordReactive({ ...word, homonyms })
+            } else if (prop === 'state') {
+              // Update the value of the reactive variable
+              const state = WordQueryResult.stateToJsonObject(value)
+              // Need to recreate an object on order for reactive var to be updated
+              wordReactive({ ...word, state })
+            } else if (prop === 'errors') {
+              // Update the value of the reactive variable
+              const errors = WordQueryResult.errorsToJsonObject(value)
+              // Need to recreate an object on order for reactive var to be updated
+              wordReactive({ ...word, errors })
+            } else {
+              Logger.getInstance().warn(`The unsupported ${prop} property has been changed`)
+            }
           } else {
-            Logger.getInstance().warn(`The unsupported ${prop} property has been changed`)
+            Logger.getInstance().warn(`Cannot update query results because the word key ${key} is missing from the storage`)
           }
 
           // Store the value into the result object

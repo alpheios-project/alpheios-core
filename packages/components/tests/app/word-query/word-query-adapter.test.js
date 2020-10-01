@@ -1,10 +1,10 @@
 /* eslint-env jest */
 // Cross-fetch is required to replace an in-browser `fetch` implementation
 import fetch from 'cross-fetch' // eslint-disable-line no-unused-vars
-import WordQueryAdapter from '@comp/app/word-query/word-query-adapter.js'
+import WordQueryController from '@comp/app/word-query/word-query-controller.js'
 import { gql } from '@apollo/client/core'
 
-describe('WordQueryAdapter', () => {
+describe('WordQueryController', () => {
   afterEach(() => {
     jest.resetModules()
   })
@@ -25,7 +25,7 @@ describe('WordQueryAdapter', () => {
         word: 'fero'
       }
     }
-    const results = await WordQueryAdapter.getInstance().query(query)
+    const results = await WordQueryController.getInstance().query(query)
     expect(results.data).toEqual({
       word: {
       }

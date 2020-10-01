@@ -1,9 +1,9 @@
 /* eslint-env jest */
 // Cross-fetch is required to replace an in-browser `fetch` implementation
 import fetch from 'cross-fetch' // eslint-disable-line no-unused-vars
-import GqlEndpoint from '@comp/app/word-query/word-query-adapter.js'
+import GqlEndpoint from '@comp/app/word-query/word-query-controller.js'
 
-describe('GqlEndpoint', () => {
+describe('WordQueryController', () => {
   afterEach(() => {
     jest.resetModules()
   })

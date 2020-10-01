@@ -11,7 +11,7 @@ import interact from 'interactjs'
 
 import DataModelController from '@comp/data-model/data-model-controller.js'
 
-import WordQueryAdapter from '@comp/app/word-query/word-query-adapter.js'
+import WordQueryController from '@comp/app/word-query/word-query-controller.js'
 
 // Modules and their support dependencies
 import L10nModule from '@comp/vue/vuex-modules/data/l10n-module.js'
@@ -386,9 +386,16 @@ export default class AppController {
     })
     // All options are initialized at this point
 
-    // We do have dependency on the DataModelController only because we're using local fields
-    // with resolvers from the DataModelController. This dependency will not exist with the remote GraphQL service.
-    this._adapters.wordQuery = new WordQueryAdapter({ wordQueryResolver: this._dmC.gqlEndpoint.resolvers.wordQuery })
+    /*
+    DataModelController represents a model that is, among other things, responsible for retrieving lexical data
+    for a word. DataModelController could be a completely separate remote service if not the two things:
+    - It uses references to the options set by the user (user preferences) in the settings controller. This is tied
+      to the UI. We should refactor (by splitting responsibilities into two parts) the settings controller
+      so that dependency would go away.
+    - It retrieves some pieces of lexical data that are inherently local, such as treebank data. There is no way
+      to eliminate that at the moment.
+     */
+    this._adapters.wordQuery = new WordQueryController({ wordQueryResolver: this._dmC.gqlEndpoint.resolvers.wordQuery })
 
     // The following options will be applied to all logging done via a single Logger instance
     // Set the  logger verbose mode according to the settings
@@ -1152,7 +1159,13 @@ export default class AppController {
         this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         break
       case LexicalQuery.resultStatus.FAILED:
-        // TODO: Can we do anything better if homonym is not available?
+        /*
+        TODO: in the future, this might be a place to prompt the user to query a word level dictionary resource
+              if there is one (or some other linked word-level resource - for example, it's a place
+              we could do better right now, if we don't have a result for a homonym in Latin,
+              we could still offer the option to search the usage examples).
+              Similarly, we might prompt the user to create their own analysis...
+         */
         if (data.homonym) { this.showLanguageInfo(data.homonym) }
         this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
