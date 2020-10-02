@@ -1,4 +1,5 @@
 import LanguageModel from './language_model.js'
+import Language from './language.js'
 import Feature from './feature.js'
 import * as Constants from './constants.js'
 
@@ -9,7 +10,7 @@ let typeFeaturesInitialized = false
  * @class  GezLanguageModel is the lass for Ge'ez specific behavior
  */
 export default class GeezLanguageModel extends LanguageModel {
-  static get language () { return Constants.Lang.GEEZ }
+  static get language () { return Language.GEEZ }
 
   static get languageID () { return Constants.LANG_GEEZ }
 

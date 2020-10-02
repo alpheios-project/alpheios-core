@@ -3,7 +3,7 @@ import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import { Constants, TreebankDataItem, HomonymGroup, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
+import { Constants, TreebankDataItem, HomonymGroup, Language, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
 import {
   CedictDestinationConfig as CedictProdConfig,
   CedictDestinationDevConfig as CedictDevConfig
@@ -427,7 +427,8 @@ export default class Lexis extends Module {
     let result
     let homonym
     // This is a bypass of an old workflow for Latin and Greek
-    if (language.isOneOf([Constants.Lang.LATIN, Constants.Lang.GREEK])) {
+    if (language.isOneOf([Language.LATIN, Language.GREEK])) {
+      console.info('The language is either Latin or Greek')
       // The new workflow is enabled for Latin only
       let variables = {
         language: language.toCode(),
@@ -438,7 +439,7 @@ export default class Lexis extends Module {
         useMorphService: true
       }
 
-      if (language.equals(Constants.Lang.PERSIAN)) { variables.useWordAsLexeme = true }
+      if (language.equals(Language.PERSIAN)) { variables.useWordAsLexeme = true }
 
       if (treebankWordIDs.length > 0) {
         // There is treebank data available on the page
