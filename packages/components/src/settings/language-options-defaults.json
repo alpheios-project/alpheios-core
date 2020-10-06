@@ -86,12 +86,16 @@
       "group": {
         "grc": {
           "defaultValue": [
-            "https://github.com/alpheios-project/mjm"
+            "https://github.com/DigiClass/alpheios-french-dictionary"
           ],
           "labelText": "Greek",
           "labelL10n": "LEXICONS_SHORT_GREEK_TITLE",
           "multiValue": true,
           "values": [
+            {
+              "value": "https://github.com/DigiClass/alpheios-french-dictionary",
+              "text": "Bailly + LSJ"
+            },
             {
               "value": "https://github.com/alpheios-project/mjm",
               "text": "Wilfred Major Core Greek Vocabulary + Middle Liddell"

@@ -29,7 +29,7 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     const urlKey = 'https://github.com/alpheios-project/lsj'
-    
+
     let url = adapter.config[urlKey].urls.short
     let result = await adapter.checkCachedData(url, LexiconsFixture.lexData[url])
 
@@ -405,9 +405,9 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let res = adapter.getRequests(testLangID)
-    expect(res.length).toEqual(7)
+    expect(res.length).toEqual(8)
     res.forEach(url => {
-      expect(url).toEqual(expect.stringContaining('https://github.com/alpheios-project/'))
+      expect(url).toEqual(expect.stringContaining('https://'))
     })
   })
 
@@ -643,7 +643,7 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     expect(adapter.async).toBeTruthy()
-    
+
     jest.spyOn(adapter, 'getRequests')
     jest.spyOn(adapter, 'prepareShortDefPromise')
 
@@ -682,10 +682,10 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     expect(adapter.async).toBeTruthy()
-    
+
     jest.spyOn(adapter, 'updateFullDefsAsync')
     jest.spyOn(adapter, 'prepareFullDefPromise')
-    
+
 
     let options = { allow: ['https://github.com/alpheios-project/lsj'] }
     await adapter.fetchDefinitions(testSuccessHomonym, options, 'full')
@@ -707,9 +707,9 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     expect(adapter.async).toBeFalsy()
-    
+
     jest.spyOn(adapter, 'updateFullDefs')
-    
+
     let options = { allow: ['https://github.com/alpheios-project/lsj'] }
     await adapter.fetchDefinitions(testSuccessHomonym, options, 'full')
 
