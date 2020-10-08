@@ -428,7 +428,6 @@ export default class Lexis extends Module {
     let homonym
     // This is a bypass of an old workflow for Latin and Greek
     if (language.isOneOf([Language.LATIN, Language.GREEK])) {
-      console.info('The language is either Latin or Greek')
       // The new workflow is enabled for Latin only
       let variables = {
         language: language.toCode(),

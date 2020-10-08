@@ -392,8 +392,8 @@ export default class AppController {
     - It uses references to the options set by the user (user preferences) in the settings controller. This is tied
       to the UI. We should refactor (by splitting responsibilities into two parts) the settings controller
       so that dependency would go away.
-    - It retrieves some pieces of lexical data that are inherently local, such as treebank data. There is no way
-      to eliminate that at the moment.
+    - It retrieves some pieces of lexical data that are inherently local, such as treebank data. There is
+      currently no way to avoid that.
      */
     this._adapters.wordQuery = new WordQueryController({ wordQueryResolver: this._dmC.gqlEndpoint.resolvers.wordQuery })
 

@@ -29,7 +29,7 @@ export default class WordQueryController {
       }
     })
 
-    this._gql = new ApolloClient({
+    this._apolloClient = new ApolloClient({
       cache,
       link: new HttpLink({ uri: '/graphql', fetch }),
       resolvers
@@ -55,7 +55,7 @@ export default class WordQueryController {
       query: WORD_QUERY,
       variables
     }
-    return this._gql.query(gqlQuery)
+    return this._apolloClient.query(gqlQuery)
   }
 
   /**
@@ -63,6 +63,11 @@ export default class WordQueryController {
    * and it polls the query data every X milliseconds or until the maximum number of poll attempts is reached.
    * It also monitors the `state.loading` filed of the query response. When it would change its value
    * from `true` to `false` it would mean that the query is complete and all query data is fully retrieved.
+   * This method is a wrapper around the Apollo Watcher that adds the following functionality:
+   *  - It defines a maximum number of iterations that is used to terminate the long-running queries;
+   *  - It checks our own custom loading status to verify if the query is still running;
+   *  - It splits query response into three separate parts: homonyms, state, and errors thus hiding
+   *    the internal structure of the GraphQL response from the client.
    *
    * @param {object} options - Data that will be passed to the GraphQL query.
    * @param {object} options.variables - Variables to be passed to the GraphQL query.
@@ -72,46 +77,18 @@ export default class WordQueryController {
    */
   observableQuery ({ variables, dataCallback, pollInterval = 1000, maxIterations = 10 } = {}) {
     let counter = 0
-    const observableQuery = this._gql.watchQuery({ query: WORD_QUERY, pollInterval, variables })
-    observableQuery.subscribe({
+    const watchableQuery = this._apolloClient.watchQuery({ query: WORD_QUERY, pollInterval, variables })
+    watchableQuery.subscribe({
       next: ({ data }) => {
         const loading = data.word.state.loading
         if (loading === false) {
-          observableQuery.stopPolling()
+          watchableQuery.stopPolling()
         }
         if (counter >= maxIterations) {
-          observableQuery.stopPolling()
+          watchableQuery.stopPolling()
         }
         counter++
         dataCallback(data.word.homonyms, data.word.state, data.word.errors)
-      }
-    })
-  }
-
-  /**
-   * Similar to `observableQuery()`, but with its own callback implementation.
-   *
-   * @param {object} options - Data that will be passed to the GraphQL query.
-   * @param {object} options.variables - Variables to be passed to the GraphQL query.
-   * @param {number} options.pollInterval - An interval in milliseconds specifying how often a new data will be retrieved.
-   * @param {number} options.maxIterations - How many iterations to do before stopping the query.
-   * @returns {Promise<*>} - A promise that is resolved with GraphQL data or is rejected with an error.
-   */
-  async getFromObservableQuery ({ variables, pollInterval = 1000, maxIterations = 10 } = {}) {
-    return new Promise((resolve, reject) => {
-      try {
-        this.observableQuery({
-          variables,
-          dataCallback: (data, loading) => {
-            if (loading === false) {
-              resolve(data)
-            }
-          },
-          pollInterval,
-          maxIterations
-        })
-      } catch (err) {
-        reject(err)
       }
     })
   }
