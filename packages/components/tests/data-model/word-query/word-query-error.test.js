@@ -1,5 +1,6 @@
 /* eslint-env jest */
-import WordQueryError from '@comp/data-model/word-query/word-query-error.js'
+import WordQueryError from '@comp/data-model/word-query/error/word-query-error.js'
+import WordQueryErrorCodes from '@comp/data-model/word-query/error/word-query-error-codes.js'
 
 describe('WordQueryError', () => {
   let errorMessage
@@ -8,7 +9,7 @@ describe('WordQueryError', () => {
 
   beforeEach(() => {
     errorMessage = 'Error message'
-    errorCode = WordQueryError.errorCodes.LEXICONS_ERROR
+    errorCode = WordQueryErrorCodes.TUFTS_ERROR
     path = ['segment one', 'segment two']
   })
 
