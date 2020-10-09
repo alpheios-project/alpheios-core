@@ -5188,6 +5188,7 @@ class WrongMethodError extends Error {
   !*** ./index.js ***!
   \******************/
 /*! namespace exports */
+/*! export AdapterError [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./errors/adapter-error.js .default */
 /*! export ClientAdapters [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./client-adapters.js .default */
 /*! export RemoteError [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./errors/remote-error.js .default */
 /*! other exports [not provided] [maybe used in main (runtime-defined)] */
@@ -5198,10 +5199,13 @@ class WrongMethodError extends Error {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ClientAdapters": () => /* reexport safe */ _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__.default,
-/* harmony export */   "RemoteError": () => /* reexport safe */ _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__.default
+/* harmony export */   "AdapterError": () => /* reexport safe */ _clAdapters_errors_adapter_error_js__WEBPACK_IMPORTED_MODULE_1__.default,
+/* harmony export */   "RemoteError": () => /* reexport safe */ _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__.default
 /* harmony export */ });
 /* harmony import */ var _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/client-adapters.js */ "./client-adapters.js");
-/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony import */ var _clAdapters_errors_adapter_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/adapter-error.js */ "./errors/adapter-error.js");
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+
 
 
 

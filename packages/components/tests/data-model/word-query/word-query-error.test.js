@@ -26,11 +26,24 @@ describe('WordQueryError', () => {
     expect(wordQueryError).toBeInstanceOf(WordQueryError)
   })
 
+  it('Constructor: should not create an instance without a message', async () => {
+    expect(() => new WordQueryError()).toThrowError('WordQueryError requires a message to be provided')
+  })
+
+  it('Constructor: should not create an instance without an error code', async () => {
+    expect(() => new WordQueryError(errorMessage)).toThrowError('WordQueryError requires a code to be provided')
+  })
+
   it('Constructor: should initialize all values properly', async () => {
     const wordQueryError = new WordQueryError(errorMessage, errorCode, { path })
     expect(wordQueryError.message).toBe(errorMessage)
     expect(wordQueryError.path).toBe(path)
     expect(wordQueryError.extensions.code).toBe(errorCode)
+  })
+
+  it('Constructor: if path is not provided it should be set to an empty array', async () => {
+    const wordQueryError = new WordQueryError(errorMessage, errorCode)
+    expect(wordQueryError.path).toEqual([])
   })
 
   it('toJsonObject: should return a JSON object representation', async () => {

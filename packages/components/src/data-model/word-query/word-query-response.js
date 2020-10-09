@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import WordQueryError from '@comp/data-model/word-query/error/word-query-error.js' // Imported for type definitions only
-
 /**
  * Represents a result object that will be returned by GraphQL.
  */
@@ -20,7 +17,7 @@ export default class WordQueryResponse {
         failed: false
       }
     }
-    /** @type {WordQueryError[]} */
+    /** @type {import('./error/word-query-error.js').WordQueryError[]} */
     this.errors = []
     this._updateCallback = updateCallback
   }
