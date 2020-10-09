@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 
-import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import BaseTestHelp from '@tests/helpclasses/base-test-help'
 
 import PanelCompact from '@/vue/components/panel-compact.vue'
@@ -34,7 +34,11 @@ describe('panel-compact.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    defaultData = { moduleConfig: {} }
+    defaultData = {
+      moduleConfig: {},
+      expanded: false,
+      showProviders: false
+    }
 
     store = BaseTestHelp.baseVuexStore()
 
