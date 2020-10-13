@@ -1,6 +1,6 @@
 {
   "name": "alpheios-res-client",
-  "version": "3.3.1-dev-bailly-defs.20201006528",
+  "version": "3.3.1-dev-bailly-defs.20201013705",
   "description": "Alpheios Resource Client Library",
   "private": true,
   "main": "dist/alpheios-res-client.min.js",
