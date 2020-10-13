@@ -12,7 +12,7 @@ export default class TuftsMorphologyData {
     this._clearShortDefs = clearShortDefs
   }
 
-  async retrieve () {
+  async retrieve (lexicalData) {
     let result = new LexicalDataResult(TuftsMorphologyData.dataType) // eslint-disable-line prefer-const
     const langAttrs = LMF.getLegacyLanguageCodeAndId(this._language)
 
@@ -39,7 +39,7 @@ export default class TuftsMorphologyData {
     } else {
       // Request failed
       adapterMorphRes.errors.forEach(error => {
-        errors.push(ErrorMapper.toWordQueryError(
+        errors.push(ErrorMapper.clientAdaptersToWordQueryError(
           error,
           { errorCode: WordQueryErrorCodes.TUFTS_ERROR }
         ))

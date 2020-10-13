@@ -12,7 +12,7 @@ export default class ErrorMapper {
    *        an error type. It is required according to the Apollo GraphQL format convention.
    * @returns {WordQueryError} - An error in a GraphQL-compatible format.
    */
-  static toWordQueryError (clientAdaptersError, { errorCode }) {
+  static clientAdaptersToWordQueryError (clientAdaptersError, { errorCode }) {
     return new WordQueryError(
       clientAdaptersError.message,
       errorCode,

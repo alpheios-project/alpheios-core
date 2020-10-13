@@ -6,25 +6,60 @@ import DisambiguatedData from '@comp/data-model/word-query/lexical-data/data-obj
 import ShortDefsData from '@comp/data-model/word-query/lexical-data/data-objects/short-defs-data.js'
 
 /**
+ * A class representing treebank options.
+ *
+ * @typedef {object} TreebankDataOptions
+ * @property {string} treebankProvider - The URL of a treebank data provider.
+ * @property {string} treebankSentenceId - An ID of a sentence in the treebank.
+ * @property {string[]} treebankWordIds - An array of word IDs.
+ */
+
+/**
+ * A class representing options for lexemes retrieval.
+ *
+ * @typedef {object} GetLexemesOptions
+ * @property {boolean} useMorphService - The URL of a treebank data provider.
+ * @property {TreebankDataOptions} useTreebankData - An ID of a sentence in the treebank.
+ * @property {boolean} useWordAsLexeme - An array of word IDs.
+ */
+
+/**
+ * A class representing options for retrieval of short definitions.
+ *
+ * @typedef {object} GetShortDefsOptions
+ * @property {object} lexicons - The object holding options for lexicons (i.e. for full definitions).
+ * @property {object} shortLexicons - The object holding options for short definitions lexicons.
+ */
+
+/**
+ * A class representing options of the word query.
+ *
+ * @typedef {object} WordQueryOptions
+ * @param {string} word - A word for which lexical data to be retrieved.
+ * @param {Language} language - A language of a word.
+ * @param {string} clientId - A client ID of an application.
+ * @param {GetLexemesOptions} [getLexemes] - Get lexemes options.
+ * @param {GetLexemesOptions} [getShortDefs] - Get short definitions options.
+ */
+
+/**
  * Contains all the business logic that is necessary to resolve the GraphQL word query.
  */
 export default class WordQuery {
+  /**
+   * Creates an instance of a WordQuery class.
+   *
+   * @param {WordQueryOptions} options - A word for which lexical data to be retrieved.
+   * @param {import('./word-query-response.js').WordQueryResponse} wordQueryResponse - A response object
+   *        that will be updated dynamically.
+   */
   constructor ({
     word,
     language,
     clientId,
     getLexemes,
-    useMorphService,
-    useTreebankData,
-    useWordAsLexeme,
-    getShortDefs,
-    treebankProvider,
-    treebankSentenceId,
-    treebankWordIds,
-    lexicons,
-    shortLexicons,
-    wordQueryResponse
-  }) {
+    getShortDefs
+  }, wordQueryResponse) {
     /*
     Word query uses several parameters to specify what data should be returned.
     get parameters specify what information should be returned:
@@ -41,15 +76,7 @@ export default class WordQuery {
       language,
       clientId,
       getLexemes,
-      useMorphService,
-      useTreebankData,
-      useWordAsLexeme,
       getShortDefs,
-      treebankProvider,
-      treebankSentenceId,
-      treebankWordIds,
-      lexicons,
-      shortLexicons,
       clearShortDefs: !getShortDefs
     }
 
@@ -71,7 +98,7 @@ export default class WordQuery {
 
     let getLexemesBatch = [] // eslint-disable-line prefer-const
     if (this._queryData.getLexemes) {
-      if (this._queryData.useMorphService) {
+      if (this._queryData.getLexemes.useMorphService) {
         getLexemesBatch.push(new TuftsMorphologyData({
           word: this._queryData.word,
           language: this._queryData.language,
@@ -79,17 +106,17 @@ export default class WordQuery {
           clearShortDefs: this._queryData.clearShortDefs
         }))
       }
-      if (this._queryData.useTreebankData) {
+      if (this._queryData.getLexemes.useTreebankData) {
         getLexemesBatch.push(new TreebankData({
           word: this._queryData.word,
           language: this._queryData.language,
           clientId: this._queryData.clientId,
-          treebankProvider: this._queryData.treebankProvider,
-          treebankSentenceId: this._queryData.treebankSentenceId,
-          treebankWordIds: this._queryData.treebankWordIds
+          treebankProvider: this._queryData.getLexemes.useTreebankData.treebankProvider,
+          treebankSentenceId: this._queryData.getLexemes.useTreebankData.treebankSentenceId,
+          treebankWordIds: this._queryData.getLexemes.useTreebankData.treebankWordIds
         }))
       }
-      if (this._queryData.useWordAsLexeme) {
+      if (this._queryData.getLexemes.useWordAsLexeme) {
         getLexemesBatch.push(new WordAsLexemeData({
           word: this._queryData.word,
           language: this._queryData.language
@@ -104,7 +131,7 @@ export default class WordQuery {
     if (this._queryData.getShortDefs) {
       path.push([new ShortDefsData({
         clientId: this._queryData.clientId,
-        shortLexicons: this._queryData.shortLexicons
+        shortLexicons: this._queryData.getShortDefs.shortLexicons
       })])
     }
     return path

@@ -7,7 +7,7 @@ export default class WordAsLexemeData {
     this._language = language
   }
 
-  async retrieve () {
+  async retrieve (lexicalData) {
     let result = new LexicalDataResult(WordAsLexemeData.dataType) // eslint-disable-line prefer-const
     const formLexeme = new Lexeme(new Lemma(this._word, this._language), [])
     const homonym = new Homonym([formLexeme], this._word)

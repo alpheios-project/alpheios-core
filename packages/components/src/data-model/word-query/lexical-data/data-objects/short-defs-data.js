@@ -49,7 +49,7 @@ export default class ShortDefsData {
         } else {
           result.state.failed = true
           adapterLexiconResShort.errors.forEach(error => {
-            result.errors.push(ErrorMapper.toWordQueryError(
+            result.errors.push(ErrorMapper.clientAdaptersToWordQueryError(
               error,
               { errorCode: WordQueryErrorCodes.SHORT_DEFS_ERROR }
             ))

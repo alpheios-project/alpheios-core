@@ -31,8 +31,8 @@ describe('ErrorMapper', () => {
     jest.clearAllMocks()
   })
 
-  it('toWordQueryError: creates an instance of a WordQueryError out of AdapterError', async () => {
-    const wordQueryError = ErrorMapper.toWordQueryError(adapterError, { errorCode })
+  it('clientAdaptersToWordQueryError: creates an instance of a WordQueryError out of AdapterError', async () => {
+    const wordQueryError = ErrorMapper.clientAdaptersToWordQueryError(adapterError, { errorCode })
     expect(wordQueryError).toEqual({
       message: `${claErrorMessage} (${claCategory}.${claAdapterName}.${claMethodName})`,
       path: [claMethodName, `${claCategory}.${claAdapterName}`],

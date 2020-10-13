@@ -38,22 +38,39 @@ export default class WordQueryResolver {
       let response = new WordQueryResponse({ updateCallback: this.updateCallback.bind(this, storage, key) })
       const lexicons = this._getLexiconsFn(variables.language, variables.location)
       const shortLexicons = this._getShortLexiconsFn(variables.language, variables.location)
-      const wordQuery = new WordQuery({
+
+      /** @type {import('./word-query.js').WordQueryOptions} */
+      let wordQueryOptions = { // eslint-disable-line prefer-const
         word: variables.word,
         language: Language.fromJsonObject({ code: variables.language }),
-        clientId: 'graphql-client',
-        getLexemes: variables.getLexemes,
-        useMorphService: variables.useMorphService,
-        useTreebankData: variables.useTreebankData,
-        useWordAsLexeme: variables.useWordAsLexeme,
-        getShortDefs: variables.getShortDefs,
-        treebankProvider: variables.treebankProvider,
-        treebankSentenceId: variables.treebankSentenceId,
-        treebankWordIds: variables.treebankWordIds,
-        lexicons,
-        shortLexicons,
-        wordQueryResponse: response
-      })
+        clientId: 'graphql-client'
+      }
+      if (variables.getLexemes) {
+        /** @type {import('./word-query.js').GetLexemesOptions} */
+        wordQueryOptions.getLexemes = {
+          useMorphService: variables.useMorphService,
+          useWordAsLexeme: variables.useWordAsLexeme
+        }
+        if (variables.useTreebankData) {
+          /** @type {import('./word-query.js').TreebankDataOptions} */
+          wordQueryOptions.getLexemes.useTreebankData = {
+            treebankProvider: variables.treebankProvider,
+            treebankSentenceId: variables.treebankSentenceId,
+            treebankWordIds: variables.treebankWordIds
+          }
+        }
+      }
+      if (variables.getShortDefs) {
+        /** @type {import('./word-query.js').GetShortDefsOptions} */
+        wordQueryOptions.getShortDefs = {
+          lexicons,
+          shortLexicons
+        }
+      }
+      const wordQuery = new WordQuery(
+        wordQueryOptions,
+        response
+      )
       // Start the new query to obtain lexical data. Don't wait for it to resolve:
       // it will dynamically update the result object until the query if complete fully.
       wordQuery.start()
