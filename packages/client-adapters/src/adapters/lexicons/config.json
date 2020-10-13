@@ -1,7 +1,7 @@
 {
   "https://github.com/DigiClass/alpheios-french-dictionary": {
     "urls": {
-      "short": "https://raw.githubusercontent.com/DigiClass/alpheios-french-dictionary/alpheios-round1/data/bailly-grc-defs.dat"
+      "short": "https://raw.githubusercontent.com/DigiClass/alpheios-french-dictionary/master/data/bailly-grc-defs.dat"
     },
     "langs": {
       "source": "grc",
