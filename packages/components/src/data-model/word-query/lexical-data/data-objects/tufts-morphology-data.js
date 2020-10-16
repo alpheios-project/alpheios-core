@@ -3,28 +3,47 @@ import { LanguageModelFactory as LMF, Logger, HomonymGroup } from 'alpheios-data
 import { ClientAdapters } from 'alpheios-client-adapters'
 import WordQueryErrorCodes from '@comp/data-model/word-query/error/word-query-error-codes.js'
 import ErrorMapper from '@comp/data-model/word-query/error/error-mapper.js'
+import LexicalDataTypes from '@comp/data-model/word-query/lexical-data/types/lexical-data-types.js'
 
 export default class TuftsMorphologyData {
-  constructor ({ word, language, clientId, clearShortDefs } = {}) {
+  /**
+   * Creates an instance of a TuftsMorphologyData object.
+   *
+   * @param {string} word - A word to be associated with an object.
+   * @param {Language} language - A language of a word.
+   * @param {string} clientId - An ID of a client application.
+   * @param {boolean} clearShortDefs - Whether to clear short definitions returned by the Tufts morphology.
+   */
+  constructor ({ word, language, clientId, clearShortDefs = false } = {}) {
+    if (!word) {
+      throw new Error(TuftsMorphologyData.errMsgs.NO_WORD_PROVIDED)
+    }
+    if (!language) {
+      throw new Error(TuftsMorphologyData.errMsgs.NO_LANGUAGE_PROVIDED)
+    }
+    if (!clientId) {
+      throw new Error(TuftsMorphologyData.errMsgs.NO_CLIENT_ID_PROVIDED)
+    }
     this._word = word
     this._language = language
     this._clientId = clientId
     this._clearShortDefs = clearShortDefs
   }
 
+  /**
+   * Creates a homonym group object from the word. The homonym group object contains a single homonym that
+   * has a single lexeme generated from the word of this object instance.
+   *
+   * @param {Map<import('../types/lexical-data-types.js').LexicalDataTypes, LexicalDataResult>} [lexicalData] - A map
+   *        containing lexical data that was already obtained.
+   * @returns {Promise<LexicalDataResult>} - A lexical data result object containing the homonym group with
+   *          a single homonym and a single lexeme.
+   */
   async retrieve (lexicalData) {
     let result = new LexicalDataResult(TuftsMorphologyData.dataType) // eslint-disable-line prefer-const
-    const langAttrs = LMF.getLegacyLanguageCodeAndId(this._language)
 
     // If succeeds, request returns a Homonym in its `result` field
-    const adapterMorphRes = await ClientAdapters.morphology.tufts({
-      method: 'getHomonym',
-      clientID: this._clientId,
-      params: {
-        languageID: langAttrs.languageID,
-        word: this._word
-      }
-    })
+    const adapterMorphRes = await this._getHomonym()
 
     let homonymGroup
     let errors = [] // eslint-disable-line prefer-const
@@ -55,6 +74,33 @@ export default class TuftsMorphologyData {
     result.data = homonymGroup
     return result
   }
+
+  /**
+   * Makes a call to the Tufts client adapter and return its results.
+   * The call to the outside infrastructure is separated into a method
+   * in order to be mocked during testing.
+   *
+   * @returns {Promise<*>}
+   * @private
+   */
+  async _getHomonym () {
+    const langAttrs = LMF.getLegacyLanguageCodeAndId(this._language)
+    return ClientAdapters.morphology.tufts({
+      method: 'getHomonym',
+      clientID: this._clientId,
+      params: {
+        languageID: langAttrs.languageID,
+        word: this._word
+      }
+    })
+  }
 }
 
-TuftsMorphologyData.dataType = 'tuftsMorphology'
+/** @type {import('../types/lexical-data-types.js').LexicalDataTypes | string} */
+TuftsMorphologyData.dataType = LexicalDataTypes.TUFTS_MORPHOLOGY
+
+TuftsMorphologyData.errMsgs = {
+  NO_WORD_PROVIDED: 'TuftsMorphologyData cannot be created without a word',
+  NO_LANGUAGE_PROVIDED: 'TuftsMorphologyData cannot be created without a language',
+  NO_CLIENT_ID_PROVIDED: 'TuftsMorphologyData cannot be created without a client ID'
+}

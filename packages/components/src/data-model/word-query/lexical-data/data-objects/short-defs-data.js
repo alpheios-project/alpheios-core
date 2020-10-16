@@ -4,6 +4,7 @@ import { Logger, HomonymGroup } from 'alpheios-data-models'
 import { ClientAdapters } from 'alpheios-client-adapters'
 import WordQueryErrorCodes from '@comp/data-model/word-query/error/word-query-error-codes.js'
 import ErrorMapper from '@comp/data-model/word-query/error/error-mapper.js'
+import LexicalDataTypes from '@comp/data-model/word-query/lexical-data/types/lexical-data-types.js'
 
 export default class ShortDefsData {
   constructor ({ clientId, shortLexicons } = {}) {
@@ -34,7 +35,7 @@ export default class ShortDefsData {
           clientId: this._clientId,
           params: {
             opts: this._shortLexicons,
-            homonym: homonym
+            homonym
           }
         })
 
@@ -70,4 +71,5 @@ export default class ShortDefsData {
   }
 }
 
-ShortDefsData.dataType = 'shortDefs'
+/** @type {import('../types/lexical-data-types.js').LexicalDataTypes | string} */
+ShortDefsData.dataType = LexicalDataTypes.SHORT_DEFS

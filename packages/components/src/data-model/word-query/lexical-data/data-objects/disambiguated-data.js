@@ -3,8 +3,21 @@ import LexicalDataResult from '@comp/data-model/word-query/lexical-data/result/l
 import TuftsMorphologyData from '@comp/data-model/word-query/lexical-data/data-objects/tufts-morphology-data.js'
 import TreebankData from '@comp/data-model/word-query/lexical-data/data-objects/treebank-data.js'
 import WordAsLexemeData from '@comp/data-model/word-query/lexical-data/data-objects/word-as-lexeme-data.js'
+import LexicalDataTypes from '@comp/data-model/word-query/lexical-data/types/lexical-data-types.js'
+import WordQueryError from '@comp/data-model/word-query/error/word-query-error.js'
+import WordQueryErrorCodes from '@comp/data-model/word-query/error/word-query-error-codes.js'
 
 export default class DisambiguatedData {
+  /**
+   * Creates a disambiguated homonym group out of results of several previous steps of lexical data retrieval.
+   * Right now it can disambiguate data from any two of the following retrieval steps: Tufts morphology,
+   * the treebank data, word as a lexeme.
+   *
+   * @param {Map<import('../types/lexical-data-types.js').LexicalDataTypes, LexicalDataResult>} [lexicalData] - A map
+   *        containing lexical data obtained on the previous steps.
+   * @returns {Promise<LexicalDataResult>} - A lexical data result object containing the homonym group with
+   *          the disambiguated lexical data.
+   */
   async retrieve (lexicalData) {
     let result = new LexicalDataResult(DisambiguatedData.dataType) // eslint-disable-line prefer-const
     result.state.loading = true
@@ -36,10 +49,19 @@ export default class DisambiguatedData {
       result.data = new HomonymGroup([])
       result.state.available = false
       result.state.failed = true
+      result.errors.push(new WordQueryError(
+        DisambiguatedData.errMsgs.NO_DISAMBIGUATION_DATA,
+        WordQueryErrorCodes.DISAMBIGUATION_ERROR,
+        { path: [this.constructor.name] }))
     }
     result.state.loading = false
     return result
   }
 }
 
-DisambiguatedData.dataType = 'disambiguated'
+/** @type {import('../types/lexical-data-types.js').LexicalDataTypes | string} */
+DisambiguatedData.dataType = LexicalDataTypes.DISAMBIGUATED
+
+DisambiguatedData.errMsgs = {
+  NO_DISAMBIGUATION_DATA: 'No lexical data for disambiguation'
+}
