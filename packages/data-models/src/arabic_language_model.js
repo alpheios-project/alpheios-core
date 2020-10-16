@@ -1,4 +1,5 @@
 import LanguageModel from './language_model.js'
+import Language from './language.js'
 import * as Constants from './constants.js'
 import Feature from './feature.js'
 
@@ -9,6 +10,7 @@ let typeFeaturesInitialized = false
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
 export default class ArabicLanguageModel extends LanguageModel {
+  static get language () { return Language.ARABIC }
   static get languageID () { return Constants.LANG_ARABIC }
   static get languageCode () { return Constants.STR_LANG_CODE_ARA }
   static get languageCodes () { return [Constants.STR_LANG_CODE_ARA, Constants.STR_LANG_CODE_AR] }

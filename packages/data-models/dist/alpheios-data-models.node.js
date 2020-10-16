@@ -17,6 +17,7 @@ return /******/ (() => { // webpackBootstrap
   \*******************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 8:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var v1 = __webpack_require__(/*! ./v1 */ "../../../node_modules/uuid/v1.js");
@@ -37,6 +38,7 @@ module.exports = uuid;
   \*****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 26:0-14 */
 /***/ ((module) => {
 
 /**
@@ -75,6 +77,7 @@ module.exports = bytesToUuid;
   \*********************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 // Unique ID creation requires a high quality random # generator.  In node.js
@@ -95,6 +98,7 @@ module.exports = function nodeRNG() {
   \****************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 109:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var rng = __webpack_require__(/*! ./lib/rng */ "../../../node_modules/uuid/lib/rng.js");
@@ -216,6 +220,7 @@ module.exports = v1;
   \****************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 29:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var rng = __webpack_require__(/*! ./lib/rng */ "../../../node_modules/uuid/lib/rng.js");
@@ -267,8 +272,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ ArabicLanguageModel
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+
 
 
 
@@ -280,13 +287,14 @@ let typeFeaturesInitialized = false
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
 class ArabicLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
-  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.LANG_ARABIC }
-  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_ARA }
-  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_ARA, _constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_AR] }
+  static get language () { return _language_js__WEBPACK_IMPORTED_MODULE_1__.default.ARABIC }
+  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_ARABIC }
+  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_ARA }
+  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_ARA, _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_AR] }
   static get contextForward () { return 0 }
   static get contextBackward () { return 0 }
-  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.LANG_DIR_RTL }
-  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.LANG_UNIT_WORD }
+  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_DIR_RTL }
+  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_UNIT_WORD }
 
   static get typeFeatures () {
     if (!typeFeaturesInitialized) { this.initTypeFeatures() }
@@ -368,14 +376,14 @@ for the current node
     // because this really only applies to the specifics of the Aramorph parser
     let aggregated = [] // eslint-disable-line prefer-const
     // eslint-disable-next-line prefer-const
-    let aggregates = { [_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_NOUN]: [], [_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_ADJECTIVE]: [], [_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_NOUN_PROPER]: [] }
+    let aggregates = { [_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_NOUN]: [], [_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADJECTIVE]: [], [_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_NOUN_PROPER]: [] }
     for (const infl of inflections) {
-      if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph].value.match(/ADJ[uaiNK]/)) {
-        aggregates[_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_ADJECTIVE].push(infl)
-      } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph].value.match(/NOUN[uaiNK]/)) {
-        aggregates[_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_NOUN].push(infl)
-      } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph].value.match(/NOUN_PROP[uaiNK]/)) {
-        aggregates[_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_NOUN_PROPER].push(infl)
+      if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.morph].value.match(/ADJ[uaiNK]/)) {
+        aggregates[_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADJECTIVE].push(infl)
+      } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.morph].value.match(/NOUN[uaiNK]/)) {
+        aggregates[_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_NOUN].push(infl)
+      } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.morph].value.match(/NOUN_PROP[uaiNK]/)) {
+        aggregates[_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_NOUN_PROPER].push(infl)
       } else {
         // we are also going to keep the examples out of the display for now
         infl.example = null
@@ -383,7 +391,7 @@ for the current node
       }
     }
     for (const type of Object.keys(aggregates)) {
-      const base = aggregated.filter((i) => i[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value === type)
+      const base = aggregated.filter((i) => i[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === type)
       if (base.length !== 1) {
         // if we don't have the base form then we don't really know what to do here
         // so just put the inflection back in the ones available for display
@@ -416,9 +424,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ ChineseLanguageModel
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
-/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -431,39 +441,40 @@ let typeFeaturesInitialized = false
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
 class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
-  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_CHINESE }
-  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_ZHO }
+  static get language () { return _language_js__WEBPACK_IMPORTED_MODULE_1__.default.CHINESE }
+  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_CHINESE }
+  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_ZHO }
   static get languageCodes () {
     return [
-      _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_ZH,
-      _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_ZHO,
-      _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_ZH_HANT,
-      _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_ZH_HANS
+      _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_ZH,
+      _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_ZHO,
+      _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_ZH_HANT,
+      _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_ZH_HANS
     ]
   }
 
   static get contextForward () { return 5 }
   static get contextBackward () { return 0 }
-  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_DIR_LTR }
-  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_UNIT_CHAR }
+  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_DIR_LTR }
+  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_UNIT_CHAR }
 
   static get featureValues () {
     return new Map([
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.fullForm,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.fullForm,
         []
       ],
 
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.frequency,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.frequency,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.pronunciation,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.pronunciation,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.radical,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.radical,
         []
       ]
 
@@ -531,7 +542,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
                   if (k + 1 < pin.length - 1 && pin[k + 1] === ':') { pin = pin.replace('u:', _v[tone]) } else { pin = pin.replace('u', _u[tone]) }
                   break
                 default:
-                  _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('some kind of weird vowel', pin[k])
+                  _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__.default.getInstance().warn('some kind of weird vowel', pin[k])
               }
               break
             }
@@ -1455,15 +1466,65 @@ class Definition {
 
 /***/ }),
 
+/***/ "./digest.js":
+/*!*******************!*\
+  !*** ./digest.js ***!
+  \*******************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Digest
+/* harmony export */ });
+/* harmony import */ var _sha1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sha1.js */ "./sha1.js");
+
+
+/**
+ * Creates an SHA-1 hash digest. The generating code is not suitable for cryptographic purposes,
+ * but is good enough for rendering unique IDs of strings and objects.
+ */
+class Digest {
+  /**
+   * Creates an SHA-1 hash digest from a string.
+   * Based on the code example from https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+   *
+   * @param {string} string - A text of a message whose digest will be calculated.
+   * @returns {string} - A digest string.
+   */
+  static fromString (string) {
+    return _sha1_js__WEBPACK_IMPORTED_MODULE_0__.default.hash(string)
+  }
+
+  /**
+   * Creates an SHA-1 hash digest  from an object.
+   * Based on the code example from https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+   *
+   * @param {object} object - An object for hash calculation.
+   * @returns {string} - A digest string.
+   */
+  static fromObject (object) {
+    const string = JSON.stringify(object)
+    return this.fromString(string)
+  }
+}
+
+
+/***/ }),
+
 /***/ "./driver.js":
 /*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
 /*! namespace exports */
-/*! export ArabicLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Author [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export ChineseLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Constants [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export ArabicLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./arabic_language_model.js .default */
+/*! export Author [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./texts/author.js .default */
+/*! export ChineseLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./chinese_language_model.js .default */
+/*! export Constants [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./constants.js */
 /*!   export CASE_ABESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export CASE_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export CASE_ABSOLUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
@@ -1691,35 +1752,37 @@ class Definition {
 /*!   export VOICE_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export VOICE_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   other exports [not provided] [no usage info] */
-/*! export Definition [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export DefinitionSet [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Feature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureImporter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export FeatureType [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export GeezLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export GreekLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export GrmFeature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Homonym [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export HomonymGroup [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Inflection [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export LanguageModelFactory [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export LatinLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Lemma [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Lexeme [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Logger [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export PersianLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export PsEvent [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export PsEventData [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export ResourceProvider [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export SyriacLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export TextQuoteSelector [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export TextWork [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Translation [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export TreebankDataItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export WordItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export WordList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export WordUsageExample [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export Definition [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./definition.js .default */
+/*! export DefinitionSet [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./definition-set.js .default */
+/*! export Digest [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./digest.js .default */
+/*! export Feature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature.js .default */
+/*! export FeatureImporter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature_importer.js .default */
+/*! export FeatureList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature_list.js .default */
+/*! export FeatureType [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature_type.js .default */
+/*! export GeezLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./geez_language_model.js .default */
+/*! export GreekLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./greek_language_model.js .default */
+/*! export GrmFeature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./grm-feature.js .default */
+/*! export Homonym [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./homonym.js .default */
+/*! export HomonymGroup [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./homonym-group.js .default */
+/*! export Inflection [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./inflection.js .default */
+/*! export Language [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./language.js .default */
+/*! export LanguageModelFactory [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./language_model_factory.js .default */
+/*! export LatinLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./latin_language_model.js .default */
+/*! export Lemma [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./lemma.js .default */
+/*! export Lexeme [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./lexeme.js .default */
+/*! export Logger [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./logging/logger.js .default */
+/*! export PersianLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./persian_language_model.js .default */
+/*! export PsEvent [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./ps-events/ps-event.js .default */
+/*! export PsEventData [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./ps-events/ps-event-data.js .default */
+/*! export ResourceProvider [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./resource_provider.js .default */
+/*! export SyriacLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./syriac_language_model.js .default */
+/*! export TextQuoteSelector [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./w3c/text-quote-selector.js .default */
+/*! export TextWork [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./texts/text-work.js .default */
+/*! export Translation [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./translation.js .default */
+/*! export TreebankDataItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./treebank_data_item.js .default */
+/*! export WordItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./word-item.js .default */
+/*! export WordList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./word-list.js .default */
+/*! export WordUsageExample [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./texts/word-usage-example.js .default */
 /*! other exports [not provided] [maybe used in main (runtime-defined)] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1741,25 +1804,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "Homonym": () => /* reexport safe */ _homonym_js__WEBPACK_IMPORTED_MODULE_10__.default,
 /* harmony export */   "Lexeme": () => /* reexport safe */ _lexeme_js__WEBPACK_IMPORTED_MODULE_11__.default,
 /* harmony export */   "Lemma": () => /* reexport safe */ _lemma_js__WEBPACK_IMPORTED_MODULE_12__.default,
-/* harmony export */   "LatinLanguageModel": () => /* reexport safe */ _latin_language_model_js__WEBPACK_IMPORTED_MODULE_14__.default,
-/* harmony export */   "GreekLanguageModel": () => /* reexport safe */ _greek_language_model_js__WEBPACK_IMPORTED_MODULE_15__.default,
-/* harmony export */   "ArabicLanguageModel": () => /* reexport safe */ _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_16__.default,
-/* harmony export */   "PersianLanguageModel": () => /* reexport safe */ _persian_language_model_js__WEBPACK_IMPORTED_MODULE_17__.default,
-/* harmony export */   "GeezLanguageModel": () => /* reexport safe */ _geez_language_model_js__WEBPACK_IMPORTED_MODULE_18__.default,
-/* harmony export */   "ChineseLanguageModel": () => /* reexport safe */ _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_19__.default,
-/* harmony export */   "SyriacLanguageModel": () => /* reexport safe */ _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_20__.default,
-/* harmony export */   "ResourceProvider": () => /* reexport safe */ _resource_provider_js__WEBPACK_IMPORTED_MODULE_21__.default,
-/* harmony export */   "Translation": () => /* reexport safe */ _translation_js__WEBPACK_IMPORTED_MODULE_24__.default,
-/* harmony export */   "PsEvent": () => /* reexport safe */ _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_22__.default,
-/* harmony export */   "PsEventData": () => /* reexport safe */ _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_23__.default,
-/* harmony export */   "TextQuoteSelector": () => /* reexport safe */ _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_25__.default,
-/* harmony export */   "WordUsageExample": () => /* reexport safe */ _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_26__.default,
-/* harmony export */   "Author": () => /* reexport safe */ _texts_author_js__WEBPACK_IMPORTED_MODULE_27__.default,
-/* harmony export */   "TextWork": () => /* reexport safe */ _texts_text_work_js__WEBPACK_IMPORTED_MODULE_28__.default,
-/* harmony export */   "WordItem": () => /* reexport safe */ _word_item_js__WEBPACK_IMPORTED_MODULE_29__.default,
-/* harmony export */   "WordList": () => /* reexport safe */ _word_list_js__WEBPACK_IMPORTED_MODULE_30__.default,
-/* harmony export */   "TreebankDataItem": () => /* reexport safe */ _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__.default,
-/* harmony export */   "Logger": () => /* reexport safe */ _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__.default
+/* harmony export */   "Language": () => /* reexport safe */ _language_js__WEBPACK_IMPORTED_MODULE_14__.default,
+/* harmony export */   "LatinLanguageModel": () => /* reexport safe */ _latin_language_model_js__WEBPACK_IMPORTED_MODULE_15__.default,
+/* harmony export */   "GreekLanguageModel": () => /* reexport safe */ _greek_language_model_js__WEBPACK_IMPORTED_MODULE_16__.default,
+/* harmony export */   "ArabicLanguageModel": () => /* reexport safe */ _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_17__.default,
+/* harmony export */   "PersianLanguageModel": () => /* reexport safe */ _persian_language_model_js__WEBPACK_IMPORTED_MODULE_18__.default,
+/* harmony export */   "GeezLanguageModel": () => /* reexport safe */ _geez_language_model_js__WEBPACK_IMPORTED_MODULE_19__.default,
+/* harmony export */   "ChineseLanguageModel": () => /* reexport safe */ _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_20__.default,
+/* harmony export */   "SyriacLanguageModel": () => /* reexport safe */ _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_21__.default,
+/* harmony export */   "ResourceProvider": () => /* reexport safe */ _resource_provider_js__WEBPACK_IMPORTED_MODULE_22__.default,
+/* harmony export */   "Translation": () => /* reexport safe */ _translation_js__WEBPACK_IMPORTED_MODULE_25__.default,
+/* harmony export */   "PsEvent": () => /* reexport safe */ _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_23__.default,
+/* harmony export */   "PsEventData": () => /* reexport safe */ _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_24__.default,
+/* harmony export */   "TextQuoteSelector": () => /* reexport safe */ _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_26__.default,
+/* harmony export */   "WordUsageExample": () => /* reexport safe */ _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_27__.default,
+/* harmony export */   "Author": () => /* reexport safe */ _texts_author_js__WEBPACK_IMPORTED_MODULE_28__.default,
+/* harmony export */   "TextWork": () => /* reexport safe */ _texts_text_work_js__WEBPACK_IMPORTED_MODULE_29__.default,
+/* harmony export */   "WordItem": () => /* reexport safe */ _word_item_js__WEBPACK_IMPORTED_MODULE_30__.default,
+/* harmony export */   "WordList": () => /* reexport safe */ _word_list_js__WEBPACK_IMPORTED_MODULE_31__.default,
+/* harmony export */   "TreebankDataItem": () => /* reexport safe */ _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_32__.default,
+/* harmony export */   "Logger": () => /* reexport safe */ _logging_logger_js__WEBPACK_IMPORTED_MODULE_33__.default,
+/* harmony export */   "Digest": () => /* reexport safe */ _digest_js__WEBPACK_IMPORTED_MODULE_34__.default
 /* harmony export */ });
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _definition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./definition.js */ "./definition.js");
@@ -1775,25 +1840,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
 /* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
-/* harmony import */ var _latin_language_model_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./latin_language_model.js */ "./latin_language_model.js");
-/* harmony import */ var _greek_language_model_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./greek_language_model.js */ "./greek_language_model.js");
-/* harmony import */ var _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./arabic_language_model.js */ "./arabic_language_model.js");
-/* harmony import */ var _persian_language_model_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./persian_language_model.js */ "./persian_language_model.js");
-/* harmony import */ var _geez_language_model_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./geez_language_model.js */ "./geez_language_model.js");
-/* harmony import */ var _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./chinese_language_model.js */ "./chinese_language_model.js");
-/* harmony import */ var _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./syriac_language_model.js */ "./syriac_language_model.js");
-/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-/* harmony import */ var _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ps-events/ps-event.js */ "./ps-events/ps-event.js");
-/* harmony import */ var _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
-/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
-/* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
-/* harmony import */ var _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./texts/word-usage-example.js */ "./texts/word-usage-example.js");
-/* harmony import */ var _texts_author_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./texts/author.js */ "./texts/author.js");
-/* harmony import */ var _texts_text_work_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./texts/text-work.js */ "./texts/text-work.js");
-/* harmony import */ var _word_item_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./word-item.js */ "./word-item.js");
-/* harmony import */ var _word_list_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./word-list.js */ "./word-list.js");
-/* harmony import */ var _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./treebank_data_item.js */ "./treebank_data_item.js");
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _latin_language_model_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./latin_language_model.js */ "./latin_language_model.js");
+/* harmony import */ var _greek_language_model_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./greek_language_model.js */ "./greek_language_model.js");
+/* harmony import */ var _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./arabic_language_model.js */ "./arabic_language_model.js");
+/* harmony import */ var _persian_language_model_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./persian_language_model.js */ "./persian_language_model.js");
+/* harmony import */ var _geez_language_model_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./geez_language_model.js */ "./geez_language_model.js");
+/* harmony import */ var _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./chinese_language_model.js */ "./chinese_language_model.js");
+/* harmony import */ var _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./syriac_language_model.js */ "./syriac_language_model.js");
+/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+/* harmony import */ var _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ps-events/ps-event.js */ "./ps-events/ps-event.js");
+/* harmony import */ var _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
+/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
+/* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
+/* harmony import */ var _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./texts/word-usage-example.js */ "./texts/word-usage-example.js");
+/* harmony import */ var _texts_author_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./texts/author.js */ "./texts/author.js");
+/* harmony import */ var _texts_text_work_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./texts/text-work.js */ "./texts/text-work.js");
+/* harmony import */ var _word_item_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./word-item.js */ "./word-item.js");
+/* harmony import */ var _word_list_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./word-list.js */ "./word-list.js");
+/* harmony import */ var _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./treebank_data_item.js */ "./treebank_data_item.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _digest_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./digest.js */ "./digest.js");
+
+
 
 
 
@@ -2833,8 +2902,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ GeezLanguageModel
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
-/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+
 
 
 
@@ -2846,42 +2917,44 @@ let typeFeaturesInitialized = false
  * @class  GezLanguageModel is the lass for Ge'ez specific behavior
  */
 class GeezLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
-  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_GEEZ }
+  static get language () { return _language_js__WEBPACK_IMPORTED_MODULE_1__.default.GEEZ }
 
-  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_GEZ }
+  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_GEEZ }
 
-  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_GEZ] }
+  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_GEZ }
+
+  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_GEZ] }
 
   static get contextForward () { return 0 }
 
   static get contextBackward () { return 0 }
 
-  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_DIR_LTR }
+  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_DIR_LTR }
 
-  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_UNIT_WORD }
+  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_UNIT_WORD }
   static get featureValues () {
     return new Map([
       ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__.default.featureValues,
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase,
         [
           // TODO Valid Values for case for gez
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.number,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.number,
         [
           // TODO Valid Values for number for gez
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.gender,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.gender,
         [
           // TODO Valid Values for gender for gez
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.mood,
         [
           // TODO Valid Values for mood for gez
         ]
@@ -2940,11 +3013,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ GreekLanguageModel
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
-/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-/* harmony import */ var _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./languages/greek-chars.js */ "./languages/greek-chars.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./languages/greek-chars.js */ "./languages/greek-chars.js");
+
 
 
 
@@ -2959,13 +3034,14 @@ let typeFeaturesInitialized = false
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
 class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
-  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_GREEK }
-  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_GRC }
-  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_GRC] }
+  static get language () { return _language_js__WEBPACK_IMPORTED_MODULE_1__.default.GREEK }
+  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_GREEK }
+  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_GRC }
+  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_GRC] }
   static get contextForward () { return 0 }
   static get contextBackward () { return 0 }
-  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_DIR_LTR }
-  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_UNIT_WORD }
+  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_DIR_LTR }
+  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_UNIT_WORD }
 
   static get featureValues () {
     /*
@@ -2975,79 +3051,79 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
     return new Map([
       ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__.default.featureValues,
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmClass,
+        _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.grmClass,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_DEMONSTRATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_GENERAL_RELATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_INDEFINITE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_INTENSIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_INTERROGATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_PERSONAL,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_POSSESSIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_RECIPROCAL,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_REFLEXIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_RELATIVE
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_DEMONSTRATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_GENERAL_RELATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_INDEFINITE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_INTENSIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_INTERROGATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_PERSONAL,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_POSSESSIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_RECIPROCAL,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_REFLEXIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_RELATIVE
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.number,
+        _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.number,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.NUM_SINGULAR,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.NUM_PLURAL,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.NUM_DUAL
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.NUM_SINGULAR,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.NUM_PLURAL,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.NUM_DUAL
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmCase,
+        _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.grmCase,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_NOMINATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_GENITIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_DATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_ACCUSATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_VOCATIVE
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_NOMINATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_GENITIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_DATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_ACCUSATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_VOCATIVE
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.declension,
+        _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.declension,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_1ST,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_2ND,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_3RD
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_1ST,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_2ND,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_3RD
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.tense,
+        _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.tense,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_PRESENT,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_IMPERFECT,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_FUTURE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_PERFECT,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_PLUPERFECT,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_FUTURE_PERFECT,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_AORIST
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_PRESENT,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_IMPERFECT,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_FUTURE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_PERFECT,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_PLUPERFECT,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_FUTURE_PERFECT,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_AORIST
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.voice,
+        _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.voice,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.VOICE_PASSIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.VOICE_ACTIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.VOICE_MEDIOPASSIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.VOICE_MIDDLE
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.VOICE_PASSIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.VOICE_ACTIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.VOICE_MEDIOPASSIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.VOICE_MIDDLE
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.mood,
+        _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.mood,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_INDICATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_SUBJUNCTIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_OPTATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_IMPERATIVE
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_INDICATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_SUBJUNCTIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_OPTATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_IMPERATIVE
         ]
       ],
       [
         // TODO full list of greek dialects
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.dialect,
+        _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.dialect,
         [
           'attic',
           'epic',
@@ -3084,7 +3160,7 @@ for the current node
    */
   static grammarFeatures () {
     // TODO this ideally might be grammar specific
-    return [_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part, _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.voice]
+    return [_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part, _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.voice]
   }
 
   /**
@@ -3223,21 +3299,21 @@ for the current node
       suffixBased: false,
       pronounClassRequired: false
     }
-    const formBasedList = [_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PRONOUN, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_NUMERAL, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ARTICLE]
-    if (inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part)) {
-      if (formBasedList.includes(inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value)) {
+    const formBasedList = [_constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PRONOUN, _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_NUMERAL, _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_ARTICLE]
+    if (inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part)) {
+      if (formBasedList.includes(inflection[_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part].value)) {
         constraints.fullFormBased = true
       } else {
         constraints.suffixBased = true
       }
     } else {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__.default.getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part])
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__.default.getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part])
     }
 
     constraints.pronounClassRequired =
-      _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.compareLanguages(GreekLanguageModel.languageID, inflection.languageID) &&
-      inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part) &&
-      inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PRONOUN
+      _language_model_factory_js__WEBPACK_IMPORTED_MODULE_2__.default.compareLanguages(GreekLanguageModel.languageID, inflection.languageID) &&
+      inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part) &&
+      inflection[_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PRONOUN
 
     return constraints
   }
@@ -3266,21 +3342,21 @@ for the current node
         // the following test intential looks for an exact equality on the headword rather than
         // using compareWord because exact match on diacritics matters -- the interrogative and indefinite
         // pronouns only differ by diacritics
-        if (form.value && (!form.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.hdwd] || (form.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.hdwd].value === hdwd))) {
+        if (form.value && (!form.features[_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.hdwd] || (form.features[_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.hdwd].value === hdwd))) {
           match = GreekLanguageModel.compareWords(form.value, word, normalize)
         }
         return match
       }
     )
     for (const matchingForm of matchingForms) {
-      if (matchingForm.features.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmClass)) {
-        for (const value of matchingForm.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmClass].values) {
+      if (matchingForm.features.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.grmClass)) {
+        for (const value of matchingForm.features[_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.grmClass].values) {
           matchingValues.add(value)
         }
       }
     }
     if (matchingValues.size > 0) {
-      return new _feature_js__WEBPACK_IMPORTED_MODULE_3__.default(_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmClass, Array.from(matchingValues), GreekLanguageModel.languageID)
+      return new _feature_js__WEBPACK_IMPORTED_MODULE_4__.default(_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.grmClass, Array.from(matchingValues), GreekLanguageModel.languageID)
     }
   }
 
@@ -3335,7 +3411,7 @@ for the current node
   }
 
   static isValidUnicode (word) {
-    return _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_5__.default.chars.some(char => word.includes(char))
+    return _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_6__.default.chars.some(char => word.includes(char))
   }
 }
 
@@ -3549,7 +3625,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class HomonymGroup {
+  /**
+   * Creates an instance of a HomonymGroup object.
+   *
+   * @param {Homonym[]} homonyms - Homonyms to include into the homonym group.
+   */
   constructor (homonyms = []) {
+    if (!homonyms) {
+      throw new Error('Homonyms are required to create a HomonymGroup')
+    }
+    if (!Array.isArray(homonyms)) {
+      throw new Error('An array of homonyms is required to create a HomonymGroup')
+    }
+    /**
+     @type {Homonym[]}
+     @private
+     */
     this._homonyms = homonyms
   }
 
@@ -3579,6 +3670,28 @@ class HomonymGroup {
       lexemes.forEach(lexeme => { lexeme.disambiguated = true })
     }
     return new _homonym_js__WEBPACK_IMPORTED_MODULE_0__.default(lexemes, targetWord)
+  }
+
+  /**
+   * Converts the homonym group into a serializable JSON object.
+   *
+   * @returns {object} - A serializable JSON object.
+   */
+  toJsonObject () {
+    return {
+      homonyms: this._homonyms.map(h => h.convertToJSONObject(true))
+    }
+  }
+
+  /**
+   * Creates a HomonymGroup object from its JSON representation.
+   *
+   * @param {object} jsonObj - A deserialized JSON object representing the homonym group.
+   * @returns {HomonymGroup} - An instance representing a deserialized JSON object.
+   */
+  static fromJsonObject (jsonObj) {
+    const homonyms = jsonObj.homonyms.map(h => _homonym_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(h))
+    return new HomonymGroup(homonyms)
   }
 }
 
@@ -3613,6 +3726,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/**
+ * A class representing a homonym object.
+ *
+ * @typedef {object} Homonym
+ * @property {Lexeme[]} lexemes - A list of lexemes that the homonym contains.
+ * @property {string} targetWord - A word that was used to create a homonym.
+ */
 class Homonym {
   /**
    * Initializes a Homonym object.
@@ -4294,6 +4414,142 @@ is included in the grouping key
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InflectionGroupingKey);
+
+
+/***/ }),
+
+/***/ "./language.js":
+/*!*********************!*\
+  !*** ./language.js ***!
+  \*********************/
+/*! namespace exports */
+/*! export Lang [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Lang": () => /* binding */ Lang,
+/* harmony export */   "default": () => /* binding */ Language
+/* harmony export */ });
+/**
+ * Constants that define a macrolanguage.
+ *
+ * @enum {string} */
+const Lang = {
+  LATIN: 'lat',
+  GREEK: 'grc',
+  ARABIC: 'ara',
+  PERSIAN: 'per',
+  GEEZ: 'gez',
+  CHINESE: 'zho',
+  SYRIAC: 'syr'
+}
+
+/**
+ * A value object that represents the notion of a language.
+ */
+class Language {
+  /**
+   * Creates an instance of a language class.
+   *
+   * @param {Lang} code - A constant that specifies a language.
+   */
+  constructor (code) {
+    if (!code) {
+      throw new Error('Language object cannot be create without a language _code')
+    }
+
+    /**
+     An ISO 639-3 _code.
+     *
+     @private
+     @type {string}
+     */
+    this._code = code
+  }
+
+  static get LATIN () {
+    return new Language(Lang.LATIN)
+  }
+
+  static get GREEK () {
+    return new Language(Lang.GREEK)
+  }
+
+  static get ARABIC () {
+    return new Language(Lang.ARABIC)
+  }
+
+  static get PERSIAN () {
+    return new Language(Lang.PERSIAN)
+  }
+
+  static get GEEZ () {
+    return new Language(Lang.GEEZ)
+  }
+
+  static get CHINESE () {
+    return new Language(Lang.CHINESE)
+  }
+
+  static get SYRIAC () {
+    return new Language(Lang.SYRIAC)
+  }
+
+  /**
+   * Check whether two languages are equal.
+   *
+   * @param {Language} language - A language object to be compared with the current one.
+   * @returns {boolean} - True if languages are equal, false otherwise.
+   */
+  equals (language) {
+    return this._code === language.toCode()
+  }
+
+  /**
+   * Checks whether the language is part of a list of languages provided.
+   *
+   * @param {Language[]} languages - A list of languages that the current language should be tested against.
+   * @returns {boolean} - True if the language list contains the current language, false otherwise.
+   */
+  isOneOf (languages) {
+    return languages.some(l => this.equals(l))
+  }
+
+  /**
+   * Returns a language code of the object.
+   *
+   * @returns {string} - A language code.
+   */
+  toCode () {
+    return this._code
+  }
+
+  /**
+   * Converts the current language object into a serializable JSON object.
+   *
+   * @returns {object} - A serializable JSON object.
+   */
+  toJsonObject () {
+    return {
+      code: this._code
+    }
+  }
+
+  /**
+   * Creates a Language object out of its JSON representation.
+   *
+   * @param {object} jsonObj - A deserialized JSON object representing the language.
+   * @returns {Language} - A Language object created from a deserialized JSON representation.
+   */
+  static fromJsonObject (jsonObj) {
+    return new Language(jsonObj.code)
+  }
+}
 
 
 /***/ }),
@@ -5021,15 +5277,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
-/* harmony import */ var _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./latin_language_model.js */ "./latin_language_model.js");
-/* harmony import */ var _greek_language_model_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./greek_language_model.js */ "./greek_language_model.js");
-/* harmony import */ var _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./arabic_language_model.js */ "./arabic_language_model.js");
-/* harmony import */ var _persian_language_model_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./persian_language_model.js */ "./persian_language_model.js");
-/* harmony import */ var _geez_language_model_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./geez_language_model.js */ "./geez_language_model.js");
-/* harmony import */ var _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./chinese_language_model.js */ "./chinese_language_model.js");
-/* harmony import */ var _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./syriac_language_model.js */ "./syriac_language_model.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
+/* harmony import */ var _latin_language_model_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./latin_language_model.js */ "./latin_language_model.js");
+/* harmony import */ var _greek_language_model_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./greek_language_model.js */ "./greek_language_model.js");
+/* harmony import */ var _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./arabic_language_model.js */ "./arabic_language_model.js");
+/* harmony import */ var _persian_language_model_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./persian_language_model.js */ "./persian_language_model.js");
+/* harmony import */ var _geez_language_model_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./geez_language_model.js */ "./geez_language_model.js");
+/* harmony import */ var _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./chinese_language_model.js */ "./chinese_language_model.js");
+/* harmony import */ var _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./syriac_language_model.js */ "./syriac_language_model.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+
 
 
 
@@ -5041,17 +5299,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const MODELS = new Map([
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_LA, _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_LAT, _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_GRC, _greek_language_model_js__WEBPACK_IMPORTED_MODULE_2__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_ARA, _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_AR, _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_PER, _persian_language_model_js__WEBPACK_IMPORTED_MODULE_4__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_GEZ, _geez_language_model_js__WEBPACK_IMPORTED_MODULE_5__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_ZHO, _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_6__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_SYR, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_SYC, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_SYR_SYRJ, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__.default]
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_LA, _latin_language_model_js__WEBPACK_IMPORTED_MODULE_2__.default],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_LAT, _latin_language_model_js__WEBPACK_IMPORTED_MODULE_2__.default],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_GRC, _greek_language_model_js__WEBPACK_IMPORTED_MODULE_3__.default],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_ARA, _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_4__.default],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_AR, _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_4__.default],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_PER, _persian_language_model_js__WEBPACK_IMPORTED_MODULE_5__.default],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_GEZ, _geez_language_model_js__WEBPACK_IMPORTED_MODULE_6__.default],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_ZHO, _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_7__.default],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_SYR, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_8__.default],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_SYC, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_8__.default],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_SYR_SYRJ, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_8__.default]
 ])
 
 class LanguageModelFactory {
@@ -5090,8 +5348,24 @@ class LanguageModelFactory {
       return MODELS.get(languageCode)
     } else {
       // A default value
-      return _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default
+      return _language_model_js__WEBPACK_IMPORTED_MODULE_1__.default
     }
+  }
+
+  /**
+   * Returns a language model for a specified language.
+   *
+   * @param {Language} language - A language for which a language model shall be returned.
+   * @returns {LanguageModel} - A language model matching the language provided.
+   */
+  static getModelFromLanguage (language) {
+    for (const languageModel of MODELS.values()) {
+      if (language.equals(languageModel.language)) {
+        return languageModel
+      }
+    }
+    // A default value
+    return _language_model_js__WEBPACK_IMPORTED_MODULE_1__.default
   }
 
   static getLanguageForCode (code = null) {
@@ -5101,7 +5375,7 @@ class LanguageModelFactory {
     }
     // for now return a default Model
     // TODO may want to throw an error
-    return new _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default()
+    return new _language_model_js__WEBPACK_IMPORTED_MODULE_1__.default()
   }
 
   /**
@@ -5117,7 +5391,7 @@ class LanguageModelFactory {
       }
     }
     // Noting found, return a Symbol with an undefined value (to keep return value type the same)
-    return _constants_js__WEBPACK_IMPORTED_MODULE_8__.LANG_UNDEFINED
+    return _constants_js__WEBPACK_IMPORTED_MODULE_9__.LANG_UNDEFINED
   }
 
   /**
@@ -5133,13 +5407,33 @@ class LanguageModelFactory {
       }
     }
     // Noting found, return a string with an undefined value (to keep return value type the same)
-    return _constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_UNDEFINED
+    return _constants_js__WEBPACK_IMPORTED_MODULE_9__.STR_LANG_CODE_UNDEFINED
+  }
+
+  /**
+   * Returns a language ID and a language code values that matches the Language object.
+   * This method is used for compatibility in places where either the legacy language ID or
+   * the language code are required.
+   * TODO: This method shall be removed once all components would switch to the Language object.
+   *
+   * @param {Language} language - A Language object.
+   * @returns {{languageID: symbol, languageCode: string}} - An object containing
+   *          both the language ID and the language code.
+   */
+  static getLegacyLanguageCodeAndId (language) {
+    const languageModel = this.getModelFromLanguage(language)
+    return {
+      languageID: languageModel.languageID,
+      languageCode: languageModel.languageCode
+    }
   }
 
   /**
    * Takes either a language ID or a language code and returns an object with both an ID and a code.
    *
-   * @param {string | symbol} language - Either a language ID (a Symbol) or a language code (a String).
+   * @param {symbol | string} language - Language in one of the following formats:
+   *        the language ID (a Symbol) or the language code (a String).
+   *
    * @returns {object} An object with the following properties:
    *    {symbol} languageID
    *    {string} languageCode
@@ -5182,7 +5476,7 @@ class LanguageModelFactory {
    * @returns {boolean}
    */
   static isExperimentalLanguage (languageID) {
-    return [_constants_js__WEBPACK_IMPORTED_MODULE_8__.LANG_GEEZ, _constants_js__WEBPACK_IMPORTED_MODULE_8__.LANG_SYRIAC, _constants_js__WEBPACK_IMPORTED_MODULE_8__.LANG_CHINESE].includes(languageID)
+    return [_constants_js__WEBPACK_IMPORTED_MODULE_9__.LANG_GEEZ, _constants_js__WEBPACK_IMPORTED_MODULE_9__.LANG_SYRIAC, _constants_js__WEBPACK_IMPORTED_MODULE_9__.LANG_CHINESE].includes(languageID)
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LanguageModelFactory);
@@ -5539,9 +5833,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ LatinLanguageModel
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
-/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -5554,13 +5850,14 @@ let typeFeaturesInitialized = false
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
 class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
-  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_LATIN }
-  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_LAT }
-  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_LA, _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_LAT] }
+  static get language () { return _language_js__WEBPACK_IMPORTED_MODULE_1__.default.LATIN }
+  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_LATIN }
+  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_LAT }
+  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_LA, _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_LAT] }
   static get contextForward () { return 0 }
   static get contextBackward () { return 0 }
-  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_DIR_LTR }
-  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_UNIT_WORD }
+  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_DIR_LTR }
+  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_UNIT_WORD }
 
   static get featureValues () {
     /*
@@ -5570,83 +5867,83 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
     return new Map([
       ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__.default.featureValues,
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmClass,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmClass,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_PERSONAL,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_REFLEXIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_POSSESSIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_DEMONSTRATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_RELATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_INTERROGATIVE
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_PERSONAL,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_REFLEXIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_POSSESSIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_DEMONSTRATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_RELATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CLASS_INTERROGATIVE
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.number,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.number,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.NUM_SINGULAR,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.NUM_PLURAL
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.NUM_SINGULAR,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.NUM_PLURAL
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_NOMINATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_GENITIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_DATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_ACCUSATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_ABLATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_LOCATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_VOCATIVE
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_NOMINATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_GENITIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_DATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_ACCUSATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_ABLATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_LOCATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.CASE_VOCATIVE
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.declension,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.declension,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_1ST,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_2ND,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_3RD,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_4TH,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_5TH
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_1ST,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_2ND,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_3RD,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_4TH,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_5TH
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.tense,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_PRESENT,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_IMPERFECT,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_FUTURE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_PERFECT,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_PLUPERFECT,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_FUTURE_PERFECT
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_PRESENT,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_IMPERFECT,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_FUTURE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_PERFECT,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_PLUPERFECT,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.TENSE_FUTURE_PERFECT
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.voice,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.voice,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.VOICE_ACTIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.VOICE_PASSIVE
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.VOICE_ACTIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.VOICE_PASSIVE
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.mood,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_INDICATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_SUBJUNCTIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_IMPERATIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_SUPINE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_GERUNDIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_INFINITIVE
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_INDICATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_SUBJUNCTIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_IMPERATIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_PARTICIPLE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_SUPINE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_GERUNDIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_PARTICIPLE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_INFINITIVE
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.conjugation,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.conjugation,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_1ST,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_2ND,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_3RD,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_4TH
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_1ST,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_2ND,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_3RD,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.ORD_4TH
         ]
       ]
     ])
@@ -5671,7 +5968,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
    */
   static grammarFeatures () {
     // TODO this ideally might be grammar specific
-    return [_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.conjugation]
+    return [_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.conjugation]
   }
 
   /**
@@ -5732,17 +6029,17 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
       suffixBased: false,
       pronounClassRequired: false
     }
-    if (inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part)) {
-      if ([_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB_PARTICIPLE, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_SUPINE, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_GERUNDIVE].includes(inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value)) {
+    if (inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part)) {
+      if ([_constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_VERB, _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_VERB_PARTICIPLE, _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_SUPINE, _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_GERUNDIVE].includes(inflection[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value)) {
         grammar.fullFormBased = true
         grammar.suffixBased = true
-      } else if (inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PRONOUN) {
+      } else if (inflection[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PRONOUN) {
         grammar.fullFormBased = true
       } else {
         grammar.suffixBased = true
       }
     } else {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part])
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__.default.getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part])
     }
 
     return grammar
@@ -5768,11 +6065,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -5787,35 +6086,38 @@ class Lemma {
    * Initializes a Lemma object.
    *
    * @param {string} word - A word.
-   * @param {symbol | string} languageID - A language ID (symbol, please use this) or a language code of a word.
+   * @param {Language | symbol | string} language - A language ID (symbol, please use this) or a language code of a word.
    * @param {string[]} principalParts - the principalParts of a lemma.
    * @param {object} features - the grammatical features of a lemma.
-
-   * @param {Translation} transaltions - translations from python service
    */
-  constructor (word, languageID, principalParts = [], features = {}) {
+  constructor (word, language, principalParts = [], features = {}) {
     if (!word) {
       throw new Error('Word should not be empty.')
     }
 
-    if (!languageID) {
+    if (!language) {
       throw new Error('Language should not be empty.')
     }
 
     // Compatibility code for something providing languageCode instead of languageID
     this.languageID = undefined
     this.languageCode = undefined
-    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageAttrs(languageID))
+    if (language instanceof _language_js__WEBPACK_IMPORTED_MODULE_1__.default) {
+      ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(language))
+    } else {
+      // Language is in a legacy format: either a symbol or a string
+      ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageAttrs(language))
+    }
 
     this.word = word
     this.principalParts = principalParts
     this.features = {}
 
-    this.ID = (0,uuid__WEBPACK_IMPORTED_MODULE_3__.v4)()
+    this.ID = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)()
   }
 
   get language () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__.default.getInstance().warn('Please use "languageID" instead of "language"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__.default.getInstance().warn('Please use "languageID" instead of "language"')
     return this.languageCode
   }
 
@@ -5826,12 +6128,12 @@ class Lemma {
 
     if (jsonObject.features && jsonObject.features.length > 0) {
       jsonObject.features.forEach(featureSource => {
-        resLemma.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.readObject(featureSource))
+        resLemma.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.readObject(featureSource))
       })
     }
 
     if (jsonObject.translation) {
-      resLemma.translation = _translation_js__WEBPACK_IMPORTED_MODULE_2__.default.readObject(jsonObject.translation, resLemma)
+      resLemma.translation = _translation_js__WEBPACK_IMPORTED_MODULE_3__.default.readObject(jsonObject.translation, resLemma)
     }
     return resLemma
   }
@@ -5863,7 +6165,7 @@ class Lemma {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__.default.getInstance().warn('Please use "addFeature" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__.default.getInstance().warn('Please use "addFeature" instead')
     if (!data) {
       throw new Error('feature data cannot be empty.')
     }
@@ -5874,7 +6176,7 @@ class Lemma {
     const type = data[0].type
     this.features[type] = []
     for (const element of data) {
-      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_2__.default)) {
         throw new Error('feature data must be a Feature object.')
       }
 
@@ -5897,7 +6199,7 @@ class Lemma {
       throw new Error('feature data cannot be empty.')
     }
 
-    if (!(feature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+    if (!(feature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_2__.default)) {
       throw new Error('feature data must be a Feature object.')
     }
 
@@ -5951,9 +6253,9 @@ class Lemma {
    */
   isFullHomonym (lemma, { normalize = false } = {}) {
     // If parts of speech do not match this is not a full homonym
-    if (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] ||
-      !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] ||
-      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part])) {
+    if (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ||
+      !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ||
+      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part])) {
       return false
     }
 
@@ -6513,7 +6815,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ PersianLanguageModel
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+
 
 
 
@@ -6524,19 +6828,21 @@ let typeFeaturesInitialized = false
  * @class  PersianLanguageModel is the lass for Persian specific behavior
  */
 class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
-  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.LANG_PERSIAN }
+  static get language () { return _language_js__WEBPACK_IMPORTED_MODULE_1__.default.PERSIAN }
 
-  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_PER }
+  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_PERSIAN }
 
-  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_PER, _constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_FAS, _constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_FA, _constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_FA_IR] }
+  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_PER }
+
+  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_PER, _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_FAS, _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_FA, _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_FA_IR] }
 
   static get contextForward () { return 0 }
 
   static get contextBackward () { return 0 }
 
-  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.LANG_DIR_RTL }
+  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_DIR_RTL }
 
-  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.LANG_UNIT_WORD }
+  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_UNIT_WORD }
 
   static get typeFeatures () {
     if (!typeFeaturesInitialized) { this.initTypeFeatures() }
@@ -6823,6 +7129,194 @@ class ResourceProvider {
 
 /***/ }),
 
+/***/ "./sha1.js":
+/*!*****************!*\
+  !*** ./sha1.js ***!
+  \*****************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* eslint-disable */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+/* SHA-1 (FIPS 180-4) implementation in JavaScript                    (c) Chris Veness 2002-2019  */
+/*                                                                                   MIT Licence  */
+/* www.movable-type.co.uk/scripts/sha1.html                                                       */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+/**
+ * SHA-1 hash function reference implementation.
+ *
+ * This is an annotated direct implementation of FIPS 180-4, without any optimisations. It is
+ * intended to aid understanding of the algorithm rather than for production use.
+ *
+ * While it could be used where performance is not critical, I would recommend using the ‘Web
+ * Cryptography API’ (developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest) for the browser,
+ * or the ‘crypto’ library (nodejs.org/api/crypto.html#crypto_class_hash) in Node.js.
+ *
+ * See csrc.nist.gov/groups/ST/toolkit/secure_hashing.html
+ *     csrc.nist.gov/groups/ST/toolkit/examples.html
+ */
+class Sha1 {
+  /**
+   * Generates SHA-1 hash of string.
+   *
+   * @param   {string} msg - (Unicode) string to be hashed.
+   * @param   {object} [options]
+   * @param   {string} [options.msgFormat=string] - Message format: 'string' for JavaScript string
+   *   (gets converted to UTF-8 for hashing); 'hex-bytes' for string of hex bytes ('616263' ≡ 'abc') .
+   * @param   {string} [options.outFormat=hex] - Output format: 'hex' for string of contiguous
+   *   hex bytes; 'hex-w' for grouping hex bytes into groups of (4 byte / 8 character) words.
+   * @returns {string} Hash of msg as hex character string.
+   *
+   * @example
+   *   import Sha1 from './sha1.js';
+   *   const hash = Sha1.hash('abc'); // 'a9993e364706816aba3e25717850c26c9cd0d89d'
+   */
+  static hash (msg, options) {
+    const defaults = { msgFormat: 'string', outFormat: 'hex' }
+    const opt = Object.assign(defaults, options)
+
+    switch (opt.msgFormat) {
+      default: // default is to convert string to UTF-8, as SHA only deals with byte-streams
+      case 'string': msg = utf8Encode(msg); break
+      case 'hex-bytes':msg = hexBytesToString(msg); break // mostly for running tests
+    }
+
+    // constants [§4.2.1]
+    const K = [0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6]
+
+    // initial hash value [§5.3.1]
+    const H = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0]
+
+    // PREPROCESSING [§6.1.1]
+
+    msg += String.fromCharCode(0x80) // add trailing '1' bit (+ 0's padding) to string [§5.1.1]
+
+    // convert string msg into 512-bit/16-integer blocks arrays of ints [§5.2.1]
+    const l = msg.length / 4 + 2 // length (in 32-bit integers) of msg + ‘1’ + appended length
+    const N = Math.ceil(l / 16) // number of 16-integer-blocks required to hold 'l' ints
+    const M = new Array(N)
+
+    for (let i = 0; i < N; i++) {
+      M[i] = new Array(16)
+      for (let j = 0; j < 16; j++) { // encode 4 chars per integer, big-endian encoding
+        M[i][j] = (msg.charCodeAt(i * 64 + j * 4 + 0) << 24) | (msg.charCodeAt(i * 64 + j * 4 + 1) << 16) |
+          (msg.charCodeAt(i * 64 + j * 4 + 2) << 8) | (msg.charCodeAt(i * 64 + j * 4 + 3) << 0)
+      } // note running off the end of msg is ok 'cos bitwise ops on NaN return 0
+    }
+    // add length (in bits) into final pair of 32-bit integers (big-endian) [§5.1.1]
+    // note: most significant word would be (len-1)*8 >>> 32, but since JS converts
+    // bitwise-op args to 32 bits, we need to simulate this by arithmetic operators
+    M[N - 1][14] = ((msg.length - 1) * 8) / Math.pow(2, 32); M[N - 1][14] = Math.floor(M[N - 1][14])
+    M[N - 1][15] = ((msg.length - 1) * 8) & 0xffffffff
+
+    // HASH COMPUTATION [§6.1.2]
+
+    for (let i = 0; i < N; i++) {
+      const W = new Array(80)
+
+      // 1 - prepare message schedule 'W'
+      for (let t = 0; t < 16; t++) W[t] = M[i][t]
+      for (let t = 16; t < 80; t++) W[t] = Sha1.ROTL(W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16], 1)
+
+      // 2 - initialise five working variables a, b, c, d, e with previous hash value
+      let a = H[0]; let b = H[1]; let c = H[2]; let d = H[3]; let e = H[4]
+
+      // 3 - main loop (use JavaScript '>>> 0' to emulate UInt32 variables)
+      for (let t = 0; t < 80; t++) {
+        const s = Math.floor(t / 20) // seq for blocks of 'f' functions and 'K' constants
+        const T = (Sha1.ROTL(a, 5) + Sha1.f(s, b, c, d) + e + K[s] + W[t]) >>> 0
+        e = d
+        d = c
+        c = Sha1.ROTL(b, 30) >>> 0
+        b = a
+        a = T
+      }
+
+      // 4 - compute the new intermediate hash value (note 'addition modulo 2^32' – JavaScript
+      // '>>> 0' coerces to unsigned UInt32 which achieves modulo 2^32 addition)
+      H[0] = (H[0] + a) >>> 0
+      H[1] = (H[1] + b) >>> 0
+      H[2] = (H[2] + c) >>> 0
+      H[3] = (H[3] + d) >>> 0
+      H[4] = (H[4] + e) >>> 0
+    }
+
+    // convert H0..H4 to hex strings (with leading zeros)
+    for (let h = 0; h < H.length; h++) H[h] = ('00000000' + H[h].toString(16)).slice(-8)
+
+    // concatenate H0..H4, with separator if required
+    const separator = opt.outFormat == 'hex-w' ? ' ' : ''
+
+    return H.join(separator)
+
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+    /**
+     * @param str
+     */
+    function utf8Encode (str) {
+      try {
+        return new TextEncoder().encode(str, 'utf-8').reduce((prev, curr) => prev + String.fromCharCode(curr), '')
+      } catch (e) { // no TextEncoder available?
+        return unescape(encodeURIComponent(str)) // monsur.hossa.in/2012/07/20/utf-8-in-javascript.html
+      }
+    }
+
+    /**
+     * @param hexStr
+     */
+    function hexBytesToString (hexStr) { // convert string of hex numbers to a string of chars (eg '616263' -> 'abc').
+      const str = hexStr.replace(' ', '') // allow space-separated groups
+      return str == '' ? '' : str.match(/.{2}/g).map(byte => String.fromCharCode(parseInt(byte, 16))).join('')
+    }
+  }
+
+  /**
+   * Function 'f' [§4.1.1].
+   *
+   * @param s
+   * @param x
+   * @param y
+   * @param z
+   * @private
+   */
+  static f (s, x, y, z) {
+    switch (s) {
+      case 0: return (x & y) ^ (~x & z) // Ch()
+      case 1: return x ^ y ^ z // Parity()
+      case 2: return (x & y) ^ (x & z) ^ (y & z) // Maj()
+      case 3: return x ^ y ^ z // Parity()
+    }
+  }
+
+  /**
+   * Rotates left (circular left shift) value x by n positions [§3.2.5].
+   *
+   * @param x
+   * @param n
+   * @private
+   */
+  static ROTL (x, n) {
+    return (x << n) | (x >>> (32 - n))
+  }
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Sha1);
+
+
+/***/ }),
+
 /***/ "./syriac_language_model.js":
 /*!**********************************!*\
   !*** ./syriac_language_model.js ***!
@@ -6839,10 +7333,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ SyriacLanguageModel
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
-/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-/* harmony import */ var _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inflection_grouping_key */ "./inflection_grouping_key.js");
-/* harmony import */ var _inflection_group__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflection_group */ "./inflection_group.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflection_grouping_key */ "./inflection_grouping_key.js");
+/* harmony import */ var _inflection_group__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./inflection_group */ "./inflection_group.js");
+
 
 
 
@@ -6856,51 +7352,53 @@ let typeFeaturesInitialized = false
  * @class  GezLanguageModel is the lass for Ge'ez specific behavior
  */
 class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
-  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_SYRIAC }
+  static get language () { return _language_js__WEBPACK_IMPORTED_MODULE_1__.default.SYRIAC }
 
-  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_SYR }
+  static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_SYRIAC }
 
-  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_SYR, _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_SYC, _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_SYR_SYRJ] }
+  static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_SYR }
+
+  static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_SYR, _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_SYC, _constants_js__WEBPACK_IMPORTED_MODULE_3__.STR_LANG_CODE_SYR_SYRJ] }
 
   static get contextForward () { return 0 }
 
   static get contextBackward () { return 0 }
 
-  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_DIR_RTL }
+  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_DIR_RTL }
 
-  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_UNIT_WORD }
+  static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_3__.LANG_UNIT_WORD }
   static get featureValues () {
     return new Map([
       ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__.default.featureValues,
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part,
         [
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERBIAL,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADJECTIVE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ARTICLE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_CONJUNCTION,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_NOUN,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_NUMERAL,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PREFIX,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PREPOSITION,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PRONOUN,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_SUFFIX,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_SUPINE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB_PARTICIPLE,
-          _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_DENOMINATIVE
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_ADVERB,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_ADVERBIAL,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_ADJECTIVE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_ARTICLE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_CONJUNCTION,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_EXCLAMATION,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_INTERJECTION,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_NOUN,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_NUMERAL,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PARTICLE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PREFIX,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PREPOSITION,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PRONOUN,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_SUFFIX,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_SUPINE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_VERB,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_VERB_PARTICIPLE,
+          _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_DENOMINATIVE
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.kaylo,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.kaylo,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.state,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.state,
         []
       ]
     ])
@@ -6959,8 +7457,8 @@ for the current node
 
     // group inflections by part of speech
     for (const infl of aggregated) {
-      const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__.default(infl,
-        [_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.kaylo, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.state, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.comparison],
+      const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_4__.default(infl,
+        [_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.kaylo, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.state, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.comparison],
         {
           prefix: infl.prefix,
           suffix: infl.suffix,
@@ -6971,7 +7469,7 @@ for the current node
       if (grouped.has(groupingKeyStr)) {
         grouped.get(groupingKeyStr).append(infl)
       } else {
-        grouped.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__.default(groupingKey, [infl]))
+        grouped.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_5__.default(groupingKey, [infl]))
       }
     }
 
@@ -6981,30 +7479,30 @@ for the current node
       for (const infl of kv[1].inflections) {
         let keyprop
         let isCaseInflectionSet = false
-        if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase]) {
+        if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase]) {
           // grouping on number if case is defined
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.number
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.number
           isCaseInflectionSet = true
-        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense]) {
+        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.tense]) {
           // grouping on tense if tense is defined but not case
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense
-        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB) {
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.tense
+        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_VERB) {
           // grouping on no case or tense but a verb
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part
-        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB) {
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part
+        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_ADVERB) {
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part
           // grouping on adverbs without case or tense
         } else {
           keyprop = 'misc'
           // grouping on adverbs without case or tense
           // everything else
         }
-        const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__.default(infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
+        const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_4__.default(infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
         const groupingKeyStr = groupingKey.toString()
         if (inflgrp.has(groupingKeyStr)) {
           inflgrp.get(groupingKeyStr).append(infl)
         } else {
-          inflgrp.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__.default(groupingKey, [infl]))
+          inflgrp.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_5__.default(groupingKey, [infl]))
         }
       }
       // inflgrp is now a map of groups of inflections grouped by
@@ -7018,13 +7516,13 @@ for the current node
         const nextGroup = new Map()
         const sortOrder = new Map()
         for (const infl of kv[1].inflections) {
-          const sortkey = infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase] ? Math.max(infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase].items.map(f => f.sortOrder)) : 1
-          const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__.default(infl, [_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.voice])
+          const sortkey = infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase] ? Math.max(infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase].items.map(f => f.sortOrder)) : 1
+          const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_4__.default(infl, [_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.voice])
           const groupingKeyStr = groupingKey.toString()
           if (nextGroup.has(groupingKeyStr)) {
             nextGroup.get(groupingKeyStr).append(infl)
           } else {
-            nextGroup.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__.default(groupingKey, [infl], sortkey))
+            nextGroup.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_5__.default(groupingKey, [infl], sortkey))
             sortOrder.set(groupingKeyStr, sortkey)
           }
         }
@@ -7049,14 +7547,14 @@ for the current node
           const nextGroup = new Map()
           for (const infl of group.inflections) {
             // set key is case comp gend pers mood sort
-            const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__.default(infl,
-              [_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.comparison, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.gender, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.number, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.person,
-                _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.voice])
+            const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_4__.default(infl,
+              [_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.comparison, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.gender, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.number, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.person,
+                _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.voice])
             const groupingKeyStr = groupingKey.toString()
             if (nextGroup.has(groupingKeyStr)) {
               nextGroup.get(groupingKeyStr).append(infl)
             } else {
-              nextGroup.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__.default(groupingKey, [infl]))
+              nextGroup.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_5__.default(groupingKey, [infl]))
             }
           }
           group.inflections = Array.from(nextGroup.values()) // now a group of inflection groups
@@ -7996,12 +8494,13 @@ class WordList {
 /*!*************************!*\
   !*** external "crypto" ***!
   \*************************/
-/*! unknown exports (runtime-defined) */
+/*! dynamic exports */
+/*! exports [maybe provided (runtime-defined)] [no usage info] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("crypto");
+module.exports = require("crypto");;
 
 /***/ })
 

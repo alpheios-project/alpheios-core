@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 
-import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import BaseTestHelp from '@tests/helpclasses/base-test-help'
 
 import Popup from '@/vue/components/popup.vue'
@@ -24,7 +24,17 @@ describe('popup.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    defaultData = { moduleConfig: {} }
+    defaultData = {
+      moduleConfig: {},
+      resizedWidth: null,
+      resizedHeight: null,
+      widthValue: 0,
+      heightValue: 0,
+      shift: {
+        x: 0,
+        y: 0
+      }
+    }
 
     store = BaseTestHelp.baseVuexStore()
 

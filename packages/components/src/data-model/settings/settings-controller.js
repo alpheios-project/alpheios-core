@@ -5,6 +5,20 @@ import UIOptionsDefaults from '@comp/settings/ui-options-defaults.json'
 import ResourcesOptionsDefaults from '@comp/settings/language-options-defaults.json'
 import SiteOptionsDefaults from '@comp/settings/site-options.json'
 
+/** @typedef {string} LexiconKeys */
+
+// eslint-disable-next-line no-unused-vars
+/** @enum {string} LexiconKeys */
+const LexiconKeys = {
+  LEXICONS: 'lexicons',
+  LEXICON_SHORT: 'lexiconsShort'
+}
+
+/**
+ * @typedef {object} LexiconList - an object that contains URLs of sources that can be used to retrieve the lexicon data.
+ * @property {string[]} allow - an array of URLs of sources that are allowed to be used for the lexicon data retrieval.
+ */
+
 export default class SettingsController {
   constructor () {
     this._storageAdapter = null
@@ -38,7 +52,9 @@ export default class SettingsController {
       throw new Error('Vuex store is required for a settings controller initialization')
     }
 
+    // TODO: Eliminate dependency on the AppController's API
     this._api = api
+    // TODO: Eliminate the need to use the Vuex store
     this._store = store
     this._storageAdapter = storageAdapter
 
@@ -84,7 +100,9 @@ export default class SettingsController {
       featureOptionChange: this.featureOptionChange.bind(this),
       resourceOptionChange: this.resourceOptionChange.bind(this),
       uiOptionChange: this.uiOptionChange.bind(this),
-      resetAllOptions: this.resetAllOptions.bind(this)
+      resetAllOptions: this.resetAllOptions.bind(this),
+      getLexiconOptions: this.getLexiconOptions.bind(this),
+      getShortLexiconOptions: this.getShortLexiconOptions.bind(this)
     }
     // endregion Public API of a settings controller
 
@@ -232,6 +250,7 @@ export default class SettingsController {
     } else {
       this._uiOptions.items[name].setTextValue(value)
     }
+    // TODO: Eliminate this circular dependency on the AppController's API
     this._api.app.applyUIOption(name, this._uiOptions.items[name].currentValue)
   }
 
@@ -244,5 +263,64 @@ export default class SettingsController {
     await this._uiOptions.reset()
     // we don't reload siteOptions
     // because we don't currently allow user configuration of these
+  }
+
+  /**
+   * Returns a list of lexicon URLs from where lexicons can be retrieved.
+   *
+   * @private
+   * @param {object} options - Method's options object.
+   * @param {LexiconKeys} options.lexiconKey - For what type of lexicon URLs should be retrieved.
+   * @param {string} options.langCode - A language code in ISO 639-3 format.
+   * @param {string} options.location - A URL of a client that uses an application. It may affect what lexicon URLs will
+   *                            be retrieved.
+   * @returns {LexiconList} - A list of lexicon URLs build for the parameters specified.
+   */
+  _getLexiconOptionsList ({ lexiconKey, langCode, location } = {}) {
+    /** @type {LexiconList} */
+    let lexiconList = { // eslint-disable-line prefer-const
+      allow: []
+    }
+
+    let allOptions
+    const siteMatch = this._siteOptions.filter((s) => location.match(new RegExp(s.uriMatch)))
+    if (siteMatch.length > 0 && siteMatch[0].resourceOptions.items[lexiconKey]) {
+      allOptions = [...siteMatch[0].resourceOptions.items[lexiconKey], ...this._resourceOptions.items[lexiconKey]]
+    } else {
+      allOptions = this._resourceOptions.items[lexiconKey] || []
+    }
+    lexiconList.allow = allOptions.filter((l) => Options.parseKey(l.name).group === langCode
+    ).map((l) => {
+      // TODO: Remove options from the Vuex store
+      // If currentValue is observable by Vuex it will be an array where the current value item is the first element
+      return Array.isArray(l.currentValue) ? l.currentValue[0] : l.currentValue
+    })
+    return lexiconList
+  }
+
+  /**
+   * Retrieves lexicon options for full definition lexicons.
+   *
+   * @param {object} options - Method's options object.
+   * @param {string} options.langCode - A language code in ISO 639-3 format.
+   * @param {string} options.location - A URL of a client that uses an application. It may affect what lexicon URLs will
+   *                            be retrieved.
+   * @returns {LexiconList} - A list of lexicon URLs build for the parameters specified.
+   */
+  getLexiconOptions (langCode, location) {
+    return this._getLexiconOptionsList({ lexiconKey: LexiconKeys.LEXICONS, langCode, location })
+  }
+
+  /**
+   * Retrieves lexicon options for short definition lexicons.
+   *
+   * @param {object} options - Method's options object.
+   * @param {string} options.langCode - A language code in ISO 639-3 format.
+   * @param {string} options.location - A URL of a client that uses an application. It may affect what lexicon URLs will
+   *                            be retrieved.
+   * @returns {LexiconList} - A list of lexicon URLs build for the parameters specified.
+   */
+  getShortLexiconOptions (langCode, location) {
+    return this._getLexiconOptionsList({ lexiconKey: LexiconKeys.LEXICON_SHORT, langCode, location })
   }
 }

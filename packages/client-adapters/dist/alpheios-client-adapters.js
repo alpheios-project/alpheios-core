@@ -7,7 +7,7 @@
 		var a = typeof exports === 'object' ? factory(require("alpheios-data-models"), require("alpheios-l10n"), require("alpheios-messaging"), require("papaparse")) : factory(root["alpheios-data-models"], root["alpheios-l10n"], root["alpheios-messaging"], root["papaparse"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__, __WEBPACK_EXTERNAL_MODULE_alpheios_l10n__, __WEBPACK_EXTERNAL_MODULE_alpheios_messaging__, __WEBPACK_EXTERNAL_MODULE_papaparse__) {
+})(self, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__, __WEBPACK_EXTERNAL_MODULE_alpheios_l10n__, __WEBPACK_EXTERNAL_MODULE_alpheios_messaging__, __WEBPACK_EXTERNAL_MODULE_papaparse__) {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -15,7 +15,9 @@ return /******/ (() => { // webpackBootstrap
 /*!********************************************!*\
   !*** ../../../node_modules/axios/index.js ***!
   \********************************************/
-/*! unknown exports (runtime-defined) */
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] -> ../../../node_modules/axios/lib/axios.js .__esModule */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] -> ../../../node_modules/axios/lib/axios.js */
 /*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -29,6 +31,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
   \*******************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -36,6 +39,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 
 var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
 var settle = __webpack_require__(/*! ./../core/settle */ "../../../node_modules/axios/lib/core/settle.js");
+var cookies = __webpack_require__(/*! ./../helpers/cookies */ "../../../node_modules/axios/lib/helpers/cookies.js");
 var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../../../node_modules/axios/lib/helpers/buildURL.js");
 var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "../../../node_modules/axios/lib/core/buildFullPath.js");
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "../../../node_modules/axios/lib/helpers/parseHeaders.js");
@@ -51,12 +55,19 @@ module.exports = function xhrAdapter(config) {
       delete requestHeaders['Content-Type']; // Let the browser set it
     }
 
+    if (
+      (utils.isBlob(requestData) || utils.isFile(requestData)) &&
+      requestData.type
+    ) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
     var request = new XMLHttpRequest();
 
     // HTTP basic authentication
     if (config.auth) {
       var username = config.auth.username || '';
-      var password = config.auth.password || '';
+      var password = unescape(encodeURIComponent(config.auth.password)) || '';
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
 
@@ -137,8 +148,6 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "../../../node_modules/axios/lib/helpers/cookies.js");
-
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
         cookies.read(config.xsrfCookieName) :
@@ -204,7 +213,7 @@ module.exports = function xhrAdapter(config) {
       });
     }
 
-    if (requestData === undefined) {
+    if (!requestData) {
       requestData = null;
     }
 
@@ -222,6 +231,7 @@ module.exports = function xhrAdapter(config) {
   \************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 50:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -288,6 +298,7 @@ module.exports.default = axios;
   \********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 19:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -320,6 +331,7 @@ module.exports = Cancel;
   \*************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 57:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -390,6 +402,7 @@ module.exports = CancelToken;
   \**********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -408,6 +421,7 @@ module.exports = function isCancel(value) {
   \*****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 94:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -486,7 +500,7 @@ Axios.prototype.getUri = function getUri(config) {
 utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
   /*eslint func-names:0*/
   Axios.prototype[method] = function(url, config) {
-    return this.request(utils.merge(config || {}, {
+    return this.request(mergeConfig(config || {}, {
       method: method,
       url: url
     }));
@@ -496,7 +510,7 @@ utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData
 utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   /*eslint func-names:0*/
   Axios.prototype[method] = function(url, data, config) {
-    return this.request(utils.merge(config || {}, {
+    return this.request(mergeConfig(config || {}, {
       method: method,
       url: url,
       data: data
@@ -515,6 +529,7 @@ module.exports = Axios;
   \******************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 52:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -580,6 +595,7 @@ module.exports = InterceptorManager;
   \*************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 15:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -613,6 +629,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
   \***********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 15:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -644,6 +661,7 @@ module.exports = function createError(message, config, code, request, response) 
   \***************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -736,6 +754,7 @@ module.exports = function dispatchRequest(config) {
   \************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -761,7 +780,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
   error.response = response;
   error.isAxiosError = true;
 
-  error.toJSON = function() {
+  error.toJSON = function toJSON() {
     return {
       // Standard
       message: this.message,
@@ -791,6 +810,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
   \***********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -811,59 +831,73 @@ module.exports = function mergeConfig(config1, config2) {
   config2 = config2 || {};
   var config = {};
 
-  var valueFromConfig2Keys = ['url', 'method', 'params', 'data'];
-  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy'];
+  var valueFromConfig2Keys = ['url', 'method', 'data'];
+  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy', 'params'];
   var defaultToConfig2Keys = [
-    'baseURL', 'url', 'transformRequest', 'transformResponse', 'paramsSerializer',
-    'timeout', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
-    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress',
-    'maxContentLength', 'validateStatus', 'maxRedirects', 'httpAgent',
-    'httpsAgent', 'cancelToken', 'socketPath'
+    'baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer',
+    'timeout', 'timeoutMessage', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'decompress',
+    'maxContentLength', 'maxBodyLength', 'maxRedirects', 'transport', 'httpAgent',
+    'httpsAgent', 'cancelToken', 'socketPath', 'responseEncoding'
   ];
+  var directMergeKeys = ['validateStatus'];
+
+  function getMergedValue(target, source) {
+    if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
+      return utils.merge(target, source);
+    } else if (utils.isPlainObject(source)) {
+      return utils.merge({}, source);
+    } else if (utils.isArray(source)) {
+      return source.slice();
+    }
+    return source;
+  }
+
+  function mergeDeepProperties(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  }
 
   utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
-    if (typeof config2[prop] !== 'undefined') {
-      config[prop] = config2[prop];
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
     }
   });
 
-  utils.forEach(mergeDeepPropertiesKeys, function mergeDeepProperties(prop) {
-    if (utils.isObject(config2[prop])) {
-      config[prop] = utils.deepMerge(config1[prop], config2[prop]);
-    } else if (typeof config2[prop] !== 'undefined') {
-      config[prop] = config2[prop];
-    } else if (utils.isObject(config1[prop])) {
-      config[prop] = utils.deepMerge(config1[prop]);
-    } else if (typeof config1[prop] !== 'undefined') {
-      config[prop] = config1[prop];
-    }
-  });
+  utils.forEach(mergeDeepPropertiesKeys, mergeDeepProperties);
 
   utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
-    if (typeof config2[prop] !== 'undefined') {
-      config[prop] = config2[prop];
-    } else if (typeof config1[prop] !== 'undefined') {
-      config[prop] = config1[prop];
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  });
+
+  utils.forEach(directMergeKeys, function merge(prop) {
+    if (prop in config2) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (prop in config1) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
     }
   });
 
   var axiosKeys = valueFromConfig2Keys
     .concat(mergeDeepPropertiesKeys)
-    .concat(defaultToConfig2Keys);
+    .concat(defaultToConfig2Keys)
+    .concat(directMergeKeys);
 
   var otherKeys = Object
-    .keys(config2)
+    .keys(config1)
+    .concat(Object.keys(config2))
     .filter(function filterAxiosKeys(key) {
       return axiosKeys.indexOf(key) === -1;
     });
 
-  utils.forEach(otherKeys, function otherKeysDefaultToConfig2(prop) {
-    if (typeof config2[prop] !== 'undefined') {
-      config[prop] = config2[prop];
-    } else if (typeof config1[prop] !== 'undefined') {
-      config[prop] = config1[prop];
-    }
-  });
+  utils.forEach(otherKeys, mergeDeepProperties);
 
   return config;
 };
@@ -877,6 +911,7 @@ module.exports = function mergeConfig(config1, config2) {
   \******************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -893,7 +928,7 @@ var createError = __webpack_require__(/*! ./createError */ "../../../node_module
  */
 module.exports = function settle(resolve, reject, response) {
   var validateStatus = response.config.validateStatus;
-  if (!validateStatus || validateStatus(response.status)) {
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
     resolve(response);
   } else {
     reject(createError(
@@ -915,6 +950,7 @@ module.exports = function settle(resolve, reject, response) {
   \*************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -948,6 +984,7 @@ module.exports = function transformData(data, headers, fns) {
   \***************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 98:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1027,6 +1064,7 @@ var defaults = {
   xsrfHeaderName: 'X-XSRF-TOKEN',
 
   maxContentLength: -1,
+  maxBodyLength: -1,
 
   validateStatus: function validateStatus(status) {
     return status >= 200 && status < 300;
@@ -1058,6 +1096,7 @@ module.exports = defaults;
   \*******************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1082,6 +1121,7 @@ module.exports = function bind(fn, thisArg) {
   \***********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 22:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1091,7 +1131,6 @@ var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/l
 
 function encode(val) {
   return encodeURIComponent(val).
-    replace(/%40/gi, '@').
     replace(/%3A/gi, ':').
     replace(/%24/g, '$').
     replace(/%2C/gi, ',').
@@ -1166,6 +1205,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
   \**************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1193,6 +1233,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
   \**********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1259,6 +1300,7 @@ module.exports = (
   \****************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1286,6 +1328,7 @@ module.exports = function isAbsoluteURL(url) {
   \******************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1367,6 +1410,7 @@ module.exports = (
   \**********************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1392,6 +1436,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
   \***************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 27:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1458,6 +1503,7 @@ module.exports = function parseHeaders(headers) {
   \*********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1498,6 +1544,7 @@ module.exports = function spread(callback) {
   \************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 328:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1606,6 +1653,21 @@ function isNumber(val) {
  */
 function isObject(val) {
   return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a plain Object
+ *
+ * @param {Object} val The value to test
+ * @return {boolean} True if value is a plain Object, otherwise false
+ */
+function isPlainObject(val) {
+  if (toString.call(val) !== '[object Object]') {
+    return false;
+  }
+
+  var prototype = Object.getPrototypeOf(val);
+  return prototype === null || prototype === Object.prototype;
 }
 
 /**
@@ -1764,34 +1826,12 @@ function forEach(obj, fn) {
 function merge(/* obj1, obj2, obj3, ... */) {
   var result = {};
   function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
+    if (isPlainObject(result[key]) && isPlainObject(val)) {
       result[key] = merge(result[key], val);
-    } else {
-      result[key] = val;
-    }
-  }
-
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    forEach(arguments[i], assignValue);
-  }
-  return result;
-}
-
-/**
- * Function equal to merge with the difference being that no reference
- * to original objects is kept.
- *
- * @see merge
- * @param {Object} obj1 Object to merge
- * @returns {Object} Result of all merge properties
- */
-function deepMerge(/* obj1, obj2, obj3, ... */) {
-  var result = {};
-  function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
-      result[key] = deepMerge(result[key], val);
-    } else if (typeof val === 'object') {
-      result[key] = deepMerge({}, val);
+    } else if (isPlainObject(val)) {
+      result[key] = merge({}, val);
+    } else if (isArray(val)) {
+      result[key] = val.slice();
     } else {
       result[key] = val;
     }
@@ -1822,6 +1862,19 @@ function extend(a, b, thisArg) {
   return a;
 }
 
+/**
+ * Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
+ *
+ * @param {string} content with BOM
+ * @return {string} content value without BOM
+ */
+function stripBOM(content) {
+  if (content.charCodeAt(0) === 0xFEFF) {
+    content = content.slice(1);
+  }
+  return content;
+}
+
 module.exports = {
   isArray: isArray,
   isArrayBuffer: isArrayBuffer,
@@ -1831,6 +1884,7 @@ module.exports = {
   isString: isString,
   isNumber: isNumber,
   isObject: isObject,
+  isPlainObject: isPlainObject,
   isUndefined: isUndefined,
   isDate: isDate,
   isFile: isFile,
@@ -1841,9 +1895,9 @@ module.exports = {
   isStandardBrowserEnv: isStandardBrowserEnv,
   forEach: forEach,
   merge: merge,
-  deepMerge: deepMerge,
   extend: extend,
-  trim: trim
+  trim: trim,
+  stripBOM: stripBOM
 };
 
 
@@ -1855,6 +1909,8 @@ module.exports = {
   \********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module.loaded, module.id, module, __webpack_require__.nmd, __webpack_require__, __webpack_exports__, __webpack_require__.* */
+/*! CommonJS bailout: module.exports is used directly at 241:55-69 */
+/*! CommonJS bailout: module.exports is used directly at 241:71-85 */
 /***/ ((module, exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
@@ -5132,8 +5188,9 @@ class WrongMethodError extends Error {
   !*** ./index.js ***!
   \******************/
 /*! namespace exports */
-/*! export ClientAdapters [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export RemoteError [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export AdapterError [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./errors/adapter-error.js .default */
+/*! export ClientAdapters [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./client-adapters.js .default */
+/*! export RemoteError [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./errors/remote-error.js .default */
 /*! other exports [not provided] [maybe used in main (runtime-defined)] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5142,10 +5199,13 @@ class WrongMethodError extends Error {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ClientAdapters": () => /* reexport safe */ _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__.default,
-/* harmony export */   "RemoteError": () => /* reexport safe */ _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__.default
+/* harmony export */   "AdapterError": () => /* reexport safe */ _clAdapters_errors_adapter_error_js__WEBPACK_IMPORTED_MODULE_1__.default,
+/* harmony export */   "RemoteError": () => /* reexport safe */ _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__.default
 /* harmony export */ });
 /* harmony import */ var _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/client-adapters.js */ "./client-adapters.js");
-/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony import */ var _clAdapters_errors_adapter_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/adapter-error.js */ "./errors/adapter-error.js");
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+
 
 
 
@@ -25401,7 +25461,9 @@ module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a t
 /*!***************************************!*\
   !*** external "alpheios-data-models" ***!
   \***************************************/
-/*! unknown exports (runtime-defined) */
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 
@@ -25414,7 +25476,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /*!********************************!*\
   !*** external "alpheios-l10n" ***!
   \********************************/
-/*! unknown exports (runtime-defined) */
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 
@@ -25427,7 +25491,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_l10n__;
 /*!*************************************!*\
   !*** external "alpheios-messaging" ***!
   \*************************************/
-/*! unknown exports (runtime-defined) */
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 
@@ -25440,7 +25506,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_messaging__;
 /*!****************************!*\
   !*** external "papaparse" ***!
   \****************************/
-/*! unknown exports (runtime-defined) */
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 

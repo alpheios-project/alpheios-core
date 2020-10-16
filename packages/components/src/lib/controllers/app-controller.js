@@ -8,6 +8,11 @@ import { WordlistController, UserDataManager } from 'alpheios-wordlist'
 import Vue from '@vue-runtime'
 import Vuex from 'vuex'
 import interact from 'interactjs'
+
+import DataModelController from '@comp/data-model/data-model-controller.js'
+
+import WordQueryController from '@comp/app/word-query/word-query-controller.js'
+
 // Modules and their support dependencies
 import L10nModule from '@comp/vue/vuex-modules/data/l10n-module.js'
 import LexisModule from '@comp/vue/vuex-modules/data/lexis.js'
@@ -27,7 +32,6 @@ import MouseMove from '@comp/lib/custom-pointer-events/mouse-move.js'
 import Options from '@comp/lib/options/options.js'
 import LocalStorage from '@comp/lib/options/local-storage-area.js'
 import RemoteAuthStorageArea from '@comp/lib/options/remote-auth-storage-area.js'
-import SettingsController from '@comp/lib/controllers/settings-controller.js'
 import UIController from '@comp/lib/controllers/ui-controller.js'
 import UIEventController from '@comp/lib/controllers/ui-event-controller.js'
 import SelectionController from '@comp/lib/controllers/selection-controller.js'
@@ -78,6 +82,8 @@ export default class AppController {
      */
     this._platform = new Platform({ setRootAttributes: true, appType: this._options.appType })
 
+    this._dmC = new DataModelController({ platform: this._platform })
+
     // Vuex store. A public API for data and UI module interactions.
     this._store = new Vuex.Store({
       /*
@@ -97,10 +103,6 @@ export default class AppController {
 
     // Get query parameters from the URL. Do this early so they will be available to modules during registration
     this._queryParams = QueryParams.parse()
-
-    this._stC = new SettingsController({
-      platform: this._platform
-    })
 
     /**
      * Holds an instance of a UI controller. Its purpose is to manage all UI components within an application.
@@ -124,6 +126,10 @@ export default class AppController {
     this._selc = new SelectionController(this.getDefaultLangCode.bind(this))
 
     this._wordlistC = {} // This is a word list controller
+
+    this._adapters = {
+      wordQuery: undefined
+    }
   }
 
   /**
@@ -148,7 +154,8 @@ export default class AppController {
 
     appController.registerModule(LexisModule, {
       arethusaTbRefreshRetryCount: appController._options.arethusaTbRefreshRetryCount,
-      arethusaTbRefreshDelay: appController._options.arethusaTbRefreshDelay
+      arethusaTbRefreshDelay: appController._options.arethusaTbRefreshDelay,
+      adapters: appController._adapters
     })
 
     /*
@@ -365,8 +372,8 @@ export default class AppController {
 
   async init () {
     if (this.isInitialized) { return 'Already initialized' }
-    // Initialize options
-    await this._stC.init({
+    // Options will be initialized within the DataModelController
+    await this._dmC.init({
       api: this.api,
       store: this._store,
       configServiceUrl: this._options.configServiceUrl,
@@ -377,7 +384,18 @@ export default class AppController {
       buildNumber: this._options.app.buildNumber,
       storageAdapter: this._options.storageAdapter
     })
-    // All options has been loaded and initialized after this point
+    // All options are initialized at this point
+
+    /*
+    DataModelController represents a model that is, among other things, responsible for retrieving lexical data
+    for a word. DataModelController could be a completely separate remote service if not the two things:
+    - It uses references to the options set by the user (user preferences) in the settings controller. This is tied
+      to the UI. We should refactor (by splitting responsibilities into two parts) the settings controller
+      so that dependency would go away.
+    - It retrieves some pieces of lexical data that are inherently local, such as treebank data. There is
+      currently no way to avoid that.
+     */
+    this._adapters.wordQuery = new WordQueryController({ wordQueryResolver: this._dmC.gqlEndpoint.resolvers.wordQuery })
 
     // The following options will be applied to all logging done via a single Logger instance
     // Set the  logger verbose mode according to the settings
@@ -1141,7 +1159,14 @@ export default class AppController {
         this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         break
       case LexicalQuery.resultStatus.FAILED:
-        this.showLanguageInfo(data.homonym)
+        /*
+        TODO: in the future, this might be a place to prompt the user to query a word level dictionary resource
+              if there is one (or some other linked word-level resource - for example, it's a place
+              we could do better right now, if we don't have a result for a homonym in Latin,
+              we could still offer the option to search the usage examples).
+              Similarly, we might prompt the user to create their own analysis...
+         */
+        if (data.homonym) { this.showLanguageInfo(data.homonym) }
         this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
     this._store.commit('app/lexicalRequestFinished')

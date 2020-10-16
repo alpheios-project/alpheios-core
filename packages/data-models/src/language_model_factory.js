@@ -1,3 +1,4 @@
+import Language from './language.js'
 import LanguageModel from './language_model.js'
 import LatinLanguageModel from './latin_language_model.js'
 import GreekLanguageModel from './greek_language_model.js'
@@ -62,6 +63,22 @@ class LanguageModelFactory {
     }
   }
 
+  /**
+   * Returns a language model for a specified language.
+   *
+   * @param {Language} language - A language for which a language model shall be returned.
+   * @returns {LanguageModel} - A language model matching the language provided.
+   */
+  static getModelFromLanguage (language) {
+    for (const languageModel of MODELS.values()) {
+      if (language.equals(languageModel.language)) {
+        return languageModel
+      }
+    }
+    // A default value
+    return LanguageModel
+  }
+
   static getLanguageForCode (code = null) {
     const Model = MODELS.get(code)
     if (Model) {
@@ -105,9 +122,29 @@ class LanguageModelFactory {
   }
 
   /**
+   * Returns a language ID and a language code values that matches the Language object.
+   * This method is used for compatibility in places where either the legacy language ID or
+   * the language code are required.
+   * TODO: This method shall be removed once all components would switch to the Language object.
+   *
+   * @param {Language} language - A Language object.
+   * @returns {{languageID: symbol, languageCode: string}} - An object containing
+   *          both the language ID and the language code.
+   */
+  static getLegacyLanguageCodeAndId (language) {
+    const languageModel = this.getModelFromLanguage(language)
+    return {
+      languageID: languageModel.languageID,
+      languageCode: languageModel.languageCode
+    }
+  }
+
+  /**
    * Takes either a language ID or a language code and returns an object with both an ID and a code.
    *
-   * @param {string | symbol} language - Either a language ID (a Symbol) or a language code (a String).
+   * @param {symbol | string} language - Language in one of the following formats:
+   *        the language ID (a Symbol) or the language code (a String).
+   *
    * @returns {object} An object with the following properties:
    *    {symbol} languageID
    *    {string} languageCode

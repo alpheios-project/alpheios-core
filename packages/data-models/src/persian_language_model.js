@@ -1,4 +1,5 @@
 import LanguageModel from './language_model.js'
+import Language from './language.js'
 import * as Constants from './constants.js'
 
 let typeFeatures = new Map() // eslint-disable-line prefer-const
@@ -8,6 +9,8 @@ let typeFeaturesInitialized = false
  * @class  PersianLanguageModel is the lass for Persian specific behavior
  */
 export default class PersianLanguageModel extends LanguageModel {
+  static get language () { return Language.PERSIAN }
+
   static get languageID () { return Constants.LANG_PERSIAN }
 
   static get languageCode () { return Constants.STR_LANG_CODE_PER }

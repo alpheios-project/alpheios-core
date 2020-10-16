@@ -282,7 +282,7 @@ describe('lexical-query.test.js', () => {
     expect(LexicalQuery.evt.LEMMA_TRANSL_READY.pub).toHaveBeenCalledWith(testHomonym)
   })
 
-  it.skip('10 LexicalQuery - getLexiconOptions parses lexicons', () => {
+  it.skip('10 LexicalQuery - _getLexiconOptionsList parses lexicons', () => {
     const mockSelector = {
       location: 'http://example.org',
       languageID: Constants.LANG_LATIN
@@ -310,7 +310,7 @@ describe('lexical-query.test.js', () => {
     expect(query.getLexiconOptions('lexiconsShort')).toEqual({ allow: ['https://github.com/alpheios-project/xx'] })
   })
 
-  it.skip('11 LexicalQuery - getLexiconOptions parses empty lexicons and returns {}', () => {
+  it.skip('11 LexicalQuery - _getLexiconOptionsList parses empty lexicons and returns {}', () => {
     const mockSelector = {
       location: 'http://example.org',
       languageID: Constants.LANG_LATIN
