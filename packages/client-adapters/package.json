@@ -1,6 +1,6 @@
 {
   "name": "alpheios-client-adapters",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "Alpheios Client Adapters Library",
   "private": true,
   "main": "dist/alpheios-client-adapters.min.js",
@@ -33,7 +33,7 @@
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/runtime": "^7.11.2",
     "@vue/test-utils": "^1.1.0",
-    "alpheios-data-models": "^3.3.0",
+    "alpheios-data-models": "^3.3.1",
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-l10n": "^3.3.1",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
