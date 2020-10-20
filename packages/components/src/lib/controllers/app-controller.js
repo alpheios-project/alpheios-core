@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME, DEVELOPMENT_MODE_BUILD */
-import { version as packageVersion, description as packageDescription } from '../../../package'
+// import { version as packageVersion, description as packageDescription } from '../../../package'
+import packageInfo from '../../../package'
 import { Constants, Feature, LanguageModelFactory, Lexeme, Logger } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
@@ -32,6 +33,9 @@ import UIController from '@comp/lib/controllers/ui-controller.js'
 import UIEventController from '@comp/lib/controllers/ui-event-controller.js'
 import SelectionController from '@comp/lib/controllers/selection-controller.js'
 import QueryParams from '@comp/lib/utility/query-params.js'
+
+const packageVersion = packageInfo.version
+const packageDescription = packageInfo.description
 
 const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
