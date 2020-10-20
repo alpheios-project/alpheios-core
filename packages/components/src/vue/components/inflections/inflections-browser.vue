@@ -16,13 +16,13 @@
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('lat', 'noun')" :key="index"
+            v-for = "(table, index) in getTables('lat', 'noun')" :key="index+'-1'"
         />
         <div class="alpheios-ib__pofs-title">Adjectives</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('lat', 'adjective')" :key="index"
+            v-for = "(table, index) in getTables('lat', 'adjective')" :key="index+'-2'"
         />
 
         <div class="alpheios-ib__pofs-title">Verbs</div>
@@ -31,21 +31,21 @@
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('lat', 'verb')" :key="index"
+            v-for = "(table, index) in getTables('lat', 'verb')" :key="index+'-3'"
         />
 
         <div class="alpheios-ib__pofs-title-l3">Other Forms</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('lat', 'other verb forms')" :key="index"
+            v-for = "(table, index) in getTables('lat', 'other verb forms')" :key="index+'-4'"
         />
 
         <div class="alpheios-ib__pofs-title-l2">Irregular verbs</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('lat', 'irregular verbs')" :key="index"
+            v-for = "(table, index) in getTables('lat', 'irregular verbs')" :key="index+'-5'"
         />
       </div>
     </div>
@@ -65,35 +65,35 @@
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'noun')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'noun')" :key="index+'-6'"
         />
 
         <div class="alpheios-ib__pofs-title">Adjectives</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'adjective')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'adjective')" :key="index+'-7'"
         />
 
         <div class="alpheios-ib__pofs-title">Pronouns</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'pronoun')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'pronoun')" :key="index+'-8'"
         />
 
         <div class="alpheios-ib__pofs-title">Articles</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'article')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'article')" :key="index+'-9'"
         />
 
         <div class="alpheios-ib__pofs-title">Numerals</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'numeral')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'numeral')" :key="index+'-10'"
         />
 
         <div class="alpheios-ib__pofs-title">Verb Paradigms</div>
@@ -102,21 +102,21 @@
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'regular verbs')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'regular verbs')" :key="index+'-11'"
         />
 
         <div class="alpheios-ib__pofs-title-l3">Athematic Perfects</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'athematic perfects')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'athematic perfects')" :key="index+'-12'"
         />
 
         <div class="alpheios-ib__pofs-title-l3">Present System of Contract Verbs (-εω, -αω, -οω)</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'contract verbs')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'contract verbs')" :key="index+'-13'"
         />
 
         <div class="alpheios-ib__pofs-title-l2">μι Verbs</div>
@@ -124,42 +124,42 @@
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'mi verbs - tithimi')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'mi verbs - tithimi')" :key="index+'-14'"
         />
 
         <div class="alpheios-ib__pofs-title-l3">ἵημι</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'mi verbs - iimi')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'mi verbs - iimi')" :key="index+'-15'"
         />
 
         <div class="alpheios-ib__pofs-title-l3">δίδωμι</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'mi verbs - didomi')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'mi verbs - didomi')" :key="index+'-16'"
         />
 
         <div class="alpheios-ib__pofs-title-l3">ἵστημι</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'mi verbs - istimi')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'mi verbs - istimi')" :key="index+'-17'"
         />
 
         <div class="alpheios-ib__pofs-title-l3">Other</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'mi verbs - other')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'mi verbs - other')" :key="index+'-18'"
         />
 
         <div class="alpheios-ib__pofs-title-l2">Participles</div>
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
             :standard-form-data="table"
-            v-for = "(table, index) in getTables('grc', 'participle')" :key="index"
+            v-for = "(table, index) in getTables('grc', 'participle')" :key="index+'-19'"
         />
       </div>
     </div>
