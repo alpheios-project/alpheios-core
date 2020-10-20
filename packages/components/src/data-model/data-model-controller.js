@@ -24,7 +24,11 @@ export default class DataModelController {
     })
     this.gqlEndpoint.init({
       getLexiconsFn: this._stC.getLexiconOptions.bind(this._stC),
-      getShortLexiconsFn: this._stC.getShortLexiconOptions.bind(this._stC)
+      getShortLexiconsFn: this._stC.getShortLexiconOptions.bind(this._stC),
+      appName,
+      appVersion,
+      branch,
+      buildNumber
     })
   }
 }

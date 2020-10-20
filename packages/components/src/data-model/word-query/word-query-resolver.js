@@ -8,9 +8,25 @@ import WordQueryResponse from '@comp/data-model/word-query/word-query-response.j
  * Creates an instance of WordQuery for the query resolution.
  */
 export default class WordQueryResolver {
-  constructor ({ getLexiconsFn, getShortLexiconsFn } = {}) {
+  constructor ({
+    getLexiconsFn, getShortLexiconsFn, appName = 'alpheios', appVersion = '', branch = '', buildNumber = ''
+  } = {}) {
     this._getLexiconsFn = getLexiconsFn
     this._getShortLexiconsFn = getShortLexiconsFn
+    this._appName = appName
+    this._appVersion = appVersion
+    this._branch = branch
+    this._buildNumber = buildNumber
+    this._clientName = 'graphql-client'
+  }
+
+  get _clientId () {
+    let clientId = this._appName
+    if (this._appVersion) { clientId += `.${this._appVersion}` }
+    if (this._branch) { clientId += `.${this._branch}` }
+    if (this._buildNumber) { clientId += `.${this._buildNumber}` }
+    clientId += `.${this._clientName}`
+    return clientId
   }
 
   /**
@@ -43,7 +59,7 @@ export default class WordQueryResolver {
       let wordQueryOptions = { // eslint-disable-line prefer-const
         word: variables.word,
         language: Language.fromJsonObject({ code: variables.language }),
-        clientId: 'graphql-client'
+        clientId: this._clientId
       }
       if (variables.getLexemes) {
         /** @type {import('./word-query.js').GetLexemesOptions} */
