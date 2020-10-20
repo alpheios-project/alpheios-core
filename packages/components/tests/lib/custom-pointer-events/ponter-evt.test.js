@@ -5,7 +5,7 @@ import PointerEvt from '@/lib/custom-pointer-events/pointer-evt.js'
 import Swipe from '@/lib/custom-pointer-events/swipe.js'
 
 describe('pointer-evt.test.js', () => {
-  // console.error = function () {}
+  console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
 
