@@ -4,7 +4,7 @@
 import LongTap from '@/lib/custom-pointer-events/long-tap.js'
 
 describe('long-tap.test.js', () => {
-  // console.error = function () {}
+  console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
   

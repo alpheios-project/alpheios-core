@@ -4,7 +4,7 @@
 import GenericEvt from '@/lib/custom-pointer-events/generic-evt.js'
 
 describe('generic-evt.test.js', () => {
-  // console.error = function () {}
+  console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
 
