@@ -7,7 +7,7 @@
 		var a = typeof exports === 'object' ? factory(require("alpheios-data-models")) : factory(root["alpheios-data-models"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) {
+})(self, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -184,7 +184,12 @@ function fromByteArray (uint8) {
 /*!*********************************************!*\
   !*** ../../../node_modules/buffer/index.js ***!
   \*********************************************/
-/*! unknown exports (runtime-defined) */
+/*! default exports */
+/*! export Buffer [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export INSPECT_MAX_BYTES [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export SlowBuffer [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export kMaxLength [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -1993,6 +1998,7 @@ var hexSliceLookupTable = (function () {
   \**********************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 56:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -2581,6 +2587,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   \**************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 5:2-16 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 try {
@@ -2602,6 +2609,8 @@ try {
   \**********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 3:2-16 */
+/*! CommonJS bailout: module.exports is used directly at 18:2-16 */
 /***/ ((module) => {
 
 if (typeof Object.create === 'function') {
@@ -2641,11 +2650,12 @@ if (typeof Object.create === 'function') {
   \****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: top-level-this-exports, __webpack_require__, __webpack_exports__, module */
+/*! CommonJS bailout: this is used directly at 31:2-6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* @license
 Papa Parse
-v5.2.0
+v5.3.0
 https://github.com/mholt/PapaParse
 License: MIT
 */
@@ -2919,6 +2929,9 @@ License: MIT
 		/** the columns (keys) we expect when we unparse objects */
 		var _columns = null;
 
+		/** whether to prevent outputting cells that can be parsed as formulae by spreadsheet software (Excel and LibreOffice) */
+		var _escapeFormulae = false;
+
 		unpackConfig();
 
 		var quoteCharRegex = new RegExp(escapeRegExp(_quoteChar), 'g');
@@ -2998,6 +3011,9 @@ License: MIT
 			if (_config.escapeChar !== undefined) {
 				_escapedQuote = _config.escapeChar + _quoteChar;
 			}
+
+			if (typeof _config.escapeFormulae === 'boolean')
+				_escapeFormulae = _config.escapeFormulae;
 		}
 
 
@@ -3083,6 +3099,10 @@ License: MIT
 
 			if (str.constructor === Date)
 				return JSON.stringify(str).slice(1, 25);
+
+			if (_escapeFormulae === true && typeof str === "string" && (str.match(/^[=+\-@].*$/) !== null)) {
+				str = "'" + str;
+			}
 
 			var escapedQuoteStr = str.toString().replace(quoteCharRegex, _escapedQuote);
 
@@ -3816,10 +3836,10 @@ License: MIT
 			if (!_results)
 				return;
 
-			function addHeder(header)
+			function addHeader(header, i)
 			{
 				if (isFunction(_config.transformHeader))
-					header = _config.transformHeader(header);
+					header = _config.transformHeader(header, i);
 
 				_fields.push(header);
 			}
@@ -3827,13 +3847,13 @@ License: MIT
 			if (Array.isArray(_results.data[0]))
 			{
 				for (var i = 0; needsHeaderRow() && i < _results.data.length; i++)
-					_results.data[i].forEach(addHeder);
+					_results.data[i].forEach(addHeader);
 
 				_results.data.splice(0, 1);
 			}
 			// if _results.data[0] is not an array, we are in a step where _results.data is the row.
 			else
-				_results.data.forEach(addHeder);
+				_results.data.forEach(addHeader);
 		}
 
 		function shouldApplyDynamicTyping(field) {
@@ -4711,6 +4731,7 @@ module.exports.codes = codes;
   \*******************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 40:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -4862,6 +4883,7 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
   \************************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 26:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -4913,6 +4935,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
   \*********************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__, __webpack_require__.g, __webpack_require__.* */
+/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -6049,6 +6072,7 @@ function indexOf(xs, x) {
   \**********************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 64:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -6262,6 +6286,7 @@ function done(stream, er, data) {
   \*********************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__, __webpack_require__.g, __webpack_require__.* */
+/*! CommonJS bailout: module.exports is used directly at 26:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -6971,6 +6996,7 @@ Writable.prototype._destroy = function (err, cb) {
   \************************************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 207:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7190,6 +7216,7 @@ module.exports = createReadableStreamAsyncIterator;
   \*********************************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 27:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7412,6 +7439,7 @@ function () {
   \*****************************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 101:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -7529,6 +7557,7 @@ module.exports = {
   \***********************************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: __webpack_require__, module */
+/*! CommonJS bailout: module.exports is used directly at 104:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7645,6 +7674,7 @@ module.exports = eos;
   \**********************************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = function () {
@@ -7660,6 +7690,7 @@ module.exports = function () {
   \******************************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: __webpack_require__, module */
+/*! CommonJS bailout: module.exports is used directly at 97:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7769,6 +7800,7 @@ module.exports = pipeline;
   \***************************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: __webpack_require__, module */
+/*! CommonJS bailout: module.exports is used directly at 25:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7806,7 +7838,8 @@ module.exports = {
 /*!************************************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
   \************************************************************************************/
-/*! unknown exports (runtime-defined) */
+/*! dynamic exports */
+/*! exports [maybe provided (runtime-defined)] [no usage info] */
 /*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -7821,6 +7854,9 @@ module.exports = __webpack_require__(/*! events */ "../../../node_modules/events
   \*****************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: __webpack_exports__, module, __webpack_require__ */
+/*! CommonJS bailout: exports is used directly at 1:0-7 */
+/*! CommonJS bailout: exports is used directly at 2:17-24 */
+/*! CommonJS bailout: exports is used directly at 3:19-26 */
 /***/ ((module, exports, __webpack_require__) => {
 
 exports = module.exports = __webpack_require__(/*! ./lib/_stream_readable.js */ "../../../node_modules/readable-stream/lib/_stream_readable.js");
@@ -7842,6 +7878,8 @@ exports.pipeline = __webpack_require__(/*! ./lib/internal/streams/pipeline.js */
   \**************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_exports__, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 12:2-16 */
+/*! CommonJS bailout: exports is used directly at 15:20-27 */
 /***/ ((module, exports, __webpack_require__) => {
 
 /* eslint-disable node/no-deprecated-api */
@@ -8224,7 +8262,8 @@ function simpleEnd(buf) {
 /*!****************************************************!*\
   !*** ../../../node_modules/util-deprecate/node.js ***!
   \****************************************************/
-/*! unknown exports (runtime-defined) */
+/*! dynamic exports */
+/*! exports [maybe provided (runtime-defined)] [no usage info] */
 /*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -8244,6 +8283,7 @@ module.exports = __webpack_require__(/*! util */ "../../../node_modules/util/uti
   \********************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 4:2-16 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 try {
@@ -8263,6 +8303,8 @@ try {
   \****************************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 3:2-16 */
+/*! CommonJS bailout: module.exports is used directly at 16:2-16 */
 /***/ ((module) => {
 
 if (typeof Object.create === 'function') {
@@ -8298,6 +8340,7 @@ if (typeof Object.create === 'function') {
   \*************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = function isBuffer(arg) {
@@ -8314,7 +8357,11 @@ module.exports = function isBuffer(arg) {
   !*** ../../../node_modules/util/util.js ***!
   \******************************************/
 /*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.g, __webpack_require__, __webpack_require__.* */
+/*! runtime requirements: __webpack_exports__, __webpack_require__, __webpack_require__.g, __webpack_require__.* */
+/*! CommonJS bailout: exports.deprecate(...) prevents optimization as exports is passed as call context at 69:13-30 */
+/*! CommonJS bailout: exports is used directly at 106:39-46 */
+/*! CommonJS bailout: exports._extend(...) prevents optimization as exports is passed as call context at 139:4-19 */
+/*! CommonJS bailout: exports is used directly at 553:59-66 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -8950,8 +8997,8 @@ class BaseResourceAdapter {
   !*** ./driver.js ***!
   \*******************/
 /*! namespace exports */
-/*! export GrammarResAdapter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export Grammars [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export GrammarResAdapter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./grammar/grammar_adapter.js .default */
+/*! export Grammars [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./grammars.js .default */
 /*! other exports [not provided] [maybe used in main (runtime-defined)] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9321,7 +9368,9 @@ module.exports = JSON.parse("{\"https://github.com/alpheios-project/grammar-benn
 /*!***************************************!*\
   !*** external "alpheios-data-models" ***!
   \***************************************/
-/*! unknown exports (runtime-defined) */
+/*! dynamic exports */
+/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
+/*! other exports [maybe provided (runtime-defined)] [no usage info] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 

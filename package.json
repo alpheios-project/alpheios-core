@@ -11,7 +11,7 @@
     "list-mismatching-deps": "npx syncpack list-mismatches; exit(0)",
     "list-outdated-deps": "npx lerna exec --no-bail npm outdated",
     "fix-mismatching-deps": "npx syncpack fix-mismatches",
-    "build": "npm run build-l10n && npm run build-data-models && npm run build-res-client && npm run build-wordlist-next && npm run build-client-adapters && npm run build-inflection-tables && npm run build-components",
+    "build": "npm run build-l10n && npm run build-data-models && npm run build-res-client && npm run build-wordlist && npm run build-client-adapters && npm run build-inflection-tables && npm run build-components",
     "test": "npm --prefix packages/l10n run test-no-coverage && npm --prefix packages/data-models run test-no-coverage && npm --prefix packages/res-client run test-no-coverage && npm --prefix packages/wordlist run test-no-coverage && npm --prefix packages/client-adapters run test-no-coverage && npm --prefix packages/inflection-tables run test-no-coverage && npm --prefix packages/components run test-no-coverage",
     "test-ci": "npm --prefix packages/l10n run test-no-coverage && npm --prefix packages/data-models run test-no-coverage && npm --prefix packages/res-client run test-no-coverage && npm --prefix packages/wordlist run test-no-coverage && npm --prefix packages/client-adapters run test-no-coverage && npm --prefix packages/inflection-tables run test-no-coverage && npm --prefix packages/components run test-no-coverage",
     "build-l10n": "npm --prefix packages/l10n run build",

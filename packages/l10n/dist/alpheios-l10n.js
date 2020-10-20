@@ -7,7 +7,7 @@
 		var a = factory();
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function() {
+})(self, function() {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -17,6 +17,7 @@ return /******/ (() => { // webpackBootstrap
   \*******************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 140:0-14 */
 /***/ ((module) => {
 
 //
@@ -172,26 +173,24 @@ module.exports.strategies = {
   !*** ../../../node_modules/intl-messageformat-parser/lib/index.js ***!
   \********************************************************************/
 /*! namespace exports */
-/*! export SKELETON_TYPE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export SyntaxError [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TYPE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export convertNumberSkeletonToNumberFormatOptions [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createLiteralElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createNumberElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isArgumentElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isDateElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isLiteralElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isNumberElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isNumberSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isPluralElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isPoundElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isSelectElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isTagElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isTimeElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export SKELETON_TYPE [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .SKELETON_TYPE */
+/*! export SyntaxError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/parser.js .SyntaxError */
+/*! export TYPE [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .TYPE */
+/*! export createLiteralElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .createLiteralElement */
+/*! export createNumberElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .createNumberElement */
+/*! export isArgumentElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isArgumentElement */
+/*! export isDateElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isDateElement */
+/*! export isDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isDateTimeSkeleton */
+/*! export isLiteralElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isLiteralElement */
+/*! export isNumberElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isNumberElement */
+/*! export isNumberSkeleton [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isNumberSkeleton */
+/*! export isPluralElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isPluralElement */
+/*! export isPoundElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isPoundElement */
+/*! export isSelectElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isSelectElement */
+/*! export isTagElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isTagElement */
+/*! export isTimeElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isTimeElement */
 /*! export parse [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export parseDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export pegParse [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export pegParse [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/parser.js .pegParse */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -216,23 +215,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isTimeElement": () => /* reexport safe */ _src_types__WEBPACK_IMPORTED_MODULE_0__.isTimeElement,
 /* harmony export */   "SyntaxError": () => /* reexport safe */ _src_parser__WEBPACK_IMPORTED_MODULE_1__.SyntaxError,
 /* harmony export */   "pegParse": () => /* reexport safe */ _src_parser__WEBPACK_IMPORTED_MODULE_1__.pegParse,
-/* harmony export */   "convertNumberSkeletonToNumberFormatOptions": () => /* reexport safe */ _src_skeleton__WEBPACK_IMPORTED_MODULE_2__.convertNumberSkeletonToNumberFormatOptions,
-/* harmony export */   "parseDateTimeSkeleton": () => /* reexport safe */ _src_skeleton__WEBPACK_IMPORTED_MODULE_2__.parseDateTimeSkeleton,
 /* harmony export */   "parse": () => /* binding */ parse
 /* harmony export */ });
 /* harmony import */ var _src_parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/parser */ "../../../node_modules/intl-messageformat-parser/lib/src/parser.js");
-/* harmony import */ var _src_normalize__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/normalize */ "../../../node_modules/intl-messageformat-parser/lib/src/normalize.js");
+/* harmony import */ var _src_normalize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/normalize */ "../../../node_modules/intl-messageformat-parser/lib/src/normalize.js");
 /* harmony import */ var _src_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/types */ "../../../node_modules/intl-messageformat-parser/lib/src/types.js");
-/* harmony import */ var _src_skeleton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/skeleton */ "../../../node_modules/intl-messageformat-parser/lib/src/skeleton.js");
-
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 
 
 
 
 function parse(input, opts) {
+    opts = __assign({ normalizeHashtagInPlural: true, shouldParseSkeleton: true }, (opts || {}));
     var els = (0,_src_parser__WEBPACK_IMPORTED_MODULE_1__.pegParse)(input, opts);
-    if (!opts || opts.normalizeHashtagInPlural !== false) {
-        (0,_src_normalize__WEBPACK_IMPORTED_MODULE_3__.normalizeHashtagInPlural)(els);
+    if (opts.normalizeHashtagInPlural) {
+        (0,_src_normalize__WEBPACK_IMPORTED_MODULE_2__.normalizeHashtagInPlural)(els);
     }
     return els;
 }
@@ -326,6 +333,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "pegParse": () => /* binding */ pegParse
 /* harmony export */ });
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "../../../node_modules/intl-messageformat-parser/lib/src/types.js");
+/* harmony import */ var _skeleton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./skeleton */ "../../../node_modules/intl-messageformat-parser/lib/src/skeleton.js");
 // @ts-nocheck
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -351,6 +359,8 @@ var __assign = (undefined && undefined.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+// @generated
+
 
 var SyntaxError = /** @class */ (function (_super) {
     __extends(SyntaxError, _super);
@@ -506,7 +516,7 @@ function peg$parse(input, options) {
         return { stem: stem, options: options };
     };
     var peg$c37 = function (tokens) {
-        return __assign({ type: 0 /* number */, tokens: tokens }, insertLocation());
+        return __assign({ type: 0 /* number */, tokens: tokens, parsedOptions: shouldParseSkeleton ? (0,_skeleton__WEBPACK_IMPORTED_MODULE_1__.parseNumberSkeleton)(tokens) : {} }, insertLocation());
     };
     var peg$c38 = "::";
     var peg$c39 = peg$literalExpectation("::", false);
@@ -532,7 +542,7 @@ function peg$parse(input, options) {
     var peg$c54 = /^[a-zA-Z]/;
     var peg$c55 = peg$classExpectation([["a", "z"], ["A", "Z"]], false, false);
     var peg$c56 = function (pattern) {
-        return __assign({ type: 1 /* dateTime */, pattern: pattern }, insertLocation());
+        return __assign({ type: 1 /* dateTime */, pattern: pattern, parsedOptions: shouldParseSkeleton ? (0,_skeleton__WEBPACK_IMPORTED_MODULE_1__.parseDateTimeSkeleton)(pattern) : {} }, insertLocation());
     };
     var peg$c57 = function () { messageCtx.push('dateOrTimeArgStyle'); return true; };
     var peg$c58 = "date";
@@ -3443,6 +3453,7 @@ function peg$parse(input, options) {
         } : {};
     }
     var ignoreTag = options && options.ignoreTag;
+    var shouldParseSkeleton = options && options.shouldParseSkeleton;
     peg$result = peg$startRuleFunction();
     if (peg$result !== peg$FAILED && peg$currPos === input.length) {
         return peg$result;
@@ -3466,8 +3477,8 @@ var pegParse = peg$parse;
   !*** ../../../node_modules/intl-messageformat-parser/lib/src/skeleton.js ***!
   \***************************************************************************/
 /*! namespace exports */
-/*! export convertNumberSkeletonToNumberFormatOptions [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export parseDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export parseNumberSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3476,7 +3487,7 @@ var pegParse = peg$parse;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "parseDateTimeSkeleton": () => /* binding */ parseDateTimeSkeleton,
-/* harmony export */   "convertNumberSkeletonToNumberFormatOptions": () => /* binding */ convertNumberSkeletonToNumberFormatOptions
+/* harmony export */   "parseNumberSkeleton": () => /* binding */ parseNumberSkeleton
 /* harmony export */ });
 var __assign = (undefined && undefined.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -3593,7 +3604,7 @@ function parseDateTimeSkeleton(skeleton) {
                 break;
             case 'S':
             case 'A':
-                throw new RangeError('`S/A` (second) pattenrs are not supported, use `s` instead');
+                throw new RangeError('`S/A` (second) patterns are not supported, use `s` instead');
             // Zone
             case 'z': // 1..3, 4: specific non-location format
                 result.timeZoneName = len < 4 ? 'short' : 'long';
@@ -3604,7 +3615,7 @@ function parseDateTimeSkeleton(skeleton) {
             case 'V': // 1, 2, 3, 4: time zone ID or city
             case 'X': // 1, 2, 3, 4: The ISO8601 varios formats
             case 'x': // 1, 2, 3, 4: The ISO8601 varios formats
-                throw new RangeError('`Z/O/v/V/X/x` (timeZone) pattenrs are not supported, use `z` instead');
+                throw new RangeError('`Z/O/v/V/X/x` (timeZone) patterns are not supported, use `z` instead');
         }
         return '';
     });
@@ -3686,7 +3697,7 @@ function parseNotationOptions(opt) {
 /**
  * https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md#skeleton-stems-and-options
  */
-function convertNumberSkeletonToNumberFormatOptions(tokens) {
+function parseNumberSkeleton(tokens) {
     var result = {};
     for (var _i = 0, tokens_1 = tokens; _i < tokens_1.length; _i++) {
         var token = tokens_1[_i];
@@ -3936,16 +3947,16 @@ function createNumberElement(value, style) {
   !*** ../../../node_modules/intl-messageformat/lib/index.js ***!
   \*************************************************************/
 /*! namespace exports */
-/*! export ErrorCode [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export FormatError [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export IntlMessageFormat [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export InvalidValueError [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export InvalidValueTypeError [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MissingValueError [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export PART_TYPE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export ErrorCode [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .ErrorCode */
+/*! export FormatError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .FormatError */
+/*! export IntlMessageFormat [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/core.js .IntlMessageFormat */
+/*! export InvalidValueError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .InvalidValueError */
+/*! export InvalidValueTypeError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .InvalidValueTypeError */
+/*! export MissingValueError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .MissingValueError */
+/*! export PART_TYPE [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/formatters.js .PART_TYPE */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export formatToParts [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isFormatXMLElementFn [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export formatToParts [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/formatters.js .formatToParts */
+/*! export isFormatXMLElementFn [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/formatters.js .isFormatXMLElementFn */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4177,7 +4188,7 @@ var IntlMessageFormat = /** @class */ (function () {
             }
             return IntlMessageFormat.memoizedDefaultLocale;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     IntlMessageFormat.memoizedDefaultLocale = null;
@@ -4355,7 +4366,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "formatToParts": () => /* binding */ formatToParts
 /* harmony export */ });
 /* harmony import */ var intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat-parser */ "../../../node_modules/intl-messageformat-parser/lib/src/types.js");
-/* harmony import */ var intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! intl-messageformat-parser */ "../../../node_modules/intl-messageformat-parser/lib/src/skeleton.js");
 /* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./error */ "../../../node_modules/intl-messageformat/lib/src/error.js");
 
 
@@ -4445,7 +4455,7 @@ originalMessage) {
             var style = typeof el.style === 'string'
                 ? formats.date[el.style]
                 : (0,intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__.isDateTimeSkeleton)(el.style)
-                    ? (0,intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_2__.parseDateTimeSkeleton)(el.style.pattern)
+                    ? el.style.parsedOptions
                     : undefined;
             result.push({
                 type: 0 /* literal */,
@@ -4459,7 +4469,7 @@ originalMessage) {
             var style = typeof el.style === 'string'
                 ? formats.time[el.style]
                 : (0,intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__.isDateTimeSkeleton)(el.style)
-                    ? (0,intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_2__.parseDateTimeSkeleton)(el.style.pattern)
+                    ? el.style.parsedOptions
                     : undefined;
             result.push({
                 type: 0 /* literal */,
@@ -4473,7 +4483,7 @@ originalMessage) {
             var style = typeof el.style === 'string'
                 ? formats.number[el.style]
                 : (0,intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__.isNumberSkeleton)(el.style)
-                    ? (0,intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_2__.convertNumberSkeletonToNumberFormatOptions)(el.style.tokens)
+                    ? el.style.parsedOptions
                     : undefined;
             result.push({
                 type: 0 /* literal */,
@@ -4538,8 +4548,8 @@ originalMessage) {
   !*** ../index.js ***!
   \*******************/
 /*! namespace exports */
-/*! export L10n [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
-/*! export MessageBundle [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] */
+/*! export L10n [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./l10n.js .default */
+/*! export MessageBundle [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./message-bundle.js .default */
 /*! other exports [not provided] [maybe used in main (runtime-defined)] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
