@@ -11,7 +11,7 @@
     "description": "Definitions derived from the Bailly 2020",
     "rights_keys": {
        "LSJ": " \"An Intermediate Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University. Edits and additions provided by Vanessa Gorman, University of Nebraska.",
-       "Bailly": "Dictionnaire Grec-Français par M. A. Bailly. Digitized by Hugo Chávez (http://gerardgreco.free.fr/spip.php?article52&lang=fr). Definitions extracted and normlized by Philippe Verkerk, Eulexis Project (https://outils.biblissima.fr/en/eulexis-web/)."
+       "Bailly": "Dictionnaire Grec-Français par M. A. Bailly. Digitized by Gérard Gréco avec le concours de André Charbonnet (Chaeréphon), Mark De Wilde et Bernard Maréchal (http://gerardgreco.free.fr/spip.php?article52&lang=fr). Definitions extracted and normalized by Philippe Verkerk, Eulexis Project (https://outils.biblissima.fr/en/eulexis)."
     }
   },
   "https://github.com/alpheios-project/mjm": {
