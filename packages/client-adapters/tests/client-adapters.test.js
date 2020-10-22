@@ -186,11 +186,13 @@ describe('client-adapters.test.js', () => {
       sourceData: sourceJson
     })
 
+    console.info('reHomonym - ', reHomonym)
+
     let res = await ClientAdapters.lemmaTranslations({
       method: 'fetchTranslations',
       params: {
         homonym: reHomonym.result,
-        browserLang: 'spa'
+        browserLang: 'es'
       },
       sourceData: {
         langs: TranslationsFixture.allLangs,
@@ -409,5 +411,48 @@ describe('client-adapters.test.js', () => {
     expect(Array.isArray(res.result)).toBeTruthy()
   })
 
+  it('21 ClientAdapters - tokenizationMethod - getTokens returns array of segments - lat', async () => {
+    ClientAdapters.init()
 
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getTokens',
+      params: {
+        text: 'veni vidi vichi',
+        fetchOptions: {
+          lang: 'lat',
+          textType: 'text',
+          segments: 'singleline'
+        }
+      }
+    })
+
+    // console.info('res - ', res)
+    // console.info('res - ', res.result.segments)
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result.segments.length).toEqual(1)
+    expect(res.result.segments[0].tokens.length).toEqual(3)
+  })
+
+  it('22 ClientAdapters - tokenizationMethod - getTokens returns array of errors - if passed incorrect parameters', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getTokens',
+      params: {
+        text: 'veni vidi vichi',
+        fetchOptions: {
+          lang: 'lat',
+          textType: 'tei',
+          segments: 'singleline'
+        }
+      }
+    })
+
+    // console.info('res - ', res)
+    // console.info('res - ', res.result.segments)
+    expect(res.errors.length).toEqual(1)
+    expect(res.result).not.toBeDefined()
+  })
 })

@@ -2579,8 +2579,10 @@ class BaseAdapter {
     })
 
     Object.keys(defaultConfig).forEach(configKey => {
-      if (configRes[configKey] === undefined) {
+      if (!configRes[configKey]) {
         configRes[configKey] = defaultConfig[configKey]
+      } else if (configRes[configKey] instanceof Object) {
+        configRes[configKey] = Object.assign(defaultConfig[configKey], configRes[configKey])
       }
     })
 
@@ -2607,7 +2609,8 @@ class BaseAdapter {
   async fetchWindow (url, options = { type: 'json' }) {
     if (url) {
       try {
-        const response = await window.fetch(url)
+        // console.info('fetchWindow ', url, options.requestParams)
+        const response = await window.fetch(url, options.requestParams)
         if (!response.ok) {
           this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText: response.statusText }))
           return
@@ -2643,7 +2646,7 @@ class BaseAdapter {
           reject(new Error('Request timed out', url))
         }, options.timeout)
 
-        window.fetch(url)
+        window.fetch(url, options.requestParams)
           .then((response) => {
             clearTimeout(timeout)
             if (!didTimeOut) {
@@ -2674,13 +2677,17 @@ class BaseAdapter {
   */
   async fetchAxios (url, options) {
     if (url) {
+      const finalOptions = Object.assign({ url: encodeURI(decodeURI(url)) }, options)
       try {
+        /*
         let res
         if (options && options.timeout > 0) {
-          res = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(encodeURI(decodeURI(url)), { timeout: options.timeout })
+          res = await axios.get(encodeURI(decodeURI(url)), { timeout: options.timeout })
         } else {
-          res = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(encodeURI(decodeURI(url)))
+          res = await axios.get(encodeURI(decodeURI(url)))
         }
+        */
+        const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()(finalOptions)
         return res.data
       } catch (error) {
         this.addError(this.l10n.getMsg('BASIC_ADAPTER_NO_DATA_FROM_URL', { url: url }))
@@ -3946,6 +3953,91 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
 
 /***/ }),
 
+/***/ "./adapters/tokenization/adapter.js":
+/*!******************************************!*\
+  !*** ./adapters/tokenization/adapter.js ***!
+  \******************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _clAdapters_adapters_tokenization_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/tokenization/config.json */ "./adapters/tokenization/config.json");
+/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
+
+
+
+class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__.default {
+  /**
+   * Adapter uploads config data
+   * @param {Object} config - properties with higher priority
+  */
+  constructor (config = {}) {
+    super()
+    this.config = this.uploadConfig(config, _clAdapters_adapters_tokenization_config_json__WEBPACK_IMPORTED_MODULE_0__)
+    this.available = this.config.availableLangs.includes(this.config.fetchOptions.lang)
+    this.sourceData = config.sourceData
+
+    this.fetchOptions = this.config.fetchOptions
+
+    this.requestParams = {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' }
+    }
+  }
+
+  /**
+  * This method uploads segments data with tokens from tokenization service
+  * @param {String} text - text for retrieving variants
+  * @return {Array} - array of segments
+  */
+  async getTokens (text) {
+    try {
+      const url = this.createFetchURL()
+      if (!url) {
+        this.addError(this.l10n.getMsg('TOKENIZATION_FETCH_OPTIONS_ERROR'))
+        return
+      }
+
+      if (this.sourceData) {
+        return this.sourceData
+      } else {
+        const finalParams = { requestParams: Object.assign({ body: text }, this.requestParams) }
+        const segments = await this.fetch(url, finalParams)
+        return segments
+      }
+    } catch (error) {
+      this.addError(this.l10n.getMsg('TOKENIZATION_FETCH_ERROR', { message: error.message }))
+    }
+  }
+
+  /**
+  * This method constructs full url for getting data
+  * @param {String} text
+  * @return {String}
+  */
+  createFetchURL () {
+    if (this.fetchOptions) {
+      let url = `${this.fetchOptions.baseUrl}${this.fetchOptions.textType}?lang=${this.fetchOptions.lang}`
+      if (this.fetchOptions.segments) {
+        url = `${url}&segments=${this.fetchOptions.segments}`
+      }
+      return url
+    }
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AlpheiosTokenizationAdapter);
+
+
+/***/ }),
+
 /***/ "./adapters/translations/adapter.js":
 /*!******************************************!*\
   !*** ./adapters/translations/adapter.js ***!
@@ -3999,6 +4091,7 @@ class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter
       lemmaList.push(lexeme.lemma)
     }
 
+    // console.info('getTranslationsList lemmaList', lemmaList)
     const inLang = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.LanguageModelFactory.getLanguageCodeFromId(homonym.lexemes[0].lemma.languageID)
     const outLang = this.config.langMap[browserLang] || this.config.defaultLang
 
@@ -4018,6 +4111,7 @@ class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter
       if (input && urlLang) {
         try {
           const url = urlLang + '?input=' + input
+
           let translationsList
           if (this.sourceData && this.sourceData.translations) {
             translationsList = this.sourceData.translations
@@ -4652,9 +4746,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_concordance_adapter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/adapters/concordance/adapter */ "./adapters/concordance/adapter.js");
 /* harmony import */ var _clAdapters_adapters_arethusa_adapter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/adapters/arethusa/adapter */ "./adapters/arethusa/adapter.js");
 /* harmony import */ var _clAdapters_adapters_logeion_adapter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/adapters/logeion/adapter */ "./adapters/logeion/adapter.js");
-/* harmony import */ var _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/errors/wrong-method-error */ "./errors/wrong-method-error.js");
-/* harmony import */ var _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @clAdapters/errors/no-required-param-error */ "./errors/no-required-param-error.js");
-/* harmony import */ var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json");
+/* harmony import */ var _clAdapters_adapters_tokenization_adapter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/adapters/tokenization/adapter */ "./adapters/tokenization/adapter.js");
+/* harmony import */ var _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @clAdapters/errors/wrong-method-error */ "./errors/wrong-method-error.js");
+/* harmony import */ var _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @clAdapters/errors/no-required-param-error */ "./errors/no-required-param-error.js");
+/* harmony import */ var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json");
+
 
 
 
@@ -4678,10 +4774,10 @@ class ClientAdapters {
   */
   static init () {
     if (cachedConfig.size === 0) {
-      for (const category in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_10__) {
+      for (const category in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_11__) {
         let adapters = {} // eslint-disable-line prefer-const
-        for (const adapterKey in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_10__[category]) {
-          const adapterData = _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_10__[category][adapterKey]
+        for (const adapterKey in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_11__[category]) {
+          const adapterData = _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_11__[category][adapterKey]
 
           adapters[adapterKey] = {
             adapter: ClientAdapters[adapterData.adapter],
@@ -4738,6 +4834,11 @@ class ClientAdapters {
     return cachedAdaptersList.get('autocompleteWords')
   }
 
+  static get tokenizationGroup () {
+    ClientAdapters.init()
+    return cachedAdaptersList.get('tokenizationGroup')
+  }
+
   /**
   * This method checks if given method is registered in config for category.adapterName
   * @param {String} category - category name - morphology, lemmatranslation, lexicon
@@ -4746,7 +4847,7 @@ class ClientAdapters {
   */
   static checkMethod (category, adapterName, methodName) {
     if (!cachedConfig.get(category)[adapterName].methods.includes(methodName)) {
-      throw new _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_8__.default(category, adapterName, methodName)
+      throw new _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_9__.default(category, adapterName, methodName)
     }
   }
 
@@ -4762,7 +4863,7 @@ class ClientAdapters {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
         // Param values other than `undefined` such as `null` or empty strings could be valid values
         if (typeof params[paramName] === 'undefined') {
-          throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_9__.default(category, adapterName, methodName, paramName)
+          throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_10__.default(category, adapterName, methodName, paramName)
         }
       })
     }
@@ -4956,6 +5057,7 @@ class ClientAdapters {
 
     if (options.method === 'getAuthorsWorks') {
       const res = await localLemmasAdapter.getAuthorsWorks()
+
       return { result: res, errors: localLemmasAdapter.errors }
     }
 
@@ -5015,6 +5117,10 @@ class ClientAdapters {
     return null
   }
 
+  /**
+   * It is used for getting segments and tokens from Alpheios Tokenization Service
+   * @param {Object} options
+   */
   static async autoCompleteWords (options) {
     ClientAdapters.checkMethodParam('autocompleteWords', 'logeion', options)
 
@@ -5032,6 +5138,28 @@ class ClientAdapters {
     if (localLogeionAdapter.available && options.method === 'getWords') {
       const res = await localLogeionAdapter.getWords(options.params.text)
       return { result: res, errors: localLogeionAdapter.errors }
+    }
+    return null
+  }
+
+  /**
+   * It is used for getting segments and tokens from Alpheios Tokenization Service
+   * @param {Object} options
+   */
+  static async tokenizationMethod (options) {
+    ClientAdapters.checkMethodParam('tokenizationGroup', 'alpheios', options)
+
+    const localTokenizationAdapter = new _clAdapters_adapters_tokenization_adapter__WEBPACK_IMPORTED_MODULE_8__.default({
+      category: 'tokenizationGroup',
+      adapterName: 'alpheios',
+      method: options.method,
+      clientId: options.clientId,
+      fetchOptions: options.params.fetchOptions
+    })
+
+    if (localTokenizationAdapter.available && options.method === 'getTokens') {
+      const res = await localTokenizationAdapter.getTokens(options.params.text)
+      return { result: res, errors: localTokenizationAdapter.errors }
     }
     return null
   }
@@ -5997,6 +6125,17 @@ class ImportMorphData {
 /*!       other exports [not provided] [no usage info] */
 /*!     other exports [not provided] [no usage info] */
 /*!   other exports [not provided] [no usage info] */
+/*! export tokenizationGroup [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export alpheios [provided] [no usage info] [missing usage info prevents renaming] */
+/*!     export adapter [provided] [no usage info] [missing usage info prevents renaming] */
+/*!     export methods [provided] [no usage info] [missing usage info prevents renaming] */
+/*!     export params [provided] [no usage info] [missing usage info prevents renaming] */
+/*!       export getTokens [provided] [no usage info] [missing usage info prevents renaming] */
+/*!         export 0 [provided] [no usage info] [missing usage info prevents renaming] */
+/*!         other exports [not provided] [no usage info] */
+/*!       other exports [not provided] [no usage info] */
+/*!     other exports [not provided] [no usage info] */
+/*!   other exports [not provided] [no usage info] */
 /*! export wordusageExamples [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export concordance [provided] [no usage info] [missing usage info prevents renaming] */
 /*!     export adapter [provided] [no usage info] [missing usage info prevents renaming] */
@@ -6018,7 +6157,7 @@ class ImportMorphData {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\",\"gotoSentence\",\"findWord\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"],\"gotoSentence\":[\"provider\",\"sentenceId\",\"wordIds\"],\"findWord\":[\"provider\",\"word\",\"prefix\",\"suffix\",\"sentenceId\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\",\"fetchOptions\"]}}}}");
+module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\",\"gotoSentence\",\"findWord\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"],\"gotoSentence\":[\"provider\",\"sentenceId\",\"wordIds\"],\"findWord\":[\"provider\",\"word\",\"prefix\",\"suffix\",\"sentenceId\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\",\"fetchOptions\"]}}},\"tokenizationGroup\":{\"alpheios\":{\"adapter\":\"tokenizationMethod\",\"methods\":\"getTokens\",\"params\":{\"getTokens\":[\"text\"]}}}}");
 
 /***/ }),
 
@@ -25002,6 +25141,29 @@ module.exports = JSON.parse("{\"url\":\"https://api-v2.logeion.org/search?q=\",\
 
 /***/ }),
 
+/***/ "./adapters/tokenization/config.json":
+/*!*******************************************!*\
+  !*** ./adapters/tokenization/config.json ***!
+  \*******************************************/
+/*! default exports */
+/*! export availableLangs [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export 0 [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export 1 [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   other exports [not provided] [no usage info] */
+/*! export fetchOptions [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export baseUrl [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export segments [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export textType [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   other exports [not provided] [no usage info] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: module */
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse("{\"availableLangs\":[\"lat\",\"grc\"],\"fetchOptions\":{\"baseUrl\":\"https://tools.alpheios.net/tokenizer/tokenize/\",\"textType\":\"text\",\"segments\":\"singleline\"}}");
+
+/***/ }),
+
 /***/ "./adapters/translations/config.json":
 /*!*******************************************!*\
   !*** ./adapters/translations/config.json ***!
@@ -25427,6 +25589,19 @@ module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a t
 /*!     export 0 [provided] [no usage info] [missing usage info prevents renaming] */
 /*!     other exports [not provided] [no usage info] */
 /*!   other exports [not provided] [no usage info] */
+/*! export TOKENIZATION_FETCH_ERROR [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export component [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export description [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export message [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export params [provided] [no usage info] [missing usage info prevents renaming] */
+/*!     export 0 [provided] [no usage info] [missing usage info prevents renaming] */
+/*!     other exports [not provided] [no usage info] */
+/*!   other exports [not provided] [no usage info] */
+/*! export TOKENIZATION_FETCH_OPTIONS_ERROR [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export component [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export description [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export message [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   other exports [not provided] [no usage info] */
 /*! export TRANSLATION_INCORRECT_LEXEMES [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export component [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export description [provided] [no usage info] [missing usage info prevents renaming] */
@@ -25453,7 +25628,7 @@ module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a t
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE\":{\"message\":\"There is no engine for the given languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no engine is found for given languageID\",\"component\":\"morphology.tufts\",\"params\":[\"languageID\"]},\"MORPH_NO_HOMONYM\":{\"message\":\"There is no homonym for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no homonym was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_TUFTS_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no data was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.tufts adapter - unknown\",\"component\":\"morphology.tufts\",\"params\":[\"message\"]},\"MORPH_TRANSFORM_NO_LANGUAGE\":{\"message\":\"No Language was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_LEMMA\":{\"message\":\"No Lemma was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_MAPPING_DATA\":{\"message\":\"No mapping data found for {language}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"language\"]},\"MORPH_TRANSFORM_INFLECTION_ERROR\":{\"message\":\"Error parsing inflection: {error}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"error\"]},\"BASIC_ADAPTER_NO_DATA_FROM_URL\":{\"message\":\"Unable to get data from url - {url}\",\"description\":\"Error message for basic adapter - when no data was returned from the url\",\"component\":\"basic_adapter\",\"params\":[\"url\"]},\"BASIC_ADAPTER_EMPTY_URL\":{\"message\":\"Unable to get data from empty url\",\"description\":\"Error message for basic adapter - when empty url was given\",\"component\":\"basic_adapter\"},\"BASIC_ADAPTER_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"message\"]},\"BASIC_ADAPTER_URL_RESPONSE_FAILED\":{\"message\":\"Request doesn't return data - {statusCode}: {statusText}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"statusCode\",\"statusText\"]},\"MORPH_TREEBANK_MISSING_REF\":{\"message\":\"Reference is missing from treebank request = {request}\",\"description\":\"Missing reference in treebank request\",\"component\":\"morph.treebank\",\"params\":[\"request\"]},\"MORPH_TREEBANK_UNSUPPORTED_LANGUAGE\":{\"message\":\"Unsupported treebank language ${languageId}\",\"description\":\"Unsupported treebank language\",\"component\":\"morph.treebank\",\"params\":[\"languageId\"]},\"MORPH_TREEBANK_NO_URL\":{\"message\":\"There is a problem with creating url for the given word - {word}\",\"description\":\"Error message for morph.treebank - no url for fetching data from treebank\",\"component\":\"morph.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word}\",\"description\":\"Error message for morphology.treebank adapter - when no data was returned from the source\",\"component\":\"morphology.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.treebank adapter - unknown\",\"component\":\"morphology.treebank\",\"params\":[\"message\"]},\"TRANSLATION_INPUT_PREPARE_ERROR\":{\"message\":\"Some problems with preparing input for geting translations - {input}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - problems with input\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"input\"]},\"TRANSLATION_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - unknown\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"message\"]},\"TRANSLATION_INCORRECT_LEXEMES\":{\"message\":\"There is no correct homonym in input\",\"description\":\"Error message for lemmatranslation.alpheios adapter - no lexemes\",\"component\":\"lemmatranslation.alpheios\"},\"LEXICONS_NO_ALLOWED_URL\":{\"message\":\"There are no allowed urls in the options\",\"description\":\"Error message for lexicon.alpheios adapter - no urls were found in options\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_FAILED_CACHED_DATA\":{\"message\":\"There is a problem with catching data from lexicon source - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with getting cached data\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_FAILED_APPEND_DEFS\":{\"message\":\"There is a problem with updating definitions - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with updating definitions\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_NO_FULL_URL\":{\"message\":\"No full url is defined for definitions\",\"description\":\"Error message for lexicon.alpheios adapter - no full url is defined\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_NO_DATA_FROM_URL\":{\"message\":\"No data recieved from url - {url}\",\"description\":\"Error message for lexicon.alpheios adapter - no data from url\",\"component\":\"lexicon.alpheios\",\"params\":[\"url\"]},\"CONCORDANCE_AUTHOR_UPLOAD_ERROR\":{\"message\":\"Some problems with retrieving from author/textWork config file - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"CONCORDANCE_WORD_USAGE_FETCH_ERROR\":{\"message\":\"Some problems with fetching word usage examples from concordance api - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"LOGEION_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from logeion api - {message}\",\"description\":\"Error message for autoCompleteWords.logeion adapter - problems with fetching words from logeion api\",\"component\":\"autoCompleteWords.logeion\",\"params\":[\"message\"]},\"LOGEION_FETCH_OPTIONS_ERROR\":{\"message\":\"There are no fetch options for Logeion API request\",\"description\":\"Error message for autoCompleteWords.logeion adapter - no apikey and baseurl for Logeion API\",\"component\":\"autoCompleteWords.logeion\"}}");
+module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE\":{\"message\":\"There is no engine for the given languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no engine is found for given languageID\",\"component\":\"morphology.tufts\",\"params\":[\"languageID\"]},\"MORPH_NO_HOMONYM\":{\"message\":\"There is no homonym for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no homonym was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_TUFTS_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no data was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.tufts adapter - unknown\",\"component\":\"morphology.tufts\",\"params\":[\"message\"]},\"MORPH_TRANSFORM_NO_LANGUAGE\":{\"message\":\"No Language was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_LEMMA\":{\"message\":\"No Lemma was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_MAPPING_DATA\":{\"message\":\"No mapping data found for {language}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"language\"]},\"MORPH_TRANSFORM_INFLECTION_ERROR\":{\"message\":\"Error parsing inflection: {error}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"error\"]},\"BASIC_ADAPTER_NO_DATA_FROM_URL\":{\"message\":\"Unable to get data from url - {url}\",\"description\":\"Error message for basic adapter - when no data was returned from the url\",\"component\":\"basic_adapter\",\"params\":[\"url\"]},\"BASIC_ADAPTER_EMPTY_URL\":{\"message\":\"Unable to get data from empty url\",\"description\":\"Error message for basic adapter - when empty url was given\",\"component\":\"basic_adapter\"},\"BASIC_ADAPTER_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"message\"]},\"BASIC_ADAPTER_URL_RESPONSE_FAILED\":{\"message\":\"Request doesn't return data - {statusCode}: {statusText}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"statusCode\",\"statusText\"]},\"MORPH_TREEBANK_MISSING_REF\":{\"message\":\"Reference is missing from treebank request = {request}\",\"description\":\"Missing reference in treebank request\",\"component\":\"morph.treebank\",\"params\":[\"request\"]},\"MORPH_TREEBANK_UNSUPPORTED_LANGUAGE\":{\"message\":\"Unsupported treebank language ${languageId}\",\"description\":\"Unsupported treebank language\",\"component\":\"morph.treebank\",\"params\":[\"languageId\"]},\"MORPH_TREEBANK_NO_URL\":{\"message\":\"There is a problem with creating url for the given word - {word}\",\"description\":\"Error message for morph.treebank - no url for fetching data from treebank\",\"component\":\"morph.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word}\",\"description\":\"Error message for morphology.treebank adapter - when no data was returned from the source\",\"component\":\"morphology.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.treebank adapter - unknown\",\"component\":\"morphology.treebank\",\"params\":[\"message\"]},\"TRANSLATION_INPUT_PREPARE_ERROR\":{\"message\":\"Some problems with preparing input for geting translations - {input}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - problems with input\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"input\"]},\"TRANSLATION_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - unknown\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"message\"]},\"TRANSLATION_INCORRECT_LEXEMES\":{\"message\":\"There is no correct homonym in input\",\"description\":\"Error message for lemmatranslation.alpheios adapter - no lexemes\",\"component\":\"lemmatranslation.alpheios\"},\"LEXICONS_NO_ALLOWED_URL\":{\"message\":\"There are no allowed urls in the options\",\"description\":\"Error message for lexicon.alpheios adapter - no urls were found in options\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_FAILED_CACHED_DATA\":{\"message\":\"There is a problem with catching data from lexicon source - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with getting cached data\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_FAILED_APPEND_DEFS\":{\"message\":\"There is a problem with updating definitions - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with updating definitions\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_NO_FULL_URL\":{\"message\":\"No full url is defined for definitions\",\"description\":\"Error message for lexicon.alpheios adapter - no full url is defined\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_NO_DATA_FROM_URL\":{\"message\":\"No data recieved from url - {url}\",\"description\":\"Error message for lexicon.alpheios adapter - no data from url\",\"component\":\"lexicon.alpheios\",\"params\":[\"url\"]},\"CONCORDANCE_AUTHOR_UPLOAD_ERROR\":{\"message\":\"Some problems with retrieving from author/textWork config file - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"CONCORDANCE_WORD_USAGE_FETCH_ERROR\":{\"message\":\"Some problems with fetching word usage examples from concordance api - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"LOGEION_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from logeion api - {message}\",\"description\":\"Error message for autoCompleteWords.logeion adapter - problems with fetching words from logeion api\",\"component\":\"autoCompleteWords.logeion\",\"params\":[\"message\"]},\"LOGEION_FETCH_OPTIONS_ERROR\":{\"message\":\"There are no fetch options for Logeion API request\",\"description\":\"Error message for autoCompleteWords.logeion adapter - no apikey and baseurl for Logeion API\",\"component\":\"autoCompleteWords.logeion\"},\"TOKENIZATION_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from Alpheios Tokenization API - {message}\",\"description\":\"Error message for Alpheios Tokenization adapter - problems with fetching words from api\",\"component\":\"tokenizationGroup.alpheios\",\"params\":[\"message\"]},\"TOKENIZATION_FETCH_OPTIONS_ERROR\":{\"message\":\"There are no fetch options for Alpheios Tokenization API request\",\"description\":\"Error message - no apikey and baseurl for Alpheios Tokenization API\",\"component\":\"tokenizationGroup.alpheios\"}}");
 
 /***/ }),
 

@@ -1,0 +1,8 @@
+{
+  "availableLangs": ["lat", "grc"],
+  "fetchOptions": {
+    "baseUrl": "https://tools.alpheios.net/tokenizer/tokenize/",
+    "textType": "text",
+    "segments": "singleline"
+  }
+}

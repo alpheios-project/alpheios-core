@@ -76,5 +76,15 @@
         "getWords": ["text", "lang", "fetchOptions"]
       }
     }
+  },
+
+  "tokenizationGroup": {
+    "alpheios": {
+      "adapter": "tokenizationMethod",
+      "methods": "getTokens",
+      "params": {
+        "getTokens": ["text"]
+      }
+    }
   }
 }

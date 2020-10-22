@@ -34,7 +34,7 @@ describe('alpheiostb/adapter.test.js', () => {
     expect(adapter.models).toBeDefined()
   })
 
-  it('2 AlpheiosTreebankAdapter - getHomonym executes prepareRequest and if url could not be constructed return undefined and adds error', async () => {
+  it.skip('2 AlpheiosTreebankAdapter - getHomonym executes prepareRequest and if url could not be constructed return undefined and adds error', async () => {
     let adapter = new AlpheiosTreebankAdapter({
       category: 'morphology',
       adapterName: 'alpheiosTreebank',
@@ -111,7 +111,11 @@ describe('alpheiostb/adapter.test.js', () => {
   })
 
   it('8 AlpheiosTreebankAdapter - adapted a word properly', async () => {
-    let adapter = new AlpheiosTreebankAdapter()
+    let adapter = new AlpheiosTreebankAdapter({
+      category: 'morphology',
+      adapterName: 'alpheiosTreebank',
+      method: 'getHomonym'
+    })
     let homonym = await adapter.getHomonym(Constants.LANG_LATIN, '1999.02.0066#1-2')
 
     expect(homonym.lexemes.length).toEqual(1)
@@ -123,7 +127,7 @@ describe('alpheiostb/adapter.test.js', () => {
     expect(homonym.lexemes[0].inflections[0].number.value).toEqual('singular')
   })
 
-  it('8 AlpheiosTreebankAdapter - prepareRequestUrl returns correct config for specific text', () => {
+  it('9 AlpheiosTreebankAdapter - prepareRequestUrl returns correct config for specific text', () => {
     let adapter = new AlpheiosTreebankAdapter({
       category: 'morphology',
       adapterName: 'alpheiosTreebank',
@@ -136,4 +140,5 @@ describe('alpheiostb/adapter.test.js', () => {
     res = adapter.prepareRequest('abc#1-2')
     expect(res.url).toBeUndefined()
   })
+
 })
