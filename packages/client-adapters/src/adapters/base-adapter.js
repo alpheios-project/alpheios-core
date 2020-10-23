@@ -50,7 +50,7 @@ class BaseAdapter {
       if (!configRes[configKey]) {
         configRes[configKey] = defaultConfig[configKey]
       } else if (Array.isArray(configRes[configKey])) {
-        configRes[configKey] = configRes[configKey].map((item, index) => { 
+        configRes[configKey] = configRes[configKey].map((item, index) => {
           return { ...defaultConfig[configKey][index], ...item }
         })
       } else if (configRes[configKey] instanceof Object) {

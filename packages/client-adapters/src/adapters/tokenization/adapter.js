@@ -47,13 +47,16 @@ class AlpheiosTokenizationAdapter extends BaseAdapter {
 
   /**
   * This method constructs full url for getting data
-  * @param {String} text
   * @return {String}
   */
   createFetchURL () {
     if (this.fetchOptions) {
+      if (!this.fetchOptions.lang || !this.fetchOptions.textType) {
+        return
+      }
+
       let url = `${this.fetchOptions.baseUrl}${this.fetchOptions.textType}?lang=${this.fetchOptions.lang}`
-      
+
       if (this.fetchOptions.segments) {
         url = `${url}&segments=${this.fetchOptions.segments}`
       }

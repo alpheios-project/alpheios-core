@@ -2227,6 +2227,7 @@ class AlpheiosTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
 
         const homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text, server.config)
+
         return homonym
       } else {
         this.addError(this.l10n.getMsg('MORPH_TREEBANK_NO_ANSWER_FOR_WORD', { word: wordref }))
@@ -2581,8 +2582,12 @@ class BaseAdapter {
     Object.keys(defaultConfig).forEach(configKey => {
       if (!configRes[configKey]) {
         configRes[configKey] = defaultConfig[configKey]
+      } else if (Array.isArray(configRes[configKey])) {
+        configRes[configKey] = configRes[configKey].map((item, index) => {
+          return { ...defaultConfig[configKey][index], ...item }
+        })
       } else if (configRes[configKey] instanceof Object) {
-        configRes[configKey] = Object.assign(defaultConfig[configKey], configRes[configKey])
+        configRes[configKey] = { ...defaultConfig[configKey], ...configRes[configKey] }
       }
     })
 
@@ -2609,8 +2614,8 @@ class BaseAdapter {
   async fetchWindow (url, options = { type: 'json' }) {
     if (url) {
       try {
-        // console.info('fetchWindow ', url, options.requestParams)
         const response = await window.fetch(url, options.requestParams)
+
         if (!response.ok) {
           this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText: response.statusText }))
           return
@@ -2679,14 +2684,6 @@ class BaseAdapter {
     if (url) {
       const finalOptions = Object.assign({ url: encodeURI(decodeURI(url)) }, options)
       try {
-        /*
-        let res
-        if (options && options.timeout > 0) {
-          res = await axios.get(encodeURI(decodeURI(url)), { timeout: options.timeout })
-        } else {
-          res = await axios.get(encodeURI(decodeURI(url)))
-        }
-        */
         const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()(finalOptions)
         return res.data
       } catch (error) {
@@ -2723,7 +2720,7 @@ class BaseAdapter {
    *     @param {Number} options.timeout - timeout ms amount
    * @return {Object|String}
   */
-  async fetch (url, options) {
+  async fetch (url, options = {}) {
     let res
 
     if (url) {
@@ -4019,14 +4016,30 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
 
   /**
   * This method constructs full url for getting data
-  * @param {String} text
   * @return {String}
   */
   createFetchURL () {
     if (this.fetchOptions) {
+      if (!this.fetchOptions.lang || !this.fetchOptions.textType) {
+        return
+      }
+
       let url = `${this.fetchOptions.baseUrl}${this.fetchOptions.textType}?lang=${this.fetchOptions.lang}`
+
       if (this.fetchOptions.segments) {
         url = `${url}&segments=${this.fetchOptions.segments}`
+      }
+
+      if (this.fetchOptions.segstart) {
+        url = `${url}&segstart=${this.fetchOptions.segstart}`
+      }
+
+      if (this.fetchOptions.direction) {
+        url = `${url}&direction=${this.fetchOptions.direction}`
+      }
+
+      if (this.fetchOptions.tbseg) {
+        url = `${url}&tbseg=${this.fetchOptions.tbseg}`
       }
       return url
     }
@@ -4091,7 +4104,6 @@ class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter
       lemmaList.push(lexeme.lemma)
     }
 
-    // console.info('getTranslationsList lemmaList', lemmaList)
     const inLang = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.LanguageModelFactory.getLanguageCodeFromId(homonym.lexemes[0].lemma.languageID)
     const outLang = this.config.langMap[browserLang] || this.config.defaultLang
 
