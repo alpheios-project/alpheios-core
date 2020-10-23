@@ -186,8 +186,6 @@ describe('client-adapters.test.js', () => {
       sourceData: sourceJson
     })
 
-    console.info('reHomonym - ', reHomonym)
-
     let res = await ClientAdapters.lemmaTranslations({
       method: 'fetchTranslations',
       params: {
@@ -426,9 +424,6 @@ describe('client-adapters.test.js', () => {
       }
     })
 
-    // console.info('res - ', res)
-    // console.info('res - ', res.result.segments)
-
     expect(res.errors).toEqual([])
 
     expect(res.result.segments.length).toEqual(1)
@@ -450,8 +445,6 @@ describe('client-adapters.test.js', () => {
       }
     })
 
-    // console.info('res - ', res)
-    // console.info('res - ', res.result.segments)
     expect(res.errors.length).toEqual(1)
     expect(res.result).not.toBeDefined()
   })

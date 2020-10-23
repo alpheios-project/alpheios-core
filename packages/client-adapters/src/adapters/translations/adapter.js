@@ -51,7 +51,6 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
       if (input && urlLang) {
         try {
           const url = urlLang + '?input=' + input
-
           let translationsList
           if (this.sourceData && this.sourceData.translations) {
             translationsList = this.sourceData.translations

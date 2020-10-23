@@ -2227,7 +2227,6 @@ class AlpheiosTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
 
         const homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text, server.config)
-
         return homonym
       } else {
         this.addError(this.l10n.getMsg('MORPH_TREEBANK_NO_ANSWER_FOR_WORD', { word: wordref }))
@@ -4123,7 +4122,6 @@ class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter
       if (input && urlLang) {
         try {
           const url = urlLang + '?input=' + input
-
           let translationsList
           if (this.sourceData && this.sourceData.translations) {
             translationsList = this.sourceData.translations
