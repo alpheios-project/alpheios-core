@@ -6903,7 +6903,6 @@ class ClientAdapters {
 
     if (options.method === 'getAuthorsWorks') {
       const res = await localLemmasAdapter.getAuthorsWorks()
-
       return { result: res, errors: localLemmasAdapter.errors }
     }
 
