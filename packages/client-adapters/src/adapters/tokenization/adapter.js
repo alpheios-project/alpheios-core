@@ -9,7 +9,7 @@ class AlpheiosTokenizationAdapter extends BaseAdapter {
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, DefaultConfig)
-    this.available = true // this.config.availableLangs.includes(this.config.fetchOptions.lang)
+    this.available = this.config.availableLangs.includes(this.config.fetchOptions.lang)
     this.sourceData = config.sourceData
 
     this.fetchOptions = this.config.fetchOptions
