@@ -1,5 +1,5 @@
 {
-  "availableLangs": ["lat", "grc"],
+  "availableLangs": ["lat", "eng", "ita", "grc"],
   "fetchOptions": {
     "baseUrl": "https://tools.alpheios.net/tokenizer/tokenize/",
     "textType": "text",
