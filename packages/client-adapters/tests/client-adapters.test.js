@@ -448,4 +448,22 @@ describe('client-adapters.test.js', () => {
     expect(res.errors.length).toEqual(1)
     expect(res.result).not.toBeDefined()
   })
+
+  it('23 ClientAdapters - tokenizationMethod - passed unavailable lang', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getTokens',
+      params: {
+        text: 'veni vidi vichi',
+        fetchOptions: {
+          lang: 'ara',
+        }
+      }
+    })
+
+    console.info('res', res)
+    expect(res.errors.length).toEqual(1)
+    expect(res.result).not.toBeDefined()
+  })
 })
