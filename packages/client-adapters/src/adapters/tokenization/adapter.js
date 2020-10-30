@@ -52,11 +52,11 @@ class AlpheiosTokenizationAdapter extends BaseAdapter {
   */
   createFetchURL () {
     if (this.fetchOptions) {
-      if (!this.fetchOptions.lang || !this.fetchOptions.textType) {
+      if (!this.fetchOptions.lang || !this.fetchOptions.sourceType) {
         return
       }
 
-      let url = `${this.fetchOptions.baseUrl}${this.fetchOptions.textType}?lang=${this.fetchOptions.lang}`
+      let url = `${this.fetchOptions.baseUrl}${this.fetchOptions.sourceType}?lang=${this.fetchOptions.lang}`
 
       if (this.fetchOptions.segments) {
         url = `${url}&segments=${this.fetchOptions.segments}`
