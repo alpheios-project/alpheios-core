@@ -49,7 +49,8 @@ describe('tokenization/adapter.test.js', () => {
     })
 
     let url = adapter.createFetchURL()
-    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}text?lang=lat&segments=singleline`)
+
+    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}text?lang=lat`)
 
     adapter.fetchOptions.segments = 'doubline'
 
@@ -77,7 +78,7 @@ describe('tokenization/adapter.test.js', () => {
 
   })
 
-  it('3 AlpheiosTokenizationAdapter - createFetchURL returns empty url, if textType or lang is not defined in fetchOptions', () => {
+  it('3 AlpheiosTokenizationAdapter - createFetchURL returns empty url, if sourceType or lang is not defined in fetchOptions', () => {
     let adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
@@ -91,12 +92,11 @@ describe('tokenization/adapter.test.js', () => {
     expect(url).not.toBeDefined()
 
     adapter.fetchOptions.lang = 'lat'
-    delete adapter.fetchOptions.textType
+    delete adapter.fetchOptions.sourceType
 
     url = adapter.createFetchURL() // lang is defined, textType is not defined
     expect(url).not.toBeDefined()
   })
-
 
   it('4 AlpheiosTokenizationAdapter - getTokens returns segments -  text/lineseg', async () => {
     let adapter = new AlpheiosTokenizationAdapter({
@@ -104,8 +104,7 @@ describe('tokenization/adapter.test.js', () => {
       adapterName: 'tokenizationMethod',
       method: 'getTokens',
       fetchOptions: {
-        lang: 'lat',
-        segments: 'singleline'
+        lang: 'lat'
       }
     })
 
@@ -172,4 +171,5 @@ mollia cum duris, sine pondere habentia pondus.
     expect(result).toEqual({ segments: []})
     expect(adapter.errors).toEqual([])
   })
+
 })

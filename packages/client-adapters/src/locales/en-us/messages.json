@@ -187,5 +187,10 @@
     "message": "There are no fetch options for Alpheios Tokenization API request",
     "description": "Error message - no apikey and baseurl for Alpheios Tokenization API",
     "component": "tokenizationGroup.alpheios"
+  },
+  "TOKENIZATION_AVAILABILITY_ERROR": {
+    "message": "Tokenization service is not available for passed fetch parameters (language)",
+    "description": "Error message - tokenization service doesn't support passed language",
+    "component": "tokenizationGroup.alpheios"
   }
 }

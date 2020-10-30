@@ -404,6 +404,13 @@ class ClientAdapters {
       fetchOptions: options.params.fetchOptions
     })
 
+    if (!localTokenizationAdapter.available) {
+      localTokenizationAdapter.addError(localTokenizationAdapter.l10n.getMsg('TOKENIZATION_AVAILABILITY_ERROR'))
+      return {
+        errors: localTokenizationAdapter.errors
+      }
+    }
+
     if (localTokenizationAdapter.available && options.method === 'getTokens') {
       const res = await localTokenizationAdapter.getTokens(options.params.text)
       return { result: res, errors: localTokenizationAdapter.errors }

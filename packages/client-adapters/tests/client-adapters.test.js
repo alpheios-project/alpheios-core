@@ -418,7 +418,7 @@ describe('client-adapters.test.js', () => {
         text: 'veni vidi vichi',
         fetchOptions: {
           lang: 'lat',
-          textType: 'text',
+          sourceType: 'text',
           segments: 'singleline'
         }
       }
@@ -439,8 +439,25 @@ describe('client-adapters.test.js', () => {
         text: 'veni vidi vichi',
         fetchOptions: {
           lang: 'lat',
-          textType: 'tei',
+          sourceType: 'tei',
           segments: 'singleline'
+        }
+      }
+    })
+
+    expect(res.errors.length).toEqual(1)
+    expect(res.result).not.toBeDefined()
+  })
+
+  it.skip('23 ClientAdapters - tokenizationMethod - passed unavailable lang', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getTokens',
+      params: {
+        text: 'veni vidi vichi',
+        fetchOptions: {
+          lang: 'ara',
         }
       }
     })
