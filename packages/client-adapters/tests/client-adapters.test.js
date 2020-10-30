@@ -462,7 +462,6 @@ describe('client-adapters.test.js', () => {
       }
     })
 
-    console.info('res', res)
     expect(res.errors.length).toEqual(1)
     expect(res.result).not.toBeDefined()
   })
