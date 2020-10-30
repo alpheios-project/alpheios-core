@@ -404,7 +404,6 @@ class ClientAdapters {
       fetchOptions: options.params.fetchOptions
     })
 
-    console.info('localTokenizationAdapter.available - ', localTokenizationAdapter.available, localTokenizationAdapter)
     if (!localTokenizationAdapter.available) {
       localTokenizationAdapter.addError(localTokenizationAdapter.l10n.getMsg('TOKENIZATION_AVAILABILITY_ERROR'))
       return {

@@ -3977,7 +3977,8 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, _clAdapters_adapters_tokenization_config_json__WEBPACK_IMPORTED_MODULE_0__)
-    this.available = this.config.availableLangs.includes(this.config.fetchOptions.lang)
+    this.available = true // Would be updated after getting this list
+    // this.available = this.config.availableLangs.includes(this.config.fetchOptions.lang)
     this.sourceData = config.sourceData
 
     this.fetchOptions = this.config.fetchOptions
@@ -5166,7 +5167,6 @@ class ClientAdapters {
       fetchOptions: options.params.fetchOptions
     })
 
-    console.info('localTokenizationAdapter.available - ', localTokenizationAdapter.available, localTokenizationAdapter)
     if (!localTokenizationAdapter.available) {
       localTokenizationAdapter.addError(localTokenizationAdapter.l10n.getMsg('TOKENIZATION_AVAILABILITY_ERROR'))
       return {
