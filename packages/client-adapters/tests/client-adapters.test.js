@@ -449,7 +449,7 @@ describe('client-adapters.test.js', () => {
     expect(res.result).not.toBeDefined()
   })
 
-  it('23 ClientAdapters - tokenizationMethod - passed unavailable lang', async () => {
+  it.skip('23 ClientAdapters - tokenizationMethod - passed unavailable lang', async () => {
     ClientAdapters.init()
 
     let res = await ClientAdapters.tokenizationGroup.alpheios({
