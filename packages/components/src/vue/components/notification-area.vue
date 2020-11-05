@@ -125,12 +125,13 @@
   </div>
 </template>
 <script>
+import { Options } from 'alpheios-data-models'
+
 // Embeddable SVG icons
 import CloseIcon from '@/images/inline-icons/x-close.svg'
 // UI modules
 import Setting from '@/vue/components/setting.vue'
 import Login from '@/vue/components/login.vue'
-import Options from '@/lib/options/options.js'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
