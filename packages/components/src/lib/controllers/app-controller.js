@@ -515,6 +515,8 @@ export default class AppController {
         providers: [], // A list of resource providers
         queryStillActive: false, // it is for Persian case, when we canReset
 
+        isInAnnotationMode: false, // Whether an application has an annotation mode turned on
+
         mouseMoveOverrideUpdate: 1
       },
 
@@ -665,6 +667,10 @@ export default class AppController {
 
         setMouseMoveOverrideUpdate (state) {
           state.mouseMoveOverrideUpdate = state.mouseMoveOverrideUpdate + 1
+        },
+
+        toggleAnnotationMode (state) {
+          state.isInAnnotationMode = !state.isInAnnotationMode
         }
       }
     })

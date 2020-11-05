@@ -121,6 +121,16 @@
     "description": "A postix added to tooltips when they are not available",
     "component": "Any"
   },
+  "TOOLTIP_TURN_ANNOTATION_MODE_ON": {
+    "message": "Turn annotation mode on",
+    "description": "A tooltip for a button that turns annotation mode one",
+    "component": "Any"
+  },
+  "TOOLTIP_TURN_ANNOTATION_MODE_OFF": {
+    "message": "Turn annotation mode off",
+    "description": "A tooltip for a button that turns annotation mode one",
+    "component": "Any"
+  },
   "PLACEHOLDER_DEFINITIONS":  {
     "message": "Lookup a word to show definitions...",
     "description": "placeholder for definitions panel",

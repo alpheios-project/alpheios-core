@@ -1,3 +1,4 @@
+/** @module settingsController */
 import Options from '@comp/lib/options/options.js'
 import { Logger } from 'alpheios-data-models'
 import FeatureOptionsDefaults from '@comp/settings/feature-options-defaults.json'
@@ -19,6 +20,17 @@ const LexiconKeys = {
  * @property {string[]} allow - an array of URLs of sources that are allowed to be used for the lexicon data retrieval.
  */
 
+/**
+ * @typedef {object} SettingsController
+ * Settings that are held within this class are stored permanently, across user sessions. This is opposed
+ * to some per-session settings that are stored within the AppController. The settings within the AppController
+ * are not stored permanently and will be reset to defaults every time the page will be reloaded.
+ *
+ * @property {Options} _featureOptions - An object that stores information about features of an application.
+ * @property {Options} _resourceOptions - An object that stores information about resources that the app uses.
+ * @property {Options} _uiOptions - An object that stores information about user interface preferences.
+ * @property {Options} _siteOptions - An object that stores preferences of the site.
+ */
 export default class SettingsController {
   constructor () {
     this._storageAdapter = null

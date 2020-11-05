@@ -1657,6 +1657,17 @@ h3.alpheios-popup__toolbar-selection {
 .alpheios-popup__toolbar-button {
   margin: 0 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
+.alpheios-popup__toolbar-annotation__btn {
+  width: 20px !important;
+  cursor: pointer !important;
+  fill: var(--alpheios-color-dark) !important;
+}
+.alpheios-popup__toolbar-annotation__btn--selected {
+  fill: var(--alpheios-color-vivid) !important;
+}
+.alpheios-popup__toolbar-annotation__btn:hover, .alpheios-popup__toolbar-annotation__btn:focus {
+  fill: var(--alpheios-color-vivid-hover) !important;
+}
 .alpheios-popup__content {
   flex: 1 0 !important;
   padding: calc(var(--alpheios-base-ui-size) * 1.25) !important;

@@ -288,6 +288,8 @@ describe('AppController', () => {
       providers: [],
       queryStillActive: false,
 
+      isInAnnotationMode: false,
+
       mouseMoveOverrideUpdate: 1
     })
   })

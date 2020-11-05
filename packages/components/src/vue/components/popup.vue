@@ -62,6 +62,13 @@
             {{$store.state.app.selectedText}}
           </h3>
         </div>
+        <div class="alpheios-popup__toolbar-annotation">
+          <alph-tooltip :tooltipText="annotationBtnTooltip" tooltipDirection="left">
+            <div :class="annotationBtnClasses" @click="$store.commit('app/toggleAnnotationMode')">
+              <annotation-icon class="alpheios-navbuttons__icon" />
+            </div>
+          </alph-tooltip>
+        </div>
       </div>
 
       <div class="alpheios-popup__content">
@@ -124,6 +131,7 @@ import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
 import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
 import InflectionsIcon from '@/images/inline-icons/inflections.svg'
 import TreebankIcon from '@/images/inline-icons/sitemap.svg'
+import AnnotationIcon from '@/images/inline-icons/commenting.svg'
 
 import { directive as onClickaway } from '../directives/clickaway.js'
 // Modules support
@@ -144,7 +152,8 @@ export default {
     definitionsIcon: DefinitionsIcon,
     wordUsageIcon: WordUsageIcon,
     inflectionsIcon: InflectionsIcon,
-    treebankIcon: TreebankIcon
+    treebankIcon: TreebankIcon,
+    annotationIcon: AnnotationIcon
   },
   directives: {
     onClickaway: onClickaway
@@ -297,6 +306,20 @@ export default {
 
     maxHeight () {
       return this.app.platform.viewport.innerHeight - 2 * this.moduleConfig.viewportMargin
+    },
+
+    annotationBtnClasses () {
+      let classes = ['alpheios-popup__toolbar-annotation__btn'] // eslint-disable-line prefer-const
+      if (this.$store.state.app.isInAnnotationMode) {
+        classes.push('alpheios-popup__toolbar-annotation__btn--selected')
+      }
+      return classes
+    },
+
+    annotationBtnTooltip () {
+      return this.$store.state.app.isInAnnotationMode
+        ? this.l10n.getText('TOOLTIP_TURN_ANNOTATION_MODE_OFF')
+        : this.l10n.getText('TOOLTIP_TURN_ANNOTATION_MODE_ON')
     }
   },
 
@@ -716,6 +739,22 @@ export default {
 
   .alpheios-popup__toolbar-button {
     margin: 0 0 uisize(10px) uisize(10px);
+  }
+
+  .alpheios-popup__toolbar-annotation {
+    &__btn {
+      width: 20px;
+      cursor: pointer;
+      fill: var(--alpheios-color-dark);
+
+      &--selected {
+        fill: var(--alpheios-color-vivid);
+      }
+
+      &:hover, &:focus {
+        fill: var(--alpheios-color-vivid-hover);
+      }
+    }
   }
 
   .alpheios-popup__content {
