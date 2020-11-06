@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import DefaultsLoader from '@/lib/options/defaults-loader'
+import DefaultsLoader from '@/storages/defaults-loader'
 
 describe('deafults-loader.test.js', () => {
   console.error = function () {}

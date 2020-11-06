@@ -93,12 +93,12 @@ describe('AppController', () => {
     jest.clearAllMocks()
   })
 
-  it('AppController - constructor: should create an instance with default arguments', () => {
+  it('1 AppController - constructor: should create an instance with default arguments', () => {
     appC = new AppController(uiState)
     expect(appC).toBeInstanceOf(AppController)
   })
 
-  it('AppController - constructor: should initialize all properties', () => {
+  it('2 AppController - constructor: should initialize all properties', () => {
     appC = new AppController(uiState)
     expect(appC.state).toBe(uiState)
     expect(appC.api).toEqual({})
@@ -107,7 +107,7 @@ describe('AppController', () => {
     expect(appC.isDeactivated).toBeFalsy()
   })
 
-  it('AppController - constructor: should initialize internal options with the constructor arguments', () => {
+  it('3 AppController - constructor: should initialize internal options with the constructor arguments', () => {
     const customOptions = {
       clientId: 'alpheios-components',
       app: {
@@ -118,19 +118,19 @@ describe('AppController', () => {
     expect(appC._options).toMatchObject(customOptions)
   })
 
-  it('AppController - create: should create an instance with default arguments', () => {
+  it('4 AppController - create: should create an instance with default arguments', () => {
     appC = AppController.jestCreate(uiState)
     appC.registerModule(AuthModule)
     expect(appC).toBeInstanceOf(AppController)
   })
 
-  it('AppController - create: an instance created should have L10n and Lexis modules', () => {
+  it('5 AppController - create: an instance created should have L10n and Lexis modules', () => {
     appC = AppController.jestCreate(uiState)
     expect(appC.hasModule('l10n')).toBeTruthy()
     expect(appC.hasModule('lexis')).toBeTruthy()
   })
 
-  it('AppController - setOptions: should combine options provided and the default ones', () => {
+  it('6 AppController - setOptions: should combine options provided and the default ones', () => {
     const customOptions = {
       clientId: 'alpheios-components',
       app: {
@@ -141,13 +141,13 @@ describe('AppController', () => {
     expect(options).toMatchObject(customOptions)
   })
 
-  it('AppController - hasUIController: should return true if the UI controller is present', () => {
+  it('7 AppController - hasUIController: should return true if the UI controller is present', () => {
     appC = AppController.jestCreate(uiState)
     // UIController are registered during an instance construction by the AppController
     expect(appC.hasUIController).toBeTruthy()
   })
 
-  it('AppController - registerModule: should register a specified module', () => {
+  it('8 AppController - registerModule: should register a specified module', () => {
     appC = AppController.jestCreate(uiState)
     expect(appC.hasModule(AuthModule.moduleName)).toBeFalsy()
     appC.registerModule(AuthModule)
@@ -156,40 +156,40 @@ describe('AppController', () => {
     expect(appC.hasUIController).toBeTruthy()
   })
 
-  it('AppController - dataModules: returns a list of registered data modules', () => {
+  it('9 AppController - dataModules: returns a list of registered data modules', () => {
     appC = AppController.jestCreate(uiState)
     // L10n and Lexis modules are registered by the constructor of the AppController
     expect(appC.dataModules.map(m => m.ModuleClass.moduleName)).toEqual(['l10n', 'lexis'])
   })
 
-  it('AppController - hasModule: returns true if module has been registered', () => {
+  it('10 AppController - hasModule: returns true if module has been registered', () => {
     appC = AppController.jestCreate(uiState)
     // L10n is registered by the constructor of the AppController
     expect(appC.hasModule('l10n')).toBeTruthy()
   })
 
-  it('AppController - hasModule: returns false if module is not present', () => {
+  it('11 AppController - hasModule: returns false if module is not present', () => {
     appC = AppController.jestCreate(uiState)
     expect(appC.hasModule('Some other module')).toBeFalsy()
   })
 
-  it('AppController - getModule: returns an instance of the module', async () => {
+  it('12 AppController - getModule: returns an instance of the module', async () => {
     appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC.getModule('l10n')).toBeInstanceOf(Module)
   })
 
-  it('AppController - getModule: returns null if module has not been created', () => {
+  it('13 AppController - getModule: returns null if module has not been created', () => {
     appC = AppController.jestCreate(uiState)
     expect(appC.getModule('l10n')).toBeNull()
   })
 
-  it('AppController - getModule: throws an error if module does not exist', () => {
+  it('14 AppController - getModule: throws an error if module does not exist', () => {
     appC = AppController.jestCreate(uiState)
     expect(() => appC.getModule('Unknown module')).toThrowError()
   })
 
-  it('AppController - init: should create the App API', async () => {
+  it('15 AppController - init: should create the App API', async () => {
     appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC.api.app).toEqual({
@@ -244,13 +244,13 @@ describe('AppController', () => {
     })
   })
 
-  it('AppController - init: should create an "app" module in the Vuex store', async () => {
+  it('16 AppController - init: should create an "app" module in the Vuex store', async () => {
     appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC._store.hasModule('app')).toBeTruthy()
   })
 
-  it('AppController - init: should create a Vuex module with the set of state items', async () => {
+  it('17 AppController - init: should create a Vuex module with the set of state items', async () => {
     appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC._store.state.app).toEqual({
@@ -292,7 +292,7 @@ describe('AppController', () => {
     })
   })
 
-  it('AppController - init: should create a Vuex module with the set of getters', async () => {
+  it('18 AppController - init: should create a Vuex module with the set of getters', async () => {
     appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC._store.getters['app/shortDefDataReady']).toBeDefined()
@@ -300,7 +300,7 @@ describe('AppController', () => {
     expect(appC._store.getters['app/lexicalRequestInProgress']).toBeDefined()
   })
 
-  it('AppController - init: should create a Vuex module with the set of mutations', async () => {
+  it('19 AppController - init: should create a Vuex module with the set of mutations', async () => {
     appC = AppController.jestCreate(uiState)
     await appC.init()
     expect(appC._store._mutations['app/setEmbedLibActive']).toBeDefined()
@@ -326,7 +326,7 @@ describe('AppController', () => {
     expect(appC._store._mutations['app/setMouseMoveOverrideUpdate']).toBeDefined()
   })
 
-  it('AppController - textSelectorParams: should return correct parameters for the "longTap" trigger on mobile', async () => {
+  it('20 AppController - textSelectorParams: should return correct parameters for the "longTap" trigger on mobile', async () => {
     appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: 'longTap' })
     await appC.init()
     appC._platform = { isMobile: true, isDektop: false }
@@ -335,7 +335,7 @@ describe('AppController', () => {
     expect(eventParams).toBeUndefined()
   })
 
-  it('AppController - textSelectorParams: should return correct parameters for the "longtap" trigger on mobile', async () => {
+  it('21 AppController - textSelectorParams: should return correct parameters for the "longtap" trigger on mobile', async () => {
     appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: 'longtap' })
     await appC.init()
     appC._platform = { isMobile: true, isDektop: false }
@@ -344,7 +344,7 @@ describe('AppController', () => {
     expect(eventParams).toBeUndefined()
   })
 
-  it('AppController - textSelectorParams: should return correct parameters for the null trigger on mobile', async () => {
+  it('22 AppController - textSelectorParams: should return correct parameters for the null trigger on mobile', async () => {
     appC = AppController.jestCreate(uiState, { textQueryTriggerMobile: null })
     await appC.init()
     appC._platform = { isMobile: true, isDektop: false }
@@ -353,7 +353,7 @@ describe('AppController', () => {
     expect(eventParams).toBeUndefined()
   })
 
-  it('AppController - textSelectorParams: should return correct parameters if no trigger is specified on mobile', async () => {
+  it('23 AppController - textSelectorParams: should return correct parameters if no trigger is specified on mobile', async () => {
     appC = AppController.jestCreate(uiState)
     await appC.init()
     appC._platform = { isMobile: true, isDektop: false }
@@ -362,7 +362,7 @@ describe('AppController', () => {
     expect(eventParams).toBeUndefined()
   })
 
-  it('AppController - textSelectorParams: should return correct parameters if some other trigger is specified on mobile', async () => {
+  it('24 AppController - textSelectorParams: should return correct parameters if some other trigger is specified on mobile', async () => {
     const triggerParams = {
       a: 'value of A',
       b: 'value of B'
@@ -1379,4 +1379,5 @@ describe('AppController', () => {
     expect(applyFeatureOptionSpy).toBeCalledTimes(14)
     expect(appC._store.state.settings.uiResetCounter).toBeGreaterThan(0)
   })
+
 })

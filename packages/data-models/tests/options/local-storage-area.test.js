@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import LocalStorageArea from '@/lib/options/local-storage-area'
+import LocalStorageArea from '@/storages/local-storage-area'
 // import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 
 describe('local-storage-area.test.js', () => {

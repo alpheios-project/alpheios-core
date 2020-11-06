@@ -1,7 +1,7 @@
 /* eslint-env jest */
-import OptionItem from '@/lib/options/options-item'
+import OptionItem from '@/options/option-item'
 
-describe('options-item.test.js', () => {
+describe('option-item.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}

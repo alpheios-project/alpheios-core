@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import StorageAdapter from '@/lib/options/storage-adapter'
+import StorageAdapter from '@/storages/storage-adapter'
 
 describe('storage-adapter.test.js', () => {
   it('1 StorageAdapter constructor saves domain to params when created', () => {

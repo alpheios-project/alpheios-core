@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import RemoteAuthStorageArea from '@/lib/options/remote-auth-storage-area'
+import RemoteAuthStorageArea from '@/storages/remote-auth-storage-area'
 import axios from 'axios'
 // import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 
