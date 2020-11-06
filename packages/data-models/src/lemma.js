@@ -189,7 +189,7 @@ class Lemma {
     // Check if words are the same
     const areSameWords = normalize
       ? LMF.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
-        { normalizeTrailingDigit: true })
+          { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
     return areSameWords

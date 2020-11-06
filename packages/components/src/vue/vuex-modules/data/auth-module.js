@@ -133,7 +133,7 @@ AuthModule.api = (moduleInstance, store) => {
       }
       moduleInstance._auth.session().then((data) => {
         moduleInstance._api.updateAuthData(data)
-      }).catch((error) => { // eslint-disable-line handle-callback-err
+      }).catch((error) => { // eslint-disable-line node/handle-callback-err
         // a session being unavailable is not necessarily an error
         // user might not have authenticated or it might be client-side auth
         // fail quietly

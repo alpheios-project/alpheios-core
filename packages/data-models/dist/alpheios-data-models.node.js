@@ -275,7 +275,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-
+;
 
 
 
@@ -428,7 +428,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-
+;
 
 
 
@@ -1280,7 +1280,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _definition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./definition */ "./definition.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-
+;
 
 
 class DefinitionSet {
@@ -1416,7 +1416,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-
+;
 
 
 class Definition {
@@ -1482,7 +1482,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ Digest
 /* harmony export */ });
 /* harmony import */ var _sha1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sha1.js */ "./sha1.js");
-
+;
 
 /**
  * Creates an SHA-1 hash digest. The generating code is not suitable for cryptographic purposes,
@@ -1862,7 +1862,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
 /* harmony import */ var _digest_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./digest.js */ "./digest.js");
 
-
+;
 
 
 
@@ -1924,7 +1924,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-
+;
 
 
 
@@ -2634,7 +2634,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
 /* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-
+;
 
 
 
@@ -2905,7 +2905,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-
+;
 
 
 
@@ -3019,7 +3019,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
 /* harmony import */ var _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./languages/greek-chars.js */ "./languages/greek-chars.js");
-
+;
 
 
 
@@ -3436,7 +3436,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-
+;
 
 
 
@@ -3622,7 +3622,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ HomonymGroup
 /* harmony export */ });
 /* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
-
+;
 
 class HomonymGroup {
   /**
@@ -3721,7 +3721,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-
+;
 
 
 
@@ -3928,7 +3928,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-
+;
 
 
 
@@ -3965,7 +3965,7 @@ class Inflection {
    * @param {prefix} prefix - a prefix of a word
    * @param {example} example - example
    */
-  constructor (stem = null, language, suffix = null, prefix = null, example = null) {
+  constructor (stem = null, language = null, suffix = null, prefix = null, example = null) {
     if (!stem && !suffix) {
       throw new Error('At least stem or suffix must be defined')
     }
@@ -4366,7 +4366,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-
+;
 
 class InflectionGroupingKey {
   /**
@@ -4576,7 +4576,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflection_grouping_key.js */ "./inflection_grouping_key.js");
 /* harmony import */ var _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./inflection_group.js */ "./inflection_group.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-
+;
 
 
 
@@ -5287,7 +5287,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./chinese_language_model.js */ "./chinese_language_model.js");
 /* harmony import */ var _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./syriac_language_model.js */ "./syriac_language_model.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-
+;
 
 
 
@@ -5837,7 +5837,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-
+;
 
 
 
@@ -6071,7 +6071,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-
+;
 
 
 
@@ -6262,7 +6262,7 @@ class Lemma {
     // Check if words are the same
     const areSameWords = normalize
       ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
-        { normalizeTrailingDigit: true })
+          { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
     return areSameWords
@@ -6360,7 +6360,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-
+;
 
 
 
@@ -6817,7 +6817,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-
+;
 
 
 
@@ -6951,7 +6951,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../src/ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
-
+;
 
 
 /**
@@ -7338,7 +7338,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflection_grouping_key */ "./inflection_grouping_key.js");
 /* harmony import */ var _inflection_group__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./inflection_group */ "./inflection_group.js");
-
+;
 
 
 
@@ -7755,7 +7755,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../language_model_factory.js */ "./language_model_factory.js");
-
+;
 
 
 class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__.default {
@@ -7864,7 +7864,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-
+;
 /**
  * stores a scope of lemma translations from python service
  * Contains a primary Lemma object
@@ -8151,7 +8151,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Implements a W3C Text Quote Selector (https://www.w3.org/TR/annotation-model/#h-text-quote-selector)
  */
-
+;
 
 class TextQuoteSelector {
   constructor (languageCode, normalizedText, prefix = null, suffix = null, source = null) {
@@ -8219,7 +8219,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
-
+;
 
 
 class WordItem {
@@ -8383,7 +8383,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ WordList
 /* harmony export */ });
 /* harmony import */ var _word_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-item */ "./word-item.js");
-
+;
 
 class WordList {
   /**
