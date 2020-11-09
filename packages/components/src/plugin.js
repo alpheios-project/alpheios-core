@@ -37,8 +37,9 @@ import Platform from '@/lib/utility/platform.js'
 import AuthData from '@/lib/auth/auth-data.js'
 import SessionAuthenticator from '@/lib/auth/session-authenticator.js'
 import AppAuthenticator from '@/lib/auth/app-authenticator.js'
+
 // Logger needs to be re-exported because clients of the components are using it
-import { Logger } from 'alpheios-data-models'
+import { Logger, Options, DefaultsLoader, ExtensionSyncStorage, LocalStorageArea, RemoteAuthStorageArea, TempStorageArea } from 'alpheios-data-models'
 import { L10n } from 'alpheios-l10n'
 
 export {
@@ -47,5 +48,6 @@ export {
   FeatureOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
   UIStateAPI, Style, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
   HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, ToolbarModule,
-  ActionPanelModule, Platform, AuthData, SessionAuthenticator, AppAuthenticator, Logger
+  ActionPanelModule, Platform, AuthData, SessionAuthenticator, AppAuthenticator,
+  Logger, Options, DefaultsLoader, ExtensionSyncStorage, LocalStorageArea, RemoteAuthStorageArea, TempStorageArea
 }
