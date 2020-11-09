@@ -1103,9 +1103,9 @@ export default class AppController {
 
     const wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
       ? {
-        paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
-        paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
-      }
+          paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
+          paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
+        }
       : null
 
     await LexicalQuery.getWordUsageData(homonym, wordUsageExamples, params)
@@ -1262,6 +1262,8 @@ export default class AppController {
 
   onDefinitionsNotFound (data) {
     this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
+    // Update the state of short definitions
+    this._store.commit('app/shortDefsUpdated')
   }
 
   onResourceQueryComplete () {

@@ -366,6 +366,11 @@ export default class Lexis extends Module {
                     homonym: homonym,
                     word: variables.word
                   })
+                } else {
+                  LexicalQuery.evt.SHORT_DEFS_NOT_FOUND.pub({
+                    requestType: 'short',
+                    word: variables.word
+                  })
                 }
               }
             }
