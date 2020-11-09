@@ -7716,7 +7716,7 @@ class Inflection {
    * @param {prefix} prefix - a prefix of a word
    * @param {example} example - example
    */
-  constructor (stem = null, language, suffix = null, prefix = null, example = null) {
+  constructor (stem = null, language = null, suffix = null, prefix = null, example = null) {
     if (!stem && !suffix) {
       throw new Error('At least stem or suffix must be defined')
     }
