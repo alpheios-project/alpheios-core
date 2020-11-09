@@ -43,8 +43,9 @@
   </div>
 </template>
 <script>
+import { Options } from 'alpheios-data-models'
+
 import Setting from './setting.vue'
-import Options from '@/lib/options/options.js'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'AdvancedSettings',

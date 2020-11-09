@@ -5,11 +5,9 @@ import Query from '@comp/lib/queries/query'
 import Locales from '@comp/locales/locales'
 import enUS from '@comp/locales/en-us/messages.json'
 import enGB from '@comp/locales/en-gb/messages.json'
-import { Constants, Feature } from 'alpheios-data-models'
+import { Constants, Feature, Options, LocalStorageArea } from 'alpheios-data-models'
 import { L10n } from 'alpheios-l10n'
-import Options from '@comp/lib/options/options'
 import LanguageOptionDefaults from '@comp/settings/language-options-defaults.json'
-import LocalStorageArea from '@comp/lib/options/local-storage-area.js'
 
 describe('resource-query.test.js', () => {
   let l10n

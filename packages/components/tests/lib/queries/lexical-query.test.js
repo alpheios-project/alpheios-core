@@ -6,12 +6,10 @@ import enUS from '@comp/locales/en-us/messages.json'
 import enGB from '@comp/locales/en-gb/messages.json'
 // import Query from '@comp/lib/queries/query'
 
-import Options from '@comp/lib/options/options'
 import LanguageOptionDefaults from '@comp/settings/language-options-defaults.json'
-import LocalStorageArea from '@comp/lib/options/local-storage-area.js'
 import SiteOptions from './fixtures/site-options-shortlex.json'
 
-import { Constants, LanguageModelFactory as LMF, Homonym } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory as LMF, Homonym, Options, LocalStorageArea } from 'alpheios-data-models'
 import { L10n } from 'alpheios-l10n'
 
 import { ClientAdapters } from 'alpheios-client-adapters'

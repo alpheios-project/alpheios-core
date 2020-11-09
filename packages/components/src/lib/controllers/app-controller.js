@@ -2,7 +2,7 @@
 /* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME, DEVELOPMENT_MODE_BUILD */
 // import { version as packageVersion, description as packageDescription } from '../../../package'
 import packageInfo from '../../../package'
-import { Constants, Feature, LanguageModelFactory, Lexeme, Logger } from 'alpheios-data-models'
+import { Constants, Feature, LanguageModelFactory, Lexeme, Logger, Options, LocalStorageArea, RemoteAuthStorageArea } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 import { WordlistController, UserDataManager } from 'alpheios-wordlist'
@@ -30,9 +30,6 @@ import LongTap from '@comp/lib/custom-pointer-events/long-tap.js'
 import GenericEvt from '@comp/lib/custom-pointer-events/generic-evt.js'
 import MouseMove from '@comp/lib/custom-pointer-events/mouse-move.js'
 
-import Options from '@comp/lib/options/options.js'
-import LocalStorage from '@comp/lib/options/local-storage-area.js'
-import RemoteAuthStorageArea from '@comp/lib/options/remote-auth-storage-area.js'
 import UIController from '@comp/lib/controllers/ui-controller.js'
 import UIEventController from '@comp/lib/controllers/ui-event-controller.js'
 import SelectionController from '@comp/lib/controllers/selection-controller.js'
@@ -71,6 +68,7 @@ export default class AppController {
    */
   constructor (state, options = {}) {
     this.state = state
+
     this._options = AppController.setOptions(options, AppController.optionsDefaults)
 
     this.isInitialized = false
@@ -243,7 +241,7 @@ export default class AppController {
       mode: 'production', // Controls options available and output. Other possible values: `development`
       appType: Platform.appTypes.OTHER, // A type of application that uses the controller
       clientId: 'alpheios-components',
-      storageAdapter: LocalStorage,
+      storageAdapter: LocalStorageArea,
       openPanel: true,
       textQueryTriggerMobile: 'longTap',
       textQueryTriggerDesktop: 'dblClick',
@@ -1105,9 +1103,9 @@ export default class AppController {
 
     const wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
       ? {
-          paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
-          paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
-        }
+        paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
+        paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
+      }
       : null
 
     await LexicalQuery.getWordUsageData(homonym, wordUsageExamples, params)
