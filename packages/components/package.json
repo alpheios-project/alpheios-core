@@ -138,13 +138,12 @@
       "^@comp[/](.+)": "<rootDir>/src/$1",
       "^@tests[/](.+)": "<rootDir>/tests/$1",
       "^@compTests[/](.+)": "<rootDir>/tests/$1",
-      "alpheios-data-models": "<rootDir>/node_modules/alpheios-data-models/dist/alpheios-data-models.js",
-      "alpheios-l10n": "<rootDir>/node_modules/alpheios-l10n/dist/alpheios-l10n.js",
-      "alpheios-client-adapters": "<rootDir>/node_modules/alpheios-client-adapters/dist/alpheios-client-adapters.js",
+      "alpheios-data-models": "<rootDir>../../packages/data-models/dist/alpheios-data-models.js",
+      "alpheios-l10n": "<rootDir>../../packages/l10n/dist/alpheios-l10n.js",
+      "alpheios-client-adapters": "<rootDir>../../packages/client-adapters/dist/alpheios-client-adapters.js",
       "alpheios-messaging": "<rootDir>../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js",
-      "alpheios-morph-client": "<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js",
-      "alpheios-wordlist": "<rootDir>/node_modules/alpheios-wordlist/dist/alpheios-wordlist.js",
-      "alpheios-inflection-tables": "<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js"
+      "alpheios-wordlist": "<rootDir>../../packages/wordlist/dist/alpheios-wordlist.js",
+      "alpheios-inflection-tables": "<rootDir>../../packages/inflection-tables/dist/alpheios-inflection-tables.js"
     },
     "moduleFileExtensions": [
       "js",

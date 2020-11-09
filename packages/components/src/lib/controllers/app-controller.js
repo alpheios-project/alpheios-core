@@ -2,7 +2,7 @@
 /* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME, DEVELOPMENT_MODE_BUILD */
 // import { version as packageVersion, description as packageDescription } from '../../../package'
 import packageInfo from '../../../package'
-import { Constants, Feature, LanguageModelFactory, Lexeme, Logger, Options, LocalStorage, RemoteAuthStorageArea } from 'alpheios-data-models'
+import { Constants, Feature, LanguageModelFactory, Lexeme, Logger, Options, LocalStorageArea, RemoteAuthStorageArea } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 import { WordlistController, UserDataManager } from 'alpheios-wordlist'
@@ -68,6 +68,7 @@ export default class AppController {
    */
   constructor (state, options = {}) {
     this.state = state
+
     this._options = AppController.setOptions(options, AppController.optionsDefaults)
 
     this.isInitialized = false
@@ -240,7 +241,7 @@ export default class AppController {
       mode: 'production', // Controls options available and output. Other possible values: `development`
       appType: Platform.appTypes.OTHER, // A type of application that uses the controller
       clientId: 'alpheios-components',
-      storageAdapter: LocalStorage,
+      storageAdapter: LocalStorageArea,
       openPanel: true,
       textQueryTriggerMobile: 'longTap',
       textQueryTriggerDesktop: 'dblClick',
