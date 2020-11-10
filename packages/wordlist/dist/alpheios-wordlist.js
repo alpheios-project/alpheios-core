@@ -55,19 +55,12 @@ module.exports = function xhrAdapter(config) {
       delete requestHeaders['Content-Type']; // Let the browser set it
     }
 
-    if (
-      (utils.isBlob(requestData) || utils.isFile(requestData)) &&
-      requestData.type
-    ) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
     var request = new XMLHttpRequest();
 
     // HTTP basic authentication
     if (config.auth) {
       var username = config.auth.username || '';
-      var password = unescape(encodeURIComponent(config.auth.password)) || '';
+      var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
 
@@ -421,7 +414,7 @@ module.exports = function isCancel(value) {
   \*****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 94:0-14 */
+/*! CommonJS bailout: module.exports is used directly at 95:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -502,7 +495,8 @@ utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData
   Axios.prototype[method] = function(url, config) {
     return this.request(mergeConfig(config || {}, {
       method: method,
-      url: url
+      url: url,
+      data: (config || {}).data
     }));
   };
 });
@@ -1959,7 +1953,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordlist_storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordlist/storage/worditem-remotedb-driver.js */ "./storage/worditem-remotedb-driver.js");
 /* harmony import */ var _wordlist_storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordlist/storage/indexed-db-adapter.js */ "./storage/indexed-db-adapter.js");
 /* harmony import */ var _wordlist_storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordlist/storage/remote-db-adapter.js */ "./storage/remote-db-adapter.js");
-
+;
 
 
 
@@ -2346,7 +2340,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
-
+;
 
 
 class WordlistController {
@@ -2744,7 +2738,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordlist_controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordlist/controllers/wordlist-controller.js */ "./controllers/wordlist-controller.js");
 /* harmony import */ var _wordlist_controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/controllers/user-data-manager.js */ "./controllers/user-data-manager.js");
-
+;
 
 
 
@@ -2769,7 +2763,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-
+;
 
 /**
  * An interface to IndexedDB Storage
@@ -3237,7 +3231,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-
+;
 
 class IndexedDBLoadProcess {
   /**
@@ -3393,7 +3387,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-
+;
 
 class RemoteDBAdapter {
   /**
@@ -3598,7 +3592,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/storage/indexeddbDriver/indexed-db-object-stores-structure */ "./storage/indexeddbDriver/indexed-db-object-stores-structure.js");
 /* harmony import */ var _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordlist/storage/indexeddbDriver/indexed-db-load-process */ "./storage/indexeddbDriver/indexed-db-load-process.js");
 /* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
-
+;
 
 
 
@@ -4061,7 +4055,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
-
+;
 
 
 class WordItemRemoteDbDriver {
