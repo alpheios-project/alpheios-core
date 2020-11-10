@@ -8201,7 +8201,7 @@ class Lemma {
     // Check if words are the same
     const areSameWords = normalize
       ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
-        { normalizeTrailingDigit: true })
+          { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
     return areSameWords
