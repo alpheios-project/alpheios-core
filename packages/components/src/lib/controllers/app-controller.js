@@ -892,18 +892,22 @@ export default class AppController {
       homonym.lexemes.filter((l) => l.isPopulated()).length < 1
     if (notFound && !this._store.state.app.queryStillActive) {
       let languageName
+      let languageCode
       if (homonym) {
+        languageCode = homonym.language
         languageName = this.api.app.getLanguageName(homonym.languageID).name
-      } else if (this._store.state.app.currentLanguageName) {
+      } else if (this._store.state.app.currentLanguageCode && this._store.state.app.currentLanguageName) {
+        languageCode = this._store.state.app.currentLanguageCode
         languageName = this._store.state.app.currentLanguageName
       } else {
+        languageCode = Constants.STR_LANG_CODE_UNDEFINED
         languageName = this.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
       }
       if (this._store.state.app.lexicalRequest.source === LexicalQuery.sources.PAGE) {
         // we offer change language here when the lookup was from the page because the language used for the
         // lookup is deduced from the page and might be wrong
         const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE',
-          { targetWord: this._store.state.app.targetWord, languageName: languageName, langCode: homonym.language })
+          { targetWord: this._store.state.app.targetWord, languageName: languageName, langCode: languageCode })
         this._store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: true })
       } else {
         // if we are coming from e.g. the lookup or the wordlist, offering change language
@@ -1155,6 +1159,7 @@ export default class AppController {
   }
 
   onLexicalQueryComplete (data) {
+    this._store.commit('app/setQueryStillActive', false) // Mark query as inactive
     switch (data.resultStatus) {
       case LexicalQuery.resultStatus.SUCCEEDED:
         this.showLanguageInfo(data.homonym)
@@ -1168,7 +1173,7 @@ export default class AppController {
               we could still offer the option to search the usage examples).
               Similarly, we might prompt the user to create their own analysis...
          */
-        if (data.homonym) { this.showLanguageInfo(data.homonym) }
+        this.showLanguageInfo(data.homonym)
         this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
     this._store.commit('app/lexicalRequestFinished')

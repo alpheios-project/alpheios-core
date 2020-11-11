@@ -52,6 +52,11 @@ export default class WordQueryResolver {
     if (!storage.words.has(key)) {
       // eslint-disable-next-line prefer-const
       let response = new WordQueryResponse({ updateCallback: this.updateCallback.bind(this, storage, key) })
+      // This makes an Apollo reactive variable
+      const word = makeVar(response.toJsonObject())
+      // Store the result object reference into the map
+      storage.words.set(key, word)
+
       const lexicons = this._getLexiconsFn(variables.language, variables.location)
       const shortLexicons = this._getShortLexiconsFn(variables.language, variables.location)
 
@@ -90,11 +95,6 @@ export default class WordQueryResolver {
       // Start the new query to obtain lexical data. Don't wait for it to resolve:
       // it will dynamically update the result object until the query if complete fully.
       wordQuery.start()
-
-      // This makes an Apollo reactive variable
-      const word = makeVar(response.toJsonObject())
-      // Store the result object reference into the map
-      storage.words.set(key, word)
     }
     // Return a value of the reactive variable to the user
     return (storage.words.get(key))()
