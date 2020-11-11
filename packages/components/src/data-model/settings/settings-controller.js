@@ -1,6 +1,5 @@
 /** @module settingsController */
-import Options from '@comp/lib/options/options.js'
-import { Logger } from 'alpheios-data-models'
+import { Logger, Options } from 'alpheios-data-models'
 import FeatureOptionsDefaults from '@comp/settings/feature-options-defaults.json'
 import UIOptionsDefaults from '@comp/settings/ui-options-defaults.json'
 import ResourcesOptionsDefaults from '@comp/settings/language-options-defaults.json'

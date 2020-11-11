@@ -40,10 +40,12 @@
   </div>
 </template>
 <script>
+import { Options } from 'alpheios-data-models'
+
 import FontSize from './font-size.vue'
 import Setting from './setting.vue'
-import Options from '@/lib/options/options.js'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+
 export default {
   name: 'UISettings',
   // API modules that are required for this component

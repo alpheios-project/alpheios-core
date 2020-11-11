@@ -38,6 +38,14 @@ import TreebankDataItem from './treebank_data_item.js'
 import Logger from './logging/logger.js'
 import Digest from './digest.js'
 
+import Options from './options/options.js'
+
+import DefaultsLoader from './storages/defaults-loader.js'
+import ExtensionSyncStorage from './storages/extension-sync-storage.js'
+import LocalStorageArea from './storages/local-storage-area.js'
+import RemoteAuthStorageArea from './storages/remote-auth-storage-area.js'
+import TempStorageArea from './storages/temp-storage-area.js'
+
 export {
   Constants,
   Definition,
@@ -73,5 +81,11 @@ export {
   WordList,
   TreebankDataItem,
   Logger,
-  Digest
+  Digest,
+  Options,
+  DefaultsLoader,
+  ExtensionSyncStorage,
+  LocalStorageArea,
+  RemoteAuthStorageArea,
+  TempStorageArea
 }

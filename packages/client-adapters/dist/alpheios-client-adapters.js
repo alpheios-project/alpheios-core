@@ -55,19 +55,12 @@ module.exports = function xhrAdapter(config) {
       delete requestHeaders['Content-Type']; // Let the browser set it
     }
 
-    if (
-      (utils.isBlob(requestData) || utils.isFile(requestData)) &&
-      requestData.type
-    ) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
     var request = new XMLHttpRequest();
 
     // HTTP basic authentication
     if (config.auth) {
       var username = config.auth.username || '';
-      var password = unescape(encodeURIComponent(config.auth.password)) || '';
+      var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
 
@@ -421,7 +414,7 @@ module.exports = function isCancel(value) {
   \*****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 94:0-14 */
+/*! CommonJS bailout: module.exports is used directly at 95:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -502,7 +495,8 @@ utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData
   Axios.prototype[method] = function(url, config) {
     return this.request(mergeConfig(config || {}, {
       method: method,
-      url: url
+      url: url,
+      data: (config || {}).data
     }));
   };
 });
@@ -2182,7 +2176,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/alpheiostb/config.json */ "./adapters/alpheiostb/config.json");
 /* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! xmltojson */ "../../../node_modules/xmltojson/lib/xmlToJSON.js");
 /* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(xmltojson__WEBPACK_IMPORTED_MODULE_3__);
-
+;
 
 
 
@@ -2329,7 +2323,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/adapters/alpheiostb/config.json */ "./adapters/alpheiostb/config.json");
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alpheios-messaging */ "alpheios-messaging");
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alpheios_messaging__WEBPACK_IMPORTED_MODULE_5__);
-
+;
 
 
 
@@ -2530,7 +2524,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
 /* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
 /* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-
+;
 
 
 
@@ -2772,7 +2766,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-messaging */ "alpheios-messaging");
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__);
 /* eslint-disable no-unused-vars */
-
+;
 
 
 
@@ -2959,7 +2953,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
-
+;
 
 
 
@@ -3292,7 +3286,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(papaparse__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/lexicons/config.json */ "./adapters/lexicons/config.json");
-
+;
 
 
 
@@ -3847,7 +3841,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
-
+;
 
 
 
@@ -3966,7 +3960,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _clAdapters_adapters_tokenization_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/tokenization/config.json */ "./adapters/tokenization/config.json");
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
-
+;
 
 
 class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__.default {
@@ -4070,7 +4064,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
-
+;
 
 
 
@@ -4215,7 +4209,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/transformers/alpheios-lexicon-transformer */ "./transformers/alpheios-lexicon-transformer.js");
 /* harmony import */ var _clAdapters_adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/tufts/config.json */ "./adapters/tufts/config.json");
 /* harmony import */ var _clAdapters_adapters_tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engines-set */ "./adapters/tufts/engines-set.js");
-
+;
 
 
 
@@ -4348,7 +4342,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-
+;
 
 
 const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__.default(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.ArabicLanguageModel, 'aramorph')
@@ -4376,7 +4370,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-
+;
 
 
 let data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__.default(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.PersianLanguageModel, 'hazm') // eslint-disable-line prefer-const
@@ -4407,7 +4401,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-
+;
 
 
 let data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__.default(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel, 'morpheusgrc') // eslint-disable-line prefer-const
@@ -4469,7 +4463,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-
+;
 
 
 const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__.default(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.SyriacLanguageModel, 'sedra')
@@ -4525,7 +4519,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-
+;
 
 
 const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__.default(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GeezLanguageModel, 'traces')
@@ -4553,7 +4547,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-
+;
 
 
 const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__.default(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.LatinLanguageModel, 'whitakerLat')
@@ -4688,7 +4682,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_tufts_engine_sedra__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engine/sedra */ "./adapters/tufts/engine/sedra.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_6__);
-
+;
 
 
 
@@ -4761,7 +4755,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @clAdapters/errors/wrong-method-error */ "./errors/wrong-method-error.js");
 /* harmony import */ var _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @clAdapters/errors/no-required-param-error */ "./errors/no-required-param-error.js");
 /* harmony import */ var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json");
-
+;
 
 
 
@@ -5350,7 +5344,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/client-adapters.js */ "./client-adapters.js");
 /* harmony import */ var _clAdapters_errors_adapter_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/adapter-error.js */ "./errors/adapter-error.js");
 /* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
-
+;
 
 
 
@@ -5376,7 +5370,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./en-us/messages.json */ "./locales/en-us/messages.json");
 /* harmony import */ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json");
-
+;
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5408,7 +5402,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-
+;
 
 /**
  Transforms morphological output adhering to the Alpheios lexicon
@@ -5741,7 +5735,7 @@ __webpack_require__.r(__webpack_exports__);
 /*
 Objects of a morphology analyzer's library
  */
-
+;
 
 /**
  * Holds all information required to transform from morphological analyzer's grammatical feature values to the
@@ -25171,15 +25165,14 @@ module.exports = JSON.parse("{\"url\":\"https://api-v2.logeion.org/search?q=\",\
 /*!   other exports [not provided] [no usage info] */
 /*! export fetchOptions [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export baseUrl [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export segments [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export textType [provided] [no usage info] [missing usage info prevents renaming] */
+/*!   export sourceType [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   other exports [not provided] [no usage info] */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"availableLangs\":[\"lat\",\"eng\",\"ita\",\"grc\"],\"fetchOptions\":{\"baseUrl\":\"https://tools.alpheios.net/tokenizer/tokenize/\",\"textType\":\"text\",\"segments\":\"singleline\"}}");
+module.exports = JSON.parse("{\"availableLangs\":[\"lat\",\"eng\",\"ita\",\"grc\"],\"fetchOptions\":{\"baseUrl\":\"https://tools.alpheios.net/tokenizer/tokenize/\",\"sourceType\":\"text\"}}");
 
 /***/ }),
 

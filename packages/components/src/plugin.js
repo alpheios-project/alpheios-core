@@ -14,13 +14,10 @@ import Language from './lib/controllers/language.js'
 import HTMLSelector from './lib/selection/media/html-selector.js'
 import LexicalQuery from './lib/queries/lexical-query.js'
 import ResourceQuery from './lib/queries/resource-query.js'
-import LocalStorageArea from './lib/options/local-storage-area.js'
-import ExtensionSyncStorage from './lib/options/extension-sync-storage.js'
 import FeatureOptionDefaults from './settings/feature-options-defaults.json'
 import LanguageOptionDefaults from './settings/language-options-defaults.json'
 import UIOptionDefaults from './settings/ui-options-defaults.json'
-import DefaultsLoader from './lib/options/defaults-loader.js'
-import Options from './lib/options/options.js'
+
 import HTMLConsole from './lib/log/html-console.js'
 import MouseDblClick from './lib/custom-pointer-events/mouse-dbl-click.js'
 import GenericEvt from './lib/custom-pointer-events/generic-evt.js'
@@ -40,15 +37,17 @@ import Platform from '@/lib/utility/platform.js'
 import AuthData from '@/lib/auth/auth-data.js'
 import SessionAuthenticator from '@/lib/auth/session-authenticator.js'
 import AppAuthenticator from '@/lib/auth/app-authenticator.js'
+
 // Logger needs to be re-exported because clients of the components are using it
-import { Logger } from 'alpheios-data-models'
+import { Logger, Options, DefaultsLoader, ExtensionSyncStorage, LocalStorageArea, RemoteAuthStorageArea, TempStorageArea } from 'alpheios-data-models'
 import { L10n } from 'alpheios-l10n'
 
 export {
   Popup, Panel, L10n, Locales, enUS, enGB, AppController, UIEventController,
   Language, HTMLSelector, LexicalQuery, ResourceQuery,
-  LocalStorageArea, ExtensionSyncStorage, FeatureOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
-  DefaultsLoader, Options, UIStateAPI, Style, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
+  FeatureOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
+  UIStateAPI, Style, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
   HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, ToolbarModule,
-  ActionPanelModule, Platform, AuthData, SessionAuthenticator, AppAuthenticator, Logger
+  ActionPanelModule, Platform, AuthData, SessionAuthenticator, AppAuthenticator,
+  Logger, Options, DefaultsLoader, ExtensionSyncStorage, LocalStorageArea, RemoteAuthStorageArea, TempStorageArea
 }

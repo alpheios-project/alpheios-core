@@ -8,17 +8,15 @@ import enUSData from '@/locales/en-us/messages-data.json'
 import enUSInfl from '@/locales/en-us/messages-inflections.json'
 import enGB from '@/locales/en-gb/messages.json'
 
-import Options from '@/lib/options/options.js'
 import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
 import UIOptionDefaults from '@/settings/ui-options-defaults.json'
-import TempStorageArea from '@/lib/options/temp-storage-area.js'
 
 import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 
 import Platform from '@/lib/utility/platform.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import { Lexeme, Lemma, Homonym, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Lexeme, Lemma, Homonym, LanguageModelFactory as LMF, Options, TempStorageArea } from 'alpheios-data-models'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import UIController from '@/lib/controllers/app-controller.js'
 
