@@ -1,5 +1,6 @@
 <template>
     <div class="alpheios-principal-parts__item">
+        <span class="alpheios-principal-parts__remove-lemma-btn"><remove-icon class="alpheios-annotation-icn"/></span>
         <span class="alpheios-principal-parts__lemma_index" v-if="lemmaindex === 0 && printIndex">{{ lexemeindex + 1 }}</span>
         <span class="alpheios-principal-parts__lemma_index_spacer" v-else-if="lemmaindex > 0 && printIndex"> </span>
 
@@ -66,6 +67,9 @@ import { Feature, LanguageModelFactory } from 'alpheios-data-models'
 
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 
+// SVG icons
+import RemoveIcon from '@/images/inline-icons/times-rectangle-o.svg'
+
 export default {
   name: 'PrincipalParts',
   inject: ['l10n'], // API modules
@@ -73,7 +77,8 @@ export default {
     inflectionattribute: InflectionAttribute,
     treebankIcon: TreebankIcon,
     disambiguatedIcon: DisambiguatedIcon,
-    tooltip: Tooltip
+    tooltip: Tooltip,
+    removeIcon: RemoveIcon
   },
   props: {
     lemma: {
