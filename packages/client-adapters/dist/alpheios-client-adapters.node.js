@@ -136,7 +136,7 @@ return /******/ (() => { // webpackBootstrap
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.0\",\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.21.0\",\"_id\":\"axios@0.21.0\",\"_inBundle\":false,\"_integrity\":\"sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.0.tgz\",\"_spec\":\"0.21.0\",\"_where\":\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.0\"}");
+module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.0\",\"C:\\\\_Alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.21.0\",\"_id\":\"axios@0.21.0\",\"_inBundle\":false,\"_integrity\":\"sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.0.tgz\",\"_spec\":\"0.21.0\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.0\"}");
 
 /***/ }),
 
@@ -5786,7 +5786,7 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5796,7 +5796,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _clAdapters_adapters_tokenization_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/tokenization/config.json */ "./adapters/tokenization/config.json");
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
 ;
+
+
 
 
 class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__.default {
@@ -5807,16 +5811,10 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, _clAdapters_adapters_tokenization_config_json__WEBPACK_IMPORTED_MODULE_0__)
-    this.available = true // Would be updated after getting this list
-    // this.available = this.config.availableLangs.includes(this.config.fetchOptions.lang)
+    this.available = true
     this.sourceData = config.sourceData
-
     this.fetchOptions = this.config.fetchOptions
-
-    this.requestParams = {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' }
-    }
+    this.storage = this.config.storage
   }
 
   /**
@@ -5826,7 +5824,13 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
   */
   async getTokens (text) {
     try {
-      const url = this.createFetchURL()
+      const requestParams = {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: text
+      }
+
+      const url = this.createTokenizeFetchURL()
       if (!url) {
         this.addError(this.l10n.getMsg('TOKENIZATION_FETCH_OPTIONS_ERROR'))
         return
@@ -5835,8 +5839,7 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
       if (this.sourceData) {
         return this.sourceData
       } else {
-        const finalParams = { requestParams: Object.assign({ body: text }, this.requestParams) }
-        const segments = await this.fetch(url, finalParams)
+        const segments = await this.fetch(url, { requestParams })
         return segments
       }
     } catch (error) {
@@ -5845,16 +5848,83 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
   }
 
   /**
-  * This method constructs full url for getting data
+  * This method uploads default config data from tokenization service
+  * @return {Array} - array of settings
+  */
+  async getConfig () {
+    try {
+      const url = this.createConfigFetchURL()
+      if (!url) {
+        this.addError(this.l10n.getMsg('TOKENIZATION_FETCH_OPTIONS_ERROR'))
+        return
+      }
+
+      if (this.sourceData) {
+        return this.sourceData
+      } else {
+        const configData = await this.fetch(url)
+
+        return this.formatSettings(configData)
+      }
+    } catch (error) {
+      this.addError(this.l10n.getMsg('TOKENIZATION_FETCH_ERROR', { message: error.message }))
+    }
+  }
+
+  /**
+   * Converts JSON response to Options for text and tei
+   * @param {Object} configData - Response from config fetch request
+   */
+  formatSettings (configData) {
+    return {
+      tei: this.convertToOptions(configData, 'tei'),
+      text: this.convertToOptions(configData, 'text')
+    }
+  }
+
+  /**
+   *
+   * @param {Object} configData Response from config fetch request
+   * @param {String} textType - tei/text
+   */
+  convertToOptions (configData, textType) {
+    const configDataPath = configData.paths[`/tokenize/${textType}`].post
+
+    const exludeParameters = ['lang', 'direction']
+
+    const dataFormatted = {
+      domain: `alpheios-remote-tokenization-${textType}`,
+      version: configData.info.version,
+      description: configData.description,
+      items: {}
+    }
+    configDataPath.parameters.filter(param => (param.in === 'query') && !exludeParameters.includes(param.name)).forEach(param => {
+      const result = {
+        defaultValue: param.schema.default,
+        labelText: param.description,
+        select: Boolean(param.schema.enum),
+        boolean: param.schema.type === 'boolean'
+      }
+      if (result.select) {
+        result.values = param.schema.enum.map(val => { return { value: val, text: val } })
+      }
+
+      dataFormatted.items[param.name] = result
+    })
+    return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Options(dataFormatted, new this.storage(dataFormatted.domain)) // eslint-disable-line new-cap
+  }
+
+  /**
+  * This method constructs full url for getting tokenize data
   * @return {String}
   */
-  createFetchURL () {
+  createTokenizeFetchURL () {
     if (this.fetchOptions) {
       if (!this.fetchOptions.lang || !this.fetchOptions.sourceType) {
         return
       }
 
-      let url = `${this.fetchOptions.baseUrl}${this.fetchOptions.sourceType}?lang=${this.fetchOptions.lang}`
+      let url = `${this.fetchOptions.baseUrl}tokenize/${this.fetchOptions.sourceType}?lang=${this.fetchOptions.lang}`
 
       if (this.fetchOptions.segments) {
         url = `${url}&segments=${this.fetchOptions.segments}`
@@ -5873,6 +5943,14 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
       }
       return url
     }
+  }
+
+  /**
+  * This method constructs full url for getting config data
+  * @return {String}
+  */
+  createConfigFetchURL () {
+    return this.fetchOptions.baseUrl
   }
 }
 
@@ -6994,7 +7072,8 @@ class ClientAdapters {
       adapterName: 'alpheios',
       method: options.method,
       clientId: options.clientId,
-      fetchOptions: options.params.fetchOptions
+      fetchOptions: options.params.fetchOptions,
+      storage: options.params.storage
     })
 
     if (!localTokenizationAdapter.available) {
@@ -7004,8 +7083,12 @@ class ClientAdapters {
       }
     }
 
-    if (localTokenizationAdapter.available && options.method === 'getTokens') {
+    if (options.method === 'getTokens') {
       const res = await localTokenizationAdapter.getTokens(options.params.text)
+      return { result: res, errors: localTokenizationAdapter.errors }
+    }
+    if (options.method === 'getConfig') {
+      const res = await localTokenizationAdapter.getConfig()
       return { result: res, errors: localTokenizationAdapter.errors }
     }
     return null
@@ -7976,7 +8059,13 @@ class ImportMorphData {
 /*!   export alpheios [provided] [no usage info] [missing usage info prevents renaming] */
 /*!     export adapter [provided] [no usage info] [missing usage info prevents renaming] */
 /*!     export methods [provided] [no usage info] [missing usage info prevents renaming] */
+/*!       export 0 [provided] [no usage info] [missing usage info prevents renaming] */
+/*!       export 1 [provided] [no usage info] [missing usage info prevents renaming] */
+/*!       other exports [not provided] [no usage info] */
 /*!     export params [provided] [no usage info] [missing usage info prevents renaming] */
+/*!       export getConfig [provided] [no usage info] [missing usage info prevents renaming] */
+/*!         export 0 [provided] [no usage info] [missing usage info prevents renaming] */
+/*!         other exports [not provided] [no usage info] */
 /*!       export getTokens [provided] [no usage info] [missing usage info prevents renaming] */
 /*!         export 0 [provided] [no usage info] [missing usage info prevents renaming] */
 /*!         other exports [not provided] [no usage info] */
@@ -8004,7 +8093,7 @@ class ImportMorphData {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\",\"gotoSentence\",\"findWord\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"],\"gotoSentence\":[\"provider\",\"sentenceId\",\"wordIds\"],\"findWord\":[\"provider\",\"word\",\"prefix\",\"suffix\",\"sentenceId\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\",\"fetchOptions\"]}}},\"tokenizationGroup\":{\"alpheios\":{\"adapter\":\"tokenizationMethod\",\"methods\":\"getTokens\",\"params\":{\"getTokens\":[\"text\"]}}}}");
+module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\",\"gotoSentence\",\"findWord\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"],\"gotoSentence\":[\"provider\",\"sentenceId\",\"wordIds\"],\"findWord\":[\"provider\",\"word\",\"prefix\",\"suffix\",\"sentenceId\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\",\"fetchOptions\"]}}},\"tokenizationGroup\":{\"alpheios\":{\"adapter\":\"tokenizationMethod\",\"methods\":[\"getTokens\",\"getConfig\"],\"params\":{\"getTokens\":[\"text\"],\"getConfig\":[\"storage\"]}}}}");
 
 /***/ }),
 
@@ -26993,12 +27082,6 @@ module.exports = JSON.parse("{\"url\":\"https://api-v2.logeion.org/search?q=\",\
   !*** ./adapters/tokenization/config.json ***!
   \*******************************************/
 /*! default exports */
-/*! export availableLangs [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 1 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 2 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 3 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
 /*! export fetchOptions [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export baseUrl [provided] [no usage info] [missing usage info prevents renaming] */
 /*!   export sourceType [provided] [no usage info] [missing usage info prevents renaming] */
@@ -27008,7 +27091,7 @@ module.exports = JSON.parse("{\"url\":\"https://api-v2.logeion.org/search?q=\",\
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"availableLangs\":[\"lat\",\"eng\",\"ita\",\"grc\"],\"fetchOptions\":{\"baseUrl\":\"https://tools.alpheios.net/tokenizer/tokenize/\",\"sourceType\":\"text\"}}");
+module.exports = JSON.parse("{\"fetchOptions\":{\"baseUrl\":\"https://tools.alpheios.net/tokenizer/\",\"sourceType\":\"text\"}}");
 
 /***/ }),
 
