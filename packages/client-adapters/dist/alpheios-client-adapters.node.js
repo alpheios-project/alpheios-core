@@ -5891,11 +5891,10 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
     const configDataPath = configData.paths[`/tokenize/${textType}`].post
 
     const exludeParameters = ['lang', 'direction']
-
     const dataFormatted = {
       domain: `alpheios-remote-tokenization-${textType}`,
       version: configData.info.version,
-      description: configData.description,
+      description: configDataPath.description,
       items: {}
     }
     configDataPath.parameters.filter(param => (param.in === 'query') && !exludeParameters.includes(param.name)).forEach(param => {
