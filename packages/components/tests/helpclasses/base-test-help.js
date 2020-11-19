@@ -72,7 +72,8 @@ export default class BaseTestHelp {
           lexicalRequest: {
             startTime: 0
           },
-          currentLanguageCode: null
+          currentLanguageCode: null,
+          isInAnnotationMode: false
         }
       },
       mutations: {

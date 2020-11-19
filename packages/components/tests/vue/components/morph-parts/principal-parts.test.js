@@ -1,15 +1,10 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 
-import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import BaseTestHelp from '@tests/helpclasses/base-test-help'
-
 import Vuex from 'vuex'
-import Vue from 'vue/dist/vue'
-
 import PrincipalParts from '@/vue/components/morph-parts/principal-parts.vue'
-import InflectionAttribute from '@/vue/components/infl-attribute.vue'
-
 import { Constants } from 'alpheios-data-models'
 
 describe('principal-parts.test.js', () => {
@@ -35,7 +30,7 @@ describe('principal-parts.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    store = BaseTestHelp.baseVuexStore()
+    store = BaseTestHelp.baseVuexStore(['app'])
     BaseTestHelp.l10nModule(store, api)
   })
 
@@ -54,6 +49,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 0,
         lexemeslength: 1
       },
+      store,
       localVue,
       mocks: api
     })
@@ -69,6 +65,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 0,
         lexemeslength: testHomonymCupidinibus.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
@@ -83,6 +80,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 0,
         lexemeslength: testHomonymFacili.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
@@ -97,6 +95,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 0,
         lexemeslength: testHomonymFacili.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
@@ -111,6 +110,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 0,
         lexemeslength: testHomonymFacili.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
@@ -125,6 +125,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 0,
         lexemeslength: testHomonymOrontea.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
@@ -139,6 +140,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 0,
         lexemeslength: testHomonymCupidinibus.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
@@ -153,6 +155,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 0,
         lexemeslength: testHomonymOrontea.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
@@ -167,6 +170,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 1,
         lexemeslength: testHomonymCupidinibus.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
@@ -186,6 +190,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 0,
         lexemeslength: testHomonymOrontea.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
@@ -205,6 +210,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 1,
         lexemeslength: testHomonymCupidinibus.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
@@ -221,6 +227,7 @@ describe('principal-parts.test.js', () => {
         lexemeindex: 1,
         lexemeslength: testHomonymCupidinibus.lexemes.length
       },
+      store,
       localVue,
       mocks: api
     })
