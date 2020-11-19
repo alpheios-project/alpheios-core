@@ -7,6 +7,7 @@
      v-on-clickaway="attachTrackingClick"
      v-show="this.$store.state.popup.visible"
      data-alpheios-ignore="all"
+     :data-annotation-mode="$store.state.app.isInAnnotationMode"
   >
     <div class="alpheios-popup__header" id="alpheios-popup-header">
       <div class="alpheios-popup__logo">
@@ -62,9 +63,10 @@
             {{$store.state.app.selectedText}}
           </h3>
         </div>
-        <div class="alpheios-popup__toolbar-annotation">
+        <div class="alpheios-popup__toolbar__annotation">
+          <span class="alpheios-popup__toolbar__annotation__text">Annotation mode is on</span>
           <alph-tooltip :tooltipText="annotationBtnTooltip" tooltipDirection="left">
-            <div :class="annotationBtnClasses" @click="$store.commit('app/toggleAnnotationMode')">
+            <div class="alpheios-popup__toolbar__annotation__btn" @click="$store.commit('app/toggleAnnotationMode')">
               <annotation-icon class="alpheios-navbuttons__icon" />
             </div>
           </alph-tooltip>
@@ -306,14 +308,6 @@ export default {
 
     maxHeight () {
       return this.app.platform.viewport.innerHeight - 2 * this.moduleConfig.viewportMargin
-    },
-
-    annotationBtnClasses () {
-      let classes = ['alpheios-popup__toolbar-annotation__btn'] // eslint-disable-line prefer-const
-      if (this.$store.state.app.isInAnnotationMode) {
-        classes.push('alpheios-popup__toolbar-annotation__btn--selected')
-      }
-      return classes
     },
 
     annotationBtnTooltip () {
@@ -578,6 +572,7 @@ export default {
 }
 </script>
 <style lang="scss">
+  @use "../../styles/annotations";
   @import "../../styles/variables";
 
   .alpheios-popup {
@@ -741,22 +736,6 @@ export default {
     margin: 0 0 uisize(10px) uisize(10px);
   }
 
-  .alpheios-popup__toolbar-annotation {
-    &__btn {
-      width: 20px;
-      cursor: pointer;
-      fill: var(--alpheios-color-dark);
-
-      &--selected {
-        fill: var(--alpheios-color-vivid);
-      }
-
-      &:hover, &:focus {
-        fill: var(--alpheios-color-vivid-hover);
-      }
-    }
-  }
-
   .alpheios-popup__content {
     flex: 1 0;
     padding: uisize(20px);
@@ -790,4 +769,47 @@ export default {
   .alpheios-popup__providers-item {
     color: var(--alpheios-desktop-popup-credit-providers-color);
   }
+
+  // region Annotation UI
+  [data-annotation-selectable="true"] {
+    &[data-annotation-mode="true"],
+    [data-annotation-mode="true"] & {
+      @include annotations.editable-element;
+    }
+  }
+
+  .alpheios-popup__toolbar__annotation {
+    [data-annotation-mode="true"] & {
+      display: flex;
+      border: 1px solid lightblue;
+      border-radius: 10px;
+      padding: 5px 10px;
+      background: lightcyan;
+    }
+
+    &__btn {
+      width: 20px;
+      cursor: pointer;
+      fill: var(--alpheios-color-dark);
+      margin-left: 10px;
+
+      [data-annotation-mode="true"] & {
+        fill: var(--alpheios-color-dark-hover);
+      }
+
+      &:hover, &:focus {
+        fill: var(--alpheios-color-vivid-hover);
+      }
+    }
+
+    &__text {
+      display: none;
+      line-height: 1.3;
+
+      [data-annotation-mode="true"] & {
+        display: inline-block;
+      }
+    }
+  }
+  // endregion Annotation UI
 </style>

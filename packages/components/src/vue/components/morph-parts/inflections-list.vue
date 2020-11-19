@@ -1,5 +1,6 @@
 <template>
-    <div class="alpheios-inflections-list__inflections" v-if="hasInflections">
+    <div class="alpheios-inflections-list__inflections" v-if="hasInflections"
+         :data-annotation-mode="$store.state.app.isInAnnotationMode">
         <div class="alpheios-morph__inflset" v-for="(inflset, ifindex) in inflections" v-bind:key="ifindex">
 
             <span class="alpheios-inflections-list__inflset_index" v-if="inflections.length > 1">{{ ifindex + 1 }}.</span>
@@ -10,6 +11,9 @@
                     :lang="languageCode" class="alpheios-inflections-list__formtext"
                     data-grouplevel="1" data-feature="feat.name"
                 >{{ feat.template.replace('%s', inflset.groupingKey[feat.name]) }}</span>
+                <div class="alpheios-principal-parts__annotation__ctrls--infl">
+                  <span class="alpheios-principal-parts__annotation__ctrls_add-btn">[+Form]</span>
+                </div>
 
                 <span class="alpheios-inflections-list__inflfeatures">
                     <inflectionattribute
@@ -39,7 +43,8 @@
                             />
                         </span>
 
-                        <div :class="groupClass(group)"  v-for="(infl, nextGrInflIndex2) in nextGroup.inflections" v-bind:key="nextGrInflIndex2">
+                        <div :class="groupClass(group)"  v-for="(infl, nextGrInflIndex2) in nextGroup.inflections"
+                             v-bind:key="nextGrInflIndex2" data-annotation-selectable="true">
                             <inflectionattribute
                                 v-for="feat in featuresList.level4.filter(feat => feat.checkfn(infl, group))" v-bind:key="feat.name"
                                 :data="infl.groupingKey"  :grouplevel="4"
@@ -171,6 +176,7 @@
   }
 </script>
 <style lang="scss">
+  @use "../../../styles/annotations";
   @import "../../../styles/variables";
 
   .alpheios-inflections-list__formtext {
@@ -230,4 +236,40 @@
 
     }
   }
+
+  // region Annotation UI
+  .alpheios-inflections-list__formtext {
+    [data-annotation-mode="true"] & {
+      @include annotations.editable-element;
+    }
+  }
+
+  .alpheios-inflections-list__inflgroup {
+    [data-annotation-mode="true"] & {
+      @include annotations.editable-element;
+    }
+  }
+
+  .alpheios-principal-parts__annotation__ctrls--infl {
+    display: none;
+    background-color: lightcyan;
+    padding: 5px;
+    border: 2px solid lightblue;
+    border-radius: 10px;
+    margin-top: 5px;
+
+    [data-annotation-mode="true"] & {
+      display: inline-block;
+    }
+
+    .alpheios-principal-parts__annotation__ctrls_add-btn {
+      color: mediumseagreen !important;
+      line-height: 1.3 !important;;
+      font-weight: 700;
+      padding: 5px 10px 10px !important;;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+  }
+  // endregion Annotation UI
 </style>

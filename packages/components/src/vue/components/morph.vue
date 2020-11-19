@@ -7,6 +7,28 @@
     >
       <div :class="morphClass(lex)">
         <morph-data :lexeme="lex" :lexemeindex = "index" :lexemeslength="lexemes.length" v-if="lex"/>
+        <div class="alpheios-principal-parts__annotation__ctrls">
+          <div class="alpheios-principal-parts__annotation__ctrls__comment-lemma-btn" data-annotation-ctrl-selected="true">[*Comment]</div>
+          <div class="alpheios-principal-parts__annotation__ctrls__remove-lemma-btn">[-Remove]</div>
+        </div>
+        <div class="alpheios-principal-parts__annotation__edit-form" style="display: none">
+          <div class="alpheios-principal-parts__annotation__edit-form__text-input">
+            A comment about the part of speech of the lexeme|
+          </div>
+          <div class="alpheios-principal-parts__annotation__edit-form__controls">
+            <div class="alpheios-principal-parts__annotation__edit-form__controls-save">Save</div>
+            <div class="alpheios-principal-parts__annotation__edit-form__controls-cancel">Cancel</div>
+          </div>
+        </div>
+        <div class="alpheios-principal-parts__annotation__edit-form">
+          <div class="alpheios-principal-parts__annotation__edit-form__warning-text">
+            Are you sure that you want to remove this comment?
+          </div>
+          <div class="alpheios-principal-parts__annotation__edit-form__controls">
+            <div class="alpheios-principal-parts__annotation__edit-form__controls-remove">Remove</div>
+            <div class="alpheios-principal-parts__annotation__edit-form__controls-cancel">Cancel</div>
+          </div>
+        </div>
         <definitions-list :lexeme = "lex" v-if="lex"/>
 
         <div
@@ -19,7 +41,7 @@
       </div>
     </div>
 
-    <div class="alpheios-morph__add-lemma"><add-icon class="alpheios-annotation-icn"/> Add lemma</div>
+    <div class="alpheios-morph__annotation__add-lemma">[+Lemma]</div>
   </div>
 </template>
 <script>
@@ -30,17 +52,13 @@ import InflectionsList from '@/vue/components/morph-parts/inflections-list.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
-// SVG icons
-import AddIcon from '@/images/inline-icons/plus-square-o.svg'
-
 export default {
   name: 'Morph',
   components: {
     morphData: MorphData,
     definitionsList: DefinitionsList,
     inflectionsList: InflectionsList,
-    lemmatranslation: LemmaTranslation,
-    addIcon: AddIcon
+    lemmatranslation: LemmaTranslation
   },
   inject: ['app', 'l10n'],
   storeModules: ['app'],
@@ -83,6 +101,7 @@ export default {
 }
 </script>
 <style lang="scss">
+  @use "../../styles/annotations";
   @import "../../styles/variables";
 
   $lemma_index_size: 20px;
@@ -125,38 +144,124 @@ export default {
     }
   }
 
-  .alpheios-morph__add-lemma {
+  // region Annotation UI
+  .alpheios-principal-parts__annotation__ctrls {
     display: none;
-    color: var(--alpheios-color-dark);
-    background-color: lightblue;
-    padding: 5px 10px;
+    background-color: lightcyan;
+    padding: 10px;
+    border: 2px solid lightblue;
+    border-radius: 10px;
+    margin-top: 5px;
 
-    [data-annotation-mode="true"] & {
-      display: inline-block;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+
+    [data-annotation-mode="true"] .alpheios-morph > div:first-child & {
+      display: flex;
+    }
+
+    &__comment-lemma-btn {
+      margin-left: 10px;
+      font-weight: 700;
+      color: steelblue;
+      padding: 5px;
+      border: 2px solid lightblue;
+      border-radius: 10px;
+    }
+
+    &__remove-lemma-btn {
+      margin-left: 10px;
+      font-weight: 700;
+      color: palevioletred;
+      padding: 5px;
+      border: 2px solid lightblue;
+      border-radius: 10px;
+      background: lightblue;
     }
   }
 
-  .alpheios-principal-parts__remove-lemma-btn {
+  .alpheios-morph-data__morphdata {
+    [data-annotation-mode="true"] & {
+      @include annotations.editable-element;
+    }
+  }
+
+  .alpheios-morph[data-annotation-mode="true"] > div:first-child .alpheios-morph-data__morphdata {
+    background-color: lightcyan;
+  }
+
+  .alpheios-principal-parts__annotation__edit-form {
     display: none;
-  }
+    padding: 5px;
+    border: 2px solid lightblue;
+    border-radius: 10px;
+    margin: -2px 0 5px;
+    background-color: lightcyan;
 
-  .alpheios-principal-parts__remove-lemma-btn {
-    display: none;
-  }
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
 
-  .alpheios-annotation-icn {
-    width: 20px;
-    height: 20px;
-  }
+    [data-annotation-mode="true"] .alpheios-morph > div:first-child & {
+      display: flex;
+      flex-direction: column;
+    }
 
-  [data-annotation-mode="true"] {
-    .alpheios-principal-parts__item {
-      background-color: lightblue;
+    .alpheios-principal-parts__annotation__edit-form__text-input {
+      height: 50px;
+      padding: 0 5px;
+      border: 1px solid lightblue;
+      border-radius: 10px;
+      margin: 5px;
+      background-color: white;
+    }
+
+    .alpheios-principal-parts__annotation__edit-form__controls {
+      display: flex;
+      justify-content: flex-end;
       padding: 5px;
     }
 
-    .alpheios-principal-parts__remove-lemma-btn {
-      display: inline-block;
+    .alpheios-principal-parts__annotation__edit-form__controls-save {
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 10px;
+      background: lightgreen;
+      margin-left: 10px;
+    }
+
+    .alpheios-principal-parts__annotation__edit-form__controls-remove {
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 10px;
+      background: palevioletred;
+      color: white;
+      margin-left: 10px;
+    }
+
+    .alpheios-principal-parts__annotation__edit-form__controls-cancel {
+      padding: 5px 10px;
+      border-radius: 10px;
+      background: lightslategrey;
+      color: white;
+      margin-left: 10px;
     }
   }
+
+  .alpheios-morph__annotation__add-lemma {
+    display: none;
+    color: mediumseagreen;
+    border: 1px solid lightblue;
+    line-height: 1.3;
+    font-weight: 700;
+    background-color: lightcyan;
+    padding: 5px 10px 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+
+    [data-annotation-mode="true"] & {
+      display: block;
+      border-radius: 10px;
+    }
+  }
+  // endregion Annotation UI
 </style>

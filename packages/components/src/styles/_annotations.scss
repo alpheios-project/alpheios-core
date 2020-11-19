@@ -1,0 +1,7 @@
+@mixin editable-element {
+  display: inline-block;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  padding: 5px 10px !important;  // TODO: get rid of important after design is finalized
+  margin-top: 5px;
+}
