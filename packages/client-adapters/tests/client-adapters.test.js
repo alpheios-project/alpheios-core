@@ -3,7 +3,7 @@
 import 'whatwg-fetch'
 import ClientAdapters from '@clAdapters/client-adapters.js'
 import { Fixture, TranslationsFixture } from 'alpheios-fixtures'
-import { Constants, Homonym, Author, WordUsageExample } from 'alpheios-data-models'
+import { Constants, Homonym, Author, WordUsageExample, LocalStorageArea, Options } from 'alpheios-data-models'
 
 describe('client-adapters.test.js', () => {
   console.error = function () {}
@@ -449,7 +449,7 @@ describe('client-adapters.test.js', () => {
     expect(res.result).not.toBeDefined()
   })
 
-  it.skip('23 ClientAdapters - tokenizationMethod - passed unavailable lang', async () => {
+  it('22 ClientAdapters - tokenizationMethod - getTokens returns array of errors - if passed incorrect parameters', async () => {
     ClientAdapters.init()
 
     let res = await ClientAdapters.tokenizationGroup.alpheios({
@@ -457,7 +457,9 @@ describe('client-adapters.test.js', () => {
       params: {
         text: 'veni vidi vichi',
         fetchOptions: {
-          lang: 'ara',
+          lang: 'lat',
+          sourceType: 'tei',
+          segments: 'singleline'
         }
       }
     })
@@ -465,4 +467,33 @@ describe('client-adapters.test.js', () => {
     expect(res.errors.length).toEqual(1)
     expect(res.result).not.toBeDefined()
   })
+
+  it('23 ClientAdapters - tokenizationMethod - getConfig returns Options for tei and text', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getConfig',
+      params: {
+        storage: LocalStorageArea
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result.tei).toEqual(expect.any(Options))
+    expect(res.result.text).toEqual(expect.any(Options))
+  })
+
+  it('24 ClientAdapters - tokenizationMethod - getConfig returns array of errors - if passed incorrect parameters', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getConfig',
+      params: {}
+    })
+
+    expect(res.errors.length).toEqual(1)
+    expect(res.result).not.toBeDefined()
+  })
+
 })

@@ -81,9 +81,10 @@
   "tokenizationGroup": {
     "alpheios": {
       "adapter": "tokenizationMethod",
-      "methods": "getTokens",
+      "methods": [ "getTokens", "getConfig" ],
       "params": {
-        "getTokens": ["text"]
+        "getTokens": ["text"],
+        "getConfig": ["storage"]
       }
     }
   }

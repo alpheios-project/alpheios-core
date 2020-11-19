@@ -3,6 +3,7 @@
 import 'whatwg-fetch'
 
 import AlpheiosTokenizationAdapter from '@clAdapters/adapters/tokenization/adapter'
+import { Options, LocalStorageArea } from 'alpheios-data-models'
 
 describe('tokenization/adapter.test.js', () => {
   console.error = function () {}
@@ -35,10 +36,9 @@ describe('tokenization/adapter.test.js', () => {
     expect(adapter.l10n).toBeDefined()
     expect(adapter.config).toBeDefined()
     expect(adapter.fetchOptions).toEqual(expect.any(Object))
-    expect(adapter.requestParams).toEqual(expect.any(Object))
   })
 
-  it('2 AlpheiosTokenizationAdapter - createFetchURL constructs url', () => {
+  it('2 AlpheiosTokenizationAdapter - createTokenizeFetchURL constructs url', () => {
     let adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
@@ -48,37 +48,37 @@ describe('tokenization/adapter.test.js', () => {
       }
     })
 
-    let url = adapter.createFetchURL()
+    let url = adapter.createTokenizeFetchURL()
 
-    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}text?lang=lat`)
+    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}tokenize/text?lang=lat`)
 
     adapter.fetchOptions.segments = 'doubline'
 
-    url = adapter.createFetchURL()
-    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}text?lang=lat&segments=doubline`)
+    url = adapter.createTokenizeFetchURL()
+    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}tokenize/text?lang=lat&segments=doubline`)
 
     adapter.fetchOptions.segments = 'singleline'
     adapter.fetchOptions.segstart = 20
 
-    url = adapter.createFetchURL()
-    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}text?lang=lat&segments=singleline&segstart=20`)
+    url = adapter.createTokenizeFetchURL()
+    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}tokenize/text?lang=lat&segments=singleline&segstart=20`)
 
     delete adapter.fetchOptions.segments
     delete adapter.fetchOptions.segstart
     adapter.fetchOptions.direction = 'ltr'
 
-    url = adapter.createFetchURL()
-    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}text?lang=lat&direction=ltr`)
+    url = adapter.createTokenizeFetchURL()
+    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}tokenize/text?lang=lat&direction=ltr`)
 
     adapter.fetchOptions.direction = 'ltr'
     adapter.fetchOptions.tbseg = true
 
-    url = adapter.createFetchURL()
-    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}text?lang=lat&direction=ltr&tbseg=true`)
+    url = adapter.createTokenizeFetchURL()
+    expect(url).toEqual(`${adapter.fetchOptions.baseUrl}tokenize/text?lang=lat&direction=ltr&tbseg=true`)
 
   })
 
-  it('3 AlpheiosTokenizationAdapter - createFetchURL returns empty url, if sourceType or lang is not defined in fetchOptions', () => {
+  it('3 AlpheiosTokenizationAdapter - createTokenizeFetchURL returns empty url, if sourceType or lang is not defined in fetchOptions', () => {
     let adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
@@ -88,13 +88,13 @@ describe('tokenization/adapter.test.js', () => {
     })
 
 
-    let url = adapter.createFetchURL() // lang is not defined, textType is defined in defaultConfig
+    let url = adapter.createTokenizeFetchURL() // lang is not defined, textType is defined in defaultConfig
     expect(url).not.toBeDefined()
 
     adapter.fetchOptions.lang = 'lat'
     delete adapter.fetchOptions.sourceType
 
-    url = adapter.createFetchURL() // lang is defined, textType is not defined
+    url = adapter.createTokenizeFetchURL() // lang is defined, textType is not defined
     expect(url).not.toBeDefined()
   })
 
@@ -172,4 +172,25 @@ mollia cum duris, sine pondere habentia pondus.
     expect(adapter.errors).toEqual([])
   })
 
+  it('7 AlpheiosTokenizationAdapter - getConfig returns config from the remote source', async () => {
+    let adapter = new AlpheiosTokenizationAdapter({
+      category: 'tokenizationGroup',
+      adapterName: 'tokenizationMethod',
+      method: 'getConfig',
+      storage: LocalStorageArea
+    })
+
+    jest.spyOn(adapter, 'formatSettings')
+    jest.spyOn(adapter, 'convertToOptions')
+
+    const result = await adapter.getConfig()
+
+    expect(adapter.formatSettings).toHaveBeenCalled()
+    expect(adapter.convertToOptions).toHaveBeenCalledTimes(2)
+
+    expect(result).toEqual({
+      tei: expect.any(Options),
+      text: expect.any(Options)
+    })
+  })
 })

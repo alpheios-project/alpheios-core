@@ -401,7 +401,8 @@ class ClientAdapters {
       adapterName: 'alpheios',
       method: options.method,
       clientId: options.clientId,
-      fetchOptions: options.params.fetchOptions
+      fetchOptions: options.params.fetchOptions,
+      storage: options.params.storage
     })
 
     if (!localTokenizationAdapter.available) {
@@ -411,8 +412,12 @@ class ClientAdapters {
       }
     }
 
-    if (localTokenizationAdapter.available && options.method === 'getTokens') {
+    if (options.method === 'getTokens') {
       const res = await localTokenizationAdapter.getTokens(options.params.text)
+      return { result: res, errors: localTokenizationAdapter.errors }
+    }
+    if (options.method === 'getConfig') {
+      const res = await localTokenizationAdapter.getConfig()
       return { result: res, errors: localTokenizationAdapter.errors }
     }
     return null
