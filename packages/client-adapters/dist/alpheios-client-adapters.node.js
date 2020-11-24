@@ -5925,19 +5925,19 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
 
       let url = `${this.fetchOptions.baseUrl}tokenize/${this.fetchOptions.sourceType}?lang=${this.fetchOptions.lang}`
 
-      if (this.fetchOptions.segments) {
+      if (this.fetchOptions.segments !== undefined) {
         url = `${url}&segments=${this.fetchOptions.segments}`
       }
 
-      if (this.fetchOptions.segstart) {
+      if (this.fetchOptions.segstart !== undefined) {
         url = `${url}&segstart=${this.fetchOptions.segstart}`
       }
 
-      if (this.fetchOptions.direction) {
+      if (this.fetchOptions.direction !== undefined) {
         url = `${url}&direction=${this.fetchOptions.direction}`
       }
 
-      if (this.fetchOptions.tbseg) {
+      if (this.fetchOptions.tbseg !== undefined) {
         url = `${url}&tbseg=${this.fetchOptions.tbseg}`
       }
       return url
