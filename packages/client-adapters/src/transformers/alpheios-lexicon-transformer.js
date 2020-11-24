@@ -137,8 +137,8 @@ class AlpheiosLexiconTransformer {
 
   /**
    * This method defines language from dictData nd inflections data
-   * @param {Object} data - jsonObj from adapter
-   * @param {Object} term - data from inflections
+   * @param {Object} jsonObj - jsonObj from adapter
+   * @param {string} targetWord - a word for which a request is made
    * Returned values:
    *     - {Homonym}
    *     - {undefined}
@@ -187,8 +187,7 @@ class AlpheiosLexiconTransformer {
         const lemma = this.mappingData.parseLemma(lemmaText, language)
         lemmas.push(lemma)
 
-        const features = featuresArray
-        for (const feature of features) {
+        for (const feature of featuresArray) {
           this.mappingData.mapFeature(lemma, elem, ...feature, this.allowUnknownValues)
         }
 
