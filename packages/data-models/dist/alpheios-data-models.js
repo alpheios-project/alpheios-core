@@ -8957,10 +8957,24 @@ class Options {
   async load () {
     try {
       const values = await this.storageAdapter.get()
+      // console.info('Load values ', this.domain, values)
+
+      if (['alpheios-alignment-editor-source-text-origin-0', 'alpheios-remote-tokenization-tei-origin-0-tei'].includes(this.domain)) {
+        console.info('Load values ', this)
+        console.info('Load values ', this.domain, values)
+      }
+
       for (const key in values) {
         const parsedKey = Options.parseKey(key)
         // TODO when we do increase the version we should handle conversion
+        if (['alpheios-alignment-editor-source-text-origin-0', 'alpheios-remote-tokenization-tei-origin-0-tei'].includes(this.domain)) {
+          console.info('Load parsedKey ', parsedKey, this.version)
+        }
+
         if (this.items.hasOwnProperty(parsedKey.name) && this.version === parsedKey.version) { // eslint-disable-line no-prototype-builtins
+          if (['alpheios-alignment-editor-source-text-origin-0', 'alpheios-remote-tokenization-tei-origin-0-tei'].includes(this.domain)) {
+            console.info('Inside condition')
+          }
           if (parsedKey.group) {
             this.items[parsedKey.name].forEach((f) => {
               if (f.name === key) {
@@ -8973,6 +8987,9 @@ class Options {
             })
           } else {
             try {
+              if (['alpheios-alignment-editor-source-text-origin-0', 'alpheios-remote-tokenization-tei-origin-0-tei'].includes(this.domain)) {
+                console.info('Inside condition 2', this.items[parsedKey.name], JSON.parse(values[key]))
+              }
               this.items[parsedKey.name].currentValue = JSON.parse(values[key])
             } catch (e) {
               // invalid value
@@ -9018,7 +9035,7 @@ class Options {
     try {
       parsed = {
         domain: domain,
-        version: parseInt(version),
+        version: version,
         name: name,
         group: group
       }
