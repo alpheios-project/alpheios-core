@@ -11,9 +11,11 @@
                     :lang="languageCode" class="alpheios-inflections-list__formtext"
                     data-grouplevel="1" data-feature="feat.name"
                 >{{ feat.template.replace('%s', inflset.groupingKey[feat.name]) }}</span>
-                <div class="alpheios-principal-parts__annotation__ctrls--infl">
-                  <span class="alpheios-principal-parts__annotation__ctrls_add-btn">[+Form]</span>
+              <div class="alpheios-annotations__act-panel" data-annotation-selected-action="none">
+                <div class="alpheios-annotations__act-ctrls">
+                  <div class="alpheios-annotations__act-ctrls-add">[+form]</div>
                 </div>
+              </div>
 
                 <span class="alpheios-inflections-list__inflfeatures">
                     <inflectionattribute
@@ -32,7 +34,6 @@
                             :type="types[feat.name]"
                         />
                     </span>
-
 
                     <div :class="groupClass(group)" v-for="(nextGroup, nextGrInflIndex) in group.inflections" v-bind:key="nextGrInflIndex">
                         <span v-if="group.groupingKey.isCaseInflectionSet">
@@ -66,114 +67,173 @@
                     </div>
 
                 </div><!-- alpheios-morph__inflgroup -->
+                <div class="alpheios-annotations__act-panel" data-annotation-selected-action="add">
+                  <div class="alpheios-annotations__act-ctrls">
+                    <div class="alpheios-annotations__act-ctrls-add">[+inflection]</div>
+                  </div>
+                  <div class="alpheios-annotations__act-form">
+                    <div class="alpheios-annotations__act-form-content">
+                      <div class="alpheios-annotations__act-form-headline">Add an inflection:</div>
+                      <div class="alpheios-annotations__act-form-dropdown-group">
+                        <label for="latin-number">Number:</label>
+                        <select name="latin-number" id="latin-number">
+                          <option value="not-selected">Select a value</option>
+                          <option value="Singular">Singular</option>
+                          <option value="Plural">Plural</option>
+                        </select>
+                      </div>
+                      <div class="alpheios-annotations__act-form-dropdown-group">
+                        <label for="latin-case">Case:</label>
+                        <select name="latin-case" id="latin-case">
+                          <option value="not-selected">Select a value</option>
+                          <option value="Nominative">Nominative</option>
+                          <option value="Genitive">Genitive</option>
+                          <option value="Dative">Dative</option>
+                          <option value="Accusative">Accusative</option>
+                          <option value="Ablative">Ablative</option>
+                          <option value="Vocative">Vocative</option>
+                        </select>
+                      </div>
+                      <div class="alpheios-annotations__act-form-dropdown-group">
+                        <label for="latin-gender">Gender:</label>
+                        <select name="latin-gender" id="latin-gender">
+                          <option value="Masculine" selected>Masculine</option>
+                          <option value="Feminine">Feminine</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="alpheios-annotations__act-form-ctrls">
+                      <div class="alpheios-annotations__act-form-ctrls-add">Add</div>
+                      <div class="alpheios-annotations__act-form-ctrls-cancel">Cancel</div>
+                    </div>
+                  </div>
+                </div>
 
             </div><!-- alpheios-morph__forms -->
         </div><!-- alpheios-morph__inflset -->
     </div><!-- alpheios-morph__inflections -->
 </template>
 <script>
-  import { Feature, LanguageModelFactory } from 'alpheios-data-models'
-  import InflectionAttribute from '@/vue/components/infl-attribute.vue'
+import { Feature, LanguageModelFactory } from 'alpheios-data-models'
+import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 
-  export default {
-    name: 'InflectionsList',
-    inject: ['app', 'l10n'],
-    storeModules: ['app'],
-    components: {
-      inflectionattribute: InflectionAttribute
-    },
-    props: {
-      lexeme: {
-        type: Object,
-        required: true
-      }
-    },
-    data: function () {
-      return {
-        types: null, // These are Feature.types
-        featuresList: {
-          wordParts: [
-            { name: 'prefix', template: '%s-'},
-            { name: 'stem', template: '%s'},
-            { name: 'suffix', template: '-%s'}
-          ],
-          level1: [
-            { name: 'part', decorators: [],
-              checkfn: (inflset) => ! this.featureMatch(this.lexeme.lemma.features[this.types.part], inflset.groupingKey[this.types.part])
-            },
-            { name: 'declension', decorators: ['appendtype'],
-              checkfn: (inflset) => inflset.groupingKey.declension && ! this.featureMatch(inflset.groupingKey.declension, this.lexeme.lemma.features.declension)
-            },
-            { name: 'kaylo', decorators: ['prefixtype'],
-              checkfn: (inflset) => inflset.groupingKey.kaylo
-            },
-            { name: 'state', decorators: ['prefixtype'],
-              checkfn: (inflset) => inflset.groupingKey.state
-            }
-          ],
-          level2: [
-            { name: 'number', decorators: ['abbreviate'] },
-            { name: 'tense', decorators: ['abbreviate'] }
-          ],
-          level3: [
-            { name: 'tense', decorators: ['abbreviate'] },
-            { name: 'voice', decorators: ['abbreviate'] }
-          ],
-          level4: [
-            { name: 'grmCase', decorators: ['abbreviate'], checkfn: () => true },
-            { name: 'gender', decorators: ['parenthesize','abbreviate'],
-              checkfn: (infl, group) => !this.featureMatch(infl.groupingKey[this.types.gender], this.lexeme.lemma.features[this.types.gender])
-            },
-            { name: 'comparison', decorators: ['abbreviate'], checkfn: () => true },
-            { name: 'person', decorators: ['appendtype','abbreviate'], checkfn: () => true },
-            { name: 'number', decorators: ['abbreviate'],
-              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
-            },
-            { name: 'tense', decorators: ['abbreviate'],
-              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
-            },
-            { name: 'mood', decorators: ['abbreviate'],
-              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
-            },
-            { name: 'voice', decorators: ['abbreviate'],
-              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
-            }
-          ]
-        }
-      }
-    },
-    computed: {
-      hasInflections () {
-        return this.inflections.length > 0
-      },
-
-      inflections () {
-        return (
-          this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getGroupedInflections)
-          ? this.lexeme.getGroupedInflections()
-          : []
-      },
-
-      languageCode () {
-        return LanguageModelFactory.getLanguageCodeFromId(this.lexeme.lemma.languageID)
-      }
-    },
-    methods: {
-      groupClass (group) {
-        return group.groupingKey.isCaseInflectionSet ? 'alpheios-inflections-list__inline' : 'alpheios-inflections-list__block'
-      },
-
-      featureMatch (a, b) {
-        if (a && b) {
-          return a.isEqual(b)
-        }
-        return false
-      }
-    },
-    created: function () {
-      this.types = Feature.types
+export default {
+  name: 'InflectionsList',
+  inject: ['app', 'l10n'],
+  storeModules: ['app'],
+  components: {
+    inflectionattribute: InflectionAttribute
+  },
+  props: {
+    lexeme: {
+      type: Object,
+      required: true
     }
+  },
+  data: function () {
+    return {
+      types: null, // These are Feature.types
+      featuresList: {
+        wordParts: [
+          { name: 'prefix', template: '%s-' },
+          { name: 'stem', template: '%s' },
+          { name: 'suffix', template: '-%s' }
+        ],
+        level1: [
+          {
+            name: 'part',
+            decorators: [],
+            checkfn: (inflset) => !this.featureMatch(this.lexeme.lemma.features[this.types.part], inflset.groupingKey[this.types.part])
+          },
+          {
+            name: 'declension',
+            decorators: ['appendtype'],
+            checkfn: (inflset) => inflset.groupingKey.declension && !this.featureMatch(inflset.groupingKey.declension, this.lexeme.lemma.features.declension)
+          },
+          {
+            name: 'kaylo',
+            decorators: ['prefixtype'],
+            checkfn: (inflset) => inflset.groupingKey.kaylo
+          },
+          {
+            name: 'state',
+            decorators: ['prefixtype'],
+            checkfn: (inflset) => inflset.groupingKey.state
+          }
+        ],
+        level2: [
+          { name: 'number', decorators: ['abbreviate'] },
+          { name: 'tense', decorators: ['abbreviate'] }
+        ],
+        level3: [
+          { name: 'tense', decorators: ['abbreviate'] },
+          { name: 'voice', decorators: ['abbreviate'] }
+        ],
+        level4: [
+          { name: 'grmCase', decorators: ['abbreviate'], checkfn: () => true },
+          {
+            name: 'gender',
+            decorators: ['parenthesize', 'abbreviate'],
+            checkfn: (infl) => !this.featureMatch(infl.groupingKey[this.types.gender], this.lexeme.lemma.features[this.types.gender])
+          },
+          { name: 'comparison', decorators: ['abbreviate'], checkfn: () => true },
+          { name: 'person', decorators: ['appendtype', 'abbreviate'], checkfn: () => true },
+          {
+            name: 'number',
+            decorators: ['abbreviate'],
+            checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
+          },
+          {
+            name: 'tense',
+            decorators: ['abbreviate'],
+            checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
+          },
+          {
+            name: 'mood',
+            decorators: ['abbreviate'],
+            checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
+          },
+          {
+            name: 'voice',
+            decorators: ['abbreviate'],
+            checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
+          }
+        ]
+      }
+    }
+  },
+  computed: {
+    hasInflections () {
+      return this.inflections.length > 0
+    },
+
+    inflections () {
+      return (
+        this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getGroupedInflections)
+        ? this.lexeme.getGroupedInflections()
+        : []
+    },
+
+    languageCode () {
+      return LanguageModelFactory.getLanguageCodeFromId(this.lexeme.lemma.languageID)
+    }
+  },
+  methods: {
+    groupClass (group) {
+      return group.groupingKey.isCaseInflectionSet ? 'alpheios-inflections-list__inline' : 'alpheios-inflections-list__block'
+    },
+
+    featureMatch (a, b) {
+      if (a && b) {
+        return a.isEqual(b)
+      }
+      return false
+    }
+  },
+  created: function () {
+    this.types = Feature.types
   }
+}
 </script>
 <style lang="scss">
   @use "../../../styles/annotations";
@@ -238,6 +298,8 @@
   }
 
   // region Annotation UI
+  @include annotations.act-panel;
+
   .alpheios-inflections-list__formtext {
     [data-annotation-mode="true"] & {
       @include annotations.editable-element;
@@ -247,28 +309,6 @@
   .alpheios-inflections-list__inflgroup {
     [data-annotation-mode="true"] & {
       @include annotations.editable-element;
-    }
-  }
-
-  .alpheios-principal-parts__annotation__ctrls--infl {
-    display: none;
-    background-color: lightcyan;
-    padding: 5px;
-    border: 2px solid lightblue;
-    border-radius: 10px;
-    margin-top: 5px;
-
-    [data-annotation-mode="true"] & {
-      display: inline-block;
-    }
-
-    .alpheios-principal-parts__annotation__ctrls_add-btn {
-      color: mediumseagreen !important;
-      line-height: 1.3 !important;;
-      font-weight: 700;
-      padding: 5px 10px 10px !important;;
-      border-radius: 10px;
-      margin-bottom: 10px;
     }
   }
   // endregion Annotation UI

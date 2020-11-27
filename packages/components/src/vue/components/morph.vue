@@ -7,28 +7,44 @@
     >
       <div :class="morphClass(lex)">
         <morph-data :lexeme="lex" :lexemeindex = "index" :lexemeslength="lexemes.length" v-if="lex"/>
-        <div class="alpheios-principal-parts__annotation__ctrls">
-          <div class="alpheios-principal-parts__annotation__ctrls__comment-lemma-btn" data-annotation-ctrl-selected="true">[*Comment]</div>
-          <div class="alpheios-principal-parts__annotation__ctrls__remove-lemma-btn">[-Remove]</div>
-        </div>
-        <div class="alpheios-principal-parts__annotation__edit-form" style="display: none">
-          <div class="alpheios-principal-parts__annotation__edit-form__text-input">
-            A comment about the part of speech of the lexeme|
+        <div class="alpheios-annotations__act-panel" data-annotation-selected-action="edit" style="display: none">
+          <div class="alpheios-annotations__act-ctrls">
+            <div class="alpheios-annotations__act-ctrls-edit">[*comment]</div>
+            <div class="alpheios-annotations__act-ctrls-remove">[-remove]</div>
           </div>
-          <div class="alpheios-principal-parts__annotation__edit-form__controls">
-            <div class="alpheios-principal-parts__annotation__edit-form__controls-save">Save</div>
-            <div class="alpheios-principal-parts__annotation__edit-form__controls-cancel">Cancel</div>
-          </div>
-        </div>
-        <div class="alpheios-principal-parts__annotation__edit-form">
-          <div class="alpheios-principal-parts__annotation__edit-form__warning-text">
-            Are you sure that you want to remove this comment?
-          </div>
-          <div class="alpheios-principal-parts__annotation__edit-form__controls">
-            <div class="alpheios-principal-parts__annotation__edit-form__controls-remove">Remove</div>
-            <div class="alpheios-principal-parts__annotation__edit-form__controls-cancel">Cancel</div>
+          <div class="alpheios-annotations__act-form">
+            <div class="alpheios-annotations__act-form-content">
+              <div class="alpheios-annotations__act-form-headline">Edit the comment:</div>
+              <div class="alpheios-annotations__act-form-text">
+                A comment about the part of speech of the lexeme
+              </div>
+            </div>
+            <div class="alpheios-annotations__act-form-ctrls">
+              <div class="alpheios-annotations__act-form-ctrls-save">Save</div>
+              <div class="alpheios-annotations__act-form-ctrls-cancel">Cancel</div>
+            </div>
           </div>
         </div>
+
+        <div class="alpheios-annotations__act-panel" data-annotation-selected-action="remove">
+          <div class="alpheios-annotations__act-ctrls">
+            <div class="alpheios-annotations__act-ctrls-edit">[*comment]</div>
+            <div class="alpheios-annotations__act-ctrls-remove">[-remove]</div>
+          </div>
+          <div class="alpheios-annotations__act-form">
+            <div class="alpheios-annotations__act-form-content">
+              <div class="alpheios-annotations__act-form-headline">Remove the comment:</div>
+              <div class="alpheios-annotations__act-form-text">
+                Are you sure that you want to remove this comment?
+              </div>
+            </div>
+            <div class="alpheios-annotations__act-form-ctrls">
+              <div class="alpheios-annotations__act-form-ctrls-remove">Remove</div>
+              <div class="alpheios-annotations__act-form-ctrls-cancel">Cancel</div>
+            </div>
+          </div>
+        </div>
+
         <definitions-list :lexeme = "lex" v-if="lex"/>
 
         <div
@@ -41,7 +57,11 @@
       </div>
     </div>
 
-    <div class="alpheios-morph__annotation__add-lemma">[+Lemma]</div>
+    <div class="alpheios-annotations__act-panel" data-annotation-selected-action="none">
+      <div class="alpheios-annotations__act-ctrls">
+        <div class="alpheios-annotations__act-ctrls-add">[+lemma]</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -145,41 +165,6 @@ export default {
   }
 
   // region Annotation UI
-  .alpheios-principal-parts__annotation__ctrls {
-    display: none;
-    background-color: lightcyan;
-    padding: 10px;
-    border: 2px solid lightblue;
-    border-radius: 10px;
-    margin-top: 5px;
-
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-
-    [data-annotation-mode="true"] .alpheios-morph > div:first-child & {
-      display: flex;
-    }
-
-    &__comment-lemma-btn {
-      margin-left: 10px;
-      font-weight: 700;
-      color: steelblue;
-      padding: 5px;
-      border: 2px solid lightblue;
-      border-radius: 10px;
-    }
-
-    &__remove-lemma-btn {
-      margin-left: 10px;
-      font-weight: 700;
-      color: palevioletred;
-      padding: 5px;
-      border: 2px solid lightblue;
-      border-radius: 10px;
-      background: lightblue;
-    }
-  }
-
   .alpheios-morph-data__morphdata {
     [data-annotation-mode="true"] & {
       @include annotations.editable-element;
@@ -188,80 +173,6 @@ export default {
 
   .alpheios-morph[data-annotation-mode="true"] > div:first-child .alpheios-morph-data__morphdata {
     background-color: lightcyan;
-  }
-
-  .alpheios-principal-parts__annotation__edit-form {
-    display: none;
-    padding: 5px;
-    border: 2px solid lightblue;
-    border-radius: 10px;
-    margin: -2px 0 5px;
-    background-color: lightcyan;
-
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-
-    [data-annotation-mode="true"] .alpheios-morph > div:first-child & {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .alpheios-principal-parts__annotation__edit-form__text-input {
-      height: 50px;
-      padding: 0 5px;
-      border: 1px solid lightblue;
-      border-radius: 10px;
-      margin: 5px;
-      background-color: white;
-    }
-
-    .alpheios-principal-parts__annotation__edit-form__controls {
-      display: flex;
-      justify-content: flex-end;
-      padding: 5px;
-    }
-
-    .alpheios-principal-parts__annotation__edit-form__controls-save {
-      font-weight: 700;
-      padding: 5px 10px;
-      border-radius: 10px;
-      background: lightgreen;
-      margin-left: 10px;
-    }
-
-    .alpheios-principal-parts__annotation__edit-form__controls-remove {
-      font-weight: 700;
-      padding: 5px 10px;
-      border-radius: 10px;
-      background: palevioletred;
-      color: white;
-      margin-left: 10px;
-    }
-
-    .alpheios-principal-parts__annotation__edit-form__controls-cancel {
-      padding: 5px 10px;
-      border-radius: 10px;
-      background: lightslategrey;
-      color: white;
-      margin-left: 10px;
-    }
-  }
-
-  .alpheios-morph__annotation__add-lemma {
-    display: none;
-    color: mediumseagreen;
-    border: 1px solid lightblue;
-    line-height: 1.3;
-    font-weight: 700;
-    background-color: lightcyan;
-    padding: 5px 10px 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-
-    [data-annotation-mode="true"] & {
-      display: block;
-      border-radius: 10px;
-    }
   }
   // endregion Annotation UI
 </style>
