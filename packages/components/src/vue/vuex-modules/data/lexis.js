@@ -376,7 +376,7 @@ export default class Lexis extends Module {
             }
             if (!state.loading) {
               // A GraphQL query is complete
-              resolve(homonym)
+              resolve({ homonym, state, errors })
             }
           },
           pollInterval,
@@ -430,7 +430,8 @@ export default class Lexis extends Module {
     const word = textSelector.normalizedText
 
     let result
-    let homonym
+    // A result of a getWordQueryData() request
+    let wqData
     // This is a bypass of an old workflow for Latin and Greek
     if (language.isOneOf([Language.LATIN, Language.GREEK])) {
       // The new workflow is enabled for Latin only
@@ -457,7 +458,7 @@ export default class Lexis extends Module {
       }
 
       try {
-        homonym = await this.getWordQueryData({
+        wqData = await this.getWordQueryData({
           variables,
           source
         })
@@ -465,7 +466,7 @@ export default class Lexis extends Module {
         Logger.getInstance().error('Observable word query error', err)
       }
 
-      if (homonym) {
+      if (wqData && wqData.homonym) {
         // A lexical query will be used to retrieve data that is not served by GraphQL currently.
         const lexQuery = LexicalQuery.create(textSelector, {
           clientId: this._appApi.clientId,
@@ -479,7 +480,7 @@ export default class Lexis extends Module {
           cedictServiceUrl: this.hasCedict() ? this._lexisConfig.cedict.target_url : null,
           source,
           hasLexemes: true,
-          homonym
+          homonym: wqData.homonym
         })
         result = lexQuery.getData()
       } else {
