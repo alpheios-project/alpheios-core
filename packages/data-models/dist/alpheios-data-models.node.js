@@ -10766,11 +10766,9 @@ class Options {
   async load () {
     try {
       const values = await this.storageAdapter.get()
-
       for (const key in values) {
         const parsedKey = Options.parseKey(key)
         // TODO when we do increase the version we should handle conversion
-
         if (this.items.hasOwnProperty(parsedKey.name) && this.version === parsedKey.version) { // eslint-disable-line no-prototype-builtins
           if (parsedKey.group) {
             this.items[parsedKey.name].forEach((f) => {
