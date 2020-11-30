@@ -335,12 +335,13 @@ export default class Lexis extends Module {
         this._adapters.wordQuery.observableQuery({
           variables,
           // This callback is called every time the GraphQL query is updated, until the query is complete.
-          dataCallback: (data, state, errors) => { // TODO: How the errors object should be handled?
+          dataCallback: (result) => {
             // Data would contain an array of homonyms
             let homonym = null
+            const state = result.extensions.state
             if (!state.lexemes.loading) {
-              if (state.lexemes.available) {
-                const homonymGroup = HomonymGroup.fromJsonObject({ homonyms: data })
+              if (state.lexemes.available && result.data.homonyms) {
+                const homonymGroup = HomonymGroup.fromJsonObject({ homonyms: result.data.homonyms })
                 if (homonymGroup.homonyms.length > 1) {
                   Logger.getInstance().warn('Multiple homonyms are not supported at the moment. Only the first homonym will be used')
                 }
@@ -375,6 +376,7 @@ export default class Lexis extends Module {
               }
             }
             if (!state.loading) {
+              const errors = result.errors || []
               // A GraphQL query is complete
               resolve({ homonym, state, errors })
             }
