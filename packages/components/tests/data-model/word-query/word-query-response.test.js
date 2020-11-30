@@ -42,18 +42,22 @@ describe('WordQueryResult', () => {
     wordQueryResult.homonymGroup = new HomonymGroup([])
     const jsonObject = wordQueryResult.toJsonObject()
     expect(jsonObject).toEqual({
-      homonyms: [],
-      state: {
-        loading: false,
-        lexemes: {
+      data: {
+        homonyms: []
+      },
+      extensions: {
+        state: {
           loading: false,
-          available: false,
-          failed: false
-        },
-        shortDefs: {
-          loading: false,
-          available: false,
-          failed: false
+          lexemes: {
+            loading: false,
+            available: false,
+            failed: false
+          },
+          shortDefs: {
+            loading: false,
+            available: false,
+            failed: false
+          }
         }
       }
     })
