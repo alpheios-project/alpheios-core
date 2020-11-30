@@ -1,6 +1,6 @@
 {
   "domain": "alpheios-feature-options",
-  "version": "2",
+  "version": 2,
   "items": {
     "enableLemmaTranslations": {
       "defaultValue": false,

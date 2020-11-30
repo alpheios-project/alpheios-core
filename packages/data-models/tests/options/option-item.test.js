@@ -1,5 +1,6 @@
 /* eslint-env jest */
 import OptionItem from '@/options/option-item'
+import StorageAdapter from '@/storages/storage-adapter.js'
 
 describe('option-item.test.js', () => {
   console.error = function () {}
@@ -139,5 +140,16 @@ describe('option-item.test.js', () => {
     await newOptionItem.save()
 
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/storing/))
+  })
+
+  it('13 OptionItem uploadValuesFromArray - uploads values from a passed array and defines defaultValue', async () => {
+    let testOptionItem = { defaultValue: 'en-US', labelText: 'UI Locale:', valuesArray: 'Locales' }
+    let newOptionItem = new OptionItem(testOptionItem, 'locale', StorageAdapter)
+
+    expect(newOptionItem.values).not.toBeDefined()
+    newOptionItem.uploadValuesFromArray([ { text: 'English (US)', value: 'en-US' }, { text: 'English (UK)', value: 'en-UK' } ])
+
+    expect(newOptionItem.values).toEqual([ { text: 'English (US)', value: 'en-US' }, { text: 'English (UK)', value: 'en-UK' } ])
+    expect(newOptionItem.defaultValue).toEqual('en-US')
   })
 })
