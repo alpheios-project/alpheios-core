@@ -1,6 +1,6 @@
 {
   "domain": "alpheios-ui-options",
-  "version": 2,
+  "version": "2",
   "items": {
     "fontSize": {
       "defaultValue": "16",
