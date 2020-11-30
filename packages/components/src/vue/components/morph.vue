@@ -172,7 +172,7 @@ export default {
   }
 
   .alpheios-morph[data-annotation-mode="true"] > div:first-child .alpheios-morph-data__morphdata {
-    background-color: lightcyan;
+    @include annotations.editable-element-selected
   }
   // endregion Annotation UI
 </style>
