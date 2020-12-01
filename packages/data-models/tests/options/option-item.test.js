@@ -140,4 +140,20 @@ describe('option-item.test.js', () => {
 
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/storing/))
   })
+
+  it('13 OptionItem uploadValuesFromArray - uploads values from a passed array and defines defaultValue', async () => {
+    let curStAdapter = {
+      domain: 'alpheios-content-options',
+      set: () => { return new Promise((resolve, reject) => { reject(testError) }) }
+    }
+
+    let testOptionItem = { defaultValue: 'en-US', labelText: 'UI Locale:', valuesArray: 'Locales' }
+    let newOptionItem = new OptionItem(testOptionItem, 'locale', curStAdapter)
+
+    expect(newOptionItem.values).not.toBeDefined()
+    newOptionItem.uploadValuesFromArray([ { text: 'English (US)', value: 'en-US' }, { text: 'English (UK)', value: 'en-UK' } ])
+
+    expect(newOptionItem.values).toEqual([ { text: 'English (US)', value: 'en-US' }, { text: 'English (UK)', value: 'en-UK' } ])
+    expect(newOptionItem.defaultValue).toEqual('en-US')
+  })
 })
