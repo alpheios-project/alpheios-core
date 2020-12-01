@@ -9043,7 +9043,7 @@ class Options {
    * @returns {object}
    */
   get formatLabelValueList () {
-    const result = {}
+    let result = {} // eslint-disable-line prefer-const
     Object.keys(this.items).forEach(nameItem => {
       result[nameItem] = this.items[nameItem].currentValue
     })
@@ -9069,12 +9069,12 @@ class Options {
    * @param {StorageAdapter} storageAdapter - class of the storage adapter
    */
   clone (domainPostfix, storageAdapter) {
-    const defaults = Object.assign({}, this.defaults)
+    let defaults = Object.assign({}, this.defaults) // eslint-disable-line prefer-const
 
     defaults.domain = `${defaults.domain}-${domainPostfix}`
     const newOptions = new Options(defaults, new storageAdapter(defaults.domain)) // eslint-disable-line new-cap
     Object.keys(newOptions.items).forEach(optionKey => {
-      const newOptionItem = newOptions.items[optionKey]
+      let newOptionItem = newOptions.items[optionKey] // eslint-disable-line prefer-const
 
       if (this.items[optionKey].values) {
         newOptionItem.uploadValuesFromArray(this.items[optionKey].values)
