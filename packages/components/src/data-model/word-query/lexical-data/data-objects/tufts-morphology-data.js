@@ -1,7 +1,7 @@
 import LexicalDataResult from '@comp/data-model/word-query/lexical-data/result/lexical-data-result.js'
 import { LanguageModelFactory as LMF, Logger, HomonymGroup } from 'alpheios-data-models'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import WordQueryErrorCodes from '@comp/data-model/word-query/error/word-query-error-codes.js'
+import ErrorCodes from '@comp/data-model/constants/error-codes.js'
 import ErrorMapper from '@comp/data-model/word-query/error/error-mapper.js'
 import LexicalDataTypes from '@comp/data-model/word-query/lexical-data/types/lexical-data-types.js'
 
@@ -45,12 +45,12 @@ export default class TuftsMorphologyData {
     // If succeeds, request returns a Homonym in its `result` field
     const adapterMorphRes = await this._getHomonym()
 
-    if (adapterMorphRes.errors.length === 0) {
+    if (adapterMorphRes.errors.length > 0) {
       // If there were any errors store them in the result object
       adapterMorphRes.errors.forEach(error => {
-        result.errors.push(ErrorMapper.clientAdaptersToWordQueryError(
+        result.errors.push(ErrorMapper.clientAdaptersToWordQuery(
           error,
-          { errorCode: WordQueryErrorCodes.TUFTS_ERROR }
+          { errCode: ErrorCodes.TUFTS_ERROR }
         ))
         Logger.getInstance().log(error.message)
       })

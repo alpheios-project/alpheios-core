@@ -80,7 +80,6 @@ export default class WordQueryController {
     const watchableQuery = this._apolloClient.watchQuery({ query: WORD_QUERY, pollInterval, variables })
     watchableQuery.subscribe({
       next: ({ data }) => {
-        console.info('next', data)
         const loading = data.word.extensions.state.loading
         if (loading === false) {
           watchableQuery.stopPolling()

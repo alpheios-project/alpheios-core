@@ -1,7 +1,8 @@
 /* eslint-env jest */
 import WordQueryResponse from '@comp/data-model/word-query/word-query-response.js'
 import WordQueryError from '@comp/data-model/word-query/error/word-query-error.js'
-import WordQueryErrorCodes from '@comp/data-model/word-query/error/word-query-error-codes.js'
+import ErrorCodes from '@comp/data-model/constants/error-codes.js'
+import ErrorSeverityTypes from '@comp/data-model/constants/error-severity-types.js'
 import { HomonymGroup } from 'alpheios-data-models'
 
 describe('WordQueryResult', () => {
@@ -67,9 +68,9 @@ describe('WordQueryResult', () => {
     let wordQueryResult = new WordQueryResponse() // eslint-disable-line prefer-const
     wordQueryResult.homonymGroup = new HomonymGroup([])
     const errMsgOne = 'Error message one'
-    const errCodeOne = WordQueryErrorCodes.TREEBANK_ERROR
+    const errCodeOne = ErrorCodes.TREEBANK_ERROR
     const errMsgTwo = 'Error message two'
-    const errCodeTwo = WordQueryErrorCodes.TUFTS_ERROR
+    const errCodeTwo = ErrorCodes.TUFTS_ERROR
     wordQueryResult.errors.push(new WordQueryError(errMsgOne, errCodeOne))
     wordQueryResult.errors.push(new WordQueryError(errMsgTwo, errCodeTwo))
     const jsonObject = wordQueryResult.toJsonObject()
@@ -78,13 +79,15 @@ describe('WordQueryResult', () => {
         {
           message: errMsgOne,
           extensions: {
-            code: errCodeOne
+            errCode: errCodeOne,
+            severity: ErrorSeverityTypes.ERROR
           }
         },
         {
           message: errMsgTwo,
           extensions: {
-            code: errCodeTwo
+            errCode: errCodeTwo,
+            severity: ErrorSeverityTypes.ERROR
           }
         }
       ]

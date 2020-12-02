@@ -2520,11 +2520,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_l10n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-l10n */ "alpheios-l10n");
 /* harmony import */ var alpheios_l10n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_l10n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/errors/adapter-error */ "./errors/adapter-error.js");
-/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
-/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+/* harmony import */ var _clAdapters_errors_adapter_warning_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/errors/adapter-warning.js */ "./errors/adapter-warning.js");
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
 ;
+
 
 
 
@@ -2541,9 +2543,9 @@ class BaseAdapter {
   constructor () {
     this.errors = []
     this.l10n = new alpheios_l10n__WEBPACK_IMPORTED_MODULE_2__.L10n()
-      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__.default.en_US)
-      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__.default.en_GB)
-      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__.default.en_US)
+      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__.default.en_US)
+      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_8__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__.default.en_GB)
+      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__.default.en_US)
   }
 
   /**
@@ -2556,8 +2558,13 @@ class BaseAdapter {
   }
 
   addRemoteError (errorCode, message) {
-    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_4__.default(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_5__.default(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
+  }
+
+  addWarning (errorCode, message) {
+    const warning = new _clAdapters_errors_adapter_warning_js__WEBPACK_IMPORTED_MODULE_4__.default(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+    this.errors.push(warning)
   }
 
   /**
@@ -5293,17 +5300,50 @@ class AdapterError extends Error {
       // Continue if environment does not support captureStackTrace.
     }
   }
-
-  update (config) {
-    this.adapter = `${config.category}.${config.adapterName}`
-    this.methodName = config.method
-
-    this.message = `${this.message} (${this.adapter}.${this.methodName})`
-    return this
-  }
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdapterError);
+
+
+/***/ }),
+
+/***/ "./errors/adapter-warning.js":
+/*!***********************************!*\
+  !*** ./errors/adapter-warning.js ***!
+  \***********************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ AdapterWarning
+/* harmony export */ });
+/**
+ A warning represents a problem that is less severe than an error.
+ In case of an error the problem that caused it cannot be ignored and,
+ because of that, the normal execution of the workflow is impossible.
+ The warning, in contrast, represents a issue that is important enough to be noticed,
+ but that does not, on itself, prevent the code from being executed normally.
+ */
+class AdapterWarning extends Error {
+  /**
+   * @param {string} category
+   * @param {string} adapterName - The name of the client adapter where the warning was originated.
+   * @param {string} methodName - The name of the method from where the warning came from.
+   * @param {string} errorCode - A short string representing the alphanumeric error code, such as `SOME_DATA_MISSING`
+   * @param errorMessage
+   */
+  constructor (category, adapterName, methodName, errorCode, errorMessage) {
+    super(errorMessage)
+    this.adapter = `${category}.${adapterName}`
+    this.methodName = methodName
+    this.errorCode = errorCode
+  }
+}
 
 
 /***/ }),
@@ -5361,15 +5401,34 @@ class RemoteError extends Error {
     this.methodName = methodName
     this.errorCode = errorCode
   }
-
-  update (config) {
-    this.adapter = `${config.category}.${config.adapterName}`
-    this.methodName = config.method
-
-    this.message = `${this.errorCode}: ${this.message} (${this.adapter}.${this.methodName})`
-    return this
-  }
 }
+
+
+/***/ }),
+
+/***/ "./errors/warning-codes.js":
+/*!*********************************!*\
+  !*** ./errors/warning-codes.js ***!
+  \*********************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/** @enum {string} */
+const WarningCodes = {
+  /*
+  `hdwd` field of the response of the morphological adapter contains a number, not a string
+   */
+  NO_LEMMA_IN_HDWD: 'NO_LEMMA_IN_HDWD'
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WarningCodes);
 
 
 /***/ }),
@@ -5484,7 +5543,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _clAdapters_errors_warning_codes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/warning-codes.js */ "./errors/warning-codes.js");
 ;
+
 
 /**
  Transforms morphological output adhering to the Alpheios lexicon
@@ -5623,8 +5684,8 @@ class AlpheiosLexiconTransformer {
 
   /**
    * This method defines language from dictData nd inflections data
-   * @param {Object} data - jsonObj from adapter
-   * @param {Object} term - data from inflections
+   * @param {Object} jsonObj - jsonObj from adapter
+   * @param {string} targetWord - a word for which a request is made
    * Returned values:
    *     - {Homonym}
    *     - {undefined}
@@ -5667,14 +5728,13 @@ class AlpheiosLexiconTransformer {
         // and not a String
         const lemmaText = elem.hdwd && elem.hdwd.$ ? `${elem.hdwd.$}` : ''
         if (!lemmaText) {
-          this.adapter.addError(this.adapter.l10n.getMsg('MORPH_TRANSFORM_NO_LEMMA'))
+          this.adapter.addWarning(_clAdapters_errors_warning_codes_js__WEBPACK_IMPORTED_MODULE_1__.default.NO_LEMMA_IN_HDWD, this.adapter.l10n.getMsg('MORPH_TRANSFORM_NO_LEMMA'))
           continue
         }
         const lemma = this.mappingData.parseLemma(lemmaText, language)
         lemmas.push(lemma)
 
-        const features = featuresArray
-        for (const feature of features) {
+        for (const feature of featuresArray) {
           this.mappingData.mapFeature(lemma, elem, ...feature, this.allowUnknownValues)
         }
 

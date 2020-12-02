@@ -1,4 +1,5 @@
 import { ResourceProvider, Lexeme, Constants, Feature, Inflection, Homonym } from 'alpheios-data-models'
+import WarningCodes from '@clAdapters/errors/warning-codes.js'
 
 /**
  Transforms morphological output adhering to the Alpheios lexicon
@@ -181,7 +182,7 @@ class AlpheiosLexiconTransformer {
         // and not a String
         const lemmaText = elem.hdwd && elem.hdwd.$ ? `${elem.hdwd.$}` : ''
         if (!lemmaText) {
-          this.adapter.addError(this.adapter.l10n.getMsg('MORPH_TRANSFORM_NO_LEMMA'))
+          this.adapter.addWarning(WarningCodes.NO_LEMMA_IN_HDWD, this.adapter.l10n.getMsg('MORPH_TRANSFORM_NO_LEMMA'))
           continue
         }
         const lemma = this.mappingData.parseLemma(lemmaText, language)

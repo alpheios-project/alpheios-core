@@ -5,12 +5,4 @@ export default class RemoteError extends Error {
     this.methodName = methodName
     this.errorCode = errorCode
   }
-
-  update (config) {
-    this.adapter = `${config.category}.${config.adapterName}`
-    this.methodName = config.method
-
-    this.message = `${this.errorCode}: ${this.message} (${this.adapter}.${this.methodName})`
-    return this
-  }
 }

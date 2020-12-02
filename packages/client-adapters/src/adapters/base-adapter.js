@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Logger } from 'alpheios-data-models'
 import { L10n } from 'alpheios-l10n'
 import AdapterError from '@clAdapters/errors/adapter-error'
+import AdapterWarning from '@clAdapters/errors/adapter-warning.js'
 import RemoteError from '@clAdapters/errors/remote-error.js'
 
 import Locales from '@clAdapters/locales/locales.js'
@@ -32,6 +33,11 @@ class BaseAdapter {
   addRemoteError (errorCode, message) {
     const error = new RemoteError(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
+  }
+
+  addWarning (errorCode, message) {
+    const warning = new AdapterWarning(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+    this.errors.push(warning)
   }
 
   /**

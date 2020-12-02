@@ -13,14 +13,6 @@ class AdapterError extends Error {
       // Continue if environment does not support captureStackTrace.
     }
   }
-
-  update (config) {
-    this.adapter = `${config.category}.${config.adapterName}`
-    this.methodName = config.method
-
-    this.message = `${this.message} (${this.adapter}.${this.methodName})`
-    return this
-  }
 }
 
 export default AdapterError

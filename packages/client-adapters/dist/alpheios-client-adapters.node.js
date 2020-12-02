@@ -136,7 +136,7 @@ return /******/ (() => { // webpackBootstrap
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.0\",\"C:\\\\_Alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.21.0\",\"_id\":\"axios@0.21.0\",\"_inBundle\":false,\"_integrity\":\"sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.0.tgz\",\"_spec\":\"0.21.0\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.0\"}");
+module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.0\",\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.21.0\",\"_id\":\"axios@0.21.0\",\"_inBundle\":false,\"_integrity\":\"sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.0.tgz\",\"_spec\":\"0.21.0\",\"_where\":\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.0\"}");
 
 /***/ }),
 
@@ -4356,11 +4356,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_l10n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-l10n */ "alpheios-l10n");
 /* harmony import */ var alpheios_l10n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_l10n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/errors/adapter-error */ "./errors/adapter-error.js");
-/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
-/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+/* harmony import */ var _clAdapters_errors_adapter_warning_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/errors/adapter-warning.js */ "./errors/adapter-warning.js");
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
 ;
+
 
 
 
@@ -4377,9 +4379,9 @@ class BaseAdapter {
   constructor () {
     this.errors = []
     this.l10n = new alpheios_l10n__WEBPACK_IMPORTED_MODULE_2__.L10n()
-      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__.default.en_US)
-      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__.default.en_GB)
-      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__.default.en_US)
+      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__.default.en_US)
+      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_8__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__.default.en_GB)
+      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__.default.en_US)
   }
 
   /**
@@ -4392,8 +4394,13 @@ class BaseAdapter {
   }
 
   addRemoteError (errorCode, message) {
-    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_4__.default(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_5__.default(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
+  }
+
+  addWarning (errorCode, message) {
+    const warning = new _clAdapters_errors_adapter_warning_js__WEBPACK_IMPORTED_MODULE_4__.default(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+    this.errors.push(warning)
   }
 
   /**
@@ -7129,17 +7136,50 @@ class AdapterError extends Error {
       // Continue if environment does not support captureStackTrace.
     }
   }
-
-  update (config) {
-    this.adapter = `${config.category}.${config.adapterName}`
-    this.methodName = config.method
-
-    this.message = `${this.message} (${this.adapter}.${this.methodName})`
-    return this
-  }
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdapterError);
+
+
+/***/ }),
+
+/***/ "./errors/adapter-warning.js":
+/*!***********************************!*\
+  !*** ./errors/adapter-warning.js ***!
+  \***********************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ AdapterWarning
+/* harmony export */ });
+/**
+ A warning represents a problem that is less severe than an error.
+ In case of an error the problem that caused it cannot be ignored and,
+ because of that, the normal execution of the workflow is impossible.
+ The warning, in contrast, represents a issue that is important enough to be noticed,
+ but that does not, on itself, prevent the code from being executed normally.
+ */
+class AdapterWarning extends Error {
+  /**
+   * @param {string} category
+   * @param {string} adapterName - The name of the client adapter where the warning was originated.
+   * @param {string} methodName - The name of the method from where the warning came from.
+   * @param {string} errorCode - A short string representing the alphanumeric error code, such as `SOME_DATA_MISSING`
+   * @param errorMessage
+   */
+  constructor (category, adapterName, methodName, errorCode, errorMessage) {
+    super(errorMessage)
+    this.adapter = `${category}.${adapterName}`
+    this.methodName = methodName
+    this.errorCode = errorCode
+  }
+}
 
 
 /***/ }),
@@ -7197,15 +7237,34 @@ class RemoteError extends Error {
     this.methodName = methodName
     this.errorCode = errorCode
   }
-
-  update (config) {
-    this.adapter = `${config.category}.${config.adapterName}`
-    this.methodName = config.method
-
-    this.message = `${this.errorCode}: ${this.message} (${this.adapter}.${this.methodName})`
-    return this
-  }
 }
+
+
+/***/ }),
+
+/***/ "./errors/warning-codes.js":
+/*!*********************************!*\
+  !*** ./errors/warning-codes.js ***!
+  \*********************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/** @enum {string} */
+const WarningCodes = {
+  /*
+  `hdwd` field of the response of the morphological adapter contains a number, not a string
+   */
+  NO_LEMMA_IN_HDWD: 'NO_LEMMA_IN_HDWD'
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WarningCodes);
 
 
 /***/ }),
@@ -7320,7 +7379,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _clAdapters_errors_warning_codes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/warning-codes.js */ "./errors/warning-codes.js");
 ;
+
 
 /**
  Transforms morphological output adhering to the Alpheios lexicon
@@ -7459,8 +7520,8 @@ class AlpheiosLexiconTransformer {
 
   /**
    * This method defines language from dictData nd inflections data
-   * @param {Object} data - jsonObj from adapter
-   * @param {Object} term - data from inflections
+   * @param {Object} jsonObj - jsonObj from adapter
+   * @param {string} targetWord - a word for which a request is made
    * Returned values:
    *     - {Homonym}
    *     - {undefined}
@@ -7503,14 +7564,13 @@ class AlpheiosLexiconTransformer {
         // and not a String
         const lemmaText = elem.hdwd && elem.hdwd.$ ? `${elem.hdwd.$}` : ''
         if (!lemmaText) {
-          this.adapter.addError(this.adapter.l10n.getMsg('MORPH_TRANSFORM_NO_LEMMA'))
+          this.adapter.addWarning(_clAdapters_errors_warning_codes_js__WEBPACK_IMPORTED_MODULE_1__.default.NO_LEMMA_IN_HDWD, this.adapter.l10n.getMsg('MORPH_TRANSFORM_NO_LEMMA'))
           continue
         }
         const lemma = this.mappingData.parseLemma(lemmaText, language)
         lemmas.push(lemma)
 
-        const features = featuresArray
-        for (const feature of features) {
+        for (const feature of featuresArray) {
           this.mappingData.mapFeature(lemma, elem, ...feature, this.allowUnknownValues)
         }
 
