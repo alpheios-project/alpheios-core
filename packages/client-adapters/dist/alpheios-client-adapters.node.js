@@ -7136,6 +7136,19 @@ class AdapterError extends Error {
       // Continue if environment does not support captureStackTrace.
     }
   }
+
+  /**
+   * @deprecated
+   * This method is obsolete. It will be removed in future versions.
+   * No replacement for its functionality has been provided as it is not used anywhere.
+   */
+  update (config) {
+    this.adapter = `${config.category}.${config.adapterName}`
+    this.methodName = config.method
+
+    this.message = `${this.message} (${this.adapter}.${this.methodName})`
+    return this
+  }
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdapterError);
@@ -7236,6 +7249,14 @@ class RemoteError extends Error {
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName
     this.errorCode = errorCode
+  }
+
+  update (config) {
+    this.adapter = `${config.category}.${config.adapterName}`
+    this.methodName = config.method
+
+    this.message = `${this.errorCode}: ${this.message} (${this.adapter}.${this.methodName})`
+    return this
   }
 }
 
