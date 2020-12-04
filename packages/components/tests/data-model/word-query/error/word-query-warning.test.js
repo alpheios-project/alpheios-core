@@ -11,7 +11,7 @@ describe('WordQueryWarning', () => {
   beforeEach(() => {
     errorMessage = 'Error message'
     errCode = ErrorCodes.TUFTS_ERROR
-    path = ['word']
+    path = ['homonyms']
   })
 
   afterEach(() => {

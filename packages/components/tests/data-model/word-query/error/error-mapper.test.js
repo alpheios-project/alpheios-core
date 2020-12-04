@@ -20,7 +20,7 @@ describe('ErrorMapper', () => {
     claMethodName = 'The Method Name'
     claErrorMessage = 'The Error Message'
     errCode = ErrorCodes.TREEBANK_ERROR
-    path = ['word']
+    path = ['homonyms']
     adapterError = new AdapterError(claCategory, claAdapterName, claMethodName, claErrorMessage)
   })
 

@@ -11,7 +11,7 @@ import WordAsLexemeData from '@comp/data-model/word-query/lexical-data/data-obje
 describe('DisambiguatedData', () => {
   const word = 'testWord'
   const language = Language.SYRIAC
-  const path = ['word']
+  const path = ['homonyms']
 
   afterEach(() => {
     jest.resetModules()
