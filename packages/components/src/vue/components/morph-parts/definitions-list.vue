@@ -4,7 +4,7 @@
         <div class="alpheios-morph-definitions_list__definitions--placeholder"
             v-show="! $store.getters['app/shortDefDataReady']"
         >
-            <progress-bar :text="l10n.getText('PLACEHOLDER_LEX_DATA_LOADING')" />
+            <progress-bar :text="l10n.getText('PROGRESS_BAR_SHORT_DEFS_LOADING')" />
         </div>
 
         <div :data-lemmakey="lexeme.lemma.ID"  class="alpheios-morph-definitions_list__definition"

@@ -276,9 +276,14 @@
     "description": "label for usage examples button on popup",
     "component": "Popup"
   },
-  "PLACEHOLDER_LEX_DATA_LOADING": {
+  "PROGRESS_BAR_LEX_DATA_LOADING": {
     "message": "Lexical data is loading",
-    "description": "placeholder text for popup data",
+    "description": "A text that is displayed in the progress bar to indicate that the lexical data is loading",
+    "component": "Popup, other components"
+  },
+  "PROGRESS_BAR_SHORT_DEFS_LOADING": {
+    "message": "Short definitions are loading",
+    "description": "A text that will appear in the short definitions progress bar",
     "component": "Popup"
   },
   "PLACEHOLDER_NO_LANGUAGE_DATA": {

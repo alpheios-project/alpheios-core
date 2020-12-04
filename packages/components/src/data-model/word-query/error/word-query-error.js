@@ -32,7 +32,7 @@ export default class WordQueryError {
       throw new Error(this.constructor.errMsgs.NO_ERROR_CODE)
     }
     this.message = message
-    this.path = ['word']
+    this.path = ['homonyms']
     this.extensions = {
       severity: ErrorSeverityTypes.ERROR,
       errCode,
