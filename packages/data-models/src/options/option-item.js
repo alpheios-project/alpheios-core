@@ -110,4 +110,13 @@ export default class OptionItem {
       }
     )
   }
+
+  /**
+   *
+   * @param {Array[Object]} valuesArr - Array[option's values]
+   */
+  uploadValuesFromArray (valuesArr) {
+    this.values = [...valuesArr]
+    this.defaultValue = this.values[0].value
+  }
 }
