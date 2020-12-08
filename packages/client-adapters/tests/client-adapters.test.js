@@ -126,7 +126,6 @@ describe('client-adapters.test.js', () => {
       langCode: 'lat', adapter: 'tufts', word: 'foo'
     })
 
-
     let res = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {

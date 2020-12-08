@@ -118,6 +118,7 @@ unus erat toto naturae vultus in orbe,
 quem dixere chaos : rudis indigestaque moles
 nec quicquam nisi pondus iners congestaque eodem
 non bene iunctarum discordia semina rerum.
+
 nullus adhuc mundo praebebat lumina Titan,
 nec nova crescendo reparabat cornua Phoebe,
 nec circumfuso pendebat in aere tellus
@@ -131,7 +132,7 @@ frigida pugnabant calidis, umentia siccis,
 mollia cum duris, sine pondere habentia pondus.
     `
     const result = await adapter.getTokens(text)
-    expect(result.segments.length).toEqual(20)
+    expect(result.segments.length).toEqual(2)
     // console.info('segments', segments)
     expect(adapter.errors).toEqual([])
   })

@@ -186,7 +186,6 @@ export default class AppController {
 
     // Subscribe to LexicalQuery events
     LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(appController.onLexicalQueryComplete.bind(appController))
-    LexicalQuery.evt.MORPH_DATA_READY.sub(appController.onMorphDataReady.bind(appController))
     LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.sub(appController.onMorphDataNotFound.bind(appController))
     LexicalQuery.evt.HOMONYM_READY.sub(appController.onHomonymReady.bind(appController))
     LexicalQuery.evt.LEMMA_TRANSL_READY.sub(appController.updateTranslations.bind(appController))
@@ -1072,10 +1071,11 @@ export default class AppController {
   }
 
   updateLemmaTranslations () {
-    if (this.api.settings.getFeatureOptions().items.enableLemmaTranslations.currentValue && !this.api.settings.getFeatureOptions().items.locale.currentValue.match(/en-/)) {
-      this.api.lexis.setLemmaTranslationLang(this.api.settings.getFeatureOptions().items.locale.currentValue)
+    if (this.api.settings.getFeatureOptions().items.enableLemmaTranslations.currentValue &&
+      !this.api.settings.getFeatureOptions().items.locale.currentValue.match(/en-/)) {
+      this.api.lexis.enableLemmaTranslations(this.api.settings.getFeatureOptions().items.locale.currentValue)
     } else {
-      this.api.lexis.setLemmaTranslationLang(null)
+      this.api.lexis.disableLemmaTranslations()
     }
   }
 
@@ -1179,16 +1179,14 @@ export default class AppController {
     this._store.commit('app/lexicalRequestFinished')
   }
 
-  onMorphDataReady () {
-    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
-  }
-
   onMorphDataNotFound () {
     this._store.commit('ui/setNotification', { text: this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'), important: true })
     this._store.commit('app/setQueryStillActive', true)
   }
 
   onHomonymReady (homonym) {
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
+
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
 
     // Update status info with data from a morphological analyzer
