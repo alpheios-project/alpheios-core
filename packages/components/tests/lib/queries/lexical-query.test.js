@@ -140,7 +140,6 @@ describe('lexical-query.test.js', () => {
       uiController: curUI,
       htmlSelector: testHtmlSelector
     })
-    const languageID = LMF.getLanguageIdFromCode(testTextSelector.languageCode)
     query.active = true
     query.canReset = true
 
@@ -162,6 +161,7 @@ describe('lexical-query.test.js', () => {
       htmlSelector: testHtmlSelector
     })
     query.canReset = false
+    const getLexiconOptionsStored = LexicalQuery.getLexiconOptions
     LexicalQuery.getLexiconOptions = function () { return { allow: false } }
 
     query.LDFAdapter = testLDFAdapterFailed
@@ -177,6 +177,7 @@ describe('lexical-query.test.js', () => {
       }
     })
     expect(LexicalQuery.evt.HOMONYM_READY.pub).toHaveBeenCalledWith(testHomonym)
+    LexicalQuery.getLexiconOptions = getLexiconOptionsStored
   })
 
   it('5 LexicalQuery - getData executes iterations: chineseLoc.getHomonym and after it updateMorphology for Chinese', async () => {
@@ -196,6 +197,7 @@ describe('lexical-query.test.js', () => {
       htmlSelector: testHtmlSelector
     })
     query.canReset = false
+    const getLexiconOptionsStored = LexicalQuery.getLexiconOptions
     LexicalQuery.getLexiconOptions = function () { return { allow: false } }
 
     query.LDFAdapter = testLDFAdapterFailed
@@ -214,6 +216,7 @@ describe('lexical-query.test.js', () => {
       }
     })
     expect(LexicalQuery.evt.HOMONYM_READY.pub).toHaveBeenCalledWith(testHomonym)
+    LexicalQuery.getLexiconOptions = getLexiconOptionsStored
   })
 
   it.skip('8 LexicalQuery - getData executes fetchShortDefs and fetchFullDefs ', async () => {
