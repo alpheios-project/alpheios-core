@@ -515,17 +515,10 @@ export default class Lexis extends Module {
         })
       }
 
-      let lemmaTranslations
-      if (this._lemmaTranslationEnabled && textSelector.languageID === Constants.LANG_LATIN && this._lemmaTranslationLocale) {
-        // Use our own rules if lemmaTranslations is not provided
-        lemmaTranslations = { locale: this._lemmaTranslationLocale }
-      }
-
       const lexQuery = LexicalQuery.create(textSelector, {
         clientId: this._appApi.clientId,
         siteOptions,
         verboseMode: this._settingsApi.isInVerboseMode(),
-        lemmaTranslations,
         wordUsageExamples,
         resourceOptions: this._settingsApi.getResourceOptions(),
         langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
