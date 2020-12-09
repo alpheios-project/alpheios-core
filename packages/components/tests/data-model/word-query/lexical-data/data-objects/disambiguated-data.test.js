@@ -3,12 +3,15 @@ import { Language, HomonymGroup } from 'alpheios-data-models'
 import DisambiguatedData from '@comp/data-model/word-query/lexical-data/data-objects/disambiguated-data.js'
 import LexicalDataResult from '@comp/data-model/word-query/lexical-data/result/lexical-data-result.js'
 import LexicalDataTypes from '@comp/data-model/word-query/lexical-data/types/lexical-data-types.js'
-import WordQueryErrorCodes from '@comp/data-model/word-query/error/word-query-error-codes.js'
+import ErrorCodes from '@comp/data-model/constants/error-codes.js'
+import ErrorSeverityTypes from '@comp/data-model/constants/error-severity-types.js'
+import ErrorOrigins from '@comp/data-model/constants/error-origins.js'
 import WordAsLexemeData from '@comp/data-model/word-query/lexical-data/data-objects/word-as-lexeme-data.js'
 
 describe('DisambiguatedData', () => {
   const word = 'testWord'
   const language = Language.SYRIAC
+  const path = ['homonyms']
 
   afterEach(() => {
     jest.resetModules()
@@ -45,10 +48,12 @@ describe('DisambiguatedData', () => {
     expect(disambiguatedResult.errors.length).toBe(1)
     expect(disambiguatedResult.errors[0]).toEqual({
       message: DisambiguatedData.errMsgs.NO_DISAMBIGUATION_DATA,
-      path: [DisambiguatedData.name],
-      extensions: {
-        code: WordQueryErrorCodes.DISAMBIGUATION_ERROR
-      }
+      path: path,
+      extensions: expect.objectContaining({
+        severity: ErrorSeverityTypes.ERROR,
+        errCode: ErrorCodes.DISAMBIGUATION_ERROR,
+        origin: ErrorOrigins.DISAMBIGUATED_DATA_OBJECT
+      })
     })
   })
 

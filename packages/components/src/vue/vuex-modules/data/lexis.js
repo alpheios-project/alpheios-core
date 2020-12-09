@@ -32,8 +32,10 @@ export default class Lexis extends Module {
       Logger.getInstance().warn('CEDICT functionality will be disabled because CEDICT configuration is not available')
     }
 
+    // Whether lemma translations are enabled
+    this._lemmaTranslationEnabled = true
     // A locale for lemma translations (e.g. 'en-US')
-    this._lemmaTranslationLang = null
+    this._lemmaTranslationLocale = null
     // A TextSelector of the last lexical query
     this._lastTextSelector = null
     // Whether a treebank application has been initialized successfully
@@ -335,12 +337,13 @@ export default class Lexis extends Module {
         this._adapters.wordQuery.observableQuery({
           variables,
           // This callback is called every time the GraphQL query is updated, until the query is complete.
-          dataCallback: (data, state, errors) => { // TODO: How the errors object should be handled?
+          dataCallback: (result) => {
             // Data would contain an array of homonyms
             let homonym = null
+            const state = result.extensions.state
             if (!state.lexemes.loading) {
-              if (state.lexemes.available) {
-                const homonymGroup = HomonymGroup.fromJsonObject({ homonyms: data })
+              if (state.lexemes.available && result.data.homonyms) {
+                const homonymGroup = HomonymGroup.fromJsonObject({ homonyms: result.data.homonyms })
                 if (homonymGroup.homonyms.length > 1) {
                   Logger.getInstance().warn('Multiple homonyms are not supported at the moment. Only the first homonym will be used')
                 }
@@ -348,7 +351,6 @@ export default class Lexis extends Module {
               }
               if (source !== LexicalQuery.sources.WORDLIST) {
                 if (state.lexemes.available) {
-                  LexicalQuery.evt.MORPH_DATA_READY.pub()
                   LexicalQuery.evt.HOMONYM_READY.pub(homonym)
                 } else {
                   LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
@@ -375,8 +377,9 @@ export default class Lexis extends Module {
               }
             }
             if (!state.loading) {
+              const errors = result.errors || []
               // A GraphQL query is complete
-              resolve(homonym)
+              resolve({ homonym, state, errors })
             }
           },
           pollInterval,
@@ -392,7 +395,6 @@ export default class Lexis extends Module {
     store,
     textSelector,
     siteOptions = [],
-    lemmaTranslations = null,
     wordUsageExamples = null,
     checkContextForward = '',
     treebankDataItem = null,
@@ -403,10 +405,6 @@ export default class Lexis extends Module {
       return
     }
 
-    if (!lemmaTranslations && textSelector.languageID === Constants.LANG_LATIN && this._lemmaTranslationLang) {
-      // Use our own rules if lemmaTranslations is not provided
-      lemmaTranslations = { locale: this._lemmaTranslationLang }
-    }
     if (!wordUsageExamples) { wordUsageExamples = this._appApi.getWordUsageExamplesQueryParams(textSelector) }
 
     if (source !== LexicalQuery.sources.WORDLIST) {
@@ -430,7 +428,8 @@ export default class Lexis extends Module {
     const word = textSelector.normalizedText
 
     let result
-    let homonym
+    // A result of a getWordQueryData() request
+    let wqData
     // This is a bypass of an old workflow for Latin and Greek
     if (language.isOneOf([Language.LATIN, Language.GREEK])) {
       // The new workflow is enabled for Latin only
@@ -457,7 +456,7 @@ export default class Lexis extends Module {
       }
 
       try {
-        homonym = await this.getWordQueryData({
+        wqData = await this.getWordQueryData({
           variables,
           source
         })
@@ -465,26 +464,41 @@ export default class Lexis extends Module {
         Logger.getInstance().error('Observable word query error', err)
       }
 
-      if (homonym) {
-        // A lexical query will be used to retrieve data that is not served by GraphQL currently.
-        const lexQuery = LexicalQuery.create(textSelector, {
+      if (wqData && wqData.homonym) {
+        let homonym = wqData.homonym // eslint-disable-line prefer-const
+
+        // Get lemma translations. Lemma translations are enabled for Latin only
+        if (this._lemmaTranslationEnabled && textSelector.languageID === Constants.LANG_LATIN) {
+          homonym = await Lexis.getLemmaTranslations({
+            homonym, browserLang: this._lemmaTranslationLocale, clientId: this._appApi.clientId, source
+          })
+        }
+
+        // Get word usage examples
+        if (wordUsageExamples) {
+          homonym = await Lexis.getWordUsageExamples({
+            homonym, paginationAuthMax: wordUsageExamples.paginationAuthMax, clientId: this._appApi.clientId
+          })
+        }
+
+        const languageCode = LMF.getLanguageCodeFromId(textSelector.languageID)
+        homonym = await Lexis.getFullDefinitions({
+          homonym,
+          languageCode,
           clientId: this._appApi.clientId,
+          location: textSelector.location,
           siteOptions,
-          verboseMode: this._settingsApi.isInVerboseMode(),
-          lemmaTranslations,
-          wordUsageExamples,
-          resourceOptions: this._settingsApi.getResourceOptions(),
-          langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
-          checkContextForward,
-          cedictServiceUrl: this.hasCedict() ? this._lexisConfig.cedict.target_url : null,
-          source,
-          hasLexemes: true,
-          homonym
+          resourceOptions: this._settingsApi.getResourceOptions()
         })
-        result = lexQuery.getData()
+        if (source !== LexicalQuery.sources.WORDLIST) {
+          LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.pub({
+            resultStatus: LexicalQuery.resultStatus.SUCCEEDED,
+            homonym: homonym
+          })
+        }
       } else {
         Logger.getInstance().error('Homonym is not available')
-        if (this._source !== LexicalQuery.sources.WORDLIST) {
+        if (source !== LexicalQuery.sources.WORDLIST) {
           LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.pub({
             resultStatus: LexicalQuery.resultStatus.FAILED
           })
@@ -492,7 +506,7 @@ export default class Lexis extends Module {
       }
     } else {
       /*
-      Use the old workflow for Chinese for now.
+      Use the old workflow for languages other than Latin and Greek
        */
       let annotatedHomonyms
       if (treebankWordIDs.length > 0) {
@@ -500,11 +514,11 @@ export default class Lexis extends Module {
           store, textSelector, treebankDataItem
         })
       }
+
       const lexQuery = LexicalQuery.create(textSelector, {
         clientId: this._appApi.clientId,
         siteOptions,
         verboseMode: this._settingsApi.isInVerboseMode(),
-        lemmaTranslations,
         wordUsageExamples,
         resourceOptions: this._settingsApi.getResourceOptions(),
         langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
@@ -519,6 +533,87 @@ export default class Lexis extends Module {
     // Hide a CEDICT notification on a new lexical query
     store.commit('lexis/hideCedictNotification')
     return result
+  }
+
+  // TODO: Should be moved behind the GraphQL facade
+  static async getLemmaTranslations ({ homonym, browserLang, clientId, source }) {
+    const adapterTranslationRes = await ClientAdapters.lemmatranslation.alpheios({
+      method: 'fetchTranslations',
+      clientId: clientId,
+      params: {
+        homonym,
+        browserLang
+      }
+    })
+    /*
+    If the request obtained any translations they will be attached
+    to the `translation` prop of the corresponding lexeme's lemma object.
+    The `adapterTranslationRes` object will contain only errors, if any.
+     */
+    if (adapterTranslationRes.errors.length > 0) {
+      adapterTranslationRes.errors.forEach(error => Logger.getInstance().log(error.message))
+    }
+    // Suppress events that will trigger UI messages if source is wordlist
+    if (source !== LexicalQuery.sources.WORDLIST) {
+      LexicalQuery.evt.LEMMA_TRANSL_READY.pub(homonym)
+    } else {
+      LexicalQuery.evt.WORDLIST_UPDATE_LEMMA_TRANSL_READY.pub(homonym)
+    }
+    return homonym
+  }
+
+  // TODO: Should be moved behind the GraphQL facade
+  static async getWordUsageExamples ({ homonym, paginationAuthMax, clientId }) {
+    // the default query for usage examples should be to request all examples
+    // for all authors, with user pagination preference for max number of examples
+    // per author applied. Total max across all authors will be enforced on the
+    // client adapter side. Different pagination options may apply when working
+    // directly with the usage examples display
+    const adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
+      method: 'getWordUsageExamples',
+      clientId: clientId,
+      params: {
+        homonym,
+        pagination: {
+          property: 'authmax',
+          value: paginationAuthMax
+        }
+      }
+    })
+    if (adapterConcordanceRes.errors.length > 0) {
+      adapterConcordanceRes.errors.forEach(error => Logger.getInstance().log(error))
+    }
+    LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
+    return homonym
+  }
+
+  // TODO: Should be moved behind the GraphQL facade
+  static async getFullDefinitions ({ homonym, languageCode, clientId, location, siteOptions, resourceOptions }) {
+    let adapterLexiconResFull = {}
+    // Do not retrieve full definition for wordlist requests
+    if (this._source !== LexicalQuery.sources.WORDLIST) {
+      const lexiconFullOpts = LexicalQuery.getLexiconOptions({
+        lexiconKey: 'lexicons',
+        languageCode,
+        location: location,
+        siteOptions: siteOptions,
+        resourceOptions: resourceOptions
+      })
+      adapterLexiconResFull = await ClientAdapters.lexicon.alpheios({
+        method: 'fetchFullDefs',
+        clientId: clientId,
+        params: {
+          opts: lexiconFullOpts,
+          homonym,
+          callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
+          callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
+        }
+      })
+      if (adapterLexiconResFull.errors.length > 0) {
+        adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
+      }
+    }
+    return homonym
   }
 }
 
@@ -646,8 +741,17 @@ Lexis.api = (moduleInstance, store) => {
       return moduleInstance.lexicalQuery({ store, textSelector, source: LexicalQuery.sources.WORDLIST })
     },
 
-    setLemmaTranslationLang (lemmaTranslationLang) {
-      moduleInstance._lemmaTranslationLang = lemmaTranslationLang
+    enableLemmaTranslations (lemmaTranslationLocale) {
+      if (!lemmaTranslationLocale) {
+        throw new Error('A lemma translations locale should be provided')
+      }
+      this._lemmaTranslationEnabled = true
+      moduleInstance._lemmaTranslationLocale = lemmaTranslationLocale
+    },
+
+    disableLemmaTranslations () {
+      this._lemmaTranslationEnabled = false
+      moduleInstance._lemmaTranslationLocale = null
     },
 
     loadCedictData: async () => {

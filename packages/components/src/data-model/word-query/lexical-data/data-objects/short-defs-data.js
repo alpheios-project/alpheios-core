@@ -2,7 +2,7 @@ import LexicalDataResult from '@comp/data-model/word-query/lexical-data/result/l
 import DisambiguatedData from '@comp/data-model/word-query/lexical-data/data-objects/disambiguated-data.js'
 import { Logger, HomonymGroup } from 'alpheios-data-models'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import WordQueryErrorCodes from '@comp/data-model/word-query/error/word-query-error-codes.js'
+import ErrorCodes from '@comp/data-model/constants/error-codes.js'
 import ErrorMapper from '@comp/data-model/word-query/error/error-mapper.js'
 import LexicalDataTypes from '@comp/data-model/word-query/lexical-data/types/lexical-data-types.js'
 
@@ -50,9 +50,9 @@ export default class ShortDefsData {
         } else {
           result.state.failed = true
           adapterLexiconResShort.errors.forEach(error => {
-            result.errors.push(ErrorMapper.clientAdaptersToWordQueryError(
+            result.errors.push(ErrorMapper.clientAdaptersToWordQuery(
               error,
-              { errorCode: WordQueryErrorCodes.SHORT_DEFS_ERROR }
+              { errCode: ErrorCodes.SHORT_DEFS_ERROR }
             ))
             Logger.getInstance().log(error.message)
           })

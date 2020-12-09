@@ -4,7 +4,7 @@
           {{ l10n.getText('WORDLIST_DOWNLOAD_NOTICE') }}
 
           <div class="alpheios-wordlist-download-confirmation-loading" v-show="showProgress">
-            <progress-bar :text="l10n.getText('PLACEHOLDER_LEX_DATA_LOADING')"></progress-bar>
+            <progress-bar :text="l10n.getText('PROGRESS_BAR_LEX_DATA_LOADING')"></progress-bar>
           </div>
         </div>
 

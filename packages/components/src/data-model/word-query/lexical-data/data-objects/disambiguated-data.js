@@ -5,7 +5,8 @@ import TreebankData from '@comp/data-model/word-query/lexical-data/data-objects/
 import WordAsLexemeData from '@comp/data-model/word-query/lexical-data/data-objects/word-as-lexeme-data.js'
 import LexicalDataTypes from '@comp/data-model/word-query/lexical-data/types/lexical-data-types.js'
 import WordQueryError from '@comp/data-model/word-query/error/word-query-error.js'
-import WordQueryErrorCodes from '@comp/data-model/word-query/error/word-query-error-codes.js'
+import ErrorCodes from '@comp/data-model/constants/error-codes.js'
+import ErrorOrigins from '@comp/data-model/constants/error-origins.js'
 
 export default class DisambiguatedData {
   /**
@@ -51,8 +52,8 @@ export default class DisambiguatedData {
       result.state.failed = true
       result.errors.push(new WordQueryError(
         DisambiguatedData.errMsgs.NO_DISAMBIGUATION_DATA,
-        WordQueryErrorCodes.DISAMBIGUATION_ERROR,
-        { path: [this.constructor.name] }))
+        ErrorCodes.DISAMBIGUATION_ERROR,
+        { origin: ErrorOrigins.DISAMBIGUATED_DATA_OBJECT }))
     }
     result.state.loading = false
     return result

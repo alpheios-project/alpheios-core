@@ -80,7 +80,7 @@ export default class WordQueryController {
     const watchableQuery = this._apolloClient.watchQuery({ query: WORD_QUERY, pollInterval, variables })
     watchableQuery.subscribe({
       next: ({ data }) => {
-        const loading = data.word.state.loading
+        const loading = data.word.extensions.state.loading
         if (loading === false) {
           watchableQuery.stopPolling()
         }
@@ -88,7 +88,7 @@ export default class WordQueryController {
           watchableQuery.stopPolling()
         }
         counter++
-        dataCallback(data.word.homonyms, data.word.state, data.word.errors)
+        dataCallback(data.word)
       }
     })
   }

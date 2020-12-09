@@ -24,7 +24,7 @@ export default class Options {
 
     this.defaults = defaults
     this.domain = defaults.domain
-    this.version = defaults.version
+    this.version = defaults.version.toString()
     this.storageAdapter = storageAdapter
     this.items = Options.initItems(this.defaults.items, this.storageAdapter, this.domain, this.version)
   }
@@ -128,7 +128,7 @@ export default class Options {
     try {
       parsed = {
         domain: domain,
-        version: parseInt(version),
+        version: version,
         name: name,
         group: group
       }
@@ -136,5 +136,52 @@ export default class Options {
       Logger.getInstance().warn(`Failed to parse stored Alpheios options key ${key}`)
     }
     return parsed
+  }
+
+  /**
+   * Converts optionItems to the object: { name of the option: currentValue }
+   *
+   * @returns {object}
+   */
+  get formatLabelValueList () {
+    let result = {} // eslint-disable-line prefer-const
+    Object.keys(this.items).forEach(nameItem => {
+      result[nameItem] = this.items[nameItem].currentValue
+    })
+    return result
+  }
+
+  /**
+   * Uploads values list from array if an option has valuesArray feature
+   *
+   * @param {object} valuesArrayList - with format nameValuesArray: Array[option's values]
+   */
+  checkAndUploadValuesFromArray (valuesArrayList) {
+    Object.values(this.items).forEach(optionItem => {
+      if (optionItem.valuesArray && !optionItem.values && valuesArrayList[optionItem.valuesArray]) {
+        optionItem.uploadValuesFromArray(valuesArrayList[optionItem.valuesArray])
+      }
+    })
+  }
+
+  /**
+   *
+   * @param {string} domainPostfix - additional string for creating unique domain name
+   * @param {StorageAdapter} storageAdapter - class of the storage adapter
+   */
+  clone (domainPostfix, storageAdapter) {
+    let defaults = Object.assign({}, this.defaults) // eslint-disable-line prefer-const
+
+    defaults.domain = `${defaults.domain}-${domainPostfix}`
+    const newOptions = new Options(defaults, new storageAdapter(defaults.domain)) // eslint-disable-line new-cap
+    Object.keys(newOptions.items).forEach(optionKey => {
+      let newOptionItem = newOptions.items[optionKey] // eslint-disable-line prefer-const
+
+      if (this.items[optionKey].values) {
+        newOptionItem.uploadValuesFromArray(this.items[optionKey].values)
+      }
+    })
+
+    return newOptions
   }
 }

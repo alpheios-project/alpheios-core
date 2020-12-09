@@ -54,7 +54,6 @@ describe('AppController', () => {
 
     // Subscribe to LexicalQuery events
     // LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(appController.onLexicalQueryComplete.bind(appController))
-    LexicalQuery.evt.MORPH_DATA_READY.sub(appController.onMorphDataReady.bind(appController))
     LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.sub(appController.onMorphDataNotFound.bind(appController))
     LexicalQuery.evt.HOMONYM_READY.sub(appController.onHomonymReady.bind(appController))
     LexicalQuery.evt.LEMMA_TRANSL_READY.sub(appController.updateTranslations.bind(appController))
@@ -854,13 +853,49 @@ describe('AppController', () => {
     expect(startResourceQuerySpy).toBeCalledWith({ type: 'table-of-contents', value: '', languageID: langID })
   })
 
-  it('66 AppController - updateLemmaTranslations: should set a lemma translation language', async () => {
+  it('66A AppController - updateLemmaTranslations: should enable lemma translations on the Lexis module', async () => {
+    const locale = 'de-DE' // In order for translations to be enabled a locale ust not be English
     appC = AppController.jestCreate(uiState)
     await appC.init()
     await appC.activate()
-    const setLemmaTranslationLangSpy = jest.spyOn(appC.api.lexis, 'setLemmaTranslationLang')
+
+    // Emulate configuration that enables translations
+    appC.api.settings.getFeatureOptions = () => ({
+      items: {
+        enableLemmaTranslations: {
+          currentValue: true
+        },
+        locale: {
+          currentValue: locale
+        }
+      }
+    })
+    const enableLemmaTranslationSpy = jest.spyOn(appC.api.lexis, 'enableLemmaTranslations')
+    const disableLemmaTranslations = jest.spyOn(appC.api.lexis, 'disableLemmaTranslations')
     appC.updateLemmaTranslations()
-    expect(setLemmaTranslationLangSpy).toBeCalledTimes(1)
+    expect(enableLemmaTranslationSpy).toBeCalledTimes(1)
+    expect(enableLemmaTranslationSpy).toBeCalledWith(locale)
+    expect(disableLemmaTranslations).toBeCalledTimes(0)
+  })
+
+  it('66B AppController - updateLemmaTranslations: should not enable translations if conditions are not satisfied', async () => {
+    appC = AppController.jestCreate(uiState)
+    await appC.init()
+    await appC.activate()
+
+    // Emulate configuration that enables translations
+    appC.api.settings.getFeatureOptions = () => ({
+      items: {
+        enableLemmaTranslations: {
+          currentValue: false
+        }
+      }
+    })
+    const enableLemmaTranslationSpy = jest.spyOn(appC.api.lexis, 'enableLemmaTranslations')
+    const disableLemmaTranslations = jest.spyOn(appC.api.lexis, 'disableLemmaTranslations')
+    appC.updateLemmaTranslations()
+    expect(disableLemmaTranslations).toBeCalledTimes(1)
+    expect(enableLemmaTranslationSpy).toBeCalledTimes(0)
   })
 
   it('67 AppController - updateWordUsageExamples: should update the usage examples data', async () => {
@@ -1099,15 +1134,6 @@ describe('AppController', () => {
     expect(appC._store.state.app.lexicalRequest.endTime).toBeGreaterThan(0)
   })
 
-  it('83 AppController - onMorphDataReady: should render a message', async () => {
-    appC = AppController.jestCreate(uiState)
-    await appC.init()
-    await appC.activate()
-    expect(appC._store.state.ui.messages).toEqual([])
-    appC.onMorphDataReady()
-    expect(appC._store.state.ui.messages).toEqual(['Morphological analyzer data is ready'])
-  })
-
   it('84 AppController - onMorphDataNotFound: should update the app and the UI states', async () => {
     appC = AppController.jestCreate(uiState)
     await appC.init()
@@ -1161,6 +1187,7 @@ describe('AppController', () => {
     expect(updateProvidersSpy).toBeCalledTimes(1)
     expect(updateProvidersSpy).toBeCalledWith(homonym)
     expect(appC._store.state.app.shortDefUpdateTime).toBeGreaterThan(0)
+    expect(appC._store.state.ui.messages).toEqual(['Morphological analyzer data is ready'])
   })
 
   it('86 AppController - onWordListUpdated: should update wordlist data', async () => {
@@ -1381,5 +1408,4 @@ describe('AppController', () => {
     expect(applyFeatureOptionSpy).toBeCalledTimes(14)
     expect(appC._store.state.settings.uiResetCounter).toBeGreaterThan(0)
   })
-
 })

@@ -14,6 +14,11 @@ class AdapterError extends Error {
     }
   }
 
+  /**
+   * @deprecated
+   * This method is obsolete. It will be removed in future versions.
+   * No replacement for its functionality has been provided as it is not used anywhere.
+   */
   update (config) {
     this.adapter = `${config.category}.${config.adapterName}`
     this.methodName = config.method

@@ -140,7 +140,6 @@ describe('lexical-query.test.js', () => {
       uiController: curUI,
       htmlSelector: testHtmlSelector
     })
-    const languageID = LMF.getLanguageIdFromCode(testTextSelector.languageCode)
     query.active = true
     query.canReset = true
 
@@ -162,7 +161,8 @@ describe('lexical-query.test.js', () => {
       htmlSelector: testHtmlSelector
     })
     query.canReset = false
-    query.getLexiconOptions = function () { return { allow: false } }
+    const getLexiconOptionsStored = LexicalQuery.getLexiconOptions
+    LexicalQuery.getLexiconOptions = function () { return { allow: false } }
 
     query.LDFAdapter = testLDFAdapterFailed
     jest.spyOn(LexicalQuery.evt.HOMONYM_READY, 'pub')
@@ -177,6 +177,7 @@ describe('lexical-query.test.js', () => {
       }
     })
     expect(LexicalQuery.evt.HOMONYM_READY.pub).toHaveBeenCalledWith(testHomonym)
+    LexicalQuery.getLexiconOptions = getLexiconOptionsStored
   })
 
   it('5 LexicalQuery - getData executes iterations: chineseLoc.getHomonym and after it updateMorphology for Chinese', async () => {
@@ -196,7 +197,8 @@ describe('lexical-query.test.js', () => {
       htmlSelector: testHtmlSelector
     })
     query.canReset = false
-    query.getLexiconOptions = function () { return { allow: false } }
+    const getLexiconOptionsStored = LexicalQuery.getLexiconOptions
+    LexicalQuery.getLexiconOptions = function () { return { allow: false } }
 
     query.LDFAdapter = testLDFAdapterFailed
     jest.spyOn(LexicalQuery.evt.HOMONYM_READY, 'pub')
@@ -214,6 +216,7 @@ describe('lexical-query.test.js', () => {
       }
     })
     expect(LexicalQuery.evt.HOMONYM_READY.pub).toHaveBeenCalledWith(testHomonym)
+    LexicalQuery.getLexiconOptions = getLexiconOptionsStored
   })
 
   it.skip('8 LexicalQuery - getData executes fetchShortDefs and fetchFullDefs ', async () => {
@@ -280,11 +283,9 @@ describe('lexical-query.test.js', () => {
     expect(LexicalQuery.evt.LEMMA_TRANSL_READY.pub).toHaveBeenCalledWith(testHomonym)
   })
 
-  it.skip('10 LexicalQuery - _getLexiconOptionsList parses lexicons', () => {
-    const mockSelector = {
-      location: 'http://example.org',
-      languageID: Constants.LANG_LATIN
-    }
+  it('10 LexicalQuery - _getLexiconOptionsList parses lexicons', () => {
+    const location = 'http://example.org'
+    const languageCode = 'lat'
 
     const emptyPromise = () => { return new Promise((resolve, reject) => {}) }
 
@@ -300,27 +301,27 @@ describe('lexical-query.test.js', () => {
 
     const languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
-    const query = LexicalQuery.create(mockSelector, {
-      resourceOptions: languageOptions,
+    expect(LexicalQuery.getLexiconOptions({
+      lexiconKey: 'lexiconsShort',
+      languageCode,
+      location,
       siteOptions: allSiteOptions,
-      langOpts: {}
-    })
-    expect(query.getLexiconOptions('lexiconsShort')).toEqual({ allow: ['https://github.com/alpheios-project/xx'] })
+      resourceOptions: languageOptions
+    })).toEqual({ allow: ['https://github.com/alpheios-project/xx'] })
   })
 
-  it.skip('11 LexicalQuery - _getLexiconOptionsList parses empty lexicons and returns {}', () => {
-    const mockSelector = {
-      location: 'http://example.org',
-      languageID: Constants.LANG_LATIN
-    }
+  it('11 LexicalQuery - _getLexiconOptionsList parses empty lexicons and returns {}', () => {
+    const location = 'http://example.org'
+    const languageCode = 'lat'
     const languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
-    const query = LexicalQuery.create(mockSelector, {
-      resourceOptions: languageOptions,
-      siteOptions: [],
-      langOpts: {}
-    })
 
-    expect(query.getLexiconOptions('lexiconsShort')).toEqual({})
+    expect(LexicalQuery.getLexiconOptions({
+      lexiconKey: 'lexiconsShort',
+      languageCode,
+      location,
+      siteOptions: [],
+      resourceOptions: languageOptions
+    })).toEqual({})
   })
 
   it.skip('12 LexicalQuery - calls tbAdapter if treebank data is present in selector', async () => {

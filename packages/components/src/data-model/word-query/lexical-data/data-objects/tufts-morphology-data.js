@@ -1,7 +1,7 @@
 import LexicalDataResult from '@comp/data-model/word-query/lexical-data/result/lexical-data-result.js'
 import { LanguageModelFactory as LMF, Logger, HomonymGroup } from 'alpheios-data-models'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import WordQueryErrorCodes from '@comp/data-model/word-query/error/word-query-error-codes.js'
+import ErrorCodes from '@comp/data-model/constants/error-codes.js'
 import ErrorMapper from '@comp/data-model/word-query/error/error-mapper.js'
 import LexicalDataTypes from '@comp/data-model/word-query/lexical-data/types/lexical-data-types.js'
 
@@ -40,38 +40,38 @@ export default class TuftsMorphologyData {
    *          a single homonym and a single lexeme.
    */
   async retrieve (lexicalData) {
+    let requestFailed = false
     let result = new LexicalDataResult(TuftsMorphologyData.dataType) // eslint-disable-line prefer-const
-
     // If succeeds, request returns a Homonym in its `result` field
     const adapterMorphRes = await this._getHomonym()
 
-    let homonymGroup
-    let errors = [] // eslint-disable-line prefer-const
-    if (adapterMorphRes.errors.length === 0) {
-      // Request succeeded
+    if (adapterMorphRes.errors.length > 0) {
+      // If there were any errors store them in the result object
+      adapterMorphRes.errors.forEach(error => {
+        result.errors.push(ErrorMapper.clientAdaptersToWordQuery(
+          error,
+          { errCode: ErrorCodes.TUFTS_ERROR }
+        ))
+        Logger.getInstance().log(error.message)
+      })
+    }
+
+    if (adapterMorphRes.result) {
+      // If there is a result returned, the request succeeded, even if there were errors reported
       if (this._clearShortDefs) {
         // Clear the short defs data if query did not request short definitions but we have them in the homonym, clear their data
         adapterMorphRes.result.lexemes.forEach((l) => { l.meaning.clearShortDefs() })
       }
-
-      homonymGroup = new HomonymGroup([adapterMorphRes.result])
+      result.data = new HomonymGroup([adapterMorphRes.result])
     } else {
       // Request failed
-      adapterMorphRes.errors.forEach(error => {
-        errors.push(ErrorMapper.clientAdaptersToWordQueryError(
-          error,
-          { errorCode: WordQueryErrorCodes.TUFTS_ERROR }
-        ))
-        Logger.getInstance().log(error.message)
-      })
-      homonymGroup = new HomonymGroup([])
+      requestFailed = true
+      result.data = new HomonymGroup([])
     }
 
     result.state.loading = false
-    result.state.available = (adapterMorphRes.errors.length === 0)
-    result.state.failed = (adapterMorphRes.errors.length > 0)
-    result.errors = errors
-    result.data = homonymGroup
+    result.state.available = !requestFailed
+    result.state.failed = requestFailed
     return result
   }
 

@@ -18,11 +18,21 @@ export default class LexicalQuery extends Query {
     this.cedictServiceUrl = options.cedictServiceUrl
     this._annotatedHomonyms = options.annotatedHomonyms
     this._source = options.source
-    this._hasLexemes = options.hasLexemes || false
     this.homonym = options.homonym || null
 
-    const langID = this.selector.languageID
-    this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
+    this.languageID = this.selector.languageID
+    this.canReset = (this.langOpts[this.languageID] && this.langOpts[this.languageID].lookupMorphLast)
+    /*
+    Short and full definition requests are cached within the client adapters,
+    and if retrieval of the definition resource has already been started in the adapters,
+    we don't want to run another request for the same word. All we need to do is just to wait
+    for the resource to be retrieved. Once the retrieval is complete, the client adapters
+    will use either FULL_DEFS_READY or FULL_DEFS_NOT_FOUND to notify subscribers about the results received.
+    We use the `startedDefinitionsQueries` map to track requests that were already sent to client adapters.
+    This is required for Persian requests, where in the lexical query in the existing workflow runs twice,
+    in order to avoid a potentially long-running full definition requests to be running in parallel.
+    TODO: Change the code to avoid the need for this check.
+     */
     this.startedDefinitionsQueries = new Map()
 
     // Suppress events that will trigger UI messages if source is wordlist
@@ -99,30 +109,24 @@ export default class LexicalQuery extends Query {
   }
 
   async getData () {
-    this.languageID = this.selector.languageID
-    if (this._hasLexemes) {
-      // Some lexical data is available, do a partial data retrieval
-      await this.partialDataRetrieval()
-    } else {
-      const iterator = this.iterations()
+    const iterator = this.iterations()
 
-      let result = iterator.next()
-      while (true) {
-        if (!this.active) { this.finalize() }
-        if (Query.isPromise(result.value)) {
-          try {
-            const resolvedValue = await result.value
-            result = iterator.next(resolvedValue)
-          } catch (error) {
-            iterator.return()
-            this.finalize(error)
-            break
-          }
-        } else {
-          result = iterator.next(result.value)
+    let result = iterator.next()
+    while (true) {
+      if (!this.active) { this.finalize() }
+      if (Query.isPromise(result.value)) {
+        try {
+          const resolvedValue = await result.value
+          result = iterator.next(resolvedValue)
+        } catch (error) {
+          iterator.return()
+          this.finalize(error)
+          break
         }
-        if (result.done) { break }
+      } else {
+        result = iterator.next(result.value)
       }
+      if (result.done) { break }
     }
   }
 
@@ -172,18 +176,10 @@ export default class LexicalQuery extends Query {
         if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
           this.homonym = Homonym.disambiguate(this.homonym, this._annotatedHomonyms.homonyms)
         }
-        // Suppress events that will trigger UI messages if source is wordlist
-        if (this._source !== LexicalQuery.sources.WORDLIST) {
-          LexicalQuery.evt.MORPH_DATA_READY.pub()
-        }
       } else {
         if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
           // If there is no results from a morhpological analyzer, a resulting homonym should always be disambiguated
           this.homonym = this._annotatedHomonyms.toHomonym(this.selector.normalizedText, { disambiguated: true })
-          // Suppress events that will trigger UI messages if source is wordlist
-          if (this._source !== LexicalQuery.sources.WORDLIST) {
-            LexicalQuery.evt.MORPH_DATA_READY.pub()
-          }
         } else {
           this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
           // Suppress events that will trigger UI messages if source is wordlist
@@ -199,10 +195,6 @@ export default class LexicalQuery extends Query {
       // if we can reset then start with definitions of the unanalyzed form
       if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
         this.homonym = this._annotatedHomonyms.toHomonym(this.selector.normalizedText)
-        // Suppress events that will trigger UI messages if source is wordlist
-        if (this._source !== LexicalQuery.sources.WORDLIST) {
-          LexicalQuery.evt.MORPH_DATA_READY.pub()
-        }
       } else {
         this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
         // Suppress events that will trigger UI messages if source is wordlist
@@ -215,8 +207,21 @@ export default class LexicalQuery extends Query {
       }
     }
 
-    const lexiconFullOpts = this.getLexiconOptions('lexicons')
-    const lexiconShortOpts = this.getLexiconOptions('lexiconsShort')
+    const languageCode = LMF.getLanguageCodeFromId(this.selector.languageID)
+    const lexiconFullOpts = LexicalQuery.getLexiconOptions({
+      lexiconKey: 'lexicons',
+      languageCode,
+      location: this.selector.location,
+      siteOptions: this.siteOptions,
+      resourceOptions: this.resourceOptions
+    })
+    const lexiconShortOpts = LexicalQuery.getLexiconOptions({
+      lexiconKey: 'lexiconsShort',
+      languageCode,
+      location: this.selector.location,
+      siteOptions: this.siteOptions,
+      resourceOptions: this.resourceOptions
+    })
 
     // if lexicon options are set for short definitions, we want to override any
     // short definitions provided by the maAdapter
@@ -362,87 +367,6 @@ export default class LexicalQuery extends Query {
     }
   }
 
-  async partialDataRetrieval () {
-    const lexiconFullOpts = this.getLexiconOptions('lexicons')
-
-    if (this.lemmaTranslations) {
-      const adapterTranslationRes = await ClientAdapters.lemmatranslation.alpheios({
-        method: 'fetchTranslations',
-        clientId: this.clientId,
-        params: {
-          homonym: this.homonym,
-          browserLang: this.lemmaTranslations.locale
-        }
-      })
-      if (adapterTranslationRes.errors.length > 0) {
-        adapterTranslationRes.errors.forEach(error => this.logger.log(error.message))
-      }
-      // Suppress events that will trigger UI messages if source is wordlist
-      if (this._source !== LexicalQuery.sources.WORDLIST) {
-        LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
-      } else {
-        LexicalQuery.evt.WORDLIST_UPDATE_LEMMA_TRANSL_READY.pub(this.homonym)
-      }
-    }
-
-    if (this.wordUsageExamples) {
-      // the default query for usage examples should be to request all examples
-      // for all authors, with user pagination preference for max number of examples
-      // per author applied. Total max across all authors will be enforced on the
-      // client adapter side. Different pagination options may apply when working
-      // directly with the usage examples display
-      const adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
-        method: 'getWordUsageExamples',
-        clientId: this.clientId,
-        params: {
-          homonym: this.homonym,
-          pagination: {
-            property: 'authmax',
-            value: this.wordUsageExamples.paginationAuthMax
-          }
-        }
-      })
-
-      if (adapterConcordanceRes.errors.length > 0) {
-        adapterConcordanceRes.errors.forEach(error => this.logger.log(error))
-      }
-
-      LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
-    }
-
-    if (!this.startedDefinitionsQueries.has(this.homonym.targetWord)) {
-      this.startedDefinitionsQueries.set(this.homonym.targetWord, true)
-
-      let adapterLexiconResFull = {}
-      // Do not retrieve full definition for wordlist requests
-      if (this._source !== LexicalQuery.sources.WORDLIST) {
-        adapterLexiconResFull = await ClientAdapters.lexicon.alpheios({
-          method: 'fetchFullDefs',
-          clientId: this.clientId,
-          params: {
-            opts: lexiconFullOpts,
-            homonym: this.homonym,
-            callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
-            callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
-          }
-        })
-
-        if (adapterLexiconResFull.errors.length > 0) {
-          adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
-        }
-      }
-
-      if (adapterLexiconResFull.result) {
-        this.finalize('Success')
-      }
-      if (!adapterLexiconResFull.result) {
-        this.finalize('Success-NoDefs')
-      }
-    } else {
-      this.finalize('Success-NoDefs')
-    }
-  }
-
   finalize (result) {
     let resultStatus
     if (this.active) {
@@ -473,27 +397,20 @@ export default class LexicalQuery extends Query {
       })
     }
     Query.destroy(this)
-    return result
   }
 
-  getLexiconOptions (lexiconKey) {
+  static getLexiconOptions ({ lexiconKey, languageCode, location, siteOptions, resourceOptions }) {
     let allOptions
-    const languageCode = LMF.getLanguageCodeFromId(this.selector.languageID)
-    const siteMatch = this.siteOptions.filter((s) => this.selector.location.match(new RegExp(s.uriMatch)))
+    const siteMatch = siteOptions.filter((s) => location.match(new RegExp(s.uriMatch)))
     if (siteMatch.length > 0 && siteMatch[0].resourceOptions.items[lexiconKey]) {
-      allOptions = [...siteMatch[0].resourceOptions.items[lexiconKey], ...this.resourceOptions.items[lexiconKey]]
+      allOptions = [...siteMatch[0].resourceOptions.items[lexiconKey], ...resourceOptions.items[lexiconKey]]
     } else {
-      allOptions = this.resourceOptions.items[lexiconKey] || []
+      allOptions = resourceOptions.items[lexiconKey] || []
     }
-    let lexiconOpts = allOptions.filter((l) => Options.parseKey(l.name).group === languageCode
+    const lexiconOpts = allOptions.filter((l) => Options.parseKey(l.name).group === languageCode
     ).map((l) => { return { allow: l.currentValue } }
     )
-    if (lexiconOpts.length > 0) {
-      lexiconOpts = lexiconOpts[0]
-    } else {
-      lexiconOpts = {}
-    }
-    return lexiconOpts
+    return lexiconOpts.length > 0 ? lexiconOpts[0] : {}
   }
 }
 
@@ -525,22 +442,18 @@ LexicalQuery.evt = {
   LEXICAL_QUERY_COMPLETE: new PsEvent('Lexical Query Complete', LexicalQuery),
 
   /**
-   * Published when morphological data becomes available.
-   * Data: an empty object.
-   */
-  MORPH_DATA_READY: new PsEvent('Morph Data Ready', LexicalQuery),
-
-  /**
-   * Published when no morphological data has been found.
-   * Data: an empty object.
-   */
-  MORPH_DATA_NOTAVAILABLE: new PsEvent('Morph Data Not Found', LexicalQuery),
-
-  /**
-   * Published when morphological data has been found.
+   * Published when morphological data has been found. If no morphological data is available,
+   * a MORPH_DATA_NOTAVAILABLE event will be published instead.
    * Data: {Homonym} homonym - A homonym object.
    */
   HOMONYM_READY: new PsEvent('Homonym Ready', LexicalQuery),
+
+  /**
+   * Published when no morphological data has been found. When there is some data,
+   * HOMONYM_READY will be used instead.
+   * Data: an empty object.
+   */
+  MORPH_DATA_NOTAVAILABLE: new PsEvent('Morph Data Not Found', LexicalQuery),
 
   /**
    * Published when we need only update existed worditem.

@@ -135,7 +135,7 @@
 
         <div class="alpheios-popup__definitions--placeholder"
              v-if="$store.getters['app/lexicalRequestInProgress'] && Boolean(this.$store.state.app.currentLanguageName)">
-          <progress-bar :text="l10n.getText('PLACEHOLDER_LEX_DATA_LOADING')"></progress-bar>
+          <progress-bar :text="l10n.getText('PROGRESS_BAR_LEX_DATA_LOADING')"></progress-bar>
         </div>
 
         <div class="alpheios-popup__definitions--placeholder"
