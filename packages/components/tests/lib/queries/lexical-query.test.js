@@ -280,7 +280,7 @@ describe('lexical-query.test.js', () => {
     expect(LexicalQuery.evt.LEMMA_TRANSL_READY.pub).toHaveBeenCalledWith(testHomonym)
   })
 
-  it.skip('10 LexicalQuery - _getLexiconOptionsList parses lexicons', () => {
+  it('10 LexicalQuery - _getLexiconOptionsList parses lexicons', () => {
     const location = 'http://example.org'
     const languageCode = 'lat'
 
@@ -307,7 +307,7 @@ describe('lexical-query.test.js', () => {
     })).toEqual({ allow: ['https://github.com/alpheios-project/xx'] })
   })
 
-  it.skip('11 LexicalQuery - _getLexiconOptionsList parses empty lexicons and returns {}', () => {
+  it('11 LexicalQuery - _getLexiconOptionsList parses empty lexicons and returns {}', () => {
     const location = 'http://example.org'
     const languageCode = 'lat'
     const languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
