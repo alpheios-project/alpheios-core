@@ -1116,6 +1116,12 @@ p.alpheios-lemma__translations-value {
   font-weight: 700 !important;
   margin-right: calc(var(--alpheios-base-text-size) * 0.3125) !important;
 }
+.alpheios-principal-parts__groupitem--lemma-word__listitem:after {
+  content: " - " !important;
+}
+.alpheios-principal-parts__groupitem--lemma-word__listitem:last-child:after {
+  content: "" !important;
+}
 .alpheios-principal-parts__listitem:after {
   content: ", " !important;
 }
