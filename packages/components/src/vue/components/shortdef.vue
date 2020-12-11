@@ -21,14 +21,12 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      if (LanguageModelFactory.supportsLanguage(this.definition.language)) {
-        const selectorName = 'getSelectedText-shortDefinitions'
-        try {
-          this.app.registerTextSelector(selectorName, '.alpheios-definition__short')
-          this.app.activateTextSelector(selectorName)
-        } catch (err) {
-          Logger.getInstance().error(err)
-        }
+      const selectorName = 'getSelectedText-shortDefinitions'
+      try {
+        this.app.registerTextSelector(selectorName, '.alpheios-definition__short')
+        this.app.activateTextSelector(selectorName)
+      } catch (err) {
+        Logger.getInstance().error(err)
       }
     })
   }
@@ -40,7 +38,7 @@ export default {
   #{$alpheios-namespace} {
     // These rules intentionally use an increased specificity to fight the style leakage
     .alpheios-definition__short {
-      .alpheios-definition__text {
+      .alpheios-definition__text, .alpheios-definition__text * {
         color: var(--alpheios-definition-short-color);
         font-size: textsize(18px);
         font-weight: bold;
