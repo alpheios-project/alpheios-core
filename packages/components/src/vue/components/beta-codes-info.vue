@@ -6,7 +6,7 @@
       <span>l => λ</span><span>m => μ</span><span>n => ν</span><span>o => ο</span><span>p => π</span>
       <span>q => θ</span><span>r => ρ</span><span>s => σ, ς</span><span>t => τ</span><span>u => υ</span>
       <span>v => ϝ</span><span>w => ω</span><span>x => χ</span><span>y => ψ</span><span>z => ζ</span>
-      <span>/a => ά</span><span>\a => ὰ</span><span>=a => ᾶ</span><span>)a => ἀ</span><span>)a => ἁ</span>
+      <span>/a => ά</span><span>\a => ὰ</span><span>=a => ᾶ</span><span>)a => ἀ</span><span>(a => ἁ</span>
       <span>|a => ᾳ</span><span>_a => ᾱ</span><span>^a => ᾰ</span><span>+i => ϊ</span><span>(/|a => ᾅ</span></div>
     </div>
 </template>
@@ -27,7 +27,7 @@ export default {
     },
     currentShowBetaCodesInfo () {
       return this.featureOptions ? this.availableUseBetaCodes && this.featureOptions.items.showBetaCodesInfo.currentValue : null
-    }    
+    }
   }
 }
 
