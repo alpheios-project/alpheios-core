@@ -10,7 +10,7 @@
             v-if="! lemma.principalParts.includes(lemma.word)"
         ><span
           class="alpheios-principal-parts__groupitem--lemma-word__listitem"
-          v-for="word in lemma.word.split(/[,-]/)">{{word}}</span></h4>
+          v-for="word in wordParts(lemma.word)">{{word}}</span></h4>
 
         <h4 class="alpheios-principal-parts__groupitem" v-if="lemma.principalParts && lemma.principalParts.length > 0">
             <span
@@ -121,6 +121,14 @@ export default {
     }
   },
   methods: {
+    // this is needed because sometimes a compound word is lemmatized
+    // into its component parts, separated by a ',' or '-'
+    // ideally this would be represented explicitly in the data model and
+    // query so that the definitions for the parts can be displayed together
+    // so this solution is temporary until we can do that
+    wordParts (word) {
+      return word.split(/[,-]/)
+    },
     featureList (features, name) {
       let list = features.map(i => this.lemma.features[i] ? this.lemma.features[i] : null).filter(i => i)
       list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
