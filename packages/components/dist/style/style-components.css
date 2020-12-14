@@ -388,6 +388,9 @@ html {
   font-size: var(--alpheios-base-text-size);
   color: var(--alpheios-text-color);
 }
+.alpheios-content *[data-alpheios-enable=all] {
+  cursor: pointer;
+}
 
 input.alpheios-input, input.alpheios-input[type] {
   box-sizing: border-box;
@@ -1268,7 +1271,7 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-content .alpheios-definition__short .alpheios-definition__text {
+.alpheios-content .alpheios-definition__short .alpheios-definition__text, .alpheios-content .alpheios-definition__short .alpheios-definition__text * {
   color: var(--alpheios-definition-short-color);
   font-size: calc(var(--alpheios-base-text-size) * 1.125);
   font-weight: bold;
