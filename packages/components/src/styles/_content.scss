@@ -201,4 +201,8 @@
       color: var(--alpheios-text-color);
     }
   }
+
+  *[data-alpheios-enable="all"] {
+    @include alpheios-enabled;
+  }
 }
