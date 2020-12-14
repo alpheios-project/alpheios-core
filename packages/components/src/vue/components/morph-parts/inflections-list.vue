@@ -125,13 +125,13 @@
               checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
             },
             { name: 'tense', decorators: ['abbreviate'],
-              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
+              checkfn: (infl, group) => true
             },
             { name: 'mood', decorators: ['abbreviate'],
               checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
             },
             { name: 'voice', decorators: ['abbreviate'],
-              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
+              checkfn: (infl, group) => true
             }
           ]
         }
