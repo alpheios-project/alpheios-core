@@ -402,7 +402,8 @@ class ClientAdapters {
       method: options.method,
       clientId: options.clientId,
       fetchOptions: options.params.fetchOptions,
-      storage: options.params.storage
+      storage: options.params.storage,
+      sourceData: options.params.sourceData
     })
 
     if (!localTokenizationAdapter.available) {

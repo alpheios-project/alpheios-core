@@ -26,7 +26,7 @@ class AlpheiosTokenizationAdapter extends BaseAdapter {
     try {
       const requestParams = {
         method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
+        headers: this.defineContentType(),
         body: text
       }
 
@@ -59,13 +59,13 @@ class AlpheiosTokenizationAdapter extends BaseAdapter {
         return
       }
 
+      let configData
       if (this.sourceData) {
-        return this.sourceData
+        configData = this.sourceData
       } else {
-        const configData = await this.fetch(url)
-
-        return this.formatSettings(configData)
+        configData = await this.fetch(url)
       }
+      return this.formatSettings(configData)
     } catch (error) {
       this.addError(this.l10n.getMsg('TOKENIZATION_FETCH_ERROR', { message: error.message }))
     }
@@ -150,6 +150,17 @@ class AlpheiosTokenizationAdapter extends BaseAdapter {
   */
   createConfigFetchURL () {
     return this.fetchOptions.baseUrl
+  }
+
+  /**
+   * This method defines type of Content-Type based on the source text type
+   * @returns {Object} - { 'Content-Type':  <mime type> }
+   */
+  defineContentType () {
+    if (this.fetchOptions.sourceType === 'tei') {
+      return { 'Content-Type': 'application/xml' }
+    }
+    return { 'Content-Type': 'text/plain' }
   }
 }
 
