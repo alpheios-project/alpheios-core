@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "standard"
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": 2019,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  }
+}

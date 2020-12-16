@@ -8,36 +8,14 @@
         </div>
 
         <div :data-lemmakey="lexeme.lemma.ID"  class="alpheios-morph-definitions_list__definition"
-            v-for="(definition, dindex) in definitions" :key="definition.ID"
-            v-show="$store.getters['app/shortDefDataReady']"
+             v-for="(definition, dindex) in definitions" :key="definition.ID"
+             v-show="$store.getters['app/shortDefDataReady']"
         >
 
             <span class="alpheios-morph-definitions_list__definition_index" v-if="definitions.length > 1">{{ definitionIndex(dindex) }}</span>
             <shortdef :definition="definition" :languageCode="lexeme.lemma.languageCode"></shortdef>
 
         </div>
-      <div class="alpheios-annotations__act-panel" data-annotation-selected-action="add">
-        <div class="alpheios-annotations__act-ctrls">
-          <div class="alpheios-annotations__act-ctrls-add">[+definition]</div>
-        </div>
-        <div class="alpheios-annotations__act-form">
-          <div class="alpheios-annotations__act-form-content">
-            <div class="alpheios-annotations__act-form-headline">Add a definition:</div>
-            <div class="alpheios-annotations__act-form-text-input-group">
-              <label for="lemma-definition">Definition:</label>
-              <textarea id="lemma-definition" name="lemma-definition" rows="4" cols="50"/>
-            </div>
-            <div class="alpheios-annotations__act-form-text-input-group">
-              <label for="lemma-source">Source:</label>
-              <input id="lemma-source" name="lemma-source"/>
-            </div>
-          </div>
-          <div class="alpheios-annotations__act-form-ctrls">
-            <div class="alpheios-annotations__act-form-ctrls-add">Add</div>
-            <div class="alpheios-annotations__act-form-ctrls-cancel">Cancel</div>
-          </div>
-        </div>
-      </div>
     </div>
 </template>
 <script>
@@ -105,5 +83,4 @@ export default {
       display: inline-block;
     }
   }
-
 </style>

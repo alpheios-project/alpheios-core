@@ -1,23 +1,18 @@
 <template>
-    <div class="alpheios-inflections-list__inflections" v-if="hasInflections"
-         :data-annotation-mode="$store.state.app.isInAnnotationMode">
+    <div class="alpheios-inflections-list__inflections" v-if="hasInflections">
         <div class="alpheios-morph__inflset" v-for="(inflset, ifindex) in inflections" v-bind:key="ifindex">
 
             <span class="alpheios-inflections-list__inflset_index" v-if="inflections.length > 1">{{ ifindex + 1 }}.</span>
 
-            <div class="alpheios-inflections-list__forms">
+      <div class="alpheios-inflections-list__forms">
                 <span
                     v-for="feat in featuresList.wordParts.filter(feat => inflset.groupingKey[feat.name])" v-bind:key="feat.name"
                     :lang="languageCode" class="alpheios-inflections-list__formtext"
                     data-grouplevel="1" data-feature="feat.name"
                 >{{ feat.template.replace('%s', inflset.groupingKey[feat.name]) }}</span>
-              <div class="alpheios-annotations__act-panel" data-annotation-selected-action="none">
-                <div class="alpheios-annotations__act-ctrls">
-                  <div class="alpheios-annotations__act-ctrls-add">[+form]</div>
-                </div>
-              </div>
+        <annotation-word-form></annotation-word-form>
 
-                <span class="alpheios-inflections-list__inflfeatures">
+        <span class="alpheios-inflections-list__inflfeatures">
                     <inflectionattribute
                         v-for="feat in featuresList.level1.filter(feat => feat.checkfn(inflset))" v-bind:key="feat.name"
                         :data="inflset.groupingKey"  :grouplevel="1"
@@ -35,6 +30,7 @@
                         />
                     </span>
 
+
                     <div :class="groupClass(group)" v-for="(nextGroup, nextGrInflIndex) in group.inflections" v-bind:key="nextGrInflIndex">
                         <span v-if="group.groupingKey.isCaseInflectionSet">
                             <inflectionattribute
@@ -44,15 +40,14 @@
                             />
                         </span>
 
-                        <div :class="groupClass(group)"  v-for="(infl, nextGrInflIndex2) in nextGroup.inflections"
-                             v-bind:key="nextGrInflIndex2" data-annotation-selectable="true">
-                            <inflectionattribute
-                                v-for="feat in featuresList.level4.filter(feat => feat.checkfn(infl, group))" v-bind:key="feat.name"
+                        <div :class="groupClass(group)"  v-for="(infl, nextGrInflIndex2) in nextGroup.inflections" v-bind:key="nextGrInflIndex2">
+              <inflectionattribute
+                  v-for="feat in featuresList.level4.filter(feat => feat.checkfn(infl, group))" v-bind:key="feat.name"
                                 :data="infl.groupingKey"  :grouplevel="4"
                                 :decorators="feat.decorators"  :type="types[feat.name]"
-                            />
+              />
 
-                            <span v-for="(item, indexItem) in infl.inflections" v-bind:key="indexItem">
+              <span v-for="(item, indexItem) in infl.inflections" v-bind:key="indexItem">
                                 <inflectionattribute
                                     :data="item"
                                     :decorators="['parenthesize']"
@@ -63,66 +58,28 @@
                                     type="example"
                                 />
                             </span>
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                </div><!-- alpheios-morph__inflgroup -->
-                <div class="alpheios-annotations__act-panel" data-annotation-selected-action="add">
-                  <div class="alpheios-annotations__act-ctrls">
-                    <div class="alpheios-annotations__act-ctrls-add">[+inflection]</div>
-                  </div>
-                  <div class="alpheios-annotations__act-form">
-                    <div class="alpheios-annotations__act-form-content">
-                      <div class="alpheios-annotations__act-form-headline">Add an inflection:</div>
-                      <div class="alpheios-annotations__act-form-dropdown-group">
-                        <label for="latin-number">Number:</label>
-                        <select name="latin-number" id="latin-number">
-                          <option value="not-selected">Select a value</option>
-                          <option value="Singular">Singular</option>
-                          <option value="Plural">Plural</option>
-                        </select>
-                      </div>
-                      <div class="alpheios-annotations__act-form-dropdown-group">
-                        <label for="latin-case">Case:</label>
-                        <select name="latin-case" id="latin-case">
-                          <option value="not-selected">Select a value</option>
-                          <option value="Nominative">Nominative</option>
-                          <option value="Genitive">Genitive</option>
-                          <option value="Dative">Dative</option>
-                          <option value="Accusative">Accusative</option>
-                          <option value="Ablative">Ablative</option>
-                          <option value="Vocative">Vocative</option>
-                        </select>
-                      </div>
-                      <div class="alpheios-annotations__act-form-dropdown-group">
-                        <label for="latin-gender">Gender:</label>
-                        <select name="latin-gender" id="latin-gender">
-                          <option value="Masculine" selected>Masculine</option>
-                          <option value="Feminine">Feminine</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="alpheios-annotations__act-form-ctrls">
-                      <div class="alpheios-annotations__act-form-ctrls-add">Add</div>
-                      <div class="alpheios-annotations__act-form-ctrls-cancel">Cancel</div>
-                    </div>
-                  </div>
-                </div>
+        </div><!-- alpheios-morph__inflgroup -->
+        <annotation-inflection></annotation-inflection>
 
-            </div><!-- alpheios-morph__forms -->
-        </div><!-- alpheios-morph__inflset -->
-    </div><!-- alpheios-morph__inflections -->
+      </div><!-- alpheios-morph__forms -->
+    </div><!-- alpheios-morph__inflset -->
+  </div><!-- alpheios-morph__inflections -->
 </template>
 <script>
 import { Feature, LanguageModelFactory } from 'alpheios-data-models'
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
+import { AnnotationInflection, AnnotationWordForm } from 'alpheios-annotations'
 
 export default {
   name: 'InflectionsList',
   inject: ['app', 'l10n'],
-  storeModules: ['app'],
   components: {
-    inflectionattribute: InflectionAttribute
+    inflectionattribute: InflectionAttribute,
+    annotationInflection: AnnotationInflection,
+    annotationWordForm: AnnotationWordForm
   },
   props: {
     lexeme: {
@@ -135,9 +92,9 @@ export default {
       types: null, // These are Feature.types
       featuresList: {
         wordParts: [
-          { name: 'prefix', template: '%s-' },
-          { name: 'stem', template: '%s' },
-          { name: 'suffix', template: '-%s' }
+          {name: 'prefix', template: '%s-'},
+          {name: 'stem', template: '%s'},
+          {name: 'suffix', template: '-%s'}
         ],
         level1: [
           {
@@ -162,22 +119,22 @@ export default {
           }
         ],
         level2: [
-          { name: 'number', decorators: ['abbreviate'] },
-          { name: 'tense', decorators: ['abbreviate'] }
+          {name: 'number', decorators: ['abbreviate']},
+          {name: 'tense', decorators: ['abbreviate']}
         ],
         level3: [
-          { name: 'tense', decorators: ['abbreviate'] },
-          { name: 'voice', decorators: ['abbreviate'] }
+          {name: 'tense', decorators: ['abbreviate']},
+          {name: 'voice', decorators: ['abbreviate']}
         ],
         level4: [
-          { name: 'grmCase', decorators: ['abbreviate'], checkfn: () => true },
+          {name: 'grmCase', decorators: ['abbreviate'], checkfn: () => true},
           {
             name: 'gender',
             decorators: ['parenthesize', 'abbreviate'],
             checkfn: (infl) => !this.featureMatch(infl.groupingKey[this.types.gender], this.lexeme.lemma.features[this.types.gender])
           },
-          { name: 'comparison', decorators: ['abbreviate'], checkfn: () => true },
-          { name: 'person', decorators: ['appendtype', 'abbreviate'], checkfn: () => true },
+          {name: 'comparison', decorators: ['abbreviate'], checkfn: () => true},
+          {name: 'person', decorators: ['appendtype', 'abbreviate'], checkfn: () => true},
           {
             name: 'number',
             decorators: ['abbreviate'],
@@ -209,9 +166,9 @@ export default {
 
     inflections () {
       return (
-        this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getGroupedInflections)
-        ? this.lexeme.getGroupedInflections()
-        : []
+          this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getGroupedInflections)
+          ? this.lexeme.getGroupedInflections()
+          : []
     },
 
     languageCode () {
@@ -236,80 +193,66 @@ export default {
 }
 </script>
 <style lang="scss">
-  @use "../../../styles/annotations";
-  @import "../../../styles/variables";
+@import "../../../styles/variables";
 
-  .alpheios-inflections-list__formtext {
-    font-weight: 700;
+.alpheios-inflections-list__formtext {
+  font-weight: 700;
+}
+
+.alpheios-inflections-list__inflset {
+  margin-left: .5em;
+  margin-top: .5em;
+}
+
+.alpheios-inflections-list__inflections div.alpheios-inflections-list__inline {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  span {
+    padding-right: .25em;
   }
+}
 
+div.alpheios-inflections-list__block {
+  display: block;
+}
+
+.alpheios-inflections-list__inflfeatures span:first-child:before {
+  content: '(';
+}
+
+.alpheios-inflections-list__inflfeatures span:last-child:after {
+  content: ')';
+}
+
+.alpheios-inflections-list__inflfeatures, .alpheios-inflections-list__inflgroup {
+  display: flex;
+  flex-direction: row;
+
+  span {
+    padding-right: .25em;
+  }
+}
+
+.alpheios-inflections-list__inflections {
   .alpheios-inflections-list__inflset {
-    margin-left: .5em;
-    margin-top: .5em;
-  }
+    margin-top: 0;
+    margin-left: 7px;
 
-  .alpheios-inflections-list__inflections div.alpheios-inflections-list__inline {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    span {
-      padding-right: .25em;
+    .alpheios-inflections-list__forms {
+      margin-left: 0;
+      display: inline-block;
+      vertical-align: top;
     }
-  }
 
-  div.alpheios-inflections-list__block {
-    display: block;
-  }
-
-  .alpheios-inflections-list__inflfeatures span:first-child:before {
-    content: '(';
-  }
-
-  .alpheios-inflections-list__inflfeatures span:last-child:after {
-    content: ')';
-  }
-  .alpheios-inflections-list__inflfeatures, .alpheios-inflections-list__inflgroup {
-    display: flex;
-    flex-direction: row;
-    span {
-      padding-right: .25em;
+    .alpheios-inflections-list__inflset_index {
+      display: inline-block;
+      font-weight: bold;
+      vertical-align: top;
+      padding-top: 4px;
     }
+
   }
-
-  .alpheios-inflections-list__inflections {
-    .alpheios-inflections-list__inflset {
-      margin-top: 0;
-      margin-left: 7px;
-
-      .alpheios-inflections-list__forms {
-        margin-left: 0;
-        display: inline-block;
-        vertical-align: top;
-      }
-
-      .alpheios-inflections-list__inflset_index {
-        display: inline-block;
-        font-weight: bold;
-        vertical-align: top;
-        padding-top: 4px;
-      }
-
-    }
-  }
-
-  // region Annotation UI
-  @include annotations.act-panel;
-
-  .alpheios-inflections-list__formtext {
-    [data-annotation-mode="true"] & {
-      @include annotations.editable-element;
-    }
-  }
-
-  .alpheios-inflections-list__inflgroup {
-    [data-annotation-mode="true"] & {
-      @include annotations.editable-element;
-    }
-  }
-  // endregion Annotation UI
+}
 </style>

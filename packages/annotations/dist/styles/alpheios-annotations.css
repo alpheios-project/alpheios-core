@@ -1,0 +1,874 @@
+[data-annotation-mode=true] [data-annotation-type] {
+  display: inline-block;
+  background-color: #FFF;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  padding: 5px 10px !important;
+  margin-top: 5px;
+  cursor: pointer;
+}
+[data-annotation-mode=true] [data-annotation-type].annotation-selected {
+  background-color: aliceblue;
+}
+.alpheios-annotations__act-panel {
+  display: none;
+  flex-direction: column;
+}
+[data-annotation-mode=true] .alpheios-annotations__act-panel {
+  display: flex;
+}
+.alpheios-annotations__act-ctrls {
+  display: flex;
+  background-color: white;
+  padding: 5px 10px 0;
+  border: 2px solid lightblue;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+.alpheios-annotations__act-ctrls[data-annotation-form-open=true] {
+  border-radius: 10px 10px 0 0;
+}
+.alpheios-annotations__act-ctrls-add {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: mediumseagreen;
+}
+.alpheios-annotations__act-ctrls-add:not(:first-child) {
+  margin-left: 10px;
+}
+[data-annotation-selected-action=add] .alpheios-annotations__act-ctrls-add {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-ctrls-edit {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: steelblue;
+}
+.alpheios-annotations__act-ctrls-edit:not(:first-child) {
+  margin-left: 10px;
+}
+.alpheios-annotations__act-ctrls-edit[data-annotation-selected=true] {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-ctrls-remove {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: palevioletred;
+}
+.alpheios-annotations__act-ctrls-remove:not(:first-child) {
+  margin-left: 10px;
+}
+.alpheios-annotations__act-ctrls-remove[data-annotation-selected=true] {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 2px solid lightblue;
+  border-radius: 0 0 10px 10px;
+  margin: -2px 0 5px;
+  background-color: lightcyan;
+}
+[data-annotation-selected-action=none] .alpheios-annotations__act-form {
+  display: none;
+}
+.alpheios-annotations__act-form-content {
+  margin-bottom: 20px;
+}
+.alpheios-annotations__act-form-headline {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-text-input-group {
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-text-input-group > label {
+  display: block;
+}
+.alpheios-annotations__act-form-text-input-group > textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+.alpheios-annotations__act-form-text-input-group > input {
+  box-sizing: border-box;
+  width: 100%;
+}
+.alpheios-annotations__act-form-dropdown-group {
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-dropdown-group > label {
+  min-width: 60px;
+  display: inline-block;
+  padding-right: 10px;
+}
+.alpheios-annotations__act-form-dropdown-group > select {
+  color: var(--alpheios-text-color);
+  border-color: var(--alpheios-text-color);
+  min-width: 120px;
+  border-radius: 3px;
+}
+.alpheios-annotations__act-form-ctrls {
+  display: flex;
+  justify-content: flex-end;
+}
+.alpheios-annotations__act-form-ctrls-add {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: mediumseagreen;
+}
+.alpheios-annotations__act-form-ctrls-save {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: steelblue;
+}
+.alpheios-annotations__act-form-ctrls-remove {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: palevioletred;
+}
+.alpheios-annotations__act-form-ctrls-cancel {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: lightslategrey;
+}
+[data-annotation-mode=true] [data-annotation-type] {
+  display: inline-block;
+  background-color: #FFF;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  padding: 5px 10px !important;
+  margin-top: 5px;
+  cursor: pointer;
+}
+[data-annotation-mode=true] [data-annotation-type].annotation-selected {
+  background-color: aliceblue;
+}
+.alpheios-annotations__act-panel {
+  display: none;
+  flex-direction: column;
+}
+[data-annotation-mode=true] .alpheios-annotations__act-panel {
+  display: flex;
+}
+.alpheios-annotations__act-ctrls {
+  display: flex;
+  background-color: white;
+  padding: 5px 10px 0;
+  border: 2px solid lightblue;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+.alpheios-annotations__act-ctrls[data-annotation-form-open=true] {
+  border-radius: 10px 10px 0 0;
+}
+.alpheios-annotations__act-ctrls-add {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: mediumseagreen;
+}
+.alpheios-annotations__act-ctrls-add:not(:first-child) {
+  margin-left: 10px;
+}
+[data-annotation-selected-action=add] .alpheios-annotations__act-ctrls-add {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-ctrls-edit {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: steelblue;
+}
+.alpheios-annotations__act-ctrls-edit:not(:first-child) {
+  margin-left: 10px;
+}
+.alpheios-annotations__act-ctrls-edit[data-annotation-selected=true] {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-ctrls-remove {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: palevioletred;
+}
+.alpheios-annotations__act-ctrls-remove:not(:first-child) {
+  margin-left: 10px;
+}
+.alpheios-annotations__act-ctrls-remove[data-annotation-selected=true] {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 2px solid lightblue;
+  border-radius: 0 0 10px 10px;
+  margin: -2px 0 5px;
+  background-color: lightcyan;
+}
+[data-annotation-selected-action=none] .alpheios-annotations__act-form {
+  display: none;
+}
+.alpheios-annotations__act-form-content {
+  margin-bottom: 20px;
+}
+.alpheios-annotations__act-form-headline {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-text-input-group {
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-text-input-group > label {
+  display: block;
+}
+.alpheios-annotations__act-form-text-input-group > textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+.alpheios-annotations__act-form-text-input-group > input {
+  box-sizing: border-box;
+  width: 100%;
+}
+.alpheios-annotations__act-form-dropdown-group {
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-dropdown-group > label {
+  min-width: 60px;
+  display: inline-block;
+  padding-right: 10px;
+}
+.alpheios-annotations__act-form-dropdown-group > select {
+  color: var(--alpheios-text-color);
+  border-color: var(--alpheios-text-color);
+  min-width: 120px;
+  border-radius: 3px;
+}
+.alpheios-annotations__act-form-ctrls {
+  display: flex;
+  justify-content: flex-end;
+}
+.alpheios-annotations__act-form-ctrls-add {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: mediumseagreen;
+}
+.alpheios-annotations__act-form-ctrls-save {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: steelblue;
+}
+.alpheios-annotations__act-form-ctrls-remove {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: palevioletred;
+}
+.alpheios-annotations__act-form-ctrls-cancel {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: lightslategrey;
+}
+[data-annotation-mode=true] [data-annotation-type] {
+  display: inline-block;
+  background-color: #FFF;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  padding: 5px 10px !important;
+  margin-top: 5px;
+  cursor: pointer;
+}
+[data-annotation-mode=true] [data-annotation-type].annotation-selected {
+  background-color: aliceblue;
+}
+.alpheios-annotations__act-panel {
+  display: none;
+  flex-direction: column;
+}
+[data-annotation-mode=true] .alpheios-annotations__act-panel {
+  display: flex;
+}
+.alpheios-annotations__act-ctrls {
+  display: flex;
+  background-color: white;
+  padding: 5px 10px 0;
+  border: 2px solid lightblue;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+.alpheios-annotations__act-ctrls[data-annotation-form-open=true] {
+  border-radius: 10px 10px 0 0;
+}
+.alpheios-annotations__act-ctrls-add {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: mediumseagreen;
+}
+.alpheios-annotations__act-ctrls-add:not(:first-child) {
+  margin-left: 10px;
+}
+[data-annotation-selected-action=add] .alpheios-annotations__act-ctrls-add {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-ctrls-edit {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: steelblue;
+}
+.alpheios-annotations__act-ctrls-edit:not(:first-child) {
+  margin-left: 10px;
+}
+.alpheios-annotations__act-ctrls-edit[data-annotation-selected=true] {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-ctrls-remove {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: palevioletred;
+}
+.alpheios-annotations__act-ctrls-remove:not(:first-child) {
+  margin-left: 10px;
+}
+.alpheios-annotations__act-ctrls-remove[data-annotation-selected=true] {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 2px solid lightblue;
+  border-radius: 0 0 10px 10px;
+  margin: -2px 0 5px;
+  background-color: lightcyan;
+}
+[data-annotation-selected-action=none] .alpheios-annotations__act-form {
+  display: none;
+}
+.alpheios-annotations__act-form-content {
+  margin-bottom: 20px;
+}
+.alpheios-annotations__act-form-headline {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-text-input-group {
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-text-input-group > label {
+  display: block;
+}
+.alpheios-annotations__act-form-text-input-group > textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+.alpheios-annotations__act-form-text-input-group > input {
+  box-sizing: border-box;
+  width: 100%;
+}
+.alpheios-annotations__act-form-dropdown-group {
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-dropdown-group > label {
+  min-width: 60px;
+  display: inline-block;
+  padding-right: 10px;
+}
+.alpheios-annotations__act-form-dropdown-group > select {
+  color: var(--alpheios-text-color);
+  border-color: var(--alpheios-text-color);
+  min-width: 120px;
+  border-radius: 3px;
+}
+.alpheios-annotations__act-form-ctrls {
+  display: flex;
+  justify-content: flex-end;
+}
+.alpheios-annotations__act-form-ctrls-add {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: mediumseagreen;
+}
+.alpheios-annotations__act-form-ctrls-save {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: steelblue;
+}
+.alpheios-annotations__act-form-ctrls-remove {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: palevioletred;
+}
+.alpheios-annotations__act-form-ctrls-cancel {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: lightslategrey;
+}
+[data-annotation-mode=true] [data-annotation-type] {
+  display: inline-block;
+  background-color: #FFF;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  padding: 5px 10px !important;
+  margin-top: 5px;
+  cursor: pointer;
+}
+[data-annotation-mode=true] [data-annotation-type][data-annotation-selected=true] {
+  background-color: aliceblue;
+}
+[data-annotation-mode=true] [data-annotation-type] {
+  display: inline-block;
+  background-color: #FFF;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  padding: 5px 10px !important;
+  margin-top: 5px;
+  cursor: pointer;
+}
+[data-annotation-mode=true] [data-annotation-type].annotation-selected {
+  background-color: aliceblue;
+}
+.alpheios-annotations__act-panel {
+  display: none;
+  flex-direction: column;
+}
+[data-annotation-mode=true] .alpheios-annotations__act-panel {
+  display: flex;
+}
+.alpheios-annotations__act-ctrls {
+  display: flex;
+  background-color: white;
+  padding: 5px 10px 0;
+  border: 2px solid lightblue;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+.alpheios-annotations__act-ctrls[data-annotation-form-open=true] {
+  border-radius: 10px 10px 0 0;
+}
+.alpheios-annotations__act-ctrls-add {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: mediumseagreen;
+}
+.alpheios-annotations__act-ctrls-add:not(:first-child) {
+  margin-left: 10px;
+}
+[data-annotation-selected-action=add] .alpheios-annotations__act-ctrls-add {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-ctrls-edit {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: steelblue;
+}
+.alpheios-annotations__act-ctrls-edit:not(:first-child) {
+  margin-left: 10px;
+}
+.alpheios-annotations__act-ctrls-edit[data-annotation-selected=true] {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-ctrls-remove {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: palevioletred;
+}
+.alpheios-annotations__act-ctrls-remove:not(:first-child) {
+  margin-left: 10px;
+}
+.alpheios-annotations__act-ctrls-remove[data-annotation-selected=true] {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 2px solid lightblue;
+  border-radius: 0 0 10px 10px;
+  margin: -2px 0 5px;
+  background-color: lightcyan;
+}
+[data-annotation-selected-action=none] .alpheios-annotations__act-form {
+  display: none;
+}
+.alpheios-annotations__act-form-content {
+  margin-bottom: 20px;
+}
+.alpheios-annotations__act-form-headline {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-text-input-group {
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-text-input-group > label {
+  display: block;
+}
+.alpheios-annotations__act-form-text-input-group > textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+.alpheios-annotations__act-form-text-input-group > input {
+  box-sizing: border-box;
+  width: 100%;
+}
+.alpheios-annotations__act-form-dropdown-group {
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-dropdown-group > label {
+  min-width: 60px;
+  display: inline-block;
+  padding-right: 10px;
+}
+.alpheios-annotations__act-form-dropdown-group > select {
+  color: var(--alpheios-text-color);
+  border-color: var(--alpheios-text-color);
+  min-width: 120px;
+  border-radius: 3px;
+}
+.alpheios-annotations__act-form-ctrls {
+  display: flex;
+  justify-content: flex-end;
+}
+.alpheios-annotations__act-form-ctrls-add {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: mediumseagreen;
+}
+.alpheios-annotations__act-form-ctrls-save {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: steelblue;
+}
+.alpheios-annotations__act-form-ctrls-remove {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: palevioletred;
+}
+.alpheios-annotations__act-form-ctrls-cancel {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: lightslategrey;
+}
+[data-annotation-mode=true] [data-annotation-type] {
+  display: inline-block;
+  background-color: #FFF;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  padding: 5px 10px !important;
+  margin-top: 5px;
+  cursor: pointer;
+}
+[data-annotation-mode=true] [data-annotation-type].annotation-selected {
+  background-color: aliceblue;
+}
+.alpheios-annotations__act-panel {
+  display: none;
+  flex-direction: column;
+}
+[data-annotation-mode=true] .alpheios-annotations__act-panel {
+  display: flex;
+}
+.alpheios-annotations__act-ctrls {
+  display: flex;
+  background-color: white;
+  padding: 5px 10px 0;
+  border: 2px solid lightblue;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+.alpheios-annotations__act-ctrls[data-annotation-form-open=true] {
+  border-radius: 10px 10px 0 0;
+}
+.alpheios-annotations__act-ctrls-add {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: mediumseagreen;
+}
+.alpheios-annotations__act-ctrls-add:not(:first-child) {
+  margin-left: 10px;
+}
+[data-annotation-selected-action=add] .alpheios-annotations__act-ctrls-add {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-ctrls-edit {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: steelblue;
+}
+.alpheios-annotations__act-ctrls-edit:not(:first-child) {
+  margin-left: 10px;
+}
+.alpheios-annotations__act-ctrls-edit[data-annotation-selected=true] {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-ctrls-remove {
+  border: 1px solid lightblue;
+  line-height: 1.3;
+  font-weight: 700;
+  background-color: azure;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: palevioletred;
+}
+.alpheios-annotations__act-ctrls-remove:not(:first-child) {
+  margin-left: 10px;
+}
+.alpheios-annotations__act-ctrls-remove[data-annotation-selected=true] {
+  background-color: lightcyan;
+}
+.alpheios-annotations__act-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 2px solid lightblue;
+  border-radius: 0 0 10px 10px;
+  margin: -2px 0 5px;
+  background-color: lightcyan;
+}
+[data-annotation-selected-action=none] .alpheios-annotations__act-form {
+  display: none;
+}
+.alpheios-annotations__act-form-content {
+  margin-bottom: 20px;
+}
+.alpheios-annotations__act-form-headline {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-text-input-group {
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-text-input-group > label {
+  display: block;
+}
+.alpheios-annotations__act-form-text-input-group > textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+.alpheios-annotations__act-form-text-input-group > input {
+  box-sizing: border-box;
+  width: 100%;
+}
+.alpheios-annotations__act-form-dropdown-group {
+  margin-bottom: 10px;
+}
+.alpheios-annotations__act-form-dropdown-group > label {
+  min-width: 60px;
+  display: inline-block;
+  padding-right: 10px;
+}
+.alpheios-annotations__act-form-dropdown-group > select {
+  color: var(--alpheios-text-color);
+  border-color: var(--alpheios-text-color);
+  min-width: 120px;
+  border-radius: 3px;
+}
+.alpheios-annotations__act-form-ctrls {
+  display: flex;
+  justify-content: flex-end;
+}
+.alpheios-annotations__act-form-ctrls-add {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: mediumseagreen;
+}
+.alpheios-annotations__act-form-ctrls-save {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: steelblue;
+}
+.alpheios-annotations__act-form-ctrls-remove {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: palevioletred;
+}
+.alpheios-annotations__act-form-ctrls-cancel {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: darkgray;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  background: lightslategrey;
+}
+
+/*# sourceMappingURL=alpheios-annotations.css.map*/

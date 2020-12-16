@@ -53,6 +53,8 @@ const webpack = {
     resolve: {
       alias: {
         // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
+        'alpheios-annotations': path.join(projectRoot, 'node_modules/alpheios-annotations/dist/alpheios-annotations.min.js'),
+        'alpheios-annotations-css': path.join(projectRoot, 'node_modules/alpheios-annotations/dist/styles/'),
         'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.min.js'),
         'alpheios-inflection-tables': path.join(projectRoot, 'node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.min.js'),
         'alpheios-l10n': path.join(projectRoot, 'node_modules/alpheios-l10n/dist/alpheios-l10n.min.js'),
@@ -88,6 +90,8 @@ const webpack = {
     resolve: {
       alias: {
         // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
+        'alpheios-annotations': path.join(projectRoot, 'node_modules/alpheios-annotations/dist/alpheios-annotations.js'),
+        'alpheios-annotations-css': path.join(projectRoot, 'node_modules/alpheios-annotations/dist/styles/'),
         'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
         'alpheios-inflection-tables': path.join(projectRoot, 'node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js'),
         'alpheios-l10n': path.join(projectRoot, 'node_modules/alpheios-l10n/dist/alpheios-l10n.js'),

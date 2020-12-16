@@ -1,6 +1,5 @@
 <template>
-  <div class="alpheios-definition__short" :data-annotation-mode="$store.state.app.isInAnnotationMode"
-       data-annotation-selectable="true">
+  <div class="alpheios-definition__short" data-annotation-type="definition">
     <span :lang="languageCode"
           class="alpheios-definition__lemma">{{ definition.lemmaText }}:</span>
     <span v-if='alpheiosEnabled' data-alpheios-enable="all" class="alpheios-definition__text" v-html="definition.text" :lang="definition.language"></span>
@@ -13,7 +12,6 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'ShortDef',
   inject: ['app'],
-  storeModules: ['app'],
   mixins: [DependencyCheck],
   props: ['definition', 'languageCode'],
   computed: {

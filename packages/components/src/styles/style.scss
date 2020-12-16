@@ -17,6 +17,8 @@
 @import "lex";
 @import "alignment";
 @import "page_injections";
+// TODO: should replace @import with @use when sass-loader will support alias resolution
+@import "~alpheios-annotations-css/alpheios-annotations.css";
 
 // Latin
 @font-face {

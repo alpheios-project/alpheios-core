@@ -1,62 +1,65 @@
 <template>
-    <div class="alpheios-principal-parts__item" :data-annotation-mode="$store.state.app.isInAnnotationMode">
-        <span class="alpheios-principal-parts__lemma_index" v-if="lemmaindex === 0 && printIndex">{{ lexemeindex + 1 }}</span>
-        <span class="alpheios-principal-parts__lemma_index_spacer" v-else-if="lemmaindex > 0 && printIndex"> </span>
+  <div  class="alpheios-principal-parts__item">
+      <span class="alpheios-principal-parts__lemma_index"
+            v-if="lemmaindex === 0 && printIndex">{{ lexemeindex + 1 }}</span>
+    <span class="alpheios-principal-parts__lemma_index_spacer" v-else-if="lemmaindex > 0 && printIndex"> </span>
 
-        <h4
-            class="alpheios-principal-parts__groupitem alpheios-principal-parts__groupitem--lemma-word"
-            :lang="languageCode"
-            v-if="! lemma.principalParts.includes(lemma.word)"
-        >{{lemma.word}}</h4>
+    <h4
+        class="alpheios-principal-parts__groupitem alpheios-principal-parts__groupitem--lemma-word"
+        :lang="languageCode"
+        v-if="! lemma.principalParts.includes(lemma.word)"
+    >{{ lemma.word }}</h4>
 
-        <h4 class="alpheios-principal-parts__groupitem" v-if="lemma.principalParts && lemma.principalParts.length > 0">
-            <span
-                :lang="languageCode"
-                class="alpheios-principal-parts__listitem"
-                v-for="(part, partIndex) in lemma.principalParts" v-bind:key="partIndex"
-            >{{part}}</span>
-        </h4>
+    <h4 class="alpheios-principal-parts__groupitem" v-if="lemma.principalParts && lemma.principalParts.length > 0"
+        data-annotation-type="comment">
+      <span
+          :lang="languageCode"
+          class="alpheios-principal-parts__listitem"
+          v-for="(part, partIndex) in lemma.principalParts" v-bind:key="partIndex"
+      >{{ part }}</span>
+    </h4>
 
-        <tooltip
-            :tooltip-text="l10n.getText('TOOLTIP_DISAMBIGUATED')"
-            tooltip-direction="top"
-            class="alpheios-principal-parts__pointer-tooltip"
-            v-show="disambiguated"
-        >
-            <disambiguated-icon class="alpheios-principal-parts__pointer-icn alpheios-disambiguated-icon"></disambiguated-icon>
-        </tooltip>
-        <div v-show="disambiguated" class="alpheios-principal-parts__dsmbg-providers">
-            <tooltip
-                :tooltip-text="l10n.getText('TOOLTIP_TREEBANK_SOURCE')"
-                tooltip-direction="top"
-                class="alpheios-principal-parts__dsmbg-providers-tooltip"
-            >
-                <treebank-icon class="alpheios-principal-parts__dsmbg-providers-icn alpheios-treebank-icon"></treebank-icon>
-            </tooltip>
-        </div>
-
-        <inflectionattribute
-            :data="lemma.features"
-            :decorators="['brackets', 'appendspace', 'chinese']"
-            :type="types.pronunciation"
-        />
-
-        <div class="feature_extras" v-if="hasExtras" >
-            <inflectionattribute
-                :data="featureList(['age','area','geo', 'frequency'],'extras')"
-                :type="'extras'"
-            />
-        </div>
-
-        <div class="feature_source" v-if="hasSource">
-            <inflectionattribute
-                :data="lemma.features"
-                :decorators="['link','brackets']"
-                :type="types.source"
-                :lang="languageCode"
-            />
-        </div>
+    <tooltip
+        :tooltip-text="l10n.getText('TOOLTIP_DISAMBIGUATED')"
+        tooltip-direction="top"
+        class="alpheios-principal-parts__pointer-tooltip"
+        v-show="disambiguated"
+    >
+      <disambiguated-icon
+          class="alpheios-principal-parts__pointer-icn alpheios-disambiguated-icon"></disambiguated-icon>
+    </tooltip>
+    <div v-show="disambiguated" class="alpheios-principal-parts__dsmbg-providers">
+      <tooltip
+          :tooltip-text="l10n.getText('TOOLTIP_TREEBANK_SOURCE')"
+          tooltip-direction="top"
+          class="alpheios-principal-parts__dsmbg-providers-tooltip"
+      >
+        <treebank-icon class="alpheios-principal-parts__dsmbg-providers-icn alpheios-treebank-icon"></treebank-icon>
+      </tooltip>
     </div>
+
+    <inflectionattribute
+        :data="lemma.features"
+        :decorators="['brackets', 'appendspace', 'chinese']"
+        :type="types.pronunciation"
+    />
+
+    <div class="feature_extras" v-if="hasExtras">
+      <inflectionattribute
+          :data="featureList(['age','area','geo', 'frequency'],'extras')"
+          :type="'extras'"
+      />
+    </div>
+
+    <div class="feature_source" v-if="hasSource">
+      <inflectionattribute
+          :data="lemma.features"
+          :decorators="['link','brackets']"
+          :type="types.source"
+          :lang="languageCode"
+      />
+    </div>
+  </div>
 </template>
 <script>
 import TreebankIcon from '@/images/inline-icons/sitemap.svg'
@@ -69,7 +72,6 @@ import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 export default {
   name: 'PrincipalParts',
   inject: ['l10n'], // API modules
-  storeModules: ['app'], // Store modules
   components: {
     inflectionattribute: InflectionAttribute,
     treebankIcon: TreebankIcon,
@@ -137,7 +139,6 @@ export default {
 }
 </script>
 <style lang="scss">
-  @use "../../../styles/annotations";
   @import "../../../styles/variables";
 
   .alpheios-principal-parts__lemma_index,
@@ -223,12 +224,4 @@ export default {
           height: 22px;
       }
   }
-
-  // region Annotation UI
-  .alpheios-principal-parts__item {
-    [data-annotation-mode="true"] & {
-      @include annotations.editable-element;
-    }
-  }
-  // endregion Annotation UI
 </style>
