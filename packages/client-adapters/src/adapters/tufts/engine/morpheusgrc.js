@@ -3,10 +3,19 @@ import * as Models from 'alpheios-data-models'
 
 let data = new ImportData(Models.GreekLanguageModel, 'morpheusgrc') // eslint-disable-line prefer-const
 
-// Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
-// the dictionary entry's conjugation if it's available
 data.inflectionOverrides = {
-  [Models.Feature.types.part]: (i, ls) => i[Models.Feature.types.part].value === Models.Constants.TYPE_IRREGULAR && ls.filter(l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_PRONOUN)
+  // Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
+  // the dictionary entry's conjugation if it's available
+  [Models.Feature.types.part]: (i, ls) => Boolean(i[Models.Feature.types.part].value === Models.Constants.TYPE_IRREGULAR && ls.filter(l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_PRONOUN)),
+  // for some irregular adjectives, the compartive is only specified in the morph flags
+  [Models.Feature.types.comparison]: (i, ls) => {
+      if (i[Models.Feature.types.morph].value === 'irreg_comp' &&
+      ls.filter(l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_ADJECTIVE)) {
+        return new Models.Feature(Models.Feature.types.comparison,Models.Constants.COMP_COMPARITIVE, Models.GreekLanguageModel.languageID)
+      } else {
+        return false
+      }
+    }
 }
 /*
 Below are value conversion maps for each grammatical feature to be parsed.

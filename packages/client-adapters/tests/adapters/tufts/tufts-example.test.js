@@ -508,4 +508,25 @@ describe('tufts-example.test.js', () => {
     expect(homonym.lexemes[1].meaning).toBeTruthy()
   })
 
+  it('27 TuftsExample - morpheusgrc overrides comparative for irregular adjective', async () => {
+    let word = 'ἁπλούστερον'
+    let res = Fixture.getFixtureRes({
+      langCode: 'grc', adapter: 'tufts', word: word
+    })
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
+
+    let homonym = await adapter.getHomonym(Constants.LANG_GREEK,word)
+    expect(homonym.lexemes.length).toEqual(1)
+    expect(homonym.lexemes[0].inflections.length).toEqual(4)
+    expect(homonym.lexemes[0].inflections[0][Feature.types.comparison].values).toEqual([Constants.COMP_COMPARITIVE])
+    expect(homonym.lexemes[0].inflections[1][Feature.types.comparison].values).toEqual([Constants.COMP_COMPARITIVE])
+    expect(homonym.lexemes[0].inflections[2][Feature.types.comparison].values).toEqual([Constants.COMP_COMPARITIVE])
+    expect(homonym.lexemes[0].inflections[3][Feature.types.comparison].values).toEqual([Constants.COMP_COMPARITIVE])
+  })
+
 })

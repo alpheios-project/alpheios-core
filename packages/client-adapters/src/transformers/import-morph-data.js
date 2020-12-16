@@ -256,17 +256,16 @@ class ImportMorphData {
    * @param {String} featureType the feature type name
    * @param {Inflection} inflection the inflection object
    * @param {Lemma[]} lemmas the lemma objects
-   * @param {Feature} alternateFeature other feature data
    */
-  overrideInflectionFeatureIfRequired (featureType, inflection, lemmas, alternateFeature) {
-    if (this.inflectionOverrides[featureType] &&
-        this.inflectionOverrides[featureType](inflection, lemmas)) {
-      if (alternateFeature) {
-        inflection.addFeature(alternateFeature)
-      } else {
+  overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
+    if (this.inflectionOverrides[featureType]) {
+      const override = this.inflectionOverrides[featureType](inflection, lemmas)
+      if (typeof override === 'boolean' && override) {
         for (const lemma of lemmas.filter(l => l.features[featureType])) {
           inflection.addFeature(lemma.features[featureType])
         }
+      } else {
+        inflection.addFeature(override)
       }
     }
   }
