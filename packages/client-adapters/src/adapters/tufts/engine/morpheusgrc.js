@@ -6,16 +6,24 @@ let data = new ImportData(Models.GreekLanguageModel, 'morpheusgrc') // eslint-di
 data.inflectionOverrides = {
   // Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
   // the dictionary entry's conjugation if it's available
-  [Models.Feature.types.part]: (i, ls) => Boolean(i[Models.Feature.types.part].value === Models.Constants.TYPE_IRREGULAR && ls.filter(l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_PRONOUN)),
+  [Models.Feature.types.part]: (i, ls) => {
+    return {
+      withLemma: i[Models.Feature.types.part].value === Models.Constants.TYPE_IRREGULAR && ls.some(l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_PRONOUN),
+      withFeature: null
+    }
+  },
   // for some irregular adjectives, the compartive is only specified in the morph flags
   [Models.Feature.types.comparison]: (i, ls) => {
-      if (i[Models.Feature.types.morph].value === 'irreg_comp' &&
-      ls.filter(l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_ADJECTIVE)) {
-        return new Models.Feature(Models.Feature.types.comparison,Models.Constants.COMP_COMPARITIVE, Models.GreekLanguageModel.languageID)
-      } else {
-        return false
-      }
+    const retVal = {
+      withLemma: false,
+      withFeature: null
     }
+    if (i[Models.Feature.types.morph].value === 'irreg_comp' &&
+      ls.some(l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_ADJECTIVE)) {
+        retVal.withFeature = new Models.Feature(Models.Feature.types.comparison,Models.Constants.COMP_COMPARITIVE, Models.GreekLanguageModel.languageID)
+    }
+    return retVal
+  }
 }
 /*
 Below are value conversion maps for each grammatical feature to be parsed.

@@ -66,7 +66,16 @@ class ImportMorphData {
 
     // may be overriden by specific engine use to a list of of featureTypes which
     // should be overridden in the inflection data from the lemma data
-    this.inflectionOverrides = []
+    // for any featureType that can be overridden, it should map that featureType
+    // name to a callback with the signature
+    // callback(featureType,inflection,lemmas): { <boolean> withLemma,
+    //                                            <Feature> withFeature
+    //                                           }
+    // if withLemma is false, and withFeature is null, no override will be used
+    // if withLemma is true, the feature from the lemma, if present, will be used
+    // if withLemma is false and withFeature is not null, the feature value of
+    //   withFeature will be used
+    this.inflectionOverrides = {}
   }
 
   /**
@@ -252,7 +261,7 @@ class ImportMorphData {
   /**
    * Overrides feature data from an inflection with feature data from the lemma
    * or other data
-   * if required by an engine-specific list of featureTypes
+   * as defined by the engine-specific inflectionOverrides property
    * @param {String} featureType the feature type name
    * @param {Inflection} inflection the inflection object
    * @param {Lemma[]} lemmas the lemma objects
@@ -260,12 +269,12 @@ class ImportMorphData {
   overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
     if (this.inflectionOverrides[featureType]) {
       const override = this.inflectionOverrides[featureType](inflection, lemmas)
-      if (typeof override === 'boolean' && override) {
+      if (override.withLemma) {
         for (const lemma of lemmas.filter(l => l.features[featureType])) {
           inflection.addFeature(lemma.features[featureType])
         }
-      } else {
-        inflection.addFeature(override)
+      } else if (override.withFeature !== null) {
+        inflection.addFeature(override.withFeature)
       }
     }
   }

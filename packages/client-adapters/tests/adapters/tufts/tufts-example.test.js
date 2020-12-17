@@ -529,4 +529,24 @@ describe('tufts-example.test.js', () => {
     expect(homonym.lexemes[0].inflections[3][Feature.types.comparison].values).toEqual([Constants.COMP_COMPARITIVE])
   })
 
+  it('28 TuftsExample - morpheusgrc does not override comparative for irregular adverb', async () => {
+    let word = 'ἐξωτέρω'
+    let res = Fixture.getFixtureRes({
+      langCode: 'grc', adapter: 'tufts', word: word
+    })
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
+
+    let homonym = await adapter.getHomonym(Constants.LANG_GREEK,word)
+    expect(homonym.lexemes.length).toEqual(2)
+    let adverb = homonym.lexemes.filter(l => l.lemma.features['part of speech'].value === 'adverb')
+    expect(adverb[0].inflections.length).toEqual(1)
+    expect(adverb[0].inflections[0][Feature.types.morph].value.match(/irreg_comp/)).toBeTruthy()
+    expect(adverb[0].inflections[0][Feature.types.comparison]).toBe(undefined)
+  })
+
 })
