@@ -66,15 +66,15 @@ export default {
     }
   },
   methods: {
-    editComment: function () {
+    editComment () {
       this.selectedAction = ActionTypes.EDIT
     },
 
-    removeComment: function () {
+    removeComment () {
       this.selectedAction = ActionTypes.REMOVE
     },
 
-    closeForm: function () {
+    closeForm () {
       this.selectedAction = ActionTypes.NONE
     }
   }

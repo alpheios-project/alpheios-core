@@ -68,11 +68,11 @@ export default {
     }
   },
   methods: {
-    addInflection: function () {
+    addInflection () {
       this.selectedAction = ActionTypes.ADD
     },
 
-    closeForm: function () {
+    closeForm () {
       this.selectedAction = ActionTypes.NONE
     }
   }

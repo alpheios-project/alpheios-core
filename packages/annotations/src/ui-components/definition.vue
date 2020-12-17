@@ -69,15 +69,15 @@ export default {
     }
   },
   methods: {
-    addDefinition: function () {
+    addDefinition () {
       this.selectedAction = ActionTypes.ADD
     },
 
-    removeDefinition: function () {
+    removeDefinition () {
       this.selectedAction = ActionTypes.REMOVE
     },
 
-    closeForm: function () {
+    closeForm () {
       this.selectedAction = ActionTypes.NONE
     }
   }

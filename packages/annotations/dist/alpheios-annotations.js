@@ -8743,7 +8743,7 @@ const EMPTY_SELECTION = {
   },
 
   methods: {
-    clickHandler: function (evt) {
+    clickHandler (evt) {
       const target = evt.target.closest(`[${ANNOTATABLE_ATTR_NAME}]`)
       if (!target) { return } // Do nothing if an annotatable element cannot be found
       const containerTarget = evt.target.closest(`[${CONTAINER_ATTR_NAME}]`)
@@ -8772,7 +8772,7 @@ const EMPTY_SELECTION = {
       }
     },
 
-    enable: function (target) {
+    enable (target) {
       const annotationType = target.getAttribute(ANNOTATABLE_ATTR_NAME)
       this.$options.selection.isSelected = true
       this.$options.selection.target = target
@@ -8785,7 +8785,7 @@ const EMPTY_SELECTION = {
       this.$options.selection.vueInstance.$mount(mountTarget)
     },
 
-    disable: function () {
+    disable () {
       this.$options.selection.target.removeAttribute(SELECTED_ATTR_NAME)
       this.$options.selection.vueInstance.$destroy()
       this.$options.selection.mountContainer.remove()
@@ -8875,15 +8875,15 @@ const ActionTypes = {
     }
   },
   methods: {
-    editComment: function () {
+    editComment () {
       this.selectedAction = ActionTypes.EDIT
     },
 
-    removeComment: function () {
+    removeComment () {
       this.selectedAction = ActionTypes.REMOVE
     },
 
-    closeForm: function () {
+    closeForm () {
       this.selectedAction = ActionTypes.NONE
     }
   }
@@ -8973,15 +8973,15 @@ const ActionTypes = {
     }
   },
   methods: {
-    addDefinition: function () {
+    addDefinition () {
       this.selectedAction = ActionTypes.ADD
     },
 
-    removeDefinition: function () {
+    removeDefinition () {
       this.selectedAction = ActionTypes.REMOVE
     },
 
-    closeForm: function () {
+    closeForm () {
       this.selectedAction = ActionTypes.NONE
     }
   }
@@ -9070,11 +9070,11 @@ const ActionTypes = {
     }
   },
   methods: {
-    addInflection: function () {
+    addInflection () {
       this.selectedAction = ActionTypes.ADD
     },
 
-    closeForm: function () {
+    closeForm () {
       this.selectedAction = ActionTypes.NONE
     }
   }
@@ -9136,11 +9136,11 @@ const ActionTypes = {
     }
   },
   methods: {
-    add: function () {
+    add () {
       this.selectedAction = ActionTypes.ADD
     },
 
-    closeForm: function () {
+    closeForm () {
       this.selectedAction = ActionTypes.NONE
     }
   }
@@ -9202,11 +9202,11 @@ const ActionTypes = {
     }
   },
   methods: {
-    add: function () {
+    add () {
       this.selectedAction = ActionTypes.ADD
     },
 
-    closeForm: function () {
+    closeForm () {
       this.selectedAction = ActionTypes.NONE
     }
   }

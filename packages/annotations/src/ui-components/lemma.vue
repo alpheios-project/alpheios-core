@@ -41,11 +41,11 @@ export default {
     }
   },
   methods: {
-    add: function () {
+    add () {
       this.selectedAction = ActionTypes.ADD
     },
 
-    closeForm: function () {
+    closeForm () {
       this.selectedAction = ActionTypes.NONE
     }
   }

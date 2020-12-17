@@ -46,7 +46,7 @@ export default {
   },
 
   methods: {
-    clickHandler: function (evt) {
+    clickHandler (evt) {
       const target = evt.target.closest(`[${ANNOTATABLE_ATTR_NAME}]`)
       if (!target) { return } // Do nothing if an annotatable element cannot be found
       const containerTarget = evt.target.closest(`[${CONTAINER_ATTR_NAME}]`)
@@ -75,7 +75,7 @@ export default {
       }
     },
 
-    enable: function (target) {
+    enable (target) {
       const annotationType = target.getAttribute(ANNOTATABLE_ATTR_NAME)
       this.$options.selection.isSelected = true
       this.$options.selection.target = target
@@ -88,7 +88,7 @@ export default {
       this.$options.selection.vueInstance.$mount(mountTarget)
     },
 
-    disable: function () {
+    disable () {
       this.$options.selection.target.removeAttribute(SELECTED_ATTR_NAME)
       this.$options.selection.vueInstance.$destroy()
       this.$options.selection.mountContainer.remove()

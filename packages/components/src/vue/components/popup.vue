@@ -63,10 +63,10 @@
             {{$store.state.app.selectedText}}
           </h3>
         </div>
-        <div class="alpheios-popup__toolbar__annotation">
-          <span class="alpheios-popup__toolbar__annotation__text">Annotation mode is on</span>
+        <div class="alpheios-popup__toolbar-annotation">
+          <span class="alpheios-popup__toolbar-annotation__text">Annotation mode is on</span>
           <alph-tooltip :tooltipText="annotationBtnTooltip" tooltipDirection="left">
-            <div class="alpheios-popup__toolbar__annotation__btn" @click="$store.commit('app/toggleAnnotationMode')">
+            <div class="alpheios-popup__toolbar-annotation__btn" @click="$store.commit('app/toggleAnnotationMode')">
               <annotation-icon class="alpheios-navbuttons__icon" />
             </div>
           </alph-tooltip>
@@ -572,7 +572,6 @@ export default {
 }
 </script>
 <style lang="scss">
-  @use "../../styles/annotations";
   @import "../../styles/variables";
 
   .alpheios-popup {
@@ -771,14 +770,7 @@ export default {
   }
 
   // region Annotation UI
-  [data-annotation-selectable="true"] {
-    &[data-annotation-mode="true"],
-    [data-annotation-mode="true"] & {
-      @include annotations.editable-element;
-    }
-  }
-
-  .alpheios-popup__toolbar__annotation {
+  .alpheios-popup__toolbar-annotation {
     [data-annotation-mode="true"] & {
       display: flex;
       border: 1px solid lightblue;
