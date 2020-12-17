@@ -5997,10 +5997,27 @@ __webpack_require__.r(__webpack_exports__);
 
 let data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__.default(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel, 'morpheusgrc') // eslint-disable-line prefer-const
 
-// Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
-// the dictionary entry's conjugation if it's available
 data.inflectionOverrides = {
-  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part]: (i, ls) => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.TYPE_IRREGULAR && ls.filter(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_PRONOUN)
+  // Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
+  // the dictionary entry's conjugation if it's available
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part]: (i, ls) => {
+    return {
+      withLemma: i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.TYPE_IRREGULAR && ls.some(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_PRONOUN),
+      withFeature: null
+    }
+  },
+  // for some irregular adjectives, the compartive is only specified in the morph flags
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison]: (i, ls) => {
+    const retVal = {
+      withLemma: false,
+      withFeature: null
+    }
+    if (i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.morph].value === 'irreg_comp' &&
+      ls.some(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_ADJECTIVE)) {
+        retVal.withFeature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison,alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.COMP_COMPARITIVE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel.languageID)
+    }
+    return retVal
+  }
 }
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -6145,7 +6162,13 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
-data.inflectionOverrides = { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.conjugation]: (i, ls) => true }
+data.inflectionOverrides = { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.conjugation]: (i, ls) => {
+    return {
+      withLemma: true,
+      withFeature: null
+    }
+  }
+}
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -6973,6 +6996,7 @@ const featuresArray = [
 ]
 
 const featuresArrayAll = [
+  ['morph', 'morph'], // morph is first because it may have data that overrides other features
   ['pofs', 'part'],
   ['case', 'grmCase'],
   ['gend', 'gender'],
@@ -6986,8 +7010,7 @@ const featuresArrayAll = [
   ['comp', 'comparison'],
   ['stemtype', 'stemtype'],
   ['derivtype', 'derivtype'],
-  ['dial', 'dialect'],
-  ['morph', 'morph']
+  ['dial', 'dialect']
 ]
 
 const attributeBasedFeatures = [
@@ -7347,7 +7370,16 @@ class ImportMorphData {
 
     // may be overriden by specific engine use to a list of of featureTypes which
     // should be overridden in the inflection data from the lemma data
-    this.inflectionOverrides = []
+    // for any featureType that can be overridden, it should map that featureType
+    // name to a callback with the signature
+    // callback(featureType,inflection,lemmas): { <boolean> withLemma,
+    //                                            <Feature> withFeature
+    //                                           }
+    // if withLemma is false, and withFeature is null, no override will be used
+    // if withLemma is true, the feature from the lemma, if present, will be used
+    // if withLemma is false and withFeature is not null, the feature value of
+    //   withFeature will be used
+    this.inflectionOverrides = {}
   }
 
   /**
@@ -7532,16 +7564,21 @@ class ImportMorphData {
 
   /**
    * Overrides feature data from an inflection with feature data from the lemma
-   * if required by an engine-specific list of featureTypes
+   * or other data
+   * as defined by the engine-specific inflectionOverrides property
    * @param {String} featureType the feature type name
    * @param {Inflection} inflection the inflection object
    * @param {Lemma[]} lemmas the lemma objects
    */
   overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
-    if (this.inflectionOverrides[featureType] &&
-        this.inflectionOverrides[featureType](inflection, lemmas)) {
-      for (const lemma of lemmas.filter(l => l.features[featureType])) {
-        inflection.addFeature(lemma.features[featureType])
+    if (this.inflectionOverrides[featureType]) {
+      const override = this.inflectionOverrides[featureType](inflection, lemmas)
+      if (override.withLemma) {
+        for (const lemma of lemmas.filter(l => l.features[featureType])) {
+          inflection.addFeature(lemma.features[featureType])
+        }
+      } else if (override.withFeature !== null) {
+        inflection.addFeature(override.withFeature)
       }
     }
   }
