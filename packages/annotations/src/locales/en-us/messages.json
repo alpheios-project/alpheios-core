@@ -1,0 +1,122 @@
+{
+  "COMMENT_ACTION": {
+    "message": "comment",
+    "description": "A text on the button that works with comments",
+    "component": "Action panel"
+  },
+  "DEFINITION_ACTION": {
+    "message": "definition",
+    "description": "A text on the button that works with definitions",
+    "component": "Action panel"
+  },
+  "INFLECTION_ACTION": {
+    "message": "inflection",
+    "description": "A text on the button that works with inflections",
+    "component": "Action panel"
+  },
+  "LEMMA_ACTION": {
+    "message": "lemma",
+    "description": "A text on the button that works with lemmas",
+    "component": "Action panel"
+  },
+  "WORD_FORM_ACTION": {
+    "message": "form",
+    "description": "A text on the button that works with word forms",
+    "component": "Action panel"
+  },
+  "REMOVE_ACTION": {
+    "message": "remove",
+    "description": "A text on the button that removes data",
+    "component": "Action panel"
+  },
+  "ADD_BTN": {
+    "message": "Add",
+    "description": "A text on the button that adds new form data",
+    "component": "Edit form"
+  },
+  "SAVE_BTN": {
+    "message": "Save",
+    "description": "A text on the button that saves form data",
+    "component": "Edit form"
+  },
+  "CANCEL_BTN": {
+    "message": "Cancel",
+    "description": "A text on the button that cancels the form action",
+    "component": "Edit form"
+  },
+  "REMOVE_BTN": {
+    "message": "Remove",
+    "description": "A text on the button in the form that removes some data",
+    "component": "Edit form"
+  },
+  "EDIT_COMMENT_HEADLINE": {
+    "message": "Edit the comment:",
+    "description": "A headline of the comment editing form",
+    "component": "Edit form"
+  },
+  "SAMPLE_COMMENT_TEXT": {
+    "message": "A comment about the part of speech of the lexeme",
+    "description": "A sample text of a comment that is placed inside the comment editing form",
+    "component": "Edit form"
+  },
+  "REMOVE_COMMENT_HEADLINE": {
+    "message": "Remove the comment:",
+    "description": "A headline of the comment removal form",
+    "component": "Edit form"
+  },
+  "REMOVE_COMMENT_WARNING": {
+    "message": "Are you sure that you want to remove this comment?",
+    "description": "A warning from inside the comment removal form",
+    "component": "Edit form"
+  },
+  "DEFINITION_HEADLINE": {
+    "message": "Add a definition:",
+    "description": "A headline of the form to add a definition",
+    "component": "Edit form"
+  },
+  "DEFINITION_LABEL": {
+    "message": "Definition:",
+    "description": "A label of a definition input area in a definition form",
+    "component": "Edit form"
+  },
+  "SOURCE_LABEL": {
+    "message": "Source:",
+    "description": "A label of a source input area in a definition form",
+    "component": "Edit form"
+  },
+  "NUMBER_LABEL": {
+    "message": "Number:",
+    "description": "A label of a number input area in a definition form",
+    "component": "Edit form"
+  },
+  "CASE_LABEL": {
+    "message": "Case:",
+    "description": "A label of a case input area in a definition form",
+    "component": "Edit form"
+  },
+  "GENDER_LABEL": {
+    "message": "Gender:",
+    "description": "A label of a gender input area in a definition form",
+    "component": "Edit form"
+  },
+  "SELECT_VALUE_LABEL": {
+    "message": "Select a value",
+    "description": "A label that prompts a selection of a value in a drop-down list",
+    "component": "Edit form"
+  },
+  "REMOVE_DEFINITION_HEADLINE": {
+    "message": "Remove the definition:",
+    "description": "A headline of the definition removal form",
+    "component": "Edit form"
+  },
+  "REMOVE_DEFINITION_WARNING": {
+    "message": "Are you sure that you want to remove this definition?",
+    "description": "A warning from inside the definition removal form",
+    "component": "Edit form"
+  },
+  "ADD_INFLECTION_HEADLINE": {
+    "message": "Add an inflection:",
+    "description": "A headline of the form to add an inflection",
+    "component": "Edit form"
+  }
+}

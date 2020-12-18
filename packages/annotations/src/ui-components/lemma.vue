@@ -3,7 +3,7 @@
     <div class="alpheios-annotations__act-panel">
       <div class="alpheios-annotations__act-ctrls" :data-annotation-form-open="isFormOpen">
         <div :data-annotation-selected="isAdding" class="alpheios-annotations__act-ctrls-add"
-             @click.stop="add">[+lemma]</div>
+             @click.stop="add">[+{{getMsg('LEMMA_ACTION')}}]</div>
       </div>
 
       <div class="alpheios-annotations__act-form" v-show="isAdding">
@@ -11,14 +11,16 @@
           Content TBD
         </div>
         <div class="alpheios-annotations__act-form-ctrls">
-          <div class="alpheios-annotations__act-form-ctrls-add" @click.stop="closeForm">Add</div>
-          <div class="alpheios-annotations__act-form-ctrls-cancel" @click.stop="closeForm">Cancel</div>
+          <div class="alpheios-annotations__act-form-ctrls-add" @click.stop="closeForm">{{getMsg('ADD_BTN')}}</div>
+          <div class="alpheios-annotations__act-form-ctrls-cancel" @click.stop="closeForm">{{getMsg('CANCEL_BTN')}}</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import L10n from '@annotations/locales/l10n.js'
+
 const ActionTypes = {
   NONE: 'none',
   ADD: 'add'
@@ -41,6 +43,10 @@ export default {
     }
   },
   methods: {
+    getMsg (messageID, formatOptions = undefined, options = {}) {
+      return L10n.getInstance().getMsg(messageID, formatOptions, options)
+    },
+
     add () {
       this.selectedAction = ActionTypes.ADD
     },

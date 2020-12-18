@@ -175,15 +175,15 @@ export default {
   }
 
   .alpheios-principal-parts__item {
-      display: flex;
+    display: flex;
 
-      .feature_extras {
-          margin-left: 5px;
-      }
+    .feature_extras {
+        margin-left: 5px;
+    }
 
-      .feature_source {
-          margin-left: 5px;
-      }
+    .feature_source {
+        margin-left: 5px;
+    }
   }
 
   .alpheios-morph-data__chinese p {
@@ -224,4 +224,11 @@ export default {
           height: 22px;
       }
   }
+// region Annotation UI
+  [data-annotation-mode="true"] {
+    .alpheios-principal-parts__item {
+      flex-direction: column;
+    }
+  }
+// endregion Annotation UI
 </style>

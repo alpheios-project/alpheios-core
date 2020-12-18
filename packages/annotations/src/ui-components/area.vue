@@ -15,6 +15,7 @@ import Vue from '@vue-runtime'
 import AnnotationComment from '@annotations/ui-components/comment.vue'
 import AnnotationDefinition from '@annotations/ui-components/definition.vue'
 import AnnotationInflection from '@annotations/ui-components/inflection.vue'
+import L10n from '@annotations/locales/l10n.js'
 
 const COMPONENT_ID = 'annotationComponent'
 const ANNOTATABLE_ATTR_NAME = 'data-annotation-type'
@@ -37,6 +38,7 @@ const EMPTY_SELECTION = {
 export default {
   name: 'AnnotationArea',
   selection: Object.assign({}, EMPTY_SELECTION),
+  l10n: null,
   props: {
     annotationMode: {
       type: Boolean,
@@ -45,13 +47,18 @@ export default {
     }
   },
 
+  mounted () {
+    // Create an instance of L10n and set the locale for other components to use
+    L10n.getInstance().setLocale(L10n.locales.EN_US)
+  },
+
   methods: {
     clickHandler (evt) {
       const target = evt.target.closest(`[${ANNOTATABLE_ATTR_NAME}]`)
       if (!target) { return } // Do nothing if an annotatable element cannot be found
       const containerTarget = evt.target.closest(`[${CONTAINER_ATTR_NAME}]`)
       if (containerTarget) {
-        console.info('A click originated from a container')
+        // Ignore all clicks that are originated within annotation containers
         return
       }
       const targetIsSelected = this.$options.selection.isSelected && this.$options.selection.target === target

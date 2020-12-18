@@ -2049,6 +2049,9 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
   display: block;
   height: 22px !important;
 }
+[data-annotation-mode=true] .alpheios-principal-parts__item {
+  flex-direction: column !important;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
