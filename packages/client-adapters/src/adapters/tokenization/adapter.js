@@ -130,8 +130,8 @@ class AlpheiosTokenizationAdapter extends BaseAdapter {
       Object.keys(this.fetchOptions).forEach(option => {
         if (exclude.indexOf(option) === -1) {
           let sign = '&'
-          if (!wasFirst) { 
-            sign = '?' 
+          if (!wasFirst) {
+            sign = '?'
             wasFirst = true
           }
           url = `${url}${sign}${option}=${this.fetchOptions[option]}`

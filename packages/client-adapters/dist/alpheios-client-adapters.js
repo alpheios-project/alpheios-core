@@ -3977,24 +3977,22 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
       if (!this.fetchOptions.lang || !this.fetchOptions.sourceType) {
         return
       }
+      const exclude = ['baseUrl', 'sourceType', 'tokenizer']
 
-      let url = `${this.fetchOptions.baseUrl}tokenize/${this.fetchOptions.sourceType}?lang=${this.fetchOptions.lang}`
+      let url = `${this.fetchOptions.baseUrl}tokenize/${this.fetchOptions.sourceType}`
+      let wasFirst = false
 
-      if (this.fetchOptions.segments !== undefined) {
-        url = `${url}&segments=${this.fetchOptions.segments}`
-      }
+      Object.keys(this.fetchOptions).forEach(option => {
+        if (exclude.indexOf(option) === -1) {
+          let sign = '&'
+          if (!wasFirst) {
+            sign = '?'
+            wasFirst = true
+          }
+          url = `${url}${sign}${option}=${this.fetchOptions[option]}`
+        }
+      })
 
-      if (this.fetchOptions.segstart !== undefined) {
-        url = `${url}&segstart=${this.fetchOptions.segstart}`
-      }
-
-      if (this.fetchOptions.direction !== undefined) {
-        url = `${url}&direction=${this.fetchOptions.direction}`
-      }
-
-      if (this.fetchOptions.tbseg !== undefined) {
-        url = `${url}&tbseg=${this.fetchOptions.tbseg}`
-      }
       return url
     }
   }
