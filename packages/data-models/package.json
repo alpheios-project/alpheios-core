@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-no-coverage": "jest",
-    "test-c": "jest tests/chinese/chinese.test.js --coverage && shx cat ./coverage/lcov.info | coveralls",
+    "test-c": "jest tests/lemma.test.js --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-l": "jest tests/options/options.test.js --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-o": "jest tests/options/option-item.test.js --coverage && shx cat ./coverage/lcov.info | coveralls",
     "build-lib": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p lib -c config.mjs",

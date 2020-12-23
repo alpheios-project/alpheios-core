@@ -152,6 +152,7 @@ describe('lemma.test.js', () => {
     lemma.addTranslation(translation)
     expect(lemma.translation).toEqual(translation)
   })
+
   it('9 Lemma - isFullHomonym method', () => {
     let lemma1 = new Lemma('fooword', Constants.LANG_LATIN)
     let lemma2 = new Lemma('fooword', Constants.LANG_LATIN)
@@ -163,5 +164,15 @@ describe('lemma.test.js', () => {
     expect(lemma1.isFullHomonym(lemma2)).toBeTruthy()
     expect(lemma1.isFullHomonym(lemma3)).toBeFalsy()
     expect(lemma1.isFullHomonym(lemma4)).toBeFalsy()
+  })
+
+  it('10 Lemma - displayWord - formats Lemma word and removes digits from the end of the word', () => {
+    let lemma1 = new Lemma('mare', Constants.LANG_LATIN)
+
+    expect(lemma1.displayWord).toEqual('mare')
+
+    let lemma2 = new Lemma('οὐδός1', Constants.LANG_GREEK)
+
+    expect(lemma2.displayWord).toEqual('οὐδός')
   })
 })
