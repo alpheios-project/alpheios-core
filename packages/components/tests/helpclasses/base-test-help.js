@@ -16,7 +16,7 @@ import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 
 import Platform from '@/lib/utility/platform.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import { Lexeme, Lemma, Homonym, LanguageModelFactory as LMF, Options, TempStorageArea } from 'alpheios-data-models'
+import { Lexeme, Lemma, Homonym, LanguageModelFactory as LMF, Options, TempStorageArea, Language } from 'alpheios-data-models'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import UIController from '@/lib/controllers/app-controller.js'
 
@@ -447,7 +447,9 @@ export default class BaseTestHelp {
     let homonym = adapterTuftsRes.result
 
     if (!homonym) {
-      const formLexeme = new Lexeme(new Lemma(targetWord, languageID), [])
+      const langData = LMF.getLanguageAttrs(languageID)
+      const lang = new Language(langData.languageCode)
+      const formLexeme = new Lexeme(new Lemma(targetWord, lang), [])
       homonym = this.homonym = new Homonym([formLexeme], targetWord)
     }
 

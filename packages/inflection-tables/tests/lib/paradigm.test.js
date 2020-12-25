@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Constants, Feature, Inflection, Lemma } from 'alpheios-data-models'
+import { Constants, Feature, Inflection, Lemma, Language } from 'alpheios-data-models'
 import Paradigm from '@/paradigm/lib/paradigm.js'
 
 import paradigm01 from '@/paradigm/data/greek/verb/tables/paradigm-01.json'
@@ -113,7 +113,7 @@ describe('paradigm.test.js', () => {
 
   it('8 Paradigm - matches - compare with inflection based on paradigm rules - success example', () => {
     let paradigm = new Paradigm(Constants.LANG_GREEK, 'verb', paradigm32)
-    const lemma = new Lemma('testWord', Constants.LANG_GREEK)
+    const lemma = new Lemma('testWord', Language.GREEK)
     let features = []
     features.push(new Feature(Feature.types.part, 'verb', Constants.LANG_GREEK))
     features.push(new Feature(Feature.types.voice, 'active', Constants.LANG_GREEK))

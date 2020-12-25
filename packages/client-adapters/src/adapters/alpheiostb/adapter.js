@@ -1,4 +1,7 @@
-import { LanguageModelFactory as LMF, LatinLanguageModel, GreekLanguageModel, ResourceProvider, Lexeme, Lemma, Feature, Inflection, Homonym } from 'alpheios-data-models'
+import {
+  LanguageModelFactory as LMF, LatinLanguageModel, GreekLanguageModel, ResourceProvider, Lexeme, Lemma,
+  Feature, Inflection, Homonym, Language
+} from 'alpheios-data-models'
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
 import DefaultConfig from '@clAdapters/adapters/alpheiostb/config.json'
@@ -93,7 +96,8 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
     lemmaText = lemmaText.replace(/\d+$/, '')
 
     const model = this.models[hdwd._attr.lang._value]
-    let lemma = new Lemma(lemmaText, model.languageCode) // eslint-disable-line prefer-const
+    const lang = new Language(model.languageCode)
+    let lemma = new Lemma(lemmaText, lang) // eslint-disable-line prefer-const
     const lexmodel = new Lexeme(lemma, [])
     let inflection = new Inflection(lemmaText, model.languageID, null, null, null) // eslint-disable-line prefer-const
     const infl = jsonObj.words[0].word[0].entry[0].infl[0]

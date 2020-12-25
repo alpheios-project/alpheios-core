@@ -1,4 +1,4 @@
-import { Constants, Feature, FeatureImporter, Lemma, Logger } from 'alpheios-data-models'
+import { Constants, Feature, FeatureImporter, Lemma, Logger, Language } from 'alpheios-data-models'
 import Paradigm from '@/paradigm/lib/paradigm.js'
 import GreekParadigmData from '@/paradigm/data/greek/greek-paradigm-data.js'
 
@@ -22,6 +22,10 @@ export default class GreekParadigmDataset extends LanguageDataset {
 
     this.typeFeatures.get(Feature.types.tense).getImporter()
       .map('future_perfect', [Constants.TENSE_FUTURE_PERFECT])
+  }
+
+  static get language () {
+    return Language.GREEK
   }
 
   static get languageID () {
@@ -59,7 +63,7 @@ export default class GreekParadigmDataset extends LanguageDataset {
 
       let lemma
       if (item[n.lemma]) {
-        lemma = new Lemma(item[n.lemma], this.languageID)
+        lemma = new Lemma(item[n.lemma], this.constructor.language)
       }
 
       let morphFlags = ''
@@ -110,7 +114,7 @@ export default class GreekParadigmDataset extends LanguageDataset {
 
       let lemma
       if (item[n.lemma]) {
-        lemma = new Lemma(item[n.lemma], this.languageID)
+        lemma = new Lemma(item[n.lemma], this.constructor.language)
       }
 
       let morphFlags = ''

@@ -24,10 +24,10 @@
   },
   "homepage": "https://github.com/alpheios-project/wordlist#readme",
   "devDependencies": {
-    "alpheios-node-build": "github:alpheios-project/node-build#v3",
+    "alpheios-node-build": "github:alpheios-project/node-build#v4",
     "coveralls": "^3.1.0",
     "cross-env": "^7.0.3",
-    "eslint": "^7.15.0",
+    "eslint": "^7.16.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",

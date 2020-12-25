@@ -1,7 +1,7 @@
 import LMF from './language_model_factory'
 import Lexeme from './lexeme.js'
 import Lemma from './lemma.js'
-import Logger from './logging/logger.js'
+import Language from './language.js'
 
 /**
  * A class representing a homonym object.
@@ -15,9 +15,9 @@ class Homonym {
    * Initializes a Homonym object.
    *
    * @param {Lexeme[]} lexemes - An array of Lexeme objects.
-   * @param {string} form - the form which produces the homonyms
+   * @param {string} targetWord - the form which produces the homonyms
    */
-  constructor (lexemes, form) {
+  constructor (lexemes, targetWord) {
     if (!lexemes || (Array.isArray(lexemes) && lexemes.length === 0)) {
       throw new Error('Lexemes data should not be empty.')
     }
@@ -34,7 +34,7 @@ class Homonym {
 
     /** @type {Lexeme[]} */
     this.lexemes = lexemes
-    this.targetWord = form
+    this.targetWord = targetWord
   }
 
   /**
@@ -43,12 +43,12 @@ class Homonym {
    * a homonym's target word.
    *
    * @param {string} word - A word that will populate homonym's `targetWord` prop and lemma `word` one.
-   * @param {symbol} languageID - A language identificator as defined in Constants.LANG_XXX.
+   * @param {Language} language - An object representing the language.
    * @param {Inflection[]} inflections - Zero or more inflection objects that will be attached to the lexeme
    * @returns {Homonym} A newly created homonym object.
    */
-  static createSimpleForm (word, languageID, inflections = []) {
-    const lemma = new Lemma(word, languageID)
+  static createSimpleForm (word, language, inflections = []) {
+    const lemma = new Lemma(word, language)
     const lexeme = new Lexeme(lemma, inflections)
     return new Homonym([lexeme], word)
   }
@@ -72,21 +72,29 @@ class Homonym {
   }
 
   static readObject (jsonObject) {
+    if (!jsonObject.form && !jsonObject.targetWord) {
+      throw new Error(Homonym.errMsgs.NO_TARGET_WORD_IN_JSON)
+    }
+    const targetWord = jsonObject.form || jsonObject.targetWord
     let lexemes = [] // eslint-disable-line prefer-const
     if (jsonObject.lexemes) {
       for (const lexeme of jsonObject.lexemes) {
         lexemes.push(Lexeme.readObject(lexeme))
       }
     } else {
-      const languageID = LMF.getLanguageIdFromCode(jsonObject.languageCode)
-      lexemes = [new Lexeme(new Lemma(jsonObject.targetWord, languageID), [])]
+      if (!jsonObject.languageCode) {
+        throw new Error(Homonym.errMsgs.NO_LANGUAGE_IN_JSON)
+      }
+      const lang = new Language(jsonObject.languageCode)
+      lexemes = [new Lexeme(new Lemma(targetWord, lang), [])]
     }
-    const homonym = new Homonym(lexemes, jsonObject.form || jsonObject.targetWord)
+    const homonym = new Homonym(lexemes, targetWord)
     homonym.lemmasList = jsonObject.lemmasList
     return homonym
   }
 
   convertToJSONObject (addMeaning = false) {
+    // TODO: Shall we use targetWord instead of form to match the internal homonym structure?
     let resultHomonym = { lexemes: [], form: this.targetWord } // eslint-disable-line prefer-const
     for (const lexeme of this.lexemes) {
       resultHomonym.lexemes.push(lexeme.convertToJSONObject(addMeaning))
@@ -95,32 +103,29 @@ class Homonym {
   }
 
   /**
-   * Returns a language code of a homonym (ISO 639-3).
+   * Returns a language of the homonym..
    * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
    * and inflections within the same homonym will have the same language, and we can determine a language
-   * by using language property of the first lemma. We chan change this logic in the future if we'll need to.
+   * by using language property of the first lemma. We can change this logic in the future if we'll need to.
    *
-   * @returns {string} A language code, as defined in the `languages` object.
+   * @returns {Language} A language of the homonym.
    */
   get language () {
-    Logger.getInstance().warn('Please use languageID instead')
-    return LMF.getLanguageCodeFromId(this.languageID)
+    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.language) {
+      return this.lexemes[0].lemma.language
+    } else {
+      throw new Error(Homonym.errMsgs.NO_LANGUAGE_IN_HOMONYM)
+    }
   }
 
   /**
-   * Returns a language ID of a homonym.
-   * Homonym does not have a languageID property, only lemmas and inflections do. We assume that all lemmas
-   * and inflections within the same homonym will have the same language, and we can determine a language
-   * by using languageID property of the first lemma. We chan change this logic in the future if we'll need to.
+   * @deprecated
+   * Returns a language ID of a homonym. This getter has been deprecated, please use language getter instead.
    *
-   * @returns {symbol} A language ID, as defined in the `LANG_` constants.
+   * @returns {symbol} A language IDs.
    */
   get languageID () {
-    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.languageID) {
-      return this.lexemes[0].lemma.languageID
-    } else {
-      throw new Error('Homonym has not been initialized properly. Unable to obtain language ID information.')
-    }
+    return LMF.getLanguageIdFromCode(this.language.toCode())
   }
 
   /**
@@ -180,5 +185,11 @@ class Homonym {
     const newHom = new Homonym([...lexemes, ...missedLexemes], base.targetWord)
     return Homonym.disambiguate(newHom, disambiguators)
   }
+}
+
+Homonym.errMsgs = {
+  NO_LANGUAGE_IN_HOMONYM: 'Homonym has not been initialized properly. Unable to obtain language ID information',
+  NO_LANGUAGE_IN_JSON: 'Cannot create homonym from JSON with no lexemes and no language info',
+  NO_TARGET_WORD_IN_JSON: 'Cannot create homonym from JSON with no lexemes and no target word'
 }
 export default Homonym

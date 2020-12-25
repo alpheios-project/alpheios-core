@@ -5,7 +5,7 @@ import papaparse from 'papaparse'
 
 import AlpheiosLexiconsAdapter from '@clAdapters/adapters/lexicons/adapter'
 import ClientAdapters from '@clAdapters/client-adapters.js'
-import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma, Language } from 'alpheios-data-models'
 import { Fixture, LexiconsFixture } from 'alpheios-fixtures'
 
 import BaseTestHelp from '@tests/base-test-help.js'
@@ -15,7 +15,7 @@ describe('lexicons/adapter.test.js', () => {
   console.log = function () {}
   console.warn = function () {}
 
-  let testSuccessHomonym, testFailedHomonym, testLangID
+  let testSuccessHomonym, testFailedHomonym, testLang, testLangID
 
   beforeAll(async () => {
     jest.spyOn(console, 'error')
@@ -42,6 +42,7 @@ describe('lexicons/adapter.test.js', () => {
   beforeEach(async () => {
     ClientAdapters.init()
     testLangID = Constants.LANG_GREEK
+    testLang = Language.GREEK
     let sourceJson = Fixture.getFixtureRes({
       langCode: 'grc', adapter: 'tufts', word: 'μύες'
     })
@@ -55,7 +56,7 @@ describe('lexicons/adapter.test.js', () => {
       sourceData: sourceJson
     })
     testSuccessHomonym = homonymRes1.result
-    let formLexeme = new Lexeme(new Lemma('ινώδους', testLangID), [])
+    let formLexeme = new Lexeme(new Lemma('ινώδους', testLang), [])
     testFailedHomonym = new Homonym([formLexeme], 'ινώδους')
   })
   afterEach(() => {
@@ -506,7 +507,7 @@ describe('lexicons/adapter.test.js', () => {
 
     await BaseTestHelp.updateCacheWithFixtures()
 
-    let formLexeme = new Lexeme(new Lemma('foo', Constants.LANG_LATIN), [])
+    let formLexeme = new Lexeme(new Lemma('foo', Language.LATIN), [])
     let homonym = new Homonym([formLexeme], 'foo')
     adapter.addError = jest.fn()
 
@@ -526,7 +527,7 @@ describe('lexicons/adapter.test.js', () => {
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
     let data = new Map()
-    let formLexeme = new Lexeme(new Lemma('συνίημι', Constants.LANG_GREEK), [])
+    let formLexeme = new Lexeme(new Lemma('συνίημι', Language.GREEK), [])
     let homonym = new Homonym([formLexeme], 'ξυνέηκε')
 
     let fullDefsRequests = adapter.collectFullDefURLs(data, homonym, adapter.config[urlKey])

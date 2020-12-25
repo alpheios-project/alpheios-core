@@ -15,9 +15,6 @@ return /******/ (() => { // webpackBootstrap
 /*!*******************************************************!*\
   !*** ../../../node_modules/fast-memoize/src/index.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 140:0-14 */
 /***/ ((module) => {
 
 //
@@ -172,27 +169,6 @@ module.exports.strategies = {
 /*!********************************************************************!*\
   !*** ../../../node_modules/intl-messageformat-parser/lib/index.js ***!
   \********************************************************************/
-/*! namespace exports */
-/*! export SKELETON_TYPE [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .SKELETON_TYPE */
-/*! export SyntaxError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/parser.js .SyntaxError */
-/*! export TYPE [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .TYPE */
-/*! export createLiteralElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .createLiteralElement */
-/*! export createNumberElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .createNumberElement */
-/*! export isArgumentElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isArgumentElement */
-/*! export isDateElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isDateElement */
-/*! export isDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isDateTimeSkeleton */
-/*! export isLiteralElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isLiteralElement */
-/*! export isNumberElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isNumberElement */
-/*! export isNumberSkeleton [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isNumberSkeleton */
-/*! export isPluralElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isPluralElement */
-/*! export isPoundElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isPoundElement */
-/*! export isSelectElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isSelectElement */
-/*! export isTagElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isTagElement */
-/*! export isTimeElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/types.js .isTimeElement */
-/*! export parse [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export pegParse [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat-parser/lib/src/parser.js .pegParse */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -221,7 +197,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/parser */ "../../../node_modules/intl-messageformat-parser/lib/src/parser.js");
 /* harmony import */ var _src_normalize__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/normalize */ "../../../node_modules/intl-messageformat-parser/lib/src/normalize.js");
 /* harmony import */ var _src_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/types */ "../../../node_modules/intl-messageformat-parser/lib/src/types.js");
-;
+
 
 
 
@@ -242,10 +218,6 @@ function parse(input, opts) {
 /*!****************************************************************************!*\
   !*** ../../../node_modules/intl-messageformat-parser/lib/src/normalize.js ***!
   \****************************************************************************/
-/*! namespace exports */
-/*! export normalizeHashtagInPlural [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -256,7 +228,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "../../../node_modules/intl-messageformat-parser/node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "../../../node_modules/intl-messageformat-parser/lib/src/types.js");
 /* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parser */ "../../../node_modules/intl-messageformat-parser/lib/src/parser.js");
-;
+
 
 
 var PLURAL_HASHTAG_REGEX = /(^|[^\\])#/g;
@@ -305,11 +277,6 @@ function normalizeHashtagInPlural(els) {
 /*!*************************************************************************!*\
   !*** ../../../node_modules/intl-messageformat-parser/lib/src/parser.js ***!
   \*************************************************************************/
-/*! namespace exports */
-/*! export SyntaxError [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export pegParse [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -322,7 +289,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ "../../../node_modules/intl-messageformat-parser/lib/src/types.js");
 /* harmony import */ var _skeleton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./skeleton */ "../../../node_modules/intl-messageformat-parser/lib/src/skeleton.js");
 // @ts-nocheck
-;
+
 // @generated
 
 
@@ -3440,11 +3407,6 @@ var pegParse = peg$parse;
 /*!***************************************************************************!*\
   !*** ../../../node_modules/intl-messageformat-parser/lib/src/skeleton.js ***!
   \***************************************************************************/
-/*! namespace exports */
-/*! export parseDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export parseNumberSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3454,7 +3416,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "parseNumberSkeleton": () => /* binding */ parseNumberSkeleton
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../../../node_modules/intl-messageformat-parser/node_modules/tslib/tslib.es6.js");
-;
+
 /**
  * https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
  * Credit: https://github.com/caridy/intl-datetimeformat-pattern/blob/master/index.js
@@ -3760,24 +3722,6 @@ function parseNumberSkeleton(tokens) {
 /*!************************************************************************!*\
   !*** ../../../node_modules/intl-messageformat-parser/lib/src/types.js ***!
   \************************************************************************/
-/*! namespace exports */
-/*! export SKELETON_TYPE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TYPE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createLiteralElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createNumberElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isArgumentElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isDateElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isLiteralElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isNumberElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isNumberSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isPluralElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isPoundElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isSelectElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isTagElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isTimeElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3901,32 +3845,6 @@ function createNumberElement(value, style) {
 /*!***************************************************************************************!*\
   !*** ../../../node_modules/intl-messageformat-parser/node_modules/tslib/tslib.es6.js ***!
   \***************************************************************************************/
-/*! namespace exports */
-/*! export __assign [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __asyncDelegator [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __asyncGenerator [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __asyncValues [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __await [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __awaiter [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __classPrivateFieldGet [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __classPrivateFieldSet [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __createBinding [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __decorate [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __exportStar [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __extends [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __generator [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __importDefault [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __importStar [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __makeTemplateObject [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __metadata [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __param [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __read [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __rest [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __spread [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __spreadArrays [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __values [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4191,19 +4109,6 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 /*!*************************************************************!*\
   !*** ../../../node_modules/intl-messageformat/lib/index.js ***!
   \*************************************************************/
-/*! namespace exports */
-/*! export ErrorCode [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .ErrorCode */
-/*! export FormatError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .FormatError */
-/*! export IntlMessageFormat [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/core.js .IntlMessageFormat */
-/*! export InvalidValueError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .InvalidValueError */
-/*! export InvalidValueTypeError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .InvalidValueTypeError */
-/*! export MissingValueError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .MissingValueError */
-/*! export PART_TYPE [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/formatters.js .PART_TYPE */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export formatToParts [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/formatters.js .formatToParts */
-/*! export isFormatXMLElementFn [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/formatters.js .isFormatXMLElementFn */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4228,7 +4133,7 @@ Copyright (c) 2014, Yahoo! Inc. All rights reserved.
 Copyrights licensed under the New BSD License.
 See the accompanying LICENSE file for terms.
 */
-;
+
 
 
 
@@ -4241,10 +4146,6 @@ See the accompanying LICENSE file for terms.
 /*!****************************************************************!*\
   !*** ../../../node_modules/intl-messageformat/lib/src/core.js ***!
   \****************************************************************/
-/*! namespace exports */
-/*! export IntlMessageFormat [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4262,7 +4163,7 @@ Copyright (c) 2014, Yahoo! Inc. All rights reserved.
 Copyrights licensed under the New BSD License.
 See the accompanying LICENSE file for terms.
 */
-;
+
 
 
 
@@ -4492,14 +4393,6 @@ var IntlMessageFormat = /** @class */ (function () {
 /*!*****************************************************************!*\
   !*** ../../../node_modules/intl-messageformat/lib/src/error.js ***!
   \*****************************************************************/
-/*! namespace exports */
-/*! export ErrorCode [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export FormatError [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export InvalidValueError [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export InvalidValueTypeError [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MissingValueError [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4512,7 +4405,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MissingValueError": () => /* binding */ MissingValueError
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../../../node_modules/intl-messageformat/node_modules/tslib/tslib.es6.js");
-;
+
 var ErrorCode;
 (function (ErrorCode) {
     // When we have a placeholder but no value to format
@@ -4568,12 +4461,6 @@ var MissingValueError = /** @class */ (function (_super) {
 /*!**********************************************************************!*\
   !*** ../../../node_modules/intl-messageformat/lib/src/formatters.js ***!
   \**********************************************************************/
-/*! namespace exports */
-/*! export PART_TYPE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export formatToParts [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isFormatXMLElementFn [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4585,7 +4472,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var intl_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat-parser */ "../../../node_modules/intl-messageformat-parser/lib/src/types.js");
 /* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./error */ "../../../node_modules/intl-messageformat/lib/src/error.js");
-;
+
 
 var PART_TYPE;
 (function (PART_TYPE) {
@@ -4765,32 +4652,6 @@ originalMessage) {
 /*!********************************************************************************!*\
   !*** ../../../node_modules/intl-messageformat/node_modules/tslib/tslib.es6.js ***!
   \********************************************************************************/
-/*! namespace exports */
-/*! export __assign [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __asyncDelegator [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __asyncGenerator [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __asyncValues [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __await [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __awaiter [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __classPrivateFieldGet [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __classPrivateFieldSet [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __createBinding [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __decorate [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __exportStar [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __extends [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __generator [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __importDefault [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __importStar [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __makeTemplateObject [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __metadata [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __param [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __read [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __rest [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __spread [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __spreadArrays [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __values [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5055,11 +4916,6 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 /*!*******************!*\
   !*** ../index.js ***!
   \*******************/
-/*! namespace exports */
-/*! export L10n [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./l10n.js .default */
-/*! export MessageBundle [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./message-bundle.js .default */
-/*! other exports [not provided] [maybe used in main (runtime-defined)] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5070,7 +4926,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @l10n/l10n.js */ "./l10n.js");
 /* harmony import */ var _l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @l10n/message-bundle.js */ "./message-bundle.js");
-;
+
 
 
 
@@ -5081,10 +4937,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************!*\
   !*** ./l10n.js ***!
   \*****************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5093,7 +4945,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ L10n
 /* harmony export */ });
 /* harmony import */ var _l10n_message_bundle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @l10n/message-bundle */ "./message-bundle.js");
-;
+
 
 /**
  * Combines several message bundles of different locales.
@@ -5202,10 +5054,6 @@ class L10n {
 /*!***************************!*\
   !*** ./message-bundle.js ***!
   \***************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5214,7 +5062,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ MessageBundle
 /* harmony export */ });
 /* harmony import */ var _l10n_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @l10n/message.js */ "./message.js");
-;
+
 // TODO: Deal with situations when message is not available, but is requested
 
 /**
@@ -5397,10 +5245,6 @@ class MessageBundle {
 /*!********************!*\
   !*** ./message.js ***!
   \********************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5409,7 +5253,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ Message
 /* harmony export */ });
 /* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat */ "../../../node_modules/intl-messageformat/lib/index.js");
-;
+
 
 /**
  * Represents a single message object

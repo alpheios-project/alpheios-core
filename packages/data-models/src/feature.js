@@ -1,4 +1,5 @@
 import LanguageModelFactory from './language_model_factory.js'
+import Language from './language.js'
 import FeatureImporter from './feature_importer.js'
 import Logger from './logging/logger.js'
 
@@ -49,6 +50,14 @@ export default class Feature {
 
     this.type = type
     this.languageID = languageID
+    const langCode = LanguageModelFactory.getLanguageCodeFromId(this.languageID)
+
+    /**
+     * A language of the feature.
+     *
+     * @type {Language}
+     */
+    this._language = new Language(langCode)
     this.sortOrder = sortOrder
     this.allowedValues = allowedValues
 
@@ -62,6 +71,15 @@ export default class Feature {
      */
     this._data = Feature.dataValuesFromInput(data)
     this.sort()
+  }
+
+  /**
+   * Returns a language of the feature.
+   *
+   * @returns {Language} - A language of the feature.
+   */
+  get language () {
+    return this._language
   }
 
   /**
@@ -504,7 +522,7 @@ to create other items of the same type.
     const data = this._data.map(dataItem => [dataItem.value, dataItem.sortOrder])
     return {
       type: this.type,
-      languageCode: LanguageModelFactory.getLanguageCodeFromId(this.languageID),
+      languageCode: this._language.toCode(),
       sortOrder: this.sortOrder,
       allowedValues: this.allowedValues,
       data: data

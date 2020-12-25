@@ -1,5 +1,5 @@
 /**
- * Constants that define a macrolanguage.
+ * Constants that define a macrolanguage in an ISO 639-3 format.
  *
  * @enum {string} */
 export const Lang = {
@@ -9,7 +9,8 @@ export const Lang = {
   PERSIAN: 'per',
   GEEZ: 'gez',
   CHINESE: 'zho',
-  SYRIAC: 'syr'
+  SYRIAC: 'syr',
+  ENGLISH: 'eng'
 }
 
 /**
@@ -19,18 +20,26 @@ export default class Language {
   /**
    * Creates an instance of a language class.
    *
-   * @param {Lang} code - A constant that specifies a language.
+   * @param {Lang | string} code - A constant that specifies a language in an ISO 639-3 format.
+   * @param {object} options - Additional options of the Language object to be created.
+   * @param {boolean} options.normalize - Whether the language code provided, in case it is not
+   *        in the format supported by the Language object, should attempted
+   *        to be converted to the supported format.
    */
-  constructor (code) {
+  constructor (code, { normalize = false } = {}) {
     if (!code) {
-      throw new Error('Language object cannot be create without a language _code')
+      throw new Error('Language object cannot be created without a language code')
+    }
+
+    if (normalize) {
+      code = Language.normalizedCode(code)
     }
 
     /**
-     An ISO 639-3 _code.
+     *An ISO 639-3 _code.
      *
-     @private
-     @type {string}
+     * @private
+     * @type {string}
      */
     this._code = code
   }
@@ -61,6 +70,30 @@ export default class Language {
 
   static get SYRIAC () {
     return new Language(Lang.SYRIAC)
+  }
+
+  static get ENGLISH () {
+    return new Language(Lang.ENGLISH)
+  }
+
+  /**
+   * Tries to convert a language code that is in an unsupported format to the one
+   * that is supported by the Language class.
+   *
+   * @param {string} code - A language code to normalize.
+   * @returns {Lang|string} - A normalized, if normalization is possible,
+   *          or an unchanged language code supplied to the function,
+   */
+  static normalizedCode (code) {
+    if (Object.values(Lang).includes(code)) {
+      // The code is already in the supported format and does not need to be normalized
+      return code
+    } else if (['en'].includes(code)) {
+      return Lang.ENGLISH
+    } else {
+      // We don't know how to normalize this code so we return the value unchanged
+      return code
+    }
   }
 
   /**

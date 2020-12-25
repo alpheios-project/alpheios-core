@@ -1,4 +1,4 @@
-import { Homonym, WordItem, Lexeme, Lemma, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Homonym, WordItem, Lexeme, Lemma, Language } from 'alpheios-data-models'
 
 export default class IndexedDBLoadProcess {
   /**
@@ -43,16 +43,16 @@ export default class IndexedDBLoadProcess {
     if (jsonHomonym.lexemes && Array.isArray(jsonHomonym.lexemes) && jsonHomonym.lexemes.length >0) {
       wordItem.homonym = WordItem.readHomonym(jsonObjs[0])
     } else {
-      let languageID = LMF.getLanguageIdFromCode(jsonObjs[0].languageCode)
+      const lang = new Language(jsonObjs[0].languageCode)
       let lexemes = []
 
       if (jsonHomonym.lemmasList) {
         let lexemesForms = jsonHomonym.lemmasList.split(', ')
         for (let lexForm of lexemesForms) {
-          lexemes.push(new Lexeme(new Lemma(lexForm, languageID), []))
+          lexemes.push(new Lexeme(new Lemma(lexForm, lang), []))
         }
       } else {
-        lexemes = [new Lexeme(new Lemma(jsonObjs[0].targetWord, languageID), [])]
+        lexemes = [new Lexeme(new Lemma(jsonObjs[0].targetWord, lang), [])]
       }
       wordItem.homonym = new Homonym(lexemes, jsonHomonym.targetWord)
     }

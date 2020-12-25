@@ -27,12 +27,22 @@ class LanguageModelFactory {
   /**
    * Checks whether a language is supported
    *
-   * @param {string | symbol} language - Language as a language ID (symbol) or a language code (string)
+   * @param {Language | string | symbol} language - Language as a Language object,
+   *        language ID (a symbol) or a language code (a string).
    * @returns {boolean} True if language is supported, false otherwise
    */
   static supportsLanguage (language) {
-    language = (typeof language === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(language) : language
-    return MODELS.has(language)
+    let langCode
+    if (language instanceof Language) {
+      langCode = language.toCode()
+    } else if (typeof language === 'symbol') {
+      // language is in a language ID format
+      langCode = LanguageModelFactory.getLanguageCodeFromId(language)
+    } else {
+      // language contains the language code
+      langCode = language
+    }
+    return MODELS.has(langCode)
   }
 
   static availableLanguages () {

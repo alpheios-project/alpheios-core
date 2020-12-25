@@ -1,6 +1,7 @@
-import Lemma from './lemma.js'
-import Inflection from './inflection.js'
-import DefinitionSet from './definition-set.js'
+/** @module lexeme */
+import Lemma from './lemma.js' /* @typedef {import('./lemma.js').Lemma} Lemma */
+import Inflection from './inflection.js' /* @typedef {import('./inflection.js').Inflection} Inflection */
+import DefinitionSet from './definition-set.js' /* @typedef {import('./definition-set.js').DefinitionSet} DefinitionSet */
 import LMF from './language_model_factory.js'
 import LM from './language_model.js'
 import ResourceProvider from './resource_provider.js'
@@ -44,11 +45,24 @@ class Lexeme {
       throw new Error('Meaning should be of DefinitionSet object type.')
     }
 
+    /**
+     * The lemma for the lexeme. If sources provide several different lemmas then this is the lemma we
+     * think is the most appropriate for this lexeme.
+     *
+     * @type {Lemma}
+     */
     this.lemma = lemma
+
+    /**
+     * Lemmas that are provided by some sources for the lexeme but that we think are less appropriate
+     * than the lemma stored in the `lemma` prop/
+     *
+     * @type {Lemma[]}
+     */
     this.altLemmas = []
     this.inflections = []
     this.addInflections(inflections)
-    this.meaning = meaning || new DefinitionSet(this.lemma.word, this.lemma.languageID)
+    this.meaning = meaning || new DefinitionSet(this.lemma.word, this.lemma.language)
     this.disambiguated = false
   }
 
@@ -77,7 +91,7 @@ class Lexeme {
   /**
    * add an alternative lemma to the lexeme
    *
-   * @param {Lemma} lemma
+   * @param {Lemma} lemma - An alternative lemma to be added to the list of alt lemmas.
    */
   addAltLemma (lemma) {
     this.altLemmas.push(lemma)

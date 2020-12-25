@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
-import { ChineseLanguageModel, Lemma, Lexeme, Homonym, Feature, Definition } from 'alpheios-data-models'
+import { ChineseLanguageModel, Lemma, Lexeme, Language, Homonym, Feature, Constants, Definition } from 'alpheios-data-models'
 import {
   MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictConfig, RequestMessage
 } from 'alpheios-messaging'
@@ -37,6 +37,8 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
     }
     this._messagingService = MessagingService.getService(msgServiceName)
   }
+
+  get language () { return ChineseLanguageModel.language }
 
   get languageID () { return ChineseLanguageModel.languageID }
 
@@ -117,7 +119,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
     wordEntries.forEach(entry => {
       const cfData = entry[characterForm]
       const headword = cfData.headword
-      let lemma = new Lemma(headword, this.languageID, []) // eslint-disable-line prefer-const
+      let lemma = new Lemma(headword, this.language, []) // eslint-disable-line prefer-const
 
       // eslint-disable-next-line prefer-const
       let pronunciationValues = entry.pinyin ? [ChineseLanguageModel.formatPinyin(entry.pinyin)] : []
@@ -132,7 +134,9 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
       if (cfData.frequency) lemma.addFeature(this._createFeature(Feature.types.frequency, cfData.frequency, 10))
 
       let lexModel = new Lexeme(lemma, []) // eslint-disable-line prefer-const
-      const shortDefs = entry.definitions.map(entry => new Definition(entry, 'eng', 'text/plain', headword))
+      const shortDefs = entry.definitions.map(
+        entry => new Definition(entry, Language.ENGLISH, Constants.MIMETypes.TEXT_PLAIN, headword)
+      )
       lexModel.meaning.appendShortDefs(shortDefs)
       lexemes.push(lexModel)
     })

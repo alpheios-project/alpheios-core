@@ -15,12 +15,6 @@ return /******/ (() => { // webpackBootstrap
 /*!************************************************!*\
   !*** ../../../node_modules/base64-js/index.js ***!
   \************************************************/
-/*! default exports */
-/*! export byteLength [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export fromByteArray [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export toByteArray [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -184,13 +178,6 @@ function fromByteArray (uint8) {
 /*!*********************************************!*\
   !*** ../../../node_modules/buffer/index.js ***!
   \*********************************************/
-/*! default exports */
-/*! export Buffer [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export INSPECT_MAX_BYTES [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export SlowBuffer [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export kMaxLength [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__, __webpack_require__.g, __webpack_require__.* */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -1991,9 +1978,6 @@ function isnan (val) {
 /*!**********************************************!*\
   !*** ../../../node_modules/events/events.js ***!
   \**********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 56:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -2481,11 +2465,6 @@ function once(emitter, name) {
 /*!**********************************************!*\
   !*** ../../../node_modules/ieee754/index.js ***!
   \**********************************************/
-/*! default exports */
-/*! export read [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export write [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports) => {
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -2581,9 +2560,6 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 /*!**************************************************!*\
   !*** ../../../node_modules/inherits/inherits.js ***!
   \**************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:2-16 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 try {
@@ -2603,10 +2579,6 @@ try {
 /*!**********************************************************!*\
   !*** ../../../node_modules/inherits/inherits_browser.js ***!
   \**********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:2-16 */
-/*! CommonJS bailout: module.exports is used directly at 18:2-16 */
 /***/ ((module) => {
 
 if (typeof Object.create === 'function') {
@@ -2644,9 +2616,6 @@ if (typeof Object.create === 'function') {
 /*!**********************************************!*\
   !*** ../../../node_modules/isarray/index.js ***!
   \**********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 var toString = {}.toString;
@@ -2662,9 +2631,6 @@ module.exports = Array.isArray || function (arr) {
 /*!****************************************************!*\
   !*** ../../../node_modules/papaparse/papaparse.js ***!
   \****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: top-level-this-exports, __webpack_require__, __webpack_exports__, module */
-/*! CommonJS bailout: this is used directly at 31:2-6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* @license
@@ -4601,10 +4567,6 @@ License: MIT
 /*!***************************************************************!*\
   !*** ../../../node_modules/readable-stream/errors-browser.js ***!
   \***************************************************************/
-/*! default exports */
-/*! export codes [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -4743,9 +4705,6 @@ module.exports.codes = codes;
 /*!*******************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/_stream_duplex.js ***!
   \*******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 40:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -4895,9 +4854,6 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
 /*!************************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/_stream_passthrough.js ***!
   \************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 26:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -4947,9 +4903,6 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 /*!*********************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/_stream_readable.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__, __webpack_require__.g, __webpack_require__.* */
-/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -6084,9 +6037,6 @@ function indexOf(xs, x) {
 /*!**********************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/_stream_transform.js ***!
   \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 64:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -6298,9 +6248,6 @@ function done(stream, er, data) {
 /*!*********************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/_stream_writable.js ***!
   \*********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__, __webpack_require__.g, __webpack_require__.* */
-/*! CommonJS bailout: module.exports is used directly at 26:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7008,9 +6955,6 @@ Writable.prototype._destroy = function (err, cb) {
 /*!************************************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/internal/streams/async_iterator.js ***!
   \************************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 207:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7228,9 +7172,6 @@ module.exports = createReadableStreamAsyncIterator;
 /*!*********************************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/internal/streams/buffer_list.js ***!
   \*********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 27:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7451,9 +7392,6 @@ function () {
 /*!*****************************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/internal/streams/destroy.js ***!
   \*****************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 101:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -7569,9 +7507,6 @@ module.exports = {
 /*!***********************************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/internal/streams/end-of-stream.js ***!
   \***********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_require__, module */
-/*! CommonJS bailout: module.exports is used directly at 104:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7686,9 +7621,6 @@ module.exports = eos;
 /*!**********************************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/internal/streams/from-browser.js ***!
   \**********************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = function () {
@@ -7702,9 +7634,6 @@ module.exports = function () {
 /*!******************************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/internal/streams/pipeline.js ***!
   \******************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_require__, module */
-/*! CommonJS bailout: module.exports is used directly at 97:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7812,9 +7741,6 @@ module.exports = pipeline;
 /*!***************************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/internal/streams/state.js ***!
   \***************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_require__, module */
-/*! CommonJS bailout: module.exports is used directly at 25:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7852,9 +7778,6 @@ module.exports = {
 /*!************************************************************************************!*\
   !*** ../../../node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
   \************************************************************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__(/*! events */ "../../../node_modules/events/events.js").EventEmitter;
@@ -7866,11 +7789,6 @@ module.exports = __webpack_require__(/*! events */ "../../../node_modules/events
 /*!*****************************************************************!*\
   !*** ../../../node_modules/readable-stream/readable-browser.js ***!
   \*****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_exports__, module, __webpack_require__ */
-/*! CommonJS bailout: exports is used directly at 1:0-7 */
-/*! CommonJS bailout: exports is used directly at 2:17-24 */
-/*! CommonJS bailout: exports is used directly at 3:19-26 */
 /***/ ((module, exports, __webpack_require__) => {
 
 exports = module.exports = __webpack_require__(/*! ./lib/_stream_readable.js */ "../../../node_modules/readable-stream/lib/_stream_readable.js");
@@ -7890,10 +7808,6 @@ exports.pipeline = __webpack_require__(/*! ./lib/internal/streams/pipeline.js */
 /*!**************************************************!*\
   !*** ../../../node_modules/safe-buffer/index.js ***!
   \**************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 12:2-16 */
-/*! CommonJS bailout: exports is used directly at 15:20-27 */
 /***/ ((module, exports, __webpack_require__) => {
 
 /* eslint-disable node/no-deprecated-api */
@@ -7966,10 +7880,6 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /*!******************************************************************!*\
   !*** ../../../node_modules/string_decoder/lib/string_decoder.js ***!
   \******************************************************************/
-/*! default exports */
-/*! export StringDecoder [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -8276,9 +8186,6 @@ function simpleEnd(buf) {
 /*!****************************************************!*\
   !*** ../../../node_modules/util-deprecate/node.js ***!
   \****************************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 
@@ -8295,9 +8202,6 @@ module.exports = __webpack_require__(/*! util */ "../../../node_modules/util/uti
 /*!********************************************************************!*\
   !*** ../../../node_modules/util/node_modules/inherits/inherits.js ***!
   \********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 4:2-16 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 try {
@@ -8315,10 +8219,6 @@ try {
 /*!****************************************************************************!*\
   !*** ../../../node_modules/util/node_modules/inherits/inherits_browser.js ***!
   \****************************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:2-16 */
-/*! CommonJS bailout: module.exports is used directly at 16:2-16 */
 /***/ ((module) => {
 
 if (typeof Object.create === 'function') {
@@ -8352,9 +8252,6 @@ if (typeof Object.create === 'function') {
 /*!*************************************************************!*\
   !*** ../../../node_modules/util/support/isBufferBrowser.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 module.exports = function isBuffer(arg) {
@@ -8370,12 +8267,6 @@ module.exports = function isBuffer(arg) {
 /*!******************************************!*\
   !*** ../../../node_modules/util/util.js ***!
   \******************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: exports.deprecate(...) prevents optimization as exports is passed as call context at 83:13-30 */
-/*! CommonJS bailout: exports is used directly at 116:39-46 */
-/*! CommonJS bailout: exports._extend(...) prevents optimization as exports is passed as call context at 149:4-19 */
-/*! CommonJS bailout: exports is used directly at 563:59-66 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -9089,10 +8980,6 @@ exports.callbackify = callbackify;
 /*!*************************!*\
   !*** ./base_adapter.js ***!
   \*************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9127,11 +9014,6 @@ class BaseResourceAdapter {
 /*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
-/*! namespace exports */
-/*! export GrammarResAdapter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./grammar/grammar_adapter.js .default */
-/*! export Grammars [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./grammars.js .default */
-/*! other exports [not provided] [maybe used in main (runtime-defined)] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9142,7 +9024,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./grammar/grammar_adapter */ "./grammar/grammar_adapter.js");
 /* harmony import */ var _grammars__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./grammars */ "./grammars.js");
-;
+
 
 
 
@@ -9153,10 +9035,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************!*\
   !*** ./grammar/grammar_adapter.js ***!
   \************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9170,7 +9048,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./config.json */ "./grammar/config.json");
-;
+
 
 
 
@@ -9347,10 +9225,6 @@ class GrammarResAdapter extends _base_adapter_js__WEBPACK_IMPORTED_MODULE_0__.de
 /*!*********************!*\
   !*** ./grammars.js ***!
   \*********************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9361,7 +9235,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./grammar/grammar_adapter */ "./grammar/grammar_adapter.js");
-;
+
 
 
 
@@ -9455,39 +9329,6 @@ class Grammars {
 /*!*****************************!*\
   !*** ./grammar/config.json ***!
   \*****************************/
-/*! default exports */
-/*! export https://github.com/alpheios-project/grammar-allen-greenough [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export base_url [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export description [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export index_url [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export langs [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export source [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export target [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     other exports [not provided] [no usage info] */
-/*!   export rights [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export https://github.com/alpheios-project/grammar-bennett [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export base_url [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export description [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export index_url [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export langs [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export source [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export target [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     other exports [not provided] [no usage info] */
-/*!   export rights [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export https://github.com/alpheios-project/grammar-smyth [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export base_url [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export description [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export index_url [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export langs [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export source [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export target [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     other exports [not provided] [no usage info] */
-/*!   export rights [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -9499,10 +9340,6 @@ module.exports = JSON.parse("{\"https://github.com/alpheios-project/grammar-benn
 /*!***************************************!*\
   !*** external "alpheios-data-models" ***!
   \***************************************/
-/*! dynamic exports */
-/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
-/*! other exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -9514,8 +9351,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements:  */
 /***/ (() => {
 
 /* (ignored) */

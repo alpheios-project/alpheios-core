@@ -234,3 +234,11 @@ export const CLASS_RECIPROCAL = 'reciprocal'
 // Paradigms
 export const PARADIGM_CAT_KAYLO = 'kaylo'
 export const PARADIGM_CAT_STATE = 'state'
+
+/**
+ * Constants that define MIME Types used in Alpheios.
+ *
+ * @enum {string} */
+export const MIMETypes = {
+  TEXT_PLAIN: 'text/plain'
+}

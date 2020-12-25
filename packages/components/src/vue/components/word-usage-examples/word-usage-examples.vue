@@ -134,7 +134,7 @@ export default {
       return this.$store.state.app.homonymDataReady && this.app.homonym ? this.app.homonym.targetWord : null
     },
     language () {
-      return this.$store.state.app.homonymDataReady && this.app.homonym ? this.app.homonym.language : null
+      return this.$store.state.app.homonymDataReady && this.app.homonym ? this.app.homonym.language.toCode() : null
     },
     showHeaderFilters () {
       return this.$store.state.app.wordUsageExamplesReady && this.app.platform.isMobile

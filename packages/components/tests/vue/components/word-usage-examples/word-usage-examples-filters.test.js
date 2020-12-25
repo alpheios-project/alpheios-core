@@ -23,15 +23,14 @@ describe('word-usage-examples-filters.test.js', () => {
   let testHomonym, testWordUsageList, testAuthor, testTextWork
 
   beforeAll(async () => {
-    testAuthor = new Author('urn:cts:latinLit:phi0893', { "lat": "Horace" }, { "lat": "Hor" })
+    testAuthor = new Author('urn:cts:latinLit:phi0893', { lat: 'Horace' }, { lat: 'Hor' })
 
     testAuthor.works = []
-    testAuthor.works.push(new TextWork(testAuthor, 'urn:cts:latinLit:phi0893.phi0001', { "lat": "Carmina" }, { "lat": "Carm" }))
-    testAuthor.works.push(new TextWork(testAuthor, 'urn:cts:latinLit:phi0893.phi0004', { "lat": "Sermones" }, { "lat": "S" }))
+    testAuthor.works.push(new TextWork(testAuthor, 'urn:cts:latinLit:phi0893.phi0001', { lat: 'Carmina' }, { lat: 'Carm' }))
+    testAuthor.works.push(new TextWork(testAuthor, 'urn:cts:latinLit:phi0893.phi0004', { lat: 'Sermones' }, { lat: 'S' }))
 
     testHomonym = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN, false)
     testWordUsageList = await BaseTestHelp.collectConcordance(testHomonym)
-    
   })
 
   beforeEach(() => {
@@ -48,16 +47,14 @@ describe('word-usage-examples-filters.test.js', () => {
     }
 
     BaseTestHelp.l10nModule(store, api)
-
   })
 
   function timeout (ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
-
   it('1 WordUsageExamplesFilters - renders a vue instance (min requirements)', () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
@@ -66,12 +63,12 @@ describe('word-usage-examples-filters.test.js', () => {
   })
 
   it('2 WordUsageExamplesFilters - clears filters on changing tab to wordusage', async () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
     })
-    
+
     cmp.vm.getResults = jest.fn()
 
     cmp.setData({
@@ -91,7 +88,7 @@ describe('word-usage-examples-filters.test.js', () => {
   })
 
   it('3 WordUsageExamplesFilters - computed homonym returns homonym if it is ready or null otherwise', () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
@@ -106,7 +103,7 @@ describe('word-usage-examples-filters.test.js', () => {
   })
 
   it('4 WordUsageExamplesFilters - computed languageCode returns languageCode from homonym or null otherwise', () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
@@ -117,11 +114,11 @@ describe('word-usage-examples-filters.test.js', () => {
     store.commit('app/setTestHomonymDataReady', true)
     api.app.homonym = testHomonym
 
-    expect(cmp.vm.languageCode).toEqual(testHomonym.language)
+    expect(cmp.vm.languageCode).toEqual(testHomonym.language.toCode())
   })
 
   it('5 WordUsageExamplesFilters - computed authorsList returns false when homonym is not ready', () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
@@ -133,7 +130,7 @@ describe('word-usage-examples-filters.test.js', () => {
   })
 
   it('6 WordUsageExamplesFilters - computed authorsList returns false when word usage is not ready and author is not selected', () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
@@ -150,12 +147,11 @@ describe('word-usage-examples-filters.test.js', () => {
   })
 
   it('7 WordUsageExamplesFilters - computed authorsList updates and sort authors list if it word usage examples were retrieved ', () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
     })
-
 
     store.commit('app/setTestWordUsageExamplesReady', true)
 
@@ -174,9 +170,8 @@ describe('word-usage-examples-filters.test.js', () => {
     expect(cmp.vm.lastAuthorsList[0]).toBeNull()
   })
 
-
   it('8 WordUsageExamplesFilters - computed filteredWorkList returns false if homonym is not ready ', () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
@@ -188,12 +183,12 @@ describe('word-usage-examples-filters.test.js', () => {
   })
 
   it('9 WordUsageExamplesFilters - computed filteredWorkList returns null if no author is selected ', () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
     })
-    
+
     cmp.setData({
       selectedAuthor: null
     })
@@ -202,14 +197,13 @@ describe('word-usage-examples-filters.test.js', () => {
     expect(cmp.vm.filteredWorkList).toBeNull()
   })
 
-
   it('10 WordUsageExamplesFilters - computed filteredWorkList returns sorted textWork list (if there are more than one textWork) ', () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
     })
-    
+
     api.app.homonym = testHomonym
     api.app.wordUsageExamples = testWordUsageList
 
@@ -228,18 +222,17 @@ describe('word-usage-examples-filters.test.js', () => {
     expect(cmp.vm.selectedTextWork).toBeNull()
   })
 
-
   it('11 WordUsageExamplesFilters - computed filteredWorkList returns textwork list and defines selectedWork if there is only one textWork in the list', () => {
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
     })
-    
+
     api.app.homonym = testHomonym
     api.app.wordUsageExamples = testWordUsageList
 
-    let newAuthor = Object.assign({}, testAuthor)
+    const newAuthor = Object.assign({}, testAuthor)
     newAuthor.works = testAuthor.works.slice(0, 1)
 
     cmp.setData({
@@ -256,19 +249,18 @@ describe('word-usage-examples-filters.test.js', () => {
     expect(cmp.vm.selectedTextWork).toEqual(newAuthor.works[0])
   })
 
-
   it('12 WordUsageExamplesFilters - method getResults executes getWordUsageData with only homonym if selectedAuthor and selectedTextWork are empty', () => {
-    let api = {
+    const api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI({
         getWordUsageData: jest.fn(() => Promise.resolve(true))
       })
     }
-  
+
     BaseTestHelp.l10nModule(store, api)
-    
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
@@ -288,17 +280,17 @@ describe('word-usage-examples-filters.test.js', () => {
   })
 
   it('13 WordUsageExamplesFilters - method getResults executes getWordUsageData with homonym and filters if selectedAuthor is not empty', () => {
-    let api = {
+    const api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI({
         getWordUsageData: jest.fn(() => Promise.resolve(true))
       })
     }
-  
+
     BaseTestHelp.l10nModule(store, api)
-    
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
@@ -318,17 +310,17 @@ describe('word-usage-examples-filters.test.js', () => {
   })
 
   it('14 WordUsageExamplesFilters - method getResults executes getWordUsageData with homonym and filters if selectedAuthor is not empty, when passed type=author, it executes with empty textWork', () => {
-    let api = {
+    const api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI({
         getWordUsageData: jest.fn(() => Promise.resolve(true))
       })
     }
-  
+
     BaseTestHelp.l10nModule(store, api)
-    
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
@@ -347,8 +339,8 @@ describe('word-usage-examples-filters.test.js', () => {
     expect(api.app.getWordUsageData).toHaveBeenCalledWith(testHomonym, { author: testAuthor, textWork: null })
   })
 
-  it('15 WordUsageExamplesFilters - method calcTitle calcs title for authors and textWorks in filters (placeholder)', () => {  
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+  it('15 WordUsageExamplesFilters - method calcTitle calcs title for authors and textWorks in filters (placeholder)', () => {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
@@ -358,72 +350,70 @@ describe('word-usage-examples-filters.test.js', () => {
       selectedAuthor: null
     })
 
-    let result1 = cmp.vm.calcTitle(null, 'author') // empty author and empty filter
+    const result1 = cmp.vm.calcTitle(null, 'author') // empty author and empty filter
     expect(result1).toEqual('Select an author')
 
     cmp.setData({
       selectedAuthor: testAuthor
     })
 
-    let result2 = cmp.vm.calcTitle(null, 'author')
+    const result2 = cmp.vm.calcTitle(null, 'author')
     expect(result2).toEqual('Clear author') // selected author and empty filter
 
-    let result3 = cmp.vm.calcTitle(null, 'textwork') // empty textwork and empty filter
+    const result3 = cmp.vm.calcTitle(null, 'textwork') // empty textwork and empty filter
     expect(result3).toEqual('Select a work')
 
     cmp.setData({
       selectedTextWork: testAuthor.works[0]
     })
-    let result4 = cmp.vm.calcTitle(null, 'textwork') // selected textwork and empty filter
+    const result4 = cmp.vm.calcTitle(null, 'textwork') // selected textwork and empty filter
     expect(result4).toEqual('Clear work')
   })
 
-  it('16 WordUsageExamplesFilters - method calcTitle calcs title for authors and textWorks in filters (item)', () => {  
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+  it('16 WordUsageExamplesFilters - method calcTitle calcs title for authors and textWorks in filters (item)', () => {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
     })
 
-    let result1 = cmp.vm.calcTitle({   //item has only title
+    const result1 = cmp.vm.calcTitle({ // item has only title
       title: () => 'fooTitle',
       abbreviation: () => null
-    }, 'author') 
+    }, 'author')
 
     expect(result1).toEqual('fooTitle')
 
-    let result2 = cmp.vm.calcTitle({   //item has only abbreviation
-        title: () => null,
-        abbreviation: () => 'fooAbbreviation'
+    const result2 = cmp.vm.calcTitle({ // item has only abbreviation
+      title: () => null,
+      abbreviation: () => 'fooAbbreviation'
     }, 'author')
-    
+
     expect(result2).toEqual('fooAbbreviation')
 
-    let result3 = cmp.vm.calcTitle({   //item has only abbreviation
-        title: () => 'fooTitle',
-        abbreviation: () => 'fooAbbreviation'
+    const result3 = cmp.vm.calcTitle({ // item has only abbreviation
+      title: () => 'fooTitle',
+      abbreviation: () => 'fooAbbreviation'
     }, 'author')
-    
+
     expect(result3).toEqual('fooTitle (fooAbbreviation)')
   })
 
-  
-  it('16 WordUsageExamplesFilters - method calcFocusHint return hint for author or textWork with data from options', () => {  
-    let cmp = shallowMount(WordUsageExamplesFilters, {
+  it('16 WordUsageExamplesFilters - method calcFocusHint return hint for author or textWork with data from options', () => {
+    const cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
       mocks: api
     })
 
-    let maxResults = cmp.vm.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue
+    const maxResults = cmp.vm.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue
 
-    let result1 = cmp.vm.calcFocusHint('author')
+    const result1 = cmp.vm.calcFocusHint('author')
     expect(result1).toEqual(expect.stringContaining('Choose an Author'))
     expect(result1).toEqual(expect.stringContaining(`up to ${maxResults} examples`))
 
-    let result2 = cmp.vm.calcFocusHint('textwork')
+    const result2 = cmp.vm.calcFocusHint('textwork')
     expect(result2).toEqual(expect.stringContaining('Focus on Work'))
     expect(result2).toEqual(expect.stringContaining(`up to ${maxResults} examples`))
   })
-
 })

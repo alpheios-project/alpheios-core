@@ -11,7 +11,7 @@ import Vue from '@vue-runtime'
 import MouseDblClick from '@comp/lib/custom-pointer-events/mouse-dbl-click.js'
 import LongTap from '@comp/lib/custom-pointer-events/long-tap.js'
 import GenericEvt from '@comp/lib/custom-pointer-events/generic-evt.js'
-import { Constants, LanguageModelFactory, LocalStorageArea } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory, Language } from 'alpheios-data-models'
 import SelectionController from '@comp/lib/controllers/selection-controller.js'
 import { WordlistController } from 'alpheios-wordlist'
 import LexicalQuery from '@comp/lib/queries/lexical-query.js'
@@ -591,11 +591,12 @@ describe('AppController', () => {
   })
 
   it('50 AppController - getLanguageName: should return a name of the language', () => {
-    const langCode = 'lat'
-    expect(AppController.getLanguageName(langCode)).toEqual({
-      code: langCode,
+    const language = Language.LATIN
+    expect(AppController.getLanguageName(language)).toEqual({
+      code: language.toCode(),
       id: expect.anything(),
-      name: 'Latin'
+      name: 'Latin',
+      language
     })
   })
 
@@ -1092,7 +1093,7 @@ describe('AppController', () => {
 
   it('81 AppController - onLexicalQueryComplete: should handle a successful completion', async () => {
     const data = {
-      homonym: { propA: 'Value of A' },
+      homonym: { propA: 'Value of A', language: Language.LATIN },
       resultStatus: LexicalQuery.resultStatus.SUCCEEDED
     }
     appC = AppController.jestCreate(uiState)
@@ -1114,7 +1115,7 @@ describe('AppController', () => {
 
   it('82 AppController - onLexicalQueryComplete: should handle a failure', async () => {
     const data = {
-      homonym: { propA: 'Value of A' },
+      homonym: { propA: 'Value of A', language: Language.LATIN },
       resultStatus: LexicalQuery.resultStatus.FAILED
     }
     appC = AppController.jestCreate(uiState)
@@ -1156,6 +1157,7 @@ describe('AppController', () => {
       lexemes: [],
       inflections: [],
       targetWord,
+      language: Language.GREEK,
       languageID,
       hasShortDefs: () => true
     }
@@ -1219,7 +1221,8 @@ describe('AppController', () => {
 
   it('88 AppController - onShortDefinitionsReady: should update the short definitions data', async () => {
     const homonym = {
-      lexemes: []
+      lexemes: [],
+      language: Language.LATIN
     }
     appC = AppController.jestCreate(uiState)
     await appC.init()
@@ -1326,6 +1329,7 @@ describe('AppController', () => {
         inflections: [],
         targetWord: 'A test word',
         languageID,
+        language: Language.LATIN,
         hasShortDefs: () => true
       }
     }

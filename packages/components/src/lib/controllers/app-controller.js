@@ -2,7 +2,7 @@
 /* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME, DEVELOPMENT_MODE_BUILD */
 // import { version as packageVersion, description as packageDescription } from '../../../package'
 import packageInfo from '../../../package'
-import { Constants, Feature, LanguageModelFactory, Lexeme, Logger, Options, LocalStorageArea, RemoteAuthStorageArea } from 'alpheios-data-models'
+import { Constants, Feature, LanguageModelFactory, Lexeme, Logger, Options, LocalStorageArea, RemoteAuthStorageArea, Language } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 import { WordlistController, UserDataManager } from 'alpheios-wordlist'
@@ -39,13 +39,13 @@ const packageVersion = packageInfo.version
 const packageDescription = packageInfo.description
 
 const languageNames = new Map([
-  [Constants.LANG_LATIN, 'Latin'],
-  [Constants.LANG_GREEK, 'Greek'],
-  [Constants.LANG_ARABIC, 'Arabic'],
-  [Constants.LANG_PERSIAN, 'Persian'],
-  [Constants.LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)'],
-  [Constants.LANG_SYRIAC, 'Syriac'],
-  [Constants.LANG_CHINESE, 'Chinese']
+  [Constants.STR_LANG_CODE_LAT, 'Latin'],
+  [Constants.STR_LANG_CODE_GRC, 'Greek'],
+  [Constants.STR_LANG_CODE_ARA, 'Arabic'],
+  [Constants.STR_LANG_CODE_PER, 'Persian'],
+  [Constants.STR_LANG_CODE_GEZ, 'Ancient Ethiopic (Ge\'ez)'],
+  [Constants.STR_LANG_CODE_SYR, 'Syriac'],
+  [Constants.STR_LANG_CODE_ZHO, 'Chinese']
 ])
 
 // Enable Vuex
@@ -593,7 +593,7 @@ export default class AppController {
 
         setHomonym (state, homonym) {
           state.homonymDataReady = true
-          state.linkedFeatures = LanguageModelFactory.getLanguageModel(homonym.languageID).grammarFeatures()
+          state.linkedFeatures = LanguageModelFactory.getModelFromLanguage(homonym.language).grammarFeatures()
         },
 
         setWordUsageExampleEnabled (state, wordUsageExampleEnabled) {
@@ -878,16 +878,28 @@ export default class AppController {
   /**
    * Gets language name details by either language ID (a symbol) or language code (string)
    *
-   * @param {symbol|string} language - Either language ID or language code (see constants in `data-models` for definitions)
+   * @param {Language | symbol|string} language - A language for which a name should be retrieved.
    * @returns {object} An object containing:
    *     {string} name - Language name
    *     {string} code - Language code
    *     {symbol} id - Language ID
    */
   static getLanguageName (language) {
-    // Compatibility code in case method be called with languageCode instead of ID. Remove when not needed
-    const { languageID: langID, languageCode: langCode } = LanguageModelFactory.getLanguageAttrs(language)
-    return { name: languageNames.has(langID) ? languageNames.get(langID) : '', code: langCode, id: langID }
+    if (language instanceof Language) {
+      // language is of Language type
+      const languageName = languageNames.has(language.toCode()) ? languageNames.get(language.toCode()) : ''
+      const langData = LanguageModelFactory.getLegacyLanguageCodeAndId(language)
+      return { name: languageName, language, code: language.toCode(), id: langData.languageID }
+    } else {
+      // language is either a language ID or a language code
+      const { languageID: langID, languageCode: langCode } = LanguageModelFactory.getLanguageAttrs(language)
+      return {
+        name: languageNames.has(langCode) ? languageNames.get(langCode) : '',
+        language: new Language(langCode),
+        code: langCode,
+        id: langID
+      }
+    }
   }
 
   showLanguageInfo (homonym) {
@@ -899,8 +911,8 @@ export default class AppController {
       let languageName
       let langCode
       if (homonym) {
-        langCode = homonym.language
-        languageName = this.api.app.getLanguageName(homonym.languageID).name
+        langCode = homonym.language.toCode()
+        languageName = this.api.app.getLanguageName(homonym.language).name
       } else if (this._store.state.app.currentLanguageCode && this._store.state.app.currentLanguageName) {
         langCode = this._store.state.app.currentLanguageCode
         languageName = this._store.state.app.currentLanguageName
@@ -918,7 +930,7 @@ export default class AppController {
         // if we are coming from e.g. the lookup or the wordlist, offering change language
         // here creates some confusion and the language was explicit upon lookup so it is not necessary
         const message = this.api.l10n.getMsg('TEXT_NOTICE_NOT_FOUND',
-          { targetWord: this._store.state.app.targetWord, languageName: languageName, langCode: homonym ? homonym.language : '' })
+          { targetWord: this._store.state.app.targetWord, languageName: languageName, langCode: homonym ? homonym.language.toCode() : '' })
         this._store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: false })
       }
     } else if (!this._store.state.app.queryStillActive) {

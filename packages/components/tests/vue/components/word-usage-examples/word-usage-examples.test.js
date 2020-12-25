@@ -27,7 +27,10 @@ describe('word-usage-examples.test.js', () => {
     testWordUsageList = await BaseTestHelp.collectConcordance(homonym)
   })
 
-  beforeEach(() => {
+  beforeEach/**
+             * @param ms
+             */
+  (() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
@@ -41,7 +44,6 @@ describe('word-usage-examples.test.js', () => {
     }
 
     BaseTestHelp.l10nModule(store, api)
-
   })
 
   function timeout (ms) {
@@ -49,7 +51,7 @@ describe('word-usage-examples.test.js', () => {
   }
 
   it('1 WordUsageExamples - renders a vue instance (min requirements)', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
       mocks: api
@@ -58,7 +60,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('2 WordUsageExamples - computed finalCollapsedHeader is true if it is mobile and collapsed', () => {
-    let api = {
+    const api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI({
@@ -70,7 +72,7 @@ describe('word-usage-examples.test.js', () => {
 
     BaseTestHelp.l10nModule(store, api)
 
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
       mocks: api
@@ -92,7 +94,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('3 WordUsageExamples - computed targetWord returns targetWord from homonym if it is ready', () => {
-    let api = {
+    const api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI({
@@ -101,13 +103,13 @@ describe('word-usage-examples.test.js', () => {
     }
 
     BaseTestHelp.l10nModule(store, api)
-    
-    let cmp = shallowMount(WordUsageExamples, {
+
+    const cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
       mocks: api
     })
-    
+
     store.commit('app/setTestHomonymDataReady', false)
 
     expect(cmp.vm.targetWord).toBeNull()
@@ -117,11 +119,10 @@ describe('word-usage-examples.test.js', () => {
 
     api.app.homonym = homonym
     expect(cmp.vm.targetWord).toEqual(homonym.targetWord)
-
   })
 
   it('4 WordUsageExamples - computed language returns language from homonym if it is ready', () => {
-    let api = {
+    const api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI({
@@ -130,13 +131,13 @@ describe('word-usage-examples.test.js', () => {
     }
 
     BaseTestHelp.l10nModule(store, api)
-    
-    let cmp = shallowMount(WordUsageExamples, {
+
+    const cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
       mocks: api
     })
-    
+
     store.commit('app/setTestHomonymDataReady', false)
 
     expect(cmp.vm.language).toBeNull()
@@ -145,12 +146,11 @@ describe('word-usage-examples.test.js', () => {
     expect(cmp.vm.language).toBeNull()
 
     api.app.homonym = homonym
-    expect(cmp.vm.language).toEqual(homonym.language)
-
+    expect(cmp.vm.language).toEqual(homonym.language.toCode())
   })
 
   it('5 WordUsageExamples - computed showHeaderFilters returns true when it is mobile and wordUsageExamplesReady = true', () => {
-    let api = {
+    const api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI({
@@ -161,13 +161,13 @@ describe('word-usage-examples.test.js', () => {
     }
 
     BaseTestHelp.l10nModule(store, api)
-    
-    let cmp = shallowMount(WordUsageExamples, {
+
+    const cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
       mocks: api
     })
-    
+
     store.commit('app/setTestWordUsageExamplesReady', false)
 
     expect(cmp.vm.showHeaderFilters).toBeFalsy()
@@ -177,11 +177,10 @@ describe('word-usage-examples.test.js', () => {
 
     api.app.platform.isMobile = true
     expect(cmp.vm.showHeaderFilters).toBeTruthy()
-
   })
 
   it('5 WordUsageExamples - computed showHeader returns true author is selected and wordUsage are ready', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
       mocks: api
@@ -207,7 +206,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('6 WordUsageExamples - computed showWordUsageExampleItems returns wordUsageExamplesReady from the store, if false changes collapsedHeader to true ', async () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
       mocks: api
@@ -215,8 +214,7 @@ describe('word-usage-examples.test.js', () => {
 
     store.commit('app/setTestWordUsageExamplesReady', false)
     expect(cmp.vm.showWordUsageExampleItems).toBeFalsy()
-    
-    
+
     store.commit('app/setTestWordUsageExamplesReady', true)
 
     expect(cmp.vm.showWordUsageExampleItems).toBeTruthy()
@@ -230,15 +228,15 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('6 WordUsageExamples - computed wordUsageExamples returns data from adapter', () => {
-    let api = {
+    const api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI()
     }
-  
+
     BaseTestHelp.l10nModule(store, api)
 
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
       mocks: api
@@ -257,7 +255,7 @@ describe('word-usage-examples.test.js', () => {
     expect(cmp.vm.wordUsageExamples).toEqual(testWordUsageList.wordUsageExamples)
 
     cmp.setData({
-      selectedAuthor: new Author('urn:cts:latinLit:phi0690', { "eng": "Virgil" }),
+      selectedAuthor: new Author('urn:cts:latinLit:phi0690', { eng: 'Virgil' }),
       needInnerFilter: true
     })
 
@@ -265,15 +263,15 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('7 WordUsageExamples - computed provider returns provider from wordUsageExamples', () => {
-    let api = {
+    const api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI()
     }
-    
+
     BaseTestHelp.l10nModule(store, api)
 
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
       mocks: api
@@ -289,7 +287,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('8 WordUsageExamples - computed providerRights returns providerRights from wordUsageExamples', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
       mocks: api
@@ -297,7 +295,7 @@ describe('word-usage-examples.test.js', () => {
 
     store.commit('app/setTestWordUsageExamplesReady', false)
     expect(cmp.vm.providerRights).toEqual([])
-    
+
     api.app.wordUsageExamples = testWordUsageList
     store.commit('app/setTestWordUsageExamplesReady', true)
 
@@ -305,7 +303,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('9 WordUsageExamples - computed wordUsageListSorted returns sorted array (executes sortWordUSageExamplesBy method)', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
@@ -320,7 +318,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('10 WordUsageExamples - computed collapsedHeaderTitle returns shows if collapsedHeader=true and hide otherwise ', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
@@ -333,7 +331,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('11 WordUsageExamples - method changedSortBy sets the value of the property - sortBy', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
@@ -345,7 +343,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('12 WordUsageExamples - method setAuthorTextWork sets values to selectedAuthor and selectedTextWork', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
@@ -360,7 +358,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('13 WordUsageExamples - method filterCurrentByAuthor executes setAuthorTextWork and sets needInnerFilter and collapsedHeader truthy', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
@@ -379,7 +377,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('14 WordUsageExamples - method getMoreResults executes setAuthorTextWork  and sets needInnerFilter falsy', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
@@ -396,7 +394,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('15 WordUsageExamples - method getAllResults executes setAuthorTextWork with nulls and sets needInnerFilter - falsy, collapsedHeader - truthy ', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
@@ -415,7 +413,7 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('16 WordUsageExamples - method getAllResults executes setAuthorTextWork with nulls and sets needInnerFilter - falsy, collapsedHeader - truthy ', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
@@ -434,92 +432,92 @@ describe('word-usage-examples.test.js', () => {
   })
 
   it('17 WordUsageExamples - method getPropertyBySortBy defines sort order, if type = byAuthor, then returns author property of the given usage example', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
     })
 
-    let wordUsageEx = testWordUsageList.wordUsageExamples[0]
-    let res = cmp.vm.getPropertyBySortBy(wordUsageEx, 'byAuthor')
+    const wordUsageEx = testWordUsageList.wordUsageExamples[0]
+    const res = cmp.vm.getPropertyBySortBy(wordUsageEx, 'byAuthor')
     expect(res).toEqual(wordUsageEx.authorForSort())
   })
 
   it('18 WordUsageExamples - method getPropertyBySortBy defines sort order, if type = byTextWork, then returns texWork property of the given usage example', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
     })
 
-    let wordUsageEx = testWordUsageList.wordUsageExamples[0]
-    let res = cmp.vm.getPropertyBySortBy(wordUsageEx, 'byTextWork')
+    const wordUsageEx = testWordUsageList.wordUsageExamples[0]
+    const res = cmp.vm.getPropertyBySortBy(wordUsageEx, 'byTextWork')
     expect(res).toEqual(wordUsageEx.textWorkForSort())
   })
 
   it('19 WordUsageExamples - method getPropertyBySortBy defines sort order, if type = byPrefix, then returns the preceeding word of the given usage example', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
     })
 
-    let wordUsageEx = testWordUsageList.wordUsageExamples[0]
-    let res = cmp.vm.getPropertyBySortBy(wordUsageEx, 'byPrefix')
+    const wordUsageEx = testWordUsageList.wordUsageExamples[0]
+    const res = cmp.vm.getPropertyBySortBy(wordUsageEx, 'byPrefix')
     expect(res).toEqual(wordUsageEx.prefixForSort)
   })
 
   it('20 WordUsageExamples - method getPropertyBySortBy defines sort order, if type = bySuffix, then returns the following word of the given usage example', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
     })
 
-    let wordUsageEx = testWordUsageList.wordUsageExamples[0]
-    let res = cmp.vm.getPropertyBySortBy(wordUsageEx, 'bySuffix')
+    const wordUsageEx = testWordUsageList.wordUsageExamples[0]
+    const res = cmp.vm.getPropertyBySortBy(wordUsageEx, 'bySuffix')
     expect(res).toEqual(wordUsageEx.suffixForSort)
   })
 
   it('21 WordUsageExamples - method getPropertyBySortBy defines sort order, if type is not defined, then by default it returns fullCit (Author + TextWork)', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
     })
 
-    let wordUsageEx = testWordUsageList.wordUsageExamples[0]
-    let res = cmp.vm.getPropertyBySortBy(wordUsageEx)
+    const wordUsageEx = testWordUsageList.wordUsageExamples[0]
+    const res = cmp.vm.getPropertyBySortBy(wordUsageEx)
     expect(res).toEqual(wordUsageEx.fullCit().toUpperCase())
   })
 
   it('22 WordUsageExamples - method formattedFullCit defines html format for one wordUsageExample', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
     })
 
-    let wordUsageEx = testWordUsageList.wordUsageExamples[0]
-    let res = cmp.vm.formattedFullCit(wordUsageEx)
-    
+    const wordUsageEx = testWordUsageList.wordUsageExamples[0]
+    const res = cmp.vm.formattedFullCit(wordUsageEx)
+
     expect(res).toEqual(wordUsageEx.formattedAuthor + ' <i>' + wordUsageEx.formattedTextWork + '</i> ' + wordUsageEx.formattedPassage)
   })
 
   it('23 WordUsageExamples - method gotToTheSource opens new tab in the window and focus on it', () => {
-    let cmp = shallowMount(WordUsageExamples, {
+    const cmp = shallowMount(WordUsageExamples, {
       store: store,
       localVue,
       mocks: api
     })
 
-    let tab = {
+    const tab = {
       focus: jest.fn()
     }
 
-    window.open = jest.fn(() => tab) 
+    window.open = jest.fn(() => tab)
 
-    let wordUsageEx = testWordUsageList.wordUsageExamples[0]
+    const wordUsageEx = testWordUsageList.wordUsageExamples[0]
 
     cmp.vm.gotToTheSource(wordUsageEx)
 

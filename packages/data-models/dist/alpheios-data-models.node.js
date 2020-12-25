@@ -15,128 +15,10 @@ return /******/ (() => { // webpackBootstrap
 /*!************************************************!*\
   !*** ../../../node_modules/axios/package.json ***!
   \************************************************/
-/*! default exports */
-/*! export _args [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export 1 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     other exports [not provided] [no usage info] */
-/*!   other exports [not provided] [no usage info] */
-/*! export _from [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _id [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _inBundle [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _integrity [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _location [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _phantomChildren [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   exports [not provided] [no usage info] */
-/*! export _requested [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export escapedName [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export fetchSpec [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export name [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export raw [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export rawSpec [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export registry [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export saveSpec [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export type [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export _requiredBy [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export _resolved [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _spec [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _where [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export author [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export name [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export browser [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ./lib/adapters/http.js [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export bugs [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export url [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export bundlesize [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export path [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export threshold [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     other exports [not provided] [no usage info] */
-/*!   other exports [not provided] [no usage info] */
-/*! export dependencies [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export follow-redirects [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export description [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export devDependencies [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export bundlesize [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export coveralls [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export es6-promise [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-banner [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-cli [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-contrib-clean [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-contrib-watch [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-eslint [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-karma [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-mocha-test [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-ts [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-webpack [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export istanbul-instrumenter-loader [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export jasmine-core [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-chrome-launcher [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-coverage [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-firefox-launcher [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-jasmine [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-jasmine-ajax [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-opera-launcher [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-safari-launcher [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-sauce-launcher [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-sinon [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-sourcemap-loader [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-webpack [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export load-grunt-tasks [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export minimist [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export mocha [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export sinon [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export typescript [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export url-search-params [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export webpack [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export webpack-dev-server [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export homepage [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export jsdelivr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export keywords [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 1 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 2 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 3 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 4 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export license [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export main [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export name [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export repository [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export type [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export url [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export scripts [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export build [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export coveralls [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export examples [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export fix [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export postversion [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export preversion [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export start [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export test [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export version [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export typings [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unpkg [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export version [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.0\",\"C:\\\\_Alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.21.0\",\"_id\":\"axios@0.21.0\",\"_inBundle\":false,\"_integrity\":\"sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.0.tgz\",\"_spec\":\"0.21.0\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.0\"}");
+module.exports = JSON.parse("{\"_from\":\"axios@^0.21.1\",\"_id\":\"axios@0.21.1\",\"_inBundle\":false,\"_integrity\":\"sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.21.1\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.21.1\",\"saveSpec\":null,\"fetchSpec\":\"^0.21.1\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.1.tgz\",\"_shasum\":\"22563481962f4d6bde9a76d516ef0e5d3c09b2b8\",\"_spec\":\"axios@^0.21.1\",\"_where\":\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.1\"}");
 
 /***/ }),
 
@@ -144,10 +26,6 @@ module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.0\",\"C:\\\\_Alpheios\\\\
 /*!********************************************!*\
   !*** ../../../node_modules/axios/index.js ***!
   \********************************************/
-/*! dynamic exports */
-/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] -> ../../../node_modules/axios/lib/axios.js .__esModule */
-/*! other exports [maybe provided (runtime-defined)] [no usage info] -> ../../../node_modules/axios/lib/axios.js */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/axios/lib/axios.js");
@@ -158,9 +36,6 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/http.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_require__, module */
-/*! CommonJS bailout: module.exports is used directly at 20:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -181,6 +56,31 @@ var createError = __webpack_require__(/*! ../core/createError */ "../../../node_
 var enhanceError = __webpack_require__(/*! ../core/enhanceError */ "../../../node_modules/axios/lib/core/enhanceError.js");
 
 var isHttps = /https:?/;
+
+/**
+ *
+ * @param {http.ClientRequestArgs} options
+ * @param {AxiosProxyConfig} proxy
+ * @param {string} location
+ */
+function setProxy(options, proxy, location) {
+  options.hostname = proxy.host;
+  options.host = proxy.host;
+  options.port = proxy.port;
+  options.path = location;
+
+  // Basic proxy authorization
+  if (proxy.auth) {
+    var base64 = Buffer.from(proxy.auth.username + ':' + proxy.auth.password, 'utf8').toString('base64');
+    options.headers['Proxy-Authorization'] = 'Basic ' + base64;
+  }
+
+  // If a proxy is used, any redirects must also pass through the proxy
+  options.beforeRedirect = function beforeRedirect(redirection) {
+    redirection.headers.host = redirection.host;
+    setProxy(redirection, proxy, redirection.href);
+  };
+}
 
 /*eslint consistent-return:0*/
 module.exports = function httpAdapter(config) {
@@ -292,11 +192,11 @@ module.exports = function httpAdapter(config) {
           });
         }
 
-
         if (shouldProxy) {
           proxy = {
             host: parsedProxyUrl.hostname,
-            port: parsedProxyUrl.port
+            port: parsedProxyUrl.port,
+            protocol: parsedProxyUrl.protocol
           };
 
           if (parsedProxyUrl.auth) {
@@ -311,17 +211,8 @@ module.exports = function httpAdapter(config) {
     }
 
     if (proxy) {
-      options.hostname = proxy.host;
-      options.host = proxy.host;
       options.headers.host = parsed.hostname + (parsed.port ? ':' + parsed.port : '');
-      options.port = proxy.port;
-      options.path = protocol + '//' + parsed.hostname + (parsed.port ? ':' + parsed.port : '') + options.path;
-
-      // Basic proxy authorization
-      if (proxy.auth) {
-        var base64 = Buffer.from(proxy.auth.username + ':' + proxy.auth.password, 'utf8').toString('base64');
-        options.headers['Proxy-Authorization'] = 'Basic ' + base64;
-      }
+      setProxy(options, proxy, protocol + '//' + parsed.hostname + (parsed.port ? ':' + parsed.port : '') + options.path);
     }
 
     var transport;
@@ -459,9 +350,6 @@ module.exports = function httpAdapter(config) {
 /*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/xhr.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -652,9 +540,6 @@ module.exports = function xhrAdapter(config) {
 /*!************************************************!*\
   !*** ../../../node_modules/axios/lib/axios.js ***!
   \************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 50:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -707,6 +592,9 @@ axios.all = function all(promises) {
 };
 axios.spread = __webpack_require__(/*! ./helpers/spread */ "../../../node_modules/axios/lib/helpers/spread.js");
 
+// Expose isAxiosError
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "../../../node_modules/axios/lib/helpers/isAxiosError.js");
+
 module.exports = axios;
 
 // Allow use of default import syntax in TypeScript
@@ -719,9 +607,6 @@ module.exports.default = axios;
 /*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/Cancel.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 19:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -752,9 +637,6 @@ module.exports = Cancel;
 /*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/CancelToken.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 57:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -823,9 +705,6 @@ module.exports = CancelToken;
 /*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/isCancel.js ***!
   \**********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -842,9 +721,6 @@ module.exports = function isCancel(value) {
 /*!*****************************************************!*\
   !*** ../../../node_modules/axios/lib/core/Axios.js ***!
   \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 95:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -951,9 +827,6 @@ module.exports = Axios;
 /*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/InterceptorManager.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 52:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1017,9 +890,6 @@ module.exports = InterceptorManager;
 /*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/buildFullPath.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 15:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1051,9 +921,6 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/createError.js ***!
   \***********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 15:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1083,9 +950,6 @@ module.exports = function createError(message, config, code, request, response) 
 /*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/dispatchRequest.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1176,9 +1040,6 @@ module.exports = function dispatchRequest(config) {
 /*!************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/enhanceError.js ***!
   \************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1232,9 +1093,6 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/mergeConfig.js ***!
   \***********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1333,9 +1191,6 @@ module.exports = function mergeConfig(config1, config2) {
 /*!******************************************************!*\
   !*** ../../../node_modules/axios/lib/core/settle.js ***!
   \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1372,9 +1227,6 @@ module.exports = function settle(resolve, reject, response) {
 /*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/transformData.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1406,9 +1258,6 @@ module.exports = function transformData(data, headers, fns) {
 /*!***************************************************!*\
   !*** ../../../node_modules/axios/lib/defaults.js ***!
   \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 98:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1518,9 +1367,6 @@ module.exports = defaults;
 /*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/bind.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1543,9 +1389,6 @@ module.exports = function bind(fn, thisArg) {
 /*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/buildURL.js ***!
   \***********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 22:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1627,9 +1470,6 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /*!**************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/combineURLs.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1655,9 +1495,6 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/cookies.js ***!
   \**********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1722,9 +1559,6 @@ module.exports = (
 /*!****************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1746,13 +1580,32 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
+/***/ "../../../node_modules/axios/lib/helpers/isAxiosError.js":
+/*!***************************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+module.exports = function isAxiosError(payload) {
+  return (typeof payload === 'object') && (payload.isAxiosError === true);
+};
+
+
+/***/ }),
+
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
 /*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1832,9 +1685,6 @@ module.exports = (
 /*!**********************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
   \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1858,9 +1708,6 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/parseHeaders.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 27:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1925,9 +1772,6 @@ module.exports = function parseHeaders(headers) {
 /*!*********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/spread.js ***!
   \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1966,9 +1810,6 @@ module.exports = function spread(callback) {
 /*!************************************************!*\
   !*** ../../../node_modules/axios/lib/utils.js ***!
   \************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 328:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -2331,11 +2172,6 @@ module.exports = {
 /*!**************************************************!*\
   !*** ../../../node_modules/debug/src/browser.js ***!
   \**************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_exports__, module, __webpack_require__ */
-/*! CommonJS bailout: exports is used directly at 7:0-7 */
-/*! CommonJS bailout: exports.humanize(...) prevents optimization as exports is passed as call context at 86:12-28 */
-/*! CommonJS bailout: exports.enable(...) prevents optimization as exports is passed as call context at 168:0-14 */
 /***/ ((module, exports, __webpack_require__) => {
 
 /**
@@ -2531,16 +2367,6 @@ function localstorage() {
 /*!************************************************!*\
   !*** ../../../node_modules/debug/src/debug.js ***!
   \************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_exports__, module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 9:10-24 */
-/*! CommonJS bailout: exports is used directly at 9:0-7 */
-/*! CommonJS bailout: exports.coerce(...) prevents optimization as exports is passed as call context at 85:14-28 */
-/*! CommonJS bailout: exports.enabled(...) prevents optimization as exports is passed as call context at 118:18-33 */
-/*! CommonJS bailout: exports.useColors(...) prevents optimization as exports is passed as call context at 119:20-37 */
-/*! CommonJS bailout: exports.init(...) prevents optimization as exports is passed as call context at 124:4-16 */
-/*! CommonJS bailout: exports.save(...) prevents optimization as exports is passed as call context at 139:2-14 */
-/*! CommonJS bailout: exports.enable(...) prevents optimization as exports is passed as call context at 165:2-16 */
 /***/ ((module, exports, __webpack_require__) => {
 
 
@@ -2753,9 +2579,6 @@ function coerce(val) {
 /*!************************************************!*\
   !*** ../../../node_modules/debug/src/index.js ***!
   \************************************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
@@ -2776,11 +2599,6 @@ if (typeof process !== 'undefined' && process.type === 'renderer') {
 /*!***********************************************!*\
   !*** ../../../node_modules/debug/src/node.js ***!
   \***********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_exports__, module, __webpack_require__ */
-/*! CommonJS bailout: exports is used directly at 14:0-7 */
-/*! CommonJS bailout: exports.humanize(...) prevents optimization as exports is passed as call context at 117:38-54 */
-/*! CommonJS bailout: exports.enable(...) prevents optimization as exports is passed as call context at 248:0-14 */
 /***/ ((module, exports, __webpack_require__) => {
 
 /**
@@ -3039,9 +2857,6 @@ exports.enable(load());
 /*!*******************************************************!*\
   !*** ../../../node_modules/follow-redirects/debug.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var debug;
@@ -3061,9 +2876,6 @@ module.exports = debug;
 /*!*******************************************************!*\
   !*** ../../../node_modules/follow-redirects/index.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: __webpack_require__, module */
-/*! CommonJS bailout: module.exports is used directly at 497:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var url = __webpack_require__(/*! url */ "url");
@@ -3468,7 +3280,7 @@ function wrap(protocols) {
     var wrappedProtocol = exports[scheme] = Object.create(nativeProtocol);
 
     // Executes a request, following redirects
-    wrappedProtocol.request = function (input, options, callback) {
+    function request(input, options, callback) {
       // Parse parameters
       if (typeof input === "string") {
         var urlStr = input;
@@ -3503,14 +3315,20 @@ function wrap(protocols) {
       assert.equal(options.protocol, protocol, "protocol mismatch");
       debug("options", options);
       return new RedirectableRequest(options, callback);
-    };
+    }
 
     // Executes a GET request, following redirects
-    wrappedProtocol.get = function (input, options, callback) {
-      var request = wrappedProtocol.request(input, options, callback);
-      request.end();
-      return request;
-    };
+    function get(input, options, callback) {
+      var wrappedRequest = wrappedProtocol.request(input, options, callback);
+      wrappedRequest.end();
+      return wrappedRequest;
+    }
+
+    // Expose the properties on the wrapped protocol
+    Object.defineProperties(wrappedProtocol, {
+      request: { value: request, configurable: true, enumerable: true, writable: true },
+      get: { value: get, configurable: true, enumerable: true, writable: true },
+    });
   });
   return exports;
 }
@@ -3572,9 +3390,6 @@ module.exports.wrap = wrap;
 /*!*****************************************!*\
   !*** ../../../node_modules/ms/index.js ***!
   \*****************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 25:0-14 */
 /***/ ((module) => {
 
 /**
@@ -3737,9 +3552,6 @@ function plural(ms, n, name) {
 /*!*******************************************!*\
   !*** ../../../node_modules/uuid/index.js ***!
   \*******************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 8:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var v1 = __webpack_require__(/*! ./v1 */ "../../../node_modules/uuid/v1.js");
@@ -3758,9 +3570,6 @@ module.exports = uuid;
 /*!*****************************************************!*\
   !*** ../../../node_modules/uuid/lib/bytesToUuid.js ***!
   \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 26:0-14 */
 /***/ ((module) => {
 
 /**
@@ -3797,9 +3606,6 @@ module.exports = bytesToUuid;
 /*!*********************************************!*\
   !*** ../../../node_modules/uuid/lib/rng.js ***!
   \*********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 6:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 // Unique ID creation requires a high quality random # generator.  In node.js
@@ -3818,9 +3624,6 @@ module.exports = function nodeRNG() {
 /*!****************************************!*\
   !*** ../../../node_modules/uuid/v1.js ***!
   \****************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 109:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var rng = __webpack_require__(/*! ./lib/rng */ "../../../node_modules/uuid/lib/rng.js");
@@ -3940,9 +3743,6 @@ module.exports = v1;
 /*!****************************************!*\
   !*** ../../../node_modules/uuid/v4.js ***!
   \****************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 29:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var rng = __webpack_require__(/*! ./lib/rng */ "../../../node_modules/uuid/lib/rng.js");
@@ -3982,10 +3782,6 @@ module.exports = v4;
 /*!**********************************!*\
   !*** ./arabic_language_model.js ***!
   \**********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3997,7 +3793,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-;
+
 
 
 
@@ -4134,10 +3930,6 @@ for the current node
 /*!***********************************!*\
   !*** ./chinese_language_model.js ***!
   \***********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4150,7 +3942,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-;
+
 
 
 
@@ -4284,235 +4076,6 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /*!**********************!*\
   !*** ./constants.js ***!
   \**********************/
-/*! namespace exports */
-/*! export CASE_ABESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ABSOLUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ACCUSATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ADDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ADELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ADESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ADVERBIAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ALLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ANTESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_APUDESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_AVERSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_BENEFACTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_CARITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_CAUSAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_CAUSAL_FINAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_COMITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_DATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_DELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_DIRECT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_DISTRIBUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_DISTRIBUTIVE_TEMPORAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_EQUATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ERGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ESSIVE_FORMAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ESSIVE_MODAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_EVITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_EXESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_FINAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_FORMAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_GENITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_ILLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_INELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_INESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_INSTRUCTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_INSTRUMENTAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_INSTRUMENTAL_COMITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_INTRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_LATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_LOCATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_MODAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_MULTIPLICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_NOMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_PARTITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_PEGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_PERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_POSSESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_POSTDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_POSTELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_POSTESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_POSTPOSITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_PREPOSITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_PRIVATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_PROLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_PROSECUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_PROXIMATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_SEPARATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_SOCIATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_SUBDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_SUBELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_SUBESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_SUBLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_SUPERDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_SUPERESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_SUPERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_SUPPRESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_TEMPORAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_TERMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_TRANSLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_VIALIS [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CASE_VOCATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CLASS_DEMONSTRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CLASS_GENERAL_RELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CLASS_INDEFINITE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CLASS_INTENSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CLASS_INTERROGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CLASS_PERSONAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CLASS_POSSESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CLASS_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CLASS_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export CLASS_RELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export COMP_COMPARITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export COMP_POSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export COMP_SUPERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export GEND_ANIMATE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export GEND_ANIMATE_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export GEND_COMMON [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export GEND_FEMININE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export GEND_INANIMATE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export GEND_INANIMATE_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export GEND_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export GEND_NEUTER [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export GEND_PERSONAL_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_ARABIC [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_CHINESE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_DIR_LTR [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_DIR_RTL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_GEEZ [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_GREEK [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_LATIN [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_PERSIAN [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_SYRIAC [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_UNDEFINED [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_UNIT_CHAR [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export LANG_UNIT_WORD [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_ADMIRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_COHORTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_CONDITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_DECLARATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_DUBITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_ENERGETIC [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_EVENTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_GENERIC [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_GERUNDIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_HYPOTHETICAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_IMPERATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_INDICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_INFERENTIAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_INFINITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_INTERROGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_JUSSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_NEGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_OPTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_PARTICIPLE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_PRESUMPTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_RENARRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_SUBJUNCTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export MOOD_SUPINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NRL_CARDINAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NRL_DISTRIBUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NRL_ORDINAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NUM_COLLECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NUM_DISTRIBUTIVE_PLURAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NUM_DUAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NUM_PAUCAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NUM_PLURAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NUM_SINGULAR [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NUM_SINGULATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NUM_TRIAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export NURL_NUMERAL_ADVERB [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ORD_1ST [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ORD_2ND [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ORD_3RD [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ORD_4TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ORD_5TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ORD_6TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ORD_7TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ORD_8TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export ORD_9TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export PARADIGM_CAT_KAYLO [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export PARADIGM_CAT_STATE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_ADJECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_ADVERB [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_ADVERBIAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_ARTICLE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_CONJUNCTION [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_DENOMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_EXCLAMATION [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_GERUNDIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_INTERJECTION [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_NOUN [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_NOUN_PROPER [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_NUMERAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_PARTICLE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_PREFIX [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_PREPOSITION [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_PRONOUN [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_SUFFIX [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_SUPINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_VERB [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export POFS_VERB_PARTICIPLE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_AR [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_ARA [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_ENG [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_FA [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_FAS [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_FA_IR [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_GEZ [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_GRC [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_LA [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_LAT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_PER [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_SYC [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_SYR [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_SYR_SYRJ [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_UNDEFINED [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_ZH [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_ZHO [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_ZH_HANS [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export STR_LANG_CODE_ZH_HANT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TENSE_AORIST [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TENSE_FUTURE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TENSE_FUTURE_PERFECT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TENSE_IMPERFECT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TENSE_PAST_ABSOLUTE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TENSE_PERFECT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TENSE_PLUPERFECT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TENSE_PRESENT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TYPE_IRREGULAR [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export TYPE_REGULAR [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_COMPOUNDS_OF_TO_BE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_DEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_IMPERSONAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_INTRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_PERFECT_DEFINITE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_SEMIDEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_TAKING_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_TAKING_DATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_TAKING_GENITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_TO_BE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VKIND_TRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_ACTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_ADJUTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_ANTIPASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_APPLICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_CAUSATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_CIRCUMSTANTIAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_DEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_IMPERSONAL_PASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_MEDIOPASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_MIDDLE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_PASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export VOICE_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4743,7 +4306,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CLASS_INTENSIVE": () => /* binding */ CLASS_INTENSIVE,
 /* harmony export */   "CLASS_RECIPROCAL": () => /* binding */ CLASS_RECIPROCAL,
 /* harmony export */   "PARADIGM_CAT_KAYLO": () => /* binding */ PARADIGM_CAT_KAYLO,
-/* harmony export */   "PARADIGM_CAT_STATE": () => /* binding */ PARADIGM_CAT_STATE
+/* harmony export */   "PARADIGM_CAT_STATE": () => /* binding */ PARADIGM_CAT_STATE,
+/* harmony export */   "MIMETypes": () => /* binding */ MIMETypes
 /* harmony export */ });
 /* eslint-disable no-unused-vars */
 const LANG_UNIT_WORD = Symbol('word')
@@ -4982,6 +4546,14 @@ const CLASS_RECIPROCAL = 'reciprocal'
 const PARADIGM_CAT_KAYLO = 'kaylo'
 const PARADIGM_CAT_STATE = 'state'
 
+/**
+ * Constants that define MIME Types used in Alpheios.
+ *
+ * @enum {string} */
+const MIMETypes = {
+  TEXT_PLAIN: 'text/plain'
+}
+
 
 /***/ }),
 
@@ -4989,10 +4561,6 @@ const PARADIGM_CAT_STATE = 'state'
 /*!***************************!*\
   !*** ./definition-set.js ***!
   \***************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5000,18 +4568,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ DefinitionSet
 /* harmony export */ });
-/* harmony import */ var _definition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./definition */ "./definition.js");
-/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-;
+/* harmony import */ var _definition_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./definition.js */ "./definition.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+
+
 
 
 class DefinitionSet {
-  constructor (lemmaWord, languageID) {
+  /**
+   * @param {string} lemmaWord - A word for which a definition set was created.
+   * @param {Language} language - A language on what a text of a definitions in a definition set is written.
+   */
+  constructor (lemmaWord, language) {
+    if (!lemmaWord) {
+      throw new Error('DefinitionSet cannot be created without the lemma word')
+    }
+    if (!language) {
+      throw new Error('DefinitionSet cannot be created without the language')
+    }
+    if (!(language instanceof _language_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+      throw new Error('The _language must be an instance of the Language class')
+    }
+
+    /**
+     * A word for which a definition set was created.
+     *
+     * @type {string}
+     */
     this.lemmaWord = lemmaWord
-    this.languageID = languageID
+
+    /**
+     * A language on what a text of a definitions in a definition set is written.
+     *
+     * @type {Language}
+     */
+    this.language = language
 
     this.shortDefs = []
     this.fullDefs = []
+  }
+
+  get languageID () {
+    const langData = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_2__.default.getLegacyLanguageCodeAndId(this.language)
+    return langData.languageID
   }
 
   /**
@@ -5021,15 +4621,15 @@ class DefinitionSet {
    * @returns {DefinitionSet} A DefinitionSet object populated with data from JSON object.
    */
   static readObject (jsonObject) {
-    const languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageIdFromCode(jsonObject.languageCode)
+    const lang = new _language_js__WEBPACK_IMPORTED_MODULE_1__.default(jsonObject.languageCode)
 
-    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, languageID) // eslint-disable-line prefer-const
+    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, lang) // eslint-disable-line prefer-const
 
     for (const shortDef of jsonObject.shortDefs) {
-      definitionSet.shortDefs.push(_definition__WEBPACK_IMPORTED_MODULE_0__.default.readObject(shortDef))
+      definitionSet.shortDefs.push(_definition_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(shortDef))
     }
     for (const fullDef of jsonObject.fullDefs) {
-      definitionSet.fullDefs.push(_definition__WEBPACK_IMPORTED_MODULE_0__.default.readObject(fullDef))
+      definitionSet.fullDefs.push(_definition_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(fullDef))
     }
 
     return definitionSet
@@ -5107,10 +4707,9 @@ class DefinitionSet {
   }
 
   convertToJSONObject () {
-    const languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageCodeFromId(this.languageID)
     return {
       lemmaWord: this.lemmaWord,
-      languageCode: languageCode,
+      languageCode: this.language.toCode(),
       shortDefs: this.shortDefs.map(def => def.convertToJSONObject()),
       fullDefs: this.fullDefs.map(def => def.convertToJSONObject())
     }
@@ -5124,10 +4723,6 @@ class DefinitionSet {
 /*!***********************!*\
   !*** ./definition.js ***!
   \***********************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5138,22 +4733,72 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-;
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/** @module definition */
 
+
+ /* @typedef {import('./language.js').Language} Language */
 
 class Definition {
+  /**
+   * @param {string} text - A text of a definition.
+   * @param {Language} language - A language on what a text of a definition is written.
+   * @param {string} format - A MIME type of a definitions text (i.e. "text/plain").
+   * @param {string} lemmaText - A ward that the definition text describes.
+   */
   constructor (text, language, format, lemmaText) {
+    if (!(language instanceof _language_js__WEBPACK_IMPORTED_MODULE_2__.default)) {
+      throw new Error('The language argument is not of the Language type')
+    }
+
+    /**
+     * A text of a definition.
+     *
+     * @type {string}
+     */
     this.text = text
+
+    /**
+     * A language on what a text of a definition is written.
+     *
+     * @type {Language}
+     */
     this.language = language
+
+    /**
+     * A MIME type of a definitions text (i.e. "text/plain").
+     *
+     * @type {string}
+     */
     this.format = format
+
+    /**
+     * A ward that the definition text describes.
+     *
+     * @type {string}
+     */
     this.lemmaText = lemmaText
 
+    /**
+     * A provider of the definition. Will be set outside of the constructor,
+     * currently, in the `getProxy` method of the ResourceProvider.
+     *
+     * @type {ResourceProvider}
+     */
+    this.provider = null
+
+    /**
+     * A unique ID of an object instance.
+     *
+     * @type {string}
+     */
     this.ID = (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)()
   }
 
   static readObject (jsonObject) {
+    const lang = new _language_js__WEBPACK_IMPORTED_MODULE_2__.default(jsonObject.languageCode)
     // eslint-disable-next-line prefer-const
-    let definition = new Definition(jsonObject.text, jsonObject.language, jsonObject.format, jsonObject.lemmaText)
+    let definition = new Definition(jsonObject.text, lang, jsonObject.format, jsonObject.lemmaText)
 
     if (jsonObject.ID) {
       definition.ID = jsonObject.ID
@@ -5171,7 +4816,7 @@ class Definition {
     // eslint-disable-next-line prefer-const
     let result = {
       text: this.text,
-      language: this.language,
+      languageCode: this.language.toCode(),
       format: this.format,
       lemmaText: this.lemmaText,
       ID: this.ID
@@ -5192,10 +4837,6 @@ class Definition {
 /*!*******************!*\
   !*** ./digest.js ***!
   \*******************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5204,7 +4845,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ Digest
 /* harmony export */ });
 /* harmony import */ var _sha1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sha1.js */ "./sha1.js");
-;
+
 
 /**
  * Creates an SHA-1 hash digest. The generating code is not suitable for cryptographic purposes,
@@ -5242,277 +4883,6 @@ class Digest {
 /*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
-/*! namespace exports */
-/*! export ArabicLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./arabic_language_model.js .default */
-/*! export Author [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./texts/author.js .default */
-/*! export ChineseLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./chinese_language_model.js .default */
-/*! export Constants [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./constants.js */
-/*!   export CASE_ABESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ABSOLUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ACCUSATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ADDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ADELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ADESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ADVERBIAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ALLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ANTESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_APUDESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_AVERSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_BENEFACTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_CARITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_CAUSAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_CAUSAL_FINAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_COMITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_DATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_DELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_DIRECT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_DISTRIBUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_DISTRIBUTIVE_TEMPORAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_EQUATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ERGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ESSIVE_FORMAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ESSIVE_MODAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_EVITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_EXESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_FINAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_FORMAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_GENITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_ILLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_INELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_INESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_INSTRUCTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_INSTRUMENTAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_INSTRUMENTAL_COMITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_INTRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_LATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_LOCATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_MODAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_MULTIPLICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_NOMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_PARTITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_PEGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_PERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_POSSESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_POSTDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_POSTELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_POSTESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_POSTPOSITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_PREPOSITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_PRIVATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_PROLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_PROSECUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_PROXIMATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_SEPARATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_SOCIATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_SUBDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_SUBELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_SUBESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_SUBLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_SUPERDIRECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_SUPERESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_SUPERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_SUPPRESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_TEMPORAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_TERMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_TRANSLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_VIALIS [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CASE_VOCATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CLASS_DEMONSTRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CLASS_GENERAL_RELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CLASS_INDEFINITE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CLASS_INTENSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CLASS_INTERROGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CLASS_PERSONAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CLASS_POSSESSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CLASS_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CLASS_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export CLASS_RELATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export COMP_COMPARITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export COMP_POSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export COMP_SUPERLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export GEND_ANIMATE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export GEND_ANIMATE_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export GEND_COMMON [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export GEND_FEMININE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export GEND_INANIMATE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export GEND_INANIMATE_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export GEND_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export GEND_NEUTER [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export GEND_PERSONAL_MASCULINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_ARABIC [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_CHINESE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_DIR_LTR [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_DIR_RTL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_GEEZ [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_GREEK [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_LATIN [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_PERSIAN [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_SYRIAC [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_UNDEFINED [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_UNIT_CHAR [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export LANG_UNIT_WORD [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_ADMIRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_COHORTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_CONDITIONAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_DECLARATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_DUBITATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_ENERGETIC [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_EVENTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_GENERIC [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_GERUNDIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_HYPOTHETICAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_IMPERATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_INDICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_INFERENTIAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_INFINITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_INTERROGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_JUSSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_NEGATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_OPTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_PARTICIPLE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_PRESUMPTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_RENARRATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_SUBJUNCTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export MOOD_SUPINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NRL_CARDINAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NRL_DISTRIBUTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NRL_ORDINAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NUM_COLLECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NUM_DISTRIBUTIVE_PLURAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NUM_DUAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NUM_PAUCAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NUM_PLURAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NUM_SINGULAR [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NUM_SINGULATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NUM_TRIAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export NURL_NUMERAL_ADVERB [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ORD_1ST [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ORD_2ND [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ORD_3RD [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ORD_4TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ORD_5TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ORD_6TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ORD_7TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ORD_8TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ORD_9TH [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export PARADIGM_CAT_KAYLO [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export PARADIGM_CAT_STATE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_ADJECTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_ADVERB [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_ADVERBIAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_ARTICLE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_CONJUNCTION [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_DENOMINATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_EXCLAMATION [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_GERUNDIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_INTERJECTION [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_NOUN [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_NOUN_PROPER [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_NUMERAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_PARTICLE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_PREFIX [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_PREPOSITION [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_PRONOUN [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_SUFFIX [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_SUPINE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_VERB [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export POFS_VERB_PARTICIPLE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_AR [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_ARA [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_ENG [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_FA [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_FAS [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_FA_IR [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_GEZ [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_GRC [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_LA [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_LAT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_PER [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_SYC [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_SYR [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_SYR_SYRJ [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_UNDEFINED [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_ZH [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_ZHO [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_ZH_HANS [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export STR_LANG_CODE_ZH_HANT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export TENSE_AORIST [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export TENSE_FUTURE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export TENSE_FUTURE_PERFECT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export TENSE_IMPERFECT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export TENSE_PAST_ABSOLUTE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export TENSE_PERFECT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export TENSE_PLUPERFECT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export TENSE_PRESENT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export TYPE_IRREGULAR [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export TYPE_REGULAR [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_COMPOUNDS_OF_TO_BE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_DEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_IMPERSONAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_INTRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_PERFECT_DEFINITE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_SEMIDEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_TAKING_ABLATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_TAKING_DATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_TAKING_GENITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_TO_BE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VKIND_TRANSITIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_ACTIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_ADJUTATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_ANTIPASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_APPLICATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_CAUSATIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_CIRCUMSTANTIAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_DEPONENT [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_IMPERSONAL_PASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_MEDIOPASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_MIDDLE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_PASSIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_RECIPROCAL [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export VOICE_REFLEXIVE [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export DefaultsLoader [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./storages/defaults-loader.js .default */
-/*! export Definition [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./definition.js .default */
-/*! export DefinitionSet [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./definition-set.js .default */
-/*! export Digest [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./digest.js .default */
-/*! export ExtensionSyncStorage [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./storages/extension-sync-storage.js .default */
-/*! export Feature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature.js .default */
-/*! export FeatureImporter [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature_importer.js .default */
-/*! export FeatureList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature_list.js .default */
-/*! export FeatureType [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./feature_type.js .default */
-/*! export GeezLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./geez_language_model.js .default */
-/*! export GreekLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./greek_language_model.js .default */
-/*! export GrmFeature [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./grm-feature.js .default */
-/*! export Homonym [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./homonym.js .default */
-/*! export HomonymGroup [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./homonym-group.js .default */
-/*! export Inflection [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./inflection.js .default */
-/*! export Language [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./language.js .default */
-/*! export LanguageModelFactory [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./language_model_factory.js .default */
-/*! export LatinLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./latin_language_model.js .default */
-/*! export Lemma [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./lemma.js .default */
-/*! export Lexeme [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./lexeme.js .default */
-/*! export LocalStorageArea [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./storages/local-storage-area.js .default */
-/*! export Logger [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./logging/logger.js .default */
-/*! export Options [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./options/options.js .default */
-/*! export PersianLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./persian_language_model.js .default */
-/*! export PsEvent [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./ps-events/ps-event.js .default */
-/*! export PsEventData [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./ps-events/ps-event-data.js .default */
-/*! export RemoteAuthStorageArea [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./storages/remote-auth-storage-area.js .default */
-/*! export ResourceProvider [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./resource_provider.js .default */
-/*! export SyriacLanguageModel [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./syriac_language_model.js .default */
-/*! export TempStorageArea [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./storages/temp-storage-area.js .default */
-/*! export TextQuoteSelector [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./w3c/text-quote-selector.js .default */
-/*! export TextWork [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./texts/text-work.js .default */
-/*! export Translation [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./translation.js .default */
-/*! export TreebankDataItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./treebank_data_item.js .default */
-/*! export WordItem [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./word-item.js .default */
-/*! export WordList [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./word-list.js .default */
-/*! export WordUsageExample [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./texts/word-usage-example.js .default */
-/*! other exports [not provided] [maybe used in main (runtime-defined)] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5658,10 +5028,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************!*\
   !*** ./feature.js ***!
   \********************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5670,9 +5036,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ Feature
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-/* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-;
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
+
 
 
 
@@ -5723,6 +5091,14 @@ class Feature {
 
     this.type = type
     this.languageID = languageID
+    const langCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageCodeFromId(this.languageID)
+
+    /**
+     * A language of the feature.
+     *
+     * @type {Language}
+     */
+    this._language = new _language_js__WEBPACK_IMPORTED_MODULE_1__.default(langCode)
     this.sortOrder = sortOrder
     this.allowedValues = allowedValues
 
@@ -5736,6 +5112,15 @@ class Feature {
      */
     this._data = Feature.dataValuesFromInput(data)
     this.sort()
+  }
+
+  /**
+   * Returns a language of the feature.
+   *
+   * @returns {Language} - A language of the feature.
+   */
+  get language () {
+    return this._language
   }
 
   /**
@@ -6028,7 +5413,7 @@ class Feature {
       })
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__.default.getInstance().warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
     }
     return this
   }
@@ -6047,7 +5432,7 @@ class Feature {
       this._data = this._data.concat(normalizedData)
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__.default.getInstance().warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
     }
     return this
   }
@@ -6059,7 +5444,7 @@ class Feature {
    */
   removeValue (value) {
     // TODO: Do we need it?
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__.default.getInstance().warn('This feature is not implemented yet')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('This feature is not implemented yet')
   }
 
   /**
@@ -6117,7 +5502,7 @@ to create other items of the same type.
    * @param {string} name - A name of an importer.
    * @param {FeatureImporter} importer - A `FeatureImporter` object.
    */
-  addImporter (importer = new _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__.default(), name = this.constructor.defaultImporterName) {
+  addImporter (importer = new _feature_importer_js__WEBPACK_IMPORTED_MODULE_2__.default(), name = this.constructor.defaultImporterName) {
     if (!this.importers) {
       this.importers = new Map()
     }
@@ -6178,7 +5563,7 @@ to create other items of the same type.
     const data = this._data.map(dataItem => [dataItem.value, dataItem.sortOrder])
     return {
       type: this.type,
-      languageCode: _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageCodeFromId(this.languageID),
+      languageCode: this._language.toCode(),
       sortOrder: this.sortOrder,
       allowedValues: this.allowedValues,
       data: data
@@ -6202,10 +5587,6 @@ Feature.errMsgs = {
 /*!*****************************!*\
   !*** ./feature_importer.js ***!
   \*****************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6285,10 +5666,6 @@ class FeatureImporter {
 /*!*************************!*\
   !*** ./feature_list.js ***!
   \*************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6367,10 +5744,6 @@ class FeatureList {
 /*!*************************!*\
   !*** ./feature_type.js ***!
   \*************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6382,7 +5755,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
 /* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-;
+
 
 
 
@@ -6638,10 +6011,6 @@ FeatureType.UNRESTRICTED_VALUE = Symbol('unrestricted')
 /*!********************************!*\
   !*** ./geez_language_model.js ***!
   \********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6653,7 +6022,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-;
+
 
 
 
@@ -6749,10 +6118,6 @@ for the current node
 /*!*********************************!*\
   !*** ./greek_language_model.js ***!
   \*********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6767,7 +6132,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
 /* harmony import */ var _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./languages/greek-chars.js */ "./languages/greek-chars.js");
-;
+
 
 
 
@@ -7170,10 +6535,6 @@ for the current node
 /*!************************!*\
   !*** ./grm-feature.js ***!
   \************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7184,7 +6545,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-;
+
 
 
 
@@ -7358,10 +6719,6 @@ GrmFeature.types = {
 /*!**************************!*\
   !*** ./homonym-group.js ***!
   \**************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7370,7 +6727,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ HomonymGroup
 /* harmony export */ });
 /* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
-;
+
 
 class HomonymGroup {
   /**
@@ -7454,10 +6811,6 @@ HomonymGroup.errors = {
 /*!********************!*\
   !*** ./homonym.js ***!
   \********************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7468,8 +6821,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
 /* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-;
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./language.js */ "./language.js");
+
 
 
 
@@ -7486,9 +6839,9 @@ class Homonym {
    * Initializes a Homonym object.
    *
    * @param {Lexeme[]} lexemes - An array of Lexeme objects.
-   * @param {string} form - the form which produces the homonyms
+   * @param {string} targetWord - the form which produces the homonyms
    */
-  constructor (lexemes, form) {
+  constructor (lexemes, targetWord) {
     if (!lexemes || (Array.isArray(lexemes) && lexemes.length === 0)) {
       throw new Error('Lexemes data should not be empty.')
     }
@@ -7505,7 +6858,7 @@ class Homonym {
 
     /** @type {Lexeme[]} */
     this.lexemes = lexemes
-    this.targetWord = form
+    this.targetWord = targetWord
   }
 
   /**
@@ -7514,12 +6867,12 @@ class Homonym {
    * a homonym's target word.
    *
    * @param {string} word - A word that will populate homonym's `targetWord` prop and lemma `word` one.
-   * @param {symbol} languageID - A language identificator as defined in Constants.LANG_XXX.
+   * @param {Language} language - An object representing the language.
    * @param {Inflection[]} inflections - Zero or more inflection objects that will be attached to the lexeme
    * @returns {Homonym} A newly created homonym object.
    */
-  static createSimpleForm (word, languageID, inflections = []) {
-    const lemma = new _lemma_js__WEBPACK_IMPORTED_MODULE_2__.default(word, languageID)
+  static createSimpleForm (word, language, inflections = []) {
+    const lemma = new _lemma_js__WEBPACK_IMPORTED_MODULE_2__.default(word, language)
     const lexeme = new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default(lemma, inflections)
     return new Homonym([lexeme], word)
   }
@@ -7543,21 +6896,29 @@ class Homonym {
   }
 
   static readObject (jsonObject) {
+    if (!jsonObject.form && !jsonObject.targetWord) {
+      throw new Error(Homonym.errMsgs.NO_TARGET_WORD_IN_JSON)
+    }
+    const targetWord = jsonObject.form || jsonObject.targetWord
     let lexemes = [] // eslint-disable-line prefer-const
     if (jsonObject.lexemes) {
       for (const lexeme of jsonObject.lexemes) {
         lexemes.push(_lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.readObject(lexeme))
       }
     } else {
-      const languageID = _language_model_factory__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageIdFromCode(jsonObject.languageCode)
-      lexemes = [new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default(new _lemma_js__WEBPACK_IMPORTED_MODULE_2__.default(jsonObject.targetWord, languageID), [])]
+      if (!jsonObject.languageCode) {
+        throw new Error(Homonym.errMsgs.NO_LANGUAGE_IN_JSON)
+      }
+      const lang = new _language_js__WEBPACK_IMPORTED_MODULE_3__.default(jsonObject.languageCode)
+      lexemes = [new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default(new _lemma_js__WEBPACK_IMPORTED_MODULE_2__.default(targetWord, lang), [])]
     }
-    const homonym = new Homonym(lexemes, jsonObject.form || jsonObject.targetWord)
+    const homonym = new Homonym(lexemes, targetWord)
     homonym.lemmasList = jsonObject.lemmasList
     return homonym
   }
 
   convertToJSONObject (addMeaning = false) {
+    // TODO: Shall we use targetWord instead of form to match the internal homonym structure?
     let resultHomonym = { lexemes: [], form: this.targetWord } // eslint-disable-line prefer-const
     for (const lexeme of this.lexemes) {
       resultHomonym.lexemes.push(lexeme.convertToJSONObject(addMeaning))
@@ -7566,32 +6927,29 @@ class Homonym {
   }
 
   /**
-   * Returns a language code of a homonym (ISO 639-3).
+   * Returns a language of the homonym..
    * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
    * and inflections within the same homonym will have the same language, and we can determine a language
-   * by using language property of the first lemma. We chan change this logic in the future if we'll need to.
+   * by using language property of the first lemma. We can change this logic in the future if we'll need to.
    *
-   * @returns {string} A language code, as defined in the `languages` object.
+   * @returns {Language} A language of the homonym.
    */
   get language () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('Please use languageID instead')
-    return _language_model_factory__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageCodeFromId(this.languageID)
+    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.language) {
+      return this.lexemes[0].lemma.language
+    } else {
+      throw new Error(Homonym.errMsgs.NO_LANGUAGE_IN_HOMONYM)
+    }
   }
 
   /**
-   * Returns a language ID of a homonym.
-   * Homonym does not have a languageID property, only lemmas and inflections do. We assume that all lemmas
-   * and inflections within the same homonym will have the same language, and we can determine a language
-   * by using languageID property of the first lemma. We chan change this logic in the future if we'll need to.
+   * @deprecated
+   * Returns a language ID of a homonym. This getter has been deprecated, please use language getter instead.
    *
-   * @returns {symbol} A language ID, as defined in the `LANG_` constants.
+   * @returns {symbol} A language IDs.
    */
   get languageID () {
-    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.languageID) {
-      return this.lexemes[0].lemma.languageID
-    } else {
-      throw new Error('Homonym has not been initialized properly. Unable to obtain language ID information.')
-    }
+    return _language_model_factory__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageIdFromCode(this.language.toCode())
   }
 
   /**
@@ -7652,6 +7010,12 @@ class Homonym {
     return Homonym.disambiguate(newHom, disambiguators)
   }
 }
+
+Homonym.errMsgs = {
+  NO_LANGUAGE_IN_HOMONYM: 'Homonym has not been initialized properly. Unable to obtain language ID information',
+  NO_LANGUAGE_IN_JSON: 'Cannot create homonym from JSON with no lexemes and no language info',
+  NO_TARGET_WORD_IN_JSON: 'Cannot create homonym from JSON with no lexemes and no target word'
+}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Homonym);
 
 
@@ -7661,10 +7025,6 @@ class Homonym {
 /*!***********************!*\
   !*** ./inflection.js ***!
   \***********************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7676,7 +7036,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-;
+
 
 
 
@@ -8060,10 +7420,6 @@ class Inflection {
 /*!*****************************!*\
   !*** ./inflection_group.js ***!
   \*****************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -8102,10 +7458,6 @@ class InflectionGroup {
 /*!************************************!*\
   !*** ./inflection_grouping_key.js ***!
   \************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -8114,7 +7466,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-;
+
 
 class InflectionGroupingKey {
   /**
@@ -8170,11 +7522,6 @@ is included in the grouping key
 /*!*********************!*\
   !*** ./language.js ***!
   \*********************/
-/*! namespace exports */
-/*! export Lang [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -8184,7 +7531,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ Language
 /* harmony export */ });
 /**
- * Constants that define a macrolanguage.
+ * Constants that define a macrolanguage in an ISO 639-3 format.
  *
  * @enum {string} */
 const Lang = {
@@ -8194,7 +7541,8 @@ const Lang = {
   PERSIAN: 'per',
   GEEZ: 'gez',
   CHINESE: 'zho',
-  SYRIAC: 'syr'
+  SYRIAC: 'syr',
+  ENGLISH: 'eng'
 }
 
 /**
@@ -8204,18 +7552,26 @@ class Language {
   /**
    * Creates an instance of a language class.
    *
-   * @param {Lang} code - A constant that specifies a language.
+   * @param {Lang | string} code - A constant that specifies a language in an ISO 639-3 format.
+   * @param {object} options - Additional options of the Language object to be created.
+   * @param {boolean} options.normalize - Whether the language code provided, in case it is not
+   *        in the format supported by the Language object, should attempted
+   *        to be converted to the supported format.
    */
-  constructor (code) {
+  constructor (code, { normalize = false } = {}) {
     if (!code) {
-      throw new Error('Language object cannot be create without a language _code')
+      throw new Error('Language object cannot be created without a language code')
+    }
+
+    if (normalize) {
+      code = Language.normalizedCode(code)
     }
 
     /**
-     An ISO 639-3 _code.
+     *An ISO 639-3 _code.
      *
-     @private
-     @type {string}
+     * @private
+     * @type {string}
      */
     this._code = code
   }
@@ -8246,6 +7602,30 @@ class Language {
 
   static get SYRIAC () {
     return new Language(Lang.SYRIAC)
+  }
+
+  static get ENGLISH () {
+    return new Language(Lang.ENGLISH)
+  }
+
+  /**
+   * Tries to convert a language code that is in an unsupported format to the one
+   * that is supported by the Language class.
+   *
+   * @param {string} code - A language code to normalize.
+   * @returns {Lang|string} - A normalized, if normalization is possible,
+   *          or an unchanged language code supplied to the function,
+   */
+  static normalizedCode (code) {
+    if (Object.values(Lang).includes(code)) {
+      // The code is already in the supported format and does not need to be normalized
+      return code
+    } else if (['en'].includes(code)) {
+      return Lang.ENGLISH
+    } else {
+      // We don't know how to normalize this code so we return the value unchanged
+      return code
+    }
   }
 
   /**
@@ -8306,10 +7686,6 @@ class Language {
 /*!***************************!*\
   !*** ./language_model.js ***!
   \***************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -8324,7 +7700,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflection_grouping_key.js */ "./inflection_grouping_key.js");
 /* harmony import */ var _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./inflection_group.js */ "./inflection_group.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-;
+
 
 
 
@@ -9014,10 +8390,6 @@ class LanguageModel {
 /*!***********************************!*\
   !*** ./language_model_factory.js ***!
   \***********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9035,7 +8407,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./chinese_language_model.js */ "./chinese_language_model.js");
 /* harmony import */ var _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./syriac_language_model.js */ "./syriac_language_model.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-;
+
 
 
 
@@ -9064,12 +8436,22 @@ class LanguageModelFactory {
   /**
    * Checks whether a language is supported
    *
-   * @param {string | symbol} language - Language as a language ID (symbol) or a language code (string)
+   * @param {Language | string | symbol} language - Language as a Language object,
+   *        language ID (a symbol) or a language code (a string).
    * @returns {boolean} True if language is supported, false otherwise
    */
   static supportsLanguage (language) {
-    language = (typeof language === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(language) : language
-    return MODELS.has(language)
+    let langCode
+    if (language instanceof _language_js__WEBPACK_IMPORTED_MODULE_0__.default) {
+      langCode = language.toCode()
+    } else if (typeof language === 'symbol') {
+      // language is in a language ID format
+      langCode = LanguageModelFactory.getLanguageCodeFromId(language)
+    } else {
+      // language contains the language code
+      langCode = language
+    }
+    return MODELS.has(langCode)
   }
 
   static availableLanguages () {
@@ -9236,10 +8618,6 @@ class LanguageModelFactory {
 /*!**********************************!*\
   !*** ./languages/greek-chars.js ***!
   \**********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9569,10 +8947,6 @@ class GreekChars {
 /*!*********************************!*\
   !*** ./latin_language_model.js ***!
   \*********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9585,7 +8959,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-;
+
 
 
 
@@ -9801,10 +9175,6 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 /*!******************!*\
   !*** ./lemma.js ***!
   \******************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9818,8 +9188,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-;
+/** @module lemma */
 
 
 
@@ -9834,7 +9203,7 @@ class Lemma {
    * Initializes a Lemma object.
    *
    * @param {string} word - A word.
-   * @param {Language | symbol | string} language - A language ID (symbol, please use this) or a language code of a word.
+   * @param {Language} language - A language of the word.
    * @param {string[]} principalParts - the principalParts of a lemma.
    * @param {object} features - the grammatical features of a lemma.
    */
@@ -9847,15 +9216,16 @@ class Lemma {
       throw new Error('Language should not be empty.')
     }
 
-    // Compatibility code for something providing languageCode instead of languageID
-    this.languageID = undefined
-    this.languageCode = undefined
-    if (language instanceof _language_js__WEBPACK_IMPORTED_MODULE_1__.default) {
-      ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(language))
-    } else {
-      // Language is in a legacy format: either a symbol or a string
-      ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageAttrs(language))
+    if (!(language instanceof _language_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+      throw new Error('The language argument should be of the Language type')
     }
+
+    /**
+     * A language of the lemma.
+     *
+     * @type {Language}
+     */
+    this.language = language
 
     this.word = word
     this.principalParts = principalParts
@@ -9864,15 +9234,33 @@ class Lemma {
     this.ID = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)()
   }
 
-  get language () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__.default.getInstance().warn('Please use "languageID" instead of "language"')
-    return this.languageCode
+  /**
+   * @deprecated
+   * Returns a language code of a lemma.
+   *
+   * @returns {string} - A language code.
+   */
+  get languageCode () {
+    const langData = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(this.language)
+    return langData.languageCode
+  }
+
+  /**
+   * @deprecated
+   * Returns a language ID of a lemma.
+   *
+   * @returns {symbol} - A language ID.
+   */
+  get languageID () {
+    const langData = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(this.language)
+    return langData.languageID
   }
 
   static readObject (jsonObject) {
-    const language = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    const langCode = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    const lang = new _language_js__WEBPACK_IMPORTED_MODULE_1__.default(langCode)
     // eslint-disable-next-line prefer-const
-    let resLemma = new Lemma(jsonObject.word, language, jsonObject.principalParts, jsonObject.pronunciation)
+    let resLemma = new Lemma(jsonObject.word, lang, jsonObject.principalParts, jsonObject.pronunciation)
 
     if (jsonObject.features && jsonObject.features.length > 0) {
       jsonObject.features.forEach(featureSource => {
@@ -9894,7 +9282,7 @@ class Lemma {
     // eslint-disable-next-line prefer-const
     let resultLemma = {
       word: this.word,
-      language: this.languageCode,
+      languageCode: this.language.toCode(),
       principalParts: this.principalParts,
       features: resultFeatures
     }
@@ -9913,28 +9301,9 @@ class Lemma {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__.default.getInstance().warn('Please use "addFeature" instead')
-    if (!data) {
-      throw new Error('feature data cannot be empty.')
-    }
-    if (!Array.isArray(data)) {
-      data = [data]
-    }
-
-    const type = data[0].type
-    this.features[type] = []
-    for (const element of data) {
-      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_2__.default)) {
-        throw new Error('feature data must be a Feature object.')
-      }
-
-      if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.compareLanguages(element.languageID, this.languageID)) {
-        throw new Error('Language "' + element.languageID.toString() + '" of a feature does not match a language "' +
-                this.languageID.toString() + '" of a Lemma object.')
-      }
-
-      this.features[type].push(element)
-    }
+    // TODO: The usage of setter seems to be eliminated form the code. It can be removed if no exceptions
+    //       will be thrown during an extended testing.
+    throw new Error('Lexeme feature setter is deprecated. Please use addFeature() method instead')
   }
 
   /**
@@ -9951,9 +9320,9 @@ class Lemma {
       throw new Error('feature data must be a Feature object.')
     }
 
-    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.compareLanguages(feature.languageID, this.languageID)) {
-      throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
-        this.languageID.toString() + '" of a Lemma object.')
+    if (!this.language.equals(feature.language)) {
+      throw new Error(`Language "${feature.language.toCode()}" of a feature does not match a language ` +
+        `"${this.language.toCode()}" of a Lemma object.`)
     }
 
     this.features[feature.type] = feature
@@ -10009,7 +9378,7 @@ class Lemma {
 
     // Check if words are the same
     const areSameWords = normalize
-      ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
+      ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getModelFromLanguage(this.language).compareWords(this.word, lemma.word, true,
           { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
@@ -10023,7 +9392,7 @@ class Lemma {
    * @returns {string} - A disambiguated word.
    */
   disambiguate (otherLemma) {
-    const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID)
+    const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getModelFromLanguage(this.language)
 
     // Check if words are the same
     const areSameWords = langModel.compareWords(this.word, otherLemma.word, true, { normalizeTrailingDigit: true })
@@ -10091,10 +9460,6 @@ class Lemma {
 /*!*******************!*\
   !*** ./lexeme.js ***!
   \*******************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10108,9 +9473,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-;
-
-
+/** @module lexeme */
+ /* @typedef {import('./lemma.js').Lemma} Lemma */
+ /* @typedef {import('./inflection.js').Inflection} Inflection */
+ /* @typedef {import('./definition-set.js').DefinitionSet} DefinitionSet */
 
 
 
@@ -10154,11 +9520,24 @@ class Lexeme {
       throw new Error('Meaning should be of DefinitionSet object type.')
     }
 
+    /**
+     * The lemma for the lexeme. If sources provide several different lemmas then this is the lemma we
+     * think is the most appropriate for this lexeme.
+     *
+     * @type {Lemma}
+     */
     this.lemma = lemma
+
+    /**
+     * Lemmas that are provided by some sources for the lexeme but that we think are less appropriate
+     * than the lemma stored in the `lemma` prop/
+     *
+     * @type {Lemma[]}
+     */
     this.altLemmas = []
     this.inflections = []
     this.addInflections(inflections)
-    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default(this.lemma.word, this.lemma.languageID)
+    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default(this.lemma.word, this.lemma.language)
     this.disambiguated = false
   }
 
@@ -10187,7 +9566,7 @@ class Lexeme {
   /**
    * add an alternative lemma to the lexeme
    *
-   * @param {Lemma} lemma
+   * @param {Lemma} lemma - An alternative lemma to be added to the list of alt lemmas.
    */
   addAltLemma (lemma) {
     this.altLemmas.push(lemma)
@@ -10389,10 +9768,6 @@ class Lexeme {
 /*!***************************!*\
   !*** ./logging/logger.js ***!
   \***************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10551,10 +9926,6 @@ class Logger {
 /*!********************************!*\
   !*** ./options/option-item.js ***!
   \********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10563,7 +9934,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ OptionItem
 /* harmony export */ });
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
-;
+
 
 /**
  * A single option item with access methods.
@@ -10693,10 +10064,6 @@ class OptionItem {
 /*!****************************!*\
   !*** ./options/options.js ***!
   \****************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10706,7 +10073,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
 /* harmony import */ var _option_item_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./option-item.js */ "./options/option-item.js");
-;
+
 
 /**
  * A set of options grouped by domain. Domain name should be passed in `defaults.domain`.
@@ -10901,10 +10268,6 @@ class Options {
 /*!***********************************!*\
   !*** ./persian_language_model.js ***!
   \***********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10915,7 +10278,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-;
+
 
 
 
@@ -10980,10 +10343,6 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /*!************************************!*\
   !*** ./ps-events/ps-event-data.js ***!
   \************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11035,10 +10394,6 @@ class PsEventData {
 /*!*******************************!*\
   !*** ./ps-events/ps-event.js ***!
   \*******************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11049,7 +10404,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../src/ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
-;
+
 
 
 /**
@@ -11144,10 +10499,6 @@ class PsEvent {
 /*!******************************!*\
   !*** ./resource_provider.js ***!
   \******************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11231,10 +10582,6 @@ class ResourceProvider {
 /*!*****************!*\
   !*** ./sha1.js ***!
   \*****************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11419,10 +10766,6 @@ class Sha1 {
 /*!*************************************!*\
   !*** ./storages/defaults-loader.js ***!
   \*************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11431,7 +10774,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ DefaultsLoader
 /* harmony export */ });
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
-;
+
 
 class DefaultsLoader {
   static fromJSON (jsonString) {
@@ -11451,10 +10794,6 @@ class DefaultsLoader {
 /*!********************************************!*\
   !*** ./storages/extension-sync-storage.js ***!
   \********************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11464,7 +10803,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
 /* global browser */
-;
+
 
 /**
  * An implementation of a StorageAdapter interface for an extension synchronized storage.
@@ -11510,10 +10849,6 @@ class ExtensionSyncStorage extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_
 /*!****************************************!*\
   !*** ./storages/local-storage-area.js ***!
   \****************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11522,7 +10857,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ LocalStorageArea
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
-;
+
 
 /**
  * An implementation of a StorageAdapter interface for a local storage.
@@ -11676,10 +11011,6 @@ class LocalStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.
 /*!**********************************************!*\
   !*** ./storages/remote-auth-storage-area.js ***!
   \**********************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11690,7 +11021,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-;
+
 
 
 /**
@@ -11784,10 +11115,6 @@ class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE
 /*!*************************************!*\
   !*** ./storages/storage-adapter.js ***!
   \*************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11866,10 +11193,6 @@ class StorageAdapter {
 /*!***************************************!*\
   !*** ./storages/temp-storage-area.js ***!
   \***************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11878,7 +11201,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ TempStorageArea
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
-;
+
 
 /**
  * An implementation of a StorageAdapter interface for temporary storage
@@ -11920,10 +11243,6 @@ class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.d
 /*!**********************************!*\
   !*** ./syriac_language_model.js ***!
   \**********************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11937,7 +11256,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflection_grouping_key */ "./inflection_grouping_key.js");
 /* harmony import */ var _inflection_group__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./inflection_group */ "./inflection_group.js");
-;
+
 
 
 
@@ -12172,10 +11491,6 @@ for the current node
 /*!*************************!*\
   !*** ./texts/author.js ***!
   \*************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -12251,10 +11566,6 @@ class Author {
 /*!****************************!*\
   !*** ./texts/text-work.js ***!
   \****************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -12341,10 +11652,6 @@ class TextWork {
 /*!*************************************!*\
   !*** ./texts/word-usage-example.js ***!
   \*************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -12354,7 +11661,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../language_model_factory.js */ "./language_model_factory.js");
-;
+
 
 
 class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__.default {
@@ -12451,10 +11758,6 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
 /*!************************!*\
   !*** ./translation.js ***!
   \************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -12463,7 +11766,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-;
+
 /**
  * stores a scope of lemma translations from python service
  * Contains a primary Lemma object
@@ -12534,10 +11837,6 @@ class Translation {
 /*!*******************************!*\
   !*** ./treebank_data_item.js ***!
   \*******************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -12734,10 +12033,6 @@ class TreebankDataItem {
 /*!************************************!*\
   !*** ./w3c/text-quote-selector.js ***!
   \************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -12750,7 +12045,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Implements a W3C Text Quote Selector (https://www.w3.org/TR/annotation-model/#h-text-quote-selector)
  */
-;
+
 
 class TextQuoteSelector {
   constructor (languageCode, normalizedText, prefix = null, suffix = null, source = null) {
@@ -12805,10 +12100,6 @@ class TextQuoteSelector {
 /*!**********************!*\
   !*** ./word-item.js ***!
   \**********************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -12818,7 +12109,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
-;
+
 
 
 class WordItem {
@@ -12970,10 +12261,6 @@ class WordItem {
 /*!**********************!*\
   !*** ./word-list.js ***!
   \**********************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -12982,7 +12269,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ WordList
 /* harmony export */ });
 /* harmony import */ var _word_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-item */ "./word-item.js");
-;
+
 
 class WordList {
   /**
@@ -13093,9 +12380,6 @@ class WordList {
 /*!*************************!*\
   !*** external "assert" ***!
   \*************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -13107,9 +12391,6 @@ module.exports = require("assert");;
 /*!*************************!*\
   !*** external "crypto" ***!
   \*************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -13121,9 +12402,6 @@ module.exports = require("crypto");;
 /*!*********************!*\
   !*** external "fs" ***!
   \*********************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -13135,9 +12413,6 @@ module.exports = require("fs");;
 /*!***********************!*\
   !*** external "http" ***!
   \***********************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -13149,9 +12424,6 @@ module.exports = require("http");;
 /*!************************!*\
   !*** external "https" ***!
   \************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -13163,9 +12435,6 @@ module.exports = require("https");;
 /*!**********************!*\
   !*** external "net" ***!
   \**********************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -13177,9 +12446,6 @@ module.exports = require("net");;
 /*!*************************!*\
   !*** external "stream" ***!
   \*************************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -13191,9 +12457,6 @@ module.exports = require("stream");;
 /*!**********************!*\
   !*** external "tty" ***!
   \**********************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -13205,9 +12468,6 @@ module.exports = require("tty");;
 /*!**********************!*\
   !*** external "url" ***!
   \**********************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -13219,9 +12479,6 @@ module.exports = require("url");;
 /*!***********************!*\
   !*** external "util" ***!
   \***********************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
@@ -13233,9 +12490,6 @@ module.exports = require("util");;
 /*!***********************!*\
   !*** external "zlib" ***!
   \***********************/
-/*! dynamic exports */
-/*! exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";

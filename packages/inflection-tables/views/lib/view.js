@@ -1,4 +1,4 @@
-import { Feature, Inflection, Homonym, LanguageModelFactory } from 'alpheios-data-models'
+import { Feature, Inflection, Homonym, LanguageModelFactory, Language } from 'alpheios-data-models'
 import LDF from '../../lib/language-dataset-factory.js'
 import WideView from './wide-view'
 import Form from '@lib/form.js'
@@ -372,7 +372,9 @@ export default class View {
     const suffix = options.suffix ? options.suffix : 'suffix'
     let inflection = new Inflection(stem, this.languageID, suffix)
     inflection.addFeature(new Feature(Feature.types.part, this.mainPartOfSpeech, this.languageID))
-    const homonym = Homonym.createSimpleForm(stem, this.languageID, [inflection])
+    const langData = LanguageModelFactory.getLanguageAttrs(this.languageID)
+    const lang = new Language(langData.languageCode)
+    const homonym = Homonym.createSimpleForm(stem, lang, [inflection])
     inflection = this.dataset.setInflectionData(inflection, homonym.lexemes[0].lemma)
     return homonym
   }

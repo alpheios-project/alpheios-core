@@ -1,20 +1,21 @@
 /* eslint-env jest */
-import DefinitionSet from '../src/definition-set'
+import DefinitionSet from '../src/definition-set.js'
+import Language from '../src/language.js'
 
 describe('DefinitionSet object', () => {
   test('isEmpty returns true for empty set', () => {
-    let set = new DefinitionSet('foo', 'lat')
+    const set = new DefinitionSet('foo', Language.LATIN)
     expect(set.isEmpty()).toBeTruthy()
   })
 
   test('isEmpty returns false fornon-empty set', () => {
-    let set = new DefinitionSet('foo', 'lat')
+    const set = new DefinitionSet('foo', Language.LATIN)
     set.appendShortDefs([{ mock: true }])
     expect(set.isEmpty()).toBeFalsy()
   })
 
   test('clearShortDefs empties short defs', () => {
-    let set = new DefinitionSet('foo', 'lat')
+    const set = new DefinitionSet('foo', Language.LATIN)
     set.appendShortDefs([{ mock: true }])
     expect(set.isEmpty()).toBeFalsy()
     set.clearShortDefs()
@@ -22,7 +23,7 @@ describe('DefinitionSet object', () => {
   })
 
   test('clearFullDefs empties full defs', () => {
-    let set = new DefinitionSet('foo', 'lat')
+    const set = new DefinitionSet('foo', Language.LATIN)
     set.appendFullDefs([{ mock: true }])
     expect(set.isEmpty()).toBeFalsy()
     set.clearFullDefs()

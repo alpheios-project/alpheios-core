@@ -148,7 +148,7 @@ export default class WordlistController {
    onHomonymReady (data) {
     // when receiving this event, it's possible this is the first time we are seeing the word so
     // create the item in the word list if it doesn't exist
-    let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
+    let wordItem = this.getWordListItem(data.language.toCode(), data.targetWord, true)
     wordItem.homonym = data
     wordItem.currentSession = true
     wordItem.updatedDT = Utility.currentDate
@@ -165,7 +165,7 @@ export default class WordlistController {
    * Emits WORDITEM_UPDATED and WORDLIST_UPDATED events
    */
   onHomonymReadyForWordlistUpdate (data) {
-    let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
+    let wordItem = this.getWordListItem(data.language.toCode(), data.targetWord, true)
     wordItem.homonym = data
     // we don't update the currentSession, updatedDT or frequency fields
     // with this event, as it's a lookup purely to populate the definition in the item for download
@@ -181,7 +181,7 @@ export default class WordlistController {
   * Emits a WORDITEM_UPDATED event
   */
   onDefinitionsReady (data) {
-    let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.homonym.languageID),data.homonym.targetWord)
+    let wordItem = this.getWordListItem(data.homonym.language.toCode(),data.homonym.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
       wordItem.updatedDT = Utility.currentDate
@@ -199,7 +199,7 @@ export default class WordlistController {
   * Emits a WORDITEM_UPDATED event
   */
   onDefinitionsReadyForWordlistUpdate (data) {
-    let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.homonym.languageID),data.homonym.targetWord)
+    let wordItem = this.getWordListItem(data.homonym.language.toCode(),data.homonym.targetWord)
     if (wordItem) {
       wordItem.homonym = data.homonym
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
@@ -216,7 +216,7 @@ export default class WordlistController {
   * Emits a WORDITEM_UPDATED event
   */
   onLemmaTranslationsReady (data) {
-    let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord)
+    let wordItem = this.getWordListItem(data.language.toCode(), data.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
       wordItem.updatedDT = Utility.currentDate
@@ -234,7 +234,7 @@ export default class WordlistController {
   * Emits a WORDITEM_UPDATED event
   */
  onLemmaTranslationsReadyForWordlistUpdate (data) {
-    let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord)
+    let wordItem = this.getWordListItem(data.language.toCode(), data.targetWord)
     if (wordItem) {
       wordItem.homonym = data
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})

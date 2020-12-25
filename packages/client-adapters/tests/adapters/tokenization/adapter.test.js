@@ -11,7 +11,7 @@ describe('tokenization/adapter.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
-  
+
   beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
@@ -25,7 +25,7 @@ describe('tokenization/adapter.test.js', () => {
   })
 
   it('1 AlpheiosTokenizationAdapter - constructor uploads config, available', () => {
-    let adapter = new AlpheiosTokenizationAdapter({
+    const adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
       method: 'getTokens',
@@ -41,7 +41,7 @@ describe('tokenization/adapter.test.js', () => {
   })
 
   it('2 AlpheiosTokenizationAdapter - createTokenizeFetchURL constructs url', () => {
-    let adapter = new AlpheiosTokenizationAdapter({
+    const adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
       method: 'getTokens',
@@ -77,18 +77,16 @@ describe('tokenization/adapter.test.js', () => {
 
     url = adapter.createTokenizeFetchURL()
     expect(url).toEqual(`${adapter.fetchOptions.baseUrl}tokenize/text?lang=lat&direction=ltr&tbseg=true`)
-
   })
 
   it('3 AlpheiosTokenizationAdapter - createTokenizeFetchURL returns empty url, if sourceType or lang is not defined in fetchOptions', () => {
-    let adapter = new AlpheiosTokenizationAdapter({
+    const adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
       method: 'getTokens',
       fetchOptions: {
       }
     })
-
 
     let url = adapter.createTokenizeFetchURL() // lang is not defined, textType is defined in defaultConfig
     expect(url).not.toBeDefined()
@@ -101,17 +99,17 @@ describe('tokenization/adapter.test.js', () => {
   })
 
   it('4 AlpheiosTokenizationAdapter - getTokens returns segments -  text/lineseg', async () => {
-    let sourceJson = TokenizationFixture.getFixtureRes({
+    const sourceJson = TokenizationFixture.getFixtureRes({
       testName: 'text-example-1'
     })
 
-    let adapter = new AlpheiosTokenizationAdapter({
+    const adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
       method: 'getTokens',
       fetchOptions: {
         lang: 'lat'
-      }, 
+      },
       sourceData: sourceJson
     })
 
@@ -134,9 +132,8 @@ margine terrarum porrexerat Amphitrite;
     expect(adapter.errors).toEqual([])
   })
 
-
   it('5 AlpheiosTokenizationAdapter - getTokens returns undefined and adds error to adapter, if url is not constructed', async () => {
-    let adapter = new AlpheiosTokenizationAdapter({
+    const adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
       method: 'getTokens',
@@ -152,7 +149,7 @@ margine terrarum porrexerat Amphitrite;
   })
 
   it('6 AlpheiosTokenizationAdapter - getTokens returns sourceData if it is passed to adapter', async () => {
-    let adapter = new AlpheiosTokenizationAdapter({
+    const adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
       method: 'getTokens',
@@ -167,20 +164,20 @@ margine terrarum porrexerat Amphitrite;
     const text = 'In nova fert animus mutatas dicere formas'
     const result = await adapter.getTokens(text)
 
-    expect(result).toEqual({ segments: []})
+    expect(result).toEqual({ segments: [] })
     expect(adapter.errors).toEqual([])
   })
 
   it('7 AlpheiosTokenizationAdapter - getConfig returns config from the remote source', async () => {
-    let sourceJson = TokenizationFixture.getFixtureRes({
+    const sourceJson = TokenizationFixture.getFixtureRes({
       testName: 'config-data'
     })
 
-    let adapter = new AlpheiosTokenizationAdapter({
+    const adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
       method: 'getConfig',
-      storage: LocalStorageArea, 
+      storage: LocalStorageArea,
       sourceData: sourceJson
     })
 
@@ -199,7 +196,7 @@ margine terrarum porrexerat Amphitrite;
   })
 
   it('8 AlpheiosTokenizationAdapter - defineContentType returns correct mime type', async () => {
-    let adapterText = new AlpheiosTokenizationAdapter({
+    const adapterText = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
       method: 'getTokens',
@@ -214,7 +211,7 @@ margine terrarum porrexerat Amphitrite;
 
     expect(adapterText.defineContentType()).toEqual({ 'Content-Type': 'text/plain' })
 
-    let adapterTei = new AlpheiosTokenizationAdapter({
+    const adapterTei = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
       method: 'getTokens',
@@ -231,18 +228,18 @@ margine terrarum porrexerat Amphitrite;
   })
 
   it('9 AlpheiosTokenizationAdapter - getTokens returns segments -  tei/default', async () => {
-    let sourceJson = TokenizationFixture.getFixtureRes({
+    const sourceJson = TokenizationFixture.getFixtureRes({
       testName: 'tei-example-1'
     })
 
-    let adapter = new AlpheiosTokenizationAdapter({
+    const adapter = new AlpheiosTokenizationAdapter({
       category: 'tokenizationGroup',
       adapterName: 'tokenizationMethod',
       method: 'getTokens',
       fetchOptions: {
         lang: 'lat',
         sourceType: 'tei'
-      }, 
+      },
       sourceData: sourceJson
     })
 
@@ -298,5 +295,4 @@ margine terrarum porrexerat Amphitrite;
     expect(result.segments.length).toEqual(1)
     expect(adapter.errors).toEqual([])
   })
-
 })

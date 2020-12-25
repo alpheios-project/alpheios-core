@@ -1,6 +1,7 @@
 /* eslint-env jest */
 import Lemma from '../src/lemma.js'
 import Translation from '../src/translation.js'
+import Language from '../src/language.js'
 
 describe('Translation object', () => {
   let lemma, word, translation
@@ -9,7 +10,7 @@ describe('Translation object', () => {
     // Create a test environment
 
     word = 'cupido'
-    lemma = new Lemma(word, 'lat')
+    lemma = new Lemma(word, Language.LATIN)
     translation = new Translation(lemma, 'lat', ['test meanings'])
   })
 

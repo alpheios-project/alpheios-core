@@ -1,9 +1,9 @@
+/** @module lemma */
 import LMF from './language_model_factory.js'
 import Language from './language.js'
 import Feature from './feature.js'
 import Translation from './translation.js'
 import { v4 as uuidv4 } from 'uuid'
-import Logger from './logging/logger.js'
 
 /**
  * Lemma, a canonical form of a word.
@@ -13,7 +13,7 @@ class Lemma {
    * Initializes a Lemma object.
    *
    * @param {string} word - A word.
-   * @param {Language | symbol | string} language - A language ID (symbol, please use this) or a language code of a word.
+   * @param {Language} language - A language of the word.
    * @param {string[]} principalParts - the principalParts of a lemma.
    * @param {object} features - the grammatical features of a lemma.
    */
@@ -26,15 +26,16 @@ class Lemma {
       throw new Error('Language should not be empty.')
     }
 
-    // Compatibility code for something providing languageCode instead of languageID
-    this.languageID = undefined
-    this.languageCode = undefined
-    if (language instanceof Language) {
-      ;({ languageID: this.languageID, languageCode: this.languageCode } = LMF.getLegacyLanguageCodeAndId(language))
-    } else {
-      // Language is in a legacy format: either a symbol or a string
-      ;({ languageID: this.languageID, languageCode: this.languageCode } = LMF.getLanguageAttrs(language))
+    if (!(language instanceof Language)) {
+      throw new Error('The language argument should be of the Language type')
     }
+
+    /**
+     * A language of the lemma.
+     *
+     * @type {Language}
+     */
+    this.language = language
 
     this.word = word
     this.principalParts = principalParts
@@ -43,15 +44,33 @@ class Lemma {
     this.ID = uuidv4()
   }
 
-  get language () {
-    Logger.getInstance().warn('Please use "languageID" instead of "language"')
-    return this.languageCode
+  /**
+   * @deprecated
+   * Returns a language code of a lemma.
+   *
+   * @returns {string} - A language code.
+   */
+  get languageCode () {
+    const langData = LMF.getLegacyLanguageCodeAndId(this.language)
+    return langData.languageCode
+  }
+
+  /**
+   * @deprecated
+   * Returns a language ID of a lemma.
+   *
+   * @returns {symbol} - A language ID.
+   */
+  get languageID () {
+    const langData = LMF.getLegacyLanguageCodeAndId(this.language)
+    return langData.languageID
   }
 
   static readObject (jsonObject) {
-    const language = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    const langCode = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    const lang = new Language(langCode)
     // eslint-disable-next-line prefer-const
-    let resLemma = new Lemma(jsonObject.word, language, jsonObject.principalParts, jsonObject.pronunciation)
+    let resLemma = new Lemma(jsonObject.word, lang, jsonObject.principalParts, jsonObject.pronunciation)
 
     if (jsonObject.features && jsonObject.features.length > 0) {
       jsonObject.features.forEach(featureSource => {
@@ -73,7 +92,7 @@ class Lemma {
     // eslint-disable-next-line prefer-const
     let resultLemma = {
       word: this.word,
-      language: this.languageCode,
+      languageCode: this.language.toCode(),
       principalParts: this.principalParts,
       features: resultFeatures
     }
@@ -92,28 +111,9 @@ class Lemma {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    Logger.getInstance().warn('Please use "addFeature" instead')
-    if (!data) {
-      throw new Error('feature data cannot be empty.')
-    }
-    if (!Array.isArray(data)) {
-      data = [data]
-    }
-
-    const type = data[0].type
-    this.features[type] = []
-    for (const element of data) {
-      if (!(element instanceof Feature)) {
-        throw new Error('feature data must be a Feature object.')
-      }
-
-      if (!LMF.compareLanguages(element.languageID, this.languageID)) {
-        throw new Error('Language "' + element.languageID.toString() + '" of a feature does not match a language "' +
-                this.languageID.toString() + '" of a Lemma object.')
-      }
-
-      this.features[type].push(element)
-    }
+    // TODO: The usage of setter seems to be eliminated form the code. It can be removed if no exceptions
+    //       will be thrown during an extended testing.
+    throw new Error('Lexeme feature setter is deprecated. Please use addFeature() method instead')
   }
 
   /**
@@ -130,9 +130,9 @@ class Lemma {
       throw new Error('feature data must be a Feature object.')
     }
 
-    if (!LMF.compareLanguages(feature.languageID, this.languageID)) {
-      throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
-        this.languageID.toString() + '" of a Lemma object.')
+    if (!this.language.equals(feature.language)) {
+      throw new Error(`Language "${feature.language.toCode()}" of a feature does not match a language ` +
+        `"${this.language.toCode()}" of a Lemma object.`)
     }
 
     this.features[feature.type] = feature
@@ -188,7 +188,7 @@ class Lemma {
 
     // Check if words are the same
     const areSameWords = normalize
-      ? LMF.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
+      ? LMF.getModelFromLanguage(this.language).compareWords(this.word, lemma.word, true,
           { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
@@ -202,7 +202,7 @@ class Lemma {
    * @returns {string} - A disambiguated word.
    */
   disambiguate (otherLemma) {
-    const langModel = LMF.getLanguageModel(this.languageID)
+    const langModel = LMF.getModelFromLanguage(this.language)
 
     // Check if words are the same
     const areSameWords = langModel.compareWords(this.word, otherLemma.word, true, { normalizeTrailingDigit: true })

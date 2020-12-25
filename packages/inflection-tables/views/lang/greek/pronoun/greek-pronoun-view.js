@@ -1,4 +1,4 @@
-import { Constants, Feature, Inflection, Homonym } from 'alpheios-data-models'
+import { Constants, Feature, Inflection, Homonym, LanguageModelFactory as LMF, Language } from 'alpheios-data-models'
 import Form from '@lib/form.js'
 import View from '@views/lib/view.js'
 import GroupFeatureType from '@views/lib/group-feature-type.js'
@@ -143,7 +143,9 @@ export default class GreekPronounView extends GreekView {
     }
     let inflection = new Inflection(options.form, this.languageID)
     inflection.addFeature(new Feature(Feature.types.part, this.mainPartOfSpeech, this.languageID))
-    const homonym = Homonym.createSimpleForm(options.form, this.languageID, [inflection])
+    const langData = LMF.getLanguageAttrs(this.languageID)
+    const lang = new Language(langData.languageCode)
+    const homonym = Homonym.createSimpleForm(options.form, lang, [inflection])
     inflection = this.dataset.setInflectionData(inflection, homonym.lexemes[0].lemma)
     return homonym
   }

@@ -8,6 +8,7 @@ import Lexeme from '@/lexeme.js'
 import Lemma from '@/lemma.js'
 import Inflection from '@/inflection.js'
 import Feature from '@/feature.js'
+import Language from '@/language.js'
 
 describe('homonym.test.js', () => {
   let lexeme1, lexeme2
@@ -22,14 +23,14 @@ describe('homonym.test.js', () => {
     jest.spyOn(console, 'warn')
 
     lexeme1 = new Lexeme(
-      new Lemma('word1', 'grc'),
+      new Lemma('word1', Language.GREEK),
       [
         new Inflection('stem1', 'grc'),
         new Inflection('stem2', 'grc')
       ]
     )
     lexeme2 = new Lexeme(
-      new Lemma('word2', 'grc'),
+      new Lemma('word2', Language.GREEK),
       [
         new Inflection('stem3', 'grc'),
         new Inflection('stem4', 'grc')
@@ -85,33 +86,39 @@ describe('homonym.test.js', () => {
     expect(hRes2.form).toBeUndefined()
 
     delete testJson.lexemes
+    expect(() => Homonym.readObject(testJson)).toThrowError(Homonym.errMsgs.NO_LANGUAGE_IN_JSON)
 
-    expect(function () {
-      const l = Homonym.readObject(testJson)
-      console.log(l)
-    }).toThrowError(/empty/)
+    delete testJson.form
+    expect(() => Homonym.readObject(testJson)).toThrowError(Homonym.errMsgs.NO_TARGET_WORD_IN_JSON)
   })
 
-  it('4 Homonym - language method', () => {
-    const homonym = new Homonym([lexeme1], 'fooform')
-    const res = homonym.language
+  it('4 Homonym - language getter should return a correct value and throw an error if the value is not available', () => {
+    let homonym = new Homonym([lexeme1], 'fooform')
 
-    expect(res).toEqual('grc')
+    expect(homonym.language.equals(Language.GREEK)).toBeTruthy()
+
+    const testLexeme = new Lexeme(
+      new Lemma('word2', Language.GREEK),
+      [
+        new Inflection('stem3', 'grc'),
+        new Inflection('stem4', 'grc')
+      ]
+    )
+    delete testLexeme.lemma.language
+    homonym = new Homonym([testLexeme])
+    expect(() => homonym.language).toThrowError(Homonym.errMsgs.NO_LANGUAGE_IN_HOMONYM)
   })
 
-  it('5 Homonym - languageID method', () => {
+  it('5 Homonym - languageID getter should return a value and throw an error if the value is not available', () => {
     let homonym = new Homonym([lexeme1])
     const res = homonym.languageID
 
     expect(res).toEqual(Constants.LANG_GREEK)
 
-    delete lexeme2.lemma.languageID
+    delete lexeme2.lemma.language
 
     homonym = new Homonym([lexeme2])
-    expect(function () {
-      const l = homonym.languageID
-      console.log(l)
-    }).toThrowError(/language ID/)
+    expect(() => homonym.languageID).toThrowError(Homonym.errMsgs.NO_LANGUAGE_IN_HOMONYM)
   })
 
   it('6 Homonym - inflections method', () => {
@@ -119,7 +126,7 @@ describe('homonym.test.js', () => {
     const infl2 = new Inflection('stem2', 'grc')
 
     const lexeme = new Lexeme(
-      new Lemma('word1', 'grc'),
+      new Lemma('word1', Language.GREEK),
       [
         infl1, infl2
       ]
@@ -139,7 +146,7 @@ describe('homonym.test.js', () => {
     infl1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
     let infl2 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
-    let lem = new Lemma('word1', 'grc') // eslint-disable-line prefer-const
+    let lem = new Lemma('word1', Language.GREEK) // eslint-disable-line prefer-const
     lem.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexeme = new Lexeme(
       lem,
@@ -173,7 +180,7 @@ describe('homonym.test.js', () => {
     infl1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
     let infl2 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
-    let lem = new Lemma('word1', 'grc') // eslint-disable-line prefer-const
+    let lem = new Lemma('word1', Language.GREEK) // eslint-disable-line prefer-const
     lem.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexeme = new Lexeme(
       lem,
@@ -187,7 +194,7 @@ describe('homonym.test.js', () => {
     let infl3 = new Inflection('stem2', 'grc') // eslint-disable-line prefer-const
     infl3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
     const disambiguatorLexeme = new Lexeme(
-      new Lemma('word2', 'grc'),
+      new Lemma('word2', Language.GREEK),
       [
         infl3
       ]
@@ -219,7 +226,7 @@ describe('homonym.test.js', () => {
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
     let infl3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
     infl3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_MEDIOPASSIVE, Constants.LANG_GREEK))
-    let lemmaA = new Lemma('word1', 'grc') // eslint-disable-line prefer-const
+    let lemmaA = new Lemma('word1', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexeme = new Lexeme(
       lemmaA,
@@ -232,7 +239,7 @@ describe('homonym.test.js', () => {
     // homonym with single lexeme, two possible inflections, disambiguator adds a new lexeme
     let infl4 = new Inflection('stem4', 'grc') // eslint-disable-line prefer-const
     infl4.addFeature(new Feature(Feature.types.voice, Constants.VOICE_MIDDLE, Constants.LANG_GREEK))
-    let lemmaB = new Lemma('word1', 'grc') // eslint-disable-line prefer-const
+    let lemmaB = new Lemma('word1', Language.GREEK) // eslint-disable-line prefer-const
     lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeB = new Lexeme(
       lemmaB,
@@ -267,7 +274,7 @@ describe('homonym.test.js', () => {
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
     let infl3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
     infl3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_MEDIOPASSIVE, Constants.LANG_GREEK))
-    let lemmaA = new Lemma('word1', 'grc') // eslint-disable-line prefer-const
+    let lemmaA = new Lemma('word1', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexeme = new Lexeme(
       lemmaA,
@@ -280,7 +287,7 @@ describe('homonym.test.js', () => {
     // homonym with single lexeme, two possible inflections, disambiguator adds a new lexeme
     let infl4 = new Inflection('stem4', 'grc') // eslint-disable-line prefer-const
     infl4.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
-    let lemmaB = new Lemma('word1', 'grc') // eslint-disable-line prefer-const
+    let lemmaB = new Lemma('word1', Language.GREEK) // eslint-disable-line prefer-const
     lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeB = new Lexeme(
       lemmaB,
@@ -317,13 +324,13 @@ describe('homonym.test.js', () => {
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
     let infl3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
     infl3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_MEDIOPASSIVE, Constants.LANG_GREEK))
-    let lemmaA1 = new Lemma('word', 'grc') // eslint-disable-line prefer-const
+    let lemmaA1 = new Lemma('word', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA1.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     let infl4 = new Inflection('stem4', 'grc') // eslint-disable-line prefer-const
     infl1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
     let infl5 = new Inflection('stem5', 'grc') // eslint-disable-line prefer-const
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
-    let lemmaA2 = new Lemma('wordA2', 'grc') // eslint-disable-line prefer-const
+    let lemmaA2 = new Lemma('wordA2', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA2.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_GREEK))
     const lexemeA1 = new Lexeme(
       lemmaA1,
@@ -342,7 +349,7 @@ describe('homonym.test.js', () => {
     // homonym with single lexeme, two possible inflections, disambiguator adds a new lexeme
     let infl6 = new Inflection('stem6', 'grc') // eslint-disable-line prefer-const
     infl6.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
-    let lemmaB = new Lemma('word', 'grc') // eslint-disable-line prefer-const
+    let lemmaB = new Lemma('word', Language.GREEK) // eslint-disable-line prefer-const
     lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeB = new Lexeme(
       lemmaB,
@@ -374,13 +381,13 @@ describe('homonym.test.js', () => {
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
     let infl3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
     infl3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_MEDIOPASSIVE, Constants.LANG_GREEK))
-    let lemmaA1 = new Lemma('wordA1', 'grc') // eslint-disable-line prefer-const
+    let lemmaA1 = new Lemma('wordA1', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA1.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     let infl4 = new Inflection('stem4', 'grc') // eslint-disable-line prefer-const
     infl1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
     let infl5 = new Inflection('stem5', 'grc') // eslint-disable-line prefer-const
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
-    let lemmaA2 = new Lemma('wordA2', 'grc') // eslint-disable-line prefer-const
+    let lemmaA2 = new Lemma('wordA2', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA2.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_GREEK))
     const lexemeA1 = new Lexeme(
       lemmaA1,
@@ -399,7 +406,7 @@ describe('homonym.test.js', () => {
     // homonym with single lexeme, two possible inflections, disambiguator adds a new lexeme
     let infl6 = new Inflection('stem6', 'grc') // eslint-disable-line prefer-const
     infl6.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
-    let lemmaB = new Lemma('wordB', 'grc') // eslint-disable-line prefer-const
+    let lemmaB = new Lemma('wordB', Language.GREEK) // eslint-disable-line prefer-const
     lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, Constants.LANG_GREEK))
     const lexemeB = new Lexeme(
       lemmaB,
@@ -441,7 +448,7 @@ describe('homonym.test.js', () => {
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
     let infl3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
     infl3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_MEDIOPASSIVE, Constants.LANG_GREEK))
-    let lemmaA = new Lemma('χράομαι', 'grc') // eslint-disable-line prefer-const
+    let lemmaA = new Lemma('χράομαι', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeA = new Lexeme(
       lemmaA,
@@ -454,7 +461,7 @@ describe('homonym.test.js', () => {
     // homonym with single lexeme, two possible inflections, disambiguator adds a new lexeme
     let infl6 = new Inflection('stem', 'grc') // eslint-disable-line prefer-const
     infl6.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
-    let lemmaB = new Lemma('Χράομαι', 'grc') // eslint-disable-line prefer-const
+    let lemmaB = new Lemma('Χράομαι', Language.GREEK) // eslint-disable-line prefer-const
     lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeB = new Lexeme(
       lemmaB,
@@ -495,7 +502,7 @@ describe('homonym.test.js', () => {
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
     let infl3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
     infl3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_MEDIOPASSIVE, Constants.LANG_GREEK))
-    let lemmaA = new Lemma('δ\u1fbd', 'grc') // eslint-disable-line prefer-const
+    let lemmaA = new Lemma('δ\u1fbd', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeA = new Lexeme(
       lemmaA,
@@ -508,7 +515,7 @@ describe('homonym.test.js', () => {
     // homonym with single lexeme, two possible inflections, disambiguator adds a new lexeme
     let infl6 = new Inflection('stem', 'grc') // eslint-disable-line prefer-const
     infl6.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
-    let lemmaB = new Lemma('δ\u2019', 'grc') // eslint-disable-line prefer-const
+    let lemmaB = new Lemma('δ\u2019', Language.GREEK) // eslint-disable-line prefer-const
     lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeB = new Lexeme(
       lemmaB,
@@ -549,7 +556,7 @@ describe('homonym.test.js', () => {
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
     let infl3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
     infl3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_MEDIOPASSIVE, Constants.LANG_GREEK))
-    let lemmaA = new Lemma('αἴγυπτος1', 'grc') // eslint-disable-line prefer-const
+    let lemmaA = new Lemma('αἴγυπτος1', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeA = new Lexeme(
       lemmaA,
@@ -562,7 +569,7 @@ describe('homonym.test.js', () => {
     // homonym with single lexeme, two possible inflections, disambiguator adds a new lexeme
     let infl6 = new Inflection('stem', 'grc') // eslint-disable-line prefer-const
     infl6.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
-    let lemmaB = new Lemma('αἴγυπτος', 'grc') // eslint-disable-line prefer-const
+    let lemmaB = new Lemma('αἴγυπτος', Language.GREEK) // eslint-disable-line prefer-const
     lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeB = new Lexeme(
       lemmaB,
@@ -593,15 +600,15 @@ describe('homonym.test.js', () => {
     except that it should be flagged as disambiguated.
     Lexeme2 should be identical to HomonymA.Lexeme2.
      */
-    let lemmaA = new Lemma('παρ᾽', 'grc') // eslint-disable-line prefer-const
+    let lemmaA = new Lemma('παρ᾽', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_PREPOSITION, Constants.LANG_GREEK))
     const lexemeA = new Lexeme(lemmaA, [])
-    let lemmaB = new Lemma('παρ᾽', 'grc') // eslint-disable-line prefer-const
+    let lemmaB = new Lemma('παρ᾽', Language.GREEK) // eslint-disable-line prefer-const
     lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, Constants.LANG_GREEK))
     const lexemeB = new Lexeme(lemmaB, [])
     const homonymA = new Homonym([lexemeA, lexemeB])
 
-    let lemmaC = new Lemma('παρ᾽', 'grc') // eslint-disable-line prefer-const
+    let lemmaC = new Lemma('παρ᾽', Language.GREEK) // eslint-disable-line prefer-const
     lemmaC.addFeature(new Feature(Feature.types.part, Constants.POFS_PREPOSITION, Constants.LANG_GREEK))
     const lexemeC = new Lexeme(lemmaC, [])
     const homonymB = new Homonym([lexemeC])
@@ -628,17 +635,17 @@ describe('homonym.test.js', () => {
     except that it should be flagged as disambiguated.
     Lexeme2 should be identical to HomonymA.Lexeme2.
      */
-    let lemmaA = new Lemma('παρ᾽', 'grc') // eslint-disable-line prefer-const
+    let lemmaA = new Lemma('παρ᾽', Language.GREEK) // eslint-disable-line prefer-const
     lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_PREPOSITION, Constants.LANG_GREEK))
     let infl1 = new Inflection('stem', 'grc') // eslint-disable-line prefer-const
     infl1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
     const lexemeA = new Lexeme(lemmaA, [infl1])
-    let lemmaB = new Lemma('παρ᾽', 'grc') // eslint-disable-line prefer-const
+    let lemmaB = new Lemma('παρ᾽', Language.GREEK) // eslint-disable-line prefer-const
     lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, Constants.LANG_GREEK))
     const lexemeB = new Lexeme(lemmaB, [])
     const homonymA = new Homonym([lexemeA, lexemeB])
 
-    let lemmaC = new Lemma('παρ᾽', 'grc') // eslint-disable-line prefer-const
+    let lemmaC = new Lemma('παρ᾽', Language.GREEK) // eslint-disable-line prefer-const
     lemmaC.addFeature(new Feature(Feature.types.part, Constants.POFS_PREPOSITION, Constants.LANG_GREEK))
     const lexemeC = new Lexeme(lemmaC, [])
     const homonymB = new Homonym([lexemeC])

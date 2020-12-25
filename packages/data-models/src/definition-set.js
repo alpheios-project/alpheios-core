@@ -1,13 +1,44 @@
-import Definition from './definition'
+import Definition from './definition.js'
+import Language from './language.js'
 import LMF from './language_model_factory.js'
 
 export default class DefinitionSet {
-  constructor (lemmaWord, languageID) {
+  /**
+   * @param {string} lemmaWord - A word for which a definition set was created.
+   * @param {Language} language - A language on what a text of a definitions in a definition set is written.
+   */
+  constructor (lemmaWord, language) {
+    if (!lemmaWord) {
+      throw new Error('DefinitionSet cannot be created without the lemma word')
+    }
+    if (!language) {
+      throw new Error('DefinitionSet cannot be created without the language')
+    }
+    if (!(language instanceof Language)) {
+      throw new Error('The _language must be an instance of the Language class')
+    }
+
+    /**
+     * A word for which a definition set was created.
+     *
+     * @type {string}
+     */
     this.lemmaWord = lemmaWord
-    this.languageID = languageID
+
+    /**
+     * A language on what a text of a definitions in a definition set is written.
+     *
+     * @type {Language}
+     */
+    this.language = language
 
     this.shortDefs = []
     this.fullDefs = []
+  }
+
+  get languageID () {
+    const langData = LMF.getLegacyLanguageCodeAndId(this.language)
+    return langData.languageID
   }
 
   /**
@@ -17,9 +48,9 @@ export default class DefinitionSet {
    * @returns {DefinitionSet} A DefinitionSet object populated with data from JSON object.
    */
   static readObject (jsonObject) {
-    const languageID = LMF.getLanguageIdFromCode(jsonObject.languageCode)
+    const lang = new Language(jsonObject.languageCode)
 
-    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, languageID) // eslint-disable-line prefer-const
+    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, lang) // eslint-disable-line prefer-const
 
     for (const shortDef of jsonObject.shortDefs) {
       definitionSet.shortDefs.push(Definition.readObject(shortDef))
@@ -103,10 +134,9 @@ export default class DefinitionSet {
   }
 
   convertToJSONObject () {
-    const languageCode = LMF.getLanguageCodeFromId(this.languageID)
     return {
       lemmaWord: this.lemmaWord,
-      languageCode: languageCode,
+      languageCode: this.language.toCode(),
       shortDefs: this.shortDefs.map(def => def.convertToJSONObject()),
       fullDefs: this.fullDefs.map(def => def.convertToJSONObject())
     }

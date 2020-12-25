@@ -1,4 +1,4 @@
-import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent, Constants, Logger, Options } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent, Constants, Logger, Options, Language } from 'alpheios-data-models'
 import Query from './query.js'
 import { ClientAdapters, RemoteError } from 'alpheios-client-adapters'
 import { ResponseMessage } from 'alpheios-messaging'
@@ -131,7 +131,9 @@ export default class LexicalQuery extends Query {
   }
 
   * iterations () {
-    const formLexeme = new Lexeme(new Lemma(this.selector.normalizedText, this.selector.languageID), [])
+    const langData = LMF.getLanguageAttrs(this.selector.languageID)
+    const lang = new Language(langData.languageCode)
+    const formLexeme = new Lexeme(new Lemma(this.selector.normalizedText, lang), [])
     if (!this.canReset) {
       // if we can't reset, proceed with full lookup sequence
       let adapterMorphRes

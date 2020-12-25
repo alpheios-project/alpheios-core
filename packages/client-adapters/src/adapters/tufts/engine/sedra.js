@@ -11,9 +11,9 @@ data.setLexemeFilter(function (lexeme) {
 
 //
 data.setMeaningParser(function (meaning, targetWord) {
-  const lang = meaning.lang ? meaning.lang : Models.Constants.STR_LANG_CODE_ENG
+  const lang = meaning.lang ? new Models.Language(meaning.lang) : Models.Language.ENGLISH
   const meaningText = meaning.$ || ''
-  return new Models.Definition(meaningText, lang, 'text/html', targetWord)
+  return new Models.Definition(meaningText, lang, Models.Constants.MIMETypes.TEXT_PLAIN, targetWord)
 })
 
 data.setPropertyParser(function (propertyName, propertyValue, inputElem) {

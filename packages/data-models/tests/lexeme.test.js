@@ -1,6 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import * as Constants from '@/constants.js'
+import Language from '@/language.js'
 import Lexeme from '@/lexeme.js'
 import Lemma from '@/lemma.js'
 import Feature from '@/feature.js'
@@ -24,8 +25,8 @@ describe('lexeme.test.js', () => {
 
     inflection1 = new Inflection('stem1', 'grc')
     inflection2 = new Inflection('stem2', 'grc')
-    lemma = new Lemma('word', 'grc')
-    definition = new DefinitionSet('word', Constants.LANG_GREEK)
+    lemma = new Lemma('word', Language.GREEK)
+    definition = new DefinitionSet('word', Language.GREEK)
   })
   afterEach(() => {
     jest.resetModules()
@@ -84,13 +85,13 @@ describe('lexeme.test.js', () => {
     const empty = new Lexeme(lemma, [])
     expect(empty.isPopulated()).toBeFalsy()
 
-    let flemma = new Lemma('word', 'grc') // eslint-disable-line prefer-const
+    let flemma = new Lemma('word', Language.GREEK) // eslint-disable-line prefer-const
     flemma.addFeature(new Feature(Feature.types.tense, ['noun'], Constants.LANG_GREEK))
 
     const withFeatures = new Lexeme(flemma, [])
     expect(withFeatures.isPopulated()).toBeTruthy()
 
-    const def = new Definition('shortdef', 'eng', 'text/plain')
+    const def = new Definition('shortdef', Language.ENGLISH, Constants.MIMETypes.TEXT_PLAIN)
     let withDef = new Lexeme(lemma, []) // eslint-disable-line prefer-const
     withDef.meaning.appendShortDefs([def])
     expect(withDef.isPopulated()).toBeTruthy()
@@ -247,7 +248,7 @@ describe('lexeme.test.js', () => {
     const lexeme = new Lexeme(lemma, [inflection1, inflection2])
     expect(lexeme.inflections).toEqual([inflection1, inflection2])
 
-    const disambiguatorLemma = new Lemma('word', 'grc')
+    const disambiguatorLemma = new Lemma('word', Language.GREEK)
     disambiguatorLemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     let inflection3 = new Inflection('word', 'grc') // eslint-disable-line prefer-const
     inflection3.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
@@ -284,7 +285,7 @@ describe('lexeme.test.js', () => {
     const lexeme = new Lexeme(lemma, [inflection1, inflection2])
     expect(lexeme.inflections).toEqual([inflection1, inflection2])
 
-    const disambiguatorLemma = new Lemma('word', 'grc')
+    const disambiguatorLemma = new Lemma('word', Language.GREEK)
     disambiguatorLemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const disambiguator = new Lexeme(disambiguatorLemma, [])
 
@@ -318,7 +319,7 @@ describe('lexeme.test.js', () => {
     const lexeme = new Lexeme(lemma, [inflection1, inflection2])
     expect(lexeme.inflections).toEqual([inflection1, inflection2])
 
-    const disambiguatorLemma = new Lemma('word', 'grc')
+    const disambiguatorLemma = new Lemma('word', Language.GREEK)
     disambiguatorLemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     let inflection3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
     inflection3.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
@@ -342,7 +343,7 @@ describe('lexeme.test.js', () => {
   })
 
   it('7 Lexeme - adds alternate Lemmas', () => {
-    const lemma2 = new Lemma('word', 'grc')
+    const lemma2 = new Lemma('word', Language.GREEK)
     let lex = new Lexeme(lemma, []) // eslint-disable-line prefer-const
     expect(lex.altLemmas.length).toEqual(0)
     lex.addAltLemma(lemma2)

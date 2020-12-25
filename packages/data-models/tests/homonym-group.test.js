@@ -4,6 +4,7 @@ import Homonym from '@/homonym.js'
 import Lexeme from '@/lexeme.js'
 import Lemma from '@/lemma.js'
 import Inflection from '@/inflection.js'
+import Language from '@/language.js'
 
 describe('homonym.test.js', () => {
   let lexeme1, lexeme2
@@ -11,14 +12,14 @@ describe('homonym.test.js', () => {
 
   beforeEach(() => {
     lexeme1 = new Lexeme(
-      new Lemma('word1', 'grc'),
+      new Lemma('word1', Language.GREEK),
       [
         new Inflection('stem1', 'grc'),
         new Inflection('stem2', 'grc')
       ]
     )
     lexeme2 = new Lexeme(
-      new Lemma('word2', 'grc'),
+      new Lemma('word2', Language.GREEK),
       [
         new Inflection('stem3', 'grc'),
         new Inflection('stem4', 'grc')

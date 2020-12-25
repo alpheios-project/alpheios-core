@@ -1,7 +1,7 @@
 /*
 Objects of a morphology analyzer's library
  */
-import { Feature, Lemma, FeatureImporter, Definition, Constants, Logger } from 'alpheios-data-models'
+import { Feature, Lemma, FeatureImporter, Definition, Language, Constants, Logger } from 'alpheios-data-models'
 
 /**
  * Holds all information required to transform from morphological analyzer's grammatical feature values to the
@@ -37,12 +37,12 @@ class ImportMorphData {
       return lexemes
     }
     // may be overridden by specific engine use via setLemmaParser
-    this.parseLemma = function (lemma) { return new Lemma(lemma, this.model.languageID) }
+    this.parseLemma = function (lemma) { return new Lemma(lemma, this.model.language) }
 
     // may be overridden by specific engine use via setMeaningParser
     this.parseMeaning = function (meaning, targetWord) {
-      const lang = meaning.lang ? meaning.lang : Constants.STR_LANG_CODE_ENG
-      return new Definition(meaning.$, lang, 'text/plain', targetWord)
+      const lang = meaning.lang ? new Language(meaning.lang) : Language.ENGLISH
+      return new Definition(meaning.$, lang, Constants.MIMETypes.TEXT_PLAIN, targetWord)
     }
 
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value

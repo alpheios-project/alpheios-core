@@ -1,7 +1,7 @@
 /*
  * Latin language data module
  */
-import { Constants, Feature, FeatureImporter, Lemma } from 'alpheios-data-models'
+import { Constants, Feature, FeatureImporter, Lemma, Language } from 'alpheios-data-models'
 import LanguageDataset from '@lib/language-dataset.js'
 import Suffix from '@lib/suffix.js'
 import Form from '@lib/form.js'
@@ -69,6 +69,10 @@ export default class LatinLanguageDataset extends LanguageDataset {
     for (const pofs of this.constructor.constants.IRREG_POFS) {
       this.irregularLemmas.set(pofs, [])
     }
+  }
+
+  static get language () {
+    return Language.LATIN
   }
 
   static get languageID () {
@@ -355,7 +359,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       const item = data[i]
       const hdwd = item[0]
       const principalParts = item[1].split(/_/)
-      const lemma = new Lemma(hdwd, LatinLanguageDataset.languageID, principalParts)
+      const lemma = new Lemma(hdwd, LatinLanguageDataset.language, principalParts)
 
       const form = item[2]
 
@@ -416,7 +420,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       ]
 
       if (lemmaWord) {
-        const lemma = new Lemma(lemmaWord, LatinLanguageDataset.languageID, principalParts)
+        const lemma = new Lemma(lemmaWord, LatinLanguageDataset.language, principalParts)
         features.push(this.features.get(Feature.types.word).createFromImporter(lemmaWord))
         if (!this.irregularLemmas.get(partOfSpeech.value).some(item => item.word === lemma.word)) {
           this.irregularLemmas.get(partOfSpeech.value).push(lemma)

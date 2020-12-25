@@ -99,7 +99,8 @@ data.setLemmaParser(function (lemma) {
     parts.push(normalized)
   }
   if (primary) {
-    parsed = new Models.Lemma(primary, this.model.languageCode, parts)
+    const lang = new Models.Language(this.model.languageCode)
+    parsed = new Models.Lemma(primary, lang, parts)
   }
 
   return parsed

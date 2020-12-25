@@ -34,16 +34,11 @@
     </div>
 </template>
 <script>
-import Tooltip from '@/vue/components/tooltip.vue'
-import { LanguageModelFactory } from 'alpheios-data-models'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'WordUsageExamplesFilters',
   inject: ['app', 'l10n', 'settings'],
-  components: {
-    alphTooltip: Tooltip
-  },
   mixins: [DependencyCheck],
   props: {
     collapsedHeader: {
@@ -82,7 +77,7 @@ export default {
       return this.$store.state.app.homonymDataReady ? this.app.homonym : null
     },
     languageCode () {
-      return  this.homonym ? LanguageModelFactory.getLanguageCodeFromId(this.homonym.languageID) : null
+      return this.homonym ? this.homonym.language.toCode() : null
     },
     authorsList () {
       if (!this.$store.state.app.homonymDataReady) {
@@ -174,17 +169,17 @@ export default {
     calcFocusHint (type) {
       // it would be better for this to be a computed property but settings.getFeatureOptions() is not reactive
       if (type === 'author') {
-        return this.l10n.getText('WORDUSAGE_FOCUS_AUTHOR',{ maxResults:this.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
+        return this.l10n.getText('WORDUSAGE_FOCUS_AUTHOR', { maxResults: this.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
       } else {
-        return this.l10n.getText('WORDUSAGE_FOCUS_WORK',{ maxResults:this.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
+        return this.l10n.getText('WORDUSAGE_FOCUS_WORK', { maxResults: this.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
       }
     },
     applySort (typeSort, items) {
-      return items.sort((a,b) => {
-            let aT = this.calcTitle(a, typeSort)
-            let bT = this.calcTitle(b, typeSort)
-            return aT.localeCompare(bT, this.languageCode, {sensitivity: 'accent'})
-          })
+      return items.sort((a, b) => {
+        const aT = this.calcTitle(a, typeSort)
+        const bT = this.calcTitle(b, typeSort)
+        return aT.localeCompare(bT, this.languageCode, { sensitivity: 'accent' })
+      })
     }
   }
 }

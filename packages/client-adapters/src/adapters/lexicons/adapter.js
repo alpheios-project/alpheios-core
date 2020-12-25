@@ -1,4 +1,4 @@
-import { LanguageModelFactory as LMF, Definition, ResourceProvider } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Definition, ResourceProvider, Language, Constants } from 'alpheios-data-models'
 import papaparse from 'papaparse'
 
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
@@ -268,7 +268,8 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
               rightsText = config.rights_keys[providerCode]
             }
             const provider = new ResourceProvider(rightsUri, rightsText)
-            const def = new Definition(text, config.langs.target, format, lexeme.lemma.word)
+            const lang = new Language(config.langs.target, { normalize: true })
+            const def = new Definition(text, lang, format, lexeme.lemma.word)
             const definition = ResourceProvider.getProxy(provider, def)
             lexeme.meaning.appendShortDefs(definition)
           } catch (error) {
@@ -338,7 +339,8 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
             this.prepareFailedCallback('fullDefs', homonym)
           } else {
             const provider = new ResourceProvider(config.urls.full, config.rights)
-            const def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
+            const lang = new Language(config.langs.target, { normalize: true })
+            const def = new Definition(fullDefData, lang, Constants.MIMETypes.TEXT_PLAIN, request.lexeme.lemma.word)
             const definition = ResourceProvider.getProxy(provider, def)
             request.lexeme.meaning.appendFullDefs(definition)
             this.prepareSuccessCallback('fullDefs', homonym)
@@ -372,7 +374,8 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
           this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error }))
         } else {
           const provider = new ResourceProvider(config.urls.full, config.rights)
-          const def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
+          const lang = new Language(config.langs.target, { normalize: true })
+          const def = new Definition(fullDefData, lang, Constants.MIMETypes.TEXT_PLAIN, request.lexeme.lemma.word)
           const definition = ResourceProvider.getProxy(provider, def)
           request.lexeme.meaning.appendFullDefs(definition)
         }

@@ -293,7 +293,7 @@ import InflectionBrowser from '@/vue/components/inflections/inflections-browser.
 
 import UserAuth from './user-auth.vue'
 import WordUsageExamples from '@/vue/components/word-usage-examples/word-usage-examples.vue'
-import { Definition } from 'alpheios-data-models'
+import { Definition, Language, Constants } from 'alpheios-data-models'
 import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
 import ProgressBar from '@/vue/components/progress-bar.vue'
 import OptionsPanel from '@/vue/components/options.vue'
@@ -412,14 +412,14 @@ export default {
       return this.$store.state.ui.activeTab
     },
     showMainTabIcons () {
-      let mainTabArray = ['morphology', 'definitions', 'inflections', 'wordUsage', 'treebank']
+      const mainTabArray = ['morphology', 'definitions', 'inflections', 'wordUsage', 'treebank']
       return this.moduleConfig.showNav && mainTabArray.includes(this.currentTab)
     },
     showMorphologyIcon () {
       return this.hasMorphologyData && (this.showMainTabIcons || this.currentTab === 'grammar')
     },
     rootClasses () {
-      let classes = []
+      const classes = []
 
       /*
       Position classes are needed for landscape orientations only as only those
@@ -493,7 +493,12 @@ export default {
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
           } else if (Object.entries(lexeme.lemma.features).length > 0) {
-            definitions.push(new Definition(this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
+            definitions.push(
+              new Definition(
+                this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), Language.ENGLISH,
+                Constants.MIMETypes.TEXT_PLAIN, lexeme.lemma.word
+              )
+            )
           }
         }
       }
@@ -528,7 +533,7 @@ export default {
     },
 
     squeezePage () {
-      let propName = this.isAttachedToRight ? 'padding-right' : 'padding-left'
+      const propName = this.isAttachedToRight ? 'padding-right' : 'padding-left'
       document.documentElement.style.setProperty(propName, '50%')
       document.body.classList.add('alpheios-layout-landscape-open-panel')
     },
