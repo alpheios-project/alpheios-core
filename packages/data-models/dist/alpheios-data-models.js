@@ -8345,7 +8345,9 @@ class Options {
   get formatLabelValueList () {
     let result = {} // eslint-disable-line prefer-const
     Object.keys(this.items).forEach(nameItem => {
-      result[nameItem] = this.items[nameItem].currentValue
+      if (this.items[nameItem].currentValue !== undefined) {
+        result[nameItem] = this.items[nameItem].currentValue
+      }
     })
     return result
   }
