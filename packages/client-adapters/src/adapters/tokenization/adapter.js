@@ -128,7 +128,7 @@ class AlpheiosTokenizationAdapter extends BaseAdapter {
       let wasFirst = false
 
       Object.keys(this.fetchOptions).forEach(option => {
-        if (exclude.indexOf(option) === -1) {
+        if ((exclude.indexOf(option) === -1) && (this.fetchOptions[option] !== undefined)) {
           let sign = '&'
           if (!wasFirst) {
             sign = '?'
