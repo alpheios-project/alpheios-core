@@ -4730,24 +4730,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _dmodels_resource_provider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @dmodels/resource_provider.js */ "./resource_provider.js");
+/* harmony import */ var _dmodels_language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @dmodels/language.js */ "./language.js");
+/* harmony import */ var _dmodels_iri_iri_provider_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @dmodels/iri/iri-provider.js */ "./iri/iri-provider.js");
 /** @module definition */
 
-
  /* @typedef {import('./language.js').Language} Language */
+
 
 class Definition {
   /**
    * @param {string} text - A text of a definition.
-   * @param {Language} language - A language on what a text of a definition is written.
+   * @param {Language} language - A _language on what a text of a definition is written.
    * @param {string} format - A MIME type of a definitions text (i.e. "text/plain").
    * @param {string} lemmaText - A ward that the definition text describes.
    */
   constructor (text, language, format, lemmaText) {
-    if (!(language instanceof _language_js__WEBPACK_IMPORTED_MODULE_2__.default)) {
+    if (!(language instanceof _dmodels_language_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
       throw new Error('The language argument is not of the Language type')
     }
 
@@ -4756,17 +4755,17 @@ class Definition {
      *
      * @type {string}
      */
-    this.text = text
+    this._text = text
 
     /**
      * A language on what a text of a definition is written.
      *
      * @type {Language}
      */
-    this.language = language
+    this._language = language
 
     /**
-     * A MIME type of a definitions text (i.e. "text/plain").
+     * A MIME type of a definitions text (e.g. "text/plain").
      *
      * @type {string}
      */
@@ -4792,21 +4791,40 @@ class Definition {
      *
      * @type {string}
      */
-    this.ID = (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)()
+    this._ID = _dmodels_iri_iri_provider_js__WEBPACK_IMPORTED_MODULE_2__.default.getIRI({ identityData: this.identityData })
+  }
+
+  get text () {
+    return this._text
+  }
+
+  get language () {
+    return this._language
+  }
+
+  get ID () {
+    return this._ID
+  }
+
+  get identityData () {
+    return {
+      text: this._text,
+      languageCode: this._language.toCode()
+    }
   }
 
   static readObject (jsonObject) {
-    const lang = new _language_js__WEBPACK_IMPORTED_MODULE_2__.default(jsonObject.languageCode)
+    const lang = new _dmodels_language_js__WEBPACK_IMPORTED_MODULE_1__.default(jsonObject.languageCode)
     // eslint-disable-next-line prefer-const
     let definition = new Definition(jsonObject.text, lang, jsonObject.format, jsonObject.lemmaText)
 
     if (jsonObject.ID) {
-      definition.ID = jsonObject.ID
+      definition._ID = jsonObject.ID
     }
 
     if (jsonObject.provider) {
-      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__.default.readObject(jsonObject.provider)
-      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__.default.getProxy(provider, definition)
+      const provider = _dmodels_resource_provider_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(jsonObject.provider)
+      return _dmodels_resource_provider_js__WEBPACK_IMPORTED_MODULE_0__.default.getProxy(provider, definition)
     } else {
       return definition
     }
@@ -4815,11 +4833,11 @@ class Definition {
   convertToJSONObject () {
     // eslint-disable-next-line prefer-const
     let result = {
-      text: this.text,
-      languageCode: this.language.toCode(),
+      text: this._text,
+      languageCode: this._language.toCode(),
       format: this.format,
       lemmaText: this.lemmaText,
-      ID: this.ID
+      ID: this._ID
     }
 
     if (this.provider) {
@@ -7518,6 +7536,120 @@ is included in the grouping key
 
 /***/ }),
 
+/***/ "./iri/iri-provider.js":
+/*!*****************************!*\
+  !*** ./iri/iri-provider.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ IRIProvider
+/* harmony export */ });
+/* harmony import */ var _dmodels_sha1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @dmodels/sha1.js */ "./sha1.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_1__);
+/** @module iriProvider */
+
+
+
+class IRIProvider {
+  /**
+   * Creates an Internationalized Resource Identifier (IRI) according to the options provided.
+   *
+   * @param identityData.identityData
+   * @param {object} [identityData] - an object containing information that will be used
+   * to generate content-based IRI, such as MD5 hash. identityData keys will be sorted in
+   * an ascending alphanumerical order and the values will be concatenated into a string.
+   * This string will then be used to compute an IRI. Same identityData objects
+   * will have the same IRI.
+   * @param {IRIProvider.IRITypes} [type=IRIProvider.IRITypes.AUTO] - A type of the IRI to create.
+   * Possible values:
+   * - IRIProvider.IRITypes.AUTO: if identityData is provided, will calculate the MD5 Hash IRI.
+   * Otherwise, will return a UUID version 4.
+   * @param identityData.type
+   * @returns {string} - A newly created IRI.
+   */
+  static getIRI ({ identityData = {}, type = IRIProvider.IRITypes.AUTO } = {}) {
+    if (type === IRIProvider.IRITypes.AUTO) {
+      if (IRIProvider._isValidIdentityData(identityData)) {
+        return IRIProvider._getMD5Hash(identityData)
+      } else {
+        return IRIProvider._getUUIDv4()
+      }
+    } else if (type === IRIProvider.IRITypes.MD5_HASH) {
+      if (!IRIProvider._isValidIdentityData(identityData)) {
+        throw new Error(IRIProvider.errMsgs.NO_IDENTITY_DATA)
+      }
+      return IRIProvider._getMD5Hash(identityData)
+    } else if (type === IRIProvider.IRITypes.UUID_V4) {
+      return IRIProvider._getUUIDv4()
+    }
+  }
+
+  /**
+   * Checks wither the identity data is valid.
+   * The object is valid if it contain at least one key-value pair.
+   *
+   * @param {object} identityData - An identity data object.
+   * @returns {boolean} - True if the object is valid, false otherwise.
+   * @private
+   */
+  static _isValidIdentityData (identityData = {}) {
+    return Boolean(identityData && Object.keys(identityData).length > 0)
+  }
+
+  /**
+   * Computes an MD5 hash of values from the identity data object.
+   *
+   * @param {object} identityData - An identity data object. Its keys will be sorted in
+   *        an ascending alphanumerical order and the values will be concatenated into a string.
+   *        This string will then be used to compute an MD5 hash. Same identityData objects
+   *        will produce the same MD5 hashes.
+   * @returns {string} - An MD5 hash of the identity data.
+   * @private
+   */
+  static _getMD5Hash (identityData) {
+    const keys = Object.keys(identityData).sort()
+    let text = ''
+    for (const key of keys) {
+      text += identityData[key]
+    }
+    return _dmodels_sha1_js__WEBPACK_IMPORTED_MODULE_0__.default.hash(text)
+  }
+
+  /**
+   * Returns a random UUID version 4 string.
+   *
+   * @returns {string} - A string containing a random UUID version 4 value.
+   * @private
+   */
+  static _getUUIDv4 () {
+    return (0,uuid__WEBPACK_IMPORTED_MODULE_1__.v4)()
+  }
+}
+
+/**
+ * Describes how IRIs be calculated.
+ *
+ * @enum {string} */
+IRIProvider.IRITypes = {
+  /** An IRI type will be selected automatically, based on the presence of the identity data */
+  AUTO: 'auto',
+  /** An IRI will be an MD5 hash */
+  MD5_HASH: 'MD5 Hash',
+  /** An IRI will be a UUID version 4 */
+  UUID_V4: 'UUID Version 4'
+}
+
+IRIProvider.errMsgs = {
+  NO_IDENTITY_DATA: 'Identity data has not been provided'
+}
+
+
+/***/ }),
+
 /***/ "./language.js":
 /*!*********************!*\
   !*** ./language.js ***!
@@ -7560,7 +7692,7 @@ class Language {
    */
   constructor (code, { normalize = false } = {}) {
     if (!code) {
-      throw new Error('Language object cannot be created without a language code')
+      throw new Error(Language.errMsgs.NO_LANGUAGE_CODE)
     }
 
     if (normalize) {
@@ -7617,10 +7749,10 @@ class Language {
    *          or an unchanged language code supplied to the function,
    */
   static normalizedCode (code) {
-    if (Object.values(Lang).includes(code)) {
-      // The code is already in the supported format and does not need to be normalized
-      return code
-    } else if (['en'].includes(code)) {
+    /*
+    Check if the list of known non-normalized codes contains the code provided.
+     */
+    if (['en'].includes(code)) {
       return Lang.ENGLISH
     } else {
       // We don't know how to normalize this code so we return the value unchanged
@@ -7677,6 +7809,10 @@ class Language {
   static fromJsonObject (jsonObj) {
     return new Language(jsonObj.code)
   }
+}
+
+Language.errMsgs = {
+  NO_LANGUAGE_CODE: 'Language object cannot be created without a language code'
 }
 
 

@@ -24,8 +24,7 @@ describe('text-selector.test.js', () => {
 
   it('1 TextSelector - constructor doesn\'t have required properties', () => {
     expect(function () {
-      const l = new TextSelector()
-      console.log(l.text)
+      const l = new TextSelector() // eslint-disable-line no-unused-vars
     }).not.toThrowError()
   })
 

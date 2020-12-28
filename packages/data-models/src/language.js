@@ -28,7 +28,7 @@ export default class Language {
    */
   constructor (code, { normalize = false } = {}) {
     if (!code) {
-      throw new Error('Language object cannot be created without a language code')
+      throw new Error(Language.errMsgs.NO_LANGUAGE_CODE)
     }
 
     if (normalize) {
@@ -85,10 +85,10 @@ export default class Language {
    *          or an unchanged language code supplied to the function,
    */
   static normalizedCode (code) {
-    if (Object.values(Lang).includes(code)) {
-      // The code is already in the supported format and does not need to be normalized
-      return code
-    } else if (['en'].includes(code)) {
+    /*
+    Check if the list of known non-normalized codes contains the code provided.
+     */
+    if (['en'].includes(code)) {
       return Lang.ENGLISH
     } else {
       // We don't know how to normalize this code so we return the value unchanged
@@ -145,4 +145,8 @@ export default class Language {
   static fromJsonObject (jsonObj) {
     return new Language(jsonObj.code)
   }
+}
+
+Language.errMsgs = {
+  NO_LANGUAGE_CODE: 'Language object cannot be created without a language code'
 }

@@ -1,3 +1,6 @@
+import path from 'path'
+const projectRoot = process.cwd()
+
 const webpack = {
   common: {
     entry: './driver.js',
@@ -8,6 +11,11 @@ const webpack = {
       library: 'AlpheiosDataModels',
       libraryTarget: 'umd',
       chunkFilename: 'datamodels.[name].js'
+    },
+    resolve: {
+      alias: {
+        '@dmodels': path.join(projectRoot, 'src')
+      }
     }
   },
 

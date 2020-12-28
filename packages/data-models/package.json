@@ -52,6 +52,7 @@
   "jest": {
     "verbose": true,
     "moduleNameMapper": {
+      "^@dmodels[/](.+)": "<rootDir>/src/$1",
       "^@[/](.+)": "<rootDir>/src/$1"
     }
   },
