@@ -4269,6 +4269,9 @@ data.inflectionOverrides = {
     if (i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.morph].value === 'irreg_comp' &&
       ls.some(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_ADJECTIVE)) {
         retVal.withFeature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison,alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.COMP_COMPARITIVE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel.languageID)
+    } else if (i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.morph].value === 'irreg_superl' &&
+      ls.some(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_ADJECTIVE)) {
+        retVal.withFeature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison,alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.COMP_SUPERLATIVE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel.languageID)
     }
     return retVal
   }
