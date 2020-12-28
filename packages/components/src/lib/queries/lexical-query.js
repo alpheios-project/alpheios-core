@@ -17,6 +17,7 @@ export default class LexicalQuery extends Query {
     this.wordUsageExamples = options.wordUsageExamples
     this.checkContextForward = options.checkContextForward || ''
     this.cedictServiceUrl = options.cedictServiceUrl
+    this.lexiconsConfig = options.lexiconsConfig
     this._annotatedHomonyms = options.annotatedHomonyms
     this._source = options.source
 
@@ -298,7 +299,8 @@ export default class LexicalQuery extends Query {
 
       let params = {
         opts: lexiconShortOpts,
-        homonym: this.homonym
+        homonym: this.homonym,
+        config: this.lexiconsConfig
       }
 
       if (this._source !== LexicalQuery.sources.WORDLIST) {

@@ -1,7 +1,7 @@
 {
   "https://github.com/alpheios-project/mjm": {
     "urls": {
-      "short": "http://localhost/mjm/dat/grc-mjm-defs.dat"
+      "short": "http://repos1.alpheios.net/mjm/dat/grc-mjm-defs.dat"
     },
     "langs": {
       "source": "grc",
