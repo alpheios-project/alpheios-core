@@ -38,10 +38,10 @@
       "adapter": "lexicons",
       "methods": [ "fetchShortDefs", "fetchFullDefs", "checkCachedData", "getConfig" ],
       "params": {
-        "fetchShortDefs" : [ "homonym", "opts", "config" ],
-        "fetchFullDefs" : [ "homonym", "opts", "config" ],
+        "fetchShortDefs" : [ "homonym", "opts" ],
+        "fetchFullDefs" : [ "homonym", "opts" ],
         "checkCachedData": [ "url", "externalData" ],
-        "getConfig": [ "config" ]
+        "getConfig": [ ]
       }
     }
   },

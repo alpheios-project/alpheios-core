@@ -299,8 +299,7 @@ export default class LexicalQuery extends Query {
 
       let params = {
         opts: lexiconShortOpts,
-        homonym: this.homonym,
-        config: this.lexiconsConfig
+        homonym: this.homonym
       }
 
       if (this._source !== LexicalQuery.sources.WORDLIST) {
@@ -313,6 +312,7 @@ export default class LexicalQuery extends Query {
       const adapterLexiconResShort = yield ClientAdapters.lexicon.alpheios({
         method: 'fetchShortDefs',
         clientId: this.clientId,
+        config: this.lexiconsConfig,
         params
       })
 
@@ -332,6 +332,7 @@ export default class LexicalQuery extends Query {
         adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
           method: 'fetchFullDefs',
           clientId: this.clientId,
+          config: this.lexiconsConfig,
           params: {
             opts: lexiconFullOpts,
             homonym: this.homonym,

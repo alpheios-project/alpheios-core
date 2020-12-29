@@ -3247,9 +3247,10 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   * Lexicons adapter uploads config data, defines default options and inits data
   * @param {Object} config - properties with higher priority
   */
-  constructor (config = {}) {
+  constructor (config = {}, remoteConfig = {}) {
     super()
-    this.config = this.uploadConfig(config, _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
+    this.config = config
+    this.config.lexicons = this.uploadConfig(remoteConfig, _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
     this.async = Boolean(this.config.callBackEvtSuccess)
   }
@@ -3278,7 +3279,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   * @param {String} urlKey - urlIndex for geting data from config
   */
   prepareShortDefPromise (homonym, urlKey) {
-    const url = this.config[urlKey].urls.short
+    const url = this.config.lexicons[urlKey].urls.short
     const requestType = 'shortDefs'
 
     const resCheckCached = this.checkCachedData(url)
@@ -3286,7 +3287,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       async (result) => {
         if (result) {
           const res = cachedDefinitions.get(url)
-          await this.updateShortDefs(res, homonym, this.config[urlKey])
+          await this.updateShortDefs(res, homonym, this.config.lexicons[urlKey])
           this.prepareSuccessCallback(requestType, homonym)
         }
       },
@@ -3303,15 +3304,15 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   * @param {String} urlKey - urlIndex for geting data from config
   */
   prepareFullDefPromise (homonym, urlKey) {
-    const url = this.config[urlKey].urls.index
+    const url = this.config.lexicons[urlKey].urls.index
     const requestType = 'fullDefs'
 
     const resCheckCached = this.checkCachedData(url)
     return resCheckCached.then(
       async (result) => {
         if (result) {
-          const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-          const resFullDefs = this.updateFullDefsAsync(fullDefsRequests, this.config[urlKey], homonym)
+          const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config.lexicons[urlKey])
+          const resFullDefs = this.updateFullDefsAsync(fullDefsRequests, this.config.lexicons[urlKey], homonym)
           resFullDefs.catch(error => {
             this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error.message }))
             this.prepareFailedCallback(requestType, homonym)
@@ -3388,12 +3389,12 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
       for (const urlKey of urlKeys) {
-        const url = this.config[urlKey].urls.short
+        const url = this.config.lexicons[urlKey].urls.short
         const result = await this.checkCachedData(url)
 
         if (result) {
           const res = cachedDefinitions.get(url)
-          await this.updateShortDefs(res, homonym, this.config[urlKey])
+          await this.updateShortDefs(res, homonym, this.config.lexicons[urlKey])
         }
       }
     } catch (error) {
@@ -3410,12 +3411,12 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
     for (const urlKey of urlKeys) {
-      const url = this.config[urlKey].urls.index
+      const url = this.config.lexicons[urlKey].urls.index
       const result = await this.checkCachedData(url)
 
       if (result) {
-        const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-        await this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
+        const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config.lexicons[urlKey])
+        await this.updateFullDefs(fullDefsRequests, this.config.lexicons[urlKey], homonym)
       }
     }
   }
@@ -3623,7 +3624,9 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   */
   getRequests (languageID) {
     const languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(languageID)
-    return Object.keys(this.config).filter(url => this.config[url] && this.config[url].langs && this.config[url].langs.source === languageCode)
+    return Object.keys(this.config.lexicons).filter(url =>
+      this.config.lexicons[url] && this.config.lexicons[url].langs &&
+      this.config.lexicons[url].langs.source === languageCode)
   }
 
   /**
@@ -4731,7 +4734,7 @@ class ClientAdapters {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
         // Param values other than `undefined` such as `null` or empty strings could be valid values
-        if (typeof params[paramName] === 'undefined') {
+        if (params && typeof params[paramName] === 'undefined') {
           throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_9__.default(category, adapterName, methodName, paramName)
         }
       })
@@ -4941,6 +4944,7 @@ class ClientAdapters {
    * it is used for getting data from lexicons adapter
    * @param {Object} options - object contains parametes:
    *    @param {String} options.method - action that should be done wth the help of adapter - fetchShortDefs and fetchFullDefs
+   *    @param {Object} options.config - lexicon configuration supplied by client
    *    @param {Homonym} options.params.homonym - homonym for retrieving translations
    *    @param {Object(allow: [String])} options.params.opts - an object with array of urls for dictionaries
    *    @param {PSEvent} options.params.callBackEvtSuccess - an event that should be published on success result
@@ -4963,7 +4967,7 @@ class ClientAdapters {
       callBackEvtFailed: options.params ? options.params.callBackEvtFailed : null
     }
 
-    const localLexiconsAdapter = new _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__.default(adapterParams)
+    const localLexiconsAdapter = new _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__.default(adapterParams,options.config)
 
     if (options.method === 'fetchShortDefs') {
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
@@ -4980,7 +4984,7 @@ class ClientAdapters {
     }
 
     if (options.method === 'getConfig') {
-      return localLexiconsAdapter.config
+      return localLexiconsAdapter.config.lexicons
     }
     return null
   }
@@ -24958,7 +24962,7 @@ module.exports = JSON.parse("{\"url\":\"https://latin.packhum.org/rst/concordanc
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"https://github.com/alpheios-project/mjm\":{\"urls\":{\"short\":\"http://localhost/mjm/dat/grc-mjm-defs.dat\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"format\":{\"short\":\"text/html\"},\"description\":\"Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the Middle Liddell.\",\"rights_keys\":{\"ML\":\" \\\"An Intermediate Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University. Edits and additions provided by Vanessa Gorman, University of Nebraska.\",\"Major\":\" Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008. Edits and additions provided by Vanessa Gorman, University of Nebraska.\"}},\"https://github.com/alpheios-project/majorplus\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/majorplus/dat/grc-mjp-defs.dat\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"format\":{\"short\":\"text/html\"},\"description\":\"Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the LSJ.\",\"rights_keys\":{\"LSJ\":\" \\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University. Edits and additions provided by Vanessa Gorman, University of Nebraska.\",\"Major\":\" Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008. Edits and additions provided by Vanessa Gorman, University of Nebraska.\"}},\"https://github.com/alpheios-project/lsj\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lsj&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott)\",\"rights\":\" \\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/aut\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/aut/dat/grc-aut-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/aut//dat/grc-aut-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=aut&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth)\",\"rights\":\" \\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/ml\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ml&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Middle Liddell\\\"\",\"rights\":\" \\\"An Intermediate Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/as\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=as&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Manual Greek Lexicon of the New Testament\\\"\",\"rights\":\" \\\"A Manual Greek Lexicon of the New Testament\\\" (G. Abbott-Smith). Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/dod\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-ids.dat\",\"full\":null},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Dodson\\\"\",\"rights\":\" \\\"A Public Domain lexicon by John Jeffrey Dodson (2010)\\\". Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/ls\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html\"},\"langs\":{\"source\":\"lat\",\"target\":\"en\"},\"description\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short)\",\"rights\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/lan\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/lan/dat/ara-lan-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lan&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane)\",\"rights\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/sal\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/sal/dat/ara-sal-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=sal&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone)\",\"rights\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/stg\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-ids.dat\",\"full\":null},\"langs\":{\"source\":\"per\",\"target\":\"en\"},\"description\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass)\",\"rights\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass). Provided by the Center for Advanced Study of Language (CASL) at the University of Maryland, College Park.\"}}");
+module.exports = JSON.parse("{\"https://github.com/alpheios-project/mjm\":{\"urls\":{\"short\":\"http://repos1.alpheios.net/lexdata/mjm/dat/grc-mjm-defs.dat\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"format\":{\"short\":\"text/html\"},\"description\":\"Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the Middle Liddell.\",\"rights_keys\":{\"ML\":\" \\\"An Intermediate Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University. Edits and additions provided by Vanessa Gorman, University of Nebraska.\",\"Major\":\" Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008. Edits and additions provided by Vanessa Gorman, University of Nebraska.\"}},\"https://github.com/alpheios-project/majorplus\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/majorplus/dat/grc-mjp-defs.dat\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"format\":{\"short\":\"text/html\"},\"description\":\"Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the LSJ.\",\"rights_keys\":{\"LSJ\":\" \\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University. Edits and additions provided by Vanessa Gorman, University of Nebraska.\",\"Major\":\" Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008. Edits and additions provided by Vanessa Gorman, University of Nebraska.\"}},\"https://github.com/alpheios-project/lsj\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lsj&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott)\",\"rights\":\" \\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/aut\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/aut/dat/grc-aut-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/aut//dat/grc-aut-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=aut&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth)\",\"rights\":\" \\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/ml\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ml&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Middle Liddell\\\"\",\"rights\":\" \\\"An Intermediate Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/as\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=as&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Manual Greek Lexicon of the New Testament\\\"\",\"rights\":\" \\\"A Manual Greek Lexicon of the New Testament\\\" (G. Abbott-Smith). Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/dod\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-ids.dat\",\"full\":null},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Dodson\\\"\",\"rights\":\" \\\"A Public Domain lexicon by John Jeffrey Dodson (2010)\\\". Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/ls\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html\"},\"langs\":{\"source\":\"lat\",\"target\":\"en\"},\"description\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short)\",\"rights\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/lan\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/lan/dat/ara-lan-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lan&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane)\",\"rights\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/sal\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/sal/dat/ara-sal-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=sal&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone)\",\"rights\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/stg\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-ids.dat\",\"full\":null},\"langs\":{\"source\":\"per\",\"target\":\"en\"},\"description\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass)\",\"rights\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass). Provided by the Center for Advanced Study of Language (CASL) at the University of Maryland, College Park.\"}}");
 
 /***/ }),
 
