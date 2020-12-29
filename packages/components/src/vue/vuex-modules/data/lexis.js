@@ -77,7 +77,7 @@ export default class Lexis extends Module {
   }
 
   hasLexiconsConfig () {
-    return Boolean(this._lexisConfig)
+    return Boolean(this._lexiconsConfig)
   }
 
   createCedictIframe () {
