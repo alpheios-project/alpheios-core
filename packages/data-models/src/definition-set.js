@@ -5,7 +5,7 @@ import LMF from './language_model_factory.js'
 export default class DefinitionSet {
   /**
    * @param {string} lemmaWord - A word for which a definition set was created.
-   * @param {Language} language - A language on what a text of a definitions in a definition set is written.
+   * @param {Language} language - A language of the lexical entity (lexeme) to which the definition set is attached.
    */
   constructor (lemmaWord, language) {
     if (!lemmaWord) {
@@ -15,7 +15,7 @@ export default class DefinitionSet {
       throw new Error('DefinitionSet cannot be created without the language')
     }
     if (!(language instanceof Language)) {
-      throw new Error('The _language must be an instance of the Language class')
+      throw new Error('The language must be an instance of the Language class')
     }
 
     /**

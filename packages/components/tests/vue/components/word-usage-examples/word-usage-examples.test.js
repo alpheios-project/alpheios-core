@@ -27,10 +27,7 @@ describe('word-usage-examples.test.js', () => {
     testWordUsageList = await BaseTestHelp.collectConcordance(homonym)
   })
 
-  beforeEach/**
-             * @param ms
-             */
-  (() => {
+  beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')

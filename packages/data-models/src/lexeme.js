@@ -171,6 +171,8 @@ class Lexeme {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
       newLexeme.disambiguated = true
+      // TODO: This change the value of a word prop of the lemma directly.
+      //       We should eliminate that to make lemma a true value object.
       newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
       let keepInflections = [] // eslint-disable-line prefer-const
       // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection

@@ -4551,7 +4551,8 @@ const PARADIGM_CAT_STATE = 'state'
  *
  * @enum {string} */
 const MIMETypes = {
-  TEXT_PLAIN: 'text/plain'
+  TEXT_PLAIN: 'text/plain',
+  TEXT_HTML: 'text/html'
 }
 
 
@@ -4578,7 +4579,7 @@ __webpack_require__.r(__webpack_exports__);
 class DefinitionSet {
   /**
    * @param {string} lemmaWord - A word for which a definition set was created.
-   * @param {Language} language - A language on what a text of a definitions in a definition set is written.
+   * @param {Language} language - A language of the lexical entity (lexeme) to which the definition set is attached.
    */
   constructor (lemmaWord, language) {
     if (!lemmaWord) {
@@ -4588,7 +4589,7 @@ class DefinitionSet {
       throw new Error('DefinitionSet cannot be created without the language')
     }
     if (!(language instanceof _language_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
-      throw new Error('The _language must be an instance of the Language class')
+      throw new Error('The language must be an instance of the Language class')
     }
 
     /**
@@ -4811,6 +4812,10 @@ class Definition {
       text: this._text,
       languageCode: this._language.toCode()
     }
+  }
+
+  test () {
+    this._language = 5
   }
 
   static readObject (jsonObject) {
@@ -6896,6 +6901,15 @@ class Homonym {
   }
 
   /**
+   * Checks if there is at least one lemma in the lexemes of the homonym.
+   *
+   * @returns {boolean} - True if there is at least one lemma available, false otherwise.
+   */
+  get hasLemmas () {
+    return Boolean(this.lexemes && this.lexemes[0] && this.lexemes[0].lemma)
+  }
+
+  /**
    * Checks if any of the lexemes of this homonym has short definitions stored.
    *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
@@ -6945,7 +6959,7 @@ class Homonym {
   }
 
   /**
-   * Returns a language of the homonym..
+   * Returns a language of the homonym.
    * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
    * and inflections within the same homonym will have the same language, and we can determine a language
    * by using language property of the first lemma. We can change this logic in the future if we'll need to.
@@ -6953,9 +6967,11 @@ class Homonym {
    * @returns {Language} A language of the homonym.
    */
   get language () {
-    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.language) {
+    if (this.hasLemmas) {
       return this.lexemes[0].lemma.language
     } else {
+      // TODO: It's probably better to guarantee that a Homonym would always have lexemes with lemmas
+      //       and lemmas would always have a language. This would require updates to the corresponding classes.
       throw new Error(Homonym.errMsgs.NO_LANGUAGE_IN_HOMONYM)
     }
   }
@@ -7572,32 +7588,35 @@ class IRIProvider {
    * @returns {string} - A newly created IRI.
    */
   static getIRI ({ identityData = {}, type = IRIProvider.IRITypes.AUTO } = {}) {
-    if (type === IRIProvider.IRITypes.AUTO) {
-      if (IRIProvider._isValidIdentityData(identityData)) {
-        return IRIProvider._getMD5Hash(identityData)
-      } else {
-        return IRIProvider._getUUIDv4()
-      }
-    } else if (type === IRIProvider.IRITypes.MD5_HASH) {
-      if (!IRIProvider._isValidIdentityData(identityData)) {
-        throw new Error(IRIProvider.errMsgs.NO_IDENTITY_DATA)
-      }
-      return IRIProvider._getMD5Hash(identityData)
-    } else if (type === IRIProvider.IRITypes.UUID_V4) {
-      return IRIProvider._getUUIDv4()
-    }
+    const getActions = new Map([
+      [IRIProvider.IRITypes.AUTO,
+        () => IRIProvider._isValidIdentityData(identityData)
+          ? IRIProvider._getMD5Hash(identityData)
+          : IRIProvider._getUUIDv4()],
+
+      [IRIProvider.IRITypes.MD5_HASH, () => IRIProvider._getMD5Hash(identityData)],
+
+      [IRIProvider.IRITypes.UUID_V4, () => IRIProvider._getUUIDv4()]
+    ])
+
+    if (!getActions.has(type)) { throw new Error(IRIProvider.errMsgs.UNKNOWN_IRI_TYPE) }
+    return getActions.get(type)()
   }
 
   /**
    * Checks wither the identity data is valid.
-   * The object is valid if it contain at least one key-value pair.
+   * The object is valid if it contain at least one key-value pair with a non-empty string value.
    *
    * @param {object} identityData - An identity data object.
    * @returns {boolean} - True if the object is valid, false otherwise.
    * @private
    */
   static _isValidIdentityData (identityData = {}) {
-    return Boolean(identityData && Object.keys(identityData).length > 0)
+    return Boolean(
+      identityData &&
+      Object.keys(identityData).length > 0 &&
+      Object.values(identityData).every(v => typeof v === 'string' && v.length > 0)
+    )
   }
 
   /**
@@ -7611,6 +7630,9 @@ class IRIProvider {
    * @private
    */
   static _getMD5Hash (identityData) {
+    if (!IRIProvider._isValidIdentityData(identityData)) {
+      throw new Error(IRIProvider.errMsgs.INCORRECT_IDENTITY_DATA)
+    }
     const keys = Object.keys(identityData).sort()
     let text = ''
     for (const key of keys) {
@@ -7644,7 +7666,8 @@ IRIProvider.IRITypes = {
 }
 
 IRIProvider.errMsgs = {
-  NO_IDENTITY_DATA: 'Identity data has not been provided'
+  INCORRECT_IDENTITY_DATA: 'Incorrect identity data',
+  UNKNOWN_IRI_TYPE: 'Unknown IRI type'
 }
 
 
@@ -8572,8 +8595,8 @@ class LanguageModelFactory {
   /**
    * Checks whether a language is supported
    *
-   * @param {Language | string | symbol} language - Language as a Language object,
-   *        language ID (a symbol) or a language code (a string).
+   * @param {Language | string | symbol} language - A language represented by a Language object.
+   *        The following deprecated formats are supported: language ID (a symbol) and a language code (a string).
    * @returns {boolean} True if language is supported, false otherwise
    */
   static supportsLanguage (language) {
@@ -9356,18 +9379,36 @@ class Lemma {
       throw new Error('The language argument should be of the Language type')
     }
 
+    // TODO: In order for Lemma to become a true value object, a word must be read only.
+    //       We cannot to do that now, however, because Lexeme.disambiguate() sets it directly.
+    //       This should be fixed.
     /**
-     * A language of the lemma.
+     * A word of a lemma.
+     *
+     * @type {string}
+     */
+    this.word = word
+
+    /**
+     * A language of a lemma.
      *
      * @type {Language}
      */
-    this.language = language
+    this._language = language
 
-    this.word = word
     this.principalParts = principalParts
     this.features = {}
 
     this.ID = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)()
+  }
+
+  /**
+   * Returns a language of a lemma.
+   *
+   * @returns {Language} - A language of a lemma.
+   */
+  get language () {
+    return this._language
   }
 
   /**
@@ -9377,7 +9418,7 @@ class Lemma {
    * @returns {string} - A language code.
    */
   get languageCode () {
-    const langData = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(this.language)
+    const langData = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(this._language)
     return langData.languageCode
   }
 
@@ -9388,7 +9429,7 @@ class Lemma {
    * @returns {symbol} - A language ID.
    */
   get languageID () {
-    const langData = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(this.language)
+    const langData = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(this._language)
     return langData.languageID
   }
 
@@ -9418,7 +9459,7 @@ class Lemma {
     // eslint-disable-next-line prefer-const
     let resultLemma = {
       word: this.word,
-      languageCode: this.language.toCode(),
+      languageCode: this._language.toCode(),
       principalParts: this.principalParts,
       features: resultFeatures
     }
@@ -9456,9 +9497,9 @@ class Lemma {
       throw new Error('feature data must be a Feature object.')
     }
 
-    if (!this.language.equals(feature.language)) {
+    if (!this._language.equals(feature.language)) {
       throw new Error(`Language "${feature.language.toCode()}" of a feature does not match a language ` +
-        `"${this.language.toCode()}" of a Lemma object.`)
+        `"${this._language.toCode()}" of a Lemma object.`)
     }
 
     this.features[feature.type] = feature
@@ -9514,7 +9555,7 @@ class Lemma {
 
     // Check if words are the same
     const areSameWords = normalize
-      ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getModelFromLanguage(this.language).compareWords(this.word, lemma.word, true,
+      ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getModelFromLanguage(this._language).compareWords(this.word, lemma.word, true,
           { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
@@ -9528,7 +9569,7 @@ class Lemma {
    * @returns {string} - A disambiguated word.
    */
   disambiguate (otherLemma) {
-    const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getModelFromLanguage(this.language)
+    const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getModelFromLanguage(this._language)
 
     // Check if words are the same
     const areSameWords = langModel.compareWords(this.word, otherLemma.word, true, { normalizeTrailingDigit: true })
@@ -9782,6 +9823,8 @@ class Lexeme {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
       newLexeme.disambiguated = true
+      // TODO: This change the value of a word prop of the lemma directly.
+      //       We should eliminate that to make lemma a true value object.
       newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
       let keepInflections = [] // eslint-disable-line prefer-const
       // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection

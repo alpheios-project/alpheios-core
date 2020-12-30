@@ -20,32 +20,35 @@ export default class IRIProvider {
    * @returns {string} - A newly created IRI.
    */
   static getIRI ({ identityData = {}, type = IRIProvider.IRITypes.AUTO } = {}) {
-    if (type === IRIProvider.IRITypes.AUTO) {
-      if (IRIProvider._isValidIdentityData(identityData)) {
-        return IRIProvider._getMD5Hash(identityData)
-      } else {
-        return IRIProvider._getUUIDv4()
-      }
-    } else if (type === IRIProvider.IRITypes.MD5_HASH) {
-      if (!IRIProvider._isValidIdentityData(identityData)) {
-        throw new Error(IRIProvider.errMsgs.NO_IDENTITY_DATA)
-      }
-      return IRIProvider._getMD5Hash(identityData)
-    } else if (type === IRIProvider.IRITypes.UUID_V4) {
-      return IRIProvider._getUUIDv4()
-    }
+    const getActions = new Map([
+      [IRIProvider.IRITypes.AUTO,
+        () => IRIProvider._isValidIdentityData(identityData)
+          ? IRIProvider._getMD5Hash(identityData)
+          : IRIProvider._getUUIDv4()],
+
+      [IRIProvider.IRITypes.MD5_HASH, () => IRIProvider._getMD5Hash(identityData)],
+
+      [IRIProvider.IRITypes.UUID_V4, () => IRIProvider._getUUIDv4()]
+    ])
+
+    if (!getActions.has(type)) { throw new Error(IRIProvider.errMsgs.UNKNOWN_IRI_TYPE) }
+    return getActions.get(type)()
   }
 
   /**
    * Checks wither the identity data is valid.
-   * The object is valid if it contain at least one key-value pair.
+   * The object is valid if it contain at least one key-value pair with a non-empty string value.
    *
    * @param {object} identityData - An identity data object.
    * @returns {boolean} - True if the object is valid, false otherwise.
    * @private
    */
   static _isValidIdentityData (identityData = {}) {
-    return Boolean(identityData && Object.keys(identityData).length > 0)
+    return Boolean(
+      identityData &&
+      Object.keys(identityData).length > 0 &&
+      Object.values(identityData).every(v => typeof v === 'string' && v.length > 0)
+    )
   }
 
   /**
@@ -59,6 +62,9 @@ export default class IRIProvider {
    * @private
    */
   static _getMD5Hash (identityData) {
+    if (!IRIProvider._isValidIdentityData(identityData)) {
+      throw new Error(IRIProvider.errMsgs.INCORRECT_IDENTITY_DATA)
+    }
     const keys = Object.keys(identityData).sort()
     let text = ''
     for (const key of keys) {
@@ -92,5 +98,6 @@ IRIProvider.IRITypes = {
 }
 
 IRIProvider.errMsgs = {
-  NO_IDENTITY_DATA: 'Identity data has not been provided'
+  INCORRECT_IDENTITY_DATA: 'Incorrect identity data',
+  UNKNOWN_IRI_TYPE: 'Unknown IRI type'
 }

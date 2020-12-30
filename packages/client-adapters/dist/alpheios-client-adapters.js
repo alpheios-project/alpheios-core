@@ -4466,7 +4466,7 @@ data.setLexemeFilter(function (lexeme) {
 data.setMeaningParser(function (meaning, targetWord) {
   const lang = meaning.lang ? new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Language(meaning.lang) : alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Language.ENGLISH
   const meaningText = meaning.$ || ''
-  return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Definition(meaningText, lang, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.MIMETypes.TEXT_PLAIN, targetWord)
+  return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Definition(meaningText, lang, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.MIMETypes.TEXT_HTML, targetWord)
 })
 
 data.setPropertyParser(function (propertyName, propertyValue, inputElem) {

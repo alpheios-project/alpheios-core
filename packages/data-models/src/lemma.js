@@ -30,18 +30,36 @@ class Lemma {
       throw new Error('The language argument should be of the Language type')
     }
 
+    // TODO: In order for Lemma to become a true value object, a word must be read only.
+    //       We cannot to do that now, however, because Lexeme.disambiguate() sets it directly.
+    //       This should be fixed.
     /**
-     * A language of the lemma.
+     * A word of a lemma.
+     *
+     * @type {string}
+     */
+    this.word = word
+
+    /**
+     * A language of a lemma.
      *
      * @type {Language}
      */
-    this.language = language
+    this._language = language
 
-    this.word = word
     this.principalParts = principalParts
     this.features = {}
 
     this.ID = uuidv4()
+  }
+
+  /**
+   * Returns a language of a lemma.
+   *
+   * @returns {Language} - A language of a lemma.
+   */
+  get language () {
+    return this._language
   }
 
   /**
@@ -51,7 +69,7 @@ class Lemma {
    * @returns {string} - A language code.
    */
   get languageCode () {
-    const langData = LMF.getLegacyLanguageCodeAndId(this.language)
+    const langData = LMF.getLegacyLanguageCodeAndId(this._language)
     return langData.languageCode
   }
 
@@ -62,7 +80,7 @@ class Lemma {
    * @returns {symbol} - A language ID.
    */
   get languageID () {
-    const langData = LMF.getLegacyLanguageCodeAndId(this.language)
+    const langData = LMF.getLegacyLanguageCodeAndId(this._language)
     return langData.languageID
   }
 
@@ -92,7 +110,7 @@ class Lemma {
     // eslint-disable-next-line prefer-const
     let resultLemma = {
       word: this.word,
-      languageCode: this.language.toCode(),
+      languageCode: this._language.toCode(),
       principalParts: this.principalParts,
       features: resultFeatures
     }
@@ -130,9 +148,9 @@ class Lemma {
       throw new Error('feature data must be a Feature object.')
     }
 
-    if (!this.language.equals(feature.language)) {
+    if (!this._language.equals(feature.language)) {
       throw new Error(`Language "${feature.language.toCode()}" of a feature does not match a language ` +
-        `"${this.language.toCode()}" of a Lemma object.`)
+        `"${this._language.toCode()}" of a Lemma object.`)
     }
 
     this.features[feature.type] = feature
@@ -188,7 +206,7 @@ class Lemma {
 
     // Check if words are the same
     const areSameWords = normalize
-      ? LMF.getModelFromLanguage(this.language).compareWords(this.word, lemma.word, true,
+      ? LMF.getModelFromLanguage(this._language).compareWords(this.word, lemma.word, true,
           { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
@@ -202,7 +220,7 @@ class Lemma {
    * @returns {string} - A disambiguated word.
    */
   disambiguate (otherLemma) {
-    const langModel = LMF.getModelFromLanguage(this.language)
+    const langModel = LMF.getModelFromLanguage(this._language)
 
     // Check if words are the same
     const areSameWords = langModel.compareWords(this.word, otherLemma.word, true, { normalizeTrailingDigit: true })

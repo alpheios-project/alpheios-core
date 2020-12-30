@@ -78,6 +78,10 @@ class Definition {
     }
   }
 
+  test () {
+    this._language = 5
+  }
+
   static readObject (jsonObject) {
     const lang = new Language(jsonObject.languageCode)
     // eslint-disable-next-line prefer-const

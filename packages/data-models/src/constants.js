@@ -240,5 +240,6 @@ export const PARADIGM_CAT_STATE = 'state'
  *
  * @enum {string} */
 export const MIMETypes = {
-  TEXT_PLAIN: 'text/plain'
+  TEXT_PLAIN: 'text/plain',
+  TEXT_HTML: 'text/html'
 }

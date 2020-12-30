@@ -54,6 +54,15 @@ class Homonym {
   }
 
   /**
+   * Checks if there is at least one lemma in the lexemes of the homonym.
+   *
+   * @returns {boolean} - True if there is at least one lemma available, false otherwise.
+   */
+  get hasLemmas () {
+    return Boolean(this.lexemes && this.lexemes[0] && this.lexemes[0].lemma)
+  }
+
+  /**
    * Checks if any of the lexemes of this homonym has short definitions stored.
    *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
@@ -103,7 +112,7 @@ class Homonym {
   }
 
   /**
-   * Returns a language of the homonym..
+   * Returns a language of the homonym.
    * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
    * and inflections within the same homonym will have the same language, and we can determine a language
    * by using language property of the first lemma. We can change this logic in the future if we'll need to.
@@ -111,9 +120,11 @@ class Homonym {
    * @returns {Language} A language of the homonym.
    */
   get language () {
-    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.language) {
+    if (this.hasLemmas) {
       return this.lexemes[0].lemma.language
     } else {
+      // TODO: It's probably better to guarantee that a Homonym would always have lexemes with lemmas
+      //       and lemmas would always have a language. This would require updates to the corresponding classes.
       throw new Error(Homonym.errMsgs.NO_LANGUAGE_IN_HOMONYM)
     }
   }

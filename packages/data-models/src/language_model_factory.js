@@ -27,8 +27,8 @@ class LanguageModelFactory {
   /**
    * Checks whether a language is supported
    *
-   * @param {Language | string | symbol} language - Language as a Language object,
-   *        language ID (a symbol) or a language code (a string).
+   * @param {Language | string | symbol} language - A language represented by a Language object.
+   *        The following deprecated formats are supported: language ID (a symbol) and a language code (a string).
    * @returns {boolean} True if language is supported, false otherwise
    */
   static supportsLanguage (language) {

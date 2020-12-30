@@ -876,9 +876,11 @@ export default class AppController {
   }
 
   /**
-   * Gets language name details by either language ID (a symbol) or language code (string)
+   * Gets language name details for the Language object specified.
    *
-   * @param {Language | symbol|string} language - A language for which a name should be retrieved.
+   * @param {Language | symbol | string} language - A Language object for which a name should be retrieved.
+   *        For compatibility with the older code the language can be supplied in the form of a language ID
+   *        or a language code string, but those values are deprecated.
    * @returns {object} An object containing:
    *     {string} name - Language name
    *     {string} code - Language code

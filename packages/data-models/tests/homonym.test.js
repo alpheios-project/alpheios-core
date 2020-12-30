@@ -104,7 +104,7 @@ describe('homonym.test.js', () => {
         new Inflection('stem4', 'grc')
       ]
     )
-    delete testLexeme.lemma.language
+    delete testLexeme.lemma
     homonym = new Homonym([testLexeme])
     expect(() => homonym.language).toThrowError(Homonym.errMsgs.NO_LANGUAGE_IN_HOMONYM)
   })
@@ -115,7 +115,7 @@ describe('homonym.test.js', () => {
 
     expect(res).toEqual(Constants.LANG_GREEK)
 
-    delete lexeme2.lemma.language
+    delete lexeme2.lemma
 
     homonym = new Homonym([lexeme2])
     expect(() => homonym.languageID).toThrowError(Homonym.errMsgs.NO_LANGUAGE_IN_HOMONYM)

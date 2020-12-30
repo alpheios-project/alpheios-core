@@ -45,11 +45,34 @@ describe('IRIProvider', () => {
 
   it('getIRI: should throw an error if identity data is not provided for the MD5', () => {
     expect(() => IRIProvider.getIRI({ type: IRIProvider.IRITypes.MD5_HASH }))
-      .toThrowError(IRIProvider.errMsgs.NO_IDENTITY_DATA)
+      .toThrowError(IRIProvider.errMsgs.INCORRECT_IDENTITY_DATA)
   })
 
-  it('getIRI: should throw an error if incomplete identity data is provided for the MD5', () => {
+  it('getIRI: should throw an error if incorrect IRI type is provided', () => {
+    expect(() => IRIProvider.getIRI({ type: 'Unknown IRI Type' }))
+      .toThrowError(IRIProvider.errMsgs.UNKNOWN_IRI_TYPE)
+  })
+
+  it('getIRI: should throw an error if an empty identity object is provided for the MD5', () => {
     expect(() => IRIProvider.getIRI({ identityData: {}, type: IRIProvider.IRITypes.MD5_HASH }))
-      .toThrowError(IRIProvider.errMsgs.NO_IDENTITY_DATA)
+      .toThrowError(IRIProvider.errMsgs.INCORRECT_IDENTITY_DATA)
+  })
+
+  it('getIRI: should throw an error if an identity object provided for the MD5 contains non-string values', () => {
+    const identityData = {
+      validValue: 'A valid value',
+      invalidValue: 11
+    }
+    expect(() => IRIProvider.getIRI({ identityData, type: IRIProvider.IRITypes.MD5_HASH }))
+      .toThrowError(IRIProvider.errMsgs.INCORRECT_IDENTITY_DATA)
+  })
+
+  it('getIRI: should throw an error if an identity object provided for the MD5 contains empty string values', () => {
+    const identityData = {
+      validValue: 'A valid value',
+      invalidValue: ''
+    }
+    expect(() => IRIProvider.getIRI({ identityData, type: IRIProvider.IRITypes.MD5_HASH }))
+      .toThrowError(IRIProvider.errMsgs.INCORRECT_IDENTITY_DATA)
   })
 })
