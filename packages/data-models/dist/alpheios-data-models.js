@@ -4726,7 +4726,7 @@ class LanguageModel {
    * @returns {string} A normalized word.
    */
   static normalizeTrailingDigit (word) {
-    return /^.+1$/.test(word) ? word.substring(0, word.length - 1) : word
+    return /^.+\d$/.test(word) ? word.substring(0, word.length - 1) : word
   }
 
   /**
@@ -5988,6 +5988,8 @@ class Lemma {
       ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
         { normalizeTrailingDigit: true })
       : this.word === lemma.word
+
+    console.info(`${this.word} and ${lemma.word} ${areSameWords}`)
 
     return areSameWords
   }
