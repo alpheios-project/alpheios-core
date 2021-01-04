@@ -10,11 +10,17 @@ let uploadStarted = new Map() // eslint-disable-line prefer-const
 class AlpheiosLexiconsAdapter extends BaseAdapter {
   /**
   * Lexicons adapter uploads config data, defines default options and inits data
-  * @param {Object} config - properties with higher priority
+  * @param {Object} config - lexicon adapter properties
+  * @param {Object} remoteConfig - remote lexicon service configuration
+  *                                merges with and overrides the lexicon
+  *                                settings in the local config.json,
+  *                                if present and populated. An empty object
+  *                                signifies that there are no overrides 
   */
-  constructor (config = {}) {
+  constructor (config = {}, remoteConfig = {}) {
     super()
-    this.config = this.uploadConfig(config, DefaultConfig)
+    this.config = config
+    this.config.lexicons = this.uploadConfig(remoteConfig, DefaultConfig)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
     this.async = Boolean(this.config.callBackEvtSuccess)
   }
@@ -43,7 +49,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {String} urlKey - urlIndex for geting data from config
   */
   prepareShortDefPromise (homonym, urlKey) {
-    const url = this.config[urlKey].urls.short
+    const url = this.config.lexicons[urlKey].urls.short
     const requestType = 'shortDefs'
 
     const resCheckCached = this.checkCachedData(url)
@@ -51,7 +57,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       async (result) => {
         if (result) {
           const res = cachedDefinitions.get(url)
-          await this.updateShortDefs(res, homonym, this.config[urlKey])
+          await this.updateShortDefs(res, homonym, this.config.lexicons[urlKey])
           this.prepareSuccessCallback(requestType, homonym)
         }
       },
@@ -68,15 +74,15 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {String} urlKey - urlIndex for geting data from config
   */
   prepareFullDefPromise (homonym, urlKey) {
-    const url = this.config[urlKey].urls.index
+    const url = this.config.lexicons[urlKey].urls.index
     const requestType = 'fullDefs'
 
     const resCheckCached = this.checkCachedData(url)
     return resCheckCached.then(
       async (result) => {
         if (result) {
-          const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-          const resFullDefs = this.updateFullDefsAsync(fullDefsRequests, this.config[urlKey], homonym)
+          const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config.lexicons[urlKey])
+          const resFullDefs = this.updateFullDefsAsync(fullDefsRequests, this.config.lexicons[urlKey], homonym)
           resFullDefs.catch(error => {
             this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error.message }))
             this.prepareFailedCallback(requestType, homonym)
@@ -153,12 +159,12 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
       for (const urlKey of urlKeys) {
-        const url = this.config[urlKey].urls.short
+        const url = this.config.lexicons[urlKey].urls.short
         const result = await this.checkCachedData(url)
 
         if (result) {
           const res = cachedDefinitions.get(url)
-          await this.updateShortDefs(res, homonym, this.config[urlKey])
+          await this.updateShortDefs(res, homonym, this.config.lexicons[urlKey])
         }
       }
     } catch (error) {
@@ -175,12 +181,12 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
     for (const urlKey of urlKeys) {
-      const url = this.config[urlKey].urls.index
+      const url = this.config.lexicons[urlKey].urls.index
       const result = await this.checkCachedData(url)
 
       if (result) {
-        const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-        await this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
+        const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config.lexicons[urlKey])
+        await this.updateFullDefs(fullDefsRequests, this.config.lexicons[urlKey], homonym)
       }
     }
   }
@@ -388,7 +394,9 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   */
   getRequests (languageID) {
     const languageCode = LMF.getLanguageCodeFromId(languageID)
-    return Object.keys(this.config).filter(url => this.config[url] && this.config[url].langs && this.config[url].langs.source === languageCode)
+    return Object.keys(this.config.lexicons).filter(url =>
+      this.config.lexicons[url] && this.config.lexicons[url].langs &&
+      this.config.lexicons[url].langs.source === languageCode)
   }
 
   /**

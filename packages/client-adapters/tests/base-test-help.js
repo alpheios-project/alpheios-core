@@ -19,18 +19,18 @@ export default class BaseTestHelp {
       },
       sourceData: sourceJson
     })
-    
+
     if (adapterTuftsRes.errors.length > 0) {
       console.error(adapterTuftsRes.errors)
     }
     return adapterTuftsRes.result
   }
 
-  static async  updateCacheWithFixtures () {  
+  static async  updateCacheWithFixtures () {
     let urls = LexiconsFixture.libUrls
     let urlsFull = LexiconsFixture.fullUrls
-    
-    const config = await ClientAdapters.lexicon.alpheios({ method: 'getConfig' })
+    let remoteConfig = {}
+    const config = await ClientAdapters.lexicon.alpheios({ method: 'getConfig', config: remoteConfig })
 
     for (let i = 0; i < urls.length; i++) {
       let urlKey = config[urls[i].url].urls[urls[i].type]
