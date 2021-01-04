@@ -7,8 +7,8 @@
     <h4
         class="alpheios-principal-parts__groupitem alpheios-principal-parts__groupitem--lemma-word"
         :lang="languageCode"
-        v-if="! lemma.principalParts.includes(lemma.word)"
-    >{{ lemma.word }}</h4>
+        v-if="! lemma.principalParts.includes(lemma.displayWord)"
+    >{{ lemma.displayWord }}</h4>
 
     <h4 class="alpheios-principal-parts__groupitem" v-if="lemma.principalParts && lemma.principalParts.length > 0"
         data-annotation-type="comment">
