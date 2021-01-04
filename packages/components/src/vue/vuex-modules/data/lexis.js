@@ -77,6 +77,9 @@ export default class Lexis extends Module {
   }
 
   hasLexiconsConfig () {
+    // note that an empty config object is allowed
+    // as it indicates that there are not remote settings
+    // that override local ones
     return Boolean(this._lexiconsConfig)
   }
 

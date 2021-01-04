@@ -10,7 +10,12 @@ let uploadStarted = new Map() // eslint-disable-line prefer-const
 class AlpheiosLexiconsAdapter extends BaseAdapter {
   /**
   * Lexicons adapter uploads config data, defines default options and inits data
-  * @param {Object} config - properties with higher priority
+  * @param {Object} config - lexicon adapter properties
+  * @param {Object} remoteConfig - remote lexicon service configuration
+  *                                merges with and overrides the lexicon
+  *                                settings in the local config.json,
+  *                                if present and populated. An empty object
+  *                                signifies that there are no overrides 
   */
   constructor (config = {}, remoteConfig = {}) {
     super()
