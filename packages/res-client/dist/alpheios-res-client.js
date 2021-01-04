@@ -12,7 +12,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "../../../node_modules/base64-js/index.js":
-/*!************************************************!*\
+/*!************************************************!*
   !*** ../../../node_modules/base64-js/index.js ***!
   \************************************************/
 /***/ ((__unused_webpack_module, exports) => {
@@ -175,7 +175,7 @@ function fromByteArray (uint8) {
 /***/ }),
 
 /***/ "../../../node_modules/buffer/index.js":
-/*!*********************************************!*\
+/*!*********************************************!*
   !*** ../../../node_modules/buffer/index.js ***!
   \*********************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
@@ -1975,7 +1975,7 @@ function isnan (val) {
 /***/ }),
 
 /***/ "../../../node_modules/events/events.js":
-/*!**********************************************!*\
+/*!**********************************************!*
   !*** ../../../node_modules/events/events.js ***!
   \**********************************************/
 /***/ ((module) => {
@@ -2462,7 +2462,7 @@ function once(emitter, name) {
 /***/ }),
 
 /***/ "../../../node_modules/ieee754/index.js":
-/*!**********************************************!*\
+/*!**********************************************!*
   !*** ../../../node_modules/ieee754/index.js ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, exports) => {
@@ -2557,7 +2557,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 /***/ }),
 
 /***/ "../../../node_modules/inherits/inherits.js":
-/*!**************************************************!*\
+/*!**************************************************!*
   !*** ../../../node_modules/inherits/inherits.js ***!
   \**************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2576,7 +2576,7 @@ try {
 /***/ }),
 
 /***/ "../../../node_modules/inherits/inherits_browser.js":
-/*!**********************************************************!*\
+/*!**********************************************************!*
   !*** ../../../node_modules/inherits/inherits_browser.js ***!
   \**********************************************************/
 /***/ ((module) => {
@@ -2613,7 +2613,7 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ "../../../node_modules/isarray/index.js":
-/*!**********************************************!*\
+/*!**********************************************!*
   !*** ../../../node_modules/isarray/index.js ***!
   \**********************************************/
 /***/ ((module) => {
@@ -2628,7 +2628,7 @@ module.exports = Array.isArray || function (arr) {
 /***/ }),
 
 /***/ "../../../node_modules/papaparse/papaparse.js":
-/*!****************************************************!*\
+/*!****************************************************!*
   !*** ../../../node_modules/papaparse/papaparse.js ***!
   \****************************************************/
 /***/ (function(module, exports, __webpack_require__) {
@@ -4564,7 +4564,7 @@ License: MIT
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/errors-browser.js":
-/*!***************************************************************!*\
+/*!***************************************************************!*
   !*** ../../../node_modules/readable-stream/errors-browser.js ***!
   \***************************************************************/
 /***/ ((module) => {
@@ -4702,7 +4702,7 @@ module.exports.codes = codes;
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/_stream_duplex.js":
-/*!*******************************************************************!*\
+/*!*******************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/_stream_duplex.js ***!
   \*******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -4851,7 +4851,7 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/_stream_passthrough.js":
-/*!************************************************************************!*\
+/*!************************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/_stream_passthrough.js ***!
   \************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -4900,7 +4900,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/_stream_readable.js":
-/*!*********************************************************************!*\
+/*!*********************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/_stream_readable.js ***!
   \*********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -6034,7 +6034,7 @@ function indexOf(xs, x) {
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/_stream_transform.js":
-/*!**********************************************************************!*\
+/*!**********************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/_stream_transform.js ***!
   \**********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -6245,7 +6245,7 @@ function done(stream, er, data) {
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/_stream_writable.js":
-/*!*********************************************************************!*\
+/*!*********************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/_stream_writable.js ***!
   \*********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -6952,7 +6952,7 @@ Writable.prototype._destroy = function (err, cb) {
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/internal/streams/async_iterator.js":
-/*!************************************************************************************!*\
+/*!************************************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/internal/streams/async_iterator.js ***!
   \************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -7169,7 +7169,7 @@ module.exports = createReadableStreamAsyncIterator;
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/internal/streams/buffer_list.js":
-/*!*********************************************************************************!*\
+/*!*********************************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/internal/streams/buffer_list.js ***!
   \*********************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -7389,7 +7389,7 @@ function () {
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/internal/streams/destroy.js":
-/*!*****************************************************************************!*\
+/*!*****************************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/internal/streams/destroy.js ***!
   \*****************************************************************************/
 /***/ ((module) => {
@@ -7504,7 +7504,7 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/internal/streams/end-of-stream.js":
-/*!***********************************************************************************!*\
+/*!***********************************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/internal/streams/end-of-stream.js ***!
   \***********************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -7618,7 +7618,7 @@ module.exports = eos;
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/internal/streams/from-browser.js":
-/*!**********************************************************************************!*\
+/*!**********************************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/internal/streams/from-browser.js ***!
   \**********************************************************************************/
 /***/ ((module) => {
@@ -7631,7 +7631,7 @@ module.exports = function () {
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/internal/streams/pipeline.js":
-/*!******************************************************************************!*\
+/*!******************************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/internal/streams/pipeline.js ***!
   \******************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -7738,7 +7738,7 @@ module.exports = pipeline;
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/internal/streams/state.js":
-/*!***************************************************************************!*\
+/*!***************************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/internal/streams/state.js ***!
   \***************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -7775,7 +7775,7 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/lib/internal/streams/stream-browser.js":
-/*!************************************************************************************!*\
+/*!************************************************************************************!*
   !*** ../../../node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
   \************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -7786,7 +7786,7 @@ module.exports = __webpack_require__(/*! events */ "../../../node_modules/events
 /***/ }),
 
 /***/ "../../../node_modules/readable-stream/readable-browser.js":
-/*!*****************************************************************!*\
+/*!*****************************************************************!*
   !*** ../../../node_modules/readable-stream/readable-browser.js ***!
   \*****************************************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -7805,7 +7805,7 @@ exports.pipeline = __webpack_require__(/*! ./lib/internal/streams/pipeline.js */
 /***/ }),
 
 /***/ "../../../node_modules/safe-buffer/index.js":
-/*!**************************************************!*\
+/*!**************************************************!*
   !*** ../../../node_modules/safe-buffer/index.js ***!
   \**************************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -7877,7 +7877,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ }),
 
 /***/ "../../../node_modules/string_decoder/lib/string_decoder.js":
-/*!******************************************************************!*\
+/*!******************************************************************!*
   !*** ../../../node_modules/string_decoder/lib/string_decoder.js ***!
   \******************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
@@ -8183,7 +8183,7 @@ function simpleEnd(buf) {
 /***/ }),
 
 /***/ "../../../node_modules/util-deprecate/node.js":
-/*!****************************************************!*\
+/*!****************************************************!*
   !*** ../../../node_modules/util-deprecate/node.js ***!
   \****************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -8199,7 +8199,7 @@ module.exports = __webpack_require__(/*! util */ "../../../node_modules/util/uti
 /***/ }),
 
 /***/ "../../../node_modules/util/node_modules/inherits/inherits.js":
-/*!********************************************************************!*\
+/*!********************************************************************!*
   !*** ../../../node_modules/util/node_modules/inherits/inherits.js ***!
   \********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -8216,7 +8216,7 @@ try {
 /***/ }),
 
 /***/ "../../../node_modules/util/node_modules/inherits/inherits_browser.js":
-/*!****************************************************************************!*\
+/*!****************************************************************************!*
   !*** ../../../node_modules/util/node_modules/inherits/inherits_browser.js ***!
   \****************************************************************************/
 /***/ ((module) => {
@@ -8249,7 +8249,7 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ "../../../node_modules/util/support/isBufferBrowser.js":
-/*!*************************************************************!*\
+/*!*************************************************************!*
   !*** ../../../node_modules/util/support/isBufferBrowser.js ***!
   \*************************************************************/
 /***/ ((module) => {
@@ -8264,7 +8264,7 @@ module.exports = function isBuffer(arg) {
 /***/ }),
 
 /***/ "../../../node_modules/util/util.js":
-/*!******************************************!*\
+/*!******************************************!*
   !*** ../../../node_modules/util/util.js ***!
   \******************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
@@ -8977,7 +8977,7 @@ exports.callbackify = callbackify;
 /***/ }),
 
 /***/ "./base_adapter.js":
-/*!*************************!*\
+/*!*************************!*
   !*** ./base_adapter.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9011,7 +9011,7 @@ class BaseResourceAdapter {
 /***/ }),
 
 /***/ "./driver.js":
-/*!*******************!*\
+/*!*******************!*
   !*** ./driver.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9032,7 +9032,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./grammar/grammar_adapter.js":
-/*!************************************!*\
+/*!************************************!*
   !*** ./grammar/grammar_adapter.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9222,7 +9222,7 @@ class GrammarResAdapter extends _base_adapter_js__WEBPACK_IMPORTED_MODULE_0__.de
 /***/ }),
 
 /***/ "./grammars.js":
-/*!*********************!*\
+/*!*********************!*
   !*** ./grammars.js ***!
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9326,7 +9326,7 @@ class Grammars {
 /***/ }),
 
 /***/ "./grammar/config.json":
-/*!*****************************!*\
+/*!*****************************!*
   !*** ./grammar/config.json ***!
   \*****************************/
 /***/ ((module) => {
@@ -9337,7 +9337,7 @@ module.exports = JSON.parse("{\"https://github.com/alpheios-project/grammar-benn
 /***/ }),
 
 /***/ "alpheios-data-models":
-/*!***************************************!*\
+/*!***************************************!*
   !*** external "alpheios-data-models" ***!
   \***************************************/
 /***/ ((module) => {
@@ -9348,7 +9348,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /***/ }),
 
 /***/ "?0bed":
-/*!**********************!*\
+/*!**********************!*
   !*** util (ignored) ***!
   \**********************/
 /***/ (() => {

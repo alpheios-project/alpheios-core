@@ -12,7 +12,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "../../../node_modules/fast-memoize/src/index.js":
-/*!*******************************************************!*\
+/*!*******************************************************!*
   !*** ../../../node_modules/fast-memoize/src/index.js ***!
   \*******************************************************/
 /***/ ((module) => {
@@ -166,7 +166,7 @@ module.exports.strategies = {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/lib/index.js":
-/*!********************************************************************!*\
+/*!********************************************************************!*
   !*** ../../../node_modules/intl-messageformat-parser/lib/index.js ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -215,7 +215,7 @@ function parse(input, opts) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/lib/src/normalize.js":
-/*!****************************************************************************!*\
+/*!****************************************************************************!*
   !*** ../../../node_modules/intl-messageformat-parser/lib/src/normalize.js ***!
   \****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -274,7 +274,7 @@ function normalizeHashtagInPlural(els) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/lib/src/parser.js":
-/*!*************************************************************************!*\
+/*!*************************************************************************!*
   !*** ../../../node_modules/intl-messageformat-parser/lib/src/parser.js ***!
   \*************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3404,7 +3404,7 @@ var pegParse = peg$parse;
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/lib/src/skeleton.js":
-/*!***************************************************************************!*\
+/*!***************************************************************************!*
   !*** ../../../node_modules/intl-messageformat-parser/lib/src/skeleton.js ***!
   \***************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3719,7 +3719,7 @@ function parseNumberSkeleton(tokens) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/lib/src/types.js":
-/*!************************************************************************!*\
+/*!************************************************************************!*
   !*** ../../../node_modules/intl-messageformat-parser/lib/src/types.js ***!
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3842,7 +3842,7 @@ function createNumberElement(value, style) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/node_modules/tslib/tslib.es6.js":
-/*!***************************************************************************************!*\
+/*!***************************************************************************************!*
   !*** ../../../node_modules/intl-messageformat-parser/node_modules/tslib/tslib.es6.js ***!
   \***************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4106,7 +4106,7 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/index.js":
-/*!*************************************************************!*\
+/*!*************************************************************!*
   !*** ../../../node_modules/intl-messageformat/lib/index.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4143,7 +4143,7 @@ See the accompanying LICENSE file for terms.
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/src/core.js":
-/*!****************************************************************!*\
+/*!****************************************************************!*
   !*** ../../../node_modules/intl-messageformat/lib/src/core.js ***!
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4390,7 +4390,7 @@ var IntlMessageFormat = /** @class */ (function () {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/src/error.js":
-/*!*****************************************************************!*\
+/*!*****************************************************************!*
   !*** ../../../node_modules/intl-messageformat/lib/src/error.js ***!
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4458,7 +4458,7 @@ var MissingValueError = /** @class */ (function (_super) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/src/formatters.js":
-/*!**********************************************************************!*\
+/*!**********************************************************************!*
   !*** ../../../node_modules/intl-messageformat/lib/src/formatters.js ***!
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4649,7 +4649,7 @@ originalMessage) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/node_modules/tslib/tslib.es6.js":
-/*!********************************************************************************!*\
+/*!********************************************************************************!*
   !*** ../../../node_modules/intl-messageformat/node_modules/tslib/tslib.es6.js ***!
   \********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4913,7 +4913,7 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 /***/ }),
 
 /***/ "../index.js":
-/*!*******************!*\
+/*!*******************!*
   !*** ../index.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4934,7 +4934,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./l10n.js":
-/*!*****************!*\
+/*!*****************!*
   !*** ./l10n.js ***!
   \*****************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5051,7 +5051,7 @@ class L10n {
 /***/ }),
 
 /***/ "./message-bundle.js":
-/*!***************************!*\
+/*!***************************!*
   !*** ./message-bundle.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5242,7 +5242,7 @@ class MessageBundle {
 /***/ }),
 
 /***/ "./message.js":
-/*!********************!*\
+/*!********************!*
   !*** ./message.js ***!
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {

@@ -12,7 +12,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "../../../node_modules/axios/index.js":
-/*!********************************************!*\
+/*!********************************************!*
   !*** ../../../node_modules/axios/index.js ***!
   \********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -22,7 +22,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/xhr.js":
-/*!*******************************************************!*\
+/*!*******************************************************!*
   !*** ../../../node_modules/axios/lib/adapters/xhr.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -212,7 +212,7 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/axios.js":
-/*!************************************************!*\
+/*!************************************************!*
   !*** ../../../node_modules/axios/lib/axios.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -279,7 +279,7 @@ module.exports.default = axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
-/*!********************************************************!*\
+/*!********************************************************!*
   !*** ../../../node_modules/axios/lib/cancel/Cancel.js ***!
   \********************************************************/
 /***/ ((module) => {
@@ -309,7 +309,7 @@ module.exports = Cancel;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*************************************************************!*\
+/*!*************************************************************!*
   !*** ../../../node_modules/axios/lib/cancel/CancelToken.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -377,7 +377,7 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
-/*!**********************************************************!*\
+/*!**********************************************************!*
   !*** ../../../node_modules/axios/lib/cancel/isCancel.js ***!
   \**********************************************************/
 /***/ ((module) => {
@@ -393,7 +393,7 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/Axios.js":
-/*!*****************************************************!*\
+/*!*****************************************************!*
   !*** ../../../node_modules/axios/lib/core/Axios.js ***!
   \*****************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -499,7 +499,7 @@ module.exports = Axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
-/*!******************************************************************!*\
+/*!******************************************************************!*
   !*** ../../../node_modules/axios/lib/core/InterceptorManager.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -562,7 +562,7 @@ module.exports = InterceptorManager;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
-/*!*************************************************************!*\
+/*!*************************************************************!*
   !*** ../../../node_modules/axios/lib/core/buildFullPath.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -593,7 +593,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/createError.js":
-/*!***********************************************************!*\
+/*!***********************************************************!*
   !*** ../../../node_modules/axios/lib/core/createError.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -622,7 +622,7 @@ module.exports = function createError(message, config, code, request, response) 
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
-/*!***************************************************************!*\
+/*!***************************************************************!*
   !*** ../../../node_modules/axios/lib/core/dispatchRequest.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -712,7 +712,7 @@ module.exports = function dispatchRequest(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/enhanceError.js":
-/*!************************************************************!*\
+/*!************************************************************!*
   !*** ../../../node_modules/axios/lib/core/enhanceError.js ***!
   \************************************************************/
 /***/ ((module) => {
@@ -765,7 +765,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
-/*!***********************************************************!*\
+/*!***********************************************************!*
   !*** ../../../node_modules/axios/lib/core/mergeConfig.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -863,7 +863,7 @@ module.exports = function mergeConfig(config1, config2) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/settle.js":
-/*!******************************************************!*\
+/*!******************************************************!*
   !*** ../../../node_modules/axios/lib/core/settle.js ***!
   \******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -899,7 +899,7 @@ module.exports = function settle(resolve, reject, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/transformData.js":
-/*!*************************************************************!*\
+/*!*************************************************************!*
   !*** ../../../node_modules/axios/lib/core/transformData.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -930,7 +930,7 @@ module.exports = function transformData(data, headers, fns) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/defaults.js":
-/*!***************************************************!*\
+/*!***************************************************!*
   !*** ../../../node_modules/axios/lib/defaults.js ***!
   \***************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1039,7 +1039,7 @@ module.exports = defaults;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/bind.js":
-/*!*******************************************************!*\
+/*!*******************************************************!*
   !*** ../../../node_modules/axios/lib/helpers/bind.js ***!
   \*******************************************************/
 /***/ ((module) => {
@@ -1061,7 +1061,7 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
-/*!***********************************************************!*\
+/*!***********************************************************!*
   !*** ../../../node_modules/axios/lib/helpers/buildURL.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1142,7 +1142,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
-/*!**************************************************************!*\
+/*!**************************************************************!*
   !*** ../../../node_modules/axios/lib/helpers/combineURLs.js ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -1167,7 +1167,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/cookies.js":
-/*!**********************************************************!*\
+/*!**********************************************************!*
   !*** ../../../node_modules/axios/lib/helpers/cookies.js ***!
   \**********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1231,7 +1231,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!****************************************************************!*\
+/*!****************************************************************!*
   !*** ../../../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
   \****************************************************************/
 /***/ ((module) => {
@@ -1278,7 +1278,7 @@ module.exports = function isAxiosError(payload) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!******************************************************************!*\
+/*!******************************************************************!*
   !*** ../../../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1357,7 +1357,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!**********************************************************************!*\
+/*!**********************************************************************!*
   !*** ../../../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
   \**********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1380,7 +1380,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!***************************************************************!*\
+/*!***************************************************************!*
   !*** ../../../node_modules/axios/lib/helpers/parseHeaders.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1444,7 +1444,7 @@ module.exports = function parseHeaders(headers) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/spread.js":
-/*!*********************************************************!*\
+/*!*********************************************************!*
   !*** ../../../node_modules/axios/lib/helpers/spread.js ***!
   \*********************************************************/
 /***/ ((module) => {
@@ -1482,7 +1482,7 @@ module.exports = function spread(callback) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/utils.js":
-/*!************************************************!*\
+/*!************************************************!*
   !*** ../../../node_modules/axios/lib/utils.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1844,7 +1844,7 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/xmltojson/lib/xmlToJSON.js":
-/*!********************************************************!*\
+/*!********************************************************!*
   !*** ../../../node_modules/xmltojson/lib/xmlToJSON.js ***!
   \********************************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -2098,7 +2098,7 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 /***/ }),
 
 /***/ "./adapters/alpheiostb/adapter.js":
-/*!****************************************!*\
+/*!****************************************!*
   !*** ./adapters/alpheiostb/adapter.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2240,7 +2240,7 @@ class AlpheiosTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 /***/ }),
 
 /***/ "./adapters/arethusa/adapter.js":
-/*!**************************************!*\
+/*!**************************************!*
   !*** ./adapters/arethusa/adapter.js ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2434,7 +2434,7 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 /***/ }),
 
 /***/ "./adapters/base-adapter.js":
-/*!**********************************!*\
+/*!**********************************!*
   !*** ./adapters/base-adapter.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2548,7 +2548,16 @@ class BaseAdapter {
         const response = await window.fetch(url, options.requestParams)
 
         if (!response.ok) {
-          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText: response.statusText }))
+          const resultResponse = await response.json()
+          let statusText
+
+          if (resultResponse && resultResponse.message) {
+            statusText = resultResponse.message
+          } else {
+            statusText = response.statusText
+          }
+
+          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText: statusText }))
           return
         }
         if (options.type === 'xml') {
@@ -2682,7 +2691,7 @@ class BaseAdapter {
 /***/ }),
 
 /***/ "./adapters/chineseloc/adapter.js":
-/*!****************************************!*\
+/*!****************************************!*
   !*** ./adapters/chineseloc/adapter.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2871,7 +2880,7 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
 /***/ }),
 
 /***/ "./adapters/concordance/adapter.js":
-/*!*****************************************!*\
+/*!*****************************************!*
   !*** ./adapters/concordance/adapter.js ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3199,7 +3208,7 @@ class AlpheiosConcordanceAdapter extends _clAdapters_adapters_base_adapter__WEBP
 /***/ }),
 
 /***/ "./adapters/lexicons/adapter.js":
-/*!**************************************!*\
+/*!**************************************!*
   !*** ./adapters/lexicons/adapter.js ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3755,7 +3764,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 /***/ }),
 
 /***/ "./adapters/logeion/adapter.js":
-/*!*************************************!*\
+/*!*************************************!*
   !*** ./adapters/logeion/adapter.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3872,7 +3881,7 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
 /***/ }),
 
 /***/ "./adapters/tokenization/adapter.js":
-/*!******************************************!*\
+/*!******************************************!*
   !*** ./adapters/tokenization/adapter.js ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4010,24 +4019,22 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
       if (!this.fetchOptions.lang || !this.fetchOptions.sourceType) {
         return
       }
+      const exclude = ['baseUrl', 'sourceType', 'tokenizer']
 
-      let url = `${this.fetchOptions.baseUrl}tokenize/${this.fetchOptions.sourceType}?lang=${this.fetchOptions.lang}`
+      let url = `${this.fetchOptions.baseUrl}tokenize/${this.fetchOptions.sourceType}`
+      let wasFirst = false
 
-      if (this.fetchOptions.segments !== undefined) {
-        url = `${url}&segments=${this.fetchOptions.segments}`
-      }
+      Object.keys(this.fetchOptions).forEach(option => {
+        if ((exclude.indexOf(option) === -1) && (this.fetchOptions[option] !== undefined)) {
+          let sign = '&'
+          if (!wasFirst) {
+            sign = '?'
+            wasFirst = true
+          }
+          url = `${url}${sign}${option}=${this.fetchOptions[option]}`
+        }
+      })
 
-      if (this.fetchOptions.segstart !== undefined) {
-        url = `${url}&segstart=${this.fetchOptions.segstart}`
-      }
-
-      if (this.fetchOptions.direction !== undefined) {
-        url = `${url}&direction=${this.fetchOptions.direction}`
-      }
-
-      if (this.fetchOptions.tbseg !== undefined) {
-        url = `${url}&tbseg=${this.fetchOptions.tbseg}`
-      }
       return url
     }
   }
@@ -4058,7 +4065,7 @@ class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEB
 /***/ }),
 
 /***/ "./adapters/translations/adapter.js":
-/*!******************************************!*\
+/*!******************************************!*
   !*** ./adapters/translations/adapter.js ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4197,7 +4204,7 @@ class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter
 /***/ }),
 
 /***/ "./adapters/tufts/adapter.js":
-/*!***********************************!*\
+/*!***********************************!*
   !*** ./adapters/tufts/adapter.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4329,7 +4336,7 @@ class AlpheiosTuftsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IM
 /***/ }),
 
 /***/ "./adapters/tufts/engine/aramorph.js":
-/*!*******************************************!*\
+/*!*******************************************!*
   !*** ./adapters/tufts/engine/aramorph.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4353,7 +4360,7 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 /***/ }),
 
 /***/ "./adapters/tufts/engine/hazm.js":
-/*!***************************************!*\
+/*!***************************************!*
   !*** ./adapters/tufts/engine/hazm.js ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4380,7 +4387,7 @@ data.setLexemeFilter(function (lexeme) { return Boolean(lexeme.lemma.word) })
 /***/ }),
 
 /***/ "./adapters/tufts/engine/morpheusgrc.js":
-/*!**********************************************!*\
+/*!**********************************************!*
   !*** ./adapters/tufts/engine/morpheusgrc.js ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4438,7 +4445,7 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
 /***/ }),
 
 /***/ "./adapters/tufts/engine/sedra.js":
-/*!****************************************!*\
+/*!****************************************!*
   !*** ./adapters/tufts/engine/sedra.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4490,7 +4497,7 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
 /***/ }),
 
 /***/ "./adapters/tufts/engine/traces.js":
-/*!*****************************************!*\
+/*!*****************************************!*
   !*** ./adapters/tufts/engine/traces.js ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4514,7 +4521,7 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 /***/ }),
 
 /***/ "./adapters/tufts/engine/whitakers.js":
-/*!********************************************!*\
+/*!********************************************!*
   !*** ./adapters/tufts/engine/whitakers.js ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4641,7 +4648,7 @@ data.setLemmaParser(function (lemma) {
 /***/ }),
 
 /***/ "./adapters/tufts/engines-set.js":
-/*!***************************************!*\
+/*!***************************************!*
   !*** ./adapters/tufts/engines-set.js ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4706,7 +4713,7 @@ class EnginesSet {
 /***/ }),
 
 /***/ "./client-adapters.js":
-/*!****************************!*\
+/*!****************************!*
   !*** ./client-adapters.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5161,7 +5168,7 @@ class ClientAdapters {
 /***/ }),
 
 /***/ "./errors/adapter-error.js":
-/*!*********************************!*\
+/*!*********************************!*
   !*** ./errors/adapter-error.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5207,7 +5214,7 @@ class AdapterError extends Error {
 /***/ }),
 
 /***/ "./errors/adapter-warning.js":
-/*!***********************************!*\
+/*!***********************************!*
   !*** ./errors/adapter-warning.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5244,7 +5251,7 @@ class AdapterWarning extends Error {
 /***/ }),
 
 /***/ "./errors/no-required-param-error.js":
-/*!*******************************************!*\
+/*!*******************************************!*
   !*** ./errors/no-required-param-error.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5271,7 +5278,7 @@ class NoRequiredParamError extends Error {
 /***/ }),
 
 /***/ "./errors/remote-error.js":
-/*!********************************!*\
+/*!********************************!*
   !*** ./errors/remote-error.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5302,7 +5309,7 @@ class RemoteError extends Error {
 /***/ }),
 
 /***/ "./errors/warning-codes.js":
-/*!*********************************!*\
+/*!*********************************!*
   !*** ./errors/warning-codes.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5325,7 +5332,7 @@ const WarningCodes = {
 /***/ }),
 
 /***/ "./errors/wrong-method-error.js":
-/*!**************************************!*\
+/*!**************************************!*
   !*** ./errors/wrong-method-error.js ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5351,7 +5358,7 @@ class WrongMethodError extends Error {
 /***/ }),
 
 /***/ "./index.js":
-/*!******************!*\
+/*!******************!*
   !*** ./index.js ***!
   \******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5376,7 +5383,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./locales/locales.js":
-/*!****************************!*\
+/*!****************************!*
   !*** ./locales/locales.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5404,7 +5411,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./transformers/alpheios-lexicon-transformer.js":
-/*!******************************************************!*\
+/*!******************************************************!*
   !*** ./transformers/alpheios-lexicon-transformer.js ***!
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5731,7 +5738,7 @@ class AlpheiosLexiconTransformer {
 /***/ }),
 
 /***/ "./transformers/import-morph-data.js":
-/*!*******************************************!*\
+/*!*******************************************!*
   !*** ./transformers/import-morph-data.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6016,7 +6023,7 @@ class ImportMorphData {
 /***/ }),
 
 /***/ "./adapters/adapters-config.json":
-/*!***************************************!*\
+/*!***************************************!*
   !*** ./adapters/adapters-config.json ***!
   \***************************************/
 /***/ ((module) => {
@@ -6027,7 +6034,7 @@ module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":
 /***/ }),
 
 /***/ "./adapters/alpheiostb/config.json":
-/*!*****************************************!*\
+/*!*****************************************!*
   !*** ./adapters/alpheiostb/config.json ***!
   \*****************************************/
 /***/ ((module) => {
@@ -6038,7 +6045,7 @@ module.exports = JSON.parse("{\"servers\":[{\"texts\":[],\"isDefault\":true,\"ur
 /***/ }),
 
 /***/ "./adapters/concordance/author-work.json":
-/*!***********************************************!*\
+/*!***********************************************!*
   !*** ./adapters/concordance/author-work.json ***!
   \***********************************************/
 /***/ ((module) => {
@@ -6049,7 +6056,7 @@ module.exports = JSON.parse("{\"authors\":[{\"urn\":\"urn:cts:latinLit:phi2456\"
 /***/ }),
 
 /***/ "./adapters/concordance/config.json":
-/*!******************************************!*\
+/*!******************************************!*
   !*** ./adapters/concordance/config.json ***!
   \******************************************/
 /***/ ((module) => {
@@ -6060,7 +6067,7 @@ module.exports = JSON.parse("{\"url\":\"https://latin.packhum.org/rst/concordanc
 /***/ }),
 
 /***/ "./adapters/lexicons/config.json":
-/*!***************************************!*\
+/*!***************************************!*
   !*** ./adapters/lexicons/config.json ***!
   \***************************************/
 /***/ ((module) => {
@@ -6071,7 +6078,7 @@ module.exports = JSON.parse("{\"https://github.com/alpheios-project/mjm\":{\"url
 /***/ }),
 
 /***/ "./adapters/logeion/config.json":
-/*!**************************************!*\
+/*!**************************************!*
   !*** ./adapters/logeion/config.json ***!
   \**************************************/
 /***/ ((module) => {
@@ -6082,7 +6089,7 @@ module.exports = JSON.parse("{\"url\":\"https://api-v2.logeion.org/search?q=\",\
 /***/ }),
 
 /***/ "./adapters/tokenization/config.json":
-/*!*******************************************!*\
+/*!*******************************************!*
   !*** ./adapters/tokenization/config.json ***!
   \*******************************************/
 /***/ ((module) => {
@@ -6093,7 +6100,7 @@ module.exports = JSON.parse("{\"fetchOptions\":{\"baseUrl\":\"https://tools.alph
 /***/ }),
 
 /***/ "./adapters/translations/config.json":
-/*!*******************************************!*\
+/*!*******************************************!*
   !*** ./adapters/translations/config.json ***!
   \*******************************************/
 /***/ ((module) => {
@@ -6104,7 +6111,7 @@ module.exports = JSON.parse("{\"url\":\"https://ats.alpheios.net\",\"availableLa
 /***/ }),
 
 /***/ "./adapters/tufts/config.json":
-/*!************************************!*\
+/*!************************************!*
   !*** ./adapters/tufts/config.json ***!
   \************************************/
 /***/ ((module) => {
@@ -6115,7 +6122,7 @@ module.exports = JSON.parse("{\"engine\":{\"lat\":[\"whitakerLat\"],\"grc\":[\"m
 /***/ }),
 
 /***/ "./locales/en-gb/messages.json":
-/*!*************************************!*\
+/*!*************************************!*
   !*** ./locales/en-gb/messages.json ***!
   \*************************************/
 /***/ ((module) => {
@@ -6126,7 +6133,7 @@ module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a t
 /***/ }),
 
 /***/ "./locales/en-us/messages.json":
-/*!*************************************!*\
+/*!*************************************!*
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
 /***/ ((module) => {
@@ -6137,7 +6144,7 @@ module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a t
 /***/ }),
 
 /***/ "alpheios-data-models":
-/*!***************************************!*\
+/*!***************************************!*
   !*** external "alpheios-data-models" ***!
   \***************************************/
 /***/ ((module) => {
@@ -6148,7 +6155,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /***/ }),
 
 /***/ "alpheios-l10n":
-/*!********************************!*\
+/*!********************************!*
   !*** external "alpheios-l10n" ***!
   \********************************/
 /***/ ((module) => {
@@ -6159,7 +6166,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_l10n__;
 /***/ }),
 
 /***/ "alpheios-messaging":
-/*!*************************************!*\
+/*!*************************************!*
   !*** external "alpheios-messaging" ***!
   \*************************************/
 /***/ ((module) => {
@@ -6170,7 +6177,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_messaging__;
 /***/ }),
 
 /***/ "papaparse":
-/*!****************************!*\
+/*!****************************!*
   !*** external "papaparse" ***!
   \****************************/
 /***/ ((module) => {

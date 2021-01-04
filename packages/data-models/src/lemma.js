@@ -84,6 +84,10 @@ class Lemma {
     return langData.languageID
   }
 
+  get displayWord () {
+    return this.word.replace(/\d+$/, '')
+  }
+
   static readObject (jsonObject) {
     const langCode = jsonObject.language ? jsonObject.language : jsonObject.languageCode
     const lang = new Language(langCode)
