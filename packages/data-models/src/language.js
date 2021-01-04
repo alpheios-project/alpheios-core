@@ -1,5 +1,5 @@
 /**
- * Constants that define a macrolanguage in an ISO 639-3 format.
+ * Constants that define a language in the ISO 639-2 format.
  *
  * @enum {string} */
 export const Lang = {
@@ -20,7 +20,8 @@ export default class Language {
   /**
    * Creates an instance of a language class.
    *
-   * @param {Lang | string} code - A constant that specifies a language in an ISO 639-3 format.
+   * @param {Lang | string} code - A constant that specifies a language in an ISO 639-2 format.
+   *        May also accept codes in ISO 639-1 and ISO 639-3 formats.
    * @param {object} options - Additional options of the Language object to be created.
    * @param {boolean} options.normalize - Whether the language code provided, in case it is not
    *        in the format supported by the Language object, should attempted
@@ -36,7 +37,7 @@ export default class Language {
     }
 
     /**
-     *An ISO 639-3 _code.
+     *An ISO 639-2 code.
      *
      * @private
      * @type {string}
@@ -77,8 +78,7 @@ export default class Language {
   }
 
   /**
-   * Tries to convert a language code that is in an unsupported format to the one
-   * that is supported by the Language class.
+   * Tries to convert a language code that is in an unsupported format to ISO 639-2.
    *
    * @param {string} code - A language code to normalize.
    * @returns {Lang|string} - A normalized, if normalization is possible,
@@ -117,11 +117,12 @@ export default class Language {
   }
 
   /**
-   * Returns a language code of the object.
+   * Returns a language code of the object in the ISO 639-2 format.
    *
    * @returns {string} - A language code.
    */
   toCode () {
+    // TODO: Make language code conversion if it is not in the ISO 639-2 format
     return this._code
   }
 
