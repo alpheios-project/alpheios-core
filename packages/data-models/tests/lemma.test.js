@@ -141,11 +141,11 @@ describe('lemma.test.js', () => {
   })
 
   it('10 Lemma - displayWord - formats Lemma word and removes digits from the end of the word', () => {
-    let lemma1 = new Lemma('mare', Constants.LANG_LATIN)
+    const lemma1 = new Lemma('mare', Language.LATIN)
 
     expect(lemma1.displayWord).toEqual('mare')
 
-    let lemma2 = new Lemma('οὐδός1', Constants.LANG_GREEK)
+    const lemma2 = new Lemma('οὐδός1', Language.GREEK)
 
     expect(lemma2.displayWord).toEqual('οὐδός')
   })

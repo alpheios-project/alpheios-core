@@ -13,7 +13,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./lib/lang/greek/data/adjective/footnotes.csv":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ./lib/lang/greek/data/adjective/footnotes.csv ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -27,7 +27,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/greek/data/adjective/suffixes.csv":
-/*!****************************************************!*
+/*!****************************************************!*\
   !*** ./lib/lang/greek/data/adjective/suffixes.csv ***!
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -41,7 +41,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/greek/data/article/forms.csv":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ./lib/lang/greek/data/article/forms.csv ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -55,7 +55,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/greek/data/noun/footnotes.csv":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ./lib/lang/greek/data/noun/footnotes.csv ***!
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -69,7 +69,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/greek/data/noun/suffixes.csv":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ./lib/lang/greek/data/noun/suffixes.csv ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -83,7 +83,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/greek/data/numeral/footnotes.csv":
-/*!***************************************************!*
+/*!***************************************************!*\
   !*** ./lib/lang/greek/data/numeral/footnotes.csv ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -97,7 +97,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/greek/data/numeral/forms.csv":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ./lib/lang/greek/data/numeral/forms.csv ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -111,7 +111,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/greek/data/pronoun/footnotes.csv":
-/*!***************************************************!*
+/*!***************************************************!*\
   !*** ./lib/lang/greek/data/pronoun/footnotes.csv ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -125,7 +125,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/greek/data/pronoun/forms.csv":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ./lib/lang/greek/data/pronoun/forms.csv ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -139,7 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/adjective/footnotes.csv":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ./lib/lang/latin/data/adjective/footnotes.csv ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -153,7 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/adjective/suffixes.csv":
-/*!****************************************************!*
+/*!****************************************************!*\
   !*** ./lib/lang/latin/data/adjective/suffixes.csv ***!
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -167,7 +167,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/comparative/footnotes.csv":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ./lib/lang/latin/data/comparative/footnotes.csv ***!
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -181,7 +181,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/comparative/suffixes.csv":
-/*!******************************************************!*
+/*!******************************************************!*\
   !*** ./lib/lang/latin/data/comparative/suffixes.csv ***!
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -195,7 +195,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/gerundive/form_footnotes.csv":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ./lib/lang/latin/data/gerundive/form_footnotes.csv ***!
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -209,7 +209,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/gerundive/forms.csv":
-/*!*************************************************!*
+/*!*************************************************!*\
   !*** ./lib/lang/latin/data/gerundive/forms.csv ***!
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -223,7 +223,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/noun/footnotes.csv":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ./lib/lang/latin/data/noun/footnotes.csv ***!
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -237,7 +237,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/noun/suffixes.csv":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ./lib/lang/latin/data/noun/suffixes.csv ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -251,7 +251,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/participle/form_footnotes.csv":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ./lib/lang/latin/data/participle/form_footnotes.csv ***!
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -265,7 +265,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/participle/forms.csv":
-/*!**************************************************!*
+/*!**************************************************!*\
   !*** ./lib/lang/latin/data/participle/forms.csv ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -279,7 +279,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/participle/suffixes.csv":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ./lib/lang/latin/data/participle/suffixes.csv ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -293,7 +293,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/pronoun/footnotes.csv":
-/*!***************************************************!*
+/*!***************************************************!*\
   !*** ./lib/lang/latin/data/pronoun/footnotes.csv ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -307,7 +307,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/pronoun/forms.csv":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ./lib/lang/latin/data/pronoun/forms.csv ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -321,7 +321,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/superlative/footnotes.csv":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ./lib/lang/latin/data/superlative/footnotes.csv ***!
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -335,7 +335,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/superlative/suffixes.csv":
-/*!******************************************************!*
+/*!******************************************************!*\
   !*** ./lib/lang/latin/data/superlative/suffixes.csv ***!
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -349,7 +349,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/supine/form_footnotes.csv":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ./lib/lang/latin/data/supine/form_footnotes.csv ***!
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -363,7 +363,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/supine/forms.csv":
-/*!**********************************************!*
+/*!**********************************************!*\
   !*** ./lib/lang/latin/data/supine/forms.csv ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -377,7 +377,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/supine/suffixes.csv":
-/*!*************************************************!*
+/*!*************************************************!*\
   !*** ./lib/lang/latin/data/supine/suffixes.csv ***!
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -391,7 +391,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/verb/footnotes.csv":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ./lib/lang/latin/data/verb/footnotes.csv ***!
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -405,7 +405,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/verb/form_footnotes.csv":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ./lib/lang/latin/data/verb/form_footnotes.csv ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -419,7 +419,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/verb/forms.csv":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ./lib/lang/latin/data/verb/forms.csv ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -433,7 +433,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/lang/latin/data/verb/suffixes.csv":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ./lib/lang/latin/data/verb/suffixes.csv ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -447,7 +447,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/adjective/rules.csv":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ./src/paradigm/data/greek/adjective/rules.csv ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -461,7 +461,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/rules.csv":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ./src/paradigm/data/greek/noun/rules.csv ***!
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -475,7 +475,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/rules.csv":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/rules.csv ***!
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -489,7 +489,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/footnotes.csv":
-/*!****************************************************!*
+/*!****************************************************!*\
   !*** ./src/paradigm/data/greek/verb/footnotes.csv ***!
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -503,7 +503,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/rules.csv":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ./src/paradigm/data/greek/verb/rules.csv ***!
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -517,7 +517,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./index.js":
-/*!******************!*
+/*!******************!*\
   !*** ./index.js ***!
   \******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -547,7 +547,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./lib/extended-greek-data.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./lib/extended-greek-data.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -589,7 +589,7 @@ class ExtendedGreekData extends _extended_language_data__WEBPACK_IMPORTED_MODULE
 /***/ }),
 
 /***/ "./lib/extended-language-data.js":
-/*!***************************************!*
+/*!***************************************!*\
   !*** ./lib/extended-language-data.js ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -624,7 +624,7 @@ class ExtendedLanguageData {
 /***/ }),
 
 /***/ "./lib/footnote.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./lib/footnote.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -656,7 +656,7 @@ class Footnote {
 /***/ }),
 
 /***/ "./lib/form.js":
-/*!*********************!*
+/*!*********************!*\
   !*** ./lib/form.js ***!
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -675,7 +675,7 @@ class Form extends _morpheme_js__WEBPACK_IMPORTED_MODULE_0__.default {
 /***/ }),
 
 /***/ "./lib/inflection-data.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./lib/inflection-data.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -765,7 +765,7 @@ class InflectionData {
 /***/ }),
 
 /***/ "./lib/inflection-list.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./lib/inflection-list.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -880,7 +880,7 @@ class InflectionList {
 /***/ }),
 
 /***/ "./lib/inflection-set.js":
-/*!*******************************!*
+/*!*******************************!*\
   !*** ./lib/inflection-set.js ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1008,7 +1008,7 @@ class InflectionSet {
 /***/ }),
 
 /***/ "./lib/lang/greek/greek-language-dataset.js":
-/*!**************************************************!*
+/*!**************************************************!*\
   !*** ./lib/lang/greek/greek-language-dataset.js ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1503,7 +1503,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 /***/ }),
 
 /***/ "./lib/lang/latin/latin-language-dataset.js":
-/*!**************************************************!*
+/*!**************************************************!*\
   !*** ./lib/lang/latin/latin-language-dataset.js ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2216,7 +2216,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 /***/ }),
 
 /***/ "./lib/language-dataset-factory.js":
-/*!*****************************************!*
+/*!*****************************************!*\
   !*** ./lib/language-dataset-factory.js ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2299,7 +2299,7 @@ class LanguageDatasetFactory {
 /***/ }),
 
 /***/ "./lib/language-dataset.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./lib/language-dataset.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2909,7 +2909,7 @@ class LanguageDataset {
 /***/ }),
 
 /***/ "./lib/match-data.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./lib/match-data.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2950,7 +2950,7 @@ class MatchData {
 /***/ }),
 
 /***/ "./lib/morpheme.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./lib/morpheme.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3343,7 +3343,7 @@ class Morpheme {
 /***/ }),
 
 /***/ "./lib/suffix.js":
-/*!***********************!*
+/*!***********************!*\
   !*** ./lib/suffix.js ***!
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3362,7 +3362,7 @@ class Suffix extends _morpheme_js__WEBPACK_IMPORTED_MODULE_0__.default {
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/greek-paradigm-data.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ./src/paradigm/data/greek/greek-paradigm-data.js ***!
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3739,7 +3739,7 @@ class GreekParadigmData {
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/greek-paradigm-dataset.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ./src/paradigm/data/greek/greek-paradigm-dataset.js ***!
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4016,7 +4016,7 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 /***/ }),
 
 /***/ "./src/paradigm/lib/paradigm-inflection-list.js":
-/*!******************************************************!*
+/*!******************************************************!*\
   !*** ./src/paradigm/lib/paradigm-inflection-list.js ***!
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4107,7 +4107,7 @@ class ParadigmInflectionList extends _lib_inflection_list_js__WEBPACK_IMPORTED_M
 /***/ }),
 
 /***/ "./src/paradigm/lib/paradigm-rule.js":
-/*!*******************************************!*
+/*!*******************************************!*\
   !*** ./src/paradigm/lib/paradigm-rule.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4159,7 +4159,7 @@ class ParadigmRule {
 /***/ }),
 
 /***/ "./src/paradigm/lib/paradigm.js":
-/*!**************************************!*
+/*!**************************************!*\
   !*** ./src/paradigm/lib/paradigm.js ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4331,7 +4331,7 @@ class Paradigm {
 /***/ }),
 
 /***/ "./src/paradigm/views/greek/adjective/greek-adjective-paradigm-view.js":
-/*!*****************************************************************************!*
+/*!*****************************************************************************!*\
   !*** ./src/paradigm/views/greek/adjective/greek-adjective-paradigm-view.js ***!
   \*****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4361,7 +4361,7 @@ class GreekAdjectiveParadigmView extends _paradigm_views_greek_greek_paradigm_vi
 /***/ }),
 
 /***/ "./src/paradigm/views/greek/greek-paradigm-view.js":
-/*!*********************************************************!*
+/*!*********************************************************!*\
   !*** ./src/paradigm/views/greek/greek-paradigm-view.js ***!
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4628,7 +4628,7 @@ class GreekParadigmView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTE
 /***/ }),
 
 /***/ "./src/paradigm/views/greek/noun/greek-noun-paradigm-view.js":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/views/greek/noun/greek-noun-paradigm-view.js ***!
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4658,7 +4658,7 @@ class GreekNounParadigmView extends _paradigm_views_greek_greek_paradigm_view_js
 /***/ }),
 
 /***/ "./src/paradigm/views/greek/verb-participle/greek-verb-participle-paradigm-view.js":
-/*!*****************************************************************************************!*
+/*!*****************************************************************************************!*\
   !*** ./src/paradigm/views/greek/verb-participle/greek-verb-participle-paradigm-view.js ***!
   \*****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4687,7 +4687,7 @@ class GreekVerbParticipleParadigmView extends _paradigm_views_greek_greek_paradi
 /***/ }),
 
 /***/ "./src/paradigm/views/greek/verb/greek-verb-paradigm-view.js":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/views/greek/verb/greek-verb-paradigm-view.js ***!
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4716,7 +4716,7 @@ class GreekVerbParadigmView extends _paradigm_views_greek_greek_paradigm_view_js
 /***/ }),
 
 /***/ "./views/lang/greek/adjective/greek-adjective-simplified-view.js":
-/*!***********************************************************************!*
+/*!***********************************************************************!*\
   !*** ./views/lang/greek/adjective/greek-adjective-simplified-view.js ***!
   \***********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4772,7 +4772,7 @@ class GreekAdjectiveSimplifiedView extends _views_lang_greek_adjective_greek_adj
 /***/ }),
 
 /***/ "./views/lang/greek/adjective/greek-adjective-view.js":
-/*!************************************************************!*
+/*!************************************************************!*\
   !*** ./views/lang/greek/adjective/greek-adjective-view.js ***!
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4840,7 +4840,7 @@ class GreekAdjectiveView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORT
 /***/ }),
 
 /***/ "./views/lang/greek/article/greek-article-view.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ./views/lang/greek/article/greek-article-view.js ***!
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4899,7 +4899,7 @@ class GreekArticleView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_2__.defau
 /***/ }),
 
 /***/ "./views/lang/greek/greek-view-set.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ./views/lang/greek/greek-view-set.js ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4977,7 +4977,7 @@ class GreekViewSet extends _lib_view_set_js__WEBPACK_IMPORTED_MODULE_0__.default
 /***/ }),
 
 /***/ "./views/lang/greek/greek-view.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ./views/lang/greek/greek-view.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5130,7 +5130,7 @@ class GreekView extends _lib_view_js__WEBPACK_IMPORTED_MODULE_3__.default {
 /***/ }),
 
 /***/ "./views/lang/greek/noun/greek-noun-simplified-view.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ./views/lang/greek/noun/greek-noun-simplified-view.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5195,7 +5195,7 @@ class GreekNounSimplifiedView extends _greek_noun_view__WEBPACK_IMPORTED_MODULE_
 /***/ }),
 
 /***/ "./views/lang/greek/noun/greek-noun-view.js":
-/*!**************************************************!*
+/*!**************************************************!*\
   !*** ./views/lang/greek/noun/greek-noun-view.js ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5263,7 +5263,7 @@ class GreekNounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MO
 /***/ }),
 
 /***/ "./views/lang/greek/numeral/greek-numeral-view.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ./views/lang/greek/numeral/greek-numeral-view.js ***!
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5388,7 +5388,7 @@ class GreekNumeralView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_4__.defau
 /***/ }),
 
 /***/ "./views/lang/greek/pronoun/greek-gender-pronoun-interr-view.js":
-/*!**********************************************************************!*
+/*!**********************************************************************!*\
   !*** ./views/lang/greek/pronoun/greek-gender-pronoun-interr-view.js ***!
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5438,7 +5438,7 @@ class GreekGenderPronounInterrogativeView extends _greek_gender_pronoun_view_js_
 /***/ }),
 
 /***/ "./views/lang/greek/pronoun/greek-gender-pronoun-view.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ./views/lang/greek/pronoun/greek-gender-pronoun-view.js ***!
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5525,7 +5525,7 @@ class GreekGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MO
 /***/ }),
 
 /***/ "./views/lang/greek/pronoun/greek-lemma-gender-pronoun-view.js":
-/*!*********************************************************************!*
+/*!*********************************************************************!*\
   !*** ./views/lang/greek/pronoun/greek-lemma-gender-pronoun-view.js ***!
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5605,7 +5605,7 @@ class GreekLemmaGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORT
 /***/ }),
 
 /***/ "./views/lang/greek/pronoun/greek-person-gender-pronoun-view.js":
-/*!**********************************************************************!*
+/*!**********************************************************************!*\
   !*** ./views/lang/greek/pronoun/greek-person-gender-pronoun-view.js ***!
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5673,7 +5673,7 @@ class GreekPersonGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPOR
 /***/ }),
 
 /***/ "./views/lang/greek/pronoun/greek-person-pronoun-view.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ./views/lang/greek/pronoun/greek-person-pronoun-view.js ***!
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5733,7 +5733,7 @@ class GreekPersonPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MO
 /***/ }),
 
 /***/ "./views/lang/greek/pronoun/greek-pronoun-view.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ./views/lang/greek/pronoun/greek-pronoun-view.js ***!
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5905,7 +5905,7 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
 /***/ }),
 
 /***/ "./views/lang/latin/adjective/latin-adjective-view.js":
-/*!************************************************************!*
+/*!************************************************************!*\
   !*** ./views/lang/latin/adjective/latin-adjective-view.js ***!
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5997,7 +5997,7 @@ class LatinAdjectiveView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2__.def
 /***/ }),
 
 /***/ "./views/lang/latin/adjective/latin-comparative-view.js":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./views/lang/latin/adjective/latin-comparative-view.js ***!
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6091,7 +6091,7 @@ class LatinAdjectiveComparativeView extends _latin_view_js__WEBPACK_IMPORTED_MOD
 /***/ }),
 
 /***/ "./views/lang/latin/adjective/latin-superlative-view.js":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./views/lang/latin/adjective/latin-superlative-view.js ***!
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6183,7 +6183,7 @@ class LatinAdjectiveSuperlativeView extends _latin_view_js__WEBPACK_IMPORTED_MOD
 /***/ }),
 
 /***/ "./views/lang/latin/latin-view-set.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ./views/lang/latin/latin-view-set.js ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6277,7 +6277,7 @@ class LatinViewSet extends _lib_view_set_js__WEBPACK_IMPORTED_MODULE_0__.default
 /***/ }),
 
 /***/ "./views/lang/latin/latin-view.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ./views/lang/latin/latin-view.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6429,7 +6429,7 @@ class LatinView extends _views_lib_view_js__WEBPACK_IMPORTED_MODULE_1__.default 
 /***/ }),
 
 /***/ "./views/lang/latin/noun/latin-noun-view.js":
-/*!**************************************************!*
+/*!**************************************************!*\
   !*** ./views/lang/latin/noun/latin-noun-view.js ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6498,7 +6498,7 @@ class LatinNounView extends _views_lang_latin_latin_view_js__WEBPACK_IMPORTED_MO
 /***/ }),
 
 /***/ "./views/lang/latin/noun/latin-supine-view.js":
-/*!****************************************************!*
+/*!****************************************************!*\
   !*** ./views/lang/latin/noun/latin-supine-view.js ***!
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6560,7 +6560,7 @@ class LatinSupineView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2__.defaul
 /***/ }),
 
 /***/ "./views/lang/latin/verb/irregular/latin-verb-imperative-irregular-view.js":
-/*!*********************************************************************************!*
+/*!*********************************************************************************!*\
   !*** ./views/lang/latin/verb/irregular/latin-verb-imperative-irregular-view.js ***!
   \*********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6658,7 +6658,7 @@ class LatinVerbImperativeIrregularView extends _views_lang_latin_verb_irregular_
 /***/ }),
 
 /***/ "./views/lang/latin/verb/irregular/latin-verb-imperative-irregular-voice-view.js":
-/*!***************************************************************************************!*
+/*!***************************************************************************************!*\
   !*** ./views/lang/latin/verb/irregular/latin-verb-imperative-irregular-voice-view.js ***!
   \***************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6751,7 +6751,7 @@ class LatinVerbImperativeIrregularVoiceView extends _views_lang_latin_verb_irreg
 /***/ }),
 
 /***/ "./views/lang/latin/verb/irregular/latin-verb-infinitive-irregular-view.js":
-/*!*********************************************************************************!*
+/*!*********************************************************************************!*\
   !*** ./views/lang/latin/verb/irregular/latin-verb-infinitive-irregular-view.js ***!
   \*********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6850,7 +6850,7 @@ class LatinVerbInfinitiveIrregularView extends _views_lang_latin_verb_irregular_
 /***/ }),
 
 /***/ "./views/lang/latin/verb/irregular/latin-verb-infinitive-irregular-voice-view.js":
-/*!***************************************************************************************!*
+/*!***************************************************************************************!*\
   !*** ./views/lang/latin/verb/irregular/latin-verb-infinitive-irregular-voice-view.js ***!
   \***************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6945,7 +6945,7 @@ class LatinVerbInfinitiveIrregularVoiceView extends _views_lang_latin_verb_irreg
 /***/ }),
 
 /***/ "./views/lang/latin/verb/irregular/latin-verb-irregular-base-view.js":
-/*!***************************************************************************!*
+/*!***************************************************************************!*\
   !*** ./views/lang/latin/verb/irregular/latin-verb-irregular-base-view.js ***!
   \***************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7096,7 +7096,7 @@ class LatinVerbIrregularBaseView extends _views_lang_latin_latin_view_js__WEBPAC
 /***/ }),
 
 /***/ "./views/lang/latin/verb/irregular/latin-verb-irregular-linked-base-view.js":
-/*!**********************************************************************************!*
+/*!**********************************************************************************!*\
   !*** ./views/lang/latin/verb/irregular/latin-verb-irregular-linked-base-view.js ***!
   \**********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7146,7 +7146,7 @@ class LatinVerbIrregularLinkedBaseView extends _views_lang_latin_verb_irregular_
 /***/ }),
 
 /***/ "./views/lang/latin/verb/irregular/latin-verb-irregular-view.js":
-/*!**********************************************************************!*
+/*!**********************************************************************!*\
   !*** ./views/lang/latin/verb/irregular/latin-verb-irregular-view.js ***!
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7247,7 +7247,7 @@ class LatinVerbIrregularView extends _views_lang_latin_verb_irregular_latin_verb
 /***/ }),
 
 /***/ "./views/lang/latin/verb/irregular/latin-verb-irregular-voice-view.js":
-/*!****************************************************************************!*
+/*!****************************************************************************!*\
   !*** ./views/lang/latin/verb/irregular/latin-verb-irregular-voice-view.js ***!
   \****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7347,7 +7347,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_verb_irregular_latin
 /***/ }),
 
 /***/ "./views/lang/latin/verb/irregular/latin-verb-participle-irregular-view.js":
-/*!*********************************************************************************!*
+/*!*********************************************************************************!*\
   !*** ./views/lang/latin/verb/irregular/latin-verb-participle-irregular-view.js ***!
   \*********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7430,7 +7430,7 @@ class LatinVerbParticipleIrregularView extends _views_lang_latin_verb_irregular_
 /***/ }),
 
 /***/ "./views/lang/latin/verb/irregular/latin-verb-supine-irregular-view.js":
-/*!*****************************************************************************!*
+/*!*****************************************************************************!*\
   !*** ./views/lang/latin/verb/irregular/latin-verb-supine-irregular-view.js ***!
   \*****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7517,7 +7517,7 @@ class LatinVerbSupineIrregularView extends _views_lang_latin_verb_irregular_lati
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-conjugation-mood-voice-view.js":
-/*!********************************************************************!*
+/*!********************************************************************!*\
   !*** ./views/lang/latin/verb/latin-conjugation-mood-voice-view.js ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7582,7 +7582,7 @@ class LatinConjugationMoodVoiceView extends _latin_verb_view_js__WEBPACK_IMPORTE
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-conjugation-voice-mood-view.js":
-/*!********************************************************************!*
+/*!********************************************************************!*\
   !*** ./views/lang/latin/verb/latin-conjugation-voice-mood-view.js ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7647,7 +7647,7 @@ class LatinConjugationVoiceMoodView extends _latin_verb_view_js__WEBPACK_IMPORTE
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-imperative-view.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ./views/lang/latin/verb/latin-imperative-view.js ***!
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7732,7 +7732,7 @@ class LatinImperativeView extends _latin_verb_mood_view_js__WEBPACK_IMPORTED_MOD
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-infinitive-view.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ./views/lang/latin/verb/latin-infinitive-view.js ***!
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7810,7 +7810,7 @@ class LatinInfinitiveView extends _latin_verb_mood_view_js__WEBPACK_IMPORTED_MOD
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-mood-conjugation-voice-view.js":
-/*!********************************************************************!*
+/*!********************************************************************!*\
   !*** ./views/lang/latin/verb/latin-mood-conjugation-voice-view.js ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7875,7 +7875,7 @@ class LatinMoodConjugationVoiceView extends _latin_verb_view_js__WEBPACK_IMPORTE
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-mood-voice-conjugation-view.js":
-/*!********************************************************************!*
+/*!********************************************************************!*\
   !*** ./views/lang/latin/verb/latin-mood-voice-conjugation-view.js ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7940,7 +7940,7 @@ class LatinMoodVoiceConjugationView extends _latin_verb_view_js__WEBPACK_IMPORTE
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-verb-mood-view.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ./views/lang/latin/verb/latin-verb-mood-view.js ***!
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7964,7 +7964,7 @@ class LatinVerbMoodView extends _latin_verb_view_js__WEBPACK_IMPORTED_MODULE_1__
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-verb-participle-view.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ./views/lang/latin/verb/latin-verb-participle-view.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8033,7 +8033,7 @@ class LatinVerbParticipleView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2_
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-verb-view.js":
-/*!**************************************************!*
+/*!**************************************************!*\
   !*** ./views/lang/latin/verb/latin-verb-view.js ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8058,7 +8058,7 @@ class LatinVerbView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_1__.default 
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-voice-conjugation-mood-view.js":
-/*!********************************************************************!*
+/*!********************************************************************!*\
   !*** ./views/lang/latin/verb/latin-voice-conjugation-mood-view.js ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8123,7 +8123,7 @@ class LatinVoiceConjugationMoodView extends _latin_verb_view_js__WEBPACK_IMPORTE
 /***/ }),
 
 /***/ "./views/lang/latin/verb/latin-voice-mood-conjugation-view.js":
-/*!********************************************************************!*
+/*!********************************************************************!*\
   !*** ./views/lang/latin/verb/latin-voice-mood-conjugation-view.js ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8188,7 +8188,7 @@ class LatinVoiceMoodConjugationView extends _latin_verb_view_js__WEBPACK_IMPORTE
 /***/ }),
 
 /***/ "./views/lib/cell.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./views/lib/cell.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8299,7 +8299,7 @@ class Cell {
 /***/ }),
 
 /***/ "./views/lib/column.js":
-/*!*****************************!*
+/*!*****************************!*\
   !*** ./views/lib/column.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8410,7 +8410,7 @@ class Column {
 /***/ }),
 
 /***/ "./views/lib/group-feature-list.js":
-/*!*****************************************!*
+/*!*****************************************!*\
   !*** ./views/lib/group-feature-list.js ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8671,7 +8671,7 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
 /***/ }),
 
 /***/ "./views/lib/group-feature-type.js":
-/*!*****************************************!*
+/*!*****************************************!*\
   !*** ./views/lib/group-feature-type.js ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8874,7 +8874,7 @@ class GroupFeatureType {
 /***/ }),
 
 /***/ "./views/lib/header-cell.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./views/lib/header-cell.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8984,7 +8984,7 @@ class HeaderCell {
 /***/ }),
 
 /***/ "./views/lib/node-group.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./views/lib/node-group.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9015,7 +9015,7 @@ class NodeGroup {
 /***/ }),
 
 /***/ "./views/lib/row-title-cell.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./views/lib/row-title-cell.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9106,7 +9106,7 @@ class RowTitleCell {
 /***/ }),
 
 /***/ "./views/lib/row.js":
-/*!**************************!*
+/*!**************************!*\
   !*** ./views/lib/row.js ***!
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9230,7 +9230,7 @@ class Row {
 /***/ }),
 
 /***/ "./views/lib/table.js":
-/*!****************************!*
+/*!****************************!*\
   !*** ./views/lib/table.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9640,7 +9640,7 @@ class Table {
 /***/ }),
 
 /***/ "./views/lib/view-set-factory.js":
-/*!***************************************!*
+/*!***************************************!*\
   !*** ./views/lib/view-set-factory.js ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9711,7 +9711,7 @@ class ViewSetFactory {
 /***/ }),
 
 /***/ "./views/lib/view-set.js":
-/*!*******************************!*
+/*!*******************************!*\
   !*** ./views/lib/view-set.js ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9842,7 +9842,7 @@ class ViewSet {
 /***/ }),
 
 /***/ "./views/lib/view.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./views/lib/view.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10255,7 +10255,7 @@ class View {
 /***/ }),
 
 /***/ "./views/lib/wide-view.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./views/lib/wide-view.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10338,7 +10338,7 @@ class WideView {
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/adjective/tables/paradigm-adjective-1.json":
-/*!****************************************************************************!*
+/*!****************************************************************************!*\
   !*** ./src/paradigm/data/greek/adjective/tables/paradigm-adjective-1.json ***!
   \****************************************************************************/
 /***/ ((module) => {
@@ -10348,7 +10348,7 @@ module.exports = JSON.parse("{\"ID\":\"adjpdgm1\",\"partOfSpeech\":\"adjective\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/adjective/tables/paradigm-adjective-2.json":
-/*!****************************************************************************!*
+/*!****************************************************************************!*\
   !*** ./src/paradigm/data/greek/adjective/tables/paradigm-adjective-2.json ***!
   \****************************************************************************/
 /***/ ((module) => {
@@ -10358,7 +10358,7 @@ module.exports = JSON.parse("{\"ID\":\"adjpdgm2\",\"partOfSpeech\":\"adjective\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/adjective/tables/paradigm-adjective-3.json":
-/*!****************************************************************************!*
+/*!****************************************************************************!*\
   !*** ./src/paradigm/data/greek/adjective/tables/paradigm-adjective-3.json ***!
   \****************************************************************************/
 /***/ ((module) => {
@@ -10368,7 +10368,7 @@ module.exports = JSON.parse("{\"ID\":\"adjpdgm3\",\"partOfSpeech\":\"adjective\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/adjective/tables/paradigm-adjective-4.json":
-/*!****************************************************************************!*
+/*!****************************************************************************!*\
   !*** ./src/paradigm/data/greek/adjective/tables/paradigm-adjective-4.json ***!
   \****************************************************************************/
 /***/ ((module) => {
@@ -10378,7 +10378,7 @@ module.exports = JSON.parse("{\"ID\":\"adjpdgm4\",\"partOfSpeech\":\"adjective\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/adjective/tables/paradigm-adjective-5.json":
-/*!****************************************************************************!*
+/*!****************************************************************************!*\
   !*** ./src/paradigm/data/greek/adjective/tables/paradigm-adjective-5.json ***!
   \****************************************************************************/
 /***/ ((module) => {
@@ -10388,7 +10388,7 @@ module.exports = JSON.parse("{\"ID\":\"adjpdgm5\",\"partOfSpeech\":\"adjective\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/adjective/tables/paradigm-adjective-6.json":
-/*!****************************************************************************!*
+/*!****************************************************************************!*\
   !*** ./src/paradigm/data/greek/adjective/tables/paradigm-adjective-6.json ***!
   \****************************************************************************/
 /***/ ((module) => {
@@ -10398,7 +10398,7 @@ module.exports = JSON.parse("{\"ID\":\"adjpdgm6\",\"partOfSpeech\":\"adjective\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/adjective/tables/paradigm-adjective-7.json":
-/*!****************************************************************************!*
+/*!****************************************************************************!*\
   !*** ./src/paradigm/data/greek/adjective/tables/paradigm-adjective-7.json ***!
   \****************************************************************************/
 /***/ ((module) => {
@@ -10408,7 +10408,7 @@ module.exports = JSON.parse("{\"ID\":\"adjpdgm7\",\"partOfSpeech\":\"adjective\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/adjective/tables/paradigm-adjective-8.json":
-/*!****************************************************************************!*
+/*!****************************************************************************!*\
   !*** ./src/paradigm/data/greek/adjective/tables/paradigm-adjective-8.json ***!
   \****************************************************************************/
 /***/ ((module) => {
@@ -10418,7 +10418,7 @@ module.exports = JSON.parse("{\"ID\":\"adjpdgm8\",\"partOfSpeech\":\"adjective\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-1.json":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-1.json ***!
   \******************************************************************/
 /***/ ((module) => {
@@ -10428,7 +10428,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm1\",\"partOfSpeech\":\"noun\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-10.json":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-10.json ***!
   \*******************************************************************/
 /***/ ((module) => {
@@ -10438,7 +10438,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm10\",\"partOfSpeech\":\"noun\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-11.json":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-11.json ***!
   \*******************************************************************/
 /***/ ((module) => {
@@ -10448,7 +10448,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm11\",\"partOfSpeech\":\"noun\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-12.json":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-12.json ***!
   \*******************************************************************/
 /***/ ((module) => {
@@ -10458,7 +10458,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm12\",\"partOfSpeech\":\"noun\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-13.json":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-13.json ***!
   \*******************************************************************/
 /***/ ((module) => {
@@ -10468,7 +10468,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm13\",\"partOfSpeech\":\"noun\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-14.json":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-14.json ***!
   \*******************************************************************/
 /***/ ((module) => {
@@ -10478,7 +10478,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm14\",\"partOfSpeech\":\"noun\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-15.json":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-15.json ***!
   \*******************************************************************/
 /***/ ((module) => {
@@ -10488,7 +10488,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm15\",\"partOfSpeech\":\"noun\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-16.json":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-16.json ***!
   \*******************************************************************/
 /***/ ((module) => {
@@ -10498,7 +10498,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm16\",\"partOfSpeech\":\"noun\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-17.json":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-17.json ***!
   \*******************************************************************/
 /***/ ((module) => {
@@ -10508,7 +10508,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm17\",\"partOfSpeech\":\"noun\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-18.json":
-/*!*******************************************************************!*
+/*!*******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-18.json ***!
   \*******************************************************************/
 /***/ ((module) => {
@@ -10518,7 +10518,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm18\",\"partOfSpeech\":\"noun\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-2.json":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-2.json ***!
   \******************************************************************/
 /***/ ((module) => {
@@ -10528,7 +10528,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm2\",\"partOfSpeech\":\"noun\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-3.json":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-3.json ***!
   \******************************************************************/
 /***/ ((module) => {
@@ -10538,7 +10538,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm3\",\"partOfSpeech\":\"noun\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-4.json":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-4.json ***!
   \******************************************************************/
 /***/ ((module) => {
@@ -10548,7 +10548,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm4\",\"partOfSpeech\":\"noun\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-5.json":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-5.json ***!
   \******************************************************************/
 /***/ ((module) => {
@@ -10558,7 +10558,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm5\",\"partOfSpeech\":\"noun\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-6.json":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-6.json ***!
   \******************************************************************/
 /***/ ((module) => {
@@ -10568,7 +10568,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm6\",\"partOfSpeech\":\"noun\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-7.json":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-7.json ***!
   \******************************************************************/
 /***/ ((module) => {
@@ -10578,7 +10578,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm7\",\"partOfSpeech\":\"noun\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-8.json":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-8.json ***!
   \******************************************************************/
 /***/ ((module) => {
@@ -10588,7 +10588,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm8\",\"partOfSpeech\":\"noun\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-9.json":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-9.json ***!
   \******************************************************************/
 /***/ ((module) => {
@@ -10598,7 +10598,7 @@ module.exports = JSON.parse("{\"ID\":\"nounpdgm9\",\"partOfSpeech\":\"noun\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-54.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-54.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10608,7 +10608,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm54\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-55.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-55.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10618,7 +10618,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm55\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-56.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-56.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10628,7 +10628,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm56\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-57.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-57.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10638,7 +10638,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm57\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-58.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-58.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10648,7 +10648,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm58\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-59.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-59.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10658,7 +10658,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm59\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-60.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-60.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10668,7 +10668,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm60\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-61.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-61.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10678,7 +10678,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm61\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-62.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-62.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10688,7 +10688,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm62\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-63.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-63.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10698,7 +10698,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm63\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-64.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-64.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10708,7 +10708,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm64\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-65.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-65.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10718,7 +10718,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm65\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb-participle/tables/paradigm-66.json":
-/*!*************************************************************************!*
+/*!*************************************************************************!*\
   !*** ./src/paradigm/data/greek/verb-participle/tables/paradigm-66.json ***!
   \*************************************************************************/
 /***/ ((module) => {
@@ -10728,7 +10728,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm66\",\"partOfSpeech\":\"verb_part
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-01.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-01.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10738,7 +10738,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm1\",\"partOfSpeech\":\"verb\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-02.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-02.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10748,7 +10748,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm2\",\"partOfSpeech\":\"verb\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-03.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-03.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10758,7 +10758,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm3\",\"partOfSpeech\":\"verb\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-04.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-04.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10768,7 +10768,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm4\",\"partOfSpeech\":\"verb\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-05.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-05.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10778,7 +10778,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm5\",\"partOfSpeech\":\"verb\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-06.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-06.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10788,7 +10788,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm6\",\"partOfSpeech\":\"verb\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-07.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-07.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10798,7 +10798,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm7\",\"partOfSpeech\":\"verb\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-08.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-08.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10808,7 +10808,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm8\",\"partOfSpeech\":\"verb\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-09.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-09.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10818,7 +10818,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm9\",\"partOfSpeech\":\"verb\",\"t
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-10.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-10.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10828,7 +10828,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm10\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-11.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-11.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10838,7 +10838,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm11\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-12.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-12.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10848,7 +10848,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm12\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-13.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-13.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10858,7 +10858,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm13\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-14.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-14.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10868,7 +10868,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm14\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-15.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-15.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10878,7 +10878,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm15\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-16.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-16.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10888,7 +10888,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm16\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-17.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-17.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10898,7 +10898,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm17\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-17b.json":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-17b.json ***!
   \***************************************************************/
 /***/ ((module) => {
@@ -10908,7 +10908,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm17b\",\"partOfSpeech\":\"verb\",\
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-17c.json":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-17c.json ***!
   \***************************************************************/
 /***/ ((module) => {
@@ -10918,7 +10918,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm17c\",\"partOfSpeech\":\"verb\",\
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-18.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-18.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10928,7 +10928,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm18\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-19.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-19.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10938,7 +10938,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm19\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-20.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-20.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10948,7 +10948,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm20\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-21.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-21.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10958,7 +10958,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm21\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-22.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-22.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10968,7 +10968,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm22\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-23.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-23.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10978,7 +10978,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm23\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-24.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-24.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10988,7 +10988,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm24\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-25.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-25.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -10998,7 +10998,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm25\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-26.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-26.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11008,7 +11008,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm26\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-27.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-27.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11018,7 +11018,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm27\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-28.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-28.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11028,7 +11028,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm28\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-29.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-29.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11038,7 +11038,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm29\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-30.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-30.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11048,7 +11048,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm30\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-31.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-31.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11058,7 +11058,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm31\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-32.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-32.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11068,7 +11068,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm32\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-33.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-33.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11078,7 +11078,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm33\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-34.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-34.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11088,7 +11088,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm34\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-35.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-35.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11098,7 +11098,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm35\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-36.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-36.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11108,7 +11108,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm36\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-37.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-37.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11118,7 +11118,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm37\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-38.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-38.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11128,7 +11128,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm38\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-39.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-39.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11138,7 +11138,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm39\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-40.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-40.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11148,7 +11148,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm40\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-41.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-41.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11158,7 +11158,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm41\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-42.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-42.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11168,7 +11168,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm42\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-43.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-43.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11178,7 +11178,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm43\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-43b.json":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-43b.json ***!
   \***************************************************************/
 /***/ ((module) => {
@@ -11188,7 +11188,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm43b\",\"partOfSpeech\":\"verb\",\
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-44.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-44.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11198,7 +11198,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm44\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-45.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-45.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11208,7 +11208,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm45\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-46.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-46.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11218,7 +11218,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm46\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-47.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-47.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11228,7 +11228,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm47\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-48.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-48.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11238,7 +11238,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm48\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-49.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-49.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11248,7 +11248,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm49\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-50.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-50.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11258,7 +11258,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm50\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-51.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-51.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11268,7 +11268,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm51\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-52.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-52.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11278,7 +11278,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm52\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "./src/paradigm/data/greek/verb/tables/paradigm-53.json":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ./src/paradigm/data/greek/verb/tables/paradigm-53.json ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -11288,7 +11288,7 @@ module.exports = JSON.parse("{\"ID\":\"verbpdgm53\",\"partOfSpeech\":\"verb\",\"
 /***/ }),
 
 /***/ "alpheios-data-models":
-/*!***************************************!*
+/*!***************************************!*\
   !*** external "alpheios-data-models" ***!
   \***************************************/
 /***/ ((module) => {
@@ -11298,7 +11298,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /***/ }),
 
 /***/ "papaparse":
-/*!****************************!*
+/*!****************************!*\
   !*** external "papaparse" ***!
   \****************************/
 /***/ ((module) => {
@@ -11308,7 +11308,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_papaparse__;
 /***/ }),
 
 /***/ "uuid/v4":
-/*!**************************!*
+/*!**************************!*\
   !*** external "uuid/v4" ***!
   \**************************/
 /***/ ((module) => {

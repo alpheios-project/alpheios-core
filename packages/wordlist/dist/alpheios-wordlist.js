@@ -12,7 +12,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "../../../node_modules/axios/index.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ../../../node_modules/axios/index.js ***!
   \********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -22,7 +22,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/xhr.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/xhr.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -212,7 +212,7 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/axios.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/lib/axios.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -267,6 +267,9 @@ axios.all = function all(promises) {
 };
 axios.spread = __webpack_require__(/*! ./helpers/spread */ "../../../node_modules/axios/lib/helpers/spread.js");
 
+// Expose isAxiosError
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "../../../node_modules/axios/lib/helpers/isAxiosError.js");
+
 module.exports = axios;
 
 // Allow use of default import syntax in TypeScript
@@ -276,7 +279,7 @@ module.exports.default = axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/Cancel.js ***!
   \********************************************************/
 /***/ ((module) => {
@@ -306,7 +309,7 @@ module.exports = Cancel;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/CancelToken.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -374,7 +377,7 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/isCancel.js ***!
   \**********************************************************/
 /***/ ((module) => {
@@ -390,7 +393,7 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/Axios.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/axios/lib/core/Axios.js ***!
   \*****************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -496,7 +499,7 @@ module.exports = Axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/InterceptorManager.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -559,7 +562,7 @@ module.exports = InterceptorManager;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/buildFullPath.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -590,7 +593,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/createError.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/createError.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -619,7 +622,7 @@ module.exports = function createError(message, config, code, request, response) 
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/dispatchRequest.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -709,7 +712,7 @@ module.exports = function dispatchRequest(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/enhanceError.js":
-/*!************************************************************!*
+/*!************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/enhanceError.js ***!
   \************************************************************/
 /***/ ((module) => {
@@ -762,7 +765,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/mergeConfig.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -860,7 +863,7 @@ module.exports = function mergeConfig(config1, config2) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/settle.js":
-/*!******************************************************!*
+/*!******************************************************!*\
   !*** ../../../node_modules/axios/lib/core/settle.js ***!
   \******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -896,7 +899,7 @@ module.exports = function settle(resolve, reject, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/transformData.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/transformData.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -927,7 +930,7 @@ module.exports = function transformData(data, headers, fns) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/defaults.js":
-/*!***************************************************!*
+/*!***************************************************!*\
   !*** ../../../node_modules/axios/lib/defaults.js ***!
   \***************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1036,7 +1039,7 @@ module.exports = defaults;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/bind.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/bind.js ***!
   \*******************************************************/
 /***/ ((module) => {
@@ -1058,7 +1061,7 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/buildURL.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1139,7 +1142,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/combineURLs.js ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -1164,7 +1167,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/cookies.js":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/cookies.js ***!
   \**********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1228,7 +1231,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!****************************************************************!*
+/*!****************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
   \****************************************************************/
 /***/ ((module) => {
@@ -1252,8 +1255,30 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
+/***/ "../../../node_modules/axios/lib/helpers/isAxiosError.js":
+/*!***************************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+module.exports = function isAxiosError(payload) {
+  return (typeof payload === 'object') && (payload.isAxiosError === true);
+};
+
+
+/***/ }),
+
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1332,7 +1357,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!**********************************************************************!*
+/*!**********************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
   \**********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1355,7 +1380,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/parseHeaders.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1419,7 +1444,7 @@ module.exports = function parseHeaders(headers) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/spread.js":
-/*!*********************************************************!*
+/*!*********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/spread.js ***!
   \*********************************************************/
 /***/ ((module) => {
@@ -1457,7 +1482,7 @@ module.exports = function spread(callback) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/utils.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/lib/utils.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1819,7 +1844,7 @@ module.exports = {
 /***/ }),
 
 /***/ "./common/utility.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./common/utility.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1850,7 +1875,7 @@ class Utility {
 /***/ }),
 
 /***/ "./controllers/user-data-manager.js":
-/*!******************************************!*
+/*!******************************************!*\
   !*** ./controllers/user-data-manager.js ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2236,7 +2261,7 @@ UserDataManager.REMOTE_DRIVER_CLASSES = {
 /***/ }),
 
 /***/ "./controllers/wordlist-controller.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ./controllers/wordlist-controller.js ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2399,7 +2424,7 @@ class WordlistController {
    onHomonymReady (data) {
     // when receiving this event, it's possible this is the first time we are seeing the word so
     // create the item in the word list if it doesn't exist
-    let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
+    let wordItem = this.getWordListItem(data.language.toCode(), data.targetWord, true)
     wordItem.homonym = data
     wordItem.currentSession = true
     wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
@@ -2416,7 +2441,7 @@ class WordlistController {
    * Emits WORDITEM_UPDATED and WORDLIST_UPDATED events
    */
   onHomonymReadyForWordlistUpdate (data) {
-    let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
+    let wordItem = this.getWordListItem(data.language.toCode(), data.targetWord, true)
     wordItem.homonym = data
     // we don't update the currentSession, updatedDT or frequency fields
     // with this event, as it's a lookup purely to populate the definition in the item for download
@@ -2432,7 +2457,7 @@ class WordlistController {
   * Emits a WORDITEM_UPDATED event
   */
   onDefinitionsReady (data) {
-    let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.homonym.languageID),data.homonym.targetWord)
+    let wordItem = this.getWordListItem(data.homonym.language.toCode(),data.homonym.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
       wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
@@ -2450,7 +2475,7 @@ class WordlistController {
   * Emits a WORDITEM_UPDATED event
   */
   onDefinitionsReadyForWordlistUpdate (data) {
-    let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.homonym.languageID),data.homonym.targetWord)
+    let wordItem = this.getWordListItem(data.homonym.language.toCode(),data.homonym.targetWord)
     if (wordItem) {
       wordItem.homonym = data.homonym
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
@@ -2467,7 +2492,7 @@ class WordlistController {
   * Emits a WORDITEM_UPDATED event
   */
   onLemmaTranslationsReady (data) {
-    let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord)
+    let wordItem = this.getWordListItem(data.language.toCode(), data.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
       wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
@@ -2485,7 +2510,7 @@ class WordlistController {
   * Emits a WORDITEM_UPDATED event
   */
  onLemmaTranslationsReadyForWordlistUpdate (data) {
-    let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord)
+    let wordItem = this.getWordListItem(data.language.toCode(), data.targetWord)
     if (wordItem) {
       wordItem.homonym = data
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
@@ -2629,7 +2654,7 @@ WordlistController.evt = {
 /***/ }),
 
 /***/ "./index.js":
-/*!******************!*
+/*!******************!*\
   !*** ./index.js ***!
   \******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2651,7 +2676,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./storage/indexed-db-adapter.js":
-/*!***************************************!*
+/*!***************************************!*\
   !*** ./storage/indexed-db-adapter.js ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3115,7 +3140,7 @@ class IndexedDBAdapter {
 /***/ }),
 
 /***/ "./storage/indexeddbDriver/indexed-db-load-process.js":
-/*!************************************************************!*
+/*!************************************************************!*\
   !*** ./storage/indexeddbDriver/indexed-db-load-process.js ***!
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3172,16 +3197,16 @@ class IndexedDBLoadProcess {
     if (jsonHomonym.lexemes && Array.isArray(jsonHomonym.lexemes) && jsonHomonym.lexemes.length >0) {
       wordItem.homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.WordItem.readHomonym(jsonObjs[0])
     } else {
-      let languageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageIdFromCode(jsonObjs[0].languageCode)
+      const lang = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Language(jsonObjs[0].languageCode)
       let lexemes = []
 
       if (jsonHomonym.lemmasList) {
         let lexemesForms = jsonHomonym.lemmasList.split(', ')
         for (let lexForm of lexemesForms) {
-          lexemes.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Lexeme(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Lemma(lexForm, languageID), []))
+          lexemes.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Lexeme(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Lemma(lexForm, lang), []))
         }
       } else {
-        lexemes = [new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Lexeme(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Lemma(jsonObjs[0].targetWord, languageID), [])]
+        lexemes = [new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Lexeme(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Lemma(jsonObjs[0].targetWord, lang), [])]
       }
       wordItem.homonym = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Homonym(lexemes, jsonHomonym.targetWord)
     }
@@ -3193,7 +3218,7 @@ class IndexedDBLoadProcess {
 /***/ }),
 
 /***/ "./storage/indexeddbDriver/indexed-db-object-stores-structure.js":
-/*!***********************************************************************!*
+/*!***********************************************************************!*\
   !*** ./storage/indexeddbDriver/indexed-db-object-stores-structure.js ***!
   \***********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3263,7 +3288,7 @@ class IndexedDBObjectStoresStructure {
 /***/ }),
 
 /***/ "./storage/remote-db-adapter.js":
-/*!**************************************!*
+/*!**************************************!*\
   !*** ./storage/remote-db-adapter.js ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3461,7 +3486,7 @@ class RemoteDBAdapter {
 /***/ }),
 
 /***/ "./storage/worditem-indexeddb-driver.js":
-/*!**********************************************!*
+/*!**********************************************!*\
   !*** ./storage/worditem-indexeddb-driver.js ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3922,7 +3947,7 @@ _serializeHomonymWithFullDefs (wordItem) {
 /***/ }),
 
 /***/ "./storage/worditem-remotedb-driver.js":
-/*!*********************************************!*
+/*!*********************************************!*\
   !*** ./storage/worditem-remotedb-driver.js ***!
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4247,7 +4272,7 @@ class WordItemRemoteDbDriver {
 /***/ }),
 
 /***/ "alpheios-data-models":
-/*!***************************************!*
+/*!***************************************!*\
   !*** external "alpheios-data-models" ***!
   \***************************************/
 /***/ ((module) => {

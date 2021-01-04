@@ -12,18 +12,18 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "../../../node_modules/axios/package.json":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/package.json ***!
   \************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.0\",\"C:\\\\_Alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.21.0\",\"_id\":\"axios@0.21.0\",\"_inBundle\":false,\"_integrity\":\"sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.0.tgz\",\"_spec\":\"0.21.0\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.0\"}");
+module.exports = JSON.parse("{\"_from\":\"axios@^0.21.1\",\"_id\":\"axios@0.21.1\",\"_inBundle\":false,\"_integrity\":\"sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.21.1\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.21.1\",\"saveSpec\":null,\"fetchSpec\":\"^0.21.1\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.1.tgz\",\"_shasum\":\"22563481962f4d6bde9a76d516ef0e5d3c09b2b8\",\"_spec\":\"axios@^0.21.1\",\"_where\":\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.1\"}");
 
 /***/ }),
 
 /***/ "../../../node_modules/axios/index.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ../../../node_modules/axios/index.js ***!
   \********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -33,7 +33,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/http.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/http.js ***!
   \********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -56,6 +56,31 @@ var createError = __webpack_require__(/*! ../core/createError */ "../../../node_
 var enhanceError = __webpack_require__(/*! ../core/enhanceError */ "../../../node_modules/axios/lib/core/enhanceError.js");
 
 var isHttps = /https:?/;
+
+/**
+ *
+ * @param {http.ClientRequestArgs} options
+ * @param {AxiosProxyConfig} proxy
+ * @param {string} location
+ */
+function setProxy(options, proxy, location) {
+  options.hostname = proxy.host;
+  options.host = proxy.host;
+  options.port = proxy.port;
+  options.path = location;
+
+  // Basic proxy authorization
+  if (proxy.auth) {
+    var base64 = Buffer.from(proxy.auth.username + ':' + proxy.auth.password, 'utf8').toString('base64');
+    options.headers['Proxy-Authorization'] = 'Basic ' + base64;
+  }
+
+  // If a proxy is used, any redirects must also pass through the proxy
+  options.beforeRedirect = function beforeRedirect(redirection) {
+    redirection.headers.host = redirection.host;
+    setProxy(redirection, proxy, redirection.href);
+  };
+}
 
 /*eslint consistent-return:0*/
 module.exports = function httpAdapter(config) {
@@ -167,11 +192,11 @@ module.exports = function httpAdapter(config) {
           });
         }
 
-
         if (shouldProxy) {
           proxy = {
             host: parsedProxyUrl.hostname,
-            port: parsedProxyUrl.port
+            port: parsedProxyUrl.port,
+            protocol: parsedProxyUrl.protocol
           };
 
           if (parsedProxyUrl.auth) {
@@ -186,17 +211,8 @@ module.exports = function httpAdapter(config) {
     }
 
     if (proxy) {
-      options.hostname = proxy.host;
-      options.host = proxy.host;
       options.headers.host = parsed.hostname + (parsed.port ? ':' + parsed.port : '');
-      options.port = proxy.port;
-      options.path = protocol + '//' + parsed.hostname + (parsed.port ? ':' + parsed.port : '') + options.path;
-
-      // Basic proxy authorization
-      if (proxy.auth) {
-        var base64 = Buffer.from(proxy.auth.username + ':' + proxy.auth.password, 'utf8').toString('base64');
-        options.headers['Proxy-Authorization'] = 'Basic ' + base64;
-      }
+      setProxy(options, proxy, protocol + '//' + parsed.hostname + (parsed.port ? ':' + parsed.port : '') + options.path);
     }
 
     var transport;
@@ -331,7 +347,7 @@ module.exports = function httpAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/xhr.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/xhr.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -521,7 +537,7 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/axios.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/lib/axios.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -576,6 +592,9 @@ axios.all = function all(promises) {
 };
 axios.spread = __webpack_require__(/*! ./helpers/spread */ "../../../node_modules/axios/lib/helpers/spread.js");
 
+// Expose isAxiosError
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "../../../node_modules/axios/lib/helpers/isAxiosError.js");
+
 module.exports = axios;
 
 // Allow use of default import syntax in TypeScript
@@ -585,7 +604,7 @@ module.exports.default = axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/Cancel.js ***!
   \********************************************************/
 /***/ ((module) => {
@@ -615,7 +634,7 @@ module.exports = Cancel;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/CancelToken.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -683,7 +702,7 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/isCancel.js ***!
   \**********************************************************/
 /***/ ((module) => {
@@ -699,7 +718,7 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/Axios.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/axios/lib/core/Axios.js ***!
   \*****************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -805,7 +824,7 @@ module.exports = Axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/InterceptorManager.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -868,7 +887,7 @@ module.exports = InterceptorManager;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/buildFullPath.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -899,7 +918,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/createError.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/createError.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -928,7 +947,7 @@ module.exports = function createError(message, config, code, request, response) 
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/dispatchRequest.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1018,7 +1037,7 @@ module.exports = function dispatchRequest(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/enhanceError.js":
-/*!************************************************************!*
+/*!************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/enhanceError.js ***!
   \************************************************************/
 /***/ ((module) => {
@@ -1071,7 +1090,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/mergeConfig.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1169,7 +1188,7 @@ module.exports = function mergeConfig(config1, config2) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/settle.js":
-/*!******************************************************!*
+/*!******************************************************!*\
   !*** ../../../node_modules/axios/lib/core/settle.js ***!
   \******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1205,7 +1224,7 @@ module.exports = function settle(resolve, reject, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/transformData.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/transformData.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1236,7 +1255,7 @@ module.exports = function transformData(data, headers, fns) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/defaults.js":
-/*!***************************************************!*
+/*!***************************************************!*\
   !*** ../../../node_modules/axios/lib/defaults.js ***!
   \***************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1345,7 +1364,7 @@ module.exports = defaults;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/bind.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/bind.js ***!
   \*******************************************************/
 /***/ ((module) => {
@@ -1367,7 +1386,7 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/buildURL.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1448,7 +1467,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/combineURLs.js ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -1473,7 +1492,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/cookies.js":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/cookies.js ***!
   \**********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1537,7 +1556,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!****************************************************************!*
+/*!****************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
   \****************************************************************/
 /***/ ((module) => {
@@ -1561,8 +1580,30 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
+/***/ "../../../node_modules/axios/lib/helpers/isAxiosError.js":
+/*!***************************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+module.exports = function isAxiosError(payload) {
+  return (typeof payload === 'object') && (payload.isAxiosError === true);
+};
+
+
+/***/ }),
+
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1641,7 +1682,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!**********************************************************************!*
+/*!**********************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
   \**********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1664,7 +1705,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/parseHeaders.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1728,7 +1769,7 @@ module.exports = function parseHeaders(headers) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/spread.js":
-/*!*********************************************************!*
+/*!*********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/spread.js ***!
   \*********************************************************/
 /***/ ((module) => {
@@ -1766,7 +1807,7 @@ module.exports = function spread(callback) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/utils.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/lib/utils.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2128,7 +2169,7 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/browser.js":
-/*!**************************************************!*
+/*!**************************************************!*\
   !*** ../../../node_modules/debug/src/browser.js ***!
   \**************************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -2323,7 +2364,7 @@ function localstorage() {
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/debug.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/debug/src/debug.js ***!
   \************************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -2535,7 +2576,7 @@ function coerce(val) {
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/index.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/debug/src/index.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2555,7 +2596,7 @@ if (typeof process !== 'undefined' && process.type === 'renderer') {
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/node.js":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ../../../node_modules/debug/src/node.js ***!
   \***********************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -2813,7 +2854,7 @@ exports.enable(load());
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/debug.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/follow-redirects/debug.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2832,7 +2873,7 @@ module.exports = debug;
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/index.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/follow-redirects/index.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -3239,7 +3280,7 @@ function wrap(protocols) {
     var wrappedProtocol = exports[scheme] = Object.create(nativeProtocol);
 
     // Executes a request, following redirects
-    wrappedProtocol.request = function (input, options, callback) {
+    function request(input, options, callback) {
       // Parse parameters
       if (typeof input === "string") {
         var urlStr = input;
@@ -3274,14 +3315,20 @@ function wrap(protocols) {
       assert.equal(options.protocol, protocol, "protocol mismatch");
       debug("options", options);
       return new RedirectableRequest(options, callback);
-    };
+    }
 
     // Executes a GET request, following redirects
-    wrappedProtocol.get = function (input, options, callback) {
-      var request = wrappedProtocol.request(input, options, callback);
-      request.end();
-      return request;
-    };
+    function get(input, options, callback) {
+      var wrappedRequest = wrappedProtocol.request(input, options, callback);
+      wrappedRequest.end();
+      return wrappedRequest;
+    }
+
+    // Expose the properties on the wrapped protocol
+    Object.defineProperties(wrappedProtocol, {
+      request: { value: request, configurable: true, enumerable: true, writable: true },
+      get: { value: get, configurable: true, enumerable: true, writable: true },
+    });
   });
   return exports;
 }
@@ -3340,7 +3387,7 @@ module.exports.wrap = wrap;
 /***/ }),
 
 /***/ "../../../node_modules/ms/index.js":
-/*!*****************************************!*
+/*!*****************************************!*\
   !*** ../../../node_modules/ms/index.js ***!
   \*****************************************/
 /***/ ((module) => {
@@ -3502,7 +3549,7 @@ function plural(ms, n, name) {
 /***/ }),
 
 /***/ "../../../node_modules/uuid/index.js":
-/*!*******************************************!*
+/*!*******************************************!*\
   !*** ../../../node_modules/uuid/index.js ***!
   \*******************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -3520,7 +3567,7 @@ module.exports = uuid;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/lib/bytesToUuid.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/uuid/lib/bytesToUuid.js ***!
   \*****************************************************/
 /***/ ((module) => {
@@ -3556,7 +3603,7 @@ module.exports = bytesToUuid;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/lib/rng.js":
-/*!*********************************************!*
+/*!*********************************************!*\
   !*** ../../../node_modules/uuid/lib/rng.js ***!
   \*********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -3574,7 +3621,7 @@ module.exports = function nodeRNG() {
 /***/ }),
 
 /***/ "../../../node_modules/uuid/v1.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ../../../node_modules/uuid/v1.js ***!
   \****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -3693,7 +3740,7 @@ module.exports = v1;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/v4.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ../../../node_modules/uuid/v4.js ***!
   \****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -3732,7 +3779,7 @@ module.exports = v4;
 /***/ }),
 
 /***/ "./arabic_language_model.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./arabic_language_model.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3880,7 +3927,7 @@ for the current node
 /***/ }),
 
 /***/ "./chinese_language_model.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./chinese_language_model.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4026,7 +4073,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /***/ }),
 
 /***/ "./constants.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./constants.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4259,7 +4306,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CLASS_INTENSIVE": () => /* binding */ CLASS_INTENSIVE,
 /* harmony export */   "CLASS_RECIPROCAL": () => /* binding */ CLASS_RECIPROCAL,
 /* harmony export */   "PARADIGM_CAT_KAYLO": () => /* binding */ PARADIGM_CAT_KAYLO,
-/* harmony export */   "PARADIGM_CAT_STATE": () => /* binding */ PARADIGM_CAT_STATE
+/* harmony export */   "PARADIGM_CAT_STATE": () => /* binding */ PARADIGM_CAT_STATE,
+/* harmony export */   "MIMETypes": () => /* binding */ MIMETypes
 /* harmony export */ });
 /* eslint-disable no-unused-vars */
 const LANG_UNIT_WORD = Symbol('word')
@@ -4498,11 +4546,20 @@ const CLASS_RECIPROCAL = 'reciprocal'
 const PARADIGM_CAT_KAYLO = 'kaylo'
 const PARADIGM_CAT_STATE = 'state'
 
+/**
+ * Constants that define MIME Types used in Alpheios.
+ *
+ * @enum {string} */
+const MIMETypes = {
+  TEXT_PLAIN: 'text/plain',
+  TEXT_HTML: 'text/html'
+}
+
 
 /***/ }),
 
 /***/ "./definition-set.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./definition-set.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4512,18 +4569,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ DefinitionSet
 /* harmony export */ });
-/* harmony import */ var _definition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./definition */ "./definition.js");
-/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+/* harmony import */ var _definition_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./definition.js */ "./definition.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+
 
 
 
 class DefinitionSet {
-  constructor (lemmaWord, languageID) {
+  /**
+   * @param {string} lemmaWord - A word for which a definition set was created.
+   * @param {Language} language - A language of the lexical entity (lexeme) to which the definition set is attached.
+   */
+  constructor (lemmaWord, language) {
+    if (!lemmaWord) {
+      throw new Error('DefinitionSet cannot be created without the lemma word')
+    }
+    if (!language) {
+      throw new Error('DefinitionSet cannot be created without the language')
+    }
+    if (!(language instanceof _language_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+      throw new Error('The language must be an instance of the Language class')
+    }
+
+    /**
+     * A word for which a definition set was created.
+     *
+     * @type {string}
+     */
     this.lemmaWord = lemmaWord
-    this.languageID = languageID
+
+    /**
+     * A language on what a text of a definitions in a definition set is written.
+     *
+     * @type {Language}
+     */
+    this.language = language
 
     this.shortDefs = []
     this.fullDefs = []
+  }
+
+  get languageID () {
+    const langData = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_2__.default.getLegacyLanguageCodeAndId(this.language)
+    return langData.languageID
   }
 
   /**
@@ -4533,15 +4622,15 @@ class DefinitionSet {
    * @returns {DefinitionSet} A DefinitionSet object populated with data from JSON object.
    */
   static readObject (jsonObject) {
-    const languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageIdFromCode(jsonObject.languageCode)
+    const lang = new _language_js__WEBPACK_IMPORTED_MODULE_1__.default(jsonObject.languageCode)
 
-    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, languageID) // eslint-disable-line prefer-const
+    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, lang) // eslint-disable-line prefer-const
 
     for (const shortDef of jsonObject.shortDefs) {
-      definitionSet.shortDefs.push(_definition__WEBPACK_IMPORTED_MODULE_0__.default.readObject(shortDef))
+      definitionSet.shortDefs.push(_definition_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(shortDef))
     }
     for (const fullDef of jsonObject.fullDefs) {
-      definitionSet.fullDefs.push(_definition__WEBPACK_IMPORTED_MODULE_0__.default.readObject(fullDef))
+      definitionSet.fullDefs.push(_definition_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(fullDef))
     }
 
     return definitionSet
@@ -4619,10 +4708,9 @@ class DefinitionSet {
   }
 
   convertToJSONObject () {
-    const languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageCodeFromId(this.languageID)
     return {
       lemmaWord: this.lemmaWord,
-      languageCode: languageCode,
+      languageCode: this.language.toCode(),
       shortDefs: this.shortDefs.map(def => def.convertToJSONObject()),
       fullDefs: this.fullDefs.map(def => def.convertToJSONObject())
     }
@@ -4633,7 +4721,7 @@ class DefinitionSet {
 /***/ }),
 
 /***/ "./definition.js":
-/*!***********************!*
+/*!***********************!*\
   !*** ./definition.js ***!
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4643,33 +4731,105 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+/* harmony import */ var _dmodels_resource_provider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @dmodels/resource_provider.js */ "./resource_provider.js");
+/* harmony import */ var _dmodels_language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @dmodels/language.js */ "./language.js");
+/* harmony import */ var _dmodels_iri_iri_provider_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @dmodels/iri/iri-provider.js */ "./iri/iri-provider.js");
+/** @module definition */
 
+ /* @typedef {import('./language.js').Language} Language */
 
 
 class Definition {
+  /**
+   * @param {string} text - A text of a definition.
+   * @param {Language} language - A _language on what a text of a definition is written.
+   * @param {string} format - A MIME type of a definitions text (i.e. "text/plain").
+   * @param {string} lemmaText - A ward that the definition text describes.
+   */
   constructor (text, language, format, lemmaText) {
-    this.text = text
-    this.language = language
+    if (!(language instanceof _dmodels_language_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+      throw new Error('The language argument is not of the Language type')
+    }
+
+    /**
+     * A text of a definition.
+     *
+     * @type {string}
+     */
+    this._text = text
+
+    /**
+     * A language on what a text of a definition is written.
+     *
+     * @type {Language}
+     */
+    this._language = language
+
+    /**
+     * A MIME type of a definitions text (e.g. "text/plain").
+     *
+     * @type {string}
+     */
     this.format = format
+
+    /**
+     * A ward that the definition text describes.
+     *
+     * @type {string}
+     */
     this.lemmaText = lemmaText
 
-    this.ID = (0,uuid__WEBPACK_IMPORTED_MODULE_0__.v4)()
+    /**
+     * A provider of the definition. Will be set outside of the constructor,
+     * currently, in the `getProxy` method of the ResourceProvider.
+     *
+     * @type {ResourceProvider}
+     */
+    this.provider = null
+
+    /**
+     * A unique ID of an object instance.
+     *
+     * @type {string}
+     */
+    this._ID = _dmodels_iri_iri_provider_js__WEBPACK_IMPORTED_MODULE_2__.default.getIRI({ identityData: this.identityData })
+  }
+
+  get text () {
+    return this._text
+  }
+
+  get language () {
+    return this._language
+  }
+
+  get ID () {
+    return this._ID
+  }
+
+  get identityData () {
+    return {
+      text: this._text,
+      languageCode: this._language.toCode()
+    }
+  }
+
+  test () {
+    this._language = 5
   }
 
   static readObject (jsonObject) {
+    const lang = new _dmodels_language_js__WEBPACK_IMPORTED_MODULE_1__.default(jsonObject.languageCode)
     // eslint-disable-next-line prefer-const
-    let definition = new Definition(jsonObject.text, jsonObject.language, jsonObject.format, jsonObject.lemmaText)
+    let definition = new Definition(jsonObject.text, lang, jsonObject.format, jsonObject.lemmaText)
 
     if (jsonObject.ID) {
-      definition.ID = jsonObject.ID
+      definition._ID = jsonObject.ID
     }
 
     if (jsonObject.provider) {
-      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__.default.readObject(jsonObject.provider)
-      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__.default.getProxy(provider, definition)
+      const provider = _dmodels_resource_provider_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(jsonObject.provider)
+      return _dmodels_resource_provider_js__WEBPACK_IMPORTED_MODULE_0__.default.getProxy(provider, definition)
     } else {
       return definition
     }
@@ -4678,11 +4838,11 @@ class Definition {
   convertToJSONObject () {
     // eslint-disable-next-line prefer-const
     let result = {
-      text: this.text,
-      language: this.language,
+      text: this._text,
+      languageCode: this._language.toCode(),
       format: this.format,
       lemmaText: this.lemmaText,
-      ID: this.ID
+      ID: this._ID
     }
 
     if (this.provider) {
@@ -4697,7 +4857,7 @@ class Definition {
 /***/ }),
 
 /***/ "./digest.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./digest.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4743,7 +4903,7 @@ class Digest {
 /***/ }),
 
 /***/ "./driver.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4888,7 +5048,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./feature.js":
-/*!********************!*
+/*!********************!*\
   !*** ./feature.js ***!
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4899,8 +5059,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ Feature
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-/* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
+/* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+
 
 
 
@@ -4952,6 +5114,14 @@ class Feature {
 
     this.type = type
     this.languageID = languageID
+    const langCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageCodeFromId(this.languageID)
+
+    /**
+     * A language of the feature.
+     *
+     * @type {Language}
+     */
+    this._language = new _language_js__WEBPACK_IMPORTED_MODULE_1__.default(langCode)
     this.sortOrder = sortOrder
     this.allowedValues = allowedValues
 
@@ -4965,6 +5135,15 @@ class Feature {
      */
     this._data = Feature.dataValuesFromInput(data)
     this.sort()
+  }
+
+  /**
+   * Returns a language of the feature.
+   *
+   * @returns {Language} - A language of the feature.
+   */
+  get language () {
+    return this._language
   }
 
   /**
@@ -5257,7 +5436,7 @@ class Feature {
       })
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__.default.getInstance().warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
     }
     return this
   }
@@ -5276,7 +5455,7 @@ class Feature {
       this._data = this._data.concat(normalizedData)
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__.default.getInstance().warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
     }
     return this
   }
@@ -5288,7 +5467,7 @@ class Feature {
    */
   removeValue (value) {
     // TODO: Do we need it?
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__.default.getInstance().warn('This feature is not implemented yet')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('This feature is not implemented yet')
   }
 
   /**
@@ -5346,7 +5525,7 @@ to create other items of the same type.
    * @param {string} name - A name of an importer.
    * @param {FeatureImporter} importer - A `FeatureImporter` object.
    */
-  addImporter (importer = new _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__.default(), name = this.constructor.defaultImporterName) {
+  addImporter (importer = new _feature_importer_js__WEBPACK_IMPORTED_MODULE_2__.default(), name = this.constructor.defaultImporterName) {
     if (!this.importers) {
       this.importers = new Map()
     }
@@ -5407,7 +5586,7 @@ to create other items of the same type.
     const data = this._data.map(dataItem => [dataItem.value, dataItem.sortOrder])
     return {
       type: this.type,
-      languageCode: _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageCodeFromId(this.languageID),
+      languageCode: this._language.toCode(),
       sortOrder: this.sortOrder,
       allowedValues: this.allowedValues,
       data: data
@@ -5428,7 +5607,7 @@ Feature.errMsgs = {
 /***/ }),
 
 /***/ "./feature_importer.js":
-/*!*****************************!*
+/*!*****************************!*\
   !*** ./feature_importer.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5507,7 +5686,7 @@ class FeatureImporter {
 /***/ }),
 
 /***/ "./feature_list.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./feature_list.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5585,7 +5764,7 @@ class FeatureList {
 /***/ }),
 
 /***/ "./feature_type.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./feature_type.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5852,7 +6031,7 @@ FeatureType.UNRESTRICTED_VALUE = Symbol('unrestricted')
 /***/ }),
 
 /***/ "./geez_language_model.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./geez_language_model.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5959,7 +6138,7 @@ for the current node
 /***/ }),
 
 /***/ "./greek_language_model.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./greek_language_model.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6376,7 +6555,7 @@ for the current node
 /***/ }),
 
 /***/ "./grm-feature.js":
-/*!************************!*
+/*!************************!*\
   !*** ./grm-feature.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6560,7 +6739,7 @@ GrmFeature.types = {
 /***/ }),
 
 /***/ "./homonym-group.js":
-/*!**************************!*
+/*!**************************!*\
   !*** ./homonym-group.js ***!
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6652,7 +6831,7 @@ HomonymGroup.errors = {
 /***/ }),
 
 /***/ "./homonym.js":
-/*!********************!*
+/*!********************!*\
   !*** ./homonym.js ***!
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6665,7 +6844,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
 /* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./language.js */ "./language.js");
 
 
 
@@ -6683,9 +6862,9 @@ class Homonym {
    * Initializes a Homonym object.
    *
    * @param {Lexeme[]} lexemes - An array of Lexeme objects.
-   * @param {string} form - the form which produces the homonyms
+   * @param {string} targetWord - the form which produces the homonyms
    */
-  constructor (lexemes, form) {
+  constructor (lexemes, targetWord) {
     if (!lexemes || (Array.isArray(lexemes) && lexemes.length === 0)) {
       throw new Error('Lexemes data should not be empty.')
     }
@@ -6702,7 +6881,7 @@ class Homonym {
 
     /** @type {Lexeme[]} */
     this.lexemes = lexemes
-    this.targetWord = form
+    this.targetWord = targetWord
   }
 
   /**
@@ -6711,14 +6890,23 @@ class Homonym {
    * a homonym's target word.
    *
    * @param {string} word - A word that will populate homonym's `targetWord` prop and lemma `word` one.
-   * @param {symbol} languageID - A language identificator as defined in Constants.LANG_XXX.
+   * @param {Language} language - An object representing the language.
    * @param {Inflection[]} inflections - Zero or more inflection objects that will be attached to the lexeme
    * @returns {Homonym} A newly created homonym object.
    */
-  static createSimpleForm (word, languageID, inflections = []) {
-    const lemma = new _lemma_js__WEBPACK_IMPORTED_MODULE_2__.default(word, languageID)
+  static createSimpleForm (word, language, inflections = []) {
+    const lemma = new _lemma_js__WEBPACK_IMPORTED_MODULE_2__.default(word, language)
     const lexeme = new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default(lemma, inflections)
     return new Homonym([lexeme], word)
+  }
+
+  /**
+   * Checks if there is at least one lemma in the lexemes of the homonym.
+   *
+   * @returns {boolean} - True if there is at least one lemma available, false otherwise.
+   */
+  get hasLemmas () {
+    return Boolean(this.lexemes && this.lexemes[0] && this.lexemes[0].lemma)
   }
 
   /**
@@ -6740,21 +6928,29 @@ class Homonym {
   }
 
   static readObject (jsonObject) {
+    if (!jsonObject.form && !jsonObject.targetWord) {
+      throw new Error(Homonym.errMsgs.NO_TARGET_WORD_IN_JSON)
+    }
+    const targetWord = jsonObject.form || jsonObject.targetWord
     let lexemes = [] // eslint-disable-line prefer-const
     if (jsonObject.lexemes) {
       for (const lexeme of jsonObject.lexemes) {
         lexemes.push(_lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.readObject(lexeme))
       }
     } else {
-      const languageID = _language_model_factory__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageIdFromCode(jsonObject.languageCode)
-      lexemes = [new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default(new _lemma_js__WEBPACK_IMPORTED_MODULE_2__.default(jsonObject.targetWord, languageID), [])]
+      if (!jsonObject.languageCode) {
+        throw new Error(Homonym.errMsgs.NO_LANGUAGE_IN_JSON)
+      }
+      const lang = new _language_js__WEBPACK_IMPORTED_MODULE_3__.default(jsonObject.languageCode)
+      lexemes = [new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default(new _lemma_js__WEBPACK_IMPORTED_MODULE_2__.default(targetWord, lang), [])]
     }
-    const homonym = new Homonym(lexemes, jsonObject.form || jsonObject.targetWord)
+    const homonym = new Homonym(lexemes, targetWord)
     homonym.lemmasList = jsonObject.lemmasList
     return homonym
   }
 
   convertToJSONObject (addMeaning = false) {
+    // TODO: Shall we use targetWord instead of form to match the internal homonym structure?
     let resultHomonym = { lexemes: [], form: this.targetWord } // eslint-disable-line prefer-const
     for (const lexeme of this.lexemes) {
       resultHomonym.lexemes.push(lexeme.convertToJSONObject(addMeaning))
@@ -6763,32 +6959,31 @@ class Homonym {
   }
 
   /**
-   * Returns a language code of a homonym (ISO 639-3).
+   * Returns a language of the homonym.
    * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
    * and inflections within the same homonym will have the same language, and we can determine a language
-   * by using language property of the first lemma. We chan change this logic in the future if we'll need to.
+   * by using language property of the first lemma. We can change this logic in the future if we'll need to.
    *
-   * @returns {string} A language code, as defined in the `languages` object.
+   * @returns {Language} A language of the homonym.
    */
   get language () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('Please use languageID instead')
-    return _language_model_factory__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageCodeFromId(this.languageID)
+    if (this.hasLemmas) {
+      return this.lexemes[0].lemma.language
+    } else {
+      // TODO: It's probably better to guarantee that a Homonym would always have lexemes with lemmas
+      //       and lemmas would always have a language. This would require updates to the corresponding classes.
+      throw new Error(Homonym.errMsgs.NO_LANGUAGE_IN_HOMONYM)
+    }
   }
 
   /**
-   * Returns a language ID of a homonym.
-   * Homonym does not have a languageID property, only lemmas and inflections do. We assume that all lemmas
-   * and inflections within the same homonym will have the same language, and we can determine a language
-   * by using languageID property of the first lemma. We chan change this logic in the future if we'll need to.
+   * @deprecated
+   * Returns a language ID of a homonym. This getter has been deprecated, please use language getter instead.
    *
-   * @returns {symbol} A language ID, as defined in the `LANG_` constants.
+   * @returns {symbol} A language IDs.
    */
   get languageID () {
-    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.languageID) {
-      return this.lexemes[0].lemma.languageID
-    } else {
-      throw new Error('Homonym has not been initialized properly. Unable to obtain language ID information.')
-    }
+    return _language_model_factory__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageIdFromCode(this.language.toCode())
   }
 
   /**
@@ -6849,13 +7044,19 @@ class Homonym {
     return Homonym.disambiguate(newHom, disambiguators)
   }
 }
+
+Homonym.errMsgs = {
+  NO_LANGUAGE_IN_HOMONYM: 'Homonym has not been initialized properly. Unable to obtain language ID information',
+  NO_LANGUAGE_IN_JSON: 'Cannot create homonym from JSON with no lexemes and no language info',
+  NO_TARGET_WORD_IN_JSON: 'Cannot create homonym from JSON with no lexemes and no target word'
+}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Homonym);
 
 
 /***/ }),
 
 /***/ "./inflection.js":
-/*!***********************!*
+/*!***********************!*\
   !*** ./inflection.js ***!
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7250,7 +7451,7 @@ class Inflection {
 /***/ }),
 
 /***/ "./inflection_group.js":
-/*!*****************************!*
+/*!*****************************!*\
   !*** ./inflection_group.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7288,7 +7489,7 @@ class InflectionGroup {
 /***/ }),
 
 /***/ "./inflection_grouping_key.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./inflection_grouping_key.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7351,8 +7552,129 @@ is included in the grouping key
 
 /***/ }),
 
+/***/ "./iri/iri-provider.js":
+/*!*****************************!*\
+  !*** ./iri/iri-provider.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ IRIProvider
+/* harmony export */ });
+/* harmony import */ var _dmodels_sha1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @dmodels/sha1.js */ "./sha1.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_1__);
+/** @module iriProvider */
+
+
+
+class IRIProvider {
+  /**
+   * Creates an Internationalized Resource Identifier (IRI) according to the options provided.
+   *
+   * @param identityData.identityData
+   * @param {object} [identityData] - an object containing information that will be used
+   * to generate content-based IRI, such as MD5 hash. identityData keys will be sorted in
+   * an ascending alphanumerical order and the values will be concatenated into a string.
+   * This string will then be used to compute an IRI. Same identityData objects
+   * will have the same IRI.
+   * @param {IRIProvider.IRITypes} [type=IRIProvider.IRITypes.AUTO] - A type of the IRI to create.
+   * Possible values:
+   * - IRIProvider.IRITypes.AUTO: if identityData is provided, will calculate the MD5 Hash IRI.
+   * Otherwise, will return a UUID version 4.
+   * @param identityData.type
+   * @returns {string} - A newly created IRI.
+   */
+  static getIRI ({ identityData = {}, type = IRIProvider.IRITypes.AUTO } = {}) {
+    const getActions = new Map([
+      [IRIProvider.IRITypes.AUTO,
+        () => IRIProvider._isValidIdentityData(identityData)
+          ? IRIProvider._getMD5Hash(identityData)
+          : IRIProvider._getUUIDv4()],
+
+      [IRIProvider.IRITypes.MD5_HASH, () => IRIProvider._getMD5Hash(identityData)],
+
+      [IRIProvider.IRITypes.UUID_V4, () => IRIProvider._getUUIDv4()]
+    ])
+
+    if (!getActions.has(type)) { throw new Error(IRIProvider.errMsgs.UNKNOWN_IRI_TYPE) }
+    return getActions.get(type)()
+  }
+
+  /**
+   * Checks wither the identity data is valid.
+   * The object is valid if it contain at least one key-value pair with a non-empty string value.
+   *
+   * @param {object} identityData - An identity data object.
+   * @returns {boolean} - True if the object is valid, false otherwise.
+   * @private
+   */
+  static _isValidIdentityData (identityData = {}) {
+    return Boolean(
+      identityData &&
+      Object.keys(identityData).length > 0 &&
+      Object.values(identityData).every(v => typeof v === 'string' && v.length > 0)
+    )
+  }
+
+  /**
+   * Computes an MD5 hash of values from the identity data object.
+   *
+   * @param {object} identityData - An identity data object. Its keys will be sorted in
+   *        an ascending alphanumerical order and the values will be concatenated into a string.
+   *        This string will then be used to compute an MD5 hash. Same identityData objects
+   *        will produce the same MD5 hashes.
+   * @returns {string} - An MD5 hash of the identity data.
+   * @private
+   */
+  static _getMD5Hash (identityData) {
+    if (!IRIProvider._isValidIdentityData(identityData)) {
+      throw new Error(IRIProvider.errMsgs.INCORRECT_IDENTITY_DATA)
+    }
+    const keys = Object.keys(identityData).sort()
+    let text = ''
+    for (const key of keys) {
+      text += identityData[key]
+    }
+    return _dmodels_sha1_js__WEBPACK_IMPORTED_MODULE_0__.default.hash(text)
+  }
+
+  /**
+   * Returns a random UUID version 4 string.
+   *
+   * @returns {string} - A string containing a random UUID version 4 value.
+   * @private
+   */
+  static _getUUIDv4 () {
+    return (0,uuid__WEBPACK_IMPORTED_MODULE_1__.v4)()
+  }
+}
+
+/**
+ * Describes how IRIs be calculated.
+ *
+ * @enum {string} */
+IRIProvider.IRITypes = {
+  /** An IRI type will be selected automatically, based on the presence of the identity data */
+  AUTO: 'auto',
+  /** An IRI will be an MD5 hash */
+  MD5_HASH: 'MD5 Hash',
+  /** An IRI will be a UUID version 4 */
+  UUID_V4: 'UUID Version 4'
+}
+
+IRIProvider.errMsgs = {
+  INCORRECT_IDENTITY_DATA: 'Incorrect identity data',
+  UNKNOWN_IRI_TYPE: 'Unknown IRI type'
+}
+
+
+/***/ }),
+
 /***/ "./language.js":
-/*!*********************!*
+/*!*********************!*\
   !*** ./language.js ***!
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7364,7 +7686,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ Language
 /* harmony export */ });
 /**
- * Constants that define a macrolanguage.
+ * Constants that define a macrolanguage in an ISO 639-3 format.
  *
  * @enum {string} */
 const Lang = {
@@ -7374,7 +7696,8 @@ const Lang = {
   PERSIAN: 'per',
   GEEZ: 'gez',
   CHINESE: 'zho',
-  SYRIAC: 'syr'
+  SYRIAC: 'syr',
+  ENGLISH: 'eng'
 }
 
 /**
@@ -7384,18 +7707,26 @@ class Language {
   /**
    * Creates an instance of a language class.
    *
-   * @param {Lang} code - A constant that specifies a language.
+   * @param {Lang | string} code - A constant that specifies a language in an ISO 639-3 format.
+   * @param {object} options - Additional options of the Language object to be created.
+   * @param {boolean} options.normalize - Whether the language code provided, in case it is not
+   *        in the format supported by the Language object, should attempted
+   *        to be converted to the supported format.
    */
-  constructor (code) {
+  constructor (code, { normalize = false } = {}) {
     if (!code) {
-      throw new Error('Language object cannot be create without a language _code')
+      throw new Error(Language.errMsgs.NO_LANGUAGE_CODE)
+    }
+
+    if (normalize) {
+      code = Language.normalizedCode(code)
     }
 
     /**
-     An ISO 639-3 _code.
+     *An ISO 639-3 _code.
      *
-     @private
-     @type {string}
+     * @private
+     * @type {string}
      */
     this._code = code
   }
@@ -7426,6 +7757,30 @@ class Language {
 
   static get SYRIAC () {
     return new Language(Lang.SYRIAC)
+  }
+
+  static get ENGLISH () {
+    return new Language(Lang.ENGLISH)
+  }
+
+  /**
+   * Tries to convert a language code that is in an unsupported format to the one
+   * that is supported by the Language class.
+   *
+   * @param {string} code - A language code to normalize.
+   * @returns {Lang|string} - A normalized, if normalization is possible,
+   *          or an unchanged language code supplied to the function,
+   */
+  static normalizedCode (code) {
+    /*
+    Check if the list of known non-normalized codes contains the code provided.
+     */
+    if (['en'].includes(code)) {
+      return Lang.ENGLISH
+    } else {
+      // We don't know how to normalize this code so we return the value unchanged
+      return code
+    }
   }
 
   /**
@@ -7479,11 +7834,15 @@ class Language {
   }
 }
 
+Language.errMsgs = {
+  NO_LANGUAGE_CODE: 'Language object cannot be created without a language code'
+}
+
 
 /***/ }),
 
 /***/ "./language_model.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./language_model.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8187,7 +8546,7 @@ class LanguageModel {
 /***/ }),
 
 /***/ "./language_model_factory.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./language_model_factory.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8236,12 +8595,22 @@ class LanguageModelFactory {
   /**
    * Checks whether a language is supported
    *
-   * @param {string | symbol} language - Language as a language ID (symbol) or a language code (string)
+   * @param {Language | string | symbol} language - A language represented by a Language object.
+   *        The following deprecated formats are supported: language ID (a symbol) and a language code (a string).
    * @returns {boolean} True if language is supported, false otherwise
    */
   static supportsLanguage (language) {
-    language = (typeof language === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(language) : language
-    return MODELS.has(language)
+    let langCode
+    if (language instanceof _language_js__WEBPACK_IMPORTED_MODULE_0__.default) {
+      langCode = language.toCode()
+    } else if (typeof language === 'symbol') {
+      // language is in a language ID format
+      langCode = LanguageModelFactory.getLanguageCodeFromId(language)
+    } else {
+      // language contains the language code
+      langCode = language
+    }
+    return MODELS.has(langCode)
   }
 
   static availableLanguages () {
@@ -8405,7 +8774,7 @@ class LanguageModelFactory {
 /***/ }),
 
 /***/ "./languages/greek-chars.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./languages/greek-chars.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8734,7 +9103,7 @@ class GreekChars {
 /***/ }),
 
 /***/ "./latin_language_model.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./latin_language_model.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8962,7 +9331,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 /***/ }),
 
 /***/ "./lemma.js":
-/*!******************!*
+/*!******************!*\
   !*** ./lemma.js ***!
   \******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8978,8 +9347,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-
+/** @module lemma */
 
 
 
@@ -8994,7 +9362,7 @@ class Lemma {
    * Initializes a Lemma object.
    *
    * @param {string} word - A word.
-   * @param {Language | symbol | string} language - A language ID (symbol, please use this) or a language code of a word.
+   * @param {Language} language - A language of the word.
    * @param {string[]} principalParts - the principalParts of a lemma.
    * @param {object} features - the grammatical features of a lemma.
    */
@@ -9007,26 +9375,62 @@ class Lemma {
       throw new Error('Language should not be empty.')
     }
 
-    // Compatibility code for something providing languageCode instead of languageID
-    this.languageID = undefined
-    this.languageCode = undefined
-    if (language instanceof _language_js__WEBPACK_IMPORTED_MODULE_1__.default) {
-      ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(language))
-    } else {
-      // Language is in a legacy format: either a symbol or a string
-      ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageAttrs(language))
+    if (!(language instanceof _language_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+      throw new Error('The language argument should be of the Language type')
     }
 
+    // TODO: In order for Lemma to become a true value object, a word must be read only.
+    //       We cannot to do that now, however, because Lexeme.disambiguate() sets it directly.
+    //       This should be fixed.
+    /**
+     * A word of a lemma.
+     *
+     * @type {string}
+     */
     this.word = word
+
+    /**
+     * A language of a lemma.
+     *
+     * @type {Language}
+     */
+    this._language = language
+
     this.principalParts = principalParts
     this.features = {}
 
     this.ID = (0,uuid__WEBPACK_IMPORTED_MODULE_4__.v4)()
   }
 
+  /**
+   * Returns a language of a lemma.
+   *
+   * @returns {Language} - A language of a lemma.
+   */
   get language () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__.default.getInstance().warn('Please use "languageID" instead of "language"')
-    return this.languageCode
+    return this._language
+  }
+
+  /**
+   * @deprecated
+   * Returns a language code of a lemma.
+   *
+   * @returns {string} - A language code.
+   */
+  get languageCode () {
+    const langData = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(this._language)
+    return langData.languageCode
+  }
+
+  /**
+   * @deprecated
+   * Returns a language ID of a lemma.
+   *
+   * @returns {symbol} - A language ID.
+   */
+  get languageID () {
+    const langData = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLegacyLanguageCodeAndId(this._language)
+    return langData.languageID
   }
 
   get displayWord () {
@@ -9034,9 +9438,10 @@ class Lemma {
   }
 
   static readObject (jsonObject) {
-    const language = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    const langCode = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    const lang = new _language_js__WEBPACK_IMPORTED_MODULE_1__.default(langCode)
     // eslint-disable-next-line prefer-const
-    let resLemma = new Lemma(jsonObject.word, language, jsonObject.principalParts, jsonObject.pronunciation)
+    let resLemma = new Lemma(jsonObject.word, lang, jsonObject.principalParts, jsonObject.pronunciation)
 
     if (jsonObject.features && jsonObject.features.length > 0) {
       jsonObject.features.forEach(featureSource => {
@@ -9058,7 +9463,7 @@ class Lemma {
     // eslint-disable-next-line prefer-const
     let resultLemma = {
       word: this.word,
-      language: this.languageCode,
+      languageCode: this._language.toCode(),
       principalParts: this.principalParts,
       features: resultFeatures
     }
@@ -9077,28 +9482,9 @@ class Lemma {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_5__.default.getInstance().warn('Please use "addFeature" instead')
-    if (!data) {
-      throw new Error('feature data cannot be empty.')
-    }
-    if (!Array.isArray(data)) {
-      data = [data]
-    }
-
-    const type = data[0].type
-    this.features[type] = []
-    for (const element of data) {
-      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_2__.default)) {
-        throw new Error('feature data must be a Feature object.')
-      }
-
-      if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.compareLanguages(element.languageID, this.languageID)) {
-        throw new Error('Language "' + element.languageID.toString() + '" of a feature does not match a language "' +
-                this.languageID.toString() + '" of a Lemma object.')
-      }
-
-      this.features[type].push(element)
-    }
+    // TODO: The usage of setter seems to be eliminated form the code. It can be removed if no exceptions
+    //       will be thrown during an extended testing.
+    throw new Error('Lexeme feature setter is deprecated. Please use addFeature() method instead')
   }
 
   /**
@@ -9115,9 +9501,9 @@ class Lemma {
       throw new Error('feature data must be a Feature object.')
     }
 
-    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.compareLanguages(feature.languageID, this.languageID)) {
-      throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
-        this.languageID.toString() + '" of a Lemma object.')
+    if (!this._language.equals(feature.language)) {
+      throw new Error(`Language "${feature.language.toCode()}" of a feature does not match a language ` +
+        `"${this._language.toCode()}" of a Lemma object.`)
     }
 
     this.features[feature.type] = feature
@@ -9173,7 +9559,7 @@ class Lemma {
 
     // Check if words are the same
     const areSameWords = normalize
-      ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
+      ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getModelFromLanguage(this._language).compareWords(this.word, lemma.word, true,
           { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
@@ -9187,7 +9573,7 @@ class Lemma {
    * @returns {string} - A disambiguated word.
    */
   disambiguate (otherLemma) {
-    const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID)
+    const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getModelFromLanguage(this._language)
 
     // Check if words are the same
     const areSameWords = langModel.compareWords(this.word, otherLemma.word, true, { normalizeTrailingDigit: true })
@@ -9252,7 +9638,7 @@ class Lemma {
 /***/ }),
 
 /***/ "./lexeme.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./lexeme.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9268,9 +9654,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-
-
-
+/** @module lexeme */
+ /* @typedef {import('./lemma.js').Lemma} Lemma */
+ /* @typedef {import('./inflection.js').Inflection} Inflection */
+ /* @typedef {import('./definition-set.js').DefinitionSet} DefinitionSet */
 
 
 
@@ -9314,11 +9701,24 @@ class Lexeme {
       throw new Error('Meaning should be of DefinitionSet object type.')
     }
 
+    /**
+     * The lemma for the lexeme. If sources provide several different lemmas then this is the lemma we
+     * think is the most appropriate for this lexeme.
+     *
+     * @type {Lemma}
+     */
     this.lemma = lemma
+
+    /**
+     * Lemmas that are provided by some sources for the lexeme but that we think are less appropriate
+     * than the lemma stored in the `lemma` prop/
+     *
+     * @type {Lemma[]}
+     */
     this.altLemmas = []
     this.inflections = []
     this.addInflections(inflections)
-    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default(this.lemma.word, this.lemma.languageID)
+    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default(this.lemma.word, this.lemma.language)
     this.disambiguated = false
   }
 
@@ -9347,7 +9747,7 @@ class Lexeme {
   /**
    * add an alternative lemma to the lexeme
    *
-   * @param {Lemma} lemma
+   * @param {Lemma} lemma - An alternative lemma to be added to the list of alt lemmas.
    */
   addAltLemma (lemma) {
     this.altLemmas.push(lemma)
@@ -9427,6 +9827,8 @@ class Lexeme {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
       newLexeme.disambiguated = true
+      // TODO: This change the value of a word prop of the lemma directly.
+      //       We should eliminate that to make lemma a true value object.
       newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
       let keepInflections = [] // eslint-disable-line prefer-const
       // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection
@@ -9546,7 +9948,7 @@ class Lexeme {
 /***/ }),
 
 /***/ "./logging/logger.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./logging/logger.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9704,7 +10106,7 @@ class Logger {
 /***/ }),
 
 /***/ "./options/option-item.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./options/option-item.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9842,7 +10244,7 @@ class OptionItem {
 /***/ }),
 
 /***/ "./options/options.js":
-/*!****************************!*
+/*!****************************!*\
   !*** ./options/options.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10048,7 +10450,7 @@ class Options {
 /***/ }),
 
 /***/ "./persian_language_model.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./persian_language_model.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10123,7 +10525,7 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /***/ }),
 
 /***/ "./ps-events/ps-event-data.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./ps-events/ps-event-data.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10174,7 +10576,7 @@ class PsEventData {
 /***/ }),
 
 /***/ "./ps-events/ps-event.js":
-/*!*******************************!*
+/*!*******************************!*\
   !*** ./ps-events/ps-event.js ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10279,7 +10681,7 @@ class PsEvent {
 /***/ }),
 
 /***/ "./resource_provider.js":
-/*!******************************!*
+/*!******************************!*\
   !*** ./resource_provider.js ***!
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10362,7 +10764,7 @@ class ResourceProvider {
 /***/ }),
 
 /***/ "./sha1.js":
-/*!*****************!*
+/*!*****************!*\
   !*** ./sha1.js ***!
   \*****************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10546,7 +10948,7 @@ class Sha1 {
 /***/ }),
 
 /***/ "./storages/defaults-loader.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./storages/defaults-loader.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10574,7 +10976,7 @@ class DefaultsLoader {
 /***/ }),
 
 /***/ "./storages/extension-sync-storage.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ./storages/extension-sync-storage.js ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10629,7 +11031,7 @@ class ExtensionSyncStorage extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_
 /***/ }),
 
 /***/ "./storages/local-storage-area.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ./storages/local-storage-area.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10791,7 +11193,7 @@ class LocalStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.
 /***/ }),
 
 /***/ "./storages/remote-auth-storage-area.js":
-/*!**********************************************!*
+/*!**********************************************!*\
   !*** ./storages/remote-auth-storage-area.js ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10895,7 +11297,7 @@ class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE
 /***/ }),
 
 /***/ "./storages/storage-adapter.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./storages/storage-adapter.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10973,7 +11375,7 @@ class StorageAdapter {
 /***/ }),
 
 /***/ "./storages/temp-storage-area.js":
-/*!***************************************!*
+/*!***************************************!*\
   !*** ./storages/temp-storage-area.js ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11023,7 +11425,7 @@ class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.d
 /***/ }),
 
 /***/ "./syriac_language_model.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./syriac_language_model.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11271,7 +11673,7 @@ for the current node
 /***/ }),
 
 /***/ "./texts/author.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./texts/author.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11346,7 +11748,7 @@ class Author {
 /***/ }),
 
 /***/ "./texts/text-work.js":
-/*!****************************!*
+/*!****************************!*\
   !*** ./texts/text-work.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11432,7 +11834,7 @@ class TextWork {
 /***/ }),
 
 /***/ "./texts/word-usage-example.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./texts/word-usage-example.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11538,7 +11940,7 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
 /***/ }),
 
 /***/ "./translation.js":
-/*!************************!*
+/*!************************!*\
   !*** ./translation.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11617,7 +12019,7 @@ class Translation {
 /***/ }),
 
 /***/ "./treebank_data_item.js":
-/*!*******************************!*
+/*!*******************************!*\
   !*** ./treebank_data_item.js ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11813,7 +12215,7 @@ class TreebankDataItem {
 /***/ }),
 
 /***/ "./w3c/text-quote-selector.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./w3c/text-quote-selector.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11880,7 +12282,7 @@ class TextQuoteSelector {
 /***/ }),
 
 /***/ "./word-item.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./word-item.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -12041,7 +12443,7 @@ class WordItem {
 /***/ }),
 
 /***/ "./word-list.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./word-list.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -12160,7 +12562,7 @@ class WordList {
 /***/ }),
 
 /***/ "assert":
-/*!*************************!*
+/*!*************************!*\
   !*** external "assert" ***!
   \*************************/
 /***/ ((module) => {
@@ -12171,7 +12573,7 @@ module.exports = require("assert");;
 /***/ }),
 
 /***/ "crypto":
-/*!*************************!*
+/*!*************************!*\
   !*** external "crypto" ***!
   \*************************/
 /***/ ((module) => {
@@ -12182,7 +12584,7 @@ module.exports = require("crypto");;
 /***/ }),
 
 /***/ "fs":
-/*!*********************!*
+/*!*********************!*\
   !*** external "fs" ***!
   \*********************/
 /***/ ((module) => {
@@ -12193,7 +12595,7 @@ module.exports = require("fs");;
 /***/ }),
 
 /***/ "http":
-/*!***********************!*
+/*!***********************!*\
   !*** external "http" ***!
   \***********************/
 /***/ ((module) => {
@@ -12204,7 +12606,7 @@ module.exports = require("http");;
 /***/ }),
 
 /***/ "https":
-/*!************************!*
+/*!************************!*\
   !*** external "https" ***!
   \************************/
 /***/ ((module) => {
@@ -12215,7 +12617,7 @@ module.exports = require("https");;
 /***/ }),
 
 /***/ "net":
-/*!**********************!*
+/*!**********************!*\
   !*** external "net" ***!
   \**********************/
 /***/ ((module) => {
@@ -12226,7 +12628,7 @@ module.exports = require("net");;
 /***/ }),
 
 /***/ "stream":
-/*!*************************!*
+/*!*************************!*\
   !*** external "stream" ***!
   \*************************/
 /***/ ((module) => {
@@ -12237,7 +12639,7 @@ module.exports = require("stream");;
 /***/ }),
 
 /***/ "tty":
-/*!**********************!*
+/*!**********************!*\
   !*** external "tty" ***!
   \**********************/
 /***/ ((module) => {
@@ -12248,7 +12650,7 @@ module.exports = require("tty");;
 /***/ }),
 
 /***/ "url":
-/*!**********************!*
+/*!**********************!*\
   !*** external "url" ***!
   \**********************/
 /***/ ((module) => {
@@ -12259,7 +12661,7 @@ module.exports = require("url");;
 /***/ }),
 
 /***/ "util":
-/*!***********************!*
+/*!***********************!*\
   !*** external "util" ***!
   \***********************/
 /***/ ((module) => {
@@ -12270,7 +12672,7 @@ module.exports = require("util");;
 /***/ }),
 
 /***/ "zlib":
-/*!***********************!*
+/*!***********************!*\
   !*** external "zlib" ***!
   \***********************/
 /***/ ((module) => {
