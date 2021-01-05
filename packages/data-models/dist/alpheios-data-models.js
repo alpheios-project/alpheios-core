@@ -3781,32 +3781,57 @@ class Homonym {
       return base
     }
     const disambiguator = disambiguators.shift()
-    let lexemes = [] // eslint-disable-line prefer-const
+    let matchedLexemes = [] // eslint-disable-line prefer-const
     let missedLexemes = [] // eslint-disable-line prefer-const
+    let possibleLexemes = [] // eslint-disable-line prefer-const
+    let unmatchedLexemes = [] // eslint-disable-line prefer-const
     // iterate through the lexemes in the disambiguator and try
     // to disambiguate the existing lexemes with each
     for (const otherLexeme of disambiguator.lexemes) {
-      let lexemeMatched = false
       for (const lexeme of base.lexemes) {
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
         const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguate(lexeme, otherLexeme) : lexeme
 
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
-          lexemeMatched = true
-          // If lexeme is a full homonym with a disambiguator, it should always be marked as disambiguated
-          newLex.disambiguated = true
+          if (newLex.getSelectedInflection() !== null) {
+            // If lexeme is a full homonym with a disambiguator and had a matching
+            // inflection, it should be marked as disambiguated
+            matchedLexemes.push(newLex)
+          } else {
+            // If lexeme is a full homonym with a disambiguator, it may or may
+            // not be disambiguated depending upon the other available lexeme matches
+            newLex.disambiguated = false
+            possibleLexemes.push(newLex)
+          }
+        } else {
+          unmatchedLexemes.push(newLex)
         }
-        lexemes.push(newLex)
       }
-      // if we couldn't find a matching lexeme, add the disambigutor's lexemes
-      // to the list of lexemes for the new Homonym
-      if (!lexemeMatched) {
-        otherLexeme.disambiguated = true
-        missedLexemes.push(otherLexeme)
+      if (matchedLexemes.length === 0) {
+        if (possibleLexemes.length > 0) {
+          // we didn't have a better match so mark as disamibugated
+          // and add in the disambiguator's inflections
+          for ( const lexeme of possibleLexemes ) {
+            lexeme.disambiguated = true
+            // we have to add in the disamibugators inflections
+            for (const infl of disambiguator.inflections) {
+              lexeme.addInflection(infl)
+              lexeme.setSelectedInflection(infl)
+            }
+          }
+        } else {
+          // if we couldn't find a matching lexeme, add the disambigutor's lexemes
+          // to the list of lexemes for the new Homonym
+          otherLexeme.disambiguated = true
+          for (const infl of otherLexeme.inflections) {
+            otherLexeme.setSelectedInflection(infl)
+          }
+          missedLexemes.push(otherLexeme)
+        }
       }
     }
     // create a new homonym with the disamibugated lexemes
-    const newHom = new Homonym([...lexemes, ...missedLexemes], base.targetWord)
+    const newHom = new Homonym([...missedLexemes, ...matchedLexemes, ...possibleLexemes, ...unmatchedLexemes], base.targetWord)
     return Homonym.disambiguate(newHom, disambiguators)
   }
 }
@@ -3913,6 +3938,7 @@ class Inflection {
     // A lemma this inflection belongs to. Is set by `Lexeme.addInflection()`
     // TODO: make sure inflections are not set directly or this data will not be set
     this.lemma = null
+
   }
 
   clone () {
@@ -5989,8 +6015,6 @@ class Lemma {
         { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
-    console.info(`${this.word} and ${lemma.word} ${areSameWords}`)
-
     return areSameWords
   }
 
@@ -6138,6 +6162,25 @@ class Lexeme {
     this.addInflections(inflections)
     this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default(this.lemma.word, this.lemma.languageID)
     this.disambiguated = false
+    this.selectedInflection = null
+  }
+
+  setSelectedInflection (inflection) {
+    console.info("Setting selected infl", inflection !== null)
+    this.selectedInflection = inflection
+  }
+
+  getSelectedInflection () {
+    return this.selectedInflection
+  }
+
+  getSelectedInflectionsForDisplay () {
+    if (this.selectedInflection) {
+      const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__.default.getLanguageModel(this.lemma.languageID)
+      return lm.groupInflectionsForDisplay([this.selectedInflection])
+    } else {
+      return []
+    }
   }
 
   /**
@@ -6246,24 +6289,13 @@ class Lexeme {
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
       newLexeme.disambiguated = true
       newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
-      let keepInflections = [] // eslint-disable-line prefer-const
-      // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection
-      // we want to keep the original inflections rather than just replacing them
-      // because the original inflections may have more information
+      // iterate through this lexemes inflections and see if any are disamibugated
+      // we want to keep the original inflections because they may have more information
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
           if (inflection.disambiguatedBy(disambiguatorInflection)) {
-            keepInflections.push(inflection)
+            newLexeme.setSelectedInflection(inflection)
           }
-        }
-      }
-      // Set greek inflections
-      newLexeme.inflections = [] // Remove inflections before adding new ones
-      newLexeme.addInflections(keepInflections)
-      // if we couldn't match any existing inflections, then add the disambiguated one
-      if (newLexeme.inflections.length === 0) {
-        for (const infl of disambiguator.inflections) {
-          newLexeme.addInflection(infl)
         }
       }
     }

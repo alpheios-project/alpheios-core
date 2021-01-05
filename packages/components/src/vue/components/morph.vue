@@ -15,7 +15,9 @@
             <lemmatranslation :lemmakey="lex.lemma.ID" :translations="translations"></lemmatranslation>
         </div>
 
-        <inflections-list :lexeme = "lex"/>
+        <inflections-list :lexeme = "lex" :disambiguated = "true" v-if="lex.getSelectedInflection()" />
+        <inflections-list :lexeme = "lex" :disambiguated = "false"
+          v-if="! lex.getSelectedInflection() || lex.inflections.length > 1"/>
       </div>
     </div>
   </div>
@@ -65,7 +67,7 @@ export default {
     hasTranslations (lemmaID) {
       return this.translations && this.translations[lemmaID] && this.translations[lemmaID].glosses && this.translations[lemmaID].glosses.length > 0
     },
-      
+
     morphClass (lex) {
       let c = 'alpheios-morph__dictentry'
       if (lex.disambiguated) {

@@ -50,6 +50,25 @@ class Lexeme {
     this.addInflections(inflections)
     this.meaning = meaning || new DefinitionSet(this.lemma.word, this.lemma.languageID)
     this.disambiguated = false
+    this.selectedInflection = null
+  }
+
+  setSelectedInflection (inflection) {
+    console.info("Setting selected infl", inflection !== null)
+    this.selectedInflection = inflection
+  }
+
+  getSelectedInflection () {
+    return this.selectedInflection
+  }
+
+  getSelectedInflectionsForDisplay () {
+    if (this.selectedInflection) {
+      const lm = LMF.getLanguageModel(this.lemma.languageID)
+      return lm.groupInflectionsForDisplay([this.selectedInflection])
+    } else {
+      return []
+    }
   }
 
   /**
@@ -158,24 +177,13 @@ class Lexeme {
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
       newLexeme.disambiguated = true
       newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
-      let keepInflections = [] // eslint-disable-line prefer-const
-      // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection
-      // we want to keep the original inflections rather than just replacing them
-      // because the original inflections may have more information
+      // iterate through this lexemes inflections and see if any are disamibugated
+      // we want to keep the original inflections because they may have more information
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
           if (inflection.disambiguatedBy(disambiguatorInflection)) {
-            keepInflections.push(inflection)
+            newLexeme.setSelectedInflection(inflection)
           }
-        }
-      }
-      // Set greek inflections
-      newLexeme.inflections = [] // Remove inflections before adding new ones
-      newLexeme.addInflections(keepInflections)
-      // if we couldn't match any existing inflections, then add the disambiguated one
-      if (newLexeme.inflections.length === 0) {
-        for (const infl of disambiguator.inflections) {
-          newLexeme.addInflection(infl)
         }
       }
     }

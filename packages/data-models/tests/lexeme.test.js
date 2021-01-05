@@ -233,8 +233,8 @@ describe('lexeme.test.js', () => {
     Base and disambiguator lexemes have same features. Base lexeme has two inflections, for passive and active voices.
     Disambiguator lexeme has one inflection, for passive voice.
     A disambiguated lexeme should have a one passive voice inflection from a base lexeme (passive voice inflection
-    provided by disambiguator is more precise within a given context and thus we should keep only
-    a passive voice inflection; we do not replace a passive voice inflection from a base lexeme
+    provided by disambiguator is more precise within a given context and thus we should flag the
+    passive voice inflection as disambiguated; we do not replace a passive voice inflection from a base lexeme
     because an inflection from a disambiguator does not add any additional info to it.
      */
     lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
@@ -256,8 +256,10 @@ describe('lexeme.test.js', () => {
 
     const disambiguated = Lexeme.disambiguate(lexeme, disambiguator)
 
+    let inflection2D = inflection2
+    inflection2D.disambiguated = true
     // Disambiguated lexeme must have inflections that matches inflection2
-    expect(disambiguated.inflections).toEqual([inflection2])
+    expect(disambiguated.inflections).toEqual([inflection1,inflection2D])
     expect(disambiguated.lemma).toEqual(lexeme.lemma)
     expect(disambiguated.meaning).toEqual(lexeme.meaning)
     expect(disambiguated.disambiguated).toBeTruthy()
@@ -304,9 +306,8 @@ describe('lexeme.test.js', () => {
   it('6C Lexeme - disambiguate: case C', () => {
     /*
     Base and disambiguator lexemes have same features. Base lexeme has two inflections, for passive and active voices.
-    Disambiguator lexeme has two inflections, for passive and mediopassive voices.
-    A disambiguated lexeme should have a one passive voice inflection from a base lexeme.
-    TODO: Do we ignore a mediapassive voice inflection from a disambiguator?
+    Disambiguator lexeme has one inflection, for passive
+    A disambiguated lexeme should flag the passive voice inflection from a base lexeme as disamibugated.
      */
     lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     let inflection1 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
@@ -323,15 +324,14 @@ describe('lexeme.test.js', () => {
     let inflection3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
     inflection3.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     inflection3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
-    let inflection4 = new Inflection('stem4', 'grc') // eslint-disable-line prefer-const
-    inflection4.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
-    inflection4.addFeature(new Feature(Feature.types.voice, Constants.VOICE_MEDIOPASSIVE, Constants.LANG_GREEK))
-    const disambiguator = new Lexeme(disambiguatorLemma, [inflection3, inflection4])
+    const disambiguator = new Lexeme(disambiguatorLemma, [inflection3])
 
     const disambiguated = Lexeme.disambiguate(lexeme, disambiguator)
 
+    const inflection2D = inflection2
+    inflection2D.disamibugated = true
     // Disambiguated lexeme must have inflections that matches inflection2
-    expect(disambiguated.inflections).toEqual([inflection2])
+    expect(disambiguated.inflections).toEqual([inflection1,inflection2D])
     expect(disambiguated.lemma).toEqual(lexeme.lemma)
     expect(disambiguated.meaning).toEqual(lexeme.meaning)
     expect(disambiguated.disambiguated).toBeTruthy()

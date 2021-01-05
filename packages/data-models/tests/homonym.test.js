@@ -133,7 +133,7 @@ describe('homonym.test.js', () => {
     /*
     A homonym with a single lexeme that has two possible inflections in active and passive voices.
     Disambiguator has a single inflection in an active voice.
-    As a rusult of a disamiguation, only an active voice inflection is kept.
+    As a result of a disambiguation, active voice inflection is the selected inflection
      */
     let infl1 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
     infl1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
@@ -159,7 +159,8 @@ describe('homonym.test.js', () => {
 
     const disambiguated = Homonym.disambiguate(homonym, [disambiguator])
     expect(disambiguated.isDisambiguated()).toBeTruthy()
-    expect(disambiguated.inflections).toEqual([infl1])
+    expect(disambiguated.inflections).toEqual([infl1,infl2])
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toEqual(infl1)
   })
 
   it('7B Homonym disambiguation: case B', () => {
@@ -197,10 +198,11 @@ describe('homonym.test.js', () => {
 
     expect(disambiguated.isDisambiguated()).toBeTruthy()
     expect(disambiguated.lexemes.length).toEqual(2)
-    expect(disambiguated.lexemes[0].inflections).toEqual([infl1, infl2])
-    expect(disambiguated.lexemes[0].disambiguated).toBeFalsy()
-    expect(disambiguated.lexemes[1].inflections).toEqual([infl3])
-    expect(disambiguated.lexemes[1].disambiguated).toBeTruthy()
+    expect(disambiguated.lexemes[0].inflections).toEqual([infl3])
+    expect(disambiguated.lexemes[0].disambiguated).toBeTruthy()
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toEqual(infl3)
+    expect(disambiguated.lexemes[1].inflections).toEqual([infl1, infl2])
+    expect(disambiguated.lexemes[1].disambiguated).toBeFalsy()
   })
 
   it('7C Homonym disambiguation: case C', () => {
@@ -210,8 +212,8 @@ describe('homonym.test.js', () => {
     HomonymA.Lexeme1 matches HomonymBLexeme1 on lemma.word and lemma.part of speech.
     HomonymB.Lexeme1.Inflection1 cannot be found in HomonymA.Lexeme1.
     The resulting Homonym should contain 1 Lexeme with the superset of all attributes
-    from HomonymA.Lexeme1 and HomonymB.Lexeme1 except only the inflection from HomonymB. Lexeme1
-    should be flagged as disambiguated.
+    from HomonymA.Lexeme1 and HomonymB.Lexeme1 with the inflection from HomonymB selected.
+    Lexeme1 should also be flagged as disambiguated.
      */
     let infl1 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
     infl1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
@@ -245,8 +247,9 @@ describe('homonym.test.js', () => {
 
     expect(disambiguated.isDisambiguated()).toBeTruthy()
     expect(disambiguated.lexemes.length).toEqual(1)
-    expect(disambiguated.lexemes[0].inflections).toEqual([infl4])
+    expect(disambiguated.lexemes[0].inflections).toEqual([infl1,infl2,infl3,infl4])
     expect(disambiguated.lexemes[0].disambiguated).toBeTruthy()
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toEqual(infl4)
   })
 
   it('7D Homonym disambiguation: case D', () => {
@@ -257,7 +260,7 @@ describe('homonym.test.js', () => {
     HomonymB.Lexeme1.Inflection1 matches HomonymA.Lexeme1.Inflection1.
     HomonymA.Lexeme1.Inflection1 has a stem and suffix whereas HomonymB.Lexeme1.Inflection1 has a stem but no suffix.
     The resulting Homonym should contain 1 Lexeme with the superset of all attributes
-    from HomonymA.Lexeme1 and HomonymB.Lexeme1 except only the inflection from HomonymA.Lexeme1.Inflection1
+    from HomonymA.Lexeme1 and HomonymB.Lexeme1 with the inflection from HomonymA.Lexeme1.Inflection1 selected
     (i.e. the inflection that includes stem+suffix).
     Lexeme1 should be flagged as disambiguated
      */
@@ -292,8 +295,9 @@ describe('homonym.test.js', () => {
     const disambiguated = Homonym.disambiguate(homonymA, [homonymB])
 
     expect(disambiguated.lexemes.length).toEqual(1)
-    expect(disambiguated.lexemes[0].inflections).toEqual([infl1])
+    expect(disambiguated.lexemes[0].inflections).toEqual([infl1,infl2,infl3])
     expect(disambiguated.lexemes[0].disambiguated).toBeTruthy()
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toEqual(infl1)
     expect(disambiguated.isDisambiguated()).toBeTruthy()
   })
 
@@ -307,7 +311,7 @@ describe('homonym.test.js', () => {
     HomonymB.Lexeme1.Inflection1 matches HomonymA.Lexeme1.Inflection1.
     HomonymA.Lexeme1.Inflection1 has a stem and suffix whereas HomonymB.Lexeme1.Inflection1 has a stem but no suffix.
     The resulting Homonym should contain 2 Lexemes. Lexeme1 has the superset of all attributes from
-    HomonymA.Lexeme1 and HomonymB.Lexeme1 except only the inflection from HomonymA.Lexeme1.Inflection1
+    HomonymA.Lexeme1 and HomonymB.Lexeme1 with the inflection from HomonymA.Lexeme1.Inflection1 selected
     (i.e. the inflection that includes stem+suffix). Lexeme2 is the exactly the same as
     HomonymA.Lexeme2. Lexeme1 should be flagged as disambiguated
      */
@@ -354,8 +358,9 @@ describe('homonym.test.js', () => {
     const disambiguated = Homonym.disambiguate(homonymA, [homonymB])
 
     expect(disambiguated.lexemes.length).toEqual(2)
-    expect(disambiguated.lexemes[0].inflections).toEqual([infl1])
+    expect(disambiguated.lexemes[0].inflections).toEqual([infl1,infl2,infl3])
     expect(disambiguated.lexemes[0].disambiguated).toBeTruthy()
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toEqual(infl1)
     expect(disambiguated.isDisambiguated()).toBeTruthy()
     expect(disambiguated.lexemes[1]).toEqual(lexemeA2)
   })
@@ -365,7 +370,7 @@ describe('homonym.test.js', () => {
     HomonymA contains 2 Lexemes. Homonym B contains 1 Lexeme.
     HomonymB.Lexeme1 does not match either of the HomonymA Lexemes on lemma.word and lemma.part of speech.
     The resulting Homonym should contain 3 Lexemes. Lexeme1 should be identical to HomonymB.Lexeme1
-    except that it should be flagged as disambiguated. Lexemes 2 and 3 should be identical to
+    except that it is disambiguated and its inflection should be selected. Lexemes 2 and 3 should be identical to
     HomonymA.Lexeme1 and HomonymA.Lexeme2.
      */
     let infl1 = new Inflection('stem1', 'grc', 'suffix1') // eslint-disable-line prefer-const
@@ -421,6 +426,7 @@ describe('homonym.test.js', () => {
       })])
     )
     expect(disambiguated.isDisambiguated()).toBeTruthy()
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toEqual(infl6)
   })
 
   it('7G Homonym disambiguation: case G', () => {
@@ -432,7 +438,7 @@ describe('homonym.test.js', () => {
     HomonymA.Lexeme1.Inflection1 has a stem and suffix whereas HomonymB.Lexeme1.Inflection1 has a stem but no suffix.
     The resulting Homonym should contain 1 Lexeme. The lemma.word should be the same as HomonymB.lemma
     (i.e. with initial upper case) and with the superset of all attributes from
-    HomonymA.Lexeme1 and HomonymB.Lexeme1 except only the inflection from HomonymA.Lexeme1.Inflection1
+    HomonymA.Lexeme1 and HomonymB.Lexeme1 and the inflection from HomonymA.Lexeme1.Inflection1 selected
     (i.e. the inflection that includes stem+suffix). Lexeme1 should be flagged as disambiguated.
      */
     let infl1 = new Inflection('stem', 'grc', 'suffix') // eslint-disable-line prefer-const
@@ -469,10 +475,11 @@ describe('homonym.test.js', () => {
     expect(disambiguated.lexemes[0]).toEqual(
       expect.objectContaining({
         lemma: expect.objectContaining({ word: lemmaB.word }),
-        inflections: [infl1],
+        inflections: [infl1,infl2,infl3],
         disambiguated: true
       })
     )
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toEqual(infl1)
     expect(disambiguated.isDisambiguated()).toBeTruthy()
   })
 
@@ -486,7 +493,7 @@ describe('homonym.test.js', () => {
     HomonymA.Lexeme1.Inflection1 has a stem and suffix whereas HomonymB.Lexeme1.Inflection1 does not.
     The resulting Homonym should contain 1 Lexeme. The lemma.word should be
     the NORMALIZED form of HomonymB.lemma and with the superset of all attributes from HomonymA.Lexeme1
-    and HomonymB.Lexeme1 except only the inflection from HomonymA.Lexeme1.Inflection1
+    and HomonymB.Lexeme1 except the inflection from HomonymA.Lexeme1.Inflection1 is selected
     (i.e. the inflection that includes stem+suffix). Lexeme1 should be flagged as disambiguated.
      */
     let infl1 = new Inflection('stem', 'grc', 'suffix') // eslint-disable-line prefer-const
@@ -524,10 +531,11 @@ describe('homonym.test.js', () => {
     expect(disambiguated.lexemes[0]).toEqual(
       expect.objectContaining({
         lemma: expect.objectContaining({ word: langModel.normalizeText(lemmaB.word) }),
-        inflections: [infl1],
+        inflections: [infl1, infl2, infl3],
         disambiguated: true
       })
     )
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toEqual(infl1)
     expect(disambiguated.isDisambiguated()).toBeTruthy()
   })
 
@@ -540,7 +548,7 @@ describe('homonym.test.js', () => {
     HomonymB.Lexeme1.Inflection1 does not. The resulting Homonym should contain 1 Lexeme.
     The lemma.word should be the form of HomonymA.lemma (the one with the trailing digit)
     and with the superset of all attributes from HomonymA.Lexeme1 and HomonymB.Lexeme1
-    except only the inflection from HomonymA.Lexeme1.Inflection1 (i.e. the inflection
+    except only inflection from HomonymA.Lexeme1.Inflection1 selected (i.e. the inflection
     that includes stem+suffix). Lexeme1 should be flagged as disambiguated.
      */
     let infl1 = new Inflection('stem', 'grc', 'suffix') // eslint-disable-line prefer-const
@@ -577,10 +585,11 @@ describe('homonym.test.js', () => {
     expect(disambiguated.lexemes[0]).toEqual(
       expect.objectContaining({
         lemma: expect.objectContaining({ word: lemmaA.word }),
-        inflections: [infl1],
+        inflections: [infl1,infl2,infl3],
         disambiguated: true
       })
     )
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toEqual(infl1)
     expect(disambiguated.isDisambiguated()).toBeTruthy()
   })
 
@@ -615,6 +624,7 @@ describe('homonym.test.js', () => {
         disambiguated: true
       })
     )
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toBeNull()
     expect(disambiguated.lexemes[1]).toEqual(lexemeB)
     expect(disambiguated.isDisambiguated()).toBeTruthy()
   })
@@ -622,10 +632,10 @@ describe('homonym.test.js', () => {
   it('7K Homonym disambiguation: case K', () => {
     /*
     Homonym A contains 2 Lexemes. HomonymB contains 1 Lexeme.
-    HomonymB.Lexeme1 matches either of the HomonymA Lexeme1 on lemma.word and lemma.part of speech.
+    HomonymB.Lexeme1 matches HomonymA Lexeme1 on lemma.word and lemma.part of speech.
     HomonymA.Lexeme1 has some inflections data. HomonymB.Lexeme1 contains no inflection data.
     Resulting homonym should contain 2 Lexemes: Lexeme1 should be identical to HomonymA.Lexeme1
-    except that it should be flagged as disambiguated.
+    except that it should be flagged as disambiguated. (No selected inflection)
     Lexeme2 should be identical to HomonymA.Lexeme2.
      */
     let lemmaA = new Lemma('παρ᾽', 'grc') // eslint-disable-line prefer-const
@@ -652,7 +662,52 @@ describe('homonym.test.js', () => {
         disambiguated: true
       })
     )
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toBeNull()
     expect(disambiguated.lexemes[1]).toEqual(lexemeB)
+    expect(disambiguated.isDisambiguated()).toBeTruthy()
+  })
+  it('7L Homonym disambiguation: case L', () => {
+    /*
+    Homonym A contains 2 Lexemes. HomonymB contains 1 Lexeme.
+    HomonymB.Lexeme1 matches both HomonymA Lexemes on lemma.word and lemma.part of speech.
+    HomonymB Lexeme1 contains an inflection match on HomonymA Lexeme2 only.
+    Resulting homonym should contain 2 Lexemes: Lexeme1 should HomonymA Lexeme2 disambiguated
+    with HomonymB Lexeme1 and Lexeme2 should be disambiguated identical to HomonymA.Lexeme1.
+     */
+    let lemmaA = new Lemma('dico', 'lat') // eslint-disable-line prefer-const
+    lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
+    let infl1 = new Inflection('dic','lat','as') // eslint-disable-line prefer-const
+    infl1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_LATIN))
+    infl1.addFeature(new Feature(Feature.types.mood, Constants.MOOD_SUBJUNCTIVE, Constants.LANG_LATIN))
+    const lexemeA = new Lexeme(lemmaA, [infl1])
+    let lemmaB = new Lemma('dico', 'lat') // eslint-disable-line prefer-const
+    lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
+    let infl2 = new Inflection('dic','lat','as') // eslint-disable-line prefer-const
+    infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_LATIN))
+    infl2.addFeature(new Feature(Feature.types.mood, Constants.MOOD_INDICATIVE, Constants.LANG_LATIN))
+    const lexemeB = new Lexeme(lemmaB, [infl2])
+    const homonymA = new Homonym([lexemeA, lexemeB])
+
+    let lemmaC = new Lemma('dico', 'lat') // eslint-disable-line prefer-const
+    lemmaC.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
+    let infl3 = new Inflection('dic','lat','as') // eslint-disable-line prefer-const
+    infl3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_LATIN))
+    infl3.addFeature(new Feature(Feature.types.mood, Constants.MOOD_INDICATIVE, Constants.LANG_LATIN))
+    const lexemeC = new Lexeme(lemmaC, [infl3])
+    const homonymB = new Homonym([lexemeC])
+    const disambiguated = Homonym.disambiguate(homonymA, [homonymB])
+
+    expect(disambiguated.lexemes.length).toEqual(2)
+    expect(disambiguated.lexemes[0]).toEqual(
+      expect.objectContaining({
+        lemma: expect.objectContaining({ word: lemmaA.word }),
+        inflections: [infl2],
+        disambiguated: true
+      })
+    )
+    expect(disambiguated.lexemes[0].getSelectedInflection()).toEqual(infl2)
+    expect(disambiguated.lexemes[1]).toEqual(lexemeA)
+    expect(disambiguated.lexemes[1].disambiguated).toBeFalsy()
     expect(disambiguated.isDisambiguated()).toBeTruthy()
   })
 })
