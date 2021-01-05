@@ -74,6 +74,7 @@ export default class SettingsController {
       initOptions: this.initOptions.bind(this),
       getLexisOptions: this.getLexisOptions.bind(this),
       getLogeionOptions: this.getLogeionOptions.bind(this),
+      getLexiconsOptions: this.getLexiconsOptions.bind(this),
       getFeatureOptions: this.getFeatureOptions.bind(this),
       getResourceOptions: this.getResourceOptions.bind(this),
       getUiOptions: this.getUiOptions.bind(this),
@@ -156,6 +157,10 @@ export default class SettingsController {
 
   getLexisOptions () {
     return this._appConfig && this._appConfig['lexis-cs'] ? this._appConfig['lexis-cs'] : {}
+  }
+
+  getLexiconsOptions() {
+    return this._appConfig && this._appConfig['lexicons'] ? this._appConfig['lexicons'] : {}
   }
 
   getLogeionOptions () {
