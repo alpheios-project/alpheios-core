@@ -1,5 +1,6 @@
 <template>
-    <div class="alpheios-inflections-list__inflections" v-if="hasInflections">
+    <div :class="listClasses" v-if="hasInflections">
+
         <div class="alpheios-morph__inflset" v-for="(inflset, ifindex) in inflections" v-bind:key="ifindex">
 
             <span class="alpheios-inflections-list__inflset_index" v-if="inflections.length > 1">{{ ifindex + 1 }}.</span>
@@ -107,6 +108,11 @@
       disambiguated: {
         type: Boolean,
         required: true
+      },
+      listclass: {
+        type: String,
+        required: false,
+        default: ""
       }
     },
     data: function () {
@@ -164,6 +170,12 @@
       }
     },
     computed: {
+      listClasses () {
+        const klasses = ["alpheios-inflections-list__inflections"]
+        klasses.push(`alpheios-inflections-list__${this.listclass}`)
+        return klasses.join(" ")
+      },
+
       hasInflections () {
         return this.inflections.length > 0
       },

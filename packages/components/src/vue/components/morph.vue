@@ -15,9 +15,10 @@
             <lemmatranslation :lemmakey="lex.lemma.ID" :translations="translations"></lemmatranslation>
         </div>
 
-        <inflections-list :lexeme = "lex" :disambiguated = "true" v-if="lex.getSelectedInflection()" />
+        <inflections-list :lexeme = "lex" :disambiguated = "true" v-if="lex.getSelectedInflection()"
+          listclass = "disambiguated-infl-set"/>
         <inflections-list :lexeme = "lex" :disambiguated = "false"
-          v-if="! lex.getSelectedInflection() || lex.inflections.length > 1"/>
+          :listclass = "inflectionListClass(lex)"/>
       </div>
     </div>
   </div>
@@ -61,6 +62,17 @@ export default {
     }
   },
   methods: {
+    inflectionListClass (lex) {
+      if (lex.getSelectedInflection()) {
+        if (lex.inflections.length === 1) {
+          return "dupe-infl-set"
+        } else {
+          return "super-infl-set"
+        }
+      } else {
+        return "full-infl-set"
+      }
+    },
     showLexeme (lex) {
       return (lex.isPopulated) ? lex.isPopulated() : false
     },
