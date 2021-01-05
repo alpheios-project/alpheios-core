@@ -4140,8 +4140,8 @@ class BaseAdapter {
    * This method is used for adding error meassage with additional data
    * @param {String} message  - message text for the error
   */
-  addError (message) {
-    const error = new _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__.default(this.config.category, this.config.adapterName, this.config.method, message)
+  addError (message, statusCode) {
+    const error = new _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__.default(this.config.category, this.config.adapterName, this.config.method, message, statusCode)
     this.errors.push(error)
   }
 
@@ -4214,7 +4214,7 @@ class BaseAdapter {
             statusText = response.statusText
           }
 
-          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText: statusText }))
+          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText: statusText }), response.status)
           return
         }
         if (options.type === 'xml') {
@@ -6828,10 +6828,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 class AdapterError extends Error {
-  constructor (category, adapterName, methodName, messageError) {
+  constructor (category, adapterName, methodName, messageError, statusCode) {
     super(messageError)
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName
+    this.statusCode = statusCode
 
     if (this.adapter && this.methodName) {
       this.message = `${this.message} (${this.adapter}.${this.methodName})`
