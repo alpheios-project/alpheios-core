@@ -6191,7 +6191,7 @@ class Lexeme {
    * but there should only be one inflection in the array)
    * @returns {Array} if no selected inflection the array will be empty
    */
-  getSelectedInflectionForDisplay () {
+  getGroupedSelectedInflection () {
     if (this.selectedInflection) {
       const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__.default.getLanguageModel(this.lemma.languageID)
       return lm.groupInflectionsForDisplay([this.selectedInflection])

@@ -171,9 +171,9 @@
     },
     computed: {
       listClasses () {
-        const klasses = ["alpheios-inflections-list__inflections"]
-        klasses.push(`alpheios-inflections-list__${this.listclass}`)
-        return klasses.join(" ")
+        const classNames = ["alpheios-inflections-list__inflections"]
+        classNames.push(`alpheios-inflections-list__${this.listclass}`)
+        return classNames.join(" ")
       },
 
       hasInflections () {
@@ -183,8 +183,8 @@
       inflections () {
         if (this.disambiguated) {
           return (
-            this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getSelectedInflectionForDisplay)
-            ? this.lexeme.getSelectedInflectionForDisplay()
+            this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getGroupedSelectedInflection)
+            ? this.lexeme.getGroupedSelectedInflection()
             : []
 
         } else {
