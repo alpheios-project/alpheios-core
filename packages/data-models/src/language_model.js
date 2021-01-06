@@ -378,7 +378,7 @@ class LanguageModel {
    * @returns {string} A normalized word.
    */
   static normalizeTrailingDigit (word) {
-    return /^.+1$/.test(word) ? word.substring(0, word.length - 1) : word
+    return /^.+\d$/.test(word) ? word.substring(0, word.length - 1) : word
   }
 
   /**

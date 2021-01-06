@@ -1354,6 +1354,31 @@ div.alpheios-inflections-list__block {
   vertical-align: top !important;
   padding-top: 4px !important;
 }
+.alpheios-inflections-list__pointer-tooltip {
+  display: block;
+  height: 22px !important;
+  margin-left: -5px !important;
+}
+.alpheios-inflections-list__pointer-icn {
+  display: block;
+  fill: var(--alpheios-color-vivid) !important;
+  height: 22px !important;
+}
+.alpheios-inflections-list__dsmbg-providers {
+  display: block;
+  height: 22px !important;
+}
+.alpheios-inflections-list__dsmbg-providers-tooltip {
+  margin-left: 5px !important;
+}
+.alpheios-inflections-list__dsmbg-providers-icn {
+  fill: var(--alpheios-color-neutral-dark) !important;
+  display: block;
+  height: 22px !important;
+}
+.alpheios-inflections-list__dupe-infl-set {
+  display: none;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.

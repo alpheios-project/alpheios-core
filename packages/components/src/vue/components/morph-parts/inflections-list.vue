@@ -1,5 +1,6 @@
 <template>
-    <div class="alpheios-inflections-list__inflections" v-if="hasInflections">
+    <div :class="listClasses" v-if="hasInflections">
+
         <div class="alpheios-morph__inflset" v-for="(inflset, ifindex) in inflections" v-bind:key="ifindex">
 
             <span class="alpheios-inflections-list__inflset_index" v-if="inflections.length > 1">{{ ifindex + 1 }}.</span>
@@ -59,7 +60,23 @@
                             </span>
                         </div>
                     </div>
-
+                    <tooltip
+                      :tooltip-text="l10n.getText('TOOLTIP_DISAMBIGUATED')"
+                      tooltip-direction="top"
+                      class="alpheios-inflections-list__pointer-tooltip"
+                      v-show="disambiguated"
+                      >
+                        <disambiguated-icon class="alpheios-inflections-list__pointer-icn alpheios-disambiguated-icon"></disambiguated-icon>
+                      </tooltip>
+                      <div v-show="disambiguated" class="alpheios-inflections-list_dsmbg-providers">
+                          <tooltip
+                              :tooltip-text="l10n.getText('TOOLTIP_TREEBANK_SOURCE')"
+                              tooltip-direction="top"
+                              class="alpheios-inflections-list__dsmbg-providers-tooltip"
+                          >
+                              <treebank-icon class="alpheios-inflections-list__dsmbg-providers-icn alpheios-treebank-icon"></treebank-icon>
+                          </tooltip>
+                      </div>
                 </div><!-- alpheios-morph__inflgroup -->
 
             </div><!-- alpheios-morph__forms -->
@@ -69,18 +86,33 @@
 <script>
   import { Feature, LanguageModelFactory } from 'alpheios-data-models'
   import InflectionAttribute from '@/vue/components/infl-attribute.vue'
+  import TreebankIcon from '@/images/inline-icons/sitemap.svg'
+  import DisambiguatedIcon from '@/images/inline-icons/caret-left.svg'
+  import Tooltip from '@/vue/components/tooltip.vue'
 
   export default {
     name: 'InflectionsList',
     inject: ['app', 'l10n'],
     storeModules: ['app'],
     components: {
-      inflectionattribute: InflectionAttribute
+      inflectionattribute: InflectionAttribute,
+      treebankIcon: TreebankIcon,
+      disambiguatedIcon: DisambiguatedIcon,
+      tooltip: Tooltip
     },
     props: {
       lexeme: {
         type: Object,
         required: true
+      },
+      disambiguated: {
+        type: Boolean,
+        required: true
+      },
+      listclass: {
+        type: String,
+        required: false,
+        default: ""
       }
     },
     data: function () {
@@ -138,15 +170,29 @@
       }
     },
     computed: {
+      listClasses () {
+        const classNames = ["alpheios-inflections-list__inflections"]
+        classNames.push(`alpheios-inflections-list__${this.listclass}`)
+        return classNames.join(" ")
+      },
+
       hasInflections () {
         return this.inflections.length > 0
       },
 
       inflections () {
-        return (
-          this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getGroupedInflections)
-          ? this.lexeme.getGroupedInflections()
-          : []
+        if (this.disambiguated) {
+          return (
+            this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getGroupedSelectedInflection)
+            ? this.lexeme.getGroupedSelectedInflection()
+            : []
+
+        } else {
+          return (
+            this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getGroupedInflections)
+            ? this.lexeme.getGroupedInflections()
+            : []
+        }
       },
 
       languageCode () {
@@ -229,5 +275,38 @@
       }
 
     }
+  }
+
+  .alpheios-inflections-list__pointer {
+      &-tooltip {
+          display: block;
+          height: 22px;
+          margin-left: -5px;
+      }
+
+      &-icn {
+          display: block;
+          fill: var(--alpheios-color-vivid);
+          height: 22px;
+      }
+  }
+
+  .alpheios-inflections-list__dsmbg-providers {
+      display: block;
+      height: 22px;
+
+      &-tooltip {
+        margin-left: 5px;
+      }
+
+      &-icn {
+          fill: var(--alpheios-color-neutral-dark);
+          display: block;
+          height: 22px;
+      }
+  }
+
+  .alpheios-inflections-list__dupe-infl-set {
+      display: none;
   }
 </style>

@@ -3755,32 +3755,59 @@ class Homonym {
       return base
     }
     const disambiguator = disambiguators.shift()
-    let lexemes = [] // eslint-disable-line prefer-const
+    let matchedLexemes = [] // eslint-disable-line prefer-const
     let missedLexemes = [] // eslint-disable-line prefer-const
+    let possibleLexemes = [] // eslint-disable-line prefer-const
+    let unmatchedLexemes = [] // eslint-disable-line prefer-const
     // iterate through the lexemes in the disambiguator and try
     // to disambiguate the existing lexemes with each
     for (const otherLexeme of disambiguator.lexemes) {
-      let lexemeMatched = false
       for (const lexeme of base.lexemes) {
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
-        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguate(lexeme, otherLexeme) : lexeme
+        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ?
+          _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguateInflections(lexeme, otherLexeme) : lexeme
 
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
-          lexemeMatched = true
-          // If lexeme is a full homonym with a disambiguator, it should always be marked as disambiguated
-          newLex.disambiguated = true
+          if (newLex.getSelectedInflection() !== null) {
+            // If lexeme is a full homonym with a disambiguator and had a matching
+            // inflection, it is a full match
+            newLex.setDisambiguation(otherLexeme)
+            matchedLexemes.push(newLex)
+          } else {
+            // If lexeme is a full homonym with a disambiguator but didn't have a
+            // matching inflection, it may or may not be a full match depending
+            // upon whether any other lexeme was a more complete match
+            possibleLexemes.push(newLex)
+          }
+        } else {
+          unmatchedLexemes.push(newLex)
         }
-        lexemes.push(newLex)
       }
-      // if we couldn't find a matching lexeme, add the disambigutor's lexemes
-      // to the list of lexemes for the new Homonym
-      if (!lexemeMatched) {
-        otherLexeme.disambiguated = true
-        missedLexemes.push(otherLexeme)
+      if (matchedLexemes.length === 0) {
+        if (possibleLexemes.length > 0) {
+          // we didn't have a better match so mark as disamibugated
+          // and add in the disambiguator's inflections
+          for ( const lexeme of possibleLexemes ) {
+            lexeme.setDisambiguation(otherLexeme)
+            // we have to add in the disamibugators inflections
+            for (const infl of disambiguator.inflections) {
+              lexeme.addInflection(infl)
+              lexeme.setSelectedInflection(infl)
+            }
+          }
+        } else {
+          // if we couldn't find a matching lexeme, add the disambigutor's lexemes
+          // to the list of lexemes for the new Homonym
+          otherLexeme.setDisambiguation()
+          for (const infl of otherLexeme.inflections) {
+            otherLexeme.setSelectedInflection(infl)
+          }
+          missedLexemes.push(otherLexeme)
+        }
       }
     }
     // create a new homonym with the disamibugated lexemes
-    const newHom = new Homonym([...lexemes, ...missedLexemes], base.targetWord)
+    const newHom = new Homonym([...missedLexemes, ...matchedLexemes, ...possibleLexemes, ...unmatchedLexemes], base.targetWord)
     return Homonym.disambiguate(newHom, disambiguators)
   }
 }
@@ -3887,6 +3914,7 @@ class Inflection {
     // A lemma this inflection belongs to. Is set by `Lexeme.addInflection()`
     // TODO: make sure inflections are not set directly or this data will not be set
     this.lemma = null
+
   }
 
   clone () {
@@ -4700,7 +4728,7 @@ class LanguageModel {
    * @returns {string} A normalized word.
    */
   static normalizeTrailingDigit (word) {
-    return /^.+1$/.test(word) ? word.substring(0, word.length - 1) : word
+    return /^.+\d$/.test(word) ? word.substring(0, word.length - 1) : word
   }
 
   /**
@@ -6110,6 +6138,40 @@ class Lexeme {
     this.addInflections(inflections)
     this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default(this.lemma.word, this.lemma.languageID)
     this.disambiguated = false
+    this.selectedInflection = null
+  }
+
+  /**
+   * Set the selected inflection for a lexeme which has had its
+   * inflections disambiguated
+   * @param {Inflection} inflection the selected inflection
+   */
+  setSelectedInflection (inflection) {
+    this.selectedInflection = inflection
+  }
+
+  /**
+   * Get the selected inflection for a lexeme which has had its
+   * inflections disambiguated
+   * @returns {Inflection} (or null if none is selected)
+   */
+  getSelectedInflection () {
+    return this.selectedInflection
+  }
+
+  /**
+   * Gets the selected inflection formatted for display
+   * (returns an array because the display is grouped by feature
+   * but there should only be one inflection in the array)
+   * @returns {Array} if no selected inflection the array will be empty
+   */
+  getGroupedSelectedInflection () {
+    if (this.selectedInflection) {
+      const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__.default.getLanguageModel(this.lemma.languageID)
+      return lm.groupInflectionsForDisplay([this.selectedInflection])
+    } else {
+      return []
+    }
   }
 
   /**
@@ -6207,39 +6269,40 @@ class Lexeme {
   }
 
   /**
-   * disambiguate with another supplied Lexeme
+   * disambiguate the inflections in this lexeme with those in another lexeme
    *
    * @param {Lexeme} lexeme the lexeme to be disambiguated
    * @param {Lexeme} disambiguator the lexeme to use to disambiguate
-   * @returns {Lexeme} a new lexeme, if disamibugation was successful disambiguated flag will be set on it
+   * @returns {Lexeme} a new lexeme, if disambiguation was successful the
+   * disambiguated inflection will be selected
    */
-  static disambiguate (lexeme, disambiguator) {
+  static disambiguateInflections (lexeme, disambiguator) {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
-      newLexeme.disambiguated = true
-      newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
-      let keepInflections = [] // eslint-disable-line prefer-const
-      // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection
-      // we want to keep the original inflections rather than just replacing them
-      // because the original inflections may have more information
+      // iterate through this lexemes inflections and see if one is disambiguated
+      // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
           if (inflection.disambiguatedBy(disambiguatorInflection)) {
-            keepInflections.push(inflection)
+            newLexeme.setSelectedInflection(inflection)
           }
-        }
-      }
-      // Set greek inflections
-      newLexeme.inflections = [] // Remove inflections before adding new ones
-      newLexeme.addInflections(keepInflections)
-      // if we couldn't match any existing inflections, then add the disambiguated one
-      if (newLexeme.inflections.length === 0) {
-        for (const infl of disambiguator.inflections) {
-          newLexeme.addInflection(infl)
         }
       }
     }
     return newLexeme
+  }
+
+  /**
+   * Set the disambiguation flag of this lexeme
+   * if a disambiguator lexeme is provided, it's lemma word will be used
+   * to update the word of this lexeme's lemma
+   * @param {Lexeme} disambiguator
+   */
+  setDisambiguation(disambiguator = null) {
+    this.disambiguated = true
+    if (disambiguator) {
+      this.lemma.word = this.lemma.disambiguate(disambiguator.lemma)
+    }
   }
 
   getGroupedInflections () {
