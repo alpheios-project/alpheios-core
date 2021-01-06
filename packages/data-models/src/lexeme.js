@@ -172,13 +172,11 @@ class Lexeme {
    * @param {Lexeme} disambiguator the lexeme to use to disambiguate
    * @returns {Lexeme} a new lexeme, if disamibugation was successful disambiguated flag will be set on it
    */
-  static disambiguate (lexeme, disambiguator) {
+  static disambiguateInflections (lexeme, disambiguator) {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
-      newLexeme.disambiguated = true
-      newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
-      // iterate through this lexemes inflections and see if any are disamibugated
-      // we want to keep the original inflections because they may have more information
+      // iterate through this lexemes inflections and see if one is disambiguated
+      // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
           if (inflection.disambiguatedBy(disambiguatorInflection)) {
@@ -188,6 +186,13 @@ class Lexeme {
       }
     }
     return newLexeme
+  }
+
+  setDisambiguation(disambiguator = null) {
+    this.disambiguated = true
+    if (disambiguator) {
+      this.lemma.word = this.lemma.disambiguate(disambiguator.lemma)
+    }
   }
 
   getGroupedInflections () {

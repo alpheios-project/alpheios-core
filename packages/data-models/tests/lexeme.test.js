@@ -228,14 +228,13 @@ describe('lexeme.test.js', () => {
     expect(lexemes.sort(sortFunc)).toEqual([mockLexemeTen, mockLexemeEleven])
   })
 
-  it('6A Lexeme - disambiguate: case A', () => {
+  it('6A Lexeme - disambiguateInflections: case A', () => {
     /*
-    Base and disambiguator lexemes have same features. Base lexeme has two inflections, for passive and active voices.
-    Disambiguator lexeme has one inflection, for passive voice.
-    A disambiguated lexeme should have a one passive voice inflection from a base lexeme (passive voice inflection
-    provided by disambiguator is more precise within a given context and thus we should flag the
-    passive voice inflection as disambiguated; we do not replace a passive voice inflection from a base lexeme
-    because an inflection from a disambiguator does not add any additional info to it.
+    Base and disambiguator lexemes have same features.
+    Base lexeme has two inflections, for passive and active voices.
+    Disambiguator lexeme has one inflection, for passive voice. stems differ.
+    The disambiguated lexeme should the passive voice inflection from the base
+    lexeme selected.
      */
     lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     let inflection1 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
@@ -254,27 +253,28 @@ describe('lexeme.test.js', () => {
     inflection3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
     const disambiguator = new Lexeme(disambiguatorLemma, [inflection3])
 
-    const disambiguated = Lexeme.disambiguate(lexeme, disambiguator)
+    const disambiguated = Lexeme.disambiguateInflections(lexeme, disambiguator)
 
-    let inflection2D = inflection2
-    inflection2D.disambiguated = true
     // Disambiguated lexeme must have inflections that matches inflection2
-    expect(disambiguated.inflections).toEqual([inflection1,inflection2D])
+    expect(disambiguated.inflections).toEqual([inflection1,inflection2])
     expect(disambiguated.lemma).toEqual(lexeme.lemma)
     expect(disambiguated.meaning).toEqual(lexeme.meaning)
-    expect(disambiguated.disambiguated).toBeTruthy()
+    expect(disambiguated.getSelectedInflection()).toEqual(inflection2)
 
     // the original lexeme's inflections should be untouched
-    expect(lexeme.disambiguated).toBeFalsy()
+    expect(lexeme.selectedInflection).toBeNull()
     expect(lexeme.inflections).toEqual([inflection1, inflection2])
   })
 
-  it('6B Lexeme - disambiguate: case B', () => {
+  it('6B Lexeme - disambiguateInflections: case B', () => {
     /*
-    Base and disambiguator lexemes have same features. Base lexeme has two inflections, for passive and active voices.
+    Base and disambiguator lexemes have same features.
+    Base lexeme has two inflections, for passive and active voices.
     Disambiguator lexeme has no inflections.
-    A disambiguated lexeme should not be disambiguated and should have the same inflections as a base lexeme:
-    disambiguator has not enough information to disambiguate a base lexeme.
+    The disambiguated lexeme should not have the same inflections as the
+    base lexeme and none selected.
+    The disambiguator doesn't have enough information to disambiguate the
+    lexemes inflections.
      */
     lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     let inflection1 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
@@ -290,54 +290,15 @@ describe('lexeme.test.js', () => {
     disambiguatorLemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const disambiguator = new Lexeme(disambiguatorLemma, [])
 
-    const disambiguated = Lexeme.disambiguate(lexeme, disambiguator)
+    const disambiguated = Lexeme.disambiguateInflections(lexeme, disambiguator)
 
     // Disambiguated lexeme must have inflections that matches inflection2
     expect(disambiguated.inflections).toEqual([inflection1, inflection2])
     expect(disambiguated.lemma).toEqual(lexeme.lemma)
     expect(disambiguated.meaning).toEqual(lexeme.meaning)
-    expect(disambiguated.disambiguated).toBeFalsy()
+    expect(disambiguated.getSelectedInflection()).toBeNull()
 
     // the original lexeme's inflections should be untouched
-    expect(lexeme.disambiguated).toBeFalsy()
-    expect(lexeme.inflections).toEqual([inflection1, inflection2])
-  })
-
-  it('6C Lexeme - disambiguate: case C', () => {
-    /*
-    Base and disambiguator lexemes have same features. Base lexeme has two inflections, for passive and active voices.
-    Disambiguator lexeme has one inflection, for passive
-    A disambiguated lexeme should flag the passive voice inflection from a base lexeme as disamibugated.
-     */
-    lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
-    let inflection1 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
-    inflection1.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
-    inflection1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
-    let inflection2 = new Inflection('stem2', 'grc') // eslint-disable-line prefer-const
-    inflection2.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
-    inflection2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
-    const lexeme = new Lexeme(lemma, [inflection1, inflection2])
-    expect(lexeme.inflections).toEqual([inflection1, inflection2])
-
-    const disambiguatorLemma = new Lemma('word', 'grc')
-    disambiguatorLemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
-    let inflection3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
-    inflection3.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
-    inflection3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
-    const disambiguator = new Lexeme(disambiguatorLemma, [inflection3])
-
-    const disambiguated = Lexeme.disambiguate(lexeme, disambiguator)
-
-    const inflection2D = inflection2
-    inflection2D.disamibugated = true
-    // Disambiguated lexeme must have inflections that matches inflection2
-    expect(disambiguated.inflections).toEqual([inflection1,inflection2D])
-    expect(disambiguated.lemma).toEqual(lexeme.lemma)
-    expect(disambiguated.meaning).toEqual(lexeme.meaning)
-    expect(disambiguated.disambiguated).toBeTruthy()
-
-    // the original lexeme's inflections should be untouched
-    expect(lexeme.disambiguated).toBeFalsy()
     expect(lexeme.inflections).toEqual([inflection1, inflection2])
   })
 

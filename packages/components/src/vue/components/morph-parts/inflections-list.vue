@@ -305,4 +305,8 @@
           height: 22px;
       }
   }
+
+  .alpheios-inflections-list__dupe-infl-set {
+      display: none;
+  }
 </style>

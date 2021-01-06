@@ -3764,17 +3764,19 @@ class Homonym {
     for (const otherLexeme of disambiguator.lexemes) {
       for (const lexeme of base.lexemes) {
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
-        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguate(lexeme, otherLexeme) : lexeme
+        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ?
+          _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguateInflections(lexeme, otherLexeme) : lexeme
 
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
           if (newLex.getSelectedInflection() !== null) {
             // If lexeme is a full homonym with a disambiguator and had a matching
-            // inflection, it should be marked as disambiguated
+            // inflection, it is a full match
+            newLex.setDisambiguation(otherLexeme)
             matchedLexemes.push(newLex)
           } else {
-            // If lexeme is a full homonym with a disambiguator, it may or may
-            // not be disambiguated depending upon the other available lexeme matches
-            newLex.disambiguated = false
+            // If lexeme is a full homonym with a disambiguator but didn't have a
+            // matching inflection, it may or may not be a full match depending
+            // upon whether any other lexeme was a more complete match
             possibleLexemes.push(newLex)
           }
         } else {
@@ -3786,7 +3788,7 @@ class Homonym {
           // we didn't have a better match so mark as disamibugated
           // and add in the disambiguator's inflections
           for ( const lexeme of possibleLexemes ) {
-            lexeme.disambiguated = true
+            lexeme.setDisambiguation(otherLexeme)
             // we have to add in the disamibugators inflections
             for (const infl of disambiguator.inflections) {
               lexeme.addInflection(infl)
@@ -3796,7 +3798,7 @@ class Homonym {
         } else {
           // if we couldn't find a matching lexeme, add the disambigutor's lexemes
           // to the list of lexemes for the new Homonym
-          otherLexeme.disambiguated = true
+          otherLexeme.setDisambiguation()
           for (const infl of otherLexeme.inflections) {
             otherLexeme.setSelectedInflection(infl)
           }
@@ -6258,13 +6260,11 @@ class Lexeme {
    * @param {Lexeme} disambiguator the lexeme to use to disambiguate
    * @returns {Lexeme} a new lexeme, if disamibugation was successful disambiguated flag will be set on it
    */
-  static disambiguate (lexeme, disambiguator) {
+  static disambiguateInflections (lexeme, disambiguator) {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
-      newLexeme.disambiguated = true
-      newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
-      // iterate through this lexemes inflections and see if any are disamibugated
-      // we want to keep the original inflections because they may have more information
+      // iterate through this lexemes inflections and see if one is disambiguated
+      // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
           if (inflection.disambiguatedBy(disambiguatorInflection)) {
@@ -6274,6 +6274,13 @@ class Lexeme {
       }
     }
     return newLexeme
+  }
+
+  setDisambiguation(disambiguator = null) {
+    this.disambiguated = true
+    if (disambiguator) {
+      this.lemma.word = this.lemma.disambiguate(disambiguator.lemma)
+    }
   }
 
   getGroupedInflections () {
