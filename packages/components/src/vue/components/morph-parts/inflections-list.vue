@@ -183,8 +183,8 @@
       inflections () {
         if (this.disambiguated) {
           return (
-            this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getSelectedInflectionsForDisplay)
-            ? this.lexeme.getSelectedInflectionsForDisplay()
+            this.$store.state.app.morphDataReady && this.app.hasMorphData() && this.lexeme.getSelectedInflectionForDisplay)
+            ? this.lexeme.getSelectedInflectionForDisplay()
             : []
 
         } else {

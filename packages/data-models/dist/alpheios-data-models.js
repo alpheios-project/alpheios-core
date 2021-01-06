@@ -6167,16 +6167,31 @@ class Lexeme {
     this.selectedInflection = null
   }
 
+  /**
+   * Set the selected inflection for a lexeme which has had its
+   * inflections disambiguated
+   * @param {Inflection} inflection the selected inflection
+   */
   setSelectedInflection (inflection) {
-    console.info("Setting selected infl", inflection !== null)
     this.selectedInflection = inflection
   }
 
+  /**
+   * Get the selected inflection for a lexeme which has had its
+   * inflections disambiguated
+   * @returns {Inflection} (or null if none is selected)
+   */
   getSelectedInflection () {
     return this.selectedInflection
   }
 
-  getSelectedInflectionsForDisplay () {
+  /**
+   * Gets the selected inflection formatted for display
+   * (returns an array because the display is grouped by feature
+   * but there should only be one inflection in the array)
+   * @returns {Array} if no selected inflection the array will be empty
+   */
+  getSelectedInflectionForDisplay () {
     if (this.selectedInflection) {
       const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__.default.getLanguageModel(this.lemma.languageID)
       return lm.groupInflectionsForDisplay([this.selectedInflection])
@@ -6280,11 +6295,12 @@ class Lexeme {
   }
 
   /**
-   * disambiguate with another supplied Lexeme
+   * disambiguate the inflections in this lexeme with those in another lexeme
    *
    * @param {Lexeme} lexeme the lexeme to be disambiguated
    * @param {Lexeme} disambiguator the lexeme to use to disambiguate
-   * @returns {Lexeme} a new lexeme, if disamibugation was successful disambiguated flag will be set on it
+   * @returns {Lexeme} a new lexeme, if disambiguation was successful the
+   * disambiguated inflection will be selected
    */
   static disambiguateInflections (lexeme, disambiguator) {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
@@ -6302,6 +6318,12 @@ class Lexeme {
     return newLexeme
   }
 
+  /**
+   * Set the disambiguation flag of this lexeme
+   * if a disambiguator lexeme is provided, it's lemma word will be used
+   * to update the word of this lexeme's lemma
+   * @param {Lexeme} disambiguator
+   */
   setDisambiguation(disambiguator = null) {
     this.disambiguated = true
     if (disambiguator) {
