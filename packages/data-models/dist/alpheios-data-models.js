@@ -5873,6 +5873,10 @@ class Lemma {
     return this.languageCode
   }
 
+  get displayWord () {
+    return this.word.replace(/\d+$/, '')
+  }
+
   static readObject (jsonObject) {
     const language = jsonObject.language ? jsonObject.language : jsonObject.languageCode
     // eslint-disable-next-line prefer-const
