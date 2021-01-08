@@ -7,10 +7,10 @@
             class="alpheios-principal-parts__groupitem alpheios-principal-parts__groupitem--lemma-word"
             :lang="languageCode"
             data-alpheios-enable="all"
-            v-if="! lemma.principalParts.includes(lemma.word)"
+            v-if="! lemma.principalParts.includes(lemma.displayWord)"
         ><span
           class="alpheios-principal-parts__groupitem--lemma-word__listitem"
-          v-for="word in wordParts(lemma.word)">{{word}}</span></h4>
+          v-for="word in wordParts(lemma.displayWord)">{{word}}</span></h4>
 
         <h4 class="alpheios-principal-parts__groupitem" v-if="lemma.principalParts && lemma.principalParts.length > 0">
             <span
