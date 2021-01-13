@@ -124,8 +124,8 @@ describe('latin_language_model.js', () => {
 
   it('13 compareFeatureValue respects normalization', () => {
     expect(latinModel.compareFeatureValue(Feature.types.mood,
-      Constants.MOOD_GERUNDIVE, Constants.MOOD_PARTICIPLE, false)).toBeFalsy()
+      Constants.MOOD_GERUNDIVE, Constants.MOOD_PARTICIPLE, { normalize: false })).toBeFalsy()
     expect(latinModel.compareFeatureValue(Feature.types.mood,
-      Constants.MOOD_GERUNDIVE, Constants.MOOD_PARTICIPLE, true)).toBeTruthy()
+      Constants.MOOD_GERUNDIVE, Constants.MOOD_PARTICIPLE, { normalize: true })).toBeTruthy()
   })
 })

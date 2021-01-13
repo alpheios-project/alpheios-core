@@ -225,21 +225,22 @@ class Inflection {
    */
   modelCompareFeatureValue ( featureType, valueA, valueB, normalize = true )  {
     const model = LMF.getLanguageModel(this.languageID)
-    return model.compareFeatureValue(featureType, valueA, valueB, normalize)
+    return model.compareFeatureValue(featureType, valueA, valueB, { normalize })
   }
 
   /**
    * Check to see if the supplied inflection can disambiguate this one
    *
    * @param {Inflection} infl Inflection object to be used for disambiguation
-   * @param {Boolean} ignorePofs flag to ignore the inflection's part of speech
-   *                             (use if lexeme pofs is more relevant)
+   * @param {Object} options disambiguation options
+   * @param {Boolean} options.ignorePofs flag to ignore the inflection's part of speech
+   *                                    (use if lexeme pofs is more relevant)
    * @returns {Object} object { {Boolean} match, {Boolean} exactMatch }
    *                   a match means the inflection was disamibugated
    *                   an exactMatch means the disamibugator matched all
    *                   values of all features
    */
-  disambiguatedBy (infl, ignorePofs = false) {
+  disambiguatedBy (infl, { ignorePofs = false } = {}) {
     let matched = true
     let exactMatch = true
     // an inflection can only be disambiguated by its features
@@ -255,7 +256,7 @@ class Inflection {
         continue
       }
       for (const value of infl[feature].values) {
-        if (!this.hasFeatureValue(feature,value,true)) {
+        if (!this.hasFeatureValue(feature,value,{ normalize: true })) {
           matched = false
           break
         }
@@ -347,9 +348,11 @@ class Inflection {
    *
    * @param {string} featureName - A name of a feature
    * @param {string} featureValue - A value of a feature
+   * @param {object} options
+   * @param {boolean} options.normalize - whether or not to normalize the feature values
    * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
-  hasFeatureValue (featureName, featureValue, normalize=false) {
+  hasFeatureValue (featureName, featureValue, { normalize=false } = {}) {
     if (this.hasOwnProperty(featureName)) {
       return this[featureName].values.some(v => this.modelCompareFeatureValue(featureName, v, featureValue))
     }

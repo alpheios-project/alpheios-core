@@ -479,9 +479,10 @@ class LanguageModel {
    * @param {string} featureType - the feature type being compared
    * @param {string} valueA - the first value for comparison
    * @param {string} valueB - the second value for comparison
-   * @param {boolean} normalize - whether or not to apply normalization
+   * @param {object} options
+   * @param {boolean} options.normalize - whether or not to apply normalization
    */
-  static compareFeatureValue ( featureType, valueA, valueB, normalize = true) {
+  static compareFeatureValue ( featureType, valueA, valueB, { normalize = true } = {}) {
     if (normalize) {
       valueA = this.normalizeFeatureValue(featureType, valueA)
       valueB = this.normalizeFeatureValue(featureType, valueB)

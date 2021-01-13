@@ -4115,22 +4115,22 @@ class Inflection {
    */
   modelCompareFeatureValue ( featureType, valueA, valueB, normalize = true )  {
     const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModel(this.languageID)
-    return model.compareFeatureValue(featureType, valueA, valueB, normalize)
+    return model.compareFeatureValue(featureType, valueA, valueB, { normalize })
   }
 
   /**
    * Check to see if the supplied inflection can disambiguate this one
    *
    * @param {Inflection} infl Inflection object to be used for disambiguation
-   * @param {Boolean} ignorePofs flag to ignore the inflection's part of speech
-   *                             (use if lexeme pofs is more relevant)
+   * @param {Object} options disambiguation options
+   * @param {Boolean} options.ignorePofs flag to ignore the inflection's part of speech
+   *                                    (use if lexeme pofs is more relevant)
    * @returns {Object} object { {Boolean} match, {Boolean} exactMatch }
    *                   a match means the inflection was disamibugated
    *                   an exactMatch means the disamibugator matched all
    *                   values of all features
    */
-  disambiguatedBy (infl, ignorePofs = false) {
-    console.info("Ignore Pofs",ignorePofs)
+  disambiguatedBy (infl, { ignorePofs = false } = {}) {
     let matched = true
     let exactMatch = true
     // an inflection can only be disambiguated by its features
@@ -4143,12 +4143,10 @@ class Inflection {
     }
     for (const feature of infl.features) {
       if (ignorePofs && feature === _feature_js__WEBPACK_IMPORTED_MODULE_0__.default.types.part) {
-        console.info("skip pofs match", feature)
         continue
       }
       for (const value of infl[feature].values) {
-        if (!this.hasFeatureValue(feature,value,true)) {
-          console.info(`no match on ${feature} ${value}`)
+        if (!this.hasFeatureValue(feature,value,{ normalize: true })) {
           matched = false
           break
         }
@@ -4240,9 +4238,11 @@ class Inflection {
    *
    * @param {string} featureName - A name of a feature
    * @param {string} featureValue - A value of a feature
+   * @param {object} options
+   * @param {boolean} options.normalize - whether or not to normalize the feature values
    * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
-  hasFeatureValue (featureName, featureValue, normalize=false) {
+  hasFeatureValue (featureName, featureValue, { normalize=false } = {}) {
     if (this.hasOwnProperty(featureName)) {
       return this[featureName].values.some(v => this.modelCompareFeatureValue(featureName, v, featureValue))
     }
@@ -4918,9 +4918,10 @@ class LanguageModel {
    * @param {string} featureType - the feature type being compared
    * @param {string} valueA - the first value for comparison
    * @param {string} valueB - the second value for comparison
-   * @param {boolean} normalize - whether or not to apply normalization
+   * @param {object} options
+   * @param {boolean} options.normalize - whether or not to apply normalization
    */
-  static compareFeatureValue ( featureType, valueA, valueB, normalize = true) {
+  static compareFeatureValue ( featureType, valueA, valueB, { normalize = true } = {}) {
     if (normalize) {
       valueA = this.normalizeFeatureValue(featureType, valueA)
       valueB = this.normalizeFeatureValue(featureType, valueB)
@@ -6470,7 +6471,7 @@ class Lexeme {
       // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
-          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, true)
+          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, { ignorePofs: true })
           if (inflMatch.match) {
             if (inflMatch.exactMatch) {
               // if it was an exact match, we can use the source lexeme's inflection

@@ -258,8 +258,8 @@ describe('inflection.test.js', () => {
     inflection9.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB_PARTICIPLE, Constants.LANG_LATIN))
     inflection9.addFeature(new Feature(Feature.types.number, Constants.NUM_SINGULAR, Constants.LANG_LATIN))
     inflection9.addFeature(new Feature(Feature.types.case, Constants.CASE_ABLATIVE, Constants.LANG_LATIN))
-    expect(inflection8.disambiguatedBy(inflection9,true).match).toBeTruthy()
-    expect(inflection8.disambiguatedBy(inflection9,true).exactMatch).toBeTruthy()
+    expect(inflection8.disambiguatedBy(inflection9,{ ignorePofs: true }).match).toBeTruthy()
+    expect(inflection8.disambiguatedBy(inflection9,{ ignorePofs: true }).exactMatch).toBeTruthy()
 
   })
 

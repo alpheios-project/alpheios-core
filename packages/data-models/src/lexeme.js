@@ -203,7 +203,7 @@ class Lexeme {
       // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
-          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, true)
+          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, { ignorePofs: true })
           if (inflMatch.match) {
             if (inflMatch.exactMatch) {
               // if it was an exact match, we can use the source lexeme's inflection
