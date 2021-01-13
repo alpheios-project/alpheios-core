@@ -4,6 +4,8 @@ import * as Constants from '@/constants.js'
 import LMF from '@/language_model_factory.js'
 import Feature from '@/feature.js'
 import Inflection from '@/inflection.js'
+import Lexeme from '@/lexeme.js'
+import Lemma from '@/lemma.js'
 import Logger from '@/logging/logger.js'
 
 describe('greek_language_model.j', () => {
@@ -229,4 +231,35 @@ describe('greek_language_model.j', () => {
     expect(alt[0]).toEqual('ἐκπ\u1F77πτω')
   })
 
+  it('18 GreekLanguageModel - normalizes verb participle pofs', () => {
+    const lemma = new Lemma('word', 'grc')
+    lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
+    let inflection1 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
+    inflection1.addFeature(new Feature(Feature.types.mood, Constants.MOOD_PARTICIPLE, Constants.LANG_GREEK))
+    const lexeme = new Lexeme(lemma, [inflection1])
+    expect(greekModel.normalizePartOfSpeechValue(lexeme)).toEqual(Constants.POFS_VERB_PARTICIPLE)
+  })
+
+  it('19 GreekLanguageModel - does not normalize pofs when it should not', () => {
+    const lemma = new Lemma('word', 'grc')
+    lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
+    let inflection1 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
+    inflection1.addFeature(new Feature(Feature.types.mood, Constants.MOOD_PARTICIPLE, Constants.LANG_GREEK))
+    inflection1.addFeature(new Feature(Feature.types.mood, Constants.MOOD_SUPINE, Constants.LANG_GREEK))
+    const lexeme = new Lexeme(lemma, [inflection1])
+    expect(greekModel.normalizePartOfSpeechValue(lexeme)).toEqual(Constants.POFS_VERB)
+    const lemma2 = new Lemma('word','grc')
+    lemma2.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_GREEK))
+    let inflection2 = new Inflection('stem1', 'grc') // eslint-disable-line prefer-const
+    inflection2.addFeature(new Feature(Feature.types.mood, Constants.MOOD_PARTICIPLE, Constants.LANG_GREEK))
+    const lexeme2 = new Lexeme(lemma2, [inflection2])
+    expect(greekModel.normalizePartOfSpeechValue(lexeme)).toEqual(Constants.POFS_VERB)
+  })
+
+  it('20 GreekLanguageModel - normalizes particle pofs to adverb', () => {
+    const lemma = new Lemma('word', 'grc')
+    lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_PARTICLE, Constants.LANG_GREEK))
+    const lexeme = new Lexeme(lemma, [])
+    expect(greekModel.normalizePartOfSpeechValue(lexeme)).toEqual(Constants.POFS_ADVERB)
+  })
 })

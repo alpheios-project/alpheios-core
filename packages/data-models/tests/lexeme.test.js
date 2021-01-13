@@ -309,4 +309,38 @@ describe('lexeme.test.js', () => {
     lex.addAltLemma(lemma2)
     expect(lex.altLemmas).toEqual([lemma2])
   })
+
+  it ('8 Lexeme - test isFullHomonym', () => {
+    const lemmaV = new Lemma('word', 'grc')
+    lemmaV.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
+    const lexV = new Lexeme(lemmaV, [])
+    const lemmaV2 = new Lemma('word', 'grc')
+    lemmaV2.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
+    const lexV2 = new Lexeme(lemmaV2, [])
+    expect(lexV.isFullHomonym(lexV2)).toBeTruthy
+  })
+
+  it ('8 Lexeme - test isFullHomonym equivalent parts of speech', () => {
+    const lemmaVP = new Lemma('word', 'grc')
+    lemmaVP.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB_PARTICIPLE, Constants.LANG_GREEK))
+    const lexVP = new Lexeme(lemmaVP, [])
+    const lemmaV = new Lemma('word', 'grc')
+    lemmaV.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
+    const infl = new Inflection('word','grc')
+    infl.addFeature(new Feature(Feature.types.mood, Constants.MOOD_PARTICIPLE, Constants.LANG_GREEK))
+    const lexV = new Lexeme(lemmaVP, [infl])
+    expect(lexVP.isFullHomonym(lexV)).toBeTruthy
+  })
+
+  it ('9 Lexeme - test isFullHomonym unequivalent parts of speech', () => {
+    const lemmaVP = new Lemma('word', 'grc')
+    lemmaVP.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB_PARTICIPLE, Constants.LANG_GREEK))
+    const lexVP = new Lexeme(lemmaVP, []) 
+    const lemmaV = new Lemma('word', 'grc')
+    lemmaV.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
+    const infl = new Inflection('word','grc')
+    infl.addFeature(new Feature(Feature.types.mood, Constants.MOOD_SUBJUNCTIVE, Constants.LANG_GREEK))
+    const lexV = new Lexeme(lemmaV, [infl])
+    expect(lexV.isFullHomonym(lexVP)).toBeFalsy()
+  })
 })

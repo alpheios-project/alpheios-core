@@ -116,4 +116,16 @@ describe('latin_language_model.js', () => {
     // and are not equal if we don't normalize
     expect(latinModel.compareWords('erās', 'eras', false)).toBeFalsy()
   })
+
+  it('12 normalizeFeatureValue normalizes gerundive to participle', () => {
+    expect(latinModel.normalizeFeatureValue(Feature.types.mood,
+      Constants.MOOD_GERUNDIVE)).toEqual(Constants.MOOD_PARTICIPLE)
+  })
+
+  it('13 compareFeatureValue respects normalization', () => {
+    expect(latinModel.compareFeatureValue(Feature.types.mood,
+      Constants.MOOD_GERUNDIVE, Constants.MOOD_PARTICIPLE, { normalize: false })).toBeFalsy()
+    expect(latinModel.compareFeatureValue(Feature.types.mood,
+      Constants.MOOD_GERUNDIVE, Constants.MOOD_PARTICIPLE, { normalize: true })).toBeTruthy()
+  })
 })
