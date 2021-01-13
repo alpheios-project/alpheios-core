@@ -252,12 +252,10 @@ class Inflection {
     }
     for (const feature of infl.features) {
       if (ignorePofs && feature === Feature.types.part) {
-        console.info("skip pofs match", feature)
         continue
       }
       for (const value of infl[feature].values) {
         if (!this.hasFeatureValue(feature,value,true)) {
-          console.info(`no match on ${feature} ${value}`)
           matched = false
           break
         }
