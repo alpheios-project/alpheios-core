@@ -240,7 +240,6 @@ class Inflection {
    *                   values of all features
    */
   disambiguatedBy (infl, ignorePofs = false) {
-    console.info("Ignore Pofs",ignorePofs)
     let matched = true
     let exactMatch = true
     // an inflection can only be disambiguated by its features
