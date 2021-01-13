@@ -3131,6 +3131,23 @@ for the current node
     return text
   }
 
+  static normalizePartOfSpeechValue( lexeme ) {
+    if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part]) {
+      if( lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB &&
+          lexeme.inflections.length > 0 &&
+          lexeme.inflections.every(i => i[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.mood] &&
+            i[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.mood].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE)) {
+        return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB_PARTICIPLE
+      } else if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
+        return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB
+      } else {
+        return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value
+      }
+    } else {
+      return null
+    }
+  }
+
   static _tonosToOxia (word) {
     return word.replace(
       /\u{03AC}/ug, '\u{1F71}').replace( // alpha
@@ -4077,28 +4094,44 @@ class Inflection {
     return model.compareWords(wordA, wordB, normalize)
   }
 
+  modelCompareFeatureValue ( featureType, valueA, valueB, normalize = true )  {
+    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModel(this.languageID)
+    return model.compareFeatureValue(featureType, valueA, valueB, normalize)
+  }
+
   /**
    * Check to see if the supplied inflection can disambiguate this one
    *
    * @param {Inflection} infl Inflection object to be used for disambiguation
+   * @param {Object} options disambiguation options
+   * @param {Boolean} options.ignorePofs flag to ignore the inflection's part of speech
    */
-  disambiguatedBy (infl) {
+  disambiguatedBy (infl, {ignorePofs = false} = {}) {
     let matched = true
+    let exactMatch = true
     // an inflection can only be disambiguated by its features
-    if (this.features.length === 0 || infl.features.length === 0) {
+    if (this.features.size === 0 || infl.features.size === 0) {
       matched = false
     }
     // the supplied inflection can be less specific but not more
-    if (infl.features.length > this.features.length) {
+    if (infl.features.size > this.features.size) {
       matched = false
     }
     for (const feature of infl.features) {
-      if (!this[feature] || !this[feature].isEqual(infl[feature])) {
-        matched = false
-        break
+      if (feature === _feature_js__WEBPACK_IMPORTED_MODULE_0__.default.types.part) {
+        continue
+      }
+      for (const value of infl[feature].values) {
+        if (!this.hasFeatureValue(feature,value,true)) {
+          matched = false
+          break
+        }
+        if (this[feature].values.length != infl[feature].values.length) {
+          exactMatch =  false
+        }
       }
     }
-    return matched
+    return { match: matched, exactMatch: exactMatch }
   }
 
   /**
@@ -4179,9 +4212,9 @@ class Inflection {
    * @param {string} featureValue - A value of a feature
    * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
-  hasFeatureValue (featureName, featureValue) {
+  hasFeatureValue (featureName, featureValue, normalize=false) {
     if (this.hasOwnProperty(featureName)) {
-      return this[featureName].values.includes(featureValue)
+      return this[featureName].values.some(v => this.modelCompareFeatureValue(featureName, v, featureValue))
     }
     return false
   }
@@ -4791,6 +4824,16 @@ class LanguageModel {
     return word
   }
 
+  static normalizePartOfSpeechValue ( lexeme ) {
+    // default is to do nothing
+    lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ? lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value : null
+  }
+
+  static normalizeFeatureValue ( featureType, featureValue ) {
+    // default is to do nothing
+    return featureValue
+  }
+
   /**
    * Returns alternate encodings for a word
    *
@@ -4826,6 +4869,14 @@ class LanguageModel {
     } else {
       return wordA === wordB
     }
+  }
+
+  static compareFeatureValue ( featureType, valueA, valueB, normalize = true) {
+    if (normalize) {
+      valueA = this.normalizeFeatureValue(featureType, valueA)
+      valueB = this.normalizeFeatureValue(featureType, valueB)
+    }
+    return valueA === valueB
   }
 
   /**
@@ -5764,6 +5815,33 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
     return text
   }
 
+
+  static normalizePartOfSpeechValue( lexeme ) {
+    if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part]) {
+      if( lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB &&
+          lexeme.inflections.length > 0 &&
+          lexeme.inflections.every(i => i[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood] &&
+            ((i[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE) ||
+             (i[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_GERUNDIVE)))
+        ) {
+        return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB_PARTICIPLE
+      } else {
+        return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value
+      }
+    } else {
+      return null
+    }
+  }
+
+  static normalizeFeatureValue ( featureType, featureValue ) {
+    if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_GERUNDIVE) {
+      return _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE
+    } else {
+      return featureValue
+    }
+  }
+
+
   /**
    * Get a list of valid puncutation for this language
    *
@@ -6005,13 +6083,16 @@ class Lemma {
    * @param {Lemma} lemma - the lemma to compare.
    * @param {object} options - Additional comparison options.
    * @param {boolean} options.normalize - Whether to normalize words before comparison.
+   * @param {boolean} options.ignore - Whether to ignore the part of speech in comparison.
    * @returns {boolean} true or false.
    */
-  isFullHomonym (lemma, { normalize = false } = {}) {
+  isFullHomonym (lemma, { normalize = false, ignorePofs = false } = {}) {
     // If parts of speech do not match this is not a full homonym
-    if (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] ||
+    // don't check if told to ignorePofs
+    if (! ignorePofs &&
+      (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] ||
       !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] ||
-      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part])) {
+      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part]))) {
       return false
     }
 
@@ -6112,10 +6193,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
 /* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
-/* harmony import */ var _definition_set_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./definition-set.js */ "./definition-set.js");
-/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-/* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
-/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _definition_set_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./definition-set.js */ "./definition-set.js");
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+/* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
+/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+
 
 
 
@@ -6158,7 +6241,7 @@ class Lexeme {
       }
     }
 
-    if (meaning !== null && !(meaning instanceof _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default)) {
+    if (meaning !== null && !(meaning instanceof _definition_set_js__WEBPACK_IMPORTED_MODULE_3__.default)) {
       throw new Error('Meaning should be of DefinitionSet object type.')
     }
 
@@ -6166,7 +6249,7 @@ class Lexeme {
     this.altLemmas = []
     this.inflections = []
     this.addInflections(inflections)
-    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default(this.lemma.word, this.lemma.languageID)
+    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_3__.default(this.lemma.word, this.lemma.languageID)
     this.disambiguated = false
     this.selectedInflection = null
   }
@@ -6197,7 +6280,7 @@ class Lexeme {
    */
   getGroupedSelectedInflection () {
     if (this.selectedInflection) {
-      const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__.default.getLanguageModel(this.lemma.languageID)
+      const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(this.lemma.languageID)
       return lm.groupInflectionsForDisplay([this.selectedInflection])
     } else {
       return []
@@ -6276,7 +6359,14 @@ class Lexeme {
    * @returns {boolean} - true if two aforementioned lemmas are full homonyms, false otherwise.
    */
   isFullHomonym (otherLexeme, { normalize = false } = {}) {
-    return this.lemma.isFullHomonym(otherLexeme.lemma, { normalize })
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(this.lemma.languageID)
+    const normalizedPofs = lm.normalizePartOfSpeechValue(this)
+    if (normalizedPofs === lm.normalizePartOfSpeechValue(otherLexeme)) {
+      const ignorePofs = Boolean(normalizedPofs !== this.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part])
+      return this.lemma.isFullHomonym(otherLexeme.lemma, { normalize, ignorePofs })
+    } else {
+      return false
+    }
   }
 
   /**
@@ -6294,7 +6384,7 @@ class Lexeme {
       - some additional information in a word (e.g. a trailing digit) that lemma has not;
       - at least one inflection.
     */
-    const hasExtraFeatures = disambiguator.inflections.length || _language_model_js__WEBPACK_IMPORTED_MODULE_4__.default.hasTrailingDigit(disambiguator.lemma.word)
+    const hasExtraFeatures = disambiguator.inflections.length || _language_model_js__WEBPACK_IMPORTED_MODULE_5__.default.hasTrailingDigit(disambiguator.lemma.word)
     return this.isFullHomonym(disambiguator, { normalize: true }) && hasExtraFeatures
   }
 
@@ -6313,8 +6403,18 @@ class Lexeme {
       // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
-          if (inflection.disambiguatedBy(disambiguatorInflection)) {
-            newLexeme.setSelectedInflection(inflection)
+          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, {ignorePofs:true})
+          if (inflMatch.match) {
+            if (inflMatch.exactMatch) {
+              // if it was an exact match, we can use the source lexeme's inflection
+              // which may carry more information
+              newLexeme.setSelectedInflection(inflection)
+            } else {
+              // if it was not an exact match (e.g. if the source inflection
+              // had a multi-valued feature), use the disambiguator lexeme's
+              // inflection
+              newLexeme.setSelectedInflection(disambiguatorInflection)
+            }
           }
         }
       }
@@ -6336,7 +6436,7 @@ class Lexeme {
   }
 
   getGroupedInflections () {
-    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__.default.getLanguageModel(this.lemma.languageID)
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(this.lemma.languageID)
     return lm.groupInflectionsForDisplay(this.inflections)
   }
 
@@ -6349,12 +6449,12 @@ class Lexeme {
 
     const lexeme = new Lexeme(lemma, inflections)
     if (jsonObject.meaning) {
-      lexeme.meaning = _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default.readObject(jsonObject.meaning)
+      lexeme.meaning = _definition_set_js__WEBPACK_IMPORTED_MODULE_3__.default.readObject(jsonObject.meaning)
     }
 
     if (jsonObject.provider) {
-      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__.default.readObject(jsonObject.provider)
-      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__.default.getProxy(provider, lexeme)
+      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_6__.default.readObject(jsonObject.provider)
+      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_6__.default.getProxy(provider, lexeme)
     } else {
       return lexeme
     }

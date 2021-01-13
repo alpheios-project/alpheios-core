@@ -176,13 +176,18 @@ class Lemma {
    * @param {Lemma} lemma - the lemma to compare.
    * @param {object} options - Additional comparison options.
    * @param {boolean} options.normalize - Whether to normalize words before comparison.
+   * @param {boolean} options.ignorePofs - Whether to ignore the part of speech in comparison.
+   *                                       (use if the lexeme data is needed
+   *                                        for a part of speech comparison)
    * @returns {boolean} true or false.
    */
-  isFullHomonym (lemma, { normalize = false } = {}) {
+  isFullHomonym (lemma, { normalize = false, ignorePofs = false } = {}) {
     // If parts of speech do not match this is not a full homonym
-    if (!this.features[Feature.types.part] ||
+    // don't check if told to ignorePofs
+    if (! ignorePofs &&
+      (!this.features[Feature.types.part] ||
       !lemma.features[Feature.types.part] ||
-      !this.features[Feature.types.part].isEqual(lemma.features[Feature.types.part])) {
+      !this.features[Feature.types.part].isEqual(lemma.features[Feature.types.part]))) {
       return false
     }
 
