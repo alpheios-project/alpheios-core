@@ -3105,14 +3105,24 @@ for the current node
     return text
   }
 
+  /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   *                   or null if no part of speech data is present on the lexeme
+   **/
   static normalizePartOfSpeechValue( lexeme ) {
     if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part]) {
+      // alpheios standard for Greek is to consider part of speech verb particple for
+      // verbs with participle mood
       if( lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB &&
           lexeme.inflections.length > 0 &&
           lexeme.inflections.every(i => i[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.mood] &&
             i[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.mood].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE)) {
         return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB_PARTICIPLE
       } else if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
+        // alpheios standard for Greek follows the Perseus Treebank Guidelines
+        // which normalize particles as adverbs
         return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB
       } else {
         return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value
@@ -4068,6 +4078,15 @@ class Inflection {
     return model.compareWords(wordA, wordB, normalize)
   }
 
+  /**
+   * Compare single feature values delegating to the language model
+   * rules for normalization
+   *
+   * @param {string} featureType the feature type
+   * @param {string} valueA the first value
+   * @param {string} valueB the secon value
+   * @param {boolean} normalize whether or not to apply normalization
+   */
   modelCompareFeatureValue ( featureType, valueA, valueB, normalize = true )  {
     const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModel(this.languageID)
     return model.compareFeatureValue(featureType, valueA, valueB, normalize)
@@ -4077,10 +4096,15 @@ class Inflection {
    * Check to see if the supplied inflection can disambiguate this one
    *
    * @param {Inflection} infl Inflection object to be used for disambiguation
-   * @param {Object} options disambiguation options
-   * @param {Boolean} options.ignorePofs flag to ignore the inflection's part of speech
+   * @param {Boolean} ignorePofs flag to ignore the inflection's part of speech
+   *                             (use if lexeme pofs is more relevant)
+   * @returns {Object} object { {Boolean} match, {Boolean} exactMatch }
+   *                   a match means the inflection was disamibugated
+   *                   an exactMatch means the disamibugator matched all
+   *                   values of all features
    */
-  disambiguatedBy (infl, {ignorePofs = false} = {}) {
+  disambiguatedBy (infl, ignorePofs = false) {
+    console.info("Ignore Pofs",ignorePofs)
     let matched = true
     let exactMatch = true
     // an inflection can only be disambiguated by its features
@@ -4092,15 +4116,21 @@ class Inflection {
       matched = false
     }
     for (const feature of infl.features) {
-      if (feature === _feature_js__WEBPACK_IMPORTED_MODULE_0__.default.types.part) {
+      if (ignorePofs && feature === _feature_js__WEBPACK_IMPORTED_MODULE_0__.default.types.part) {
+        console.info("skip pofs match", feature)
         continue
       }
       for (const value of infl[feature].values) {
         if (!this.hasFeatureValue(feature,value,true)) {
+          console.info(`no match on ${feature} ${value}`)
           matched = false
           break
         }
-        if (this[feature].values.length != infl[feature].values.length) {
+        // it's an exact match if all of the values of a multi-valued
+        // feature match (e.g. an inflection with a single masculine gender feature
+        // disambiguates an inflection with a masculine and feminine gender feature
+        // but it is not an exact match of the inflection
+        if (this[feature].values.length !== infl[feature].values.length) {
           exactMatch =  false
         }
       }
@@ -4798,13 +4828,24 @@ class LanguageModel {
     return word
   }
 
+  /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   **/
   static normalizePartOfSpeechValue ( lexeme ) {
-    // default is to do nothing
+    // default is to return the value as it exists on the lemma
     lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ? lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value : null
   }
 
+  /**
+   * Return a normalized feature value, based upon the feature type  and supplied value
+   * @param {string} featureType the feature type
+   * @param {string} featureValue the feature value
+   * @returns {string} the alpheios-normalized feature value
+   */
   static normalizeFeatureValue ( featureType, featureValue ) {
-    // default is to do nothing
+    // default is to return the value as supplied
     return featureValue
   }
 
@@ -4845,6 +4886,14 @@ class LanguageModel {
     }
   }
 
+  /**
+   * Compare two feature values with language specific logic
+   *
+   * @param {string} featureType - the feature type being compared
+   * @param {string} valueA - the first value for comparison
+   * @param {string} valueB - the second value for comparison
+   * @param {boolean} normalize - whether or not to apply normalization
+   */
   static compareFeatureValue ( featureType, valueA, valueB, normalize = true) {
     if (normalize) {
       valueA = this.normalizeFeatureValue(featureType, valueA)
@@ -5790,8 +5839,16 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   }
 
 
+  /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   *                   or null if no part of speech data is present on the lexeme
+   **/
   static normalizePartOfSpeechValue( lexeme ) {
     if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part]) {
+      // alpheios standard for Latin is to consider part of speech verb particple for
+      // verbs with gerundive or participle mood
       if( lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB &&
           lexeme.inflections.length > 0 &&
           lexeme.inflections.every(i => i[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood] &&
@@ -5807,7 +5864,15 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
     }
   }
 
+  /**
+   * Return a normalized feature value, based upon the feature type  and supplied value
+   * @param {string} featureType the feature type
+   * @param {string} featureValue the feature value
+   * @returns {string} the alpheios-normalized feature value
+   */
   static normalizeFeatureValue ( featureType, featureValue ) {
+    // alpheios standard for Latin is currently following Whitaker, and
+    // normalize the gerundive mood to participle
     if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_GERUNDIVE) {
       return _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE
     } else {
@@ -6057,7 +6122,9 @@ class Lemma {
    * @param {Lemma} lemma - the lemma to compare.
    * @param {object} options - Additional comparison options.
    * @param {boolean} options.normalize - Whether to normalize words before comparison.
-   * @param {boolean} options.ignore - Whether to ignore the part of speech in comparison.
+   * @param {boolean} options.ignorePofs - Whether to ignore the part of speech in comparison.
+   *                                       (use if the lexeme data is needed
+   *                                        for a part of speech comparison)
    * @returns {boolean} true or false.
    */
   isFullHomonym (lemma, { normalize = false, ignorePofs = false } = {}) {
@@ -6377,7 +6444,7 @@ class Lexeme {
       // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
-          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, {ignorePofs:true})
+          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, true)
           if (inflMatch.match) {
             if (inflMatch.exactMatch) {
               // if it was an exact match, we can use the source lexeme's inflection
