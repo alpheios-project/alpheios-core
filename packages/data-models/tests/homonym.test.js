@@ -710,4 +710,53 @@ describe('homonym.test.js', () => {
     expect(disambiguated.lexemes[1].disambiguated).toBeFalsy()
     expect(disambiguated.isDisambiguated()).toBeTruthy()
   })
+  it('7M - Homonym Disambiguation: case M', () => {
+    /*
+    Homonym A contains 1 Lexeme. Homonym B contains 1 Lexeme.
+    Homonym B.Lexeme1 has an equivalent but not identical POFS as Homonym A.Lexeme1
+    Resulting homonym should contain 1 Lexeme: Homonym A Lexeme1
+     */
+    const lemmaA = new Lemma('ἄρ', 'grc')
+    lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_PARTICLE, Constants.LANG_GREEK))
+    const lexemeA = new Lexeme(lemmaA, [])
+    const homonymA = new Homonym([lexemeA])
+    const lemmaB = new Lemma('ἄρ', 'grc')
+    lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_ADVERB, Constants.LANG_GREEK))
+    const lexemeB = new Lexeme(lemmaB, [])
+    const homonymB = new Homonym([lexemeB])
+    const disambiguated = Homonym.disambiguate(homonymA, [homonymB])
+    expect(lexemeA.isFullHomonym(lexemeB)).toBeTruthy()
+    expect(disambiguated.lexemes.length).toEqual(1)
+    expect(disambiguated.lexemes[0]).toEqual(
+      expect.objectContaining({
+        lemma: expect.objectContaining({ word: lemmaA.word }),
+        disambiguated: true
+      })
+    )
+    expect(disambiguated.lexemes[0].lemma.features[Feature.types.part]).toEqual(lexemeA.lemma.features[Feature.types.part])
+
+    const lemmaC = new Lemma('fugiendo', 'lat')
+    lemmaC.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB_PARTICIPLE, Constants.LANG_LATIN))
+    const inflC = new Inflection('fugiendo','lat')
+    inflC.addFeature(new Feature(Feature.types.case, Constants.CASE_ABLATIVE, Constants.LANG_LATIN))
+    const lexemeC = new Lexeme(lemmaC, [inflC])
+    const homonymC = new Homonym([lexemeC])
+    const lemmaD = new Lemma('fugiendo', 'lat')
+    lemmaD.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
+    const inflD = new Inflection('fugiendo','lat')
+    inflD.addFeature(new Feature(Feature.types.case, Constants.CASE_ABLATIVE, Constants.LANG_LATIN))
+    inflD.addFeature(new Feature(Feature.types.mood, Constants.MOOD_GERUNDIVE, Constants.LANG_LATIN))
+    const lexemeD = new Lexeme(lemmaD, [inflD])
+    const homonymD = new Homonym([lexemeD])
+    const disambiguated2 = Homonym.disambiguate(homonymC, [homonymD])
+    expect(disambiguated2.lexemes[0]).toEqual(
+      expect.objectContaining({
+        lemma: expect.objectContaining({ word: lemmaC.word }),
+        disambiguated: true
+      })
+    )
+    expect(disambiguated2.lexemes[0].lemma.features[Feature.types.part]).toEqual(lexemeC.lemma.features[Feature.types.part])
+    expect(disambiguated2.lexemes[0].inflections.length).toEqual(2)
+    expect(disambiguated2.lexemes[0].getSelectedInflection()).toEqual(inflD)
+  })
 })

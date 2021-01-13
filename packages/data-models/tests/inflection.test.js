@@ -210,20 +210,23 @@ describe('inflection.test.js', () => {
     let inflection2 = new Inflection('form', 'lat', null)
     inflection2.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     inflection2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_LATIN))
-    expect(inflection1.disambiguatedBy(inflection2)).toBeTruthy()
+    expect(inflection1.disambiguatedBy(inflection2).match).toBeTruthy()
+    expect(inflection1.disambiguatedBy(inflection2).exactMatch).toBeTruthy()
 
     let inflection3 = new Inflection('form', 'lat', null)
     inflection3.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     inflection3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_LATIN))
     // voice is mismatch
-    expect(inflection1.disambiguatedBy(inflection3)).toBeFalsy()
+    expect(inflection1.disambiguatedBy(inflection3).match).toBeFalsy()
+    expect(inflection1.disambiguatedBy(inflection3).exactMatch).toBeTruthy()
 
     let inflection4 = new Inflection('form', 'lat', null)
     inflection4.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     inflection4.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_LATIN))
     inflection4.addFeature(new Feature(Feature.types.number, Constants.NUM_PLURAL, Constants.LANG_LATIN))
     // disambiguation requires match on part,voice - inflection being disambiguated also has different number so no match
-    expect(inflection1.disambiguatedBy(inflection4)).toBeFalsy()
+    expect(inflection1.disambiguatedBy(inflection4).match).toBeFalsy()
+    expect(inflection1.disambiguatedBy(inflection4).exactMatch).toBeTruthy()
 
     let inflection5 = new Inflection('form', 'lat', null)
     inflection5.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
@@ -231,7 +234,33 @@ describe('inflection.test.js', () => {
     inflection5.addFeature(new Feature(Feature.types.number, Constants.NUM_PLURAL, Constants.LANG_LATIN))
     inflection5.addFeature(new Feature(Feature.types.gender, Constants.GEND_FEMININE, Constants.LANG_LATIN))
     // inflection being disambiguated is more specific so it doesn't match
-    expect(inflection1.disambiguatedBy(inflection4)).toBeFalsy()
+    expect(inflection1.disambiguatedBy(inflection5).match).toBeFalsy()
+    expect(inflection1.disambiguatedBy(inflection5).exactMatch).toBeTruthy()
+
+    let inflection6 = new Inflection('form', 'lat', null)
+    inflection6.addFeature(new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, Constants.LANG_LATIN))
+    inflection6.addFeature(new Feature(Feature.types.number, Constants.NUM_PLURAL, Constants.LANG_LATIN))
+    inflection6.addFeature(new Feature(Feature.types.gender, [Constants.GEND_FEMININE, Constants.GEND_MASCULINE], Constants.LANG_LATIN))
+
+    let inflection7 = new Inflection('form', 'lat', null)
+    inflection7.addFeature(new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, Constants.LANG_LATIN))
+    inflection7.addFeature(new Feature(Feature.types.number, Constants.NUM_PLURAL, Constants.LANG_LATIN))
+    inflection7.addFeature(new Feature(Feature.types.gender, Constants.GEND_FEMININE, Constants.LANG_LATIN))
+    expect(inflection6.disambiguatedBy(inflection7).match).toBeTruthy()
+    expect(inflection6.disambiguatedBy(inflection7).exactMatch).toBeFalsy()
+
+    let inflection8 = new Inflection('form','lat', null)
+    inflection8.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
+    inflection8.addFeature(new Feature(Feature.types.number, Constants.NUM_SINGULAR, Constants.LANG_LATIN))
+    inflection8.addFeature(new Feature(Feature.types.case, Constants.CASE_ABLATIVE, Constants.LANG_LATIN))
+    inflection8.addFeature(new Feature(Feature.types.tense, Constants.TENSE_FUTURE, Constants.LANG_LATIN))
+    let inflection9 = new Inflection('form','lat', null)
+    inflection9.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB_PARTICIPLE, Constants.LANG_LATIN))
+    inflection9.addFeature(new Feature(Feature.types.number, Constants.NUM_SINGULAR, Constants.LANG_LATIN))
+    inflection9.addFeature(new Feature(Feature.types.case, Constants.CASE_ABLATIVE, Constants.LANG_LATIN))
+    expect(inflection8.disambiguatedBy(inflection9,{ ignorePofs: true }).match).toBeTruthy()
+    expect(inflection8.disambiguatedBy(inflection9,{ ignorePofs: true }).exactMatch).toBeTruthy()
+
   })
 
   it('21 Inflection - features is populated', () => {

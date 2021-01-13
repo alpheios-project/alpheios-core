@@ -1,5 +1,6 @@
 import Lemma from './lemma.js'
 import Inflection from './inflection.js'
+import Feature from './feature.js'
 import DefinitionSet from './definition-set.js'
 import LMF from './language_model_factory.js'
 import LM from './language_model.js'
@@ -158,7 +159,14 @@ class Lexeme {
    * @returns {boolean} - true if two aforementioned lemmas are full homonyms, false otherwise.
    */
   isFullHomonym (otherLexeme, { normalize = false } = {}) {
-    return this.lemma.isFullHomonym(otherLexeme.lemma, { normalize })
+    const lm = LMF.getLanguageModel(this.lemma.languageID)
+    const normalizedPofs = lm.normalizePartOfSpeechValue(this)
+    if (normalizedPofs === lm.normalizePartOfSpeechValue(otherLexeme)) {
+      const ignorePofs = Boolean(normalizedPofs !== this.lemma.features[Feature.types.part])
+      return this.lemma.isFullHomonym(otherLexeme.lemma, { normalize, ignorePofs })
+    } else {
+      return false
+    }
   }
 
   /**
@@ -195,8 +203,18 @@ class Lexeme {
       // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
-          if (inflection.disambiguatedBy(disambiguatorInflection)) {
-            newLexeme.setSelectedInflection(inflection)
+          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, { ignorePofs: true })
+          if (inflMatch.match) {
+            if (inflMatch.exactMatch) {
+              // if it was an exact match, we can use the source lexeme's inflection
+              // which may carry more information
+              newLexeme.setSelectedInflection(inflection)
+            } else {
+              // if it was not an exact match (e.g. if the source inflection
+              // had a multi-valued feature), use the disambiguator lexeme's
+              // inflection
+              newLexeme.setSelectedInflection(disambiguatorInflection)
+            }
           }
         }
       }

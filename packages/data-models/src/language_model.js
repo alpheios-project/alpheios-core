@@ -416,6 +416,27 @@ class LanguageModel {
   }
 
   /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   **/
+  static normalizePartOfSpeechValue ( lexeme ) {
+    // default is to return the value as it exists on the lemma
+    lexeme.lemma.features[Feature.types.part] ? lexeme.lemma.features[Feature.types.part].value : null
+  }
+
+  /**
+   * Return a normalized feature value, based upon the feature type  and supplied value
+   * @param {string} featureType the feature type
+   * @param {string} featureValue the feature value
+   * @returns {string} the alpheios-normalized feature value
+   */
+  static normalizeFeatureValue ( featureType, featureValue ) {
+    // default is to return the value as supplied
+    return featureValue
+  }
+
+  /**
    * Returns alternate encodings for a word
    *
    * @param {object} params - A parameters object.
@@ -450,6 +471,23 @@ class LanguageModel {
     } else {
       return wordA === wordB
     }
+  }
+
+  /**
+   * Compare two feature values with language specific logic
+   *
+   * @param {string} featureType - the feature type being compared
+   * @param {string} valueA - the first value for comparison
+   * @param {string} valueB - the second value for comparison
+   * @param {object} options
+   * @param {boolean} options.normalize - whether or not to apply normalization
+   */
+  static compareFeatureValue ( featureType, valueA, valueB, { normalize = true } = {}) {
+    if (normalize) {
+      valueA = this.normalizeFeatureValue(featureType, valueA)
+      valueB = this.normalizeFeatureValue(featureType, valueB)
+    }
+    return valueA === valueB
   }
 
   /**

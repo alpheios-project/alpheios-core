@@ -158,6 +158,33 @@ for the current node
     return text
   }
 
+  /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   *                   or null if no part of speech data is present on the lexeme
+   **/
+  static normalizePartOfSpeechValue( lexeme ) {
+    if (lexeme.lemma.features[Feature.types.part]) {
+      // alpheios standard for Greek is to consider part of speech verb particple for
+      // verbs with participle mood
+      if( lexeme.lemma.features[Feature.types.part].value === Constants.POFS_VERB &&
+          lexeme.inflections.length > 0 &&
+          lexeme.inflections.every(i => i[Feature.types.mood] &&
+            i[Feature.types.mood].value === Constants.MOOD_PARTICIPLE)) {
+        return Constants.POFS_VERB_PARTICIPLE
+      } else if (lexeme.lemma.features[Feature.types.part].value === Constants.POFS_PARTICLE) {
+        // alpheios standard for Greek follows the Perseus Treebank Guidelines
+        // which normalize particles as adverbs
+        return Constants.POFS_ADVERB
+      } else {
+        return lexeme.lemma.features[Feature.types.part].value
+      }
+    } else {
+      return null
+    }
+  }
+
   static _tonosToOxia (word) {
     return word.replace(
       /\u{03AC}/ug, '\u{1F71}').replace( // alpha
