@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import { Language } from 'alpheios-data-models'
-import TreebankData from '@comp/data-model/word-query/lexical-data/data-objects/treebank-data.js'
+import TreebankData from '@comp/lexical-data/word-query/lexical-data/data-objects/treebank-data.js'
 
 describe('TreebankData', () => {
   const word = 'testWord'

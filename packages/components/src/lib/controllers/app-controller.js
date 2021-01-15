@@ -10,7 +10,7 @@ import Vue from '@vue-runtime'
 import Vuex from 'vuex'
 import interact from 'interactjs'
 
-import DataModelController from '@comp/data-model/data-model-controller.js'
+import DataModelController from '@comp/lexical-data/data-model-controller.js'
 
 import WordQueryController from '@comp/app/word-query/word-query-controller.js'
 
@@ -1110,9 +1110,10 @@ export default class AppController {
   }
 
   isGetSelectedTextEnabled (domEvent) {
+    console.info('isGetSelectedTextEnabled')
     return (this.state.isActive() &&
       this.state.uiIsActive() &&
-      (!this._options.triggerPreCallback || this.isMousemoveEnabled || this._options.triggerPreCallback(domEvent)))
+      (!this._options.triggerPreCallback /* || this.isMousemoveEnabled */ || this._options.triggerPreCallback(domEvent)))
   }
 
   async getWordUsageData (homonym, params = {}) {

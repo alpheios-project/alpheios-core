@@ -1,8 +1,8 @@
 /* eslint-env jest */
 import { Language, LanguageModelFactory as LMF, HomonymGroup } from 'alpheios-data-models'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import TuftsMorphologyData from '@comp/data-model/word-query/lexical-data/data-objects/tufts-morphology-data.js'
-import LexicalDataResult from '@comp/data-model/word-query/lexical-data/result/lexical-data-result.js'
+import TuftsMorphologyData from '@comp/lexical-data/word-query/lexical-data/data-objects/tufts-morphology-data.js'
+import LexicalDataResult from '@comp/lexical-data/word-query/lexical-data/result/lexical-data-result.js'
 import { Fixture } from 'alpheios-fixtures'
 
 describe('TuftsMorphologyData', () => {

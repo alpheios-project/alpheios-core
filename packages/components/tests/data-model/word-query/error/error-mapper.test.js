@@ -1,9 +1,9 @@
 /* eslint-env jest */
 import { AdapterError } from 'alpheios-client-adapters'
-import ErrorMapper from '@comp/data-model/word-query/error/error-mapper.js'
-import ErrorCodes from '@comp/data-model/constants/error-codes.js'
-import ErrorOrigins from '@comp/data-model/constants/error-origins.js'
-import ErrorSeverityTypes from '@comp/data-model/constants/error-severity-types.js'
+import ErrorMapper from '@comp/lexical-data/word-query/error/error-mapper.js'
+import ErrorCodes from '@comp/lexical-data/constants/error-codes.js'
+import ErrorOrigins from '@comp/lexical-data/constants/error-origins.js'
+import ErrorSeverityTypes from '@comp/lexical-data/constants/error-severity-types.js'
 
 describe('ErrorMapper', () => {
   let claCategory

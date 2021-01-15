@@ -1,8 +1,8 @@
 /* eslint-env jest */
 // Cross-fetch is required to replace an in-browser `fetch` implementation
 import fetch from 'cross-fetch' // eslint-disable-line no-unused-vars
-import DataModelController from '@comp/data-model/data-model-controller.js'
-import GqlEndpoint from '@comp/data-model/endpoints/gql-endpoint.js'
+import DataModelController from '@comp/lexical-data/data-model-controller.js'
+import GqlEndpoint from '@comp/lexical-data/endpoints/gql-endpoint.js'
 import Platform from '@comp/lib/utility/platform.js'
 
 describe('DataModelController', () => {

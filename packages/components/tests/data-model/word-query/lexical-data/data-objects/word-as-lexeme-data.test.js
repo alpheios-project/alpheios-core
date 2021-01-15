@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { Language, HomonymGroup } from 'alpheios-data-models'
-import WordAsLexemeData from '@comp/data-model/word-query/lexical-data/data-objects/word-as-lexeme-data.js'
-import LexicalDataResult from '@comp/data-model/word-query/lexical-data/result/lexical-data-result.js'
+import WordAsLexemeData from '@comp/lexical-data/word-query/lexical-data/data-objects/word-as-lexeme-data.js'
+import LexicalDataResult from '@comp/lexical-data/word-query/lexical-data/result/lexical-data-result.js'
 
 describe('WordAsLexemeData', () => {
   const word = 'testWord'

@@ -1,7 +1,7 @@
 /* eslint-env jest */
-import WordQueryWarning from '@comp/data-model/word-query/error/word-query-warning.js'
-import ErrorCodes from '@comp/data-model/constants/error-codes.js'
-import ErrorSeverityTypes from '@comp/data-model/constants/error-severity-types.js'
+import WordQueryWarning from '@comp/lexical-data/word-query/error/word-query-warning.js'
+import ErrorCodes from '@comp/lexical-data/constants/error-codes.js'
+import ErrorSeverityTypes from '@comp/lexical-data/constants/error-severity-types.js'
 
 describe('WordQueryWarning', () => {
   let errorMessage

@@ -1,12 +1,12 @@
 /* eslint-env jest */
 import { Language, HomonymGroup } from 'alpheios-data-models'
-import DisambiguatedData from '@comp/data-model/word-query/lexical-data/data-objects/disambiguated-data.js'
-import LexicalDataResult from '@comp/data-model/word-query/lexical-data/result/lexical-data-result.js'
-import LexicalDataTypes from '@comp/data-model/word-query/lexical-data/types/lexical-data-types.js'
-import ErrorCodes from '@comp/data-model/constants/error-codes.js'
-import ErrorSeverityTypes from '@comp/data-model/constants/error-severity-types.js'
-import ErrorOrigins from '@comp/data-model/constants/error-origins.js'
-import WordAsLexemeData from '@comp/data-model/word-query/lexical-data/data-objects/word-as-lexeme-data.js'
+import DisambiguatedData from '@comp/lexical-data/word-query/lexical-data/data-objects/disambiguated-data.js'
+import LexicalDataResult from '@comp/lexical-data/word-query/lexical-data/result/lexical-data-result.js'
+import LexicalDataTypes from '@comp/lexical-data/word-query/lexical-data/types/lexical-data-types.js'
+import ErrorCodes from '@comp/lexical-data/constants/error-codes.js'
+import ErrorSeverityTypes from '@comp/lexical-data/constants/error-severity-types.js'
+import ErrorOrigins from '@comp/lexical-data/constants/error-origins.js'
+import WordAsLexemeData from '@comp/lexical-data/word-query/lexical-data/data-objects/word-as-lexeme-data.js'
 
 describe('DisambiguatedData', () => {
   const word = 'testWord'

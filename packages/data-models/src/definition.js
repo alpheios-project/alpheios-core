@@ -37,7 +37,7 @@ class Definition {
     this.format = format
 
     /**
-     * A ward that the definition text describes.
+     * A word that the definition text describes.
      *
      * @type {string}
      */
@@ -76,10 +76,6 @@ class Definition {
       text: this._text,
       languageCode: this._language.toCode()
     }
-  }
-
-  test () {
-    this._language = 5
   }
 
   static readObject (jsonObject) {

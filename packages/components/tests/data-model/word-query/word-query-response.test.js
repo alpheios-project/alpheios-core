@@ -1,8 +1,8 @@
 /* eslint-env jest */
-import WordQueryResponse from '@comp/data-model/word-query/word-query-response.js'
-import WordQueryError from '@comp/data-model/word-query/error/word-query-error.js'
-import ErrorCodes from '@comp/data-model/constants/error-codes.js'
-import ErrorSeverityTypes from '@comp/data-model/constants/error-severity-types.js'
+import WordQueryResponse from '@comp/lexical-data/word-query/word-query-response.js'
+import WordQueryError from '@comp/lexical-data/word-query/error/word-query-error.js'
+import ErrorCodes from '@comp/lexical-data/constants/error-codes.js'
+import ErrorSeverityTypes from '@comp/lexical-data/constants/error-severity-types.js'
 import { HomonymGroup } from 'alpheios-data-models'
 
 describe('WordQueryResult', () => {

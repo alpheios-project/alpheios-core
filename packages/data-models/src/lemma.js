@@ -14,7 +14,7 @@ class Lemma {
    *
    * @param {string} word - A word.
    * @param {Language} language - A language of the word.
-   * @param {string[]} principalParts - the principalParts of a lemma.
+   * @param {string[]} principalParts - the principal parts of a lemma.
    * @param {object} features - the grammatical features of a lemma.
    */
   constructor (word, language, principalParts = [], features = {}) {

@@ -1,0 +1,226 @@
+# Custom scalars and enums
+scalar Date
+scalar Language
+scalar URI
+
+enum MIMEType {
+    TEXT_PLAIN
+    TEXT_HTML
+}
+
+enum FeatureType {
+    WORD
+    FULL_FORM
+    HDWD
+    PART
+    NUMBER
+    CASE
+    GRMCASE
+    DECLENSION
+    GENDER
+    TYPE
+    CLASS
+    GRMCLASS
+    CONJUGATION
+    COMPARISON
+    TENSE
+    VOICE
+    MOOD
+    PERSON
+    FREQUENCY
+    MEANING
+    SOURCE
+    FOOTNOTE
+    DIALECT
+    NOTE
+    PRONUNCIATION
+    AGE
+    AREA
+    GEO
+    KIND
+    DERIVTYPE
+    STEMTYPE
+    MORPH
+    VAR
+    RADICAL
+    KAYLO
+    STATE
+}
+
+# Output types
+type FeatureValue {
+    value: String!
+}
+
+type Feature {
+    id: ID!
+    schema: String!
+    type: FeatureType!
+    value: [FeatureValue!]!
+}
+
+type User {
+    id: ID!
+    nickname: String
+}
+
+type ResourceProvider {
+    uri: URI!,
+    description: String!,
+    right: String!
+}
+
+type Comment {
+    id: ID!
+    text: String!
+    language: Language!
+    dateTime: Date!
+    author: User!
+    replies: [Comment!]
+}
+
+type Assertion {
+    id: ID!
+    confidence: Int!
+    dateTime: Date!
+    author: User!
+}
+
+type Negation {
+    id: ID!
+    confidence: Int!
+    dateTime: Date!
+    author: User!
+}
+
+type Definition {
+    id: ID!
+    text: String!
+    language: Language!
+    format: MIMEType!
+    lemma: Lemma! # The lemma this is defined by the definition text
+    comments: [Comment!]
+}
+
+type DefinitionConnection {
+    id: ID!
+    definitions: [Definition!]
+    assertions: [Assertion!]
+    negations: [Negation!]
+    comments: [Comment!]
+}
+
+type DefinitionSet {
+    id: ID!
+    lemmaWord: String!
+    language: Language!
+    shortDefs: [DefinitionConnection!]
+    fullDefs: [DefinitionConnection!]
+}
+
+type Inflection {
+    id: ID!
+    language: Language!
+    stem: String
+    prefix: String
+    suffix: String
+    features: [String!]
+    example: String
+    comments: [Comment!]
+}
+
+type Lemma {
+    id: ID!
+    word: String!
+    language: Language!
+    prinicipalParts: [String!]
+    variants: [Lemma!] # Alternative versions of the lemma
+    partOfSpeech: Feature!
+    features: [Feature!] # Part of speech will not be included into the features list
+    comments: [Comment!]
+}
+
+type Lexeme {
+    id: ID!
+    lemma: Lemma!
+    inflections: [Inflection!]
+    meaning: DefinitionSet! # If there are no definitiions, the DefinitionSet will be empty
+    comments: [Comment!]
+}
+
+type Word {
+    id: ID!
+    targetWord: String!
+    lexemes: [Lexeme!]
+}
+
+# Input types
+input AssertionInput {
+    confidence: Int!
+    dateTime: Date!
+    authorID: ID!
+}
+
+input NegationInput {
+    confidence: Int!
+    dateTime: Date!
+    authorID: ID!
+}
+
+input CommentInput {
+    text: String!
+    language: Language!
+    dateTime: Date!
+    authorID: ID!
+}
+
+input CommentReplyInput {
+    commentID: ID!
+    comment: CommentInput
+}
+
+input LexemeCommentInput {
+    lexemeID: ID!
+    comment: CommentInput
+}
+
+input DefinitionCommentInput {
+    definitionID: ID!
+    comment: CommentInput
+}
+
+input DefinitionConnectionCommentInput {
+    definitionConnectionID: ID!
+    comment: CommentInput
+}
+
+input DefinitionAssertionInput {
+    definitionConnectionID: ID!
+    assertion: AssertionInput
+}
+
+input DefinitionNegationInput {
+    definitionConnectionID: ID!
+    negation: NegationInput
+}
+
+# Mutations
+type Mutation {
+    # Creates a new comment and attaches it to the specified lexeme
+    commentOnLexeme(input: LexemeCommentInput) : Comment
+
+    # Creates a new assertion and attaches it to the specified definitionConnection
+    assertDefinitionConnection(input: DefinitionAssertionInput) : Assertion
+
+    # Creates a new negation and attaches it to the specified definitionConnection
+    negateDefinitionConnection(input: DefinitionNegationInput) : Negation
+
+    # Creates a new comment and attaches it to the specified definitionConnection
+    commentOnDefinitionConnection(input: DefinitionConnectionCommentInput) : Comment
+
+    # Creates a new comment and attaches it to the specified definition
+    commentOnDefinition(input: DefinitionCommentInput) : Comment
+
+    # Creates a new reply to the existing comment
+    replyToComment(input: CommentReplyInput) : Comment
+}
