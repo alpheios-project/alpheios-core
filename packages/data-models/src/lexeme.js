@@ -198,12 +198,15 @@ class Lexeme {
    */
   static disambiguateInflections (lexeme, disambiguator) {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
+    const lm = LMF.getLanguageModel(lexeme.lemma.languageID)
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
       // iterate through this lexemes inflections and see if one is disambiguated
       // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
-          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, { ignorePofs: true })
+          const normalizedPofs = lm.normalizePartOfSpeechValue(disambiguator)
+          const ignorePofs = Boolean(normalizedPofs !== disambiguator.lemma.features[Feature.types.part])
+          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, { ignorePofs })
           if (inflMatch.match) {
             if (inflMatch.exactMatch) {
               // if it was an exact match, we can use the source lexeme's inflection

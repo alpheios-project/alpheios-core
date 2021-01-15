@@ -3139,14 +3139,7 @@ for the current node
    **/
   static normalizePartOfSpeechValue( lexeme ) {
     if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part]) {
-      // alpheios standard for Greek is to consider part of speech verb particple for
-      // verbs with participle mood
-      if( lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB &&
-          lexeme.inflections.length > 0 &&
-          lexeme.inflections.every(i => i[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.mood] &&
-            i[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.mood].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE)) {
-        return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB_PARTICIPLE
-      } else if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
+      if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
         // alpheios standard for Greek follows the Perseus Treebank Guidelines
         // which normalize particles as adverbs
         return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB
@@ -5865,32 +5858,6 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
     return text
   }
 
-
-  /**
-   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
-   * @param {Lexeme} lexeme the lexeme to normalize
-   * @returns {string} the alpheios-normalized part of speech value
-   *                   or null if no part of speech data is present on the lexeme
-   **/
-  static normalizePartOfSpeechValue( lexeme ) {
-    if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part]) {
-      // alpheios standard for Latin is to consider part of speech verb particple for
-      // verbs with gerundive or participle mood
-      if( lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB &&
-          lexeme.inflections.length > 0 &&
-          lexeme.inflections.every(i => i[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood] &&
-            ((i[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE) ||
-             (i[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_GERUNDIVE)))
-        ) {
-        return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB_PARTICIPLE
-      } else {
-        return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value
-      }
-    } else {
-      return null
-    }
-  }
-
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
    * @param {string} featureType the feature type
@@ -6466,12 +6433,15 @@ class Lexeme {
    */
   static disambiguateInflections (lexeme, disambiguator) {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(lexeme.lemma.languageID)
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
       // iterate through this lexemes inflections and see if one is disambiguated
       // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
-          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, { ignorePofs: true })
+          const normalizedPofs = lm.normalizePartOfSpeechValue(disambiguator)
+          const ignorePofs = Boolean(normalizedPofs !== disambiguator.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part])
+          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, { ignorePofs })
           if (inflMatch.match) {
             if (inflMatch.exactMatch) {
               // if it was an exact match, we can use the source lexeme's inflection
