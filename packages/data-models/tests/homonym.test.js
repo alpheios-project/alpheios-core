@@ -736,8 +736,9 @@ describe('homonym.test.js', () => {
     expect(disambiguated.lexemes[0].lemma.features[Feature.types.part]).toEqual(lexemeA.lemma.features[Feature.types.part])
 
     const lemmaC = new Lemma('fugiendo', 'lat')
-    lemmaC.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB_PARTICIPLE, Constants.LANG_LATIN))
+    lemmaC.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     const inflC = new Inflection('fugiendo','lat')
+    inflC.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB_PARTICIPLE, Constants.LANG_LATIN))
     inflC.addFeature(new Feature(Feature.types.case, Constants.CASE_ABLATIVE, Constants.LANG_LATIN))
     const lexemeC = new Lexeme(lemmaC, [inflC])
     const homonymC = new Homonym([lexemeC])
