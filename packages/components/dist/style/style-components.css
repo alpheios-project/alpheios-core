@@ -1212,6 +1212,9 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
 .alpheios-morph-data__principal_parts .feature_source span {
   font-size: smaller;
 }
+.alpheios-morph-data__morphdata span.alpheios-morph__attr, .alpheios-morph-data__morphdata span.alpheios-morph__linkedattr {
+  padding-right: 5px;
+}
 .alpheios-morph-data__morphdata .alpheios-morph-data__pofs span {
   padding-right: 5px;
 }

@@ -166,14 +166,7 @@ for the current node
    **/
   static normalizePartOfSpeechValue( lexeme ) {
     if (lexeme.lemma.features[Feature.types.part]) {
-      // alpheios standard for Greek is to consider part of speech verb particple for
-      // verbs with participle mood
-      if( lexeme.lemma.features[Feature.types.part].value === Constants.POFS_VERB &&
-          lexeme.inflections.length > 0 &&
-          lexeme.inflections.every(i => i[Feature.types.mood] &&
-            i[Feature.types.mood].value === Constants.MOOD_PARTICIPLE)) {
-        return Constants.POFS_VERB_PARTICIPLE
-      } else if (lexeme.lemma.features[Feature.types.part].value === Constants.POFS_PARTICLE) {
+      if (lexeme.lemma.features[Feature.types.part].value === Constants.POFS_PARTICLE) {
         // alpheios standard for Greek follows the Perseus Treebank Guidelines
         // which normalize particles as adverbs
         return Constants.POFS_ADVERB
