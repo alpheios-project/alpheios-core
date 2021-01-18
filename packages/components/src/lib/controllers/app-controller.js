@@ -1113,7 +1113,7 @@ export default class AppController {
     console.info('isGetSelectedTextEnabled')
     return (this.state.isActive() &&
       this.state.uiIsActive() &&
-      (!this._options.triggerPreCallback /* || this.isMousemoveEnabled */ || this._options.triggerPreCallback(domEvent)))
+      (!this._options.triggerPreCallback || this.isMousemoveEnabled || this._options.triggerPreCallback(domEvent)))
   }
 
   async getWordUsageData (homonym, params = {}) {

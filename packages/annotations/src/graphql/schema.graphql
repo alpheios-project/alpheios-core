@@ -81,14 +81,14 @@ type Comment {
 
 type Assertion {
     id: ID!
-    confidence: Int!
+    confidence: Int
     dateTime: Date!
     author: User!
 }
 
 type Negation {
     id: ID!
-    confidence: Int!
+    confidence: Int
     dateTime: Date!
     author: User!
 }
