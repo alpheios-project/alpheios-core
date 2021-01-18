@@ -1110,7 +1110,6 @@ export default class AppController {
   }
 
   isGetSelectedTextEnabled (domEvent) {
-    console.info('isGetSelectedTextEnabled')
     return (this.state.isActive() &&
       this.state.uiIsActive() &&
       (!this._options.triggerPreCallback || this.isMousemoveEnabled || this._options.triggerPreCallback(domEvent)))
