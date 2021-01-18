@@ -3117,11 +3117,33 @@ for the current node
         // alpheios standard for Greek follows the Perseus Treebank Guidelines
         // which normalize particles as adverbs
         return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB
+      } else if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+        // alpheios normalizes exclamation to interjection (following treebank guidelines)
+        return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
       } else {
         return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value
       }
     } else {
       return null
+    }
+ }
+
+  /**
+   * Return a normalized feature value, based upon the feature type  and supplied value
+   * @param {string} featureType the feature type
+   * @param {string} featureValue the feature value
+   * @returns {string} the alpheios-normalized feature value
+   */
+  static normalizeFeatureValue ( featureType, featureValue ) {
+    // alpheios standard for Latin is currently following Whitaker, and
+    // normalize the gerundive mood to participle
+    if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
+      return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB
+    } else if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+      // alpheios normalizes exclamation to interjection (following treebank guidelines)
+      return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
+    } else {
+      return featureValue
     }
   }
 
@@ -4828,7 +4850,7 @@ class LanguageModel {
    **/
   static normalizePartOfSpeechValue ( lexeme ) {
     // default is to return the value as it exists on the lemma
-    lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ? lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value : null
+    return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ? lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value : null
   }
 
   /**
@@ -5843,8 +5865,29 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
     // normalize the gerundive mood to participle
     if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_GERUNDIVE) {
       return _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE
+    } else if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+      return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
     } else {
       return featureValue
+    }
+  }
+
+  /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   **/
+  static normalizePartOfSpeechValue ( lexeme ) {
+    if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part]) {
+      // Alpheios currently follows Whitaker for Latin and normalizes  exclamation
+      // to interjection
+      if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+        return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
+      } else {
+        return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value
+      }
+    } else {
+        return null
     }
   }
 

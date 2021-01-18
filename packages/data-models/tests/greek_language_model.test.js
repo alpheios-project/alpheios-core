@@ -237,4 +237,16 @@ describe('greek_language_model.j', () => {
     const lexeme = new Lexeme(lemma, [])
     expect(greekModel.normalizePartOfSpeechValue(lexeme)).toEqual(Constants.POFS_ADVERB)
   })
+
+  it('19 GreekLanguageModel - normalizes exclamation pofs to interjection', () => {
+    const lemma = new Lemma('word', 'grc')
+    lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_EXCLAMATION, Constants.LANG_GREEK))
+    const lexeme = new Lexeme(lemma, [])
+    expect(greekModel.normalizePartOfSpeechValue(lexeme)).toEqual(Constants.POFS_INTERJECTION)
+  })
+
+  it('20 normalizeFeatureValue normalizes exclamation to interjection', () => {
+    expect(greekModel.normalizeFeatureValue(Feature.types.part,
+      Constants.POFS_EXCLAMATION)).toEqual(Constants.POFS_INTERJECTION)
+  })
 })

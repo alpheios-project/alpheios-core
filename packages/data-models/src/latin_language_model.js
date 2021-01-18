@@ -177,8 +177,29 @@ export default class LatinLanguageModel extends LanguageModel {
     // normalize the gerundive mood to participle
     if (featureType === Feature.types.mood && featureValue === Constants.MOOD_GERUNDIVE) {
       return Constants.MOOD_PARTICIPLE
+    } else if (featureType === Feature.types.part && featureValue === Constants.POFS_EXCLAMATION) {
+      return Constants.POFS_INTERJECTION
     } else {
       return featureValue
+    }
+  }
+
+  /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   **/
+  static normalizePartOfSpeechValue ( lexeme ) {
+    if (lexeme.lemma.features[Feature.types.part]) {
+      // Alpheios currently follows Whitaker for Latin and normalizes  exclamation
+      // to interjection
+      if (lexeme.lemma.features[Feature.types.part].value === Constants.POFS_EXCLAMATION) {
+        return Constants.POFS_INTERJECTION
+      } else {
+        return lexeme.lemma.features[Feature.types.part].value
+      }
+    } else {
+        return null
     }
   }
 
