@@ -422,7 +422,7 @@ class LanguageModel {
    **/
   static normalizePartOfSpeechValue ( lexeme ) {
     // default is to return the value as it exists on the lemma
-    lexeme.lemma.features[Feature.types.part] ? lexeme.lemma.features[Feature.types.part].value : null
+    return lexeme.lemma.features[Feature.types.part] ? lexeme.lemma.features[Feature.types.part].value : null
   }
 
   /**
