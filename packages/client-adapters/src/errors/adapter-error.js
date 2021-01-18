@@ -1,8 +1,9 @@
 class AdapterError extends Error {
-  constructor (category, adapterName, methodName, messageError) {
+  constructor (category, adapterName, methodName, messageError, statusCode) {
     super(messageError)
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName
+    this.statusCode = statusCode
 
     if (this.adapter && this.methodName) {
       this.message = `${this.message} (${this.adapter}.${this.methodName})`
