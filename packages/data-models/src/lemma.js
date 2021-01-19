@@ -191,11 +191,23 @@ class Lemma {
       return false
     }
 
+    const lm = LMF.getLanguageModel(this.languageID)
     // Check if words are the same
     const areSameWords = normalize
-      ? LMF.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
+      ? lm.compareWords(this.word, lemma.word, true,
         { normalizeTrailingDigit: true })
       : this.word === lemma.word
+
+    // if they have differing trailing digits, they cannot be the same
+    const thisHasTrailingDigit = lm.hasTrailingDigit(this.word)
+    const otherHasTrailingDigit = lm.hasTrailingDigit(lemma.word)
+    if (thisHasTrailingDigit && otherHasTrailingDigit) {
+      const thisTrailingDigit = this.word.match(/\d+$/)[0]
+      const otherTrailingDigit = lemma.word.match(/\d+$/)[0]
+      if (thisTrailingDigit !== otherTrailingDigit) {
+        return false
+      }
+    }
 
     return areSameWords
   }
