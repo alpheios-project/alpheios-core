@@ -417,21 +417,23 @@ class LanguageModel {
 
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    **/
-  static normalizePartOfSpeechValue ( lexeme ) {
+  static normalizePartOfSpeechValue (lexeme) {
     // default is to return the value as it exists on the lemma
     return lexeme.lemma.features[Feature.types.part] ? lexeme.lemma.features[Feature.types.part].value : null
   }
 
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
+   *
    * @param {string} featureType the feature type
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue ( featureType, featureValue ) {
+  static normalizeFeatureValue (featureType, featureValue) {
     // default is to return the value as supplied
     return featureValue
   }
@@ -482,7 +484,7 @@ class LanguageModel {
    * @param {object} options
    * @param {boolean} options.normalize - whether or not to apply normalization
    */
-  static compareFeatureValue ( featureType, valueA, valueB, { normalize = true } = {}) {
+  static compareFeatureValue (featureType, valueA, valueB, { normalize = true } = {}) {
     if (normalize) {
       valueA = this.normalizeFeatureValue(featureType, valueA)
       valueB = this.normalizeFeatureValue(featureType, valueB)
@@ -491,12 +493,12 @@ class LanguageModel {
   }
 
   /**
-   * Get a list of valid puncutation for this language
+   * Get a list of valid punctuation for this language
    *
-   * @returns {string} a string containing valid puncutation symbols
+   * @returns {string} a string containing valid punctuation symbols
    */
   static getPunctuation () {
-    return '\\-\\.,;:!?\'"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r'
+    return '\\-\\.,;:!?\'"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u2020\u2021\u201C\u201D\u0387\u00B7\n\r'
   }
 
   /**

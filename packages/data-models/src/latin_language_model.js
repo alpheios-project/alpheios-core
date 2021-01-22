@@ -168,11 +168,12 @@ export default class LatinLanguageModel extends LanguageModel {
 
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
+   *
    * @param {string} featureType the feature type
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue ( featureType, featureValue ) {
+  static normalizeFeatureValue (featureType, featureValue) {
     // alpheios standard for Latin is currently following Whitaker, and
     // normalize the gerundive mood to participle
     if (featureType === Feature.types.mood && featureValue === Constants.MOOD_GERUNDIVE) {
@@ -186,10 +187,11 @@ export default class LatinLanguageModel extends LanguageModel {
 
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    **/
-  static normalizePartOfSpeechValue ( lexeme ) {
+  static normalizePartOfSpeechValue (lexeme) {
     if (lexeme.lemma.features[Feature.types.part]) {
       // Alpheios currently follows Whitaker for Latin and normalizes  exclamation
       // to interjection
@@ -199,18 +201,17 @@ export default class LatinLanguageModel extends LanguageModel {
         return lexeme.lemma.features[Feature.types.part].value
       }
     } else {
-        return null
+      return null
     }
   }
 
-
   /**
-   * Get a list of valid puncutation for this language
+   * Get a list of valid punctuation for this language
    *
-   * @returns {string} a string containing valid puncutation symbols
+   * @returns {string} a string containing valid punctuation symbols
    */
   static getPunctuation () {
-    return ".,;:!?'\"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
+    return ".,;:!?'\"(){}\\[\\]<>\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u2020\u2021\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
   }
 
   /**

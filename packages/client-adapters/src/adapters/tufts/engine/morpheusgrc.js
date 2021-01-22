@@ -20,10 +20,10 @@ data.inflectionOverrides = {
     }
     if (i[Models.Feature.types.morph].value === 'irreg_comp' &&
       ls.some(l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_ADJECTIVE)) {
-        retVal.withFeature = new Models.Feature(Models.Feature.types.comparison,Models.Constants.COMP_COMPARITIVE, Models.GreekLanguageModel.languageID)
+      retVal.withFeature = new Models.Feature(Models.Feature.types.comparison, Models.Constants.COMP_COMPARITIVE, Models.GreekLanguageModel.languageID)
     } else if (i[Models.Feature.types.morph].value === 'irreg_superl' &&
       ls.some(l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_ADJECTIVE)) {
-        retVal.withFeature = new Models.Feature(Models.Feature.types.comparison,Models.Constants.COMP_SUPERLATIVE, Models.GreekLanguageModel.languageID)
+      retVal.withFeature = new Models.Feature(Models.Feature.types.comparison, Models.Constants.COMP_SUPERLATIVE, Models.GreekLanguageModel.languageID)
     }
     return retVal
   }

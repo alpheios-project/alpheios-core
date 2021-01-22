@@ -2388,7 +2388,7 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         if (homonym && homonym.lexemes && homonym.lexemes.length === 1 &&
            homonym.lexemes[0].lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Constants.POFS_VERB &&
            homonym.lexemes[0].inflections.length === 1 &&
-           languageModel.normalizeFeatureValue(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.mood,homonym.lexemes[0].inflections[0][alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.mood].value) === alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Constants.MOOD_PARTICIPLE) {
+           languageModel.normalizeFeatureValue(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.mood, homonym.lexemes[0].inflections[0][alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.mood].value) === alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Constants.MOOD_PARTICIPLE) {
           homonym.lexemes[0].inflections[0].addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.part, alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Constants.POFS_VERB_PARTICIPLE, languageModel.languageID))
         }
         return homonym
@@ -3250,7 +3250,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   *                                merges with and overrides the lexicon
   *                                settings in the local config.json,
   *                                if present and populated. An empty object
-  *                                signifies that there are no overrides 
+  *                                signifies that there are no overrides
   */
   constructor (config = {}, remoteConfig = {}) {
     super()
@@ -4276,10 +4276,10 @@ data.inflectionOverrides = {
     }
     if (i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.morph].value === 'irreg_comp' &&
       ls.some(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_ADJECTIVE)) {
-        retVal.withFeature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison,alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.COMP_COMPARITIVE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel.languageID)
+      retVal.withFeature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.COMP_COMPARITIVE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel.languageID)
     } else if (i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.morph].value === 'irreg_superl' &&
       ls.some(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_ADJECTIVE)) {
-        retVal.withFeature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison,alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.COMP_SUPERLATIVE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel.languageID)
+      retVal.withFeature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.COMP_SUPERLATIVE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel.languageID)
     }
     return retVal
   }
@@ -4427,7 +4427,8 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
-data.inflectionOverrides = { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.conjugation]: (i, ls) => {
+data.inflectionOverrides = {
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.conjugation]: (i, ls) => {
     return {
       withLemma: true,
       withFeature: null
@@ -4972,7 +4973,7 @@ class ClientAdapters {
       callBackEvtFailed: options.params ? options.params.callBackEvtFailed : null
     }
 
-    const localLexiconsAdapter = new _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__.default(adapterParams,options.config)
+    const localLexiconsAdapter = new _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__.default(adapterParams, options.config)
 
     if (options.method === 'fetchShortDefs') {
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
