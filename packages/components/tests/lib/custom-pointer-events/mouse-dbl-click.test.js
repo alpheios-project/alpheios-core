@@ -4,7 +4,7 @@
 import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
 
 describe('mouse-dbl-click.test.js', () => {
-  // console.error = function () {}
+  console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
   

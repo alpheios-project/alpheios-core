@@ -15,6 +15,7 @@ export default class Cell {
       if (element.match && element.match.suffixMatch) {
         return element.match.suffixMatch
       }
+      return undefined
     })
     this.morphologyMatch = this.morphemes.length > 0 && this.morphemes.every(m => m.match && m.match.morphologyMatch)
 

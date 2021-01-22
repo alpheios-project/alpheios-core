@@ -1,13 +1,19 @@
 /* eslint-disable no-unused-vars */
 /* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME, DEVELOPMENT_MODE_BUILD */
-import { version as packageVersion, description as packageDescription } from '../../../package'
-import { Constants, Feature, LanguageModelFactory, Lexeme, Logger } from 'alpheios-data-models'
+// import { version as packageVersion, description as packageDescription } from '../../../package'
+import packageInfo from '../../../package'
+import { Constants, Feature, LanguageModelFactory, Lexeme, Logger, Options, LocalStorageArea, RemoteAuthStorageArea } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 import { WordlistController, UserDataManager } from 'alpheios-wordlist'
 import Vue from '@vue-runtime'
 import Vuex from 'vuex'
 import interact from 'interactjs'
+
+import DataModelController from '@comp/data-model/data-model-controller.js'
+
+import WordQueryController from '@comp/app/word-query/word-query-controller.js'
+
 // Modules and their support dependencies
 import L10nModule from '@comp/vue/vuex-modules/data/l10n-module.js'
 import LexisModule from '@comp/vue/vuex-modules/data/lexis.js'
@@ -24,14 +30,13 @@ import LongTap from '@comp/lib/custom-pointer-events/long-tap.js'
 import GenericEvt from '@comp/lib/custom-pointer-events/generic-evt.js'
 import MouseMove from '@comp/lib/custom-pointer-events/mouse-move.js'
 
-import Options from '@comp/lib/options/options.js'
-import LocalStorage from '@comp/lib/options/local-storage-area.js'
-import RemoteAuthStorageArea from '@comp/lib/options/remote-auth-storage-area.js'
-import SettingsController from '@comp/lib/controllers/settings-controller.js'
 import UIController from '@comp/lib/controllers/ui-controller.js'
 import UIEventController from '@comp/lib/controllers/ui-event-controller.js'
 import SelectionController from '@comp/lib/controllers/selection-controller.js'
 import QueryParams from '@comp/lib/utility/query-params.js'
+
+const packageVersion = packageInfo.version
+const packageDescription = packageInfo.description
 
 const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
@@ -63,6 +68,7 @@ export default class AppController {
    */
   constructor (state, options = {}) {
     this.state = state
+
     this._options = AppController.setOptions(options, AppController.optionsDefaults)
 
     this.isInitialized = false
@@ -77,6 +83,8 @@ export default class AppController {
      * @type {Platform} - A an object containing data about the platform.
      */
     this._platform = new Platform({ setRootAttributes: true, appType: this._options.appType })
+
+    this._dmC = new DataModelController({ platform: this._platform })
 
     // Vuex store. A public API for data and UI module interactions.
     this._store = new Vuex.Store({
@@ -97,10 +105,6 @@ export default class AppController {
 
     // Get query parameters from the URL. Do this early so they will be available to modules during registration
     this._queryParams = QueryParams.parse()
-
-    this._stC = new SettingsController({
-      platform: this._platform
-    })
 
     /**
      * Holds an instance of a UI controller. Its purpose is to manage all UI components within an application.
@@ -124,6 +128,10 @@ export default class AppController {
     this._selc = new SelectionController(this.getDefaultLangCode.bind(this))
 
     this._wordlistC = {} // This is a word list controller
+
+    this._adapters = {
+      wordQuery: undefined
+    }
   }
 
   /**
@@ -148,7 +156,8 @@ export default class AppController {
 
     appController.registerModule(LexisModule, {
       arethusaTbRefreshRetryCount: appController._options.arethusaTbRefreshRetryCount,
-      arethusaTbRefreshDelay: appController._options.arethusaTbRefreshDelay
+      arethusaTbRefreshDelay: appController._options.arethusaTbRefreshDelay,
+      adapters: appController._adapters
     })
 
     /*
@@ -177,7 +186,6 @@ export default class AppController {
 
     // Subscribe to LexicalQuery events
     LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(appController.onLexicalQueryComplete.bind(appController))
-    LexicalQuery.evt.MORPH_DATA_READY.sub(appController.onMorphDataReady.bind(appController))
     LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.sub(appController.onMorphDataNotFound.bind(appController))
     LexicalQuery.evt.HOMONYM_READY.sub(appController.onHomonymReady.bind(appController))
     LexicalQuery.evt.LEMMA_TRANSL_READY.sub(appController.updateTranslations.bind(appController))
@@ -232,7 +240,7 @@ export default class AppController {
       mode: 'production', // Controls options available and output. Other possible values: `development`
       appType: Platform.appTypes.OTHER, // A type of application that uses the controller
       clientId: 'alpheios-components',
-      storageAdapter: LocalStorage,
+      storageAdapter: LocalStorageArea,
       openPanel: true,
       textQueryTriggerMobile: 'longTap',
       textQueryTriggerDesktop: 'dblClick',
@@ -365,8 +373,8 @@ export default class AppController {
 
   async init () {
     if (this.isInitialized) { return 'Already initialized' }
-    // Initialize options
-    await this._stC.init({
+    // Options will be initialized within the DataModelController
+    await this._dmC.init({
       api: this.api,
       store: this._store,
       configServiceUrl: this._options.configServiceUrl,
@@ -377,7 +385,18 @@ export default class AppController {
       buildNumber: this._options.app.buildNumber,
       storageAdapter: this._options.storageAdapter
     })
-    // All options has been loaded and initialized after this point
+    // All options are initialized at this point
+
+    /*
+    DataModelController represents a model that is, among other things, responsible for retrieving lexical data
+    for a word. DataModelController could be a completely separate remote service if not the two things:
+    - It uses references to the options set by the user (user preferences) in the settings controller. This is tied
+      to the UI. We should refactor (by splitting responsibilities into two parts) the settings controller
+      so that dependency would go away.
+    - It retrieves some pieces of lexical data that are inherently local, such as treebank data. There is
+      currently no way to avoid that.
+     */
+    this._adapters.wordQuery = new WordQueryController({ wordQueryResolver: this._dmC.gqlEndpoint.resolvers.wordQuery })
 
     // The following options will be applied to all logging done via a single Logger instance
     // Set the  logger verbose mode according to the settings
@@ -872,18 +891,22 @@ export default class AppController {
       homonym.lexemes.filter((l) => l.isPopulated()).length < 1
     if (notFound && !this._store.state.app.queryStillActive) {
       let languageName
+      let langCode
       if (homonym) {
+        langCode = homonym.language
         languageName = this.api.app.getLanguageName(homonym.languageID).name
-      } else if (this._store.state.app.currentLanguageName) {
+      } else if (this._store.state.app.currentLanguageCode && this._store.state.app.currentLanguageName) {
+        langCode = this._store.state.app.currentLanguageCode
         languageName = this._store.state.app.currentLanguageName
       } else {
+        langCode = Constants.STR_LANG_CODE_UNDEFINED
         languageName = this.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
       }
       if (this._store.state.app.lexicalRequest.source === LexicalQuery.sources.PAGE) {
         // we offer change language here when the lookup was from the page because the language used for the
         // lookup is deduced from the page and might be wrong
-        const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE',
-          { targetWord: this._store.state.app.targetWord, languageName: languageName, langCode: homonym.language })
+        const targetWord = this._store.state.app.targetWord
+        const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { targetWord, languageName, langCode })
         this._store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: true })
       } else {
         // if we are coming from e.g. the lookup or the wordlist, offering change language
@@ -1048,10 +1071,11 @@ export default class AppController {
   }
 
   updateLemmaTranslations () {
-    if (this.api.settings.getFeatureOptions().items.enableLemmaTranslations.currentValue && !this.api.settings.getFeatureOptions().items.locale.currentValue.match(/en-/)) {
-      this.api.lexis.setLemmaTranslationLang(this.api.settings.getFeatureOptions().items.locale.currentValue)
+    if (this.api.settings.getFeatureOptions().items.enableLemmaTranslations.currentValue &&
+      !this.api.settings.getFeatureOptions().items.locale.currentValue.match(/en-/)) {
+      this.api.lexis.enableLemmaTranslations(this.api.settings.getFeatureOptions().items.locale.currentValue)
     } else {
-      this.api.lexis.setLemmaTranslationLang(null)
+      this.api.lexis.disableLemmaTranslations()
     }
   }
 
@@ -1083,9 +1107,9 @@ export default class AppController {
 
     const wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
       ? {
-        paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
-        paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
-      }
+          paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
+          paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
+        }
       : null
 
     await LexicalQuery.getWordUsageData(homonym, wordUsageExamples, params)
@@ -1135,20 +1159,24 @@ export default class AppController {
   }
 
   onLexicalQueryComplete (data) {
+    this._store.commit('app/setQueryStillActive', false) // Mark query as inactive
     switch (data.resultStatus) {
       case LexicalQuery.resultStatus.SUCCEEDED:
         this.showLanguageInfo(data.homonym)
         this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         break
       case LexicalQuery.resultStatus.FAILED:
+        /*
+        TODO: in the future, this might be a place to prompt the user to query a word level dictionary resource
+              if there is one (or some other linked word-level resource - for example, it's a place
+              we could do better right now, if we don't have a result for a homonym in Latin,
+              we could still offer the option to search the usage examples).
+              Similarly, we might prompt the user to create their own analysis...
+         */
         this.showLanguageInfo(data.homonym)
         this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
     this._store.commit('app/lexicalRequestFinished')
-  }
-
-  onMorphDataReady () {
-    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
   }
 
   onMorphDataNotFound () {
@@ -1157,6 +1185,8 @@ export default class AppController {
   }
 
   onHomonymReady (homonym) {
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_READY'))
+
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
 
     // Update status info with data from a morphological analyzer
@@ -1235,6 +1265,8 @@ export default class AppController {
 
   onDefinitionsNotFound (data) {
     this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
+    // Update the state of short definitions
+    this._store.commit('app/shortDefsUpdated')
   }
 
   onResourceQueryComplete () {

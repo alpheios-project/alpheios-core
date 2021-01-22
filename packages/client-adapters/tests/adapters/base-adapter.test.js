@@ -179,7 +179,7 @@ describe('base-adapter.test.js', () => {
 
     adapter.fetch(url)
 
-    expect(adapter.fetchWindow).toHaveBeenCalledWith(url, undefined)
+    expect(adapter.fetchWindow).toHaveBeenCalledWith(url, expect.any(Object))
     expect(adapter.fetchAxios).not.toHaveBeenCalled()
     expect(adapter.fetchWindowTimeout).not.toHaveBeenCalled()
   })
@@ -197,8 +197,9 @@ describe('base-adapter.test.js', () => {
 
     adapter.fetch(url, options)
 
-    expect(adapter.fetchWindowTimeout).toHaveBeenCalledWith(url, options)
+    expect(adapter.fetchWindowTimeout).toHaveBeenCalledWith(url, expect.any(Object))
     expect(adapter.fetchAxios).not.toHaveBeenCalled()
     expect(adapter.fetchWindow).not.toHaveBeenCalled()
   })
+
 })

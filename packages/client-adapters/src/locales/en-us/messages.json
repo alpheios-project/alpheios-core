@@ -176,5 +176,21 @@
     "message": "There are no fetch options for Logeion API request",
     "description": "Error message for autoCompleteWords.logeion adapter - no apikey and baseurl for Logeion API",
     "component": "autoCompleteWords.logeion"
+  },
+  "TOKENIZATION_FETCH_ERROR": {
+    "message": "Some problems with fetching words from Alpheios Tokenization API - {message}",
+    "description": "Error message for Alpheios Tokenization adapter - problems with fetching words from api",
+    "component": "tokenizationGroup.alpheios",
+    "params": ["message"]
+  },
+  "TOKENIZATION_FETCH_OPTIONS_ERROR": {
+    "message": "There are no fetch options for Alpheios Tokenization API request",
+    "description": "Error message - no apikey and baseurl for Alpheios Tokenization API",
+    "component": "tokenizationGroup.alpheios"
+  },
+  "TOKENIZATION_AVAILABILITY_ERROR": {
+    "message": "Tokenization service is not available for passed fetch parameters (language)",
+    "description": "Error message - tokenization service doesn't support passed language",
+    "component": "tokenizationGroup.alpheios"
   }
 }

@@ -3,7 +3,7 @@ import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import { Constants, TreebankDataItem, HomonymGroup, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
+import { Constants, TreebankDataItem, HomonymGroup, Language, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
 import {
   CedictDestinationConfig as CedictProdConfig,
   CedictDestinationDevConfig as CedictDevConfig
@@ -26,14 +26,17 @@ export default class Lexis extends Module {
     this._settingsApi = api.settings
     this._lexisConfig = api.settings.getLexisOptions()
     this._lexiconsConfig = api.settings.getLexiconsOptions()
+    this._adapters = config.adapters
 
     if (!this.hasCedict()) {
       // If CEDICT configuration is not available we will disable any CEDICT-related functionality
       Logger.getInstance().warn('CEDICT functionality will be disabled because CEDICT configuration is not available')
     }
 
+    // Whether lemma translations are enabled
+    this._lemmaTranslationEnabled = true
     // A locale for lemma translations (e.g. 'en-US')
-    this._lemmaTranslationLang = null
+    this._lemmaTranslationLocale = null
     // A TextSelector of the last lexical query
     this._lastTextSelector = null
     // Whether a treebank application has been initialized successfully
@@ -219,7 +222,20 @@ export default class Lexis extends Module {
     textSelector,
     treebankDataItem = null
   } = {}) {
-    let annotatedHomonyms
+    const wordIDs = await this.getTreebankWordIDs({
+      store,
+      textSelector,
+      treebankDataItem
+    })
+    return wordIDs.length > 0 ? Lexis.getHomonymsFromTreebank(treebankDataItem, textSelector) : null
+  }
+
+  async getTreebankWordIDs ({
+    store,
+    textSelector,
+    treebankDataItem = null
+  } = {}) {
+    let wordIDs = []
 
     this._treebankDataItem = treebankDataItem
 
@@ -293,7 +309,7 @@ export default class Lexis extends Module {
             treebankDataItem.setWordData(wordIDs)
           }
         }
-        annotatedHomonyms = await Lexis.getHomonymsFromTreebank(treebankDataItem, textSelector)
+        wordIDs = treebankDataItem.wordIds
       } catch (err) {
         // Treebank data is unavailable
         store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
@@ -320,14 +336,73 @@ export default class Lexis extends Module {
       store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       this._treebankDataItem = null
     }
-    return annotatedHomonyms
+    return wordIDs
+  }
+
+  async getWordQueryData ({ variables, pollInterval = 1000, maxIterations = 10, source, languageId } = {}) {
+    return new Promise((resolve, reject) => {
+      try {
+        this._adapters.wordQuery.observableQuery({
+          variables,
+          // This callback is called every time the GraphQL query is updated, until the query is complete.
+          dataCallback: (result) => {
+            // Data would contain an array of homonyms
+            let homonym = null
+            const state = result.extensions.state
+            if (!state.lexemes.loading) {
+              if (state.lexemes.available && result.data.homonyms) {
+                const homonymGroup = HomonymGroup.fromJsonObject({ homonyms: result.data.homonyms })
+                if (homonymGroup.homonyms.length > 1) {
+                  Logger.getInstance().warn('Multiple homonyms are not supported at the moment. Only the first homonym will be used')
+                }
+                homonym = homonymGroup.homonyms[0]
+              }
+              if (source !== LexicalQuery.sources.WORDLIST) {
+                if (state.lexemes.available) {
+                  LexicalQuery.evt.HOMONYM_READY.pub(homonym)
+                } else {
+                  LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
+                    targetWord: variables.word,
+                    languageId: languageId
+                  })
+                }
+              }
+            }
+            if (!state.shortDefs.loading) {
+              if (source !== LexicalQuery.sources.WORDLIST) {
+                if (state.shortDefs.available) {
+                  LexicalQuery.evt.SHORT_DEFS_READY.pub({
+                    requestType: 'short',
+                    homonym: homonym,
+                    word: variables.word
+                  })
+                } else {
+                  LexicalQuery.evt.SHORT_DEFS_NOT_FOUND.pub({
+                    requestType: 'short',
+                    word: variables.word
+                  })
+                }
+              }
+            }
+            if (!state.loading) {
+              const errors = result.errors || []
+              // A GraphQL query is complete
+              resolve({ homonym, state, errors })
+            }
+          },
+          pollInterval,
+          maxIterations
+        })
+      } catch (err) {
+        reject(err)
+      }
+    })
   }
 
   async lexicalQuery ({
     store,
     textSelector,
     siteOptions = [],
-    lemmaTranslations = null,
     wordUsageExamples = null,
     checkContextForward = '',
     treebankDataItem = null,
@@ -338,42 +413,216 @@ export default class Lexis extends Module {
       return
     }
 
-    if (!lemmaTranslations && textSelector.languageID === Constants.LANG_LATIN && this._lemmaTranslationLang) {
-      // Use our own rules if lemmaTranslations is not provided
-      lemmaTranslations = { locale: this._lemmaTranslationLang }
-    }
     if (!wordUsageExamples) { wordUsageExamples = this._appApi.getWordUsageExamplesQueryParams(textSelector) }
 
     if (source !== LexicalQuery.sources.WORDLIST) {
       this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
     }
 
-    let annotatedHomonyms
+    let treebankWordIDs = []
     if (source === LexicalQuery.sources.PAGE) {
-      annotatedHomonyms = await this.getTreebankData({
-        store, textSelector, treebankDataItem
+      treebankWordIDs = await this.getTreebankWordIDs({
+        store,
+        textSelector,
+        treebankDataItem
       })
     }
 
-    const lexQuery = LexicalQuery.create(textSelector, {
-      clientId: this._appApi.clientId,
-      siteOptions,
-      verboseMode: this._settingsApi.isInVerboseMode(),
-      lemmaTranslations,
-      wordUsageExamples,
-      resourceOptions: this._settingsApi.getResourceOptions(),
-      langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
-      checkContextForward,
-      cedictServiceUrl: this.hasCedict() ? this._lexisConfig.cedict.target_url : null,
-      lexiconsConfig: this.hasLexiconsConfig() ? this._lexiconsConfig : null,
-      annotatedHomonyms,
-      source
-    })
-    const result = lexQuery.getData()
+    /*
+    TODO: Retrieve lemma, then merge with resources available
+     */
+
+    const language = LMF.getLanguageModel(textSelector.languageID).language
+    const word = textSelector.normalizedText
+
+    let result
+    // A result of a getWordQueryData() request
+    let wqData
+    // This is a bypass of an old workflow for Latin and Greek
+    if (language.isOneOf([Language.LATIN, Language.GREEK])) {
+      // The new workflow is enabled for Latin only
+      let variables = {
+        language: language.toCode(),
+        location: textSelector.location,
+        word,
+        getLexemes: true,
+        getShortDefs: true,
+        useMorphService: true
+      }
+
+      if (language.equals(Language.PERSIAN)) { variables.useWordAsLexeme = true }
+
+      if (treebankWordIDs.length > 0) {
+        // There is treebank data available on the page
+        const treebankVariables = {
+          useTreebankData: true,
+          treebankProvider: treebankDataItem.provider,
+          treebankSentenceID: treebankDataItem.sentenceId,
+          treebankWordIDs
+        }
+        variables = { ...variables, ...treebankVariables }
+      }
+
+      try {
+        wqData = await this.getWordQueryData({
+          variables,
+          source
+        })
+      } catch (err) {
+        Logger.getInstance().error('Observable word query error', err)
+      }
+
+      if (wqData && wqData.homonym) {
+        let homonym = wqData.homonym // eslint-disable-line prefer-const
+
+        // Get lemma translations. Lemma translations are enabled for Latin only
+        if (this._lemmaTranslationEnabled && textSelector.languageID === Constants.LANG_LATIN) {
+          homonym = await Lexis.getLemmaTranslations({
+            homonym, browserLang: this._lemmaTranslationLocale, clientId: this._appApi.clientId, source
+          })
+        }
+
+        // Get word usage examples
+        if (wordUsageExamples) {
+          homonym = await Lexis.getWordUsageExamples({
+            homonym, paginationAuthMax: wordUsageExamples.paginationAuthMax, clientId: this._appApi.clientId
+          })
+        }
+
+        const languageCode = LMF.getLanguageCodeFromId(textSelector.languageID)
+        homonym = await Lexis.getFullDefinitions({
+          homonym,
+          languageCode,
+          clientId: this._appApi.clientId,
+          location: textSelector.location,
+          siteOptions,
+          resourceOptions: this._settingsApi.getResourceOptions()
+        })
+        if (source !== LexicalQuery.sources.WORDLIST) {
+          LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.pub({
+            resultStatus: LexicalQuery.resultStatus.SUCCEEDED,
+            homonym: homonym
+          })
+        }
+      } else {
+        Logger.getInstance().error('Homonym is not available')
+        if (source !== LexicalQuery.sources.WORDLIST) {
+          LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.pub({
+            resultStatus: LexicalQuery.resultStatus.FAILED
+          })
+        }
+      }
+    } else {
+      /*
+      Use the old workflow for languages other than Latin and Greek
+       */
+      let annotatedHomonyms
+      if (treebankWordIDs.length > 0) {
+        annotatedHomonyms = await this.getTreebankData({
+          store, textSelector, treebankDataItem
+        })
+      }
+
+      const lexQuery = LexicalQuery.create(textSelector, {
+        clientId: this._appApi.clientId,
+        siteOptions,
+        verboseMode: this._settingsApi.isInVerboseMode(),
+        wordUsageExamples,
+        resourceOptions: this._settingsApi.getResourceOptions(),
+        langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
+        checkContextForward,
+        cedictServiceUrl: this.hasCedict() ? this._lexisConfig.cedict.target_url : null,
+        lexiconsConfig: this.hasLexiconsConfig() ? this._lexiconsConfig : null,
+        annotatedHomonyms,
+        source
+      })
+      result = lexQuery.getData()
+    }
 
     // Hide a CEDICT notification on a new lexical query
     store.commit('lexis/hideCedictNotification')
     return result
+  }
+
+  // TODO: Should be moved behind the GraphQL facade
+  static async getLemmaTranslations ({ homonym, browserLang, clientId, source }) {
+    const adapterTranslationRes = await ClientAdapters.lemmatranslation.alpheios({
+      method: 'fetchTranslations',
+      clientId: clientId,
+      params: {
+        homonym,
+        browserLang
+      }
+    })
+    /*
+    If the request obtained any translations they will be attached
+    to the `translation` prop of the corresponding lexeme's lemma object.
+    The `adapterTranslationRes` object will contain only errors, if any.
+     */
+    if (adapterTranslationRes.errors.length > 0) {
+      adapterTranslationRes.errors.forEach(error => Logger.getInstance().log(error.message))
+    }
+    // Suppress events that will trigger UI messages if source is wordlist
+    if (source !== LexicalQuery.sources.WORDLIST) {
+      LexicalQuery.evt.LEMMA_TRANSL_READY.pub(homonym)
+    } else {
+      LexicalQuery.evt.WORDLIST_UPDATE_LEMMA_TRANSL_READY.pub(homonym)
+    }
+    return homonym
+  }
+
+  // TODO: Should be moved behind the GraphQL facade
+  static async getWordUsageExamples ({ homonym, paginationAuthMax, clientId }) {
+    // the default query for usage examples should be to request all examples
+    // for all authors, with user pagination preference for max number of examples
+    // per author applied. Total max across all authors will be enforced on the
+    // client adapter side. Different pagination options may apply when working
+    // directly with the usage examples display
+    const adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
+      method: 'getWordUsageExamples',
+      clientId: clientId,
+      params: {
+        homonym,
+        pagination: {
+          property: 'authmax',
+          value: paginationAuthMax
+        }
+      }
+    })
+    if (adapterConcordanceRes.errors.length > 0) {
+      adapterConcordanceRes.errors.forEach(error => Logger.getInstance().log(error))
+    }
+    LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
+    return homonym
+  }
+
+  // TODO: Should be moved behind the GraphQL facade
+  static async getFullDefinitions ({ homonym, languageCode, clientId, location, siteOptions, resourceOptions }) {
+    let adapterLexiconResFull = {}
+    // Do not retrieve full definition for wordlist requests
+    if (this._source !== LexicalQuery.sources.WORDLIST) {
+      const lexiconFullOpts = LexicalQuery.getLexiconOptions({
+        lexiconKey: 'lexicons',
+        languageCode,
+        location: location,
+        siteOptions: siteOptions,
+        resourceOptions: resourceOptions
+      })
+      adapterLexiconResFull = await ClientAdapters.lexicon.alpheios({
+        method: 'fetchFullDefs',
+        clientId: clientId,
+        params: {
+          opts: lexiconFullOpts,
+          homonym,
+          callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
+          callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
+        }
+      })
+      if (adapterLexiconResFull.errors.length > 0) {
+        adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
+      }
+    }
+    return homonym
   }
 }
 
@@ -423,7 +672,8 @@ Lexis.store = (moduleInstance) => {
        * @param {object} data - A data object.
        * @param {string} data.treebankSrc - A URL of a treebank app.
        * @param {boolean} data.hasTreebankData - Whether there is any treebank word or sentence data
-       *        to show on a diagram.
+       * to show on a diagram.
+       * @param data.suppressTree
        */
       setTreebankInfo (state, {
         treebankSrc = undefined,
@@ -500,8 +750,17 @@ Lexis.api = (moduleInstance, store) => {
       return moduleInstance.lexicalQuery({ store, textSelector, source: LexicalQuery.sources.WORDLIST })
     },
 
-    setLemmaTranslationLang (lemmaTranslationLang) {
-      moduleInstance._lemmaTranslationLang = lemmaTranslationLang
+    enableLemmaTranslations (lemmaTranslationLocale) {
+      if (!lemmaTranslationLocale) {
+        throw new Error('A lemma translations locale should be provided')
+      }
+      this._lemmaTranslationEnabled = true
+      moduleInstance._lemmaTranslationLocale = lemmaTranslationLocale
+    },
+
+    disableLemmaTranslations () {
+      this._lemmaTranslationEnabled = false
+      moduleInstance._lemmaTranslationLocale = null
     },
 
     loadCedictData: async () => {

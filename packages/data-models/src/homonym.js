@@ -3,6 +3,13 @@ import Lexeme from './lexeme.js'
 import Lemma from './lemma.js'
 import Logger from './logging/logger.js'
 
+/**
+ * A class representing a homonym object.
+ *
+ * @typedef {object} Homonym
+ * @property {Lexeme[]} lexemes - A list of lexemes that the homonym contains.
+ * @property {string} targetWord - A word that was used to create a homonym.
+ */
 class Homonym {
   /**
    * Initializes a Homonym object.

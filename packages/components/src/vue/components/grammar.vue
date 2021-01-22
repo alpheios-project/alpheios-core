@@ -51,9 +51,8 @@
       if no language is opened or if tab is not visible
 */
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-import { Constants, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory as LMF, Options } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
-import Options from '@/lib/options/options.js'
 
 import Vue from '@vue-runtime'
 

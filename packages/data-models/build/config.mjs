@@ -3,6 +3,11 @@ const webpack = {
     entry: './driver.js',
     externals: {
       'uuid/v4': 'uuid/v4'
+    },
+    output: {
+      library: 'AlpheiosDataModels',
+      libraryTarget: 'umd',
+      chunkFilename: 'datamodels.[name].js'
     }
   },
 

@@ -1,4 +1,5 @@
 import LMF from './language_model_factory.js'
+import Language from './language.js'
 import Feature from './feature.js'
 import Translation from './translation.js'
 import { v4 as uuidv4 } from 'uuid'
@@ -12,25 +13,28 @@ class Lemma {
    * Initializes a Lemma object.
    *
    * @param {string} word - A word.
-   * @param {symbol | string} languageID - A language ID (symbol, please use this) or a language code of a word.
+   * @param {Language | symbol | string} language - A language ID (symbol, please use this) or a language code of a word.
    * @param {string[]} principalParts - the principalParts of a lemma.
    * @param {object} features - the grammatical features of a lemma.
-
-   * @param {Translation} transaltions - translations from python service
    */
-  constructor (word, languageID, principalParts = [], features = {}) {
+  constructor (word, language, principalParts = [], features = {}) {
     if (!word) {
       throw new Error('Word should not be empty.')
     }
 
-    if (!languageID) {
+    if (!language) {
       throw new Error('Language should not be empty.')
     }
 
     // Compatibility code for something providing languageCode instead of languageID
     this.languageID = undefined
     this.languageCode = undefined
-    ;({ languageID: this.languageID, languageCode: this.languageCode } = LMF.getLanguageAttrs(languageID))
+    if (language instanceof Language) {
+      ;({ languageID: this.languageID, languageCode: this.languageCode } = LMF.getLegacyLanguageCodeAndId(language))
+    } else {
+      // Language is in a legacy format: either a symbol or a string
+      ;({ languageID: this.languageID, languageCode: this.languageCode } = LMF.getLanguageAttrs(language))
+    }
 
     this.word = word
     this.principalParts = principalParts

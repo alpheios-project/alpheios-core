@@ -6,6 +6,7 @@ import AlpheiosLexiconsAdapter from '@clAdapters/adapters/lexicons/adapter'
 import AlpheiosConcordanceAdapter from '@clAdapters/adapters/concordance/adapter'
 import ArethusaTreebankAdapter from '@clAdapters/adapters/arethusa/adapter'
 import AlpheiosLogeionAdapter from '@clAdapters/adapters/logeion/adapter'
+import AlpheiosTokenizationAdapter from '@clAdapters/adapters/tokenization/adapter'
 
 import WrongMethodError from '@clAdapters/errors/wrong-method-error'
 import NoRequiredParamError from '@clAdapters/errors/no-required-param-error'
@@ -79,6 +80,11 @@ class ClientAdapters {
   static get autocompleteWords () {
     ClientAdapters.init()
     return cachedAdaptersList.get('autocompleteWords')
+  }
+
+  static get tokenizationGroup () {
+    ClientAdapters.init()
+    return cachedAdaptersList.get('tokenizationGroup')
   }
 
   /**
@@ -359,6 +365,10 @@ class ClientAdapters {
     return null
   }
 
+  /**
+   * It is used for getting segments and tokens from Alpheios Tokenization Service
+   * @param {Object} options
+   */
   static async autoCompleteWords (options) {
     ClientAdapters.checkMethodParam('autocompleteWords', 'logeion', options)
 
@@ -376,6 +386,41 @@ class ClientAdapters {
     if (localLogeionAdapter.available && options.method === 'getWords') {
       const res = await localLogeionAdapter.getWords(options.params.text)
       return { result: res, errors: localLogeionAdapter.errors }
+    }
+    return null
+  }
+
+  /**
+   * It is used for getting segments and tokens from Alpheios Tokenization Service
+   * @param {Object} options
+   */
+  static async tokenizationMethod (options) {
+    ClientAdapters.checkMethodParam('tokenizationGroup', 'alpheios', options)
+
+    const localTokenizationAdapter = new AlpheiosTokenizationAdapter({
+      category: 'tokenizationGroup',
+      adapterName: 'alpheios',
+      method: options.method,
+      clientId: options.clientId,
+      fetchOptions: options.params.fetchOptions,
+      storage: options.params.storage,
+      sourceData: options.params.sourceData
+    })
+
+    if (!localTokenizationAdapter.available) {
+      localTokenizationAdapter.addError(localTokenizationAdapter.l10n.getMsg('TOKENIZATION_AVAILABILITY_ERROR'))
+      return {
+        errors: localTokenizationAdapter.errors
+      }
+    }
+
+    if (options.method === 'getTokens') {
+      const res = await localTokenizationAdapter.getTokens(options.params.text)
+      return { result: res, errors: localTokenizationAdapter.errors }
+    }
+    if (options.method === 'getConfig') {
+      const res = await localTokenizationAdapter.getConfig()
+      return { result: res, errors: localTokenizationAdapter.errors }
     }
     return null
   }

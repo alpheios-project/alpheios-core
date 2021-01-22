@@ -9,9 +9,9 @@ import { Constants, TextQuoteSelector, LanguageModelFactory } from 'alpheios-dat
 import BaseTestHelp from '@tests/helpclasses/base-test-help'
 
 describe('html-selector.test.js', () => {
-  // console.error = function () {}
+  console.error = function () {}
   console.log = function () {}
-  // console.warn = function () {}
+  console.warn = function () {}
 
   let eventEl, testElement, parentElement
   beforeAll(() => {

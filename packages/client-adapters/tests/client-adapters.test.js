@@ -3,7 +3,7 @@
 import 'whatwg-fetch'
 import ClientAdapters from '@clAdapters/client-adapters.js'
 import { Fixture, TranslationsFixture } from 'alpheios-fixtures'
-import { Constants, Homonym, Author, WordUsageExample } from 'alpheios-data-models'
+import { Constants, Homonym, Author, WordUsageExample, LocalStorageArea, Options } from 'alpheios-data-models'
 
 describe('client-adapters.test.js', () => {
   console.error = function () {}
@@ -126,7 +126,6 @@ describe('client-adapters.test.js', () => {
       langCode: 'lat', adapter: 'tufts', word: 'foo'
     })
 
-
     let res = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
@@ -190,7 +189,7 @@ describe('client-adapters.test.js', () => {
       method: 'fetchTranslations',
       params: {
         homonym: reHomonym.result,
-        browserLang: 'spa'
+        browserLang: 'es'
       },
       sourceData: {
         langs: TranslationsFixture.allLangs,
@@ -409,5 +408,91 @@ describe('client-adapters.test.js', () => {
     expect(Array.isArray(res.result)).toBeTruthy()
   })
 
+  it('21 ClientAdapters - tokenizationMethod - getTokens returns array of segments - lat', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getTokens',
+      params: {
+        text: 'veni vidi vichi',
+        fetchOptions: {
+          lang: 'lat',
+          sourceType: 'text',
+          segments: 'singleline'
+        }
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result.segments.length).toEqual(1)
+    expect(res.result.segments[0].tokens.length).toEqual(3)
+  })
+
+  it('22 ClientAdapters - tokenizationMethod - getTokens returns array of errors - if passed incorrect parameters', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getTokens',
+      params: {
+        text: 'veni vidi vichi',
+        fetchOptions: {
+          lang: 'lat',
+          sourceType: 'tei',
+          segments: 'singleline'
+        }
+      }
+    })
+
+    expect(res.errors.length).toEqual(1)
+    expect(res.result).not.toBeDefined()
+  })
+
+  it('22 ClientAdapters - tokenizationMethod - getTokens returns array of errors - if passed incorrect parameters', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getTokens',
+      params: {
+        text: 'veni vidi vichi',
+        fetchOptions: {
+          lang: 'lat',
+          sourceType: 'tei',
+          segments: 'singleline'
+        }
+      }
+    })
+
+    expect(res.errors.length).toEqual(1)
+    expect(res.result).not.toBeDefined()
+  })
+
+  it('23 ClientAdapters - tokenizationMethod - getConfig returns Options for tei and text', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getConfig',
+      params: {
+        storage: LocalStorageArea
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result.tei).toEqual(expect.any(Options))
+    expect(res.result.text).toEqual(expect.any(Options))
+  })
+
+  it('24 ClientAdapters - tokenizationMethod - getConfig returns array of errors - if passed incorrect parameters', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getConfig',
+      params: {}
+    })
+
+    expect(res.errors.length).toEqual(1)
+    expect(res.result).not.toBeDefined()
+  })
 
 })
