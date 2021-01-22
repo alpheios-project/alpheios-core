@@ -10306,7 +10306,7 @@ class Options {
    */
   async reset () {
     await this.storageAdapter.clearAll()
-    this.items = Options.initItems(this.defaults.items, this.storageAdapter)
+    this.items = Options.initItems(this.defaults.items, this.storageAdapter, this.domain, this.version)
   }
 
   get names () {
