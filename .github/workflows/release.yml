@@ -85,17 +85,10 @@ jobs:
         node-version: '14'
         
     - name: prepare for tests
-<<<<<<< HEAD
       run: npm install -g install-peerdeps@v2.0.2 && npm run set-node-build-deps && npm run bootstrap
 
     - name: test-wordlist
       run: echo skip npm --prefix packages/wordlist run test-no-coverage
-=======
-      run: npm run set-node-build-deps && npm run bootstrap
-
-    - name: test-wordlist
-      run: npm --prefix packages/wordlist run test-no-coverage
->>>>>>> master
     
     - name: test-data-models
       run: npm --prefix packages/data-models run test-no-coverage
@@ -114,11 +107,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-<<<<<<< HEAD
     needs: [test_components_1, test_components_2, test_components_4, test_components_5, test_others]
-=======
-    needs: [test_components_1, test_components_2, test_components_3, test_components_4, test_components_5, test_others]
->>>>>>> master
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2-beta
@@ -126,11 +115,7 @@ jobs:
         node-version: '14'
         
     - name: prepare for build
-<<<<<<< HEAD
       run: npm install -g install-peerdeps@v2.0.2 && npm run set-node-build-deps && npm run bootstrap
-=======
-      run: npm run set-node-build-deps && npm run bootstrap
->>>>>>> master
 
     - name: build
       id: run_build
