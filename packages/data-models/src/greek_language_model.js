@@ -158,6 +158,48 @@ for the current node
     return text
   }
 
+  /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   *                   or null if no part of speech data is present on the lexeme
+   **/
+  static normalizePartOfSpeechValue( lexeme ) {
+    if (lexeme.lemma.features[Feature.types.part]) {
+      if (lexeme.lemma.features[Feature.types.part].value === Constants.POFS_PARTICLE) {
+        // alpheios standard for Greek follows the Perseus Treebank Guidelines
+        // which normalize particles as adverbs
+        return Constants.POFS_ADVERB
+      } else if (lexeme.lemma.features[Feature.types.part].value === Constants.POFS_EXCLAMATION) {
+        // alpheios normalizes exclamation to interjection (following treebank guidelines)
+        return Constants.POFS_INTERJECTION
+      } else {
+        return lexeme.lemma.features[Feature.types.part].value
+      }
+    } else {
+      return null
+    }
+ }
+
+  /**
+   * Return a normalized feature value, based upon the feature type  and supplied value
+   * @param {string} featureType the feature type
+   * @param {string} featureValue the feature value
+   * @returns {string} the alpheios-normalized feature value
+   */
+  static normalizeFeatureValue ( featureType, featureValue ) {
+    // alpheios standard for Latin is currently following Whitaker, and
+    // normalize the gerundive mood to participle
+    if (featureType === Feature.types.part && featureValue === Constants.POFS_PARTICLE) {
+      return Constants.POFS_ADVERB
+    } else if (featureType === Feature.types.part && featureValue === Constants.POFS_EXCLAMATION) {
+      // alpheios normalizes exclamation to interjection (following treebank guidelines)
+      return Constants.POFS_INTERJECTION
+    } else {
+      return featureValue
+    }
+  }
+
   static _tonosToOxia (word) {
     return word.replace(
       /\u{03AC}/ug, '\u{1F71}').replace( // alpha

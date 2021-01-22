@@ -41,7 +41,7 @@
         "fetchShortDefs" : [ "homonym", "opts" ],
         "fetchFullDefs" : [ "homonym", "opts" ],
         "checkCachedData": [ "url", "externalData" ],
-        "getConfig": []
+        "getConfig": [ ]
       }
     }
   },

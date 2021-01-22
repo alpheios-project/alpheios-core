@@ -6,13 +6,17 @@
         <h4
             class="alpheios-principal-parts__groupitem alpheios-principal-parts__groupitem--lemma-word"
             :lang="languageCode"
-            v-if="! lemma.principalParts.includes(lemma.word)"
-        >{{lemma.word}}</h4>
+            data-alpheios-enable="all"
+            v-if="! lemma.principalParts.includes(lemma.displayWord)"
+        ><span
+          class="alpheios-principal-parts__groupitem--lemma-word__listitem"
+          v-for="word in wordParts(lemma.displayWord)">{{word}}</span></h4>
 
         <h4 class="alpheios-principal-parts__groupitem" v-if="lemma.principalParts && lemma.principalParts.length > 0">
             <span
                 :lang="languageCode"
                 class="alpheios-principal-parts__listitem"
+                data-alpheios-enable="all"
                 v-for="(part, partIndex) in lemma.principalParts" v-bind:key="partIndex"
             >{{part}}</span>
         </h4>
@@ -62,13 +66,13 @@
 import TreebankIcon from '@/images/inline-icons/sitemap.svg'
 import DisambiguatedIcon from '@/images/inline-icons/caret-left.svg'
 import Tooltip from '@/vue/components/tooltip.vue'
-import { Feature, LanguageModelFactory } from 'alpheios-data-models'
+import { Feature, LanguageModelFactory, Logger } from 'alpheios-data-models'
 
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 
 export default {
   name: 'PrincipalParts',
-  inject: ['l10n'], // API modules
+  inject: ['app','l10n'], // API modules
   components: {
     inflectionattribute: InflectionAttribute,
     treebankIcon: TreebankIcon,
@@ -117,6 +121,14 @@ export default {
     }
   },
   methods: {
+    // this is needed because sometimes a compound word is lemmatized
+    // into its component parts, separated by a ',' or '-'
+    // ideally this would be represented explicitly in the data model and
+    // query so that the definitions for the parts can be displayed together
+    // so this solution is temporary until we can do that
+    wordParts (word) {
+      return word.split(/[,-]/)
+    },
     featureList (features, name) {
       let list = features.map(i => this.lemma.features[i] ? this.lemma.features[i] : null).filter(i => i)
       list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
@@ -132,6 +144,17 @@ export default {
   },
   created: function () {
     this.types = Feature.types
+  },
+  mounted () {
+    this.$nextTick(() => {
+      const selectorName = 'getSelectedText-lemma'
+      try {
+        this.app.registerTextSelector(selectorName, '.alpheios-principal-parts__groupitem')
+        this.app.activateTextSelector(selectorName)
+      } catch (err) {
+        Logger.getInstance().error(err)
+      }
+    })
   }
 }
 </script>
@@ -144,6 +167,13 @@ export default {
     text-align: center;
     font-weight: 700;
     margin-right: textsize(5px);
+  }
+
+  .alpheios-principal-parts__groupitem--lemma-word__listitem:after {
+    content: " - ";
+  }
+  .alpheios-principal-parts__groupitem--lemma-word__listitem:last-child:after {
+    content: "";
   }
 
   .alpheios-principal-parts__listitem:after {

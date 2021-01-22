@@ -137,6 +137,12 @@ export default {
     }
   }
 
+  .alpheios-morph-data__morphdata {
+    span.alpheios-morph__attr, span.alpheios-morph__linkedattr {
+      padding-right: 5px;
+    }
+  }
+
   .alpheios-morph-data__morphdata .alpheios-morph-data__pofs {
     span {
       padding-right: 5px;
