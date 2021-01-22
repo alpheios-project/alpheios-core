@@ -184,7 +184,7 @@ class Lemma {
   isFullHomonym (lemma, { normalize = false, ignorePofs = false } = {}) {
     // If parts of speech do not match this is not a full homonym
     // don't check if told to ignorePofs
-    if (! ignorePofs &&
+    if (!ignorePofs &&
       (!this.features[Feature.types.part] ||
       !lemma.features[Feature.types.part] ||
       !this.features[Feature.types.part].isEqual(lemma.features[Feature.types.part]))) {

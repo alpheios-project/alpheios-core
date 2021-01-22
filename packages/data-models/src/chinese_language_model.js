@@ -62,7 +62,7 @@ export default class ChineseLanguageModel extends LanguageModel {
   }
 
   static getPunctuation () {
-    return ".,;:!?'\"(){}\\[\\]<>\\\n\r\uFF0C\u3001\u3002\u300C\u300D\u300A\u300B\u200C\u200D"
+    return ".,;:!?'\"(){}\\[\\]<>\\\n\r\uFF0C\u3001\u3002\u300C\u300D\u300A\u300B\u200C\u200D\u2020\u2021"
   }
 
   static _isVowel (aLetter) {

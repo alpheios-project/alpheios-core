@@ -77,7 +77,6 @@ class Inflection {
     // A lemma this inflection belongs to. Is set by `Lexeme.addInflection()`
     // TODO: make sure inflections are not set directly or this data will not be set
     this.lemma = null
-
   }
 
   clone () {
@@ -223,7 +222,7 @@ class Inflection {
    * @param {string} valueB the secon value
    * @param {boolean} normalize whether or not to apply normalization
    */
-  modelCompareFeatureValue ( featureType, valueA, valueB, normalize = true )  {
+  modelCompareFeatureValue (featureType, valueA, valueB, normalize = true) {
     const model = LMF.getLanguageModel(this.languageID)
     return model.compareFeatureValue(featureType, valueA, valueB, { normalize })
   }
@@ -232,10 +231,10 @@ class Inflection {
    * Check to see if the supplied inflection can disambiguate this one
    *
    * @param {Inflection} infl Inflection object to be used for disambiguation
-   * @param {Object} options disambiguation options
-   * @param {Boolean} options.ignorePofs flag to ignore the inflection's part of speech
+   * @param {object} options disambiguation options
+   * @param {boolean} options.ignorePofs flag to ignore the inflection's part of speech
    *                                    (use if lexeme pofs is more relevant)
-   * @returns {Object} object { {Boolean} match, {Boolean} exactMatch }
+   * @returns {object} object { {Boolean} match, {Boolean} exactMatch }
    *                   a match means the inflection was disamibugated
    *                   an exactMatch means the disamibugator matched all
    *                   values of all features
@@ -256,7 +255,7 @@ class Inflection {
         continue
       }
       for (const value of infl[feature].values) {
-        if (!this.hasFeatureValue(feature,value,{ normalize: true })) {
+        if (!this.hasFeatureValue(feature, value, { normalize: true })) {
           matched = false
           break
         }
@@ -265,7 +264,7 @@ class Inflection {
         // disambiguates an inflection with a masculine and feminine gender feature
         // but it is not an exact match of the inflection
         if (this[feature].values.length !== infl[feature].values.length) {
-          exactMatch =  false
+          exactMatch = false
         }
       }
     }
@@ -352,7 +351,7 @@ class Inflection {
    * @param {boolean} options.normalize - whether or not to normalize the feature values
    * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
-  hasFeatureValue (featureName, featureValue, { normalize=false } = {}) {
+  hasFeatureValue (featureName, featureValue, { normalize = false } = {}) {
     if (this.hasOwnProperty(featureName)) {
       return this[featureName].values.some(v => this.modelCompareFeatureValue(featureName, v, featureValue))
     }

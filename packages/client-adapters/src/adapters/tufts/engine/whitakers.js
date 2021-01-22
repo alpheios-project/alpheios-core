@@ -5,7 +5,8 @@ const data = new ImportData(Models.LatinLanguageModel, 'whitakerLat')
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
-data.inflectionOverrides = { [Models.Feature.types.conjugation]: (i, ls) => {
+data.inflectionOverrides = {
+  [Models.Feature.types.conjugation]: (i, ls) => {
     return {
       withLemma: true,
       withFeature: null
