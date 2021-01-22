@@ -15,7 +15,7 @@ jobs:
         node-version: '14'
         
     - name: prepare for tests
-      run: npm run set-node-build-deps && npm run bootstrap
+      run: npm install -g install-peerdeps@v2.0.2 && npm run set-node-build-deps && npm run bootstrap
 
     - name: test
       run: npm --prefix packages/components run test-ci-controllers
