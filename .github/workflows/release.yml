@@ -29,7 +29,7 @@ jobs:
         node-version: '14'
         
     - name: prepare for tests
-      run: npm run set-node-build-deps && npm run bootstrap
+      run: npm install -g install-peerdeps@v2.0.2 && npm run set-node-build-deps && npm run bootstrap
 
     - name: test
       run: npm --prefix packages/components run test-ci-lib
@@ -43,7 +43,7 @@ jobs:
         node-version: '14'
         
     - name: prepare for tests
-      run: npm run set-node-build-deps && npm run bootstrap
+      run: npm install -g install-peerdeps@v2.0.2 && npm run set-node-build-deps && npm run bootstrap
 
     - name: test
       run: echo "skip npm --prefix packages/components run test-ci-vue-c"
@@ -57,7 +57,7 @@ jobs:
         node-version: '14'
         
     - name: prepare for tests
-      run: npm run set-node-build-deps && npm run bootstrap
+      run: npm install -g install-peerdeps@v2.0.2 && npm run set-node-build-deps && npm run bootstrap
 
     - name: test
       run: npm --prefix packages/components run test-ci-vue-m
@@ -71,7 +71,7 @@ jobs:
         node-version: '14'
         
     - name: prepare for tests
-      run: npm run set-node-build-deps && npm run bootstrap
+      run: npm install -g install-peerdeps@v2.0.2 && npm run set-node-build-deps && npm run bootstrap
 
     - name: test
       run: npm --prefix packages/components run test-ci-inflections
@@ -85,7 +85,7 @@ jobs:
         node-version: '14'
         
     - name: prepare for tests
-      run: npm run set-node-build-deps && npm run bootstrap
+      run: npm install -g install-peerdeps@v2.0.2 && npm run set-node-build-deps && npm run bootstrap
 
     - name: test-wordlist
       run: echo skip npm --prefix packages/wordlist run test-no-coverage
@@ -115,7 +115,7 @@ jobs:
         node-version: '14'
         
     - name: prepare for build
-      run: npm run set-node-build-deps && npm run bootstrap
+      run: npm install -g install-peerdeps@v2.0.2 && npm run set-node-build-deps && npm run bootstrap
 
     - name: build
       id: run_build
