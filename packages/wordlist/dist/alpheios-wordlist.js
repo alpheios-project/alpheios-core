@@ -2443,7 +2443,6 @@ class WordlistController {
     // when receiving this event, it's possible this is the first time we are seeing the word so
     // create the item in the word list if it doesn't exist
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
-    console.info(`On homonym ready, ${data.targetWord}`)
     wordItem.homonym = data
     wordItem.currentSession = true
     wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate

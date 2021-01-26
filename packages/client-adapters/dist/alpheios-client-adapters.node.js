@@ -5889,7 +5889,6 @@ class AlpheiosTuftsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IM
         if (homonym && homonym.lexemes) {
           homonym.lexemes.sort(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Lexeme.getSortByTwoLemmaFeatures(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Feature.types.frequency, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Feature.types.part))
         }
-
         return homonym
       }
     } catch (error) {

@@ -79,7 +79,6 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
         if (homonym && homonym.lexemes) {
           homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
         }
-
         return homonym
       }
     } catch (error) {

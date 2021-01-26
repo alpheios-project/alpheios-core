@@ -8219,6 +8219,7 @@ class WordList {
   }
 
   addWordItem (item) {
+    console.info('addWordItem', item)
     if (item.languageCode !== this.languageCode) {
       throw new Error(`Language Code mismatch ${item.languageCode} !=== ${this.languageCode}`)
     }
@@ -8261,6 +8262,7 @@ class WordList {
    * @returns {WordItem} the retrieved item
    */
   getWordItem (targetWord, create = true, eventWordItemUpdated = null) {
+    console.info('getWordItem', targetWord)
     const key = this._makeItemKey(this.languageCode, targetWord)
     if (create && !this.items[key]) {
       const wordItem = new _word_item__WEBPACK_IMPORTED_MODULE_0__.default({ targetWord: targetWord, languageCode: this.languageCode })
