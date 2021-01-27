@@ -180,21 +180,38 @@ class Lemma {
    * @param {Lemma} lemma - the lemma to compare.
    * @param {object} options - Additional comparison options.
    * @param {boolean} options.normalize - Whether to normalize words before comparison.
+   * @param {boolean} options.ignorePofs - Whether to ignore the part of speech in comparison.
+   *                                       (use if the lexeme data is needed
+   *                                        for a part of speech comparison)
    * @returns {boolean} true or false.
    */
-  isFullHomonym (lemma, { normalize = false } = {}) {
+  isFullHomonym (lemma, { normalize = false, ignorePofs = false } = {}) {
     // If parts of speech do not match this is not a full homonym
-    if (!this.features[Feature.types.part] ||
+    // don't check if told to ignorePofs
+    if (! ignorePofs &&
+      (!this.features[Feature.types.part] ||
       !lemma.features[Feature.types.part] ||
-      !this.features[Feature.types.part].isEqual(lemma.features[Feature.types.part])) {
+      !this.features[Feature.types.part].isEqual(lemma.features[Feature.types.part]))) {
       return false
     }
 
+    const lm = LMF.getLanguageModel(this.languageID)
     // Check if words are the same
     const areSameWords = normalize
-      ? LMF.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
-          { normalizeTrailingDigit: true })
+      ? lm.compareWords(this.word, lemma.word, true,
+        { normalizeTrailingDigit: true })
       : this.word === lemma.word
+
+    // if they have differing trailing digits, they cannot be the same
+    const thisHasTrailingDigit = lm.hasTrailingDigit(this.word)
+    const otherHasTrailingDigit = lm.hasTrailingDigit(lemma.word)
+    if (thisHasTrailingDigit && otherHasTrailingDigit) {
+      const thisTrailingDigit = this.word.match(/\d+$/)[0]
+      const otherTrailingDigit = lemma.word.match(/\d+$/)[0]
+      if (thisTrailingDigit !== otherTrailingDigit) {
+        return false
+      }
+    }
 
     return areSameWords
   }

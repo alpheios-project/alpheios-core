@@ -110,7 +110,7 @@ class ClientAdapters {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
         // Param values other than `undefined` such as `null` or empty strings could be valid values
-        if (typeof params[paramName] === 'undefined') {
+        if (params && typeof params[paramName] === 'undefined') {
           throw new NoRequiredParamError(category, adapterName, methodName, paramName)
         }
       })
@@ -320,6 +320,7 @@ class ClientAdapters {
    * it is used for getting data from lexicons adapter
    * @param {Object} options - object contains parametes:
    *    @param {String} options.method - action that should be done wth the help of adapter - fetchShortDefs and fetchFullDefs
+   *    @param {Object} options.config - lexicon configuration supplied by client
    *    @param {Homonym} options.params.homonym - homonym for retrieving translations
    *    @param {Object(allow: [String])} options.params.opts - an object with array of urls for dictionaries
    *    @param {PSEvent} options.params.callBackEvtSuccess - an event that should be published on success result
@@ -342,7 +343,7 @@ class ClientAdapters {
       callBackEvtFailed: options.params ? options.params.callBackEvtFailed : null
     }
 
-    const localLexiconsAdapter = new AlpheiosLexiconsAdapter(adapterParams)
+    const localLexiconsAdapter = new AlpheiosLexiconsAdapter(adapterParams,options.config)
 
     if (options.method === 'fetchShortDefs') {
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
@@ -359,7 +360,7 @@ class ClientAdapters {
     }
 
     if (options.method === 'getConfig') {
-      return localLexiconsAdapter.config
+      return localLexiconsAdapter.config.lexicons
     }
     return null
   }

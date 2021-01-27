@@ -25,6 +25,7 @@ export default class Lexis extends Module {
     this._appApi = api.app
     this._settingsApi = api.settings
     this._lexisConfig = api.settings.getLexisOptions()
+    this._lexiconsConfig = api.settings.getLexiconsOptions()
     this._adapters = config.adapters
 
     if (!this.hasCedict()) {
@@ -76,6 +77,13 @@ export default class Lexis extends Module {
 
   hasCedict () {
     return Boolean(this._lexisConfig && this._lexisConfig.cedict)
+  }
+
+  hasLexiconsConfig () {
+    // note that an empty config object is allowed
+    // as it indicates that there are not remote settings
+    // that override local ones
+    return Boolean(this._lexiconsConfig)
   }
 
   createCedictIframe () {
@@ -524,6 +532,7 @@ export default class Lexis extends Module {
         langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
         checkContextForward,
         cedictServiceUrl: this.hasCedict() ? this._lexisConfig.cedict.target_url : null,
+        lexiconsConfig: this.hasLexiconsConfig() ? this._lexiconsConfig : null,
         annotatedHomonyms,
         source
       })

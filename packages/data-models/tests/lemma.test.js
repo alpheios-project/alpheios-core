@@ -158,12 +158,31 @@ describe('lemma.test.js', () => {
     let lemma2 = new Lemma('fooword', Constants.LANG_LATIN)
     let lemma3 = new Lemma('fooword', Constants.LANG_LATIN)
     let lemma4 = new Lemma('barword', Constants.LANG_LATIN)
+    let lemma5 = new Lemma('fooword1', Constants.LANG_LATIN)
+    let lemma6 = new Lemma('fooword1', Constants.LANG_LATIN)
+    let lemma7 = new Lemma('fooword2', Constants.LANG_LATIN)
     lemma1.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     lemma2.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN))
     lemma3.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_LATIN))
+    lemma5.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_LATIN))
+    lemma6.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_LATIN))
+    lemma7.addFeature(new Feature(Feature.types.part, Constants.POFS_NOUN, Constants.LANG_LATIN))
     expect(lemma1.isFullHomonym(lemma2)).toBeTruthy()
     expect(lemma1.isFullHomonym(lemma3)).toBeFalsy()
     expect(lemma1.isFullHomonym(lemma4)).toBeFalsy()
+    expect(lemma3.isFullHomonym(lemma5, {normalize: true})).toBeTruthy()
+    expect(lemma5.isFullHomonym(lemma6, {normalize: true})).toBeTruthy()
+    expect(lemma5.isFullHomonym(lemma7, {normalize: true})).toBeFalsy()
+  })
+
+  it('10 Lemma - displayWord - formats Lemma word and removes digits from the end of the word', () => {
+    let lemma1 = new Lemma('mare', Constants.LANG_LATIN)
+
+    expect(lemma1.displayWord).toEqual('mare')
+
+    let lemma2 = new Lemma('οὐδός1', Constants.LANG_GREEK)
+
+    expect(lemma2.displayWord).toEqual('οὐδός')
   })
 
   it('10 Lemma - displayWord - formats Lemma word and removes digits from the end of the word', () => {

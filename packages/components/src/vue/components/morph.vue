@@ -15,7 +15,10 @@
             <lemmatranslation :lemmakey="lex.lemma.ID" :translations="translations"></lemmatranslation>
         </div>
 
-        <inflections-list :lexeme = "lex"/>
+        <inflections-list :lexeme = "lex" :disambiguated = "true" v-if="lex.getSelectedInflection()"
+          listclass = "disambiguated-infl-set"/>
+        <inflections-list :lexeme = "lex" :disambiguated = "false"
+          :listclass = "inflectionListClass(lex)"/>
       </div>
     </div>
   </div>
@@ -59,13 +62,24 @@ export default {
     }
   },
   methods: {
+    inflectionListClass (lex) {
+      if (lex.getSelectedInflection()) {
+        if (lex.inflections.length === 1) {
+          return "dupe-infl-set"
+        } else {
+          return "super-infl-set"
+        }
+      } else {
+        return "full-infl-set"
+      }
+    },
     showLexeme (lex) {
       return (lex.isPopulated) ? lex.isPopulated() : false
     },
     hasTranslations (lemmaID) {
       return this.translations && this.translations[lemmaID] && this.translations[lemmaID].glosses && this.translations[lemmaID].glosses.length > 0
     },
-      
+
     morphClass (lex) {
       let c = 'alpheios-morph__dictentry'
       if (lex.disambiguated) {

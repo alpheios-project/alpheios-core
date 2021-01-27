@@ -329,6 +329,7 @@ export default class BaseTestHelp {
     const defaultProps = {
       lookupResourceOptions: BaseTestHelp.defaultResourceOptions,
       getLexisOptions: () => { return { cedict: { target_url: 'http://target.url' } } },
+      getLexiconsOptions: () => { return {} },
       getFeatureOptions: () => { return BaseTestHelp.defaultFeatureOptions },
       getResourceOptions: () => { return BaseTestHelp.defaultResourceOptions },
       getUiOptions: () => { return BaseTestHelp.defaultUIOptions },

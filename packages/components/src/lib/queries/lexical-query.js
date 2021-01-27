@@ -16,6 +16,7 @@ export default class LexicalQuery extends Query {
     this.wordUsageExamples = options.wordUsageExamples
     this.checkContextForward = options.checkContextForward || ''
     this.cedictServiceUrl = options.cedictServiceUrl
+    this.lexiconsConfig = options.lexiconsConfig
     this._annotatedHomonyms = options.annotatedHomonyms
     this._source = options.source
     this.homonym = options.homonym || null
@@ -322,6 +323,7 @@ export default class LexicalQuery extends Query {
       const adapterLexiconResShort = yield ClientAdapters.lexicon.alpheios({
         method: 'fetchShortDefs',
         clientId: this.clientId,
+        config: this.lexiconsConfig,
         params
       })
 
@@ -341,6 +343,7 @@ export default class LexicalQuery extends Query {
         adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
           method: 'fetchFullDefs',
           clientId: this.clientId,
+          config: this.lexiconsConfig,
           params: {
             opts: lexiconFullOpts,
             homonym: this.homonym,

@@ -23,6 +23,7 @@ const featuresArray = [
 ]
 
 const featuresArrayAll = [
+  ['morph', 'morph'], // morph is first because it may have data that overrides other features
   ['pofs', 'part'],
   ['case', 'grmCase'],
   ['gend', 'gender'],
@@ -36,8 +37,7 @@ const featuresArrayAll = [
   ['comp', 'comparison'],
   ['stemtype', 'stemtype'],
   ['derivtype', 'derivtype'],
-  ['dial', 'dialect'],
-  ['morph', 'morph']
+  ['dial', 'dialect']
 ]
 
 const attributeBasedFeatures = [

@@ -388,6 +388,9 @@ html {
   font-size: var(--alpheios-base-text-size);
   color: var(--alpheios-text-color);
 }
+.alpheios-content *[data-alpheios-enable=all] {
+  cursor: pointer;
+}
 
 input.alpheios-input, input.alpheios-input[type] {
   box-sizing: border-box;
@@ -1116,6 +1119,12 @@ p.alpheios-lemma__translations-value {
   font-weight: 700;
   margin-right: calc(var(--alpheios-base-text-size) * 0.3125);
 }
+.alpheios-principal-parts__groupitem--lemma-word__listitem:after {
+  content: " - ";
+}
+.alpheios-principal-parts__groupitem--lemma-word__listitem:last-child:after {
+  content: "";
+}
 .alpheios-principal-parts__listitem:after {
   content: ", ";
 }
@@ -1203,6 +1212,9 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
 .alpheios-morph-data__principal_parts .feature_source span {
   font-size: smaller;
 }
+.alpheios-morph-data__morphdata span.alpheios-morph__attr, .alpheios-morph-data__morphdata span.alpheios-morph__linkedattr {
+  padding-right: 5px;
+}
 .alpheios-morph-data__morphdata .alpheios-morph-data__pofs span {
   padding-right: 5px;
 }
@@ -1262,7 +1274,7 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-content .alpheios-definition__short .alpheios-definition__text {
+.alpheios-content .alpheios-definition__short .alpheios-definition__text, .alpheios-content .alpheios-definition__short .alpheios-definition__text * {
   color: var(--alpheios-definition-short-color);
   font-size: calc(var(--alpheios-base-text-size) * 1.125);
   font-weight: bold;
@@ -1344,6 +1356,31 @@ div.alpheios-inflections-list__block {
   font-weight: bold;
   vertical-align: top;
   padding-top: 4px;
+}
+.alpheios-inflections-list__pointer-tooltip {
+  display: block;
+  height: 22px;
+  margin-left: -5px;
+}
+.alpheios-inflections-list__pointer-icn {
+  display: block;
+  fill: var(--alpheios-color-vivid);
+  height: 22px;
+}
+.alpheios-inflections-list__dsmbg-providers {
+  display: block;
+  height: 22px;
+}
+.alpheios-inflections-list__dsmbg-providers-tooltip {
+  margin-left: 5px;
+}
+.alpheios-inflections-list__dsmbg-providers-icn {
+  fill: var(--alpheios-color-neutral-dark);
+  display: block;
+  height: 22px;
+}
+.alpheios-inflections-list__dupe-infl-set {
+  display: none;
 }
 /*
  Calculates a size of text elements relative to the base size.
