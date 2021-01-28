@@ -8,9 +8,10 @@
             :lang="languageCode"
             data-alpheios-enable="all"
             v-if="! lemma.principalParts.includes(lemma.displayWord)"
-        ><span
-          class="alpheios-principal-parts__groupitem--lemma-word__listitem"
-          v-for="word in wordParts(lemma.displayWord)">{{word}}</span></h4>
+        >
+          <div class="alpheios-principal-parts__groupitem--lemma-word__listitem"
+          v-for="word in wordParts(lemma.displayWord)" :key="word">{{word}}</div>
+        </h4>
 
         <h4 class="alpheios-principal-parts__groupitem" v-if="lemma.principalParts && lemma.principalParts.length > 0">
             <span
@@ -169,23 +170,24 @@ export default {
     margin-right: textsize(5px);
   }
 
-  .alpheios-principal-parts__groupitem--lemma-word__listitem:after {
-    content: " - ";
-  }
-  .alpheios-principal-parts__groupitem--lemma-word__listitem:last-child:after {
-    content: "";
+  .alpheios-principal-parts__groupitem--lemma-word__listitem:not(:last-child) {
+    margin-right: 3px;
+
+    &:after {
+      content: " - ";
+    }
   }
 
-  .alpheios-principal-parts__listitem:after {
-    content: ", ";
-  }
+  .alpheios-principal-parts__listitem:not(:last-child) {
+    margin-right: 3px;
 
-  .alpheios-principal-parts__listitem:last-child:after {
-    content: "";
+    &:after {
+      content: ", ";
+    }
   }
 
   .alpheios-principal-parts__item h4.alpheios-principal-parts__groupitem {
-    display: inline;
+    display: flex;
     font-weight: 700;
     margin-right: 5px;
     margin-bottom: 0;
