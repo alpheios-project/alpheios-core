@@ -176,8 +176,8 @@ export default class SettingsController {
     return this._appConfig && this._appConfig['lexis-cs'] ? this._appConfig['lexis-cs'] : {}
   }
 
-  getLexiconsOptions() {
-    return this._appConfig && this._appConfig['lexicons'] ? this._appConfig['lexicons'] : {}
+  getLexiconsOptions () {
+    return this._appConfig && this._appConfig.lexicons ? this._appConfig.lexicons : {}
   }
 
   getLogeionOptions () {

@@ -417,21 +417,23 @@ class LanguageModel {
 
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    **/
-  static normalizePartOfSpeechValue ( lexeme ) {
+  static normalizePartOfSpeechValue (lexeme) {
     // default is to return the value as it exists on the lemma
     return lexeme.lemma.features[Feature.types.part] ? lexeme.lemma.features[Feature.types.part].value : null
   }
 
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
+   *
    * @param {string} featureType the feature type
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue ( featureType, featureValue ) {
+  static normalizeFeatureValue (featureType, featureValue) {
     // default is to return the value as supplied
     return featureValue
   }
@@ -482,7 +484,7 @@ class LanguageModel {
    * @param {object} options
    * @param {boolean} options.normalize - whether or not to apply normalization
    */
-  static compareFeatureValue ( featureType, valueA, valueB, { normalize = true } = {}) {
+  static compareFeatureValue (featureType, valueA, valueB, { normalize = true } = {}) {
     if (normalize) {
       valueA = this.normalizeFeatureValue(featureType, valueA)
       valueB = this.normalizeFeatureValue(featureType, valueB)

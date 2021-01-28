@@ -15,7 +15,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   *                                merges with and overrides the lexicon
   *                                settings in the local config.json,
   *                                if present and populated. An empty object
-  *                                signifies that there are no overrides 
+  *                                signifies that there are no overrides
   */
   constructor (config = {}, remoteConfig = {}) {
     super()

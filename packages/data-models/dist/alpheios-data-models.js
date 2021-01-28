@@ -267,6 +267,9 @@ axios.all = function all(promises) {
 };
 axios.spread = __webpack_require__(/*! ./helpers/spread */ "../../../node_modules/axios/lib/helpers/spread.js");
 
+// Expose isAxiosError
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "../../../node_modules/axios/lib/helpers/isAxiosError.js");
+
 module.exports = axios;
 
 // Allow use of default import syntax in TypeScript
@@ -1247,6 +1250,28 @@ module.exports = function isAbsoluteURL(url) {
   // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
   // by any combination of letters, digits, plus, period, or hyphen.
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/isAxiosError.js":
+/*!***************************************************************!*
+  !*** ../../../node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+module.exports = function isAxiosError(payload) {
+  return (typeof payload === 'object') && (payload.isAxiosError === true);
 };
 
 
@@ -4483,11 +4508,12 @@ for the current node
 
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    *                   or null if no part of speech data is present on the lexeme
    **/
-  static normalizePartOfSpeechValue( lexeme ) {
+  static normalizePartOfSpeechValue (lexeme) {
     if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part]) {
       if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PARTICLE) {
         // alpheios standard for Greek follows the Perseus Treebank Guidelines
@@ -4502,15 +4528,16 @@ for the current node
     } else {
       return null
     }
- }
+  }
 
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
+   *
    * @param {string} featureType the feature type
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue ( featureType, featureValue ) {
+  static normalizeFeatureValue (featureType, featureValue) {
     // alpheios standard for Latin is currently following Whitaker, and
     // normalize the gerundive mood to participle
     if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PARTICLE) {
@@ -5214,8 +5241,7 @@ class Homonym {
     for (const otherLexeme of disambiguator.lexemes) {
       for (const lexeme of base.lexemes) {
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
-        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ?
-          _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguateInflections(lexeme, otherLexeme) : lexeme
+        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguateInflections(lexeme, otherLexeme) : lexeme
 
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
           if (newLex.getSelectedInflection() !== null) {
@@ -5237,7 +5263,7 @@ class Homonym {
         if (possibleLexemes.length > 0) {
           // we didn't have a better match so mark as disamibugated
           // and add in the disambiguator's inflections
-          for ( const lexeme of possibleLexemes ) {
+          for (const lexeme of possibleLexemes) {
             lexeme.setDisambiguation(otherLexeme)
             // we have to add in the disamibugators inflections
             for (const infl of disambiguator.inflections) {
@@ -5360,7 +5386,6 @@ class Inflection {
     // A lemma this inflection belongs to. Is set by `Lexeme.addInflection()`
     // TODO: make sure inflections are not set directly or this data will not be set
     this.lemma = null
-
   }
 
   clone () {
@@ -5506,7 +5531,7 @@ class Inflection {
    * @param {string} valueB the secon value
    * @param {boolean} normalize whether or not to apply normalization
    */
-  modelCompareFeatureValue ( featureType, valueA, valueB, normalize = true )  {
+  modelCompareFeatureValue (featureType, valueA, valueB, normalize = true) {
     const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModel(this.languageID)
     return model.compareFeatureValue(featureType, valueA, valueB, { normalize })
   }
@@ -5515,10 +5540,10 @@ class Inflection {
    * Check to see if the supplied inflection can disambiguate this one
    *
    * @param {Inflection} infl Inflection object to be used for disambiguation
-   * @param {Object} options disambiguation options
-   * @param {Boolean} options.ignorePofs flag to ignore the inflection's part of speech
+   * @param {object} options disambiguation options
+   * @param {boolean} options.ignorePofs flag to ignore the inflection's part of speech
    *                                    (use if lexeme pofs is more relevant)
-   * @returns {Object} object { {Boolean} match, {Boolean} exactMatch }
+   * @returns {object} object { {Boolean} match, {Boolean} exactMatch }
    *                   a match means the inflection was disamibugated
    *                   an exactMatch means the disamibugator matched all
    *                   values of all features
@@ -5539,7 +5564,7 @@ class Inflection {
         continue
       }
       for (const value of infl[feature].values) {
-        if (!this.hasFeatureValue(feature,value,{ normalize: true })) {
+        if (!this.hasFeatureValue(feature, value, { normalize: true })) {
           matched = false
           break
         }
@@ -5548,7 +5573,7 @@ class Inflection {
         // disambiguates an inflection with a masculine and feminine gender feature
         // but it is not an exact match of the inflection
         if (this[feature].values.length !== infl[feature].values.length) {
-          exactMatch =  false
+          exactMatch = false
         }
       }
     }
@@ -5635,7 +5660,7 @@ class Inflection {
    * @param {boolean} options.normalize - whether or not to normalize the feature values
    * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
-  hasFeatureValue (featureName, featureValue, { normalize=false } = {}) {
+  hasFeatureValue (featureName, featureValue, { normalize = false } = {}) {
     if (this.hasOwnProperty(featureName)) {
       return this[featureName].values.some(v => this.modelCompareFeatureValue(featureName, v, featureValue))
     }
@@ -6368,21 +6393,23 @@ class LanguageModel {
 
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    **/
-  static normalizePartOfSpeechValue ( lexeme ) {
+  static normalizePartOfSpeechValue (lexeme) {
     // default is to return the value as it exists on the lemma
     return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ? lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value : null
   }
 
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
+   *
    * @param {string} featureType the feature type
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue ( featureType, featureValue ) {
+  static normalizeFeatureValue (featureType, featureValue) {
     // default is to return the value as supplied
     return featureValue
   }
@@ -6433,7 +6460,7 @@ class LanguageModel {
    * @param {object} options
    * @param {boolean} options.normalize - whether or not to apply normalization
    */
-  static compareFeatureValue ( featureType, valueA, valueB, { normalize = true } = {}) {
+  static compareFeatureValue (featureType, valueA, valueB, { normalize = true } = {}) {
     if (normalize) {
       valueA = this.normalizeFeatureValue(featureType, valueA)
       valueB = this.normalizeFeatureValue(featureType, valueB)
@@ -7408,11 +7435,12 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
+   *
    * @param {string} featureType the feature type
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue ( featureType, featureValue ) {
+  static normalizeFeatureValue (featureType, featureValue) {
     // alpheios standard for Latin is currently following Whitaker, and
     // normalize the gerundive mood to participle
     if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.mood && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_GERUNDIVE) {
@@ -7426,10 +7454,11 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    **/
-  static normalizePartOfSpeechValue ( lexeme ) {
+  static normalizePartOfSpeechValue (lexeme) {
     if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part]) {
       // Alpheios currently follows Whitaker for Latin and normalizes  exclamation
       // to interjection
@@ -7439,10 +7468,9 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value
       }
     } else {
-        return null
+      return null
     }
   }
-
 
   /**
    * Get a list of valid puncutation for this language
@@ -7694,7 +7722,7 @@ class Lemma {
   isFullHomonym (lemma, { normalize = false, ignorePofs = false } = {}) {
     // If parts of speech do not match this is not a full homonym
     // don't check if told to ignorePofs
-    if (! ignorePofs &&
+    if (!ignorePofs &&
       (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ||
       !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ||
       !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part]))) {
@@ -7705,7 +7733,7 @@ class Lemma {
     // Check if words are the same
     const areSameWords = normalize
       ? lm.compareWords(this.word, lemma.word, true,
-        { normalizeTrailingDigit: true })
+          { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
     // if they have differing trailing digits, they cannot be the same
@@ -7870,6 +7898,7 @@ class Lexeme {
   /**
    * Set the selected inflection for a lexeme which has had its
    * inflections disambiguated
+   *
    * @param {Inflection} inflection the selected inflection
    */
   setSelectedInflection (inflection) {
@@ -7879,6 +7908,7 @@ class Lexeme {
   /**
    * Get the selected inflection for a lexeme which has had its
    * inflections disambiguated
+   *
    * @returns {Inflection} (or null if none is selected)
    */
   getSelectedInflection () {
@@ -7889,6 +7919,7 @@ class Lexeme {
    * Gets the selected inflection formatted for display
    * (returns an array because the display is grouped by feature
    * but there should only be one inflection in the array)
+   *
    * @returns {Array} if no selected inflection the array will be empty
    */
   getGroupedSelectedInflection () {
@@ -8042,9 +8073,10 @@ class Lexeme {
    * Set the disambiguation flag of this lexeme
    * if a disambiguator lexeme is provided, it's lemma word will be used
    * to update the word of this lexeme's lemma
+   *
    * @param {Lexeme} disambiguator
    */
-  setDisambiguation(disambiguator = null) {
+  setDisambiguation (disambiguator = null) {
     this.disambiguated = true
     if (disambiguator) {
       this.lemma.word = this.lemma.disambiguate(disambiguator.lemma)
