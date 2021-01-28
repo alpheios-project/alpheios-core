@@ -343,7 +343,7 @@ class ClientAdapters {
       callBackEvtFailed: options.params ? options.params.callBackEvtFailed : null
     }
 
-    const localLexiconsAdapter = new AlpheiosLexiconsAdapter(adapterParams,options.config)
+    const localLexiconsAdapter = new AlpheiosLexiconsAdapter(adapterParams, options.config)
 
     if (options.method === 'fetchShortDefs') {
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)

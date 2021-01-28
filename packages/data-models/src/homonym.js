@@ -161,8 +161,7 @@ class Homonym {
     for (const otherLexeme of disambiguator.lexemes) {
       for (const lexeme of base.lexemes) {
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
-        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ?
-          Lexeme.disambiguateInflections(lexeme, otherLexeme) : lexeme
+        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? Lexeme.disambiguateInflections(lexeme, otherLexeme) : lexeme
 
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
           if (newLex.getSelectedInflection() !== null) {
@@ -184,7 +183,7 @@ class Homonym {
         if (possibleLexemes.length > 0) {
           // we didn't have a better match so mark as disamibugated
           // and add in the disambiguator's inflections
-          for ( const lexeme of possibleLexemes ) {
+          for (const lexeme of possibleLexemes) {
             lexeme.setDisambiguation(otherLexeme)
             // we have to add in the disamibugators inflections
             for (const infl of disambiguator.inflections) {

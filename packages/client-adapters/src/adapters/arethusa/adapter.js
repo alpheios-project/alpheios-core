@@ -115,7 +115,7 @@ class ArethusaTreebankAdapter extends BaseAdapter {
         if (homonym && homonym.lexemes && homonym.lexemes.length === 1 &&
            homonym.lexemes[0].lemma.features[Feature.types.part].value === Constants.POFS_VERB &&
            homonym.lexemes[0].inflections.length === 1 &&
-           languageModel.normalizeFeatureValue(Feature.types.mood,homonym.lexemes[0].inflections[0][Feature.types.mood].value) === Constants.MOOD_PARTICIPLE) {
+           languageModel.normalizeFeatureValue(Feature.types.mood, homonym.lexemes[0].inflections[0][Feature.types.mood].value) === Constants.MOOD_PARTICIPLE) {
           homonym.lexemes[0].inflections[0].addFeature(new Feature(Feature.types.part, Constants.POFS_VERB_PARTICIPLE, languageModel.languageID))
         }
         return homonym

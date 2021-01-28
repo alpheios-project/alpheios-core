@@ -18,7 +18,7 @@ return /******/ (() => { // webpackBootstrap
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.0\",\"/home/balmas/workspace/alpheios-core\"]],\"_from\":\"axios@0.21.0\",\"_id\":\"axios@0.21.0\",\"_inBundle\":false,\"_integrity\":\"sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.0.tgz\",\"_spec\":\"0.21.0\",\"_where\":\"/home/balmas/workspace/alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.0\"}");
+module.exports = JSON.parse("{\"_from\":\"axios@^0.21.0\",\"_id\":\"axios@0.21.1\",\"_inBundle\":false,\"_integrity\":\"sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"^0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.1.tgz\",\"_shasum\":\"22563481962f4d6bde9a76d516ef0e5d3c09b2b8\",\"_spec\":\"axios@^0.21.0\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.1\"}");
 
 /***/ }),
 
@@ -56,6 +56,31 @@ var createError = __webpack_require__(/*! ../core/createError */ "../../../node_
 var enhanceError = __webpack_require__(/*! ../core/enhanceError */ "../../../node_modules/axios/lib/core/enhanceError.js");
 
 var isHttps = /https:?/;
+
+/**
+ *
+ * @param {http.ClientRequestArgs} options
+ * @param {AxiosProxyConfig} proxy
+ * @param {string} location
+ */
+function setProxy(options, proxy, location) {
+  options.hostname = proxy.host;
+  options.host = proxy.host;
+  options.port = proxy.port;
+  options.path = location;
+
+  // Basic proxy authorization
+  if (proxy.auth) {
+    var base64 = Buffer.from(proxy.auth.username + ':' + proxy.auth.password, 'utf8').toString('base64');
+    options.headers['Proxy-Authorization'] = 'Basic ' + base64;
+  }
+
+  // If a proxy is used, any redirects must also pass through the proxy
+  options.beforeRedirect = function beforeRedirect(redirection) {
+    redirection.headers.host = redirection.host;
+    setProxy(redirection, proxy, redirection.href);
+  };
+}
 
 /*eslint consistent-return:0*/
 module.exports = function httpAdapter(config) {
@@ -167,11 +192,11 @@ module.exports = function httpAdapter(config) {
           });
         }
 
-
         if (shouldProxy) {
           proxy = {
             host: parsedProxyUrl.hostname,
-            port: parsedProxyUrl.port
+            port: parsedProxyUrl.port,
+            protocol: parsedProxyUrl.protocol
           };
 
           if (parsedProxyUrl.auth) {
@@ -186,17 +211,8 @@ module.exports = function httpAdapter(config) {
     }
 
     if (proxy) {
-      options.hostname = proxy.host;
-      options.host = proxy.host;
       options.headers.host = parsed.hostname + (parsed.port ? ':' + parsed.port : '');
-      options.port = proxy.port;
-      options.path = protocol + '//' + parsed.hostname + (parsed.port ? ':' + parsed.port : '') + options.path;
-
-      // Basic proxy authorization
-      if (proxy.auth) {
-        var base64 = Buffer.from(proxy.auth.username + ':' + proxy.auth.password, 'utf8').toString('base64');
-        options.headers['Proxy-Authorization'] = 'Basic ' + base64;
-      }
+      setProxy(options, proxy, protocol + '//' + parsed.hostname + (parsed.port ? ':' + parsed.port : '') + options.path);
     }
 
     var transport;
@@ -575,6 +591,9 @@ axios.all = function all(promises) {
   return Promise.all(promises);
 };
 axios.spread = __webpack_require__(/*! ./helpers/spread */ "../../../node_modules/axios/lib/helpers/spread.js");
+
+// Expose isAxiosError
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "../../../node_modules/axios/lib/helpers/isAxiosError.js");
 
 module.exports = axios;
 
@@ -1556,6 +1575,28 @@ module.exports = function isAbsoluteURL(url) {
   // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
   // by any combination of letters, digits, plus, period, or hyphen.
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/isAxiosError.js":
+/*!***************************************************************!*
+  !*** ../../../node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+module.exports = function isAxiosError(payload) {
+  return (typeof payload === 'object') && (payload.isAxiosError === true);
 };
 
 
@@ -2819,14 +2860,19 @@ exports.enable(load());
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var debug;
-try {
-  /* eslint global-require: off */
-  debug = __webpack_require__(/*! debug */ "../../../node_modules/debug/src/index.js")("follow-redirects");
-}
-catch (error) {
-  debug = function () { /* */ };
-}
-module.exports = debug;
+
+module.exports = function () {
+  if (!debug) {
+    try {
+      /* eslint global-require: off */
+      debug = __webpack_require__(/*! debug */ "../../../node_modules/debug/src/index.js")("follow-redirects");
+    }
+    catch (error) {
+      debug = function () { /* */ };
+    }
+  }
+  debug.apply(null, arguments);
+};
 
 
 /***/ }),
@@ -3239,7 +3285,7 @@ function wrap(protocols) {
     var wrappedProtocol = exports[scheme] = Object.create(nativeProtocol);
 
     // Executes a request, following redirects
-    wrappedProtocol.request = function (input, options, callback) {
+    function request(input, options, callback) {
       // Parse parameters
       if (typeof input === "string") {
         var urlStr = input;
@@ -3274,14 +3320,20 @@ function wrap(protocols) {
       assert.equal(options.protocol, protocol, "protocol mismatch");
       debug("options", options);
       return new RedirectableRequest(options, callback);
-    };
+    }
 
     // Executes a GET request, following redirects
-    wrappedProtocol.get = function (input, options, callback) {
-      var request = wrappedProtocol.request(input, options, callback);
-      request.end();
-      return request;
-    };
+    function get(input, options, callback) {
+      var wrappedRequest = wrappedProtocol.request(input, options, callback);
+      wrappedRequest.end();
+      return wrappedRequest;
+    }
+
+    // Expose the properties on the wrapped protocol
+    Object.defineProperties(wrappedProtocol, {
+      request: { value: request, configurable: true, enumerable: true, writable: true },
+      get: { value: get, configurable: true, enumerable: true, writable: true },
+    });
   });
   return exports;
 }
@@ -6140,11 +6192,12 @@ for the current node
 
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    *                   or null if no part of speech data is present on the lexeme
    **/
-  static normalizePartOfSpeechValue( lexeme ) {
+  static normalizePartOfSpeechValue (lexeme) {
     if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part]) {
       if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PARTICLE) {
         // alpheios standard for Greek follows the Perseus Treebank Guidelines
@@ -6159,15 +6212,16 @@ for the current node
     } else {
       return null
     }
- }
+  }
 
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
+   *
    * @param {string} featureType the feature type
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue ( featureType, featureValue ) {
+  static normalizeFeatureValue (featureType, featureValue) {
     // alpheios standard for Latin is currently following Whitaker, and
     // normalize the gerundive mood to participle
     if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_4__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_3__.POFS_PARTICLE) {
@@ -6871,8 +6925,7 @@ class Homonym {
     for (const otherLexeme of disambiguator.lexemes) {
       for (const lexeme of base.lexemes) {
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
-        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ?
-          _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguateInflections(lexeme, otherLexeme) : lexeme
+        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguateInflections(lexeme, otherLexeme) : lexeme
 
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
           if (newLex.getSelectedInflection() !== null) {
@@ -6894,7 +6947,7 @@ class Homonym {
         if (possibleLexemes.length > 0) {
           // we didn't have a better match so mark as disamibugated
           // and add in the disambiguator's inflections
-          for ( const lexeme of possibleLexemes ) {
+          for (const lexeme of possibleLexemes) {
             lexeme.setDisambiguation(otherLexeme)
             // we have to add in the disamibugators inflections
             for (const infl of disambiguator.inflections) {
@@ -7017,7 +7070,6 @@ class Inflection {
     // A lemma this inflection belongs to. Is set by `Lexeme.addInflection()`
     // TODO: make sure inflections are not set directly or this data will not be set
     this.lemma = null
-
   }
 
   clone () {
@@ -7163,7 +7215,7 @@ class Inflection {
    * @param {string} valueB the secon value
    * @param {boolean} normalize whether or not to apply normalization
    */
-  modelCompareFeatureValue ( featureType, valueA, valueB, normalize = true )  {
+  modelCompareFeatureValue (featureType, valueA, valueB, normalize = true) {
     const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModel(this.languageID)
     return model.compareFeatureValue(featureType, valueA, valueB, { normalize })
   }
@@ -7172,10 +7224,10 @@ class Inflection {
    * Check to see if the supplied inflection can disambiguate this one
    *
    * @param {Inflection} infl Inflection object to be used for disambiguation
-   * @param {Object} options disambiguation options
-   * @param {Boolean} options.ignorePofs flag to ignore the inflection's part of speech
+   * @param {object} options disambiguation options
+   * @param {boolean} options.ignorePofs flag to ignore the inflection's part of speech
    *                                    (use if lexeme pofs is more relevant)
-   * @returns {Object} object { {Boolean} match, {Boolean} exactMatch }
+   * @returns {object} object { {Boolean} match, {Boolean} exactMatch }
    *                   a match means the inflection was disamibugated
    *                   an exactMatch means the disamibugator matched all
    *                   values of all features
@@ -7196,7 +7248,7 @@ class Inflection {
         continue
       }
       for (const value of infl[feature].values) {
-        if (!this.hasFeatureValue(feature,value,{ normalize: true })) {
+        if (!this.hasFeatureValue(feature, value, { normalize: true })) {
           matched = false
           break
         }
@@ -7205,7 +7257,7 @@ class Inflection {
         // disambiguates an inflection with a masculine and feminine gender feature
         // but it is not an exact match of the inflection
         if (this[feature].values.length !== infl[feature].values.length) {
-          exactMatch =  false
+          exactMatch = false
         }
       }
     }
@@ -7292,7 +7344,7 @@ class Inflection {
    * @param {boolean} options.normalize - whether or not to normalize the feature values
    * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
-  hasFeatureValue (featureName, featureValue, { normalize=false } = {}) {
+  hasFeatureValue (featureName, featureValue, { normalize = false } = {}) {
     if (this.hasOwnProperty(featureName)) {
       return this[featureName].values.some(v => this.modelCompareFeatureValue(featureName, v, featureValue))
     }
@@ -8025,21 +8077,23 @@ class LanguageModel {
 
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    **/
-  static normalizePartOfSpeechValue ( lexeme ) {
+  static normalizePartOfSpeechValue (lexeme) {
     // default is to return the value as it exists on the lemma
     return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ? lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value : null
   }
 
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
+   *
    * @param {string} featureType the feature type
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue ( featureType, featureValue ) {
+  static normalizeFeatureValue (featureType, featureValue) {
     // default is to return the value as supplied
     return featureValue
   }
@@ -8090,7 +8144,7 @@ class LanguageModel {
    * @param {object} options
    * @param {boolean} options.normalize - whether or not to apply normalization
    */
-  static compareFeatureValue ( featureType, valueA, valueB, { normalize = true } = {}) {
+  static compareFeatureValue (featureType, valueA, valueB, { normalize = true } = {}) {
     if (normalize) {
       valueA = this.normalizeFeatureValue(featureType, valueA)
       valueB = this.normalizeFeatureValue(featureType, valueB)
@@ -9065,11 +9119,12 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
+   *
    * @param {string} featureType the feature type
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue ( featureType, featureValue ) {
+  static normalizeFeatureValue (featureType, featureValue) {
     // alpheios standard for Latin is currently following Whitaker, and
     // normalize the gerundive mood to participle
     if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.mood && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_3__.MOOD_GERUNDIVE) {
@@ -9083,10 +9138,11 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    **/
-  static normalizePartOfSpeechValue ( lexeme ) {
+  static normalizePartOfSpeechValue (lexeme) {
     if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part]) {
       // Alpheios currently follows Whitaker for Latin and normalizes  exclamation
       // to interjection
@@ -9096,10 +9152,9 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value
       }
     } else {
-        return null
+      return null
     }
   }
-
 
   /**
    * Get a list of valid puncutation for this language
@@ -9351,7 +9406,7 @@ class Lemma {
   isFullHomonym (lemma, { normalize = false, ignorePofs = false } = {}) {
     // If parts of speech do not match this is not a full homonym
     // don't check if told to ignorePofs
-    if (! ignorePofs &&
+    if (!ignorePofs &&
       (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ||
       !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ||
       !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part]))) {
@@ -9362,7 +9417,7 @@ class Lemma {
     // Check if words are the same
     const areSameWords = normalize
       ? lm.compareWords(this.word, lemma.word, true,
-        { normalizeTrailingDigit: true })
+          { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
     // if they have differing trailing digits, they cannot be the same
@@ -9527,6 +9582,7 @@ class Lexeme {
   /**
    * Set the selected inflection for a lexeme which has had its
    * inflections disambiguated
+   *
    * @param {Inflection} inflection the selected inflection
    */
   setSelectedInflection (inflection) {
@@ -9536,6 +9592,7 @@ class Lexeme {
   /**
    * Get the selected inflection for a lexeme which has had its
    * inflections disambiguated
+   *
    * @returns {Inflection} (or null if none is selected)
    */
   getSelectedInflection () {
@@ -9546,6 +9603,7 @@ class Lexeme {
    * Gets the selected inflection formatted for display
    * (returns an array because the display is grouped by feature
    * but there should only be one inflection in the array)
+   *
    * @returns {Array} if no selected inflection the array will be empty
    */
   getGroupedSelectedInflection () {
@@ -9699,9 +9757,10 @@ class Lexeme {
    * Set the disambiguation flag of this lexeme
    * if a disambiguator lexeme is provided, it's lemma word will be used
    * to update the word of this lexeme's lemma
+   *
    * @param {Lexeme} disambiguator
    */
-  setDisambiguation(disambiguator = null) {
+  setDisambiguation (disambiguator = null) {
     this.disambiguated = true
     if (disambiguator) {
       this.lemma.word = this.lemma.disambiguate(disambiguator.lemma)

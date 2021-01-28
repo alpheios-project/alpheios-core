@@ -57,6 +57,7 @@ class Lexeme {
   /**
    * Set the selected inflection for a lexeme which has had its
    * inflections disambiguated
+   *
    * @param {Inflection} inflection the selected inflection
    */
   setSelectedInflection (inflection) {
@@ -66,6 +67,7 @@ class Lexeme {
   /**
    * Get the selected inflection for a lexeme which has had its
    * inflections disambiguated
+   *
    * @returns {Inflection} (or null if none is selected)
    */
   getSelectedInflection () {
@@ -76,6 +78,7 @@ class Lexeme {
    * Gets the selected inflection formatted for display
    * (returns an array because the display is grouped by feature
    * but there should only be one inflection in the array)
+   *
    * @returns {Array} if no selected inflection the array will be empty
    */
   getGroupedSelectedInflection () {
@@ -229,9 +232,10 @@ class Lexeme {
    * Set the disambiguation flag of this lexeme
    * if a disambiguator lexeme is provided, it's lemma word will be used
    * to update the word of this lexeme's lemma
+   *
    * @param {Lexeme} disambiguator
    */
-  setDisambiguation(disambiguator = null) {
+  setDisambiguation (disambiguator = null) {
     this.disambiguated = true
     if (disambiguator) {
       this.lemma.word = this.lemma.disambiguate(disambiguator.lemma)

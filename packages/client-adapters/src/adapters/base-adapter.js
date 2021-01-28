@@ -88,18 +88,15 @@ class BaseAdapter {
     if (url) {
       try {
         const response = await window.fetch(url, options.requestParams)
-
         if (!response.ok) {
-          const resultResponse = await response.json()
           let statusText
 
-          if (resultResponse && resultResponse.message) {
-            statusText = resultResponse.message
-          } else {
-            statusText = response.statusText
+          if (response.status === 400) {
+            const resultResponse = await response.json()
+            statusText = (resultResponse && resultResponse.message) ? resultResponse.message : response.statusText
           }
 
-          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText: statusText }), response.status)
+          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText }), response.status)
           return
         }
         if (options.type === 'xml') {
