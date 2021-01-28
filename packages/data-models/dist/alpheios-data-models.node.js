@@ -6006,7 +6006,12 @@ class Lemma {
   }
 
   get displayWord () {
-    return this.word.replace(/\d+$/, '')
+    return Lemma.getDisplayWord(this.word)
+  }
+
+  static getDisplayWord (word) {
+    // In the word list we meed to format a word that is in a string format so the getter of the Lemma won't work there
+    return word.replace(/\d+$/, '')
   }
 
   static readObject (jsonObject) {
@@ -8193,7 +8198,6 @@ class WordList {
   }
 
   addWordItem (item) {
-    console.info('addWordItem', item)
     if (item.languageCode !== this.languageCode) {
       throw new Error(`Language Code mismatch ${item.languageCode} !=== ${this.languageCode}`)
     }
@@ -8236,7 +8240,6 @@ class WordList {
    * @returns {WordItem} the retrieved item
    */
   getWordItem (targetWord, create = true, eventWordItemUpdated = null) {
-    console.info('getWordItem', targetWord)
     const key = this._makeItemKey(this.languageCode, targetWord)
     if (create && !this.items[key]) {
       const wordItem = new _word_item__WEBPACK_IMPORTED_MODULE_0__.default({ targetWord: targetWord, languageCode: this.languageCode })

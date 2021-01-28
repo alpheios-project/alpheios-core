@@ -36,13 +36,14 @@
         >{{ worditem.targetWord }}</div>
 
         <div class="alpheios-worditem__data alpheios-worditem__lemmasList">
-          <span v-for="(lemma, lemmaIndex) in lemmasList" 
+          <span v-for="(lemma, lemmaIndex) in lemmasList"
                 @click="setLemmaFilterByClick(lemma)"
                 class="alpheios-worditem__lemmasList-lemmaitem"
                 :lang="worditem.languageCode"
-          >{{ lemma }}<span v-if="lemmaIndex < lemmasList.length-1">, </span></span>
+            >{{ formattedWord(lemma) }}<span v-if="lemmaIndex < lemmasList.length-1">, </span>
+          </span>
         </div>
-        
+
         <alph-tooltip tooltipDirection="top-right"
           :tooltipText="l10n.getMsg('WORDLIST_TOOLTIP_FREQUENCY')">
           <div class="alpheios-worditem__data alpheios-worditem__frequency">
@@ -64,6 +65,8 @@ import DeleteIcon from '@/images/inline-icons/delete.svg'
 import TextQuoteIcon from '@/images/inline-icons/text-quote.svg'
 import CurrentSessionIcon from '@/images/inline-icons/current-session.svg'
 import Tooltip from '@/vue/components/tooltip.vue'
+
+import { Lemma } from 'alpheios-data-models'
 
 export default {
   name: 'WordItemBlock',
@@ -127,6 +130,9 @@ export default {
     },
     setLemmaFilterByClick(lemma) {
       this.$emit('setLemmaFilterByClick', lemma)
+    },
+    formattedWord (lemma) {
+      return Lemma.getDisplayWord(lemma)
     }
   }
 }
@@ -215,7 +221,7 @@ export default {
     visibility: hidden;
   }
 
-  .alpheios-lemma-clickable 
+  .alpheios-lemma-clickable
   .alpheios-worditem__lemmasList-lemmaitem {
     cursor: pointer;
   }
