@@ -1,6 +1,6 @@
 {
   "name": "alpheios-l10n",
-  "version": "3.3.3-20210122585",
+  "version": "3.3.1-dev-bailly-defs.20210201546",
   "description": "Alpheios Localization",
   "private": true,
   "main": "dist/alpheios-l10n.min.js",
