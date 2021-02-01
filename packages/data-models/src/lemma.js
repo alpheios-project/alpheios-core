@@ -45,12 +45,7 @@ class Lemma {
   }
 
   get displayWord () {
-    return Lemma.getDisplayWord(this.word)
-  }
-
-  static getDisplayWord (word) {
-    // In the word list we meed to format a word that is in a string format so the getter of the Lemma won't work there
-    return word.replace(/\d+$/, '')
+    return this.word.replace(/\d+$/, '')
   }
 
   static readObject (jsonObject) {

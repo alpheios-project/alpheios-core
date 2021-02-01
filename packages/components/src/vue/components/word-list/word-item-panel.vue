@@ -40,7 +40,7 @@
                 @click="setLemmaFilterByClick(lemma)"
                 class="alpheios-worditem__lemmasList-lemmaitem"
                 :lang="worditem.languageCode"
-            >{{ formattedWord(lemma) }}<span v-if="lemmaIndex < lemmasList.length-1">, </span>
+            >{{ formattedWord(lemma, worditem.languageCode) }}<span v-if="lemmaIndex < lemmasList.length-1">, </span>
           </span>
         </div>
 
@@ -101,7 +101,7 @@ export default {
     },
     lemmasList () {
       return this.$store.state.app.wordListUpdateTime ? this.worditem.lemmasList.split(',') : []
-    }, 
+    },
     updatedDT () {
       return this.$store.state.app.wordListUpdateTime && this.worditem.updatedDT ? this.worditem.updatedDT.substr(0, this.worditem.updatedDT.indexOf('@')) : null
     }
@@ -128,11 +128,16 @@ export default {
     showContexts () {
       this.$emit('showContexts', this.worditem.targetWord)
     },
-    setLemmaFilterByClick(lemma) {
+    setLemmaFilterByClick (lemma) {
       this.$emit('setLemmaFilterByClick', lemma)
     },
-    formattedWord (lemma) {
-      return Lemma.getDisplayWord(lemma)
+    formattedWord (lemmaWord, langCode) {
+      if (lemmaWord && langCode) {
+        const lemma = new Lemma(lemmaWord, langCode)
+        return lemma.displayWord
+      }
+      // Pass-through if there is not enough info to build the lemma
+      return lemmaWord
     }
   }
 }
