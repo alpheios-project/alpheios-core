@@ -426,6 +426,7 @@ _serializeHomonymWithFullDefs (wordItem) {
    * @return {WordItem}
    */
   createFromRemoteData (remoteDataItem) {
+    console.info('remoteDataItem - ', remoteDataItem)
     let wordItem = this.loadFirst(remoteDataItem)
 
     if (remoteDataItem.context) {
