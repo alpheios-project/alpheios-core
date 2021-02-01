@@ -1,6 +1,6 @@
 {
   "name": "alpheios-inflection-tables",
-  "version": "3.3.1-dev-bailly-defs.20201021605",
+  "version": "3.3.3-20210122585",
   "description": "Inflection library for an Alpheios project",
   "private": true,
   "main": "dist/alpheios-inflection-tables.min.js",
@@ -43,8 +43,8 @@
     "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/runtime": "^7.9.6",
-    "alpheios-client-adapters": "^3.3.1-dev-bailly-defs.20201021605",
-    "alpheios-data-models": "^3.3.1-dev-bailly-defs.20201021605",
+    "alpheios-client-adapters": "^3.3.3-20210122585",
+    "alpheios-data-models": "^3.3.3-20210122585",
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-node-build": "github:alpheios-project/node-build#v3",
     "coveralls": "^3.1.0",

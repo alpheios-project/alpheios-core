@@ -69,4 +69,19 @@ describe('arethusa/adapter.test.js', () => {
     expect(res.lexemes[0].inflections[0]["part of speech"].value).toEqual('verb participle')
     expect(res.lexemes[0].lemma.features["part of speech"].value).toEqual('verb')
   })
+  it('4 ArethusaTreebankAdapter - getHomonym maps gerundives to participles properly', async () => {
+    const adapter = new ArethusaTreebankAdapter({
+      category: 'morphology',
+      adapterName: 'arethusaTreebank',
+      method: 'getHomonym'
+    })
+    // stub the service request
+    adapter._fetchArethusaData = ArethusaFixture.treebankServiceRequest
+    const res = await adapter.getHomonym(Constants.LANG_LATIN, 'fugiendo', 'http://example.org', '1', '3')
+    expect(adapter.errors.length).toEqual(0)
+    expect(res).toBeInstanceOf(Homonym)
+    expect(res.lexemes.length).toEqual(1)
+    expect(res.lexemes[0].inflections[0]["part of speech"].value).toEqual('verb participle')
+    expect(res.lexemes[0].lemma.features["part of speech"].value).toEqual('verb')
+  })
 })

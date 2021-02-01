@@ -3,6 +3,8 @@
 import * as Constants from '@/constants.js'
 import Logger from '@/logging/logger.js'
 import LMF from '@/language_model_factory.js'
+import Lemma from '@/lemma.js'
+import Lexeme from '@/lexeme.js'
 import Feature from '@/feature.js'
 import Inflection from '@/inflection.js'
 
@@ -115,5 +117,22 @@ describe('latin_language_model.js', () => {
     expect(latinModel.compareWords('erās', 'eras', true)).toBeTruthy()
     // and are not equal if we don't normalize
     expect(latinModel.compareWords('erās', 'eras', false)).toBeFalsy()
+  })
+
+  it('12 normalizeFeatureValue normalizes gerundive to participle', () => {
+    expect(latinModel.normalizeFeatureValue(Feature.types.mood,
+      Constants.MOOD_GERUNDIVE)).toEqual(Constants.MOOD_PARTICIPLE)
+  })
+
+  it('13 normalizeFeatureValue normalizes exclamation to interjections', () => {
+    expect(latinModel.normalizeFeatureValue(Feature.types.part,
+      Constants.POFS_EXCLAMATION)).toEqual(Constants.POFS_INTERJECTION)
+  })
+
+  it('14 normalizes exclamation pofs to interjection', () => {
+    const lemma = new Lemma('word', 'lat')
+    lemma.addFeature(new Feature(Feature.types.part, Constants.POFS_EXCLAMATION, Constants.LANG_LATIN))
+    const lexeme = new Lexeme(lemma, [])
+    expect(latinModel.normalizePartOfSpeechValue(lexeme)).toEqual(Constants.POFS_INTERJECTION)
   })
 })

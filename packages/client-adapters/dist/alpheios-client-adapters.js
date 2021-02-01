@@ -2388,7 +2388,7 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         if (homonym && homonym.lexemes && homonym.lexemes.length === 1 &&
            homonym.lexemes[0].lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Constants.POFS_VERB &&
            homonym.lexemes[0].inflections.length === 1 &&
-           homonym.lexemes[0].inflections[0][alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.mood].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Constants.MOOD_PARTICIPLE) {
+           languageModel.normalizeFeatureValue(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.mood,homonym.lexemes[0].inflections[0][alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.mood].value) === alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Constants.MOOD_PARTICIPLE) {
           homonym.lexemes[0].inflections[0].addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Feature.types.part, alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Constants.POFS_VERB_PARTICIPLE, languageModel.languageID))
         }
         return homonym
@@ -3245,11 +3245,17 @@ let uploadStarted = new Map() // eslint-disable-line prefer-const
 class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__.default {
   /**
   * Lexicons adapter uploads config data, defines default options and inits data
-  * @param {Object} config - properties with higher priority
+  * @param {Object} config - lexicon adapter properties
+  * @param {Object} remoteConfig - remote lexicon service configuration
+  *                                merges with and overrides the lexicon
+  *                                settings in the local config.json,
+  *                                if present and populated. An empty object
+  *                                signifies that there are no overrides 
   */
-  constructor (config = {}) {
+  constructor (config = {}, remoteConfig = {}) {
     super()
-    this.config = this.uploadConfig(config, _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
+    this.config = config
+    this.config.lexicons = this.uploadConfig(remoteConfig, _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
     this.async = Boolean(this.config.callBackEvtSuccess)
   }
@@ -3278,7 +3284,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   * @param {String} urlKey - urlIndex for geting data from config
   */
   prepareShortDefPromise (homonym, urlKey) {
-    const url = this.config[urlKey].urls.short
+    const url = this.config.lexicons[urlKey].urls.short
     const requestType = 'shortDefs'
 
     const resCheckCached = this.checkCachedData(url)
@@ -3286,7 +3292,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       async (result) => {
         if (result) {
           const res = cachedDefinitions.get(url)
-          await this.updateShortDefs(res, homonym, this.config[urlKey])
+          await this.updateShortDefs(res, homonym, this.config.lexicons[urlKey])
           this.prepareSuccessCallback(requestType, homonym)
         }
       },
@@ -3303,15 +3309,15 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   * @param {String} urlKey - urlIndex for geting data from config
   */
   prepareFullDefPromise (homonym, urlKey) {
-    const url = this.config[urlKey].urls.index
+    const url = this.config.lexicons[urlKey].urls.index
     const requestType = 'fullDefs'
 
     const resCheckCached = this.checkCachedData(url)
     return resCheckCached.then(
       async (result) => {
         if (result) {
-          const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-          const resFullDefs = this.updateFullDefsAsync(fullDefsRequests, this.config[urlKey], homonym)
+          const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config.lexicons[urlKey])
+          const resFullDefs = this.updateFullDefsAsync(fullDefsRequests, this.config.lexicons[urlKey], homonym)
           resFullDefs.catch(error => {
             this.addError(this.l10n.getMsg('LEXICONS_FAILED_CACHED_DATA', { message: error.message }))
             this.prepareFailedCallback(requestType, homonym)
@@ -3388,12 +3394,12 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
       for (const urlKey of urlKeys) {
-        const url = this.config[urlKey].urls.short
+        const url = this.config.lexicons[urlKey].urls.short
         const result = await this.checkCachedData(url)
 
         if (result) {
           const res = cachedDefinitions.get(url)
-          await this.updateShortDefs(res, homonym, this.config[urlKey])
+          await this.updateShortDefs(res, homonym, this.config.lexicons[urlKey])
         }
       }
     } catch (error) {
@@ -3410,12 +3416,12 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
     for (const urlKey of urlKeys) {
-      const url = this.config[urlKey].urls.index
+      const url = this.config.lexicons[urlKey].urls.index
       const result = await this.checkCachedData(url)
 
       if (result) {
-        const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-        await this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
+        const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config.lexicons[urlKey])
+        await this.updateFullDefs(fullDefsRequests, this.config.lexicons[urlKey], homonym)
       }
     }
   }
@@ -3623,7 +3629,9 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   */
   getRequests (languageID) {
     const languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(languageID)
-    return Object.keys(this.config).filter(url => this.config[url] && this.config[url].langs && this.config[url].langs.source === languageCode)
+    return Object.keys(this.config.lexicons).filter(url =>
+      this.config.lexicons[url] && this.config.lexicons[url].langs &&
+      this.config.lexicons[url].langs.source === languageCode)
   }
 
   /**
@@ -4251,10 +4259,30 @@ __webpack_require__.r(__webpack_exports__);
 
 let data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__.default(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel, 'morpheusgrc') // eslint-disable-line prefer-const
 
-// Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
-// the dictionary entry's conjugation if it's available
 data.inflectionOverrides = {
-  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part]: (i, ls) => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.TYPE_IRREGULAR && ls.filter(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_PRONOUN)
+  // Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
+  // the dictionary entry's conjugation if it's available
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part]: (i, ls) => {
+    return {
+      withLemma: i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.TYPE_IRREGULAR && ls.some(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_PRONOUN),
+      withFeature: null
+    }
+  },
+  // for some irregular adjectives, the compartive is only specified in the morph flags
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison]: (i, ls) => {
+    const retVal = {
+      withLemma: false,
+      withFeature: null
+    }
+    if (i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.morph].value === 'irreg_comp' &&
+      ls.some(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_ADJECTIVE)) {
+        retVal.withFeature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison,alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.COMP_COMPARITIVE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel.languageID)
+    } else if (i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.morph].value === 'irreg_superl' &&
+      ls.some(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.POFS_ADJECTIVE)) {
+        retVal.withFeature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.comparison,alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Constants.COMP_SUPERLATIVE, alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.GreekLanguageModel.languageID)
+    }
+    return retVal
+  }
 }
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -4399,7 +4427,13 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
-data.inflectionOverrides = { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.conjugation]: (i, ls) => true }
+data.inflectionOverrides = { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Feature.types.conjugation]: (i, ls) => {
+    return {
+      withLemma: true,
+      withFeature: null
+    }
+  }
+}
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -4705,7 +4739,7 @@ class ClientAdapters {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
         // Param values other than `undefined` such as `null` or empty strings could be valid values
-        if (typeof params[paramName] === 'undefined') {
+        if (params && typeof params[paramName] === 'undefined') {
           throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_9__.default(category, adapterName, methodName, paramName)
         }
       })
@@ -4915,6 +4949,7 @@ class ClientAdapters {
    * it is used for getting data from lexicons adapter
    * @param {Object} options - object contains parametes:
    *    @param {String} options.method - action that should be done wth the help of adapter - fetchShortDefs and fetchFullDefs
+   *    @param {Object} options.config - lexicon configuration supplied by client
    *    @param {Homonym} options.params.homonym - homonym for retrieving translations
    *    @param {Object(allow: [String])} options.params.opts - an object with array of urls for dictionaries
    *    @param {PSEvent} options.params.callBackEvtSuccess - an event that should be published on success result
@@ -4937,7 +4972,7 @@ class ClientAdapters {
       callBackEvtFailed: options.params ? options.params.callBackEvtFailed : null
     }
 
-    const localLexiconsAdapter = new _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__.default(adapterParams)
+    const localLexiconsAdapter = new _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__.default(adapterParams,options.config)
 
     if (options.method === 'fetchShortDefs') {
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
@@ -4954,7 +4989,7 @@ class ClientAdapters {
     }
 
     if (options.method === 'getConfig') {
-      return localLexiconsAdapter.config
+      return localLexiconsAdapter.config.lexicons
     }
     return null
   }
@@ -5227,6 +5262,7 @@ const featuresArray = [
 ]
 
 const featuresArrayAll = [
+  ['morph', 'morph'], // morph is first because it may have data that overrides other features
   ['pofs', 'part'],
   ['case', 'grmCase'],
   ['gend', 'gender'],
@@ -5240,8 +5276,7 @@ const featuresArrayAll = [
   ['comp', 'comparison'],
   ['stemtype', 'stemtype'],
   ['derivtype', 'derivtype'],
-  ['dial', 'dialect'],
-  ['morph', 'morph']
+  ['dial', 'dialect']
 ]
 
 const attributeBasedFeatures = [
@@ -5601,7 +5636,16 @@ class ImportMorphData {
 
     // may be overriden by specific engine use to a list of of featureTypes which
     // should be overridden in the inflection data from the lemma data
-    this.inflectionOverrides = []
+    // for any featureType that can be overridden, it should map that featureType
+    // name to a callback with the signature
+    // callback(featureType,inflection,lemmas): { <boolean> withLemma,
+    //                                            <Feature> withFeature
+    //                                           }
+    // if withLemma is false, and withFeature is null, no override will be used
+    // if withLemma is true, the feature from the lemma, if present, will be used
+    // if withLemma is false and withFeature is not null, the feature value of
+    //   withFeature will be used
+    this.inflectionOverrides = {}
   }
 
   /**
@@ -5786,16 +5830,21 @@ class ImportMorphData {
 
   /**
    * Overrides feature data from an inflection with feature data from the lemma
-   * if required by an engine-specific list of featureTypes
+   * or other data
+   * as defined by the engine-specific inflectionOverrides property
    * @param {String} featureType the feature type name
    * @param {Inflection} inflection the inflection object
    * @param {Lemma[]} lemmas the lemma objects
    */
   overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
-    if (this.inflectionOverrides[featureType] &&
-        this.inflectionOverrides[featureType](inflection, lemmas)) {
-      for (const lemma of lemmas.filter(l => l.features[featureType])) {
-        inflection.addFeature(lemma.features[featureType])
+    if (this.inflectionOverrides[featureType]) {
+      const override = this.inflectionOverrides[featureType](inflection, lemmas)
+      if (override.withLemma) {
+        for (const lemma of lemmas.filter(l => l.features[featureType])) {
+          inflection.addFeature(lemma.features[featureType])
+        }
+      } else if (override.withFeature !== null) {
+        inflection.addFeature(override.withFeature)
       }
     }
   }

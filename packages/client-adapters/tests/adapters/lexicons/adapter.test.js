@@ -30,10 +30,14 @@ describe('lexicons/adapter.test.js', () => {
 
     const urlKey = 'https://github.com/alpheios-project/lsj'
 
+<<<<<<< HEAD
     let url = adapter.config[urlKey].urls.short
+=======
+    let url = adapter.config.lexicons[urlKey].urls.short
+>>>>>>> production
     let result = await adapter.checkCachedData(url, LexiconsFixture.lexData[url])
 
-    url = adapter.config[urlKey].urls.index
+    url = adapter.config.lexicons[urlKey].urls.index
     result = await adapter.checkCachedData(url, LexiconsFixture.lexData[url])
 
     return result
@@ -70,7 +74,7 @@ describe('lexicons/adapter.test.js', () => {
   }
 
   function updateObjectWithFixtures (adapter, urlLib, urlType) {
-    let urlKey = adapter.config[urlLib].urls[urlType]
+    let urlKey = adapter.config.lexicons[urlLib].urls[urlType]
 
     let cachedDefinitions = new Map()
     cachedDefinitions.set(urlKey, LexiconsFixture.lexData[urlKey])
@@ -316,13 +320,13 @@ describe('lexicons/adapter.test.js', () => {
 
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    let url = adapter.config[urlKey].urls.short
+    let url = adapter.config.lexicons[urlKey].urls.short
 
     const cachedDefinitions = updateObjectWithFixtures(adapter, urlKey, 'short')
 
     let model = LMF.getLanguageModel(testLangID)
 
-    await adapter.updateShortDefs(cachedDefinitions.get(url), testSuccessHomonym, adapter.config[urlKey])
+    await adapter.updateShortDefs(cachedDefinitions.get(url), testSuccessHomonym, adapter.config.lexicons[urlKey])
 
     expect(adapter.lookupInDataIndex).toHaveBeenCalled()
 
@@ -343,13 +347,13 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    let url = adapter.config[urlKey].urls.index
+    let url = adapter.config.lexicons[urlKey].urls.index
 
     const cachedDefinitionsIndex = updateObjectWithFixtures(adapter, urlKey, 'index')
 
     await BaseTestHelp.updateCacheWithFixtures()
 
-    let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(url), testSuccessHomonym, adapter.config[urlKey])
+    let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(url), testSuccessHomonym, adapter.config.lexicons[urlKey])
     expect(fullDefsRequests.length).toEqual(testSuccessHomonym.lexemes.length)
 
     fullDefsRequests.forEach(reqData => {
@@ -367,7 +371,7 @@ describe('lexicons/adapter.test.js', () => {
 
     let urlKey = 'https://github.com/alpheios-project/dod'
     adapter.addError = jest.fn()
-    adapter.collectFullDefURLs({}, testSuccessHomonym, adapter.config[urlKey])
+    adapter.collectFullDefURLs({}, testSuccessHomonym, adapter.config.lexicons[urlKey])
     expect(adapter.addError).toHaveBeenCalledWith(adapter.l10n.getMsg('LEXICONS_NO_FULL_URL'))
   })
 
@@ -380,14 +384,14 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    let url = adapter.config[urlKey].urls.index
+    let url = adapter.config.lexicons[urlKey].urls.index
     const cachedDefinitionsIndex = updateObjectWithFixtures(adapter, urlKey, 'index')
 
     await BaseTestHelp.updateCacheWithFixtures()
 
-    let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(url), testSuccessHomonym, adapter.config[urlKey])
+    let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(url), testSuccessHomonym, adapter.config.lexicons[urlKey])
     adapter.prepareSuccessCallback = jest.fn()
-    await adapter.updateFullDefsAsync(fullDefsRequests, adapter.config[urlKey], testSuccessHomonym)
+    await adapter.updateFullDefsAsync(fullDefsRequests, adapter.config.lexicons[urlKey], testSuccessHomonym)
 
     await timeout(300)
 
@@ -529,7 +533,7 @@ describe('lexicons/adapter.test.js', () => {
     let formLexeme = new Lexeme(new Lemma('συνίημι', Constants.LANG_GREEK), [])
     let homonym = new Homonym([formLexeme], 'ξυνέηκε')
 
-    let fullDefsRequests = adapter.collectFullDefURLs(data, homonym, adapter.config[urlKey])
+    let fullDefsRequests = adapter.collectFullDefURLs(data, homonym, adapter.config.lexicons[urlKey])
 
     fullDefsRequests.forEach(reqData => {
       expect(reqData.url).toEqual(expect.stringContaining('l=%CF%83%CF%85%CE%BD%CE%AF%CE%B7%CE%BC%CE%B9'))
@@ -718,4 +722,36 @@ describe('lexicons/adapter.test.js', () => {
     expect(testSuccessHomonym.lexemes[0].meaning.fullDefs.length).toEqual(1)
     expect(testSuccessHomonym.lexemes[0].meaning.fullDefs[0].text).toEqual(expect.stringContaining('Anaxandr.41.61'))
   }, 50000)
+
+  it('31 AlpheiosLexiconAdapter - uses remote config if defined', async () => {
+    const testUrl = "http://otherurlformjm"
+    const remoteConfig =
+      {
+        "https://github.com/alpheios-project/mjm": {
+          "urls": {
+            "short": testUrl
+          },
+          "langs": {
+            "source": "grc",
+            "target": "en"
+          },
+          "format": { "short" :"text/html" },
+          "description": "Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the Middle Liddell.",
+          "rights_keys": {
+            "ML": " \"An Intermediate Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University. Edits and additions provided by Vanessa Gorman, University of Nebraska.",
+            "Major": " Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008. Edits and additions provided by Vanessa Gorman, University of Nebraska."
+          }
+        }
+      }
+      const retrievedConfig = await ClientAdapters.lexicon.alpheios({ method: 'getConfig', config: remoteConfig })
+      expect(retrievedConfig["https://github.com/alpheios-project/mjm"].urls.short).toEqual(testUrl)
+      expect(retrievedConfig["https://github.com/alpheios-project/lsj"].urls.short).toEqual("https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat")
+      const adapter = new AlpheiosLexiconsAdapter({
+        category: 'lexicon',
+        adapterName: 'alpheios',
+        method: 'fetchFullDefs',
+      },remoteConfig)
+      expect(adapter.config.lexicons["https://github.com/alpheios-project/mjm"].urls.short).toEqual(testUrl)
+      expect(adapter.config.lexicons["https://github.com/alpheios-project/lsj"].urls.short).toEqual("https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat")
+    })
 })

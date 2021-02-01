@@ -3105,6 +3105,48 @@ for the current node
     return text
   }
 
+  /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   *                   or null if no part of speech data is present on the lexeme
+   **/
+  static normalizePartOfSpeechValue( lexeme ) {
+    if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part]) {
+      if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
+        // alpheios standard for Greek follows the Perseus Treebank Guidelines
+        // which normalize particles as adverbs
+        return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB
+      } else if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+        // alpheios normalizes exclamation to interjection (following treebank guidelines)
+        return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
+      } else {
+        return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value
+      }
+    } else {
+      return null
+    }
+ }
+
+  /**
+   * Return a normalized feature value, based upon the feature type  and supplied value
+   * @param {string} featureType the feature type
+   * @param {string} featureValue the feature value
+   * @returns {string} the alpheios-normalized feature value
+   */
+  static normalizeFeatureValue ( featureType, featureValue ) {
+    // alpheios standard for Latin is currently following Whitaker, and
+    // normalize the gerundive mood to participle
+    if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
+      return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB
+    } else if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+      // alpheios normalizes exclamation to interjection (following treebank guidelines)
+      return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
+    } else {
+      return featureValue
+    }
+  }
+
   static _tonosToOxia (word) {
     return word.replace(
       /\u{03AC}/ug, '\u{1F71}').replace( // alpha
@@ -3755,32 +3797,59 @@ class Homonym {
       return base
     }
     const disambiguator = disambiguators.shift()
-    let lexemes = [] // eslint-disable-line prefer-const
+    let matchedLexemes = [] // eslint-disable-line prefer-const
     let missedLexemes = [] // eslint-disable-line prefer-const
+    let possibleLexemes = [] // eslint-disable-line prefer-const
+    let unmatchedLexemes = [] // eslint-disable-line prefer-const
     // iterate through the lexemes in the disambiguator and try
     // to disambiguate the existing lexemes with each
     for (const otherLexeme of disambiguator.lexemes) {
-      let lexemeMatched = false
       for (const lexeme of base.lexemes) {
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
-        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguate(lexeme, otherLexeme) : lexeme
+        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ?
+          _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguateInflections(lexeme, otherLexeme) : lexeme
 
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
-          lexemeMatched = true
-          // If lexeme is a full homonym with a disambiguator, it should always be marked as disambiguated
-          newLex.disambiguated = true
+          if (newLex.getSelectedInflection() !== null) {
+            // If lexeme is a full homonym with a disambiguator and had a matching
+            // inflection, it is a full match
+            newLex.setDisambiguation(otherLexeme)
+            matchedLexemes.push(newLex)
+          } else {
+            // If lexeme is a full homonym with a disambiguator but didn't have a
+            // matching inflection, it may or may not be a full match depending
+            // upon whether any other lexeme was a more complete match
+            possibleLexemes.push(newLex)
+          }
+        } else {
+          unmatchedLexemes.push(newLex)
         }
-        lexemes.push(newLex)
       }
-      // if we couldn't find a matching lexeme, add the disambigutor's lexemes
-      // to the list of lexemes for the new Homonym
-      if (!lexemeMatched) {
-        otherLexeme.disambiguated = true
-        missedLexemes.push(otherLexeme)
+      if (matchedLexemes.length === 0) {
+        if (possibleLexemes.length > 0) {
+          // we didn't have a better match so mark as disamibugated
+          // and add in the disambiguator's inflections
+          for ( const lexeme of possibleLexemes ) {
+            lexeme.setDisambiguation(otherLexeme)
+            // we have to add in the disamibugators inflections
+            for (const infl of disambiguator.inflections) {
+              lexeme.addInflection(infl)
+              lexeme.setSelectedInflection(infl)
+            }
+          }
+        } else {
+          // if we couldn't find a matching lexeme, add the disambigutor's lexemes
+          // to the list of lexemes for the new Homonym
+          otherLexeme.setDisambiguation()
+          for (const infl of otherLexeme.inflections) {
+            otherLexeme.setSelectedInflection(infl)
+          }
+          missedLexemes.push(otherLexeme)
+        }
       }
     }
     // create a new homonym with the disamibugated lexemes
-    const newHom = new Homonym([...lexemes, ...missedLexemes], base.targetWord)
+    const newHom = new Homonym([...missedLexemes, ...matchedLexemes, ...possibleLexemes, ...unmatchedLexemes], base.targetWord)
     return Homonym.disambiguate(newHom, disambiguators)
   }
 }
@@ -3887,6 +3956,7 @@ class Inflection {
     // A lemma this inflection belongs to. Is set by `Lexeme.addInflection()`
     // TODO: make sure inflections are not set directly or this data will not be set
     this.lemma = null
+
   }
 
   clone () {
@@ -4024,27 +4094,61 @@ class Inflection {
   }
 
   /**
+   * Compare single feature values delegating to the language model
+   * rules for normalization
+   *
+   * @param {string} featureType the feature type
+   * @param {string} valueA the first value
+   * @param {string} valueB the secon value
+   * @param {boolean} normalize whether or not to apply normalization
+   */
+  modelCompareFeatureValue ( featureType, valueA, valueB, normalize = true )  {
+    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModel(this.languageID)
+    return model.compareFeatureValue(featureType, valueA, valueB, { normalize })
+  }
+
+  /**
    * Check to see if the supplied inflection can disambiguate this one
    *
    * @param {Inflection} infl Inflection object to be used for disambiguation
+   * @param {Object} options disambiguation options
+   * @param {Boolean} options.ignorePofs flag to ignore the inflection's part of speech
+   *                                    (use if lexeme pofs is more relevant)
+   * @returns {Object} object { {Boolean} match, {Boolean} exactMatch }
+   *                   a match means the inflection was disamibugated
+   *                   an exactMatch means the disamibugator matched all
+   *                   values of all features
    */
-  disambiguatedBy (infl) {
+  disambiguatedBy (infl, { ignorePofs = false } = {}) {
     let matched = true
+    let exactMatch = true
     // an inflection can only be disambiguated by its features
-    if (this.features.length === 0 || infl.features.length === 0) {
+    if (this.features.size === 0 || infl.features.size === 0) {
       matched = false
     }
     // the supplied inflection can be less specific but not more
-    if (infl.features.length > this.features.length) {
+    if (infl.features.size > this.features.size) {
       matched = false
     }
     for (const feature of infl.features) {
-      if (!this[feature] || !this[feature].isEqual(infl[feature])) {
-        matched = false
-        break
+      if (ignorePofs && feature === _feature_js__WEBPACK_IMPORTED_MODULE_0__.default.types.part) {
+        continue
+      }
+      for (const value of infl[feature].values) {
+        if (!this.hasFeatureValue(feature,value,{ normalize: true })) {
+          matched = false
+          break
+        }
+        // it's an exact match if all of the values of a multi-valued
+        // feature match (e.g. an inflection with a single masculine gender feature
+        // disambiguates an inflection with a masculine and feminine gender feature
+        // but it is not an exact match of the inflection
+        if (this[feature].values.length !== infl[feature].values.length) {
+          exactMatch =  false
+        }
       }
     }
-    return matched
+    return { match: matched, exactMatch: exactMatch }
   }
 
   /**
@@ -4123,11 +4227,13 @@ class Inflection {
    *
    * @param {string} featureName - A name of a feature
    * @param {string} featureValue - A value of a feature
+   * @param {object} options
+   * @param {boolean} options.normalize - whether or not to normalize the feature values
    * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
-  hasFeatureValue (featureName, featureValue) {
+  hasFeatureValue (featureName, featureValue, { normalize=false } = {}) {
     if (this.hasOwnProperty(featureName)) {
-      return this[featureName].values.includes(featureValue)
+      return this[featureName].values.some(v => this.modelCompareFeatureValue(featureName, v, featureValue))
     }
     return false
   }
@@ -4700,7 +4806,7 @@ class LanguageModel {
    * @returns {string} A normalized word.
    */
   static normalizeTrailingDigit (word) {
-    return /^.+1$/.test(word) ? word.substring(0, word.length - 1) : word
+    return /^.+\d$/.test(word) ? word.substring(0, word.length - 1) : word
   }
 
   /**
@@ -4738,6 +4844,27 @@ class LanguageModel {
   }
 
   /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   **/
+  static normalizePartOfSpeechValue ( lexeme ) {
+    // default is to return the value as it exists on the lemma
+    return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ? lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value : null
+  }
+
+  /**
+   * Return a normalized feature value, based upon the feature type  and supplied value
+   * @param {string} featureType the feature type
+   * @param {string} featureValue the feature value
+   * @returns {string} the alpheios-normalized feature value
+   */
+  static normalizeFeatureValue ( featureType, featureValue ) {
+    // default is to return the value as supplied
+    return featureValue
+  }
+
+  /**
    * Returns alternate encodings for a word
    *
    * @param {object} params - A parameters object.
@@ -4772,6 +4899,23 @@ class LanguageModel {
     } else {
       return wordA === wordB
     }
+  }
+
+  /**
+   * Compare two feature values with language specific logic
+   *
+   * @param {string} featureType - the feature type being compared
+   * @param {string} valueA - the first value for comparison
+   * @param {string} valueB - the second value for comparison
+   * @param {object} options
+   * @param {boolean} options.normalize - whether or not to apply normalization
+   */
+  static compareFeatureValue ( featureType, valueA, valueB, { normalize = true } = {}) {
+    if (normalize) {
+      valueA = this.normalizeFeatureValue(featureType, valueA)
+      valueB = this.normalizeFeatureValue(featureType, valueB)
+    }
+    return valueA === valueB
   }
 
   /**
@@ -5711,6 +5855,44 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   }
 
   /**
+   * Return a normalized feature value, based upon the feature type  and supplied value
+   * @param {string} featureType the feature type
+   * @param {string} featureValue the feature value
+   * @returns {string} the alpheios-normalized feature value
+   */
+  static normalizeFeatureValue ( featureType, featureValue ) {
+    // alpheios standard for Latin is currently following Whitaker, and
+    // normalize the gerundive mood to participle
+    if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_GERUNDIVE) {
+      return _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE
+    } else if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+      return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
+    } else {
+      return featureValue
+    }
+  }
+
+  /**
+   * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
+   * @param {Lexeme} lexeme the lexeme to normalize
+   * @returns {string} the alpheios-normalized part of speech value
+   **/
+  static normalizePartOfSpeechValue ( lexeme ) {
+    if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part]) {
+      // Alpheios currently follows Whitaker for Latin and normalizes  exclamation
+      // to interjection
+      if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+        return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
+      } else {
+        return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value
+      }
+    } else {
+        return null
+    }
+  }
+
+
+  /**
    * Get a list of valid puncutation for this language
    *
    * @returns {string} a string containing valid puncutation symbols
@@ -5817,6 +5999,10 @@ class Lemma {
   get language () {
     _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__.default.getInstance().warn('Please use "languageID" instead of "language"')
     return this.languageCode
+  }
+
+  get displayWord () {
+    return this.word.replace(/\d+$/, '')
   }
 
   static readObject (jsonObject) {
@@ -5947,21 +6133,38 @@ class Lemma {
    * @param {Lemma} lemma - the lemma to compare.
    * @param {object} options - Additional comparison options.
    * @param {boolean} options.normalize - Whether to normalize words before comparison.
+   * @param {boolean} options.ignorePofs - Whether to ignore the part of speech in comparison.
+   *                                       (use if the lexeme data is needed
+   *                                        for a part of speech comparison)
    * @returns {boolean} true or false.
    */
-  isFullHomonym (lemma, { normalize = false } = {}) {
+  isFullHomonym (lemma, { normalize = false, ignorePofs = false } = {}) {
     // If parts of speech do not match this is not a full homonym
-    if (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] ||
+    // don't check if told to ignorePofs
+    if (! ignorePofs &&
+      (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] ||
       !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] ||
-      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part])) {
+      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part]))) {
       return false
     }
 
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID)
     // Check if words are the same
     const areSameWords = normalize
-      ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
+      ? lm.compareWords(this.word, lemma.word, true,
         { normalizeTrailingDigit: true })
       : this.word === lemma.word
+
+    // if they have differing trailing digits, they cannot be the same
+    const thisHasTrailingDigit = lm.hasTrailingDigit(this.word)
+    const otherHasTrailingDigit = lm.hasTrailingDigit(lemma.word)
+    if (thisHasTrailingDigit && otherHasTrailingDigit) {
+      const thisTrailingDigit = this.word.match(/\d+$/)[0]
+      const otherTrailingDigit = lemma.word.match(/\d+$/)[0]
+      if (thisTrailingDigit !== otherTrailingDigit) {
+        return false
+      }
+    }
 
     return areSameWords
   }
@@ -6054,10 +6257,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
 /* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
-/* harmony import */ var _definition_set_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./definition-set.js */ "./definition-set.js");
-/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-/* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
-/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _definition_set_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./definition-set.js */ "./definition-set.js");
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+/* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
+/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+
 
 
 
@@ -6100,7 +6305,7 @@ class Lexeme {
       }
     }
 
-    if (meaning !== null && !(meaning instanceof _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default)) {
+    if (meaning !== null && !(meaning instanceof _definition_set_js__WEBPACK_IMPORTED_MODULE_3__.default)) {
       throw new Error('Meaning should be of DefinitionSet object type.')
     }
 
@@ -6108,8 +6313,42 @@ class Lexeme {
     this.altLemmas = []
     this.inflections = []
     this.addInflections(inflections)
-    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default(this.lemma.word, this.lemma.languageID)
+    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_3__.default(this.lemma.word, this.lemma.languageID)
     this.disambiguated = false
+    this.selectedInflection = null
+  }
+
+  /**
+   * Set the selected inflection for a lexeme which has had its
+   * inflections disambiguated
+   * @param {Inflection} inflection the selected inflection
+   */
+  setSelectedInflection (inflection) {
+    this.selectedInflection = inflection
+  }
+
+  /**
+   * Get the selected inflection for a lexeme which has had its
+   * inflections disambiguated
+   * @returns {Inflection} (or null if none is selected)
+   */
+  getSelectedInflection () {
+    return this.selectedInflection
+  }
+
+  /**
+   * Gets the selected inflection formatted for display
+   * (returns an array because the display is grouped by feature
+   * but there should only be one inflection in the array)
+   * @returns {Array} if no selected inflection the array will be empty
+   */
+  getGroupedSelectedInflection () {
+    if (this.selectedInflection) {
+      const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(this.lemma.languageID)
+      return lm.groupInflectionsForDisplay([this.selectedInflection])
+    } else {
+      return []
+    }
   }
 
   /**
@@ -6184,7 +6423,14 @@ class Lexeme {
    * @returns {boolean} - true if two aforementioned lemmas are full homonyms, false otherwise.
    */
   isFullHomonym (otherLexeme, { normalize = false } = {}) {
-    return this.lemma.isFullHomonym(otherLexeme.lemma, { normalize })
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(this.lemma.languageID)
+    const normalizedPofs = lm.normalizePartOfSpeechValue(this)
+    if (normalizedPofs === lm.normalizePartOfSpeechValue(otherLexeme)) {
+      const ignorePofs = Boolean(normalizedPofs !== this.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part])
+      return this.lemma.isFullHomonym(otherLexeme.lemma, { normalize, ignorePofs })
+    } else {
+      return false
+    }
   }
 
   /**
@@ -6202,48 +6448,62 @@ class Lexeme {
       - some additional information in a word (e.g. a trailing digit) that lemma has not;
       - at least one inflection.
     */
-    const hasExtraFeatures = disambiguator.inflections.length || _language_model_js__WEBPACK_IMPORTED_MODULE_4__.default.hasTrailingDigit(disambiguator.lemma.word)
+    const hasExtraFeatures = disambiguator.inflections.length || _language_model_js__WEBPACK_IMPORTED_MODULE_5__.default.hasTrailingDigit(disambiguator.lemma.word)
     return this.isFullHomonym(disambiguator, { normalize: true }) && hasExtraFeatures
   }
 
   /**
-   * disambiguate with another supplied Lexeme
+   * disambiguate the inflections in this lexeme with those in another lexeme
    *
    * @param {Lexeme} lexeme the lexeme to be disambiguated
    * @param {Lexeme} disambiguator the lexeme to use to disambiguate
-   * @returns {Lexeme} a new lexeme, if disamibugation was successful disambiguated flag will be set on it
+   * @returns {Lexeme} a new lexeme, if disambiguation was successful the
+   * disambiguated inflection will be selected
    */
-  static disambiguate (lexeme, disambiguator) {
+  static disambiguateInflections (lexeme, disambiguator) {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(lexeme.lemma.languageID)
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
-      newLexeme.disambiguated = true
-      newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
-      let keepInflections = [] // eslint-disable-line prefer-const
-      // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection
-      // we want to keep the original inflections rather than just replacing them
-      // because the original inflections may have more information
+      // iterate through this lexemes inflections and see if one is disambiguated
+      // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
-          if (inflection.disambiguatedBy(disambiguatorInflection)) {
-            keepInflections.push(inflection)
+          const normalizedPofs = lm.normalizePartOfSpeechValue(disambiguator)
+          const ignorePofs = Boolean(normalizedPofs !== disambiguator.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part])
+          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, { ignorePofs })
+          if (inflMatch.match) {
+            if (inflMatch.exactMatch) {
+              // if it was an exact match, we can use the source lexeme's inflection
+              // which may carry more information
+              newLexeme.setSelectedInflection(inflection)
+            } else {
+              // if it was not an exact match (e.g. if the source inflection
+              // had a multi-valued feature), use the disambiguator lexeme's
+              // inflection
+              newLexeme.setSelectedInflection(disambiguatorInflection)
+            }
           }
-        }
-      }
-      // Set greek inflections
-      newLexeme.inflections = [] // Remove inflections before adding new ones
-      newLexeme.addInflections(keepInflections)
-      // if we couldn't match any existing inflections, then add the disambiguated one
-      if (newLexeme.inflections.length === 0) {
-        for (const infl of disambiguator.inflections) {
-          newLexeme.addInflection(infl)
         }
       }
     }
     return newLexeme
   }
 
+  /**
+   * Set the disambiguation flag of this lexeme
+   * if a disambiguator lexeme is provided, it's lemma word will be used
+   * to update the word of this lexeme's lemma
+   * @param {Lexeme} disambiguator
+   */
+  setDisambiguation(disambiguator = null) {
+    this.disambiguated = true
+    if (disambiguator) {
+      this.lemma.word = this.lemma.disambiguate(disambiguator.lemma)
+    }
+  }
+
   getGroupedInflections () {
-    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__.default.getLanguageModel(this.lemma.languageID)
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(this.lemma.languageID)
     return lm.groupInflectionsForDisplay(this.inflections)
   }
 
@@ -6256,12 +6516,12 @@ class Lexeme {
 
     const lexeme = new Lexeme(lemma, inflections)
     if (jsonObject.meaning) {
-      lexeme.meaning = _definition_set_js__WEBPACK_IMPORTED_MODULE_2__.default.readObject(jsonObject.meaning)
+      lexeme.meaning = _definition_set_js__WEBPACK_IMPORTED_MODULE_3__.default.readObject(jsonObject.meaning)
     }
 
     if (jsonObject.provider) {
-      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__.default.readObject(jsonObject.provider)
-      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__.default.getProxy(provider, lexeme)
+      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_6__.default.readObject(jsonObject.provider)
+      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_6__.default.getProxy(provider, lexeme)
     } else {
       return lexeme
     }
