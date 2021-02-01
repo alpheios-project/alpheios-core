@@ -30,11 +30,7 @@ describe('lexicons/adapter.test.js', () => {
 
     const urlKey = 'https://github.com/alpheios-project/lsj'
 
-<<<<<<< HEAD
-    let url = adapter.config[urlKey].urls.short
-=======
     let url = adapter.config.lexicons[urlKey].urls.short
->>>>>>> production
     let result = await adapter.checkCachedData(url, LexiconsFixture.lexData[url])
 
     url = adapter.config.lexicons[urlKey].urls.index
