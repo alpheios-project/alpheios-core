@@ -79,9 +79,6 @@ export default class WordItemRemoteDbDriver {
    */
   mergeCommonPart  (currentItem, newItem) {
     currentItem.important = currentItem.important || newItem.important
-
-    console.info('*****mergeCommonPart currentItem', currentItem, currentItem.frequency)
-    console.info('mergeCommonPart newItem', newItem, newItem.frequency)
     currentItem.frequency = currentItem.frequency + newItem.frequency
     return currentItem
   }

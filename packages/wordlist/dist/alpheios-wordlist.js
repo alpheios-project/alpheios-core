@@ -3929,7 +3929,6 @@ _serializeHomonymWithFullDefs (wordItem) {
    * @return {WordItem}
    */
   createFromRemoteData (remoteDataItem) {
-    console.info('remoteDataItem - ', remoteDataItem)
     let wordItem = this.loadFirst(remoteDataItem)
 
     if (remoteDataItem.context) {
@@ -4042,9 +4041,6 @@ class WordItemRemoteDbDriver {
    */
   mergeCommonPart  (currentItem, newItem) {
     currentItem.important = currentItem.important || newItem.important
-
-    console.info('*****mergeCommonPart currentItem', currentItem, currentItem.frequency)
-    console.info('mergeCommonPart newItem', newItem, newItem.frequency)
     currentItem.frequency = currentItem.frequency + newItem.frequency
     return currentItem
   }
