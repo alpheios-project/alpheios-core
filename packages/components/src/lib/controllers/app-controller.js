@@ -1083,9 +1083,9 @@ export default class AppController {
 
     const wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
       ? {
-        paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
-        paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
-      }
+          paginationMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue,
+          paginationAuthMax: this.api.settings.getFeatureOptions().items.wordUsageExamplesAuthMax.currentValue
+        }
       : null
 
     await LexicalQuery.getWordUsageData(homonym, wordUsageExamples, params)
