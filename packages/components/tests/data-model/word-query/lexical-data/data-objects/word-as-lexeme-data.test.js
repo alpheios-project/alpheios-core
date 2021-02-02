@@ -61,7 +61,8 @@ describe('WordAsLexemeData', () => {
             fullDefs: [],
             lemmaWord: word,
             shortDefs: []
-          })
+          }),
+          selectedInflection: null
         }
       ],
       targetWord: word

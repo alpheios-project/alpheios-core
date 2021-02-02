@@ -4041,6 +4041,7 @@ class WordItemRemoteDbDriver {
    */
   mergeCommonPart  (currentItem, newItem) {
     currentItem.important = currentItem.important || newItem.important
+    currentItem.frequency = currentItem.frequency + newItem.frequency
     return currentItem
   }
 
