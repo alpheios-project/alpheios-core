@@ -44,5 +44,6 @@ describe('dtsapi/adapter.test.js', () => {
 
     const result = await adapter.getCollections()
     console.info(result)
+    console.info(adapter.errors)
   })
 })
