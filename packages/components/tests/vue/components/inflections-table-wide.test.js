@@ -64,7 +64,7 @@ describe('inflections-table-wide.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
   })
 
-  it('2 InflectionsTableWide - computed title returns view.title or standardFormData.title or an empty string', () => {
+  it('2 InflectionsTableWide - computed title returns view.title or standardFormData.title or an empty string', async () => {
     let cmp = shallowMount(InflectionsTableWide, {
       store,
       localVue,
@@ -82,14 +82,18 @@ describe('inflections-table-wide.test.js', () => {
 
     cmp.setProps({ view: {} })
 
+    await Vue.nextTick()
+
     expect(cmp.vm.title).toEqual('fooStFormTitle')
 
     cmp.setProps({ standardFormData: {} })
 
+    await Vue.nextTick()
+
     expect(cmp.vm.title).toEqual('')
   })
 
-  it('3 InflectionsTableWide - computed additionalTitle returns view.titadditionalTitlele or standardFormData.additionalTitle or an empty string', () => {
+  it('3 InflectionsTableWide - computed additionalTitle returns view.titadditionalTitlele or standardFormData.additionalTitle or an empty string', async () => {
     let cmp = shallowMount(InflectionsTableWide, {
       store,
       localVue,
@@ -107,10 +111,12 @@ describe('inflections-table-wide.test.js', () => {
 
     cmp.setProps({ view: {} })
 
+    await Vue.nextTick()
     expect(cmp.vm.additionalTitle).toEqual('fooStFormTitle')
 
     cmp.setProps({ standardFormData: {} })
 
+    await Vue.nextTick()
     expect(cmp.vm.additionalTitle).toEqual('')
   })
 
@@ -524,7 +530,7 @@ describe('inflections-table-wide.test.js', () => {
     expect(classIn).toEqual('infl-prdgm-tbl-cell--data')
   })
 
-  it('15 InflectionsTableWide - method morphemeClasses returns classes by morpheme matches', () => {
+  it('15 InflectionsTableWide - method morphemeClasses returns classes by morpheme matches', async () => {
     let cmp = shallowMount(InflectionsTableWide, {
       store,
       localVue,
@@ -546,6 +552,7 @@ describe('inflections-table-wide.test.js', () => {
       standardFormData: true
     })
 
+    await Vue.nextTick()
     classes = cmp.vm.morphemeClasses(morpheme)
     expect(classes['infl-suff']).toBeTruthy()
     expect(classes['infl-suff--suffix-match']).toBeUndefined()

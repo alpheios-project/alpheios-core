@@ -7,6 +7,7 @@ import AlpheiosConcordanceAdapter from '@clAdapters/adapters/concordance/adapter
 import ArethusaTreebankAdapter from '@clAdapters/adapters/arethusa/adapter'
 import AlpheiosLogeionAdapter from '@clAdapters/adapters/logeion/adapter'
 import AlpheiosTokenizationAdapter from '@clAdapters/adapters/tokenization/adapter'
+import DTSAPIAdapter from '@clAdapters/adapters/dtsapi/adapter'
 
 import WrongMethodError from '@clAdapters/errors/wrong-method-error'
 import NoRequiredParamError from '@clAdapters/errors/no-required-param-error'
@@ -85,6 +86,11 @@ class ClientAdapters {
   static get tokenizationGroup () {
     ClientAdapters.init()
     return cachedAdaptersList.get('tokenizationGroup')
+  }
+
+  static get dtsapiGroup () {
+    ClientAdapters.init()
+    return cachedAdaptersList.get('dtsapiGroup')
   }
 
   /**
@@ -423,6 +429,33 @@ class ClientAdapters {
       return { result: res, errors: localTokenizationAdapter.errors }
     }
     return null
+  }
+
+  static async dtsApiMethod (options) {
+    ClientAdapters.checkMethodParam('dtsapiGroup', 'dtsapi', options)
+
+    const localDTSAPIAdapter = new DTSAPIAdapter({
+      category: 'dtsapiGroup',
+      adapterName: 'dtsapi',
+      method: options.method,
+      clientId: options.clientId,
+      baseUrl: options.params.baseUrl
+    })
+
+    if (options.method === 'getCollection') {
+      const res = await localDTSAPIAdapter.getCollection(options.params.id)
+      return { result: res, errors: localDTSAPIAdapter.errors }
+    }
+
+    if (options.method === 'getNavigation') {
+      const res = await localDTSAPIAdapter.getNavigation(options.params.id, options.params.collection)
+      return { result: res, errors: localDTSAPIAdapter.errors }
+    }
+
+    if (options.method === 'getDocument') {
+      const res = await localDTSAPIAdapter.getDocument(options.params.id, options.params.refParams)
+      return { result: res, errors: localDTSAPIAdapter.errors }
+    }
   }
 }
 
