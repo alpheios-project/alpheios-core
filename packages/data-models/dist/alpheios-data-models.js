@@ -12,7 +12,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "../../../node_modules/axios/index.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ../../../node_modules/axios/index.js ***!
   \********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -22,7 +22,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/xhr.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/xhr.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -212,7 +212,7 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/axios.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/lib/axios.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -279,7 +279,7 @@ module.exports.default = axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/Cancel.js ***!
   \********************************************************/
 /***/ ((module) => {
@@ -309,7 +309,7 @@ module.exports = Cancel;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/CancelToken.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -377,7 +377,7 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/isCancel.js ***!
   \**********************************************************/
 /***/ ((module) => {
@@ -393,7 +393,7 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/Axios.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/axios/lib/core/Axios.js ***!
   \*****************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -499,7 +499,7 @@ module.exports = Axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/InterceptorManager.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -562,7 +562,7 @@ module.exports = InterceptorManager;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/buildFullPath.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -593,7 +593,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/createError.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/createError.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -622,7 +622,7 @@ module.exports = function createError(message, config, code, request, response) 
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/dispatchRequest.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -712,7 +712,7 @@ module.exports = function dispatchRequest(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/enhanceError.js":
-/*!************************************************************!*
+/*!************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/enhanceError.js ***!
   \************************************************************/
 /***/ ((module) => {
@@ -765,7 +765,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/mergeConfig.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -863,7 +863,7 @@ module.exports = function mergeConfig(config1, config2) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/settle.js":
-/*!******************************************************!*
+/*!******************************************************!*\
   !*** ../../../node_modules/axios/lib/core/settle.js ***!
   \******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -899,7 +899,7 @@ module.exports = function settle(resolve, reject, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/transformData.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/transformData.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -930,7 +930,7 @@ module.exports = function transformData(data, headers, fns) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/defaults.js":
-/*!***************************************************!*
+/*!***************************************************!*\
   !*** ../../../node_modules/axios/lib/defaults.js ***!
   \***************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1039,7 +1039,7 @@ module.exports = defaults;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/bind.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/bind.js ***!
   \*******************************************************/
 /***/ ((module) => {
@@ -1061,7 +1061,7 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/buildURL.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1142,7 +1142,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/combineURLs.js ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -1167,7 +1167,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/cookies.js":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/cookies.js ***!
   \**********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1231,7 +1231,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!****************************************************************!*
+/*!****************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
   \****************************************************************/
 /***/ ((module) => {
@@ -1256,7 +1256,7 @@ module.exports = function isAbsoluteURL(url) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAxiosError.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAxiosError.js ***!
   \***************************************************************/
 /***/ ((module) => {
@@ -1278,7 +1278,7 @@ module.exports = function isAxiosError(payload) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1357,7 +1357,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!**********************************************************************!*
+/*!**********************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
   \**********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1380,7 +1380,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/parseHeaders.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1444,7 +1444,7 @@ module.exports = function parseHeaders(headers) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/spread.js":
-/*!*********************************************************!*
+/*!*********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/spread.js ***!
   \*********************************************************/
 /***/ ((module) => {
@@ -1482,7 +1482,7 @@ module.exports = function spread(callback) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/utils.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/lib/utils.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1844,7 +1844,7 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/uuid/index.js":
-/*!*******************************************!*
+/*!*******************************************!*\
   !*** ../../../node_modules/uuid/index.js ***!
   \*******************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1862,7 +1862,7 @@ module.exports = uuid;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/lib/bytesToUuid.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/uuid/lib/bytesToUuid.js ***!
   \*****************************************************/
 /***/ ((module) => {
@@ -1898,7 +1898,7 @@ module.exports = bytesToUuid;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/lib/rng-browser.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/uuid/lib/rng-browser.js ***!
   \*****************************************************/
 /***/ ((module) => {
@@ -1942,7 +1942,7 @@ if (getRandomValues) {
 /***/ }),
 
 /***/ "../../../node_modules/uuid/v1.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ../../../node_modules/uuid/v1.js ***!
   \****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2061,7 +2061,7 @@ module.exports = v1;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/v4.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ../../../node_modules/uuid/v4.js ***!
   \****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2100,7 +2100,7 @@ module.exports = v4;
 /***/ }),
 
 /***/ "./arabic_language_model.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./arabic_language_model.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2108,7 +2108,7 @@ module.exports = v4;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ ArabicLanguageModel
+/* harmony export */   "default": () => (/* binding */ ArabicLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -2248,7 +2248,7 @@ for the current node
 /***/ }),
 
 /***/ "./chinese_language_model.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./chinese_language_model.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2256,7 +2256,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ ChineseLanguageModel
+/* harmony export */   "default": () => (/* binding */ ChineseLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -2394,7 +2394,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /***/ }),
 
 /***/ "./constants.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./constants.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2402,232 +2402,232 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LANG_UNIT_WORD": () => /* binding */ LANG_UNIT_WORD,
-/* harmony export */   "LANG_UNIT_CHAR": () => /* binding */ LANG_UNIT_CHAR,
-/* harmony export */   "LANG_DIR_LTR": () => /* binding */ LANG_DIR_LTR,
-/* harmony export */   "LANG_DIR_RTL": () => /* binding */ LANG_DIR_RTL,
-/* harmony export */   "LANG_UNDEFINED": () => /* binding */ LANG_UNDEFINED,
-/* harmony export */   "LANG_LATIN": () => /* binding */ LANG_LATIN,
-/* harmony export */   "LANG_GREEK": () => /* binding */ LANG_GREEK,
-/* harmony export */   "LANG_ARABIC": () => /* binding */ LANG_ARABIC,
-/* harmony export */   "LANG_PERSIAN": () => /* binding */ LANG_PERSIAN,
-/* harmony export */   "LANG_GEEZ": () => /* binding */ LANG_GEEZ,
-/* harmony export */   "LANG_CHINESE": () => /* binding */ LANG_CHINESE,
-/* harmony export */   "LANG_SYRIAC": () => /* binding */ LANG_SYRIAC,
-/* harmony export */   "STR_LANG_CODE_UNDEFINED": () => /* binding */ STR_LANG_CODE_UNDEFINED,
-/* harmony export */   "STR_LANG_CODE_LAT": () => /* binding */ STR_LANG_CODE_LAT,
-/* harmony export */   "STR_LANG_CODE_LA": () => /* binding */ STR_LANG_CODE_LA,
-/* harmony export */   "STR_LANG_CODE_GRC": () => /* binding */ STR_LANG_CODE_GRC,
-/* harmony export */   "STR_LANG_CODE_ARA": () => /* binding */ STR_LANG_CODE_ARA,
-/* harmony export */   "STR_LANG_CODE_AR": () => /* binding */ STR_LANG_CODE_AR,
-/* harmony export */   "STR_LANG_CODE_FAS": () => /* binding */ STR_LANG_CODE_FAS,
-/* harmony export */   "STR_LANG_CODE_PER": () => /* binding */ STR_LANG_CODE_PER,
-/* harmony export */   "STR_LANG_CODE_FA_IR": () => /* binding */ STR_LANG_CODE_FA_IR,
-/* harmony export */   "STR_LANG_CODE_FA": () => /* binding */ STR_LANG_CODE_FA,
-/* harmony export */   "STR_LANG_CODE_GEZ": () => /* binding */ STR_LANG_CODE_GEZ,
-/* harmony export */   "STR_LANG_CODE_ZHO": () => /* binding */ STR_LANG_CODE_ZHO,
-/* harmony export */   "STR_LANG_CODE_ZH": () => /* binding */ STR_LANG_CODE_ZH,
-/* harmony export */   "STR_LANG_CODE_ZH_HANT": () => /* binding */ STR_LANG_CODE_ZH_HANT,
-/* harmony export */   "STR_LANG_CODE_ZH_HANS": () => /* binding */ STR_LANG_CODE_ZH_HANS,
-/* harmony export */   "STR_LANG_CODE_SYC": () => /* binding */ STR_LANG_CODE_SYC,
-/* harmony export */   "STR_LANG_CODE_SYR": () => /* binding */ STR_LANG_CODE_SYR,
-/* harmony export */   "STR_LANG_CODE_SYR_SYRJ": () => /* binding */ STR_LANG_CODE_SYR_SYRJ,
-/* harmony export */   "STR_LANG_CODE_ENG": () => /* binding */ STR_LANG_CODE_ENG,
-/* harmony export */   "POFS_ADJECTIVE": () => /* binding */ POFS_ADJECTIVE,
-/* harmony export */   "POFS_ADVERB": () => /* binding */ POFS_ADVERB,
-/* harmony export */   "POFS_ADVERBIAL": () => /* binding */ POFS_ADVERBIAL,
-/* harmony export */   "POFS_ARTICLE": () => /* binding */ POFS_ARTICLE,
-/* harmony export */   "POFS_CONJUNCTION": () => /* binding */ POFS_CONJUNCTION,
-/* harmony export */   "POFS_EXCLAMATION": () => /* binding */ POFS_EXCLAMATION,
-/* harmony export */   "POFS_INTERJECTION": () => /* binding */ POFS_INTERJECTION,
-/* harmony export */   "POFS_NOUN": () => /* binding */ POFS_NOUN,
-/* harmony export */   "POFS_NOUN_PROPER": () => /* binding */ POFS_NOUN_PROPER,
-/* harmony export */   "POFS_NUMERAL": () => /* binding */ POFS_NUMERAL,
-/* harmony export */   "POFS_PARTICLE": () => /* binding */ POFS_PARTICLE,
-/* harmony export */   "POFS_PREFIX": () => /* binding */ POFS_PREFIX,
-/* harmony export */   "POFS_PREPOSITION": () => /* binding */ POFS_PREPOSITION,
-/* harmony export */   "POFS_PRONOUN": () => /* binding */ POFS_PRONOUN,
-/* harmony export */   "POFS_SUFFIX": () => /* binding */ POFS_SUFFIX,
-/* harmony export */   "POFS_GERUNDIVE": () => /* binding */ POFS_GERUNDIVE,
-/* harmony export */   "POFS_SUPINE": () => /* binding */ POFS_SUPINE,
-/* harmony export */   "POFS_VERB": () => /* binding */ POFS_VERB,
-/* harmony export */   "POFS_VERB_PARTICIPLE": () => /* binding */ POFS_VERB_PARTICIPLE,
-/* harmony export */   "POFS_DENOMINATIVE": () => /* binding */ POFS_DENOMINATIVE,
-/* harmony export */   "GEND_MASCULINE": () => /* binding */ GEND_MASCULINE,
-/* harmony export */   "GEND_FEMININE": () => /* binding */ GEND_FEMININE,
-/* harmony export */   "GEND_NEUTER": () => /* binding */ GEND_NEUTER,
-/* harmony export */   "GEND_COMMON": () => /* binding */ GEND_COMMON,
-/* harmony export */   "GEND_ANIMATE": () => /* binding */ GEND_ANIMATE,
-/* harmony export */   "GEND_INANIMATE": () => /* binding */ GEND_INANIMATE,
-/* harmony export */   "GEND_PERSONAL_MASCULINE": () => /* binding */ GEND_PERSONAL_MASCULINE,
-/* harmony export */   "GEND_ANIMATE_MASCULINE": () => /* binding */ GEND_ANIMATE_MASCULINE,
-/* harmony export */   "GEND_INANIMATE_MASCULINE": () => /* binding */ GEND_INANIMATE_MASCULINE,
-/* harmony export */   "COMP_POSITIVE": () => /* binding */ COMP_POSITIVE,
-/* harmony export */   "COMP_COMPARITIVE": () => /* binding */ COMP_COMPARITIVE,
-/* harmony export */   "COMP_SUPERLATIVE": () => /* binding */ COMP_SUPERLATIVE,
-/* harmony export */   "CASE_ABESSIVE": () => /* binding */ CASE_ABESSIVE,
-/* harmony export */   "CASE_ABLATIVE": () => /* binding */ CASE_ABLATIVE,
-/* harmony export */   "CASE_ABSOLUTIVE": () => /* binding */ CASE_ABSOLUTIVE,
-/* harmony export */   "CASE_ACCUSATIVE": () => /* binding */ CASE_ACCUSATIVE,
-/* harmony export */   "CASE_ADDIRECTIVE": () => /* binding */ CASE_ADDIRECTIVE,
-/* harmony export */   "CASE_ADELATIVE": () => /* binding */ CASE_ADELATIVE,
-/* harmony export */   "CASE_ADESSIVE": () => /* binding */ CASE_ADESSIVE,
-/* harmony export */   "CASE_ADVERBIAL": () => /* binding */ CASE_ADVERBIAL,
-/* harmony export */   "CASE_ALLATIVE": () => /* binding */ CASE_ALLATIVE,
-/* harmony export */   "CASE_ANTESSIVE": () => /* binding */ CASE_ANTESSIVE,
-/* harmony export */   "CASE_APUDESSIVE": () => /* binding */ CASE_APUDESSIVE,
-/* harmony export */   "CASE_AVERSIVE": () => /* binding */ CASE_AVERSIVE,
-/* harmony export */   "CASE_BENEFACTIVE": () => /* binding */ CASE_BENEFACTIVE,
-/* harmony export */   "CASE_CARITIVE": () => /* binding */ CASE_CARITIVE,
-/* harmony export */   "CASE_CAUSAL": () => /* binding */ CASE_CAUSAL,
-/* harmony export */   "CASE_CAUSAL_FINAL": () => /* binding */ CASE_CAUSAL_FINAL,
-/* harmony export */   "CASE_COMITATIVE": () => /* binding */ CASE_COMITATIVE,
-/* harmony export */   "CASE_DATIVE": () => /* binding */ CASE_DATIVE,
-/* harmony export */   "CASE_DELATIVE": () => /* binding */ CASE_DELATIVE,
-/* harmony export */   "CASE_DIRECT": () => /* binding */ CASE_DIRECT,
-/* harmony export */   "CASE_DISTRIBUTIVE": () => /* binding */ CASE_DISTRIBUTIVE,
-/* harmony export */   "CASE_DISTRIBUTIVE_TEMPORAL": () => /* binding */ CASE_DISTRIBUTIVE_TEMPORAL,
-/* harmony export */   "CASE_ELATIVE": () => /* binding */ CASE_ELATIVE,
-/* harmony export */   "CASE_ERGATIVE": () => /* binding */ CASE_ERGATIVE,
-/* harmony export */   "CASE_ESSIVE": () => /* binding */ CASE_ESSIVE,
-/* harmony export */   "CASE_ESSIVE_FORMAL": () => /* binding */ CASE_ESSIVE_FORMAL,
-/* harmony export */   "CASE_ESSIVE_MODAL": () => /* binding */ CASE_ESSIVE_MODAL,
-/* harmony export */   "CASE_EQUATIVE": () => /* binding */ CASE_EQUATIVE,
-/* harmony export */   "CASE_EVITATIVE": () => /* binding */ CASE_EVITATIVE,
-/* harmony export */   "CASE_EXESSIVE": () => /* binding */ CASE_EXESSIVE,
-/* harmony export */   "CASE_FINAL": () => /* binding */ CASE_FINAL,
-/* harmony export */   "CASE_FORMAL": () => /* binding */ CASE_FORMAL,
-/* harmony export */   "CASE_GENITIVE": () => /* binding */ CASE_GENITIVE,
-/* harmony export */   "CASE_ILLATIVE": () => /* binding */ CASE_ILLATIVE,
-/* harmony export */   "CASE_INELATIVE": () => /* binding */ CASE_INELATIVE,
-/* harmony export */   "CASE_INESSIVE": () => /* binding */ CASE_INESSIVE,
-/* harmony export */   "CASE_INSTRUCTIVE": () => /* binding */ CASE_INSTRUCTIVE,
-/* harmony export */   "CASE_INSTRUMENTAL": () => /* binding */ CASE_INSTRUMENTAL,
-/* harmony export */   "CASE_INSTRUMENTAL_COMITATIVE": () => /* binding */ CASE_INSTRUMENTAL_COMITATIVE,
-/* harmony export */   "CASE_INTRANSITIVE": () => /* binding */ CASE_INTRANSITIVE,
-/* harmony export */   "CASE_LATIVE": () => /* binding */ CASE_LATIVE,
-/* harmony export */   "CASE_LOCATIVE": () => /* binding */ CASE_LOCATIVE,
-/* harmony export */   "CASE_MODAL": () => /* binding */ CASE_MODAL,
-/* harmony export */   "CASE_MULTIPLICATIVE": () => /* binding */ CASE_MULTIPLICATIVE,
-/* harmony export */   "CASE_NOMINATIVE": () => /* binding */ CASE_NOMINATIVE,
-/* harmony export */   "CASE_PARTITIVE": () => /* binding */ CASE_PARTITIVE,
-/* harmony export */   "CASE_PEGATIVE": () => /* binding */ CASE_PEGATIVE,
-/* harmony export */   "CASE_PERLATIVE": () => /* binding */ CASE_PERLATIVE,
-/* harmony export */   "CASE_POSSESSIVE": () => /* binding */ CASE_POSSESSIVE,
-/* harmony export */   "CASE_POSTELATIVE": () => /* binding */ CASE_POSTELATIVE,
-/* harmony export */   "CASE_POSTDIRECTIVE": () => /* binding */ CASE_POSTDIRECTIVE,
-/* harmony export */   "CASE_POSTESSIVE": () => /* binding */ CASE_POSTESSIVE,
-/* harmony export */   "CASE_POSTPOSITIONAL": () => /* binding */ CASE_POSTPOSITIONAL,
-/* harmony export */   "CASE_PREPOSITIONAL": () => /* binding */ CASE_PREPOSITIONAL,
-/* harmony export */   "CASE_PRIVATIVE": () => /* binding */ CASE_PRIVATIVE,
-/* harmony export */   "CASE_PROLATIVE": () => /* binding */ CASE_PROLATIVE,
-/* harmony export */   "CASE_PROSECUTIVE": () => /* binding */ CASE_PROSECUTIVE,
-/* harmony export */   "CASE_PROXIMATIVE": () => /* binding */ CASE_PROXIMATIVE,
-/* harmony export */   "CASE_SEPARATIVE": () => /* binding */ CASE_SEPARATIVE,
-/* harmony export */   "CASE_SOCIATIVE": () => /* binding */ CASE_SOCIATIVE,
-/* harmony export */   "CASE_SUBDIRECTIVE": () => /* binding */ CASE_SUBDIRECTIVE,
-/* harmony export */   "CASE_SUBESSIVE": () => /* binding */ CASE_SUBESSIVE,
-/* harmony export */   "CASE_SUBELATIVE": () => /* binding */ CASE_SUBELATIVE,
-/* harmony export */   "CASE_SUBLATIVE": () => /* binding */ CASE_SUBLATIVE,
-/* harmony export */   "CASE_SUPERDIRECTIVE": () => /* binding */ CASE_SUPERDIRECTIVE,
-/* harmony export */   "CASE_SUPERESSIVE": () => /* binding */ CASE_SUPERESSIVE,
-/* harmony export */   "CASE_SUPERLATIVE": () => /* binding */ CASE_SUPERLATIVE,
-/* harmony export */   "CASE_SUPPRESSIVE": () => /* binding */ CASE_SUPPRESSIVE,
-/* harmony export */   "CASE_TEMPORAL": () => /* binding */ CASE_TEMPORAL,
-/* harmony export */   "CASE_TERMINATIVE": () => /* binding */ CASE_TERMINATIVE,
-/* harmony export */   "CASE_TRANSLATIVE": () => /* binding */ CASE_TRANSLATIVE,
-/* harmony export */   "CASE_VIALIS": () => /* binding */ CASE_VIALIS,
-/* harmony export */   "CASE_VOCATIVE": () => /* binding */ CASE_VOCATIVE,
-/* harmony export */   "MOOD_ADMIRATIVE": () => /* binding */ MOOD_ADMIRATIVE,
-/* harmony export */   "MOOD_COHORTATIVE": () => /* binding */ MOOD_COHORTATIVE,
-/* harmony export */   "MOOD_CONDITIONAL": () => /* binding */ MOOD_CONDITIONAL,
-/* harmony export */   "MOOD_DECLARATIVE": () => /* binding */ MOOD_DECLARATIVE,
-/* harmony export */   "MOOD_DUBITATIVE": () => /* binding */ MOOD_DUBITATIVE,
-/* harmony export */   "MOOD_ENERGETIC": () => /* binding */ MOOD_ENERGETIC,
-/* harmony export */   "MOOD_EVENTIVE": () => /* binding */ MOOD_EVENTIVE,
-/* harmony export */   "MOOD_GENERIC": () => /* binding */ MOOD_GENERIC,
-/* harmony export */   "MOOD_GERUNDIVE": () => /* binding */ MOOD_GERUNDIVE,
-/* harmony export */   "MOOD_HYPOTHETICAL": () => /* binding */ MOOD_HYPOTHETICAL,
-/* harmony export */   "MOOD_IMPERATIVE": () => /* binding */ MOOD_IMPERATIVE,
-/* harmony export */   "MOOD_INDICATIVE": () => /* binding */ MOOD_INDICATIVE,
-/* harmony export */   "MOOD_INFERENTIAL": () => /* binding */ MOOD_INFERENTIAL,
-/* harmony export */   "MOOD_INFINITIVE": () => /* binding */ MOOD_INFINITIVE,
-/* harmony export */   "MOOD_INTERROGATIVE": () => /* binding */ MOOD_INTERROGATIVE,
-/* harmony export */   "MOOD_JUSSIVE": () => /* binding */ MOOD_JUSSIVE,
-/* harmony export */   "MOOD_NEGATIVE": () => /* binding */ MOOD_NEGATIVE,
-/* harmony export */   "MOOD_OPTATIVE": () => /* binding */ MOOD_OPTATIVE,
-/* harmony export */   "MOOD_PARTICIPLE": () => /* binding */ MOOD_PARTICIPLE,
-/* harmony export */   "MOOD_PRESUMPTIVE": () => /* binding */ MOOD_PRESUMPTIVE,
-/* harmony export */   "MOOD_RENARRATIVE": () => /* binding */ MOOD_RENARRATIVE,
-/* harmony export */   "MOOD_SUBJUNCTIVE": () => /* binding */ MOOD_SUBJUNCTIVE,
-/* harmony export */   "MOOD_SUPINE": () => /* binding */ MOOD_SUPINE,
-/* harmony export */   "NUM_SINGULAR": () => /* binding */ NUM_SINGULAR,
-/* harmony export */   "NUM_PLURAL": () => /* binding */ NUM_PLURAL,
-/* harmony export */   "NUM_DUAL": () => /* binding */ NUM_DUAL,
-/* harmony export */   "NUM_TRIAL": () => /* binding */ NUM_TRIAL,
-/* harmony export */   "NUM_PAUCAL": () => /* binding */ NUM_PAUCAL,
-/* harmony export */   "NUM_SINGULATIVE": () => /* binding */ NUM_SINGULATIVE,
-/* harmony export */   "NUM_COLLECTIVE": () => /* binding */ NUM_COLLECTIVE,
-/* harmony export */   "NUM_DISTRIBUTIVE_PLURAL": () => /* binding */ NUM_DISTRIBUTIVE_PLURAL,
-/* harmony export */   "NRL_CARDINAL": () => /* binding */ NRL_CARDINAL,
-/* harmony export */   "NRL_ORDINAL": () => /* binding */ NRL_ORDINAL,
-/* harmony export */   "NRL_DISTRIBUTIVE": () => /* binding */ NRL_DISTRIBUTIVE,
-/* harmony export */   "NURL_NUMERAL_ADVERB": () => /* binding */ NURL_NUMERAL_ADVERB,
-/* harmony export */   "ORD_1ST": () => /* binding */ ORD_1ST,
-/* harmony export */   "ORD_2ND": () => /* binding */ ORD_2ND,
-/* harmony export */   "ORD_3RD": () => /* binding */ ORD_3RD,
-/* harmony export */   "ORD_4TH": () => /* binding */ ORD_4TH,
-/* harmony export */   "ORD_5TH": () => /* binding */ ORD_5TH,
-/* harmony export */   "ORD_6TH": () => /* binding */ ORD_6TH,
-/* harmony export */   "ORD_7TH": () => /* binding */ ORD_7TH,
-/* harmony export */   "ORD_8TH": () => /* binding */ ORD_8TH,
-/* harmony export */   "ORD_9TH": () => /* binding */ ORD_9TH,
-/* harmony export */   "TENSE_AORIST": () => /* binding */ TENSE_AORIST,
-/* harmony export */   "TENSE_FUTURE": () => /* binding */ TENSE_FUTURE,
-/* harmony export */   "TENSE_FUTURE_PERFECT": () => /* binding */ TENSE_FUTURE_PERFECT,
-/* harmony export */   "TENSE_IMPERFECT": () => /* binding */ TENSE_IMPERFECT,
-/* harmony export */   "TENSE_PAST_ABSOLUTE": () => /* binding */ TENSE_PAST_ABSOLUTE,
-/* harmony export */   "TENSE_PERFECT": () => /* binding */ TENSE_PERFECT,
-/* harmony export */   "TENSE_PLUPERFECT": () => /* binding */ TENSE_PLUPERFECT,
-/* harmony export */   "TENSE_PRESENT": () => /* binding */ TENSE_PRESENT,
-/* harmony export */   "VKIND_TO_BE": () => /* binding */ VKIND_TO_BE,
-/* harmony export */   "VKIND_COMPOUNDS_OF_TO_BE": () => /* binding */ VKIND_COMPOUNDS_OF_TO_BE,
-/* harmony export */   "VKIND_TAKING_ABLATIVE": () => /* binding */ VKIND_TAKING_ABLATIVE,
-/* harmony export */   "VKIND_TAKING_DATIVE": () => /* binding */ VKIND_TAKING_DATIVE,
-/* harmony export */   "VKIND_TAKING_GENITIVE": () => /* binding */ VKIND_TAKING_GENITIVE,
-/* harmony export */   "VKIND_TRANSITIVE": () => /* binding */ VKIND_TRANSITIVE,
-/* harmony export */   "VKIND_INTRANSITIVE": () => /* binding */ VKIND_INTRANSITIVE,
-/* harmony export */   "VKIND_IMPERSONAL": () => /* binding */ VKIND_IMPERSONAL,
-/* harmony export */   "VKIND_DEPONENT": () => /* binding */ VKIND_DEPONENT,
-/* harmony export */   "VKIND_SEMIDEPONENT": () => /* binding */ VKIND_SEMIDEPONENT,
-/* harmony export */   "VKIND_PERFECT_DEFINITE": () => /* binding */ VKIND_PERFECT_DEFINITE,
-/* harmony export */   "VOICE_ACTIVE": () => /* binding */ VOICE_ACTIVE,
-/* harmony export */   "VOICE_PASSIVE": () => /* binding */ VOICE_PASSIVE,
-/* harmony export */   "VOICE_MEDIOPASSIVE": () => /* binding */ VOICE_MEDIOPASSIVE,
-/* harmony export */   "VOICE_IMPERSONAL_PASSIVE": () => /* binding */ VOICE_IMPERSONAL_PASSIVE,
-/* harmony export */   "VOICE_MIDDLE": () => /* binding */ VOICE_MIDDLE,
-/* harmony export */   "VOICE_ANTIPASSIVE": () => /* binding */ VOICE_ANTIPASSIVE,
-/* harmony export */   "VOICE_REFLEXIVE": () => /* binding */ VOICE_REFLEXIVE,
-/* harmony export */   "VOICE_RECIPROCAL": () => /* binding */ VOICE_RECIPROCAL,
-/* harmony export */   "VOICE_CAUSATIVE": () => /* binding */ VOICE_CAUSATIVE,
-/* harmony export */   "VOICE_ADJUTATIVE": () => /* binding */ VOICE_ADJUTATIVE,
-/* harmony export */   "VOICE_APPLICATIVE": () => /* binding */ VOICE_APPLICATIVE,
-/* harmony export */   "VOICE_CIRCUMSTANTIAL": () => /* binding */ VOICE_CIRCUMSTANTIAL,
-/* harmony export */   "VOICE_DEPONENT": () => /* binding */ VOICE_DEPONENT,
-/* harmony export */   "TYPE_IRREGULAR": () => /* binding */ TYPE_IRREGULAR,
-/* harmony export */   "TYPE_REGULAR": () => /* binding */ TYPE_REGULAR,
-/* harmony export */   "CLASS_PERSONAL": () => /* binding */ CLASS_PERSONAL,
-/* harmony export */   "CLASS_REFLEXIVE": () => /* binding */ CLASS_REFLEXIVE,
-/* harmony export */   "CLASS_POSSESSIVE": () => /* binding */ CLASS_POSSESSIVE,
-/* harmony export */   "CLASS_DEMONSTRATIVE": () => /* binding */ CLASS_DEMONSTRATIVE,
-/* harmony export */   "CLASS_RELATIVE": () => /* binding */ CLASS_RELATIVE,
-/* harmony export */   "CLASS_INTERROGATIVE": () => /* binding */ CLASS_INTERROGATIVE,
-/* harmony export */   "CLASS_GENERAL_RELATIVE": () => /* binding */ CLASS_GENERAL_RELATIVE,
-/* harmony export */   "CLASS_INDEFINITE": () => /* binding */ CLASS_INDEFINITE,
-/* harmony export */   "CLASS_INTENSIVE": () => /* binding */ CLASS_INTENSIVE,
-/* harmony export */   "CLASS_RECIPROCAL": () => /* binding */ CLASS_RECIPROCAL,
-/* harmony export */   "PARADIGM_CAT_KAYLO": () => /* binding */ PARADIGM_CAT_KAYLO,
-/* harmony export */   "PARADIGM_CAT_STATE": () => /* binding */ PARADIGM_CAT_STATE
+/* harmony export */   "LANG_UNIT_WORD": () => (/* binding */ LANG_UNIT_WORD),
+/* harmony export */   "LANG_UNIT_CHAR": () => (/* binding */ LANG_UNIT_CHAR),
+/* harmony export */   "LANG_DIR_LTR": () => (/* binding */ LANG_DIR_LTR),
+/* harmony export */   "LANG_DIR_RTL": () => (/* binding */ LANG_DIR_RTL),
+/* harmony export */   "LANG_UNDEFINED": () => (/* binding */ LANG_UNDEFINED),
+/* harmony export */   "LANG_LATIN": () => (/* binding */ LANG_LATIN),
+/* harmony export */   "LANG_GREEK": () => (/* binding */ LANG_GREEK),
+/* harmony export */   "LANG_ARABIC": () => (/* binding */ LANG_ARABIC),
+/* harmony export */   "LANG_PERSIAN": () => (/* binding */ LANG_PERSIAN),
+/* harmony export */   "LANG_GEEZ": () => (/* binding */ LANG_GEEZ),
+/* harmony export */   "LANG_CHINESE": () => (/* binding */ LANG_CHINESE),
+/* harmony export */   "LANG_SYRIAC": () => (/* binding */ LANG_SYRIAC),
+/* harmony export */   "STR_LANG_CODE_UNDEFINED": () => (/* binding */ STR_LANG_CODE_UNDEFINED),
+/* harmony export */   "STR_LANG_CODE_LAT": () => (/* binding */ STR_LANG_CODE_LAT),
+/* harmony export */   "STR_LANG_CODE_LA": () => (/* binding */ STR_LANG_CODE_LA),
+/* harmony export */   "STR_LANG_CODE_GRC": () => (/* binding */ STR_LANG_CODE_GRC),
+/* harmony export */   "STR_LANG_CODE_ARA": () => (/* binding */ STR_LANG_CODE_ARA),
+/* harmony export */   "STR_LANG_CODE_AR": () => (/* binding */ STR_LANG_CODE_AR),
+/* harmony export */   "STR_LANG_CODE_FAS": () => (/* binding */ STR_LANG_CODE_FAS),
+/* harmony export */   "STR_LANG_CODE_PER": () => (/* binding */ STR_LANG_CODE_PER),
+/* harmony export */   "STR_LANG_CODE_FA_IR": () => (/* binding */ STR_LANG_CODE_FA_IR),
+/* harmony export */   "STR_LANG_CODE_FA": () => (/* binding */ STR_LANG_CODE_FA),
+/* harmony export */   "STR_LANG_CODE_GEZ": () => (/* binding */ STR_LANG_CODE_GEZ),
+/* harmony export */   "STR_LANG_CODE_ZHO": () => (/* binding */ STR_LANG_CODE_ZHO),
+/* harmony export */   "STR_LANG_CODE_ZH": () => (/* binding */ STR_LANG_CODE_ZH),
+/* harmony export */   "STR_LANG_CODE_ZH_HANT": () => (/* binding */ STR_LANG_CODE_ZH_HANT),
+/* harmony export */   "STR_LANG_CODE_ZH_HANS": () => (/* binding */ STR_LANG_CODE_ZH_HANS),
+/* harmony export */   "STR_LANG_CODE_SYC": () => (/* binding */ STR_LANG_CODE_SYC),
+/* harmony export */   "STR_LANG_CODE_SYR": () => (/* binding */ STR_LANG_CODE_SYR),
+/* harmony export */   "STR_LANG_CODE_SYR_SYRJ": () => (/* binding */ STR_LANG_CODE_SYR_SYRJ),
+/* harmony export */   "STR_LANG_CODE_ENG": () => (/* binding */ STR_LANG_CODE_ENG),
+/* harmony export */   "POFS_ADJECTIVE": () => (/* binding */ POFS_ADJECTIVE),
+/* harmony export */   "POFS_ADVERB": () => (/* binding */ POFS_ADVERB),
+/* harmony export */   "POFS_ADVERBIAL": () => (/* binding */ POFS_ADVERBIAL),
+/* harmony export */   "POFS_ARTICLE": () => (/* binding */ POFS_ARTICLE),
+/* harmony export */   "POFS_CONJUNCTION": () => (/* binding */ POFS_CONJUNCTION),
+/* harmony export */   "POFS_EXCLAMATION": () => (/* binding */ POFS_EXCLAMATION),
+/* harmony export */   "POFS_INTERJECTION": () => (/* binding */ POFS_INTERJECTION),
+/* harmony export */   "POFS_NOUN": () => (/* binding */ POFS_NOUN),
+/* harmony export */   "POFS_NOUN_PROPER": () => (/* binding */ POFS_NOUN_PROPER),
+/* harmony export */   "POFS_NUMERAL": () => (/* binding */ POFS_NUMERAL),
+/* harmony export */   "POFS_PARTICLE": () => (/* binding */ POFS_PARTICLE),
+/* harmony export */   "POFS_PREFIX": () => (/* binding */ POFS_PREFIX),
+/* harmony export */   "POFS_PREPOSITION": () => (/* binding */ POFS_PREPOSITION),
+/* harmony export */   "POFS_PRONOUN": () => (/* binding */ POFS_PRONOUN),
+/* harmony export */   "POFS_SUFFIX": () => (/* binding */ POFS_SUFFIX),
+/* harmony export */   "POFS_GERUNDIVE": () => (/* binding */ POFS_GERUNDIVE),
+/* harmony export */   "POFS_SUPINE": () => (/* binding */ POFS_SUPINE),
+/* harmony export */   "POFS_VERB": () => (/* binding */ POFS_VERB),
+/* harmony export */   "POFS_VERB_PARTICIPLE": () => (/* binding */ POFS_VERB_PARTICIPLE),
+/* harmony export */   "POFS_DENOMINATIVE": () => (/* binding */ POFS_DENOMINATIVE),
+/* harmony export */   "GEND_MASCULINE": () => (/* binding */ GEND_MASCULINE),
+/* harmony export */   "GEND_FEMININE": () => (/* binding */ GEND_FEMININE),
+/* harmony export */   "GEND_NEUTER": () => (/* binding */ GEND_NEUTER),
+/* harmony export */   "GEND_COMMON": () => (/* binding */ GEND_COMMON),
+/* harmony export */   "GEND_ANIMATE": () => (/* binding */ GEND_ANIMATE),
+/* harmony export */   "GEND_INANIMATE": () => (/* binding */ GEND_INANIMATE),
+/* harmony export */   "GEND_PERSONAL_MASCULINE": () => (/* binding */ GEND_PERSONAL_MASCULINE),
+/* harmony export */   "GEND_ANIMATE_MASCULINE": () => (/* binding */ GEND_ANIMATE_MASCULINE),
+/* harmony export */   "GEND_INANIMATE_MASCULINE": () => (/* binding */ GEND_INANIMATE_MASCULINE),
+/* harmony export */   "COMP_POSITIVE": () => (/* binding */ COMP_POSITIVE),
+/* harmony export */   "COMP_COMPARITIVE": () => (/* binding */ COMP_COMPARITIVE),
+/* harmony export */   "COMP_SUPERLATIVE": () => (/* binding */ COMP_SUPERLATIVE),
+/* harmony export */   "CASE_ABESSIVE": () => (/* binding */ CASE_ABESSIVE),
+/* harmony export */   "CASE_ABLATIVE": () => (/* binding */ CASE_ABLATIVE),
+/* harmony export */   "CASE_ABSOLUTIVE": () => (/* binding */ CASE_ABSOLUTIVE),
+/* harmony export */   "CASE_ACCUSATIVE": () => (/* binding */ CASE_ACCUSATIVE),
+/* harmony export */   "CASE_ADDIRECTIVE": () => (/* binding */ CASE_ADDIRECTIVE),
+/* harmony export */   "CASE_ADELATIVE": () => (/* binding */ CASE_ADELATIVE),
+/* harmony export */   "CASE_ADESSIVE": () => (/* binding */ CASE_ADESSIVE),
+/* harmony export */   "CASE_ADVERBIAL": () => (/* binding */ CASE_ADVERBIAL),
+/* harmony export */   "CASE_ALLATIVE": () => (/* binding */ CASE_ALLATIVE),
+/* harmony export */   "CASE_ANTESSIVE": () => (/* binding */ CASE_ANTESSIVE),
+/* harmony export */   "CASE_APUDESSIVE": () => (/* binding */ CASE_APUDESSIVE),
+/* harmony export */   "CASE_AVERSIVE": () => (/* binding */ CASE_AVERSIVE),
+/* harmony export */   "CASE_BENEFACTIVE": () => (/* binding */ CASE_BENEFACTIVE),
+/* harmony export */   "CASE_CARITIVE": () => (/* binding */ CASE_CARITIVE),
+/* harmony export */   "CASE_CAUSAL": () => (/* binding */ CASE_CAUSAL),
+/* harmony export */   "CASE_CAUSAL_FINAL": () => (/* binding */ CASE_CAUSAL_FINAL),
+/* harmony export */   "CASE_COMITATIVE": () => (/* binding */ CASE_COMITATIVE),
+/* harmony export */   "CASE_DATIVE": () => (/* binding */ CASE_DATIVE),
+/* harmony export */   "CASE_DELATIVE": () => (/* binding */ CASE_DELATIVE),
+/* harmony export */   "CASE_DIRECT": () => (/* binding */ CASE_DIRECT),
+/* harmony export */   "CASE_DISTRIBUTIVE": () => (/* binding */ CASE_DISTRIBUTIVE),
+/* harmony export */   "CASE_DISTRIBUTIVE_TEMPORAL": () => (/* binding */ CASE_DISTRIBUTIVE_TEMPORAL),
+/* harmony export */   "CASE_ELATIVE": () => (/* binding */ CASE_ELATIVE),
+/* harmony export */   "CASE_ERGATIVE": () => (/* binding */ CASE_ERGATIVE),
+/* harmony export */   "CASE_ESSIVE": () => (/* binding */ CASE_ESSIVE),
+/* harmony export */   "CASE_ESSIVE_FORMAL": () => (/* binding */ CASE_ESSIVE_FORMAL),
+/* harmony export */   "CASE_ESSIVE_MODAL": () => (/* binding */ CASE_ESSIVE_MODAL),
+/* harmony export */   "CASE_EQUATIVE": () => (/* binding */ CASE_EQUATIVE),
+/* harmony export */   "CASE_EVITATIVE": () => (/* binding */ CASE_EVITATIVE),
+/* harmony export */   "CASE_EXESSIVE": () => (/* binding */ CASE_EXESSIVE),
+/* harmony export */   "CASE_FINAL": () => (/* binding */ CASE_FINAL),
+/* harmony export */   "CASE_FORMAL": () => (/* binding */ CASE_FORMAL),
+/* harmony export */   "CASE_GENITIVE": () => (/* binding */ CASE_GENITIVE),
+/* harmony export */   "CASE_ILLATIVE": () => (/* binding */ CASE_ILLATIVE),
+/* harmony export */   "CASE_INELATIVE": () => (/* binding */ CASE_INELATIVE),
+/* harmony export */   "CASE_INESSIVE": () => (/* binding */ CASE_INESSIVE),
+/* harmony export */   "CASE_INSTRUCTIVE": () => (/* binding */ CASE_INSTRUCTIVE),
+/* harmony export */   "CASE_INSTRUMENTAL": () => (/* binding */ CASE_INSTRUMENTAL),
+/* harmony export */   "CASE_INSTRUMENTAL_COMITATIVE": () => (/* binding */ CASE_INSTRUMENTAL_COMITATIVE),
+/* harmony export */   "CASE_INTRANSITIVE": () => (/* binding */ CASE_INTRANSITIVE),
+/* harmony export */   "CASE_LATIVE": () => (/* binding */ CASE_LATIVE),
+/* harmony export */   "CASE_LOCATIVE": () => (/* binding */ CASE_LOCATIVE),
+/* harmony export */   "CASE_MODAL": () => (/* binding */ CASE_MODAL),
+/* harmony export */   "CASE_MULTIPLICATIVE": () => (/* binding */ CASE_MULTIPLICATIVE),
+/* harmony export */   "CASE_NOMINATIVE": () => (/* binding */ CASE_NOMINATIVE),
+/* harmony export */   "CASE_PARTITIVE": () => (/* binding */ CASE_PARTITIVE),
+/* harmony export */   "CASE_PEGATIVE": () => (/* binding */ CASE_PEGATIVE),
+/* harmony export */   "CASE_PERLATIVE": () => (/* binding */ CASE_PERLATIVE),
+/* harmony export */   "CASE_POSSESSIVE": () => (/* binding */ CASE_POSSESSIVE),
+/* harmony export */   "CASE_POSTELATIVE": () => (/* binding */ CASE_POSTELATIVE),
+/* harmony export */   "CASE_POSTDIRECTIVE": () => (/* binding */ CASE_POSTDIRECTIVE),
+/* harmony export */   "CASE_POSTESSIVE": () => (/* binding */ CASE_POSTESSIVE),
+/* harmony export */   "CASE_POSTPOSITIONAL": () => (/* binding */ CASE_POSTPOSITIONAL),
+/* harmony export */   "CASE_PREPOSITIONAL": () => (/* binding */ CASE_PREPOSITIONAL),
+/* harmony export */   "CASE_PRIVATIVE": () => (/* binding */ CASE_PRIVATIVE),
+/* harmony export */   "CASE_PROLATIVE": () => (/* binding */ CASE_PROLATIVE),
+/* harmony export */   "CASE_PROSECUTIVE": () => (/* binding */ CASE_PROSECUTIVE),
+/* harmony export */   "CASE_PROXIMATIVE": () => (/* binding */ CASE_PROXIMATIVE),
+/* harmony export */   "CASE_SEPARATIVE": () => (/* binding */ CASE_SEPARATIVE),
+/* harmony export */   "CASE_SOCIATIVE": () => (/* binding */ CASE_SOCIATIVE),
+/* harmony export */   "CASE_SUBDIRECTIVE": () => (/* binding */ CASE_SUBDIRECTIVE),
+/* harmony export */   "CASE_SUBESSIVE": () => (/* binding */ CASE_SUBESSIVE),
+/* harmony export */   "CASE_SUBELATIVE": () => (/* binding */ CASE_SUBELATIVE),
+/* harmony export */   "CASE_SUBLATIVE": () => (/* binding */ CASE_SUBLATIVE),
+/* harmony export */   "CASE_SUPERDIRECTIVE": () => (/* binding */ CASE_SUPERDIRECTIVE),
+/* harmony export */   "CASE_SUPERESSIVE": () => (/* binding */ CASE_SUPERESSIVE),
+/* harmony export */   "CASE_SUPERLATIVE": () => (/* binding */ CASE_SUPERLATIVE),
+/* harmony export */   "CASE_SUPPRESSIVE": () => (/* binding */ CASE_SUPPRESSIVE),
+/* harmony export */   "CASE_TEMPORAL": () => (/* binding */ CASE_TEMPORAL),
+/* harmony export */   "CASE_TERMINATIVE": () => (/* binding */ CASE_TERMINATIVE),
+/* harmony export */   "CASE_TRANSLATIVE": () => (/* binding */ CASE_TRANSLATIVE),
+/* harmony export */   "CASE_VIALIS": () => (/* binding */ CASE_VIALIS),
+/* harmony export */   "CASE_VOCATIVE": () => (/* binding */ CASE_VOCATIVE),
+/* harmony export */   "MOOD_ADMIRATIVE": () => (/* binding */ MOOD_ADMIRATIVE),
+/* harmony export */   "MOOD_COHORTATIVE": () => (/* binding */ MOOD_COHORTATIVE),
+/* harmony export */   "MOOD_CONDITIONAL": () => (/* binding */ MOOD_CONDITIONAL),
+/* harmony export */   "MOOD_DECLARATIVE": () => (/* binding */ MOOD_DECLARATIVE),
+/* harmony export */   "MOOD_DUBITATIVE": () => (/* binding */ MOOD_DUBITATIVE),
+/* harmony export */   "MOOD_ENERGETIC": () => (/* binding */ MOOD_ENERGETIC),
+/* harmony export */   "MOOD_EVENTIVE": () => (/* binding */ MOOD_EVENTIVE),
+/* harmony export */   "MOOD_GENERIC": () => (/* binding */ MOOD_GENERIC),
+/* harmony export */   "MOOD_GERUNDIVE": () => (/* binding */ MOOD_GERUNDIVE),
+/* harmony export */   "MOOD_HYPOTHETICAL": () => (/* binding */ MOOD_HYPOTHETICAL),
+/* harmony export */   "MOOD_IMPERATIVE": () => (/* binding */ MOOD_IMPERATIVE),
+/* harmony export */   "MOOD_INDICATIVE": () => (/* binding */ MOOD_INDICATIVE),
+/* harmony export */   "MOOD_INFERENTIAL": () => (/* binding */ MOOD_INFERENTIAL),
+/* harmony export */   "MOOD_INFINITIVE": () => (/* binding */ MOOD_INFINITIVE),
+/* harmony export */   "MOOD_INTERROGATIVE": () => (/* binding */ MOOD_INTERROGATIVE),
+/* harmony export */   "MOOD_JUSSIVE": () => (/* binding */ MOOD_JUSSIVE),
+/* harmony export */   "MOOD_NEGATIVE": () => (/* binding */ MOOD_NEGATIVE),
+/* harmony export */   "MOOD_OPTATIVE": () => (/* binding */ MOOD_OPTATIVE),
+/* harmony export */   "MOOD_PARTICIPLE": () => (/* binding */ MOOD_PARTICIPLE),
+/* harmony export */   "MOOD_PRESUMPTIVE": () => (/* binding */ MOOD_PRESUMPTIVE),
+/* harmony export */   "MOOD_RENARRATIVE": () => (/* binding */ MOOD_RENARRATIVE),
+/* harmony export */   "MOOD_SUBJUNCTIVE": () => (/* binding */ MOOD_SUBJUNCTIVE),
+/* harmony export */   "MOOD_SUPINE": () => (/* binding */ MOOD_SUPINE),
+/* harmony export */   "NUM_SINGULAR": () => (/* binding */ NUM_SINGULAR),
+/* harmony export */   "NUM_PLURAL": () => (/* binding */ NUM_PLURAL),
+/* harmony export */   "NUM_DUAL": () => (/* binding */ NUM_DUAL),
+/* harmony export */   "NUM_TRIAL": () => (/* binding */ NUM_TRIAL),
+/* harmony export */   "NUM_PAUCAL": () => (/* binding */ NUM_PAUCAL),
+/* harmony export */   "NUM_SINGULATIVE": () => (/* binding */ NUM_SINGULATIVE),
+/* harmony export */   "NUM_COLLECTIVE": () => (/* binding */ NUM_COLLECTIVE),
+/* harmony export */   "NUM_DISTRIBUTIVE_PLURAL": () => (/* binding */ NUM_DISTRIBUTIVE_PLURAL),
+/* harmony export */   "NRL_CARDINAL": () => (/* binding */ NRL_CARDINAL),
+/* harmony export */   "NRL_ORDINAL": () => (/* binding */ NRL_ORDINAL),
+/* harmony export */   "NRL_DISTRIBUTIVE": () => (/* binding */ NRL_DISTRIBUTIVE),
+/* harmony export */   "NURL_NUMERAL_ADVERB": () => (/* binding */ NURL_NUMERAL_ADVERB),
+/* harmony export */   "ORD_1ST": () => (/* binding */ ORD_1ST),
+/* harmony export */   "ORD_2ND": () => (/* binding */ ORD_2ND),
+/* harmony export */   "ORD_3RD": () => (/* binding */ ORD_3RD),
+/* harmony export */   "ORD_4TH": () => (/* binding */ ORD_4TH),
+/* harmony export */   "ORD_5TH": () => (/* binding */ ORD_5TH),
+/* harmony export */   "ORD_6TH": () => (/* binding */ ORD_6TH),
+/* harmony export */   "ORD_7TH": () => (/* binding */ ORD_7TH),
+/* harmony export */   "ORD_8TH": () => (/* binding */ ORD_8TH),
+/* harmony export */   "ORD_9TH": () => (/* binding */ ORD_9TH),
+/* harmony export */   "TENSE_AORIST": () => (/* binding */ TENSE_AORIST),
+/* harmony export */   "TENSE_FUTURE": () => (/* binding */ TENSE_FUTURE),
+/* harmony export */   "TENSE_FUTURE_PERFECT": () => (/* binding */ TENSE_FUTURE_PERFECT),
+/* harmony export */   "TENSE_IMPERFECT": () => (/* binding */ TENSE_IMPERFECT),
+/* harmony export */   "TENSE_PAST_ABSOLUTE": () => (/* binding */ TENSE_PAST_ABSOLUTE),
+/* harmony export */   "TENSE_PERFECT": () => (/* binding */ TENSE_PERFECT),
+/* harmony export */   "TENSE_PLUPERFECT": () => (/* binding */ TENSE_PLUPERFECT),
+/* harmony export */   "TENSE_PRESENT": () => (/* binding */ TENSE_PRESENT),
+/* harmony export */   "VKIND_TO_BE": () => (/* binding */ VKIND_TO_BE),
+/* harmony export */   "VKIND_COMPOUNDS_OF_TO_BE": () => (/* binding */ VKIND_COMPOUNDS_OF_TO_BE),
+/* harmony export */   "VKIND_TAKING_ABLATIVE": () => (/* binding */ VKIND_TAKING_ABLATIVE),
+/* harmony export */   "VKIND_TAKING_DATIVE": () => (/* binding */ VKIND_TAKING_DATIVE),
+/* harmony export */   "VKIND_TAKING_GENITIVE": () => (/* binding */ VKIND_TAKING_GENITIVE),
+/* harmony export */   "VKIND_TRANSITIVE": () => (/* binding */ VKIND_TRANSITIVE),
+/* harmony export */   "VKIND_INTRANSITIVE": () => (/* binding */ VKIND_INTRANSITIVE),
+/* harmony export */   "VKIND_IMPERSONAL": () => (/* binding */ VKIND_IMPERSONAL),
+/* harmony export */   "VKIND_DEPONENT": () => (/* binding */ VKIND_DEPONENT),
+/* harmony export */   "VKIND_SEMIDEPONENT": () => (/* binding */ VKIND_SEMIDEPONENT),
+/* harmony export */   "VKIND_PERFECT_DEFINITE": () => (/* binding */ VKIND_PERFECT_DEFINITE),
+/* harmony export */   "VOICE_ACTIVE": () => (/* binding */ VOICE_ACTIVE),
+/* harmony export */   "VOICE_PASSIVE": () => (/* binding */ VOICE_PASSIVE),
+/* harmony export */   "VOICE_MEDIOPASSIVE": () => (/* binding */ VOICE_MEDIOPASSIVE),
+/* harmony export */   "VOICE_IMPERSONAL_PASSIVE": () => (/* binding */ VOICE_IMPERSONAL_PASSIVE),
+/* harmony export */   "VOICE_MIDDLE": () => (/* binding */ VOICE_MIDDLE),
+/* harmony export */   "VOICE_ANTIPASSIVE": () => (/* binding */ VOICE_ANTIPASSIVE),
+/* harmony export */   "VOICE_REFLEXIVE": () => (/* binding */ VOICE_REFLEXIVE),
+/* harmony export */   "VOICE_RECIPROCAL": () => (/* binding */ VOICE_RECIPROCAL),
+/* harmony export */   "VOICE_CAUSATIVE": () => (/* binding */ VOICE_CAUSATIVE),
+/* harmony export */   "VOICE_ADJUTATIVE": () => (/* binding */ VOICE_ADJUTATIVE),
+/* harmony export */   "VOICE_APPLICATIVE": () => (/* binding */ VOICE_APPLICATIVE),
+/* harmony export */   "VOICE_CIRCUMSTANTIAL": () => (/* binding */ VOICE_CIRCUMSTANTIAL),
+/* harmony export */   "VOICE_DEPONENT": () => (/* binding */ VOICE_DEPONENT),
+/* harmony export */   "TYPE_IRREGULAR": () => (/* binding */ TYPE_IRREGULAR),
+/* harmony export */   "TYPE_REGULAR": () => (/* binding */ TYPE_REGULAR),
+/* harmony export */   "CLASS_PERSONAL": () => (/* binding */ CLASS_PERSONAL),
+/* harmony export */   "CLASS_REFLEXIVE": () => (/* binding */ CLASS_REFLEXIVE),
+/* harmony export */   "CLASS_POSSESSIVE": () => (/* binding */ CLASS_POSSESSIVE),
+/* harmony export */   "CLASS_DEMONSTRATIVE": () => (/* binding */ CLASS_DEMONSTRATIVE),
+/* harmony export */   "CLASS_RELATIVE": () => (/* binding */ CLASS_RELATIVE),
+/* harmony export */   "CLASS_INTERROGATIVE": () => (/* binding */ CLASS_INTERROGATIVE),
+/* harmony export */   "CLASS_GENERAL_RELATIVE": () => (/* binding */ CLASS_GENERAL_RELATIVE),
+/* harmony export */   "CLASS_INDEFINITE": () => (/* binding */ CLASS_INDEFINITE),
+/* harmony export */   "CLASS_INTENSIVE": () => (/* binding */ CLASS_INTENSIVE),
+/* harmony export */   "CLASS_RECIPROCAL": () => (/* binding */ CLASS_RECIPROCAL),
+/* harmony export */   "PARADIGM_CAT_KAYLO": () => (/* binding */ PARADIGM_CAT_KAYLO),
+/* harmony export */   "PARADIGM_CAT_STATE": () => (/* binding */ PARADIGM_CAT_STATE)
 /* harmony export */ });
 /* eslint-disable no-unused-vars */
 const LANG_UNIT_WORD = Symbol('word')
@@ -2870,7 +2870,7 @@ const PARADIGM_CAT_STATE = 'state'
 /***/ }),
 
 /***/ "./definition-set.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./definition-set.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2878,7 +2878,7 @@ const PARADIGM_CAT_STATE = 'state'
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ DefinitionSet
+/* harmony export */   "default": () => (/* binding */ DefinitionSet)
 /* harmony export */ });
 /* harmony import */ var _definition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./definition */ "./definition.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
@@ -3001,7 +3001,7 @@ class DefinitionSet {
 /***/ }),
 
 /***/ "./definition.js":
-/*!***********************!*
+/*!***********************!*\
   !*** ./definition.js ***!
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3009,7 +3009,7 @@ class DefinitionSet {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
@@ -3065,7 +3065,7 @@ class Definition {
 /***/ }),
 
 /***/ "./digest.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./digest.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3073,7 +3073,7 @@ class Definition {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Digest
+/* harmony export */   "default": () => (/* binding */ Digest)
 /* harmony export */ });
 /* harmony import */ var _sha1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sha1.js */ "./sha1.js");
 
@@ -3111,7 +3111,7 @@ class Digest {
 /***/ }),
 
 /***/ "./driver.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3119,47 +3119,49 @@ class Digest {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Constants": () => /* reexport module object */ _constants_js__WEBPACK_IMPORTED_MODULE_0__,
-/* harmony export */   "Definition": () => /* reexport safe */ _definition_js__WEBPACK_IMPORTED_MODULE_1__.default,
-/* harmony export */   "DefinitionSet": () => /* reexport safe */ _definition_set__WEBPACK_IMPORTED_MODULE_2__.default,
-/* harmony export */   "Feature": () => /* reexport safe */ _feature_js__WEBPACK_IMPORTED_MODULE_3__.default,
-/* harmony export */   "GrmFeature": () => /* reexport safe */ _grm_feature_js__WEBPACK_IMPORTED_MODULE_4__.default,
-/* harmony export */   "FeatureType": () => /* reexport safe */ _feature_type_js__WEBPACK_IMPORTED_MODULE_5__.default,
-/* harmony export */   "FeatureList": () => /* reexport safe */ _feature_list_js__WEBPACK_IMPORTED_MODULE_6__.default,
-/* harmony export */   "FeatureImporter": () => /* reexport safe */ _feature_importer_js__WEBPACK_IMPORTED_MODULE_7__.default,
-/* harmony export */   "Inflection": () => /* reexport safe */ _inflection_js__WEBPACK_IMPORTED_MODULE_13__.default,
-/* harmony export */   "LanguageModelFactory": () => /* reexport safe */ _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__.default,
-/* harmony export */   "HomonymGroup": () => /* reexport safe */ _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__.default,
-/* harmony export */   "Homonym": () => /* reexport safe */ _homonym_js__WEBPACK_IMPORTED_MODULE_10__.default,
-/* harmony export */   "Lexeme": () => /* reexport safe */ _lexeme_js__WEBPACK_IMPORTED_MODULE_11__.default,
-/* harmony export */   "Lemma": () => /* reexport safe */ _lemma_js__WEBPACK_IMPORTED_MODULE_12__.default,
-/* harmony export */   "Language": () => /* reexport safe */ _language_js__WEBPACK_IMPORTED_MODULE_14__.default,
-/* harmony export */   "LatinLanguageModel": () => /* reexport safe */ _latin_language_model_js__WEBPACK_IMPORTED_MODULE_15__.default,
-/* harmony export */   "GreekLanguageModel": () => /* reexport safe */ _greek_language_model_js__WEBPACK_IMPORTED_MODULE_16__.default,
-/* harmony export */   "ArabicLanguageModel": () => /* reexport safe */ _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_17__.default,
-/* harmony export */   "PersianLanguageModel": () => /* reexport safe */ _persian_language_model_js__WEBPACK_IMPORTED_MODULE_18__.default,
-/* harmony export */   "GeezLanguageModel": () => /* reexport safe */ _geez_language_model_js__WEBPACK_IMPORTED_MODULE_19__.default,
-/* harmony export */   "ChineseLanguageModel": () => /* reexport safe */ _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_20__.default,
-/* harmony export */   "SyriacLanguageModel": () => /* reexport safe */ _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_21__.default,
-/* harmony export */   "ResourceProvider": () => /* reexport safe */ _resource_provider_js__WEBPACK_IMPORTED_MODULE_22__.default,
-/* harmony export */   "Translation": () => /* reexport safe */ _translation_js__WEBPACK_IMPORTED_MODULE_25__.default,
-/* harmony export */   "PsEvent": () => /* reexport safe */ _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_23__.default,
-/* harmony export */   "PsEventData": () => /* reexport safe */ _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_24__.default,
-/* harmony export */   "TextQuoteSelector": () => /* reexport safe */ _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_26__.default,
-/* harmony export */   "WordUsageExample": () => /* reexport safe */ _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_27__.default,
-/* harmony export */   "Author": () => /* reexport safe */ _texts_author_js__WEBPACK_IMPORTED_MODULE_28__.default,
-/* harmony export */   "TextWork": () => /* reexport safe */ _texts_text_work_js__WEBPACK_IMPORTED_MODULE_29__.default,
-/* harmony export */   "WordItem": () => /* reexport safe */ _word_item_js__WEBPACK_IMPORTED_MODULE_30__.default,
-/* harmony export */   "WordList": () => /* reexport safe */ _word_list_js__WEBPACK_IMPORTED_MODULE_31__.default,
-/* harmony export */   "TreebankDataItem": () => /* reexport safe */ _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_32__.default,
-/* harmony export */   "Logger": () => /* reexport safe */ _logging_logger_js__WEBPACK_IMPORTED_MODULE_33__.default,
-/* harmony export */   "Digest": () => /* reexport safe */ _digest_js__WEBPACK_IMPORTED_MODULE_34__.default,
-/* harmony export */   "Options": () => /* reexport safe */ _options_options_js__WEBPACK_IMPORTED_MODULE_35__.default,
-/* harmony export */   "DefaultsLoader": () => /* reexport safe */ _storages_defaults_loader_js__WEBPACK_IMPORTED_MODULE_36__.default,
-/* harmony export */   "ExtensionSyncStorage": () => /* reexport safe */ _storages_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_37__.default,
-/* harmony export */   "LocalStorageArea": () => /* reexport safe */ _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_38__.default,
-/* harmony export */   "RemoteAuthStorageArea": () => /* reexport safe */ _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_39__.default,
-/* harmony export */   "TempStorageArea": () => /* reexport safe */ _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_40__.default
+/* harmony export */   "Constants": () => (/* reexport module object */ _constants_js__WEBPACK_IMPORTED_MODULE_0__),
+/* harmony export */   "Definition": () => (/* reexport safe */ _definition_js__WEBPACK_IMPORTED_MODULE_1__.default),
+/* harmony export */   "DefinitionSet": () => (/* reexport safe */ _definition_set__WEBPACK_IMPORTED_MODULE_2__.default),
+/* harmony export */   "Feature": () => (/* reexport safe */ _feature_js__WEBPACK_IMPORTED_MODULE_3__.default),
+/* harmony export */   "GrmFeature": () => (/* reexport safe */ _grm_feature_js__WEBPACK_IMPORTED_MODULE_4__.default),
+/* harmony export */   "FeatureType": () => (/* reexport safe */ _feature_type_js__WEBPACK_IMPORTED_MODULE_5__.default),
+/* harmony export */   "FeatureList": () => (/* reexport safe */ _feature_list_js__WEBPACK_IMPORTED_MODULE_6__.default),
+/* harmony export */   "FeatureImporter": () => (/* reexport safe */ _feature_importer_js__WEBPACK_IMPORTED_MODULE_7__.default),
+/* harmony export */   "Inflection": () => (/* reexport safe */ _inflection_js__WEBPACK_IMPORTED_MODULE_13__.default),
+/* harmony export */   "LanguageModelFactory": () => (/* reexport safe */ _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__.default),
+/* harmony export */   "HomonymGroup": () => (/* reexport safe */ _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__.default),
+/* harmony export */   "Homonym": () => (/* reexport safe */ _homonym_js__WEBPACK_IMPORTED_MODULE_10__.default),
+/* harmony export */   "Lexeme": () => (/* reexport safe */ _lexeme_js__WEBPACK_IMPORTED_MODULE_11__.default),
+/* harmony export */   "Lemma": () => (/* reexport safe */ _lemma_js__WEBPACK_IMPORTED_MODULE_12__.default),
+/* harmony export */   "Language": () => (/* reexport safe */ _language_js__WEBPACK_IMPORTED_MODULE_14__.default),
+/* harmony export */   "LatinLanguageModel": () => (/* reexport safe */ _latin_language_model_js__WEBPACK_IMPORTED_MODULE_15__.default),
+/* harmony export */   "GreekLanguageModel": () => (/* reexport safe */ _greek_language_model_js__WEBPACK_IMPORTED_MODULE_16__.default),
+/* harmony export */   "ArabicLanguageModel": () => (/* reexport safe */ _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_17__.default),
+/* harmony export */   "PersianLanguageModel": () => (/* reexport safe */ _persian_language_model_js__WEBPACK_IMPORTED_MODULE_18__.default),
+/* harmony export */   "GeezLanguageModel": () => (/* reexport safe */ _geez_language_model_js__WEBPACK_IMPORTED_MODULE_19__.default),
+/* harmony export */   "ChineseLanguageModel": () => (/* reexport safe */ _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_20__.default),
+/* harmony export */   "SyriacLanguageModel": () => (/* reexport safe */ _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_21__.default),
+/* harmony export */   "ResourceProvider": () => (/* reexport safe */ _resource_provider_js__WEBPACK_IMPORTED_MODULE_22__.default),
+/* harmony export */   "Translation": () => (/* reexport safe */ _translation_js__WEBPACK_IMPORTED_MODULE_25__.default),
+/* harmony export */   "PsEvent": () => (/* reexport safe */ _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_23__.default),
+/* harmony export */   "PsEventData": () => (/* reexport safe */ _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_24__.default),
+/* harmony export */   "TextQuoteSelector": () => (/* reexport safe */ _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_26__.default),
+/* harmony export */   "WordUsageExample": () => (/* reexport safe */ _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_27__.default),
+/* harmony export */   "Author": () => (/* reexport safe */ _texts_author_js__WEBPACK_IMPORTED_MODULE_28__.default),
+/* harmony export */   "TextWork": () => (/* reexport safe */ _texts_text_work_js__WEBPACK_IMPORTED_MODULE_29__.default),
+/* harmony export */   "WordItem": () => (/* reexport safe */ _word_item_js__WEBPACK_IMPORTED_MODULE_30__.default),
+/* harmony export */   "WordList": () => (/* reexport safe */ _word_list_js__WEBPACK_IMPORTED_MODULE_31__.default),
+/* harmony export */   "TreebankDataItem": () => (/* reexport safe */ _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_32__.default),
+/* harmony export */   "Logger": () => (/* reexport safe */ _logging_logger_js__WEBPACK_IMPORTED_MODULE_33__.default),
+/* harmony export */   "Digest": () => (/* reexport safe */ _digest_js__WEBPACK_IMPORTED_MODULE_34__.default),
+/* harmony export */   "Options": () => (/* reexport safe */ _options_options_js__WEBPACK_IMPORTED_MODULE_35__.default),
+/* harmony export */   "DefaultsLoader": () => (/* reexport safe */ _storages_defaults_loader_js__WEBPACK_IMPORTED_MODULE_36__.default),
+/* harmony export */   "ExtensionSyncStorage": () => (/* reexport safe */ _storages_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_37__.default),
+/* harmony export */   "LocalStorageArea": () => (/* reexport safe */ _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_38__.default),
+/* harmony export */   "RemoteAuthStorageArea": () => (/* reexport safe */ _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_39__.default),
+/* harmony export */   "TempStorageArea": () => (/* reexport safe */ _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_40__.default),
+/* harmony export */   "Collection": () => (/* reexport safe */ _dts_collection_js__WEBPACK_IMPORTED_MODULE_41__.default),
+/* harmony export */   "Resource": () => (/* reexport safe */ _dts_resource_js__WEBPACK_IMPORTED_MODULE_42__.default)
 /* harmony export */ });
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _definition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./definition.js */ "./definition.js");
@@ -3202,6 +3204,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./storages/local-storage-area.js */ "./storages/local-storage-area.js");
 /* harmony import */ var _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./storages/remote-auth-storage-area.js */ "./storages/remote-auth-storage-area.js");
 /* harmony import */ var _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./storages/temp-storage-area.js */ "./storages/temp-storage-area.js");
+/* harmony import */ var _dts_collection_js__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./dts/collection.js */ "./dts/collection.js");
+/* harmony import */ var _dts_resource_js__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./dts/resource.js */ "./dts/resource.js");
 
 ;
 
@@ -3253,10 +3257,74 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+/***/ }),
+
+/***/ "./dts/collection.js":
+/*!***************************!*\
+  !*** ./dts/collection.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Collection)
+/* harmony export */ });
+/* harmony import */ var _resource_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource.js */ "./dts/resource.js");
+
+
+class Collection {
+  constructor ({ totalItems, title, id } = {}) {
+    this.totalItems = totalItems
+    this.title = title
+    this.id = id
+    this.members = []
+    this.navigation = null
+  }
+
+  addMember (jsonObj) {
+    if (jsonObj.type === 'Collection') {
+      this.members.push(new Collection(jsonObj))
+    }
+    if (jsonObj.type === 'Resource') {
+      this.navigation = new _resource_js__WEBPACK_IMPORTED_MODULE_0__.default(jsonObj)
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./dts/resource.js":
+/*!*************************!*\
+  !*** ./dts/resource.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Resource)
+/* harmony export */ });
+class Resource {
+  constructor ({ id } = {}) {
+    this.id = id
+  }
+
+  uploadRefs ({ refs, passage } = {}) {
+    this.passage = passage
+    this.refs = refs
+  }
+}
+
+
 /***/ }),
 
 /***/ "./feature.js":
-/*!********************!*
+/*!********************!*\
   !*** ./feature.js ***!
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3264,7 +3332,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Feature
+/* harmony export */   "default": () => (/* binding */ Feature)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
@@ -3796,7 +3864,7 @@ Feature.errMsgs = {
 /***/ }),
 
 /***/ "./feature_importer.js":
-/*!*****************************!*
+/*!*****************************!*\
   !*** ./feature_importer.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3804,7 +3872,7 @@ Feature.errMsgs = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class FeatureImporter {
   /**
@@ -3875,7 +3943,7 @@ class FeatureImporter {
 /***/ }),
 
 /***/ "./feature_list.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./feature_list.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3883,7 +3951,7 @@ class FeatureImporter {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /**
  * A list of grammatical features that characterizes a language unit. Has some additional service methods,
@@ -3953,7 +4021,7 @@ class FeatureList {
 /***/ }),
 
 /***/ "./feature_type.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./feature_type.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3961,7 +4029,7 @@ class FeatureList {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
@@ -4220,7 +4288,7 @@ FeatureType.UNRESTRICTED_VALUE = Symbol('unrestricted')
 /***/ }),
 
 /***/ "./geez_language_model.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./geez_language_model.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4228,7 +4296,7 @@ FeatureType.UNRESTRICTED_VALUE = Symbol('unrestricted')
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ GeezLanguageModel
+/* harmony export */   "default": () => (/* binding */ GeezLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -4327,7 +4395,7 @@ for the current node
 /***/ }),
 
 /***/ "./greek_language_model.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./greek_language_model.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4335,7 +4403,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ GreekLanguageModel
+/* harmony export */   "default": () => (/* binding */ GreekLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -4788,7 +4856,7 @@ for the current node
 /***/ }),
 
 /***/ "./grm-feature.js":
-/*!************************!*
+/*!************************!*\
   !*** ./grm-feature.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4796,7 +4864,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
@@ -4972,7 +5040,7 @@ GrmFeature.types = {
 /***/ }),
 
 /***/ "./homonym-group.js":
-/*!**************************!*
+/*!**************************!*\
   !*** ./homonym-group.js ***!
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4980,7 +5048,7 @@ GrmFeature.types = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ HomonymGroup
+/* harmony export */   "default": () => (/* binding */ HomonymGroup)
 /* harmony export */ });
 /* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
 
@@ -5064,7 +5132,7 @@ HomonymGroup.errors = {
 /***/ }),
 
 /***/ "./homonym.js":
-/*!********************!*
+/*!********************!*\
   !*** ./homonym.js ***!
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5072,7 +5140,7 @@ HomonymGroup.errors = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
 /* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
@@ -5293,7 +5361,7 @@ class Homonym {
 /***/ }),
 
 /***/ "./inflection.js":
-/*!***********************!*
+/*!***********************!*\
   !*** ./inflection.js ***!
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5301,7 +5369,7 @@ class Homonym {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
@@ -5724,7 +5792,7 @@ class Inflection {
 /***/ }),
 
 /***/ "./inflection_group.js":
-/*!*****************************!*
+/*!*****************************!*\
   !*** ./inflection_group.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5732,7 +5800,7 @@ class Inflection {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class InflectionGroup {
   /**
@@ -5762,7 +5830,7 @@ class InflectionGroup {
 /***/ }),
 
 /***/ "./inflection_grouping_key.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./inflection_grouping_key.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5770,7 +5838,7 @@ class InflectionGroup {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 
@@ -5826,7 +5894,7 @@ is included in the grouping key
 /***/ }),
 
 /***/ "./language.js":
-/*!*********************!*
+/*!*********************!*\
   !*** ./language.js ***!
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5834,8 +5902,8 @@ is included in the grouping key
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Lang": () => /* binding */ Lang,
-/* harmony export */   "default": () => /* binding */ Language
+/* harmony export */   "Lang": () => (/* binding */ Lang),
+/* harmony export */   "default": () => (/* binding */ Language)
 /* harmony export */ });
 /**
  * Constants that define a macrolanguage.
@@ -5957,7 +6025,7 @@ class Language {
 /***/ }),
 
 /***/ "./language_model.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./language_model.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5965,7 +6033,7 @@ class Language {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
@@ -6701,7 +6769,7 @@ class LanguageModel {
 /***/ }),
 
 /***/ "./language_model_factory.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./language_model_factory.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6709,7 +6777,7 @@ class LanguageModel {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language.js */ "./language.js");
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
@@ -6919,7 +6987,7 @@ class LanguageModelFactory {
 /***/ }),
 
 /***/ "./languages/greek-chars.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./languages/greek-chars.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6927,7 +6995,7 @@ class LanguageModelFactory {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ GreekChars
+/* harmony export */   "default": () => (/* binding */ GreekChars)
 /* harmony export */ });
 class GreekChars {
   static get chars () {
@@ -7248,7 +7316,7 @@ class GreekChars {
 /***/ }),
 
 /***/ "./latin_language_model.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./latin_language_model.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7256,7 +7324,7 @@ class GreekChars {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ LatinLanguageModel
+/* harmony export */   "default": () => (/* binding */ LatinLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -7515,7 +7583,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 /***/ }),
 
 /***/ "./lemma.js":
-/*!******************!*
+/*!******************!*\
   !*** ./lemma.js ***!
   \******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7523,7 +7591,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -7822,7 +7890,7 @@ class Lemma {
 /***/ }),
 
 /***/ "./lexeme.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./lexeme.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7830,7 +7898,7 @@ class Lemma {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
 /* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
@@ -8177,7 +8245,7 @@ class Lexeme {
 /***/ }),
 
 /***/ "./logging/logger.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./logging/logger.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8185,7 +8253,7 @@ class Lexeme {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Logger
+/* harmony export */   "default": () => (/* binding */ Logger)
 /* harmony export */ });
 let singleInstance
 
@@ -8335,7 +8403,7 @@ class Logger {
 /***/ }),
 
 /***/ "./options/option-item.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./options/option-item.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8343,7 +8411,7 @@ class Logger {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ OptionItem
+/* harmony export */   "default": () => (/* binding */ OptionItem)
 /* harmony export */ });
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
 
@@ -8473,7 +8541,7 @@ class OptionItem {
 /***/ }),
 
 /***/ "./options/options.js":
-/*!****************************!*
+/*!****************************!*\
   !*** ./options/options.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8481,7 +8549,7 @@ class OptionItem {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Options
+/* harmony export */   "default": () => (/* binding */ Options)
 /* harmony export */ });
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
 /* harmony import */ var _option_item_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./option-item.js */ "./options/option-item.js");
@@ -8679,7 +8747,7 @@ class Options {
 /***/ }),
 
 /***/ "./persian_language_model.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./persian_language_model.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8687,7 +8755,7 @@ class Options {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ PersianLanguageModel
+/* harmony export */   "default": () => (/* binding */ PersianLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -8754,7 +8822,7 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /***/ }),
 
 /***/ "./ps-events/ps-event-data.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./ps-events/ps-event-data.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8762,7 +8830,7 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ PsEventData
+/* harmony export */   "default": () => (/* binding */ PsEventData)
 /* harmony export */ });
 /**
  * A public information about published event that is returned to subscriber.
@@ -8805,7 +8873,7 @@ class PsEventData {
 /***/ }),
 
 /***/ "./ps-events/ps-event.js":
-/*!*******************************!*
+/*!*******************************!*\
   !*** ./ps-events/ps-event.js ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8813,7 +8881,7 @@ class PsEventData {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ PsEvent
+/* harmony export */   "default": () => (/* binding */ PsEvent)
 /* harmony export */ });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
@@ -8910,7 +8978,7 @@ class PsEvent {
 /***/ }),
 
 /***/ "./resource_provider.js":
-/*!******************************!*
+/*!******************************!*\
   !*** ./resource_provider.js ***!
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8918,7 +8986,7 @@ class PsEvent {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /**
  * An abstraction of an Alpheios resource provider
@@ -8993,7 +9061,7 @@ class ResourceProvider {
 /***/ }),
 
 /***/ "./sha1.js":
-/*!*****************!*
+/*!*****************!*\
   !*** ./sha1.js ***!
   \*****************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9001,7 +9069,7 @@ class ResourceProvider {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* eslint-disable */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
@@ -9177,7 +9245,7 @@ class Sha1 {
 /***/ }),
 
 /***/ "./storages/defaults-loader.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./storages/defaults-loader.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9185,7 +9253,7 @@ class Sha1 {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ DefaultsLoader
+/* harmony export */   "default": () => (/* binding */ DefaultsLoader)
 /* harmony export */ });
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
 
@@ -9205,7 +9273,7 @@ class DefaultsLoader {
 /***/ }),
 
 /***/ "./storages/extension-sync-storage.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ./storages/extension-sync-storage.js ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9213,7 +9281,7 @@ class DefaultsLoader {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ ExtensionSyncStorage
+/* harmony export */   "default": () => (/* binding */ ExtensionSyncStorage)
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
 /* global browser */
@@ -9260,7 +9328,7 @@ class ExtensionSyncStorage extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_
 /***/ }),
 
 /***/ "./storages/local-storage-area.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ./storages/local-storage-area.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9268,7 +9336,7 @@ class ExtensionSyncStorage extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ LocalStorageArea
+/* harmony export */   "default": () => (/* binding */ LocalStorageArea)
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
 
@@ -9422,7 +9490,7 @@ class LocalStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.
 /***/ }),
 
 /***/ "./storages/remote-auth-storage-area.js":
-/*!**********************************************!*
+/*!**********************************************!*\
   !*** ./storages/remote-auth-storage-area.js ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9430,7 +9498,7 @@ class LocalStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ RemoteAuthStorageArea
+/* harmony export */   "default": () => (/* binding */ RemoteAuthStorageArea)
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
@@ -9526,7 +9594,7 @@ class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE
 /***/ }),
 
 /***/ "./storages/storage-adapter.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./storages/storage-adapter.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9534,7 +9602,7 @@ class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ StorageAdapter
+/* harmony export */   "default": () => (/* binding */ StorageAdapter)
 /* harmony export */ });
 /**
  * An abstract storage adapter class for an Options object. Implements two methods: set() and get().
@@ -9604,7 +9672,7 @@ class StorageAdapter {
 /***/ }),
 
 /***/ "./storages/temp-storage-area.js":
-/*!***************************************!*
+/*!***************************************!*\
   !*** ./storages/temp-storage-area.js ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9612,7 +9680,7 @@ class StorageAdapter {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ TempStorageArea
+/* harmony export */   "default": () => (/* binding */ TempStorageArea)
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
 
@@ -9654,7 +9722,7 @@ class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.d
 /***/ }),
 
 /***/ "./syriac_language_model.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./syriac_language_model.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9662,7 +9730,7 @@ class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.d
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ SyriacLanguageModel
+/* harmony export */   "default": () => (/* binding */ SyriacLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -9902,7 +9970,7 @@ for the current node
 /***/ }),
 
 /***/ "./texts/author.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./texts/author.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9910,7 +9978,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class Author {
   /**
@@ -9977,7 +10045,7 @@ class Author {
 /***/ }),
 
 /***/ "./texts/text-work.js":
-/*!****************************!*
+/*!****************************!*\
   !*** ./texts/text-work.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9985,7 +10053,7 @@ class Author {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class TextWork {
   /**
@@ -10063,7 +10131,7 @@ class TextWork {
 /***/ }),
 
 /***/ "./texts/word-usage-example.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./texts/word-usage-example.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10071,7 +10139,7 @@ class TextWork {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordUsageExample
+/* harmony export */   "default": () => (/* binding */ WordUsageExample)
 /* harmony export */ });
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../language_model_factory.js */ "./language_model_factory.js");
@@ -10169,7 +10237,7 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
 /***/ }),
 
 /***/ "./translation.js":
-/*!************************!*
+/*!************************!*\
   !*** ./translation.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10177,7 +10245,7 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
 
@@ -10248,7 +10316,7 @@ class Translation {
 /***/ }),
 
 /***/ "./treebank_data_item.js":
-/*!*******************************!*
+/*!*******************************!*\
   !*** ./treebank_data_item.js ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10256,7 +10324,7 @@ class Translation {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ TreebankDataItem
+/* harmony export */   "default": () => (/* binding */ TreebankDataItem)
 /* harmony export */ });
 class TreebankDataItem {
   /**
@@ -10444,7 +10512,7 @@ class TreebankDataItem {
 /***/ }),
 
 /***/ "./w3c/text-quote-selector.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./w3c/text-quote-selector.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10452,7 +10520,7 @@ class TreebankDataItem {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ TextQuoteSelector
+/* harmony export */   "default": () => (/* binding */ TextQuoteSelector)
 /* harmony export */ });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
@@ -10511,7 +10579,7 @@ class TextQuoteSelector {
 /***/ }),
 
 /***/ "./word-item.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./word-item.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10519,7 +10587,7 @@ class TextQuoteSelector {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordItem
+/* harmony export */   "default": () => (/* binding */ WordItem)
 /* harmony export */ });
 /* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
@@ -10672,7 +10740,7 @@ class WordItem {
 /***/ }),
 
 /***/ "./word-list.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./word-list.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10680,7 +10748,7 @@ class WordItem {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordList
+/* harmony export */   "default": () => (/* binding */ WordList)
 /* harmony export */ });
 /* harmony import */ var _word_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-item */ "./word-item.js");
 
@@ -10821,8 +10889,8 @@ class WordList {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
 /******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
@@ -10842,7 +10910,7 @@ class WordList {
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */

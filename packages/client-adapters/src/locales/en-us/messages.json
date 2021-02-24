@@ -192,5 +192,17 @@
     "message": "Tokenization service is not available for passed fetch parameters (language)",
     "description": "Error message - tokenization service doesn't support passed language",
     "component": "tokenizationGroup.alpheios"
+  },
+  "DTSAPI_FETCH_ERROR": {
+    "message": "Some problems with fetching words from DTS API - {message}",
+    "description": "Error message for DTS API adapter - problems with fetching words from api",
+    "component": "dtsapiGroup.general",
+    "params": ["message"]
+  },
+  "DTSAPI_NO_OBLIGATORY_PROPS": {
+    "message": "Not all obligatory parameters are defined for the method - {message}",
+    "description": "Error message for DTS API adapter - problems with fetching words from api",
+    "component": "dtsapiGroup.general",
+    "params": ["message"]
   }
 }

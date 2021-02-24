@@ -87,5 +87,17 @@
         "getConfig": ["storage"]
       }
     }
+  },
+
+  "dtsapiGroup": {
+    "dtsapi": {
+      "adapter": "dtsApiMethod",
+      "methods": [ "getCollection", "getNavigation", "getDocument" ],
+      "params": {
+        "getCollection": ["baseUrl"],
+        "getNavigation": ["baseUrl", "id", "collection"],
+        "getDocument": ["baseUrl", "id", "refParams"]
+      }
+    }
   }
 }

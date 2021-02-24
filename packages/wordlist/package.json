@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/alpheios-project/wordlist#readme",
   "devDependencies": {
-    "alpheios-node-build": "github:alpheios-project/node-build#v3",
+    "alpheios-node-build": "github:alpheios-project/node-build#v3-update",
     "coveralls": "^3.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.15.0",

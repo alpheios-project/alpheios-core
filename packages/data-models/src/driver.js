@@ -46,6 +46,9 @@ import LocalStorageArea from './storages/local-storage-area.js'
 import RemoteAuthStorageArea from './storages/remote-auth-storage-area.js'
 import TempStorageArea from './storages/temp-storage-area.js'
 
+import Collection from './dts/collection.js'
+import Resource from './dts/resource.js'
+
 export {
   Constants,
   Definition,
@@ -87,5 +90,8 @@ export {
   ExtensionSyncStorage,
   LocalStorageArea,
   RemoteAuthStorageArea,
-  TempStorageArea
+  TempStorageArea,
+
+  Collection,
+  Resource
 }

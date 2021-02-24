@@ -12,7 +12,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "../../../node_modules/axios/package.json":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/package.json ***!
   \************************************************/
 /***/ ((module) => {
@@ -23,7 +23,7 @@ module.exports = JSON.parse("{\"_from\":\"axios@^0.21.0\",\"_id\":\"axios@0.21.1
 /***/ }),
 
 /***/ "../../../node_modules/axios/index.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ../../../node_modules/axios/index.js ***!
   \********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -33,7 +33,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/http.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/http.js ***!
   \********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -347,7 +347,7 @@ module.exports = function httpAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/xhr.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/xhr.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -537,7 +537,7 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/axios.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/lib/axios.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -604,7 +604,7 @@ module.exports.default = axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/Cancel.js ***!
   \********************************************************/
 /***/ ((module) => {
@@ -634,7 +634,7 @@ module.exports = Cancel;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/CancelToken.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -702,7 +702,7 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/isCancel.js ***!
   \**********************************************************/
 /***/ ((module) => {
@@ -718,7 +718,7 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/Axios.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/axios/lib/core/Axios.js ***!
   \*****************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -824,7 +824,7 @@ module.exports = Axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/InterceptorManager.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -887,7 +887,7 @@ module.exports = InterceptorManager;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/buildFullPath.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -918,7 +918,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/createError.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/createError.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -947,7 +947,7 @@ module.exports = function createError(message, config, code, request, response) 
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/dispatchRequest.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1037,7 +1037,7 @@ module.exports = function dispatchRequest(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/enhanceError.js":
-/*!************************************************************!*
+/*!************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/enhanceError.js ***!
   \************************************************************/
 /***/ ((module) => {
@@ -1090,7 +1090,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/mergeConfig.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1188,7 +1188,7 @@ module.exports = function mergeConfig(config1, config2) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/settle.js":
-/*!******************************************************!*
+/*!******************************************************!*\
   !*** ../../../node_modules/axios/lib/core/settle.js ***!
   \******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1224,7 +1224,7 @@ module.exports = function settle(resolve, reject, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/transformData.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/transformData.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1255,7 +1255,7 @@ module.exports = function transformData(data, headers, fns) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/defaults.js":
-/*!***************************************************!*
+/*!***************************************************!*\
   !*** ../../../node_modules/axios/lib/defaults.js ***!
   \***************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1364,7 +1364,7 @@ module.exports = defaults;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/bind.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/bind.js ***!
   \*******************************************************/
 /***/ ((module) => {
@@ -1386,7 +1386,7 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/buildURL.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1467,7 +1467,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/combineURLs.js ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -1492,7 +1492,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/cookies.js":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/cookies.js ***!
   \**********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1556,7 +1556,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!****************************************************************!*
+/*!****************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
   \****************************************************************/
 /***/ ((module) => {
@@ -1581,7 +1581,7 @@ module.exports = function isAbsoluteURL(url) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAxiosError.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAxiosError.js ***!
   \***************************************************************/
 /***/ ((module) => {
@@ -1603,7 +1603,7 @@ module.exports = function isAxiosError(payload) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1682,7 +1682,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!**********************************************************************!*
+/*!**********************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
   \**********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1705,7 +1705,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/parseHeaders.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1769,7 +1769,7 @@ module.exports = function parseHeaders(headers) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/spread.js":
-/*!*********************************************************!*
+/*!*********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/spread.js ***!
   \*********************************************************/
 /***/ ((module) => {
@@ -1807,7 +1807,7 @@ module.exports = function spread(callback) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/utils.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/lib/utils.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2169,39 +2169,114 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/browser.js":
-/*!**************************************************!*
+/*!**************************************************!*\
   !*** ../../../node_modules/debug/src/browser.js ***!
   \**************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
+/* eslint-env browser */
+
 /**
  * This is the web browser implementation of `debug()`.
- *
- * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(/*! ./debug */ "../../../node_modules/debug/src/debug.js");
-exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
 exports.load = load;
 exports.useColors = useColors;
-exports.storage = 'undefined' != typeof chrome
-               && 'undefined' != typeof chrome.storage
-                  ? chrome.storage.local
-                  : localstorage();
+exports.storage = localstorage();
+exports.destroy = (() => {
+	let warned = false;
+
+	return () => {
+		if (!warned) {
+			warned = true;
+			console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+		}
+	};
+})();
 
 /**
  * Colors.
  */
 
 exports.colors = [
-  'lightseagreen',
-  'forestgreen',
-  'goldenrod',
-  'dodgerblue',
-  'darkorchid',
-  'crimson'
+	'#0000CC',
+	'#0000FF',
+	'#0033CC',
+	'#0033FF',
+	'#0066CC',
+	'#0066FF',
+	'#0099CC',
+	'#0099FF',
+	'#00CC00',
+	'#00CC33',
+	'#00CC66',
+	'#00CC99',
+	'#00CCCC',
+	'#00CCFF',
+	'#3300CC',
+	'#3300FF',
+	'#3333CC',
+	'#3333FF',
+	'#3366CC',
+	'#3366FF',
+	'#3399CC',
+	'#3399FF',
+	'#33CC00',
+	'#33CC33',
+	'#33CC66',
+	'#33CC99',
+	'#33CCCC',
+	'#33CCFF',
+	'#6600CC',
+	'#6600FF',
+	'#6633CC',
+	'#6633FF',
+	'#66CC00',
+	'#66CC33',
+	'#9900CC',
+	'#9900FF',
+	'#9933CC',
+	'#9933FF',
+	'#99CC00',
+	'#99CC33',
+	'#CC0000',
+	'#CC0033',
+	'#CC0066',
+	'#CC0099',
+	'#CC00CC',
+	'#CC00FF',
+	'#CC3300',
+	'#CC3333',
+	'#CC3366',
+	'#CC3399',
+	'#CC33CC',
+	'#CC33FF',
+	'#CC6600',
+	'#CC6633',
+	'#CC9900',
+	'#CC9933',
+	'#CCCC00',
+	'#CCCC33',
+	'#FF0000',
+	'#FF0033',
+	'#FF0066',
+	'#FF0099',
+	'#FF00CC',
+	'#FF00FF',
+	'#FF3300',
+	'#FF3333',
+	'#FF3366',
+	'#FF3399',
+	'#FF33CC',
+	'#FF33FF',
+	'#FF6600',
+	'#FF6633',
+	'#FF9900',
+	'#FF9933',
+	'#FFCC00',
+	'#FFCC33'
 ];
 
 /**
@@ -2212,38 +2287,31 @@ exports.colors = [
  * TODO: add a `localStorage` variable to explicitly enable/disable colors
  */
 
+// eslint-disable-next-line complexity
 function useColors() {
-  // NB: In an Electron preload script, document will be defined but not fully
-  // initialized. Since we know we're in Chrome, we'll just detect this case
-  // explicitly
-  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
-    return true;
-  }
+	// NB: In an Electron preload script, document will be defined but not fully
+	// initialized. Since we know we're in Chrome, we'll just detect this case
+	// explicitly
+	if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
+		return true;
+	}
 
-  // is webkit? http://stackoverflow.com/a/16459606/376773
-  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
-    // is firebug? http://stackoverflow.com/a/398120/376773
-    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
-    // is firefox >= v31?
-    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
-    // double check webkit in userAgent just in case we are in a worker
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+	// Internet Explorer and Edge do not support colors.
+	if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
+		return false;
+	}
+
+	// Is webkit? http://stackoverflow.com/a/16459606/376773
+	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+		// Is firebug? http://stackoverflow.com/a/398120/376773
+		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+		// Is firefox >= v31?
+		// https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+		// Double check webkit in userAgent just in case we are in a worker
+		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
 }
-
-/**
- * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
- */
-
-exports.formatters.j = function(v) {
-  try {
-    return JSON.stringify(v);
-  } catch (err) {
-    return '[UnexpectedJSONParseError]: ' + err.message;
-  }
-};
-
 
 /**
  * Colorize log arguments if enabled.
@@ -2252,52 +2320,49 @@ exports.formatters.j = function(v) {
  */
 
 function formatArgs(args) {
-  var useColors = this.useColors;
+	args[0] = (this.useColors ? '%c' : '') +
+		this.namespace +
+		(this.useColors ? ' %c' : ' ') +
+		args[0] +
+		(this.useColors ? '%c ' : ' ') +
+		'+' + module.exports.humanize(this.diff);
 
-  args[0] = (useColors ? '%c' : '')
-    + this.namespace
-    + (useColors ? ' %c' : ' ')
-    + args[0]
-    + (useColors ? '%c ' : ' ')
-    + '+' + exports.humanize(this.diff);
+	if (!this.useColors) {
+		return;
+	}
 
-  if (!useColors) return;
+	const c = 'color: ' + this.color;
+	args.splice(1, 0, c, 'color: inherit');
 
-  var c = 'color: ' + this.color;
-  args.splice(1, 0, c, 'color: inherit')
+	// The final "%c" is somewhat tricky, because there could be other
+	// arguments passed either before or after the %c, so we need to
+	// figure out the correct index to insert the CSS into
+	let index = 0;
+	let lastC = 0;
+	args[0].replace(/%[a-zA-Z%]/g, match => {
+		if (match === '%%') {
+			return;
+		}
+		index++;
+		if (match === '%c') {
+			// We only are interested in the *last* %c
+			// (the user may have provided their own)
+			lastC = index;
+		}
+	});
 
-  // the final "%c" is somewhat tricky, because there could be other
-  // arguments passed either before or after the %c, so we need to
-  // figure out the correct index to insert the CSS into
-  var index = 0;
-  var lastC = 0;
-  args[0].replace(/%[a-zA-Z%]/g, function(match) {
-    if ('%%' === match) return;
-    index++;
-    if ('%c' === match) {
-      // we only are interested in the *last* %c
-      // (the user may have provided their own)
-      lastC = index;
-    }
-  });
-
-  args.splice(lastC, 0, c);
+	args.splice(lastC, 0, c);
 }
 
 /**
- * Invokes `console.log()` when available.
- * No-op when `console.log` is not a "function".
+ * Invokes `console.debug()` when available.
+ * No-op when `console.debug` is not a "function".
+ * If `console.debug` is not available, falls back
+ * to `console.log`.
  *
  * @api public
  */
-
-function log() {
-  // this hackery is required for IE8/9, where
-  // the `console.log` function doesn't have 'apply'
-  return 'object' === typeof console
-    && console.log
-    && Function.prototype.apply.call(console.log, console, arguments);
-}
+exports.log = console.debug || console.log || (() => {});
 
 /**
  * Save `namespaces`.
@@ -2305,15 +2370,17 @@ function log() {
  * @param {String} namespaces
  * @api private
  */
-
 function save(namespaces) {
-  try {
-    if (null == namespaces) {
-      exports.storage.removeItem('debug');
-    } else {
-      exports.storage.debug = namespaces;
-    }
-  } catch(e) {}
+	try {
+		if (namespaces) {
+			exports.storage.setItem('debug', namespaces);
+		} else {
+			exports.storage.removeItem('debug');
+		}
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
 }
 
 /**
@@ -2322,26 +2389,22 @@ function save(namespaces) {
  * @return {String} returns the previously persisted debug modes
  * @api private
  */
-
 function load() {
-  var r;
-  try {
-    r = exports.storage.debug;
-  } catch(e) {}
+	let r;
+	try {
+		r = exports.storage.getItem('debug');
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
 
-  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-  if (!r && typeof process !== 'undefined' && 'env' in process) {
-    r = process.env.DEBUG;
-  }
+	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+	if (!r && typeof process !== 'undefined' && 'env' in process) {
+		r = process.env.DEBUG;
+	}
 
-  return r;
+	return r;
 }
-
-/**
- * Enable namespaces listed in `localStorage.debug` initially.
- */
-
-exports.enable(load());
 
 /**
  * Localstorage attempts to return the localstorage.
@@ -2355,248 +2418,328 @@ exports.enable(load());
  */
 
 function localstorage() {
-  try {
-    return window.localStorage;
-  } catch (e) {}
+	try {
+		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
+		// The Browser also has localStorage in the global context.
+		return localStorage;
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
 }
+
+module.exports = __webpack_require__(/*! ./common */ "../../../node_modules/debug/src/common.js")(exports);
+
+const {formatters} = module.exports;
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+formatters.j = function (v) {
+	try {
+		return JSON.stringify(v);
+	} catch (error) {
+		return '[UnexpectedJSONParseError]: ' + error.message;
+	}
+};
 
 
 /***/ }),
 
-/***/ "../../../node_modules/debug/src/debug.js":
-/*!************************************************!*
-  !*** ../../../node_modules/debug/src/debug.js ***!
-  \************************************************/
-/***/ ((module, exports, __webpack_require__) => {
+/***/ "../../../node_modules/debug/src/common.js":
+/*!*************************************************!*\
+  !*** ../../../node_modules/debug/src/common.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 
 /**
  * This is the common logic for both the Node.js and web browser
  * implementations of `debug()`.
- *
- * Expose `debug()` as the module.
  */
 
-exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
-exports.coerce = coerce;
-exports.disable = disable;
-exports.enable = enable;
-exports.enabled = enabled;
-exports.humanize = __webpack_require__(/*! ms */ "../../../node_modules/ms/index.js");
+function setup(env) {
+	createDebug.debug = createDebug;
+	createDebug.default = createDebug;
+	createDebug.coerce = coerce;
+	createDebug.disable = disable;
+	createDebug.enable = enable;
+	createDebug.enabled = enabled;
+	createDebug.humanize = __webpack_require__(/*! ms */ "../../../node_modules/ms/index.js");
+	createDebug.destroy = destroy;
 
-/**
- * The currently active debug mode names, and names to skip.
- */
+	Object.keys(env).forEach(key => {
+		createDebug[key] = env[key];
+	});
 
-exports.names = [];
-exports.skips = [];
+	/**
+	* The currently active debug mode names, and names to skip.
+	*/
 
-/**
- * Map of special "%n" handling functions, for the debug "format" argument.
- *
- * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
- */
+	createDebug.names = [];
+	createDebug.skips = [];
 
-exports.formatters = {};
+	/**
+	* Map of special "%n" handling functions, for the debug "format" argument.
+	*
+	* Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+	*/
+	createDebug.formatters = {};
 
-/**
- * Previous log timestamp.
- */
+	/**
+	* Selects a color for a debug namespace
+	* @param {String} namespace The namespace string for the for the debug instance to be colored
+	* @return {Number|String} An ANSI color code for the given namespace
+	* @api private
+	*/
+	function selectColor(namespace) {
+		let hash = 0;
 
-var prevTime;
+		for (let i = 0; i < namespace.length; i++) {
+			hash = ((hash << 5) - hash) + namespace.charCodeAt(i);
+			hash |= 0; // Convert to 32bit integer
+		}
 
-/**
- * Select a color.
- * @param {String} namespace
- * @return {Number}
- * @api private
- */
+		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
+	}
+	createDebug.selectColor = selectColor;
 
-function selectColor(namespace) {
-  var hash = 0, i;
+	/**
+	* Create a debugger with the given `namespace`.
+	*
+	* @param {String} namespace
+	* @return {Function}
+	* @api public
+	*/
+	function createDebug(namespace) {
+		let prevTime;
+		let enableOverride = null;
 
-  for (i in namespace) {
-    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
-    hash |= 0; // Convert to 32bit integer
-  }
+		function debug(...args) {
+			// Disabled?
+			if (!debug.enabled) {
+				return;
+			}
 
-  return exports.colors[Math.abs(hash) % exports.colors.length];
+			const self = debug;
+
+			// Set `diff` timestamp
+			const curr = Number(new Date());
+			const ms = curr - (prevTime || curr);
+			self.diff = ms;
+			self.prev = prevTime;
+			self.curr = curr;
+			prevTime = curr;
+
+			args[0] = createDebug.coerce(args[0]);
+
+			if (typeof args[0] !== 'string') {
+				// Anything else let's inspect with %O
+				args.unshift('%O');
+			}
+
+			// Apply any `formatters` transformations
+			let index = 0;
+			args[0] = args[0].replace(/%([a-zA-Z%])/g, (match, format) => {
+				// If we encounter an escaped % then don't increase the array index
+				if (match === '%%') {
+					return '%';
+				}
+				index++;
+				const formatter = createDebug.formatters[format];
+				if (typeof formatter === 'function') {
+					const val = args[index];
+					match = formatter.call(self, val);
+
+					// Now we need to remove `args[index]` since it's inlined in the `format`
+					args.splice(index, 1);
+					index--;
+				}
+				return match;
+			});
+
+			// Apply env-specific formatting (colors, etc.)
+			createDebug.formatArgs.call(self, args);
+
+			const logFn = self.log || createDebug.log;
+			logFn.apply(self, args);
+		}
+
+		debug.namespace = namespace;
+		debug.useColors = createDebug.useColors();
+		debug.color = createDebug.selectColor(namespace);
+		debug.extend = extend;
+		debug.destroy = createDebug.destroy; // XXX Temporary. Will be removed in the next major release.
+
+		Object.defineProperty(debug, 'enabled', {
+			enumerable: true,
+			configurable: false,
+			get: () => enableOverride === null ? createDebug.enabled(namespace) : enableOverride,
+			set: v => {
+				enableOverride = v;
+			}
+		});
+
+		// Env-specific initialization logic for debug instances
+		if (typeof createDebug.init === 'function') {
+			createDebug.init(debug);
+		}
+
+		return debug;
+	}
+
+	function extend(namespace, delimiter) {
+		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
+		newDebug.log = this.log;
+		return newDebug;
+	}
+
+	/**
+	* Enables a debug mode by namespaces. This can include modes
+	* separated by a colon and wildcards.
+	*
+	* @param {String} namespaces
+	* @api public
+	*/
+	function enable(namespaces) {
+		createDebug.save(namespaces);
+
+		createDebug.names = [];
+		createDebug.skips = [];
+
+		let i;
+		const split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+		const len = split.length;
+
+		for (i = 0; i < len; i++) {
+			if (!split[i]) {
+				// ignore empty strings
+				continue;
+			}
+
+			namespaces = split[i].replace(/\*/g, '.*?');
+
+			if (namespaces[0] === '-') {
+				createDebug.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+			} else {
+				createDebug.names.push(new RegExp('^' + namespaces + '$'));
+			}
+		}
+	}
+
+	/**
+	* Disable debug output.
+	*
+	* @return {String} namespaces
+	* @api public
+	*/
+	function disable() {
+		const namespaces = [
+			...createDebug.names.map(toNamespace),
+			...createDebug.skips.map(toNamespace).map(namespace => '-' + namespace)
+		].join(',');
+		createDebug.enable('');
+		return namespaces;
+	}
+
+	/**
+	* Returns true if the given mode name is enabled, false otherwise.
+	*
+	* @param {String} name
+	* @return {Boolean}
+	* @api public
+	*/
+	function enabled(name) {
+		if (name[name.length - 1] === '*') {
+			return true;
+		}
+
+		let i;
+		let len;
+
+		for (i = 0, len = createDebug.skips.length; i < len; i++) {
+			if (createDebug.skips[i].test(name)) {
+				return false;
+			}
+		}
+
+		for (i = 0, len = createDebug.names.length; i < len; i++) {
+			if (createDebug.names[i].test(name)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	* Convert regexp to namespace
+	*
+	* @param {RegExp} regxep
+	* @return {String} namespace
+	* @api private
+	*/
+	function toNamespace(regexp) {
+		return regexp.toString()
+			.substring(2, regexp.toString().length - 2)
+			.replace(/\.\*\?$/, '*');
+	}
+
+	/**
+	* Coerce `val`.
+	*
+	* @param {Mixed} val
+	* @return {Mixed}
+	* @api private
+	*/
+	function coerce(val) {
+		if (val instanceof Error) {
+			return val.stack || val.message;
+		}
+		return val;
+	}
+
+	/**
+	* XXX DO NOT USE. This is a temporary stub function.
+	* XXX It WILL be removed in the next major release.
+	*/
+	function destroy() {
+		console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+	}
+
+	createDebug.enable(createDebug.load());
+
+	return createDebug;
 }
 
-/**
- * Create a debugger with the given `namespace`.
- *
- * @param {String} namespace
- * @return {Function}
- * @api public
- */
-
-function createDebug(namespace) {
-
-  function debug() {
-    // disabled?
-    if (!debug.enabled) return;
-
-    var self = debug;
-
-    // set `diff` timestamp
-    var curr = +new Date();
-    var ms = curr - (prevTime || curr);
-    self.diff = ms;
-    self.prev = prevTime;
-    self.curr = curr;
-    prevTime = curr;
-
-    // turn the `arguments` into a proper Array
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-
-    args[0] = exports.coerce(args[0]);
-
-    if ('string' !== typeof args[0]) {
-      // anything else let's inspect with %O
-      args.unshift('%O');
-    }
-
-    // apply any `formatters` transformations
-    var index = 0;
-    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
-      // if we encounter an escaped % then don't increase the array index
-      if (match === '%%') return match;
-      index++;
-      var formatter = exports.formatters[format];
-      if ('function' === typeof formatter) {
-        var val = args[index];
-        match = formatter.call(self, val);
-
-        // now we need to remove `args[index]` since it's inlined in the `format`
-        args.splice(index, 1);
-        index--;
-      }
-      return match;
-    });
-
-    // apply env-specific formatting (colors, etc.)
-    exports.formatArgs.call(self, args);
-
-    var logFn = debug.log || exports.log || console.log.bind(console);
-    logFn.apply(self, args);
-  }
-
-  debug.namespace = namespace;
-  debug.enabled = exports.enabled(namespace);
-  debug.useColors = exports.useColors();
-  debug.color = selectColor(namespace);
-
-  // env-specific initialization logic for debug instances
-  if ('function' === typeof exports.init) {
-    exports.init(debug);
-  }
-
-  return debug;
-}
-
-/**
- * Enables a debug mode by namespaces. This can include modes
- * separated by a colon and wildcards.
- *
- * @param {String} namespaces
- * @api public
- */
-
-function enable(namespaces) {
-  exports.save(namespaces);
-
-  exports.names = [];
-  exports.skips = [];
-
-  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
-  var len = split.length;
-
-  for (var i = 0; i < len; i++) {
-    if (!split[i]) continue; // ignore empty strings
-    namespaces = split[i].replace(/\*/g, '.*?');
-    if (namespaces[0] === '-') {
-      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
-    } else {
-      exports.names.push(new RegExp('^' + namespaces + '$'));
-    }
-  }
-}
-
-/**
- * Disable debug output.
- *
- * @api public
- */
-
-function disable() {
-  exports.enable('');
-}
-
-/**
- * Returns true if the given mode name is enabled, false otherwise.
- *
- * @param {String} name
- * @return {Boolean}
- * @api public
- */
-
-function enabled(name) {
-  var i, len;
-  for (i = 0, len = exports.skips.length; i < len; i++) {
-    if (exports.skips[i].test(name)) {
-      return false;
-    }
-  }
-  for (i = 0, len = exports.names.length; i < len; i++) {
-    if (exports.names[i].test(name)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-/**
- * Coerce `val`.
- *
- * @param {Mixed} val
- * @return {Mixed}
- * @api private
- */
-
-function coerce(val) {
-  if (val instanceof Error) return val.stack || val.message;
-  return val;
-}
+module.exports = setup;
 
 
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/index.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/debug/src/index.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
- * Detect Electron renderer process, which is node, but we should
+ * Detect Electron renderer / nwjs process, which is node, but we should
  * treat as a browser.
  */
 
-if (typeof process !== 'undefined' && process.type === 'renderer') {
-  module.exports = __webpack_require__(/*! ./browser.js */ "../../../node_modules/debug/src/browser.js");
+if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
+	module.exports = __webpack_require__(/*! ./browser.js */ "../../../node_modules/debug/src/browser.js");
 } else {
-  module.exports = __webpack_require__(/*! ./node.js */ "../../../node_modules/debug/src/node.js");
+	module.exports = __webpack_require__(/*! ./node.js */ "../../../node_modules/debug/src/node.js");
 }
 
 
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/node.js":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ../../../node_modules/debug/src/node.js ***!
   \***********************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -2605,22 +2748,23 @@ if (typeof process !== 'undefined' && process.type === 'renderer') {
  * Module dependencies.
  */
 
-var tty = __webpack_require__(/*! tty */ "tty");
-var util = __webpack_require__(/*! util */ "util");
+const tty = __webpack_require__(/*! tty */ "tty");
+const util = __webpack_require__(/*! util */ "util");
 
 /**
  * This is the Node.js implementation of `debug()`.
- *
- * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(/*! ./debug */ "../../../node_modules/debug/src/debug.js");
 exports.init = init;
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
 exports.load = load;
 exports.useColors = useColors;
+exports.destroy = util.deprecate(
+	() => {},
+	'Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.'
+);
 
 /**
  * Colors.
@@ -2628,79 +2772,137 @@ exports.useColors = useColors;
 
 exports.colors = [6, 2, 3, 4, 5, 1];
 
+try {
+	// Optional dependency (as in, doesn't need to be installed, NOT like optionalDependencies in package.json)
+	// eslint-disable-next-line import/no-extraneous-dependencies
+	const supportsColor = __webpack_require__(/*! supports-color */ "../../../node_modules/supports-color/index.js");
+
+	if (supportsColor && (supportsColor.stderr || supportsColor).level >= 2) {
+		exports.colors = [
+			20,
+			21,
+			26,
+			27,
+			32,
+			33,
+			38,
+			39,
+			40,
+			41,
+			42,
+			43,
+			44,
+			45,
+			56,
+			57,
+			62,
+			63,
+			68,
+			69,
+			74,
+			75,
+			76,
+			77,
+			78,
+			79,
+			80,
+			81,
+			92,
+			93,
+			98,
+			99,
+			112,
+			113,
+			128,
+			129,
+			134,
+			135,
+			148,
+			149,
+			160,
+			161,
+			162,
+			163,
+			164,
+			165,
+			166,
+			167,
+			168,
+			169,
+			170,
+			171,
+			172,
+			173,
+			178,
+			179,
+			184,
+			185,
+			196,
+			197,
+			198,
+			199,
+			200,
+			201,
+			202,
+			203,
+			204,
+			205,
+			206,
+			207,
+			208,
+			209,
+			214,
+			215,
+			220,
+			221
+		];
+	}
+} catch (error) {
+	// Swallow - we only care if `supports-color` is available; it doesn't have to be.
+}
+
 /**
  * Build up the default `inspectOpts` object from the environment variables.
  *
  *   $ DEBUG_COLORS=no DEBUG_DEPTH=10 DEBUG_SHOW_HIDDEN=enabled node script.js
  */
 
-exports.inspectOpts = Object.keys(process.env).filter(function (key) {
-  return /^debug_/i.test(key);
-}).reduce(function (obj, key) {
-  // camel-case
-  var prop = key
-    .substring(6)
-    .toLowerCase()
-    .replace(/_([a-z])/g, function (_, k) { return k.toUpperCase() });
+exports.inspectOpts = Object.keys(process.env).filter(key => {
+	return /^debug_/i.test(key);
+}).reduce((obj, key) => {
+	// Camel-case
+	const prop = key
+		.substring(6)
+		.toLowerCase()
+		.replace(/_([a-z])/g, (_, k) => {
+			return k.toUpperCase();
+		});
 
-  // coerce string value into JS value
-  var val = process.env[key];
-  if (/^(yes|on|true|enabled)$/i.test(val)) val = true;
-  else if (/^(no|off|false|disabled)$/i.test(val)) val = false;
-  else if (val === 'null') val = null;
-  else val = Number(val);
+	// Coerce string value into JS value
+	let val = process.env[key];
+	if (/^(yes|on|true|enabled)$/i.test(val)) {
+		val = true;
+	} else if (/^(no|off|false|disabled)$/i.test(val)) {
+		val = false;
+	} else if (val === 'null') {
+		val = null;
+	} else {
+		val = Number(val);
+	}
 
-  obj[prop] = val;
-  return obj;
+	obj[prop] = val;
+	return obj;
 }, {});
-
-/**
- * The file descriptor to write the `debug()` calls to.
- * Set the `DEBUG_FD` env variable to override with another value. i.e.:
- *
- *   $ DEBUG_FD=3 node script.js 3>debug.log
- */
-
-var fd = parseInt(process.env.DEBUG_FD, 10) || 2;
-
-if (1 !== fd && 2 !== fd) {
-  util.deprecate(function(){}, 'except for stderr(2) and stdout(1), any other usage of DEBUG_FD is deprecated. Override debug.log if you want to use a different log function (https://git.io/debug_fd)')()
-}
-
-var stream = 1 === fd ? process.stdout :
-             2 === fd ? process.stderr :
-             createWritableStdioStream(fd);
 
 /**
  * Is stdout a TTY? Colored output is enabled when `true`.
  */
 
 function useColors() {
-  return 'colors' in exports.inspectOpts
-    ? Boolean(exports.inspectOpts.colors)
-    : tty.isatty(fd);
+	return 'colors' in exports.inspectOpts ?
+		Boolean(exports.inspectOpts.colors) :
+		tty.isatty(process.stderr.fd);
 }
-
-/**
- * Map %o to `util.inspect()`, all on a single line.
- */
-
-exports.formatters.o = function(v) {
-  this.inspectOpts.colors = this.useColors;
-  return util.inspect(v, this.inspectOpts)
-    .split('\n').map(function(str) {
-      return str.trim()
-    }).join(' ');
-};
-
-/**
- * Map %o to `util.inspect()`, allowing multiple lines if needed.
- */
-
-exports.formatters.O = function(v) {
-  this.inspectOpts.colors = this.useColors;
-  return util.inspect(v, this.inspectOpts);
-};
 
 /**
  * Adds ANSI color escape codes if enabled.
@@ -2709,27 +2911,33 @@ exports.formatters.O = function(v) {
  */
 
 function formatArgs(args) {
-  var name = this.namespace;
-  var useColors = this.useColors;
+	const {namespace: name, useColors} = this;
 
-  if (useColors) {
-    var c = this.color;
-    var prefix = '  \u001b[3' + c + ';1m' + name + ' ' + '\u001b[0m';
+	if (useColors) {
+		const c = this.color;
+		const colorCode = '\u001B[3' + (c < 8 ? c : '8;5;' + c);
+		const prefix = `  ${colorCode};1m${name} \u001B[0m`;
 
-    args[0] = prefix + args[0].split('\n').join('\n' + prefix);
-    args.push('\u001b[3' + c + 'm+' + exports.humanize(this.diff) + '\u001b[0m');
-  } else {
-    args[0] = new Date().toUTCString()
-      + ' ' + name + ' ' + args[0];
-  }
+		args[0] = prefix + args[0].split('\n').join('\n' + prefix);
+		args.push(colorCode + 'm+' + module.exports.humanize(this.diff) + '\u001B[0m');
+	} else {
+		args[0] = getDate() + name + ' ' + args[0];
+	}
+}
+
+function getDate() {
+	if (exports.inspectOpts.hideDate) {
+		return '';
+	}
+	return new Date().toISOString() + ' ';
 }
 
 /**
- * Invokes `util.format()` with the specified arguments and writes to `stream`.
+ * Invokes `util.format()` with the specified arguments and writes to stderr.
  */
 
-function log() {
-  return stream.write(util.format.apply(util, arguments) + '\n');
+function log(...args) {
+	return process.stderr.write(util.format(...args) + '\n');
 }
 
 /**
@@ -2738,15 +2946,14 @@ function log() {
  * @param {String} namespaces
  * @api private
  */
-
 function save(namespaces) {
-  if (null == namespaces) {
-    // If you set a process.env field to null or undefined, it gets cast to the
-    // string 'null' or 'undefined'. Just delete instead.
-    delete process.env.DEBUG;
-  } else {
-    process.env.DEBUG = namespaces;
-  }
+	if (namespaces) {
+		process.env.DEBUG = namespaces;
+	} else {
+		// If you set a process.env field to null or undefined, it gets cast to the
+		// string 'null' or 'undefined'. Just delete instead.
+		delete process.env.DEBUG;
+	}
 }
 
 /**
@@ -2757,75 +2964,7 @@ function save(namespaces) {
  */
 
 function load() {
-  return process.env.DEBUG;
-}
-
-/**
- * Copied from `node/src/node.js`.
- *
- * XXX: It's lame that node doesn't expose this API out-of-the-box. It also
- * relies on the undocumented `tty_wrap.guessHandleType()` which is also lame.
- */
-
-function createWritableStdioStream (fd) {
-  var stream;
-  var tty_wrap = process.binding('tty_wrap');
-
-  // Note stream._type is used for test-module-load-list.js
-
-  switch (tty_wrap.guessHandleType(fd)) {
-    case 'TTY':
-      stream = new tty.WriteStream(fd);
-      stream._type = 'tty';
-
-      // Hack to have stream not keep the event loop alive.
-      // See https://github.com/joyent/node/issues/1726
-      if (stream._handle && stream._handle.unref) {
-        stream._handle.unref();
-      }
-      break;
-
-    case 'FILE':
-      var fs = __webpack_require__(/*! fs */ "fs");
-      stream = new fs.SyncWriteStream(fd, { autoClose: false });
-      stream._type = 'fs';
-      break;
-
-    case 'PIPE':
-    case 'TCP':
-      var net = __webpack_require__(/*! net */ "net");
-      stream = new net.Socket({
-        fd: fd,
-        readable: false,
-        writable: true
-      });
-
-      // FIXME Should probably have an option in net.Socket to create a
-      // stream from an existing fd which is writable only. But for now
-      // we'll just add this hack and set the `readable` member to false.
-      // Test: ./node test/fixtures/echo.js < /etc/passwd
-      stream.readable = false;
-      stream.read = null;
-      stream._type = 'pipe';
-
-      // FIXME Hack to have stream not keep the event loop alive.
-      // See https://github.com/joyent/node/issues/1726
-      if (stream._handle && stream._handle.unref) {
-        stream._handle.unref();
-      }
-      break;
-
-    default:
-      // Probably an error on in uv_guess_handle()
-      throw new Error('Implement me. Unknown stream file type!');
-  }
-
-  // For supporting legacy API we put the FD here.
-  stream.fd = fd;
-
-  stream._isStdio = true;
-
-  return stream;
+	return process.env.DEBUG;
 }
 
 /**
@@ -2835,26 +2974,45 @@ function createWritableStdioStream (fd) {
  * differently for a particular `debug` instance.
  */
 
-function init (debug) {
-  debug.inspectOpts = {};
+function init(debug) {
+	debug.inspectOpts = {};
 
-  var keys = Object.keys(exports.inspectOpts);
-  for (var i = 0; i < keys.length; i++) {
-    debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
-  }
+	const keys = Object.keys(exports.inspectOpts);
+	for (let i = 0; i < keys.length; i++) {
+		debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
+	}
 }
 
+module.exports = __webpack_require__(/*! ./common */ "../../../node_modules/debug/src/common.js")(exports);
+
+const {formatters} = module.exports;
+
 /**
- * Enable namespaces listed in `process.env.DEBUG` initially.
+ * Map %o to `util.inspect()`, all on a single line.
  */
 
-exports.enable(load());
+formatters.o = function (v) {
+	this.inspectOpts.colors = this.useColors;
+	return util.inspect(v, this.inspectOpts)
+		.split('\n')
+		.map(str => str.trim())
+		.join(' ');
+};
+
+/**
+ * Map %O to `util.inspect()`, allowing multiple lines if needed.
+ */
+
+formatters.O = function (v) {
+	this.inspectOpts.colors = this.useColors;
+	return util.inspect(v, this.inspectOpts);
+};
 
 
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/debug.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/follow-redirects/debug.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2878,7 +3036,7 @@ module.exports = function () {
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/index.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/follow-redirects/index.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -3391,8 +3549,27 @@ module.exports.wrap = wrap;
 
 /***/ }),
 
+/***/ "../../../node_modules/has-flag/index.js":
+/*!***********************************************!*\
+  !*** ../../../node_modules/has-flag/index.js ***!
+  \***********************************************/
+/***/ ((module) => {
+
+"use strict";
+
+module.exports = (flag, argv) => {
+	argv = argv || process.argv;
+	const prefix = flag.startsWith('-') ? '' : (flag.length === 1 ? '-' : '--');
+	const pos = argv.indexOf(prefix + flag);
+	const terminatorPos = argv.indexOf('--');
+	return pos !== -1 && (terminatorPos === -1 ? true : pos < terminatorPos);
+};
+
+
+/***/ }),
+
 /***/ "../../../node_modules/ms/index.js":
-/*!*****************************************!*
+/*!*****************************************!*\
   !*** ../../../node_modules/ms/index.js ***!
   \*****************************************/
 /***/ ((module) => {
@@ -3405,6 +3582,7 @@ var s = 1000;
 var m = s * 60;
 var h = m * 60;
 var d = h * 24;
+var w = d * 7;
 var y = d * 365.25;
 
 /**
@@ -3426,7 +3604,7 @@ module.exports = function(val, options) {
   var type = typeof val;
   if (type === 'string' && val.length > 0) {
     return parse(val);
-  } else if (type === 'number' && isNaN(val) === false) {
+  } else if (type === 'number' && isFinite(val)) {
     return options.long ? fmtLong(val) : fmtShort(val);
   }
   throw new Error(
@@ -3448,7 +3626,7 @@ function parse(str) {
   if (str.length > 100) {
     return;
   }
-  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
+  var match = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
     str
   );
   if (!match) {
@@ -3463,6 +3641,10 @@ function parse(str) {
     case 'yr':
     case 'y':
       return n * y;
+    case 'weeks':
+    case 'week':
+    case 'w':
+      return n * w;
     case 'days':
     case 'day':
     case 'd':
@@ -3505,16 +3687,17 @@ function parse(str) {
  */
 
 function fmtShort(ms) {
-  if (ms >= d) {
+  var msAbs = Math.abs(ms);
+  if (msAbs >= d) {
     return Math.round(ms / d) + 'd';
   }
-  if (ms >= h) {
+  if (msAbs >= h) {
     return Math.round(ms / h) + 'h';
   }
-  if (ms >= m) {
+  if (msAbs >= m) {
     return Math.round(ms / m) + 'm';
   }
-  if (ms >= s) {
+  if (msAbs >= s) {
     return Math.round(ms / s) + 's';
   }
   return ms + 'ms';
@@ -3529,32 +3712,178 @@ function fmtShort(ms) {
  */
 
 function fmtLong(ms) {
-  return plural(ms, d, 'day') ||
-    plural(ms, h, 'hour') ||
-    plural(ms, m, 'minute') ||
-    plural(ms, s, 'second') ||
-    ms + ' ms';
+  var msAbs = Math.abs(ms);
+  if (msAbs >= d) {
+    return plural(ms, msAbs, d, 'day');
+  }
+  if (msAbs >= h) {
+    return plural(ms, msAbs, h, 'hour');
+  }
+  if (msAbs >= m) {
+    return plural(ms, msAbs, m, 'minute');
+  }
+  if (msAbs >= s) {
+    return plural(ms, msAbs, s, 'second');
+  }
+  return ms + ' ms';
 }
 
 /**
  * Pluralization helper.
  */
 
-function plural(ms, n, name) {
-  if (ms < n) {
-    return;
-  }
-  if (ms < n * 1.5) {
-    return Math.floor(ms / n) + ' ' + name;
-  }
-  return Math.ceil(ms / n) + ' ' + name + 's';
+function plural(ms, msAbs, n, name) {
+  var isPlural = msAbs >= n * 1.5;
+  return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
 }
 
 
 /***/ }),
 
+/***/ "../../../node_modules/supports-color/index.js":
+/*!*****************************************************!*\
+  !*** ../../../node_modules/supports-color/index.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+const os = __webpack_require__(/*! os */ "os");
+const hasFlag = __webpack_require__(/*! has-flag */ "../../../node_modules/has-flag/index.js");
+
+const env = process.env;
+
+let forceColor;
+if (hasFlag('no-color') ||
+	hasFlag('no-colors') ||
+	hasFlag('color=false')) {
+	forceColor = false;
+} else if (hasFlag('color') ||
+	hasFlag('colors') ||
+	hasFlag('color=true') ||
+	hasFlag('color=always')) {
+	forceColor = true;
+}
+if ('FORCE_COLOR' in env) {
+	forceColor = env.FORCE_COLOR.length === 0 || parseInt(env.FORCE_COLOR, 10) !== 0;
+}
+
+function translateLevel(level) {
+	if (level === 0) {
+		return false;
+	}
+
+	return {
+		level,
+		hasBasic: true,
+		has256: level >= 2,
+		has16m: level >= 3
+	};
+}
+
+function supportsColor(stream) {
+	if (forceColor === false) {
+		return 0;
+	}
+
+	if (hasFlag('color=16m') ||
+		hasFlag('color=full') ||
+		hasFlag('color=truecolor')) {
+		return 3;
+	}
+
+	if (hasFlag('color=256')) {
+		return 2;
+	}
+
+	if (stream && !stream.isTTY && forceColor !== true) {
+		return 0;
+	}
+
+	const min = forceColor ? 1 : 0;
+
+	if (process.platform === 'win32') {
+		// Node.js 7.5.0 is the first version of Node.js to include a patch to
+		// libuv that enables 256 color output on Windows. Anything earlier and it
+		// won't work. However, here we target Node.js 8 at minimum as it is an LTS
+		// release, and Node.js 7 is not. Windows 10 build 10586 is the first Windows
+		// release that supports 256 colors. Windows 10 build 14931 is the first release
+		// that supports 16m/TrueColor.
+		const osRelease = os.release().split('.');
+		if (
+			Number(process.versions.node.split('.')[0]) >= 8 &&
+			Number(osRelease[0]) >= 10 &&
+			Number(osRelease[2]) >= 10586
+		) {
+			return Number(osRelease[2]) >= 14931 ? 3 : 2;
+		}
+
+		return 1;
+	}
+
+	if ('CI' in env) {
+		if (['TRAVIS', 'CIRCLECI', 'APPVEYOR', 'GITLAB_CI'].some(sign => sign in env) || env.CI_NAME === 'codeship') {
+			return 1;
+		}
+
+		return min;
+	}
+
+	if ('TEAMCITY_VERSION' in env) {
+		return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env.TEAMCITY_VERSION) ? 1 : 0;
+	}
+
+	if (env.COLORTERM === 'truecolor') {
+		return 3;
+	}
+
+	if ('TERM_PROGRAM' in env) {
+		const version = parseInt((env.TERM_PROGRAM_VERSION || '').split('.')[0], 10);
+
+		switch (env.TERM_PROGRAM) {
+			case 'iTerm.app':
+				return version >= 3 ? 3 : 2;
+			case 'Apple_Terminal':
+				return 2;
+			// No default
+		}
+	}
+
+	if (/-256(color)?$/i.test(env.TERM)) {
+		return 2;
+	}
+
+	if (/^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(env.TERM)) {
+		return 1;
+	}
+
+	if ('COLORTERM' in env) {
+		return 1;
+	}
+
+	if (env.TERM === 'dumb') {
+		return min;
+	}
+
+	return min;
+}
+
+function getSupportLevel(stream) {
+	const level = supportsColor(stream);
+	return translateLevel(level);
+}
+
+module.exports = {
+	supportsColor: getSupportLevel,
+	stdout: getSupportLevel(process.stdout),
+	stderr: getSupportLevel(process.stderr)
+};
+
+
+/***/ }),
+
 /***/ "../../../node_modules/uuid/index.js":
-/*!*******************************************!*
+/*!*******************************************!*\
   !*** ../../../node_modules/uuid/index.js ***!
   \*******************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -3572,7 +3901,7 @@ module.exports = uuid;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/lib/bytesToUuid.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/uuid/lib/bytesToUuid.js ***!
   \*****************************************************/
 /***/ ((module) => {
@@ -3608,7 +3937,7 @@ module.exports = bytesToUuid;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/lib/rng.js":
-/*!*********************************************!*
+/*!*********************************************!*\
   !*** ../../../node_modules/uuid/lib/rng.js ***!
   \*********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -3626,7 +3955,7 @@ module.exports = function nodeRNG() {
 /***/ }),
 
 /***/ "../../../node_modules/uuid/v1.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ../../../node_modules/uuid/v1.js ***!
   \****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -3745,7 +4074,7 @@ module.exports = v1;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/v4.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ../../../node_modules/uuid/v4.js ***!
   \****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -3784,7 +4113,7 @@ module.exports = v4;
 /***/ }),
 
 /***/ "./arabic_language_model.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./arabic_language_model.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3792,7 +4121,7 @@ module.exports = v4;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ ArabicLanguageModel
+/* harmony export */   "default": () => (/* binding */ ArabicLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -3932,7 +4261,7 @@ for the current node
 /***/ }),
 
 /***/ "./chinese_language_model.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./chinese_language_model.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3940,7 +4269,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ ChineseLanguageModel
+/* harmony export */   "default": () => (/* binding */ ChineseLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -4078,7 +4407,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /***/ }),
 
 /***/ "./constants.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./constants.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4086,232 +4415,232 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LANG_UNIT_WORD": () => /* binding */ LANG_UNIT_WORD,
-/* harmony export */   "LANG_UNIT_CHAR": () => /* binding */ LANG_UNIT_CHAR,
-/* harmony export */   "LANG_DIR_LTR": () => /* binding */ LANG_DIR_LTR,
-/* harmony export */   "LANG_DIR_RTL": () => /* binding */ LANG_DIR_RTL,
-/* harmony export */   "LANG_UNDEFINED": () => /* binding */ LANG_UNDEFINED,
-/* harmony export */   "LANG_LATIN": () => /* binding */ LANG_LATIN,
-/* harmony export */   "LANG_GREEK": () => /* binding */ LANG_GREEK,
-/* harmony export */   "LANG_ARABIC": () => /* binding */ LANG_ARABIC,
-/* harmony export */   "LANG_PERSIAN": () => /* binding */ LANG_PERSIAN,
-/* harmony export */   "LANG_GEEZ": () => /* binding */ LANG_GEEZ,
-/* harmony export */   "LANG_CHINESE": () => /* binding */ LANG_CHINESE,
-/* harmony export */   "LANG_SYRIAC": () => /* binding */ LANG_SYRIAC,
-/* harmony export */   "STR_LANG_CODE_UNDEFINED": () => /* binding */ STR_LANG_CODE_UNDEFINED,
-/* harmony export */   "STR_LANG_CODE_LAT": () => /* binding */ STR_LANG_CODE_LAT,
-/* harmony export */   "STR_LANG_CODE_LA": () => /* binding */ STR_LANG_CODE_LA,
-/* harmony export */   "STR_LANG_CODE_GRC": () => /* binding */ STR_LANG_CODE_GRC,
-/* harmony export */   "STR_LANG_CODE_ARA": () => /* binding */ STR_LANG_CODE_ARA,
-/* harmony export */   "STR_LANG_CODE_AR": () => /* binding */ STR_LANG_CODE_AR,
-/* harmony export */   "STR_LANG_CODE_FAS": () => /* binding */ STR_LANG_CODE_FAS,
-/* harmony export */   "STR_LANG_CODE_PER": () => /* binding */ STR_LANG_CODE_PER,
-/* harmony export */   "STR_LANG_CODE_FA_IR": () => /* binding */ STR_LANG_CODE_FA_IR,
-/* harmony export */   "STR_LANG_CODE_FA": () => /* binding */ STR_LANG_CODE_FA,
-/* harmony export */   "STR_LANG_CODE_GEZ": () => /* binding */ STR_LANG_CODE_GEZ,
-/* harmony export */   "STR_LANG_CODE_ZHO": () => /* binding */ STR_LANG_CODE_ZHO,
-/* harmony export */   "STR_LANG_CODE_ZH": () => /* binding */ STR_LANG_CODE_ZH,
-/* harmony export */   "STR_LANG_CODE_ZH_HANT": () => /* binding */ STR_LANG_CODE_ZH_HANT,
-/* harmony export */   "STR_LANG_CODE_ZH_HANS": () => /* binding */ STR_LANG_CODE_ZH_HANS,
-/* harmony export */   "STR_LANG_CODE_SYC": () => /* binding */ STR_LANG_CODE_SYC,
-/* harmony export */   "STR_LANG_CODE_SYR": () => /* binding */ STR_LANG_CODE_SYR,
-/* harmony export */   "STR_LANG_CODE_SYR_SYRJ": () => /* binding */ STR_LANG_CODE_SYR_SYRJ,
-/* harmony export */   "STR_LANG_CODE_ENG": () => /* binding */ STR_LANG_CODE_ENG,
-/* harmony export */   "POFS_ADJECTIVE": () => /* binding */ POFS_ADJECTIVE,
-/* harmony export */   "POFS_ADVERB": () => /* binding */ POFS_ADVERB,
-/* harmony export */   "POFS_ADVERBIAL": () => /* binding */ POFS_ADVERBIAL,
-/* harmony export */   "POFS_ARTICLE": () => /* binding */ POFS_ARTICLE,
-/* harmony export */   "POFS_CONJUNCTION": () => /* binding */ POFS_CONJUNCTION,
-/* harmony export */   "POFS_EXCLAMATION": () => /* binding */ POFS_EXCLAMATION,
-/* harmony export */   "POFS_INTERJECTION": () => /* binding */ POFS_INTERJECTION,
-/* harmony export */   "POFS_NOUN": () => /* binding */ POFS_NOUN,
-/* harmony export */   "POFS_NOUN_PROPER": () => /* binding */ POFS_NOUN_PROPER,
-/* harmony export */   "POFS_NUMERAL": () => /* binding */ POFS_NUMERAL,
-/* harmony export */   "POFS_PARTICLE": () => /* binding */ POFS_PARTICLE,
-/* harmony export */   "POFS_PREFIX": () => /* binding */ POFS_PREFIX,
-/* harmony export */   "POFS_PREPOSITION": () => /* binding */ POFS_PREPOSITION,
-/* harmony export */   "POFS_PRONOUN": () => /* binding */ POFS_PRONOUN,
-/* harmony export */   "POFS_SUFFIX": () => /* binding */ POFS_SUFFIX,
-/* harmony export */   "POFS_GERUNDIVE": () => /* binding */ POFS_GERUNDIVE,
-/* harmony export */   "POFS_SUPINE": () => /* binding */ POFS_SUPINE,
-/* harmony export */   "POFS_VERB": () => /* binding */ POFS_VERB,
-/* harmony export */   "POFS_VERB_PARTICIPLE": () => /* binding */ POFS_VERB_PARTICIPLE,
-/* harmony export */   "POFS_DENOMINATIVE": () => /* binding */ POFS_DENOMINATIVE,
-/* harmony export */   "GEND_MASCULINE": () => /* binding */ GEND_MASCULINE,
-/* harmony export */   "GEND_FEMININE": () => /* binding */ GEND_FEMININE,
-/* harmony export */   "GEND_NEUTER": () => /* binding */ GEND_NEUTER,
-/* harmony export */   "GEND_COMMON": () => /* binding */ GEND_COMMON,
-/* harmony export */   "GEND_ANIMATE": () => /* binding */ GEND_ANIMATE,
-/* harmony export */   "GEND_INANIMATE": () => /* binding */ GEND_INANIMATE,
-/* harmony export */   "GEND_PERSONAL_MASCULINE": () => /* binding */ GEND_PERSONAL_MASCULINE,
-/* harmony export */   "GEND_ANIMATE_MASCULINE": () => /* binding */ GEND_ANIMATE_MASCULINE,
-/* harmony export */   "GEND_INANIMATE_MASCULINE": () => /* binding */ GEND_INANIMATE_MASCULINE,
-/* harmony export */   "COMP_POSITIVE": () => /* binding */ COMP_POSITIVE,
-/* harmony export */   "COMP_COMPARITIVE": () => /* binding */ COMP_COMPARITIVE,
-/* harmony export */   "COMP_SUPERLATIVE": () => /* binding */ COMP_SUPERLATIVE,
-/* harmony export */   "CASE_ABESSIVE": () => /* binding */ CASE_ABESSIVE,
-/* harmony export */   "CASE_ABLATIVE": () => /* binding */ CASE_ABLATIVE,
-/* harmony export */   "CASE_ABSOLUTIVE": () => /* binding */ CASE_ABSOLUTIVE,
-/* harmony export */   "CASE_ACCUSATIVE": () => /* binding */ CASE_ACCUSATIVE,
-/* harmony export */   "CASE_ADDIRECTIVE": () => /* binding */ CASE_ADDIRECTIVE,
-/* harmony export */   "CASE_ADELATIVE": () => /* binding */ CASE_ADELATIVE,
-/* harmony export */   "CASE_ADESSIVE": () => /* binding */ CASE_ADESSIVE,
-/* harmony export */   "CASE_ADVERBIAL": () => /* binding */ CASE_ADVERBIAL,
-/* harmony export */   "CASE_ALLATIVE": () => /* binding */ CASE_ALLATIVE,
-/* harmony export */   "CASE_ANTESSIVE": () => /* binding */ CASE_ANTESSIVE,
-/* harmony export */   "CASE_APUDESSIVE": () => /* binding */ CASE_APUDESSIVE,
-/* harmony export */   "CASE_AVERSIVE": () => /* binding */ CASE_AVERSIVE,
-/* harmony export */   "CASE_BENEFACTIVE": () => /* binding */ CASE_BENEFACTIVE,
-/* harmony export */   "CASE_CARITIVE": () => /* binding */ CASE_CARITIVE,
-/* harmony export */   "CASE_CAUSAL": () => /* binding */ CASE_CAUSAL,
-/* harmony export */   "CASE_CAUSAL_FINAL": () => /* binding */ CASE_CAUSAL_FINAL,
-/* harmony export */   "CASE_COMITATIVE": () => /* binding */ CASE_COMITATIVE,
-/* harmony export */   "CASE_DATIVE": () => /* binding */ CASE_DATIVE,
-/* harmony export */   "CASE_DELATIVE": () => /* binding */ CASE_DELATIVE,
-/* harmony export */   "CASE_DIRECT": () => /* binding */ CASE_DIRECT,
-/* harmony export */   "CASE_DISTRIBUTIVE": () => /* binding */ CASE_DISTRIBUTIVE,
-/* harmony export */   "CASE_DISTRIBUTIVE_TEMPORAL": () => /* binding */ CASE_DISTRIBUTIVE_TEMPORAL,
-/* harmony export */   "CASE_ELATIVE": () => /* binding */ CASE_ELATIVE,
-/* harmony export */   "CASE_ERGATIVE": () => /* binding */ CASE_ERGATIVE,
-/* harmony export */   "CASE_ESSIVE": () => /* binding */ CASE_ESSIVE,
-/* harmony export */   "CASE_ESSIVE_FORMAL": () => /* binding */ CASE_ESSIVE_FORMAL,
-/* harmony export */   "CASE_ESSIVE_MODAL": () => /* binding */ CASE_ESSIVE_MODAL,
-/* harmony export */   "CASE_EQUATIVE": () => /* binding */ CASE_EQUATIVE,
-/* harmony export */   "CASE_EVITATIVE": () => /* binding */ CASE_EVITATIVE,
-/* harmony export */   "CASE_EXESSIVE": () => /* binding */ CASE_EXESSIVE,
-/* harmony export */   "CASE_FINAL": () => /* binding */ CASE_FINAL,
-/* harmony export */   "CASE_FORMAL": () => /* binding */ CASE_FORMAL,
-/* harmony export */   "CASE_GENITIVE": () => /* binding */ CASE_GENITIVE,
-/* harmony export */   "CASE_ILLATIVE": () => /* binding */ CASE_ILLATIVE,
-/* harmony export */   "CASE_INELATIVE": () => /* binding */ CASE_INELATIVE,
-/* harmony export */   "CASE_INESSIVE": () => /* binding */ CASE_INESSIVE,
-/* harmony export */   "CASE_INSTRUCTIVE": () => /* binding */ CASE_INSTRUCTIVE,
-/* harmony export */   "CASE_INSTRUMENTAL": () => /* binding */ CASE_INSTRUMENTAL,
-/* harmony export */   "CASE_INSTRUMENTAL_COMITATIVE": () => /* binding */ CASE_INSTRUMENTAL_COMITATIVE,
-/* harmony export */   "CASE_INTRANSITIVE": () => /* binding */ CASE_INTRANSITIVE,
-/* harmony export */   "CASE_LATIVE": () => /* binding */ CASE_LATIVE,
-/* harmony export */   "CASE_LOCATIVE": () => /* binding */ CASE_LOCATIVE,
-/* harmony export */   "CASE_MODAL": () => /* binding */ CASE_MODAL,
-/* harmony export */   "CASE_MULTIPLICATIVE": () => /* binding */ CASE_MULTIPLICATIVE,
-/* harmony export */   "CASE_NOMINATIVE": () => /* binding */ CASE_NOMINATIVE,
-/* harmony export */   "CASE_PARTITIVE": () => /* binding */ CASE_PARTITIVE,
-/* harmony export */   "CASE_PEGATIVE": () => /* binding */ CASE_PEGATIVE,
-/* harmony export */   "CASE_PERLATIVE": () => /* binding */ CASE_PERLATIVE,
-/* harmony export */   "CASE_POSSESSIVE": () => /* binding */ CASE_POSSESSIVE,
-/* harmony export */   "CASE_POSTELATIVE": () => /* binding */ CASE_POSTELATIVE,
-/* harmony export */   "CASE_POSTDIRECTIVE": () => /* binding */ CASE_POSTDIRECTIVE,
-/* harmony export */   "CASE_POSTESSIVE": () => /* binding */ CASE_POSTESSIVE,
-/* harmony export */   "CASE_POSTPOSITIONAL": () => /* binding */ CASE_POSTPOSITIONAL,
-/* harmony export */   "CASE_PREPOSITIONAL": () => /* binding */ CASE_PREPOSITIONAL,
-/* harmony export */   "CASE_PRIVATIVE": () => /* binding */ CASE_PRIVATIVE,
-/* harmony export */   "CASE_PROLATIVE": () => /* binding */ CASE_PROLATIVE,
-/* harmony export */   "CASE_PROSECUTIVE": () => /* binding */ CASE_PROSECUTIVE,
-/* harmony export */   "CASE_PROXIMATIVE": () => /* binding */ CASE_PROXIMATIVE,
-/* harmony export */   "CASE_SEPARATIVE": () => /* binding */ CASE_SEPARATIVE,
-/* harmony export */   "CASE_SOCIATIVE": () => /* binding */ CASE_SOCIATIVE,
-/* harmony export */   "CASE_SUBDIRECTIVE": () => /* binding */ CASE_SUBDIRECTIVE,
-/* harmony export */   "CASE_SUBESSIVE": () => /* binding */ CASE_SUBESSIVE,
-/* harmony export */   "CASE_SUBELATIVE": () => /* binding */ CASE_SUBELATIVE,
-/* harmony export */   "CASE_SUBLATIVE": () => /* binding */ CASE_SUBLATIVE,
-/* harmony export */   "CASE_SUPERDIRECTIVE": () => /* binding */ CASE_SUPERDIRECTIVE,
-/* harmony export */   "CASE_SUPERESSIVE": () => /* binding */ CASE_SUPERESSIVE,
-/* harmony export */   "CASE_SUPERLATIVE": () => /* binding */ CASE_SUPERLATIVE,
-/* harmony export */   "CASE_SUPPRESSIVE": () => /* binding */ CASE_SUPPRESSIVE,
-/* harmony export */   "CASE_TEMPORAL": () => /* binding */ CASE_TEMPORAL,
-/* harmony export */   "CASE_TERMINATIVE": () => /* binding */ CASE_TERMINATIVE,
-/* harmony export */   "CASE_TRANSLATIVE": () => /* binding */ CASE_TRANSLATIVE,
-/* harmony export */   "CASE_VIALIS": () => /* binding */ CASE_VIALIS,
-/* harmony export */   "CASE_VOCATIVE": () => /* binding */ CASE_VOCATIVE,
-/* harmony export */   "MOOD_ADMIRATIVE": () => /* binding */ MOOD_ADMIRATIVE,
-/* harmony export */   "MOOD_COHORTATIVE": () => /* binding */ MOOD_COHORTATIVE,
-/* harmony export */   "MOOD_CONDITIONAL": () => /* binding */ MOOD_CONDITIONAL,
-/* harmony export */   "MOOD_DECLARATIVE": () => /* binding */ MOOD_DECLARATIVE,
-/* harmony export */   "MOOD_DUBITATIVE": () => /* binding */ MOOD_DUBITATIVE,
-/* harmony export */   "MOOD_ENERGETIC": () => /* binding */ MOOD_ENERGETIC,
-/* harmony export */   "MOOD_EVENTIVE": () => /* binding */ MOOD_EVENTIVE,
-/* harmony export */   "MOOD_GENERIC": () => /* binding */ MOOD_GENERIC,
-/* harmony export */   "MOOD_GERUNDIVE": () => /* binding */ MOOD_GERUNDIVE,
-/* harmony export */   "MOOD_HYPOTHETICAL": () => /* binding */ MOOD_HYPOTHETICAL,
-/* harmony export */   "MOOD_IMPERATIVE": () => /* binding */ MOOD_IMPERATIVE,
-/* harmony export */   "MOOD_INDICATIVE": () => /* binding */ MOOD_INDICATIVE,
-/* harmony export */   "MOOD_INFERENTIAL": () => /* binding */ MOOD_INFERENTIAL,
-/* harmony export */   "MOOD_INFINITIVE": () => /* binding */ MOOD_INFINITIVE,
-/* harmony export */   "MOOD_INTERROGATIVE": () => /* binding */ MOOD_INTERROGATIVE,
-/* harmony export */   "MOOD_JUSSIVE": () => /* binding */ MOOD_JUSSIVE,
-/* harmony export */   "MOOD_NEGATIVE": () => /* binding */ MOOD_NEGATIVE,
-/* harmony export */   "MOOD_OPTATIVE": () => /* binding */ MOOD_OPTATIVE,
-/* harmony export */   "MOOD_PARTICIPLE": () => /* binding */ MOOD_PARTICIPLE,
-/* harmony export */   "MOOD_PRESUMPTIVE": () => /* binding */ MOOD_PRESUMPTIVE,
-/* harmony export */   "MOOD_RENARRATIVE": () => /* binding */ MOOD_RENARRATIVE,
-/* harmony export */   "MOOD_SUBJUNCTIVE": () => /* binding */ MOOD_SUBJUNCTIVE,
-/* harmony export */   "MOOD_SUPINE": () => /* binding */ MOOD_SUPINE,
-/* harmony export */   "NUM_SINGULAR": () => /* binding */ NUM_SINGULAR,
-/* harmony export */   "NUM_PLURAL": () => /* binding */ NUM_PLURAL,
-/* harmony export */   "NUM_DUAL": () => /* binding */ NUM_DUAL,
-/* harmony export */   "NUM_TRIAL": () => /* binding */ NUM_TRIAL,
-/* harmony export */   "NUM_PAUCAL": () => /* binding */ NUM_PAUCAL,
-/* harmony export */   "NUM_SINGULATIVE": () => /* binding */ NUM_SINGULATIVE,
-/* harmony export */   "NUM_COLLECTIVE": () => /* binding */ NUM_COLLECTIVE,
-/* harmony export */   "NUM_DISTRIBUTIVE_PLURAL": () => /* binding */ NUM_DISTRIBUTIVE_PLURAL,
-/* harmony export */   "NRL_CARDINAL": () => /* binding */ NRL_CARDINAL,
-/* harmony export */   "NRL_ORDINAL": () => /* binding */ NRL_ORDINAL,
-/* harmony export */   "NRL_DISTRIBUTIVE": () => /* binding */ NRL_DISTRIBUTIVE,
-/* harmony export */   "NURL_NUMERAL_ADVERB": () => /* binding */ NURL_NUMERAL_ADVERB,
-/* harmony export */   "ORD_1ST": () => /* binding */ ORD_1ST,
-/* harmony export */   "ORD_2ND": () => /* binding */ ORD_2ND,
-/* harmony export */   "ORD_3RD": () => /* binding */ ORD_3RD,
-/* harmony export */   "ORD_4TH": () => /* binding */ ORD_4TH,
-/* harmony export */   "ORD_5TH": () => /* binding */ ORD_5TH,
-/* harmony export */   "ORD_6TH": () => /* binding */ ORD_6TH,
-/* harmony export */   "ORD_7TH": () => /* binding */ ORD_7TH,
-/* harmony export */   "ORD_8TH": () => /* binding */ ORD_8TH,
-/* harmony export */   "ORD_9TH": () => /* binding */ ORD_9TH,
-/* harmony export */   "TENSE_AORIST": () => /* binding */ TENSE_AORIST,
-/* harmony export */   "TENSE_FUTURE": () => /* binding */ TENSE_FUTURE,
-/* harmony export */   "TENSE_FUTURE_PERFECT": () => /* binding */ TENSE_FUTURE_PERFECT,
-/* harmony export */   "TENSE_IMPERFECT": () => /* binding */ TENSE_IMPERFECT,
-/* harmony export */   "TENSE_PAST_ABSOLUTE": () => /* binding */ TENSE_PAST_ABSOLUTE,
-/* harmony export */   "TENSE_PERFECT": () => /* binding */ TENSE_PERFECT,
-/* harmony export */   "TENSE_PLUPERFECT": () => /* binding */ TENSE_PLUPERFECT,
-/* harmony export */   "TENSE_PRESENT": () => /* binding */ TENSE_PRESENT,
-/* harmony export */   "VKIND_TO_BE": () => /* binding */ VKIND_TO_BE,
-/* harmony export */   "VKIND_COMPOUNDS_OF_TO_BE": () => /* binding */ VKIND_COMPOUNDS_OF_TO_BE,
-/* harmony export */   "VKIND_TAKING_ABLATIVE": () => /* binding */ VKIND_TAKING_ABLATIVE,
-/* harmony export */   "VKIND_TAKING_DATIVE": () => /* binding */ VKIND_TAKING_DATIVE,
-/* harmony export */   "VKIND_TAKING_GENITIVE": () => /* binding */ VKIND_TAKING_GENITIVE,
-/* harmony export */   "VKIND_TRANSITIVE": () => /* binding */ VKIND_TRANSITIVE,
-/* harmony export */   "VKIND_INTRANSITIVE": () => /* binding */ VKIND_INTRANSITIVE,
-/* harmony export */   "VKIND_IMPERSONAL": () => /* binding */ VKIND_IMPERSONAL,
-/* harmony export */   "VKIND_DEPONENT": () => /* binding */ VKIND_DEPONENT,
-/* harmony export */   "VKIND_SEMIDEPONENT": () => /* binding */ VKIND_SEMIDEPONENT,
-/* harmony export */   "VKIND_PERFECT_DEFINITE": () => /* binding */ VKIND_PERFECT_DEFINITE,
-/* harmony export */   "VOICE_ACTIVE": () => /* binding */ VOICE_ACTIVE,
-/* harmony export */   "VOICE_PASSIVE": () => /* binding */ VOICE_PASSIVE,
-/* harmony export */   "VOICE_MEDIOPASSIVE": () => /* binding */ VOICE_MEDIOPASSIVE,
-/* harmony export */   "VOICE_IMPERSONAL_PASSIVE": () => /* binding */ VOICE_IMPERSONAL_PASSIVE,
-/* harmony export */   "VOICE_MIDDLE": () => /* binding */ VOICE_MIDDLE,
-/* harmony export */   "VOICE_ANTIPASSIVE": () => /* binding */ VOICE_ANTIPASSIVE,
-/* harmony export */   "VOICE_REFLEXIVE": () => /* binding */ VOICE_REFLEXIVE,
-/* harmony export */   "VOICE_RECIPROCAL": () => /* binding */ VOICE_RECIPROCAL,
-/* harmony export */   "VOICE_CAUSATIVE": () => /* binding */ VOICE_CAUSATIVE,
-/* harmony export */   "VOICE_ADJUTATIVE": () => /* binding */ VOICE_ADJUTATIVE,
-/* harmony export */   "VOICE_APPLICATIVE": () => /* binding */ VOICE_APPLICATIVE,
-/* harmony export */   "VOICE_CIRCUMSTANTIAL": () => /* binding */ VOICE_CIRCUMSTANTIAL,
-/* harmony export */   "VOICE_DEPONENT": () => /* binding */ VOICE_DEPONENT,
-/* harmony export */   "TYPE_IRREGULAR": () => /* binding */ TYPE_IRREGULAR,
-/* harmony export */   "TYPE_REGULAR": () => /* binding */ TYPE_REGULAR,
-/* harmony export */   "CLASS_PERSONAL": () => /* binding */ CLASS_PERSONAL,
-/* harmony export */   "CLASS_REFLEXIVE": () => /* binding */ CLASS_REFLEXIVE,
-/* harmony export */   "CLASS_POSSESSIVE": () => /* binding */ CLASS_POSSESSIVE,
-/* harmony export */   "CLASS_DEMONSTRATIVE": () => /* binding */ CLASS_DEMONSTRATIVE,
-/* harmony export */   "CLASS_RELATIVE": () => /* binding */ CLASS_RELATIVE,
-/* harmony export */   "CLASS_INTERROGATIVE": () => /* binding */ CLASS_INTERROGATIVE,
-/* harmony export */   "CLASS_GENERAL_RELATIVE": () => /* binding */ CLASS_GENERAL_RELATIVE,
-/* harmony export */   "CLASS_INDEFINITE": () => /* binding */ CLASS_INDEFINITE,
-/* harmony export */   "CLASS_INTENSIVE": () => /* binding */ CLASS_INTENSIVE,
-/* harmony export */   "CLASS_RECIPROCAL": () => /* binding */ CLASS_RECIPROCAL,
-/* harmony export */   "PARADIGM_CAT_KAYLO": () => /* binding */ PARADIGM_CAT_KAYLO,
-/* harmony export */   "PARADIGM_CAT_STATE": () => /* binding */ PARADIGM_CAT_STATE
+/* harmony export */   "LANG_UNIT_WORD": () => (/* binding */ LANG_UNIT_WORD),
+/* harmony export */   "LANG_UNIT_CHAR": () => (/* binding */ LANG_UNIT_CHAR),
+/* harmony export */   "LANG_DIR_LTR": () => (/* binding */ LANG_DIR_LTR),
+/* harmony export */   "LANG_DIR_RTL": () => (/* binding */ LANG_DIR_RTL),
+/* harmony export */   "LANG_UNDEFINED": () => (/* binding */ LANG_UNDEFINED),
+/* harmony export */   "LANG_LATIN": () => (/* binding */ LANG_LATIN),
+/* harmony export */   "LANG_GREEK": () => (/* binding */ LANG_GREEK),
+/* harmony export */   "LANG_ARABIC": () => (/* binding */ LANG_ARABIC),
+/* harmony export */   "LANG_PERSIAN": () => (/* binding */ LANG_PERSIAN),
+/* harmony export */   "LANG_GEEZ": () => (/* binding */ LANG_GEEZ),
+/* harmony export */   "LANG_CHINESE": () => (/* binding */ LANG_CHINESE),
+/* harmony export */   "LANG_SYRIAC": () => (/* binding */ LANG_SYRIAC),
+/* harmony export */   "STR_LANG_CODE_UNDEFINED": () => (/* binding */ STR_LANG_CODE_UNDEFINED),
+/* harmony export */   "STR_LANG_CODE_LAT": () => (/* binding */ STR_LANG_CODE_LAT),
+/* harmony export */   "STR_LANG_CODE_LA": () => (/* binding */ STR_LANG_CODE_LA),
+/* harmony export */   "STR_LANG_CODE_GRC": () => (/* binding */ STR_LANG_CODE_GRC),
+/* harmony export */   "STR_LANG_CODE_ARA": () => (/* binding */ STR_LANG_CODE_ARA),
+/* harmony export */   "STR_LANG_CODE_AR": () => (/* binding */ STR_LANG_CODE_AR),
+/* harmony export */   "STR_LANG_CODE_FAS": () => (/* binding */ STR_LANG_CODE_FAS),
+/* harmony export */   "STR_LANG_CODE_PER": () => (/* binding */ STR_LANG_CODE_PER),
+/* harmony export */   "STR_LANG_CODE_FA_IR": () => (/* binding */ STR_LANG_CODE_FA_IR),
+/* harmony export */   "STR_LANG_CODE_FA": () => (/* binding */ STR_LANG_CODE_FA),
+/* harmony export */   "STR_LANG_CODE_GEZ": () => (/* binding */ STR_LANG_CODE_GEZ),
+/* harmony export */   "STR_LANG_CODE_ZHO": () => (/* binding */ STR_LANG_CODE_ZHO),
+/* harmony export */   "STR_LANG_CODE_ZH": () => (/* binding */ STR_LANG_CODE_ZH),
+/* harmony export */   "STR_LANG_CODE_ZH_HANT": () => (/* binding */ STR_LANG_CODE_ZH_HANT),
+/* harmony export */   "STR_LANG_CODE_ZH_HANS": () => (/* binding */ STR_LANG_CODE_ZH_HANS),
+/* harmony export */   "STR_LANG_CODE_SYC": () => (/* binding */ STR_LANG_CODE_SYC),
+/* harmony export */   "STR_LANG_CODE_SYR": () => (/* binding */ STR_LANG_CODE_SYR),
+/* harmony export */   "STR_LANG_CODE_SYR_SYRJ": () => (/* binding */ STR_LANG_CODE_SYR_SYRJ),
+/* harmony export */   "STR_LANG_CODE_ENG": () => (/* binding */ STR_LANG_CODE_ENG),
+/* harmony export */   "POFS_ADJECTIVE": () => (/* binding */ POFS_ADJECTIVE),
+/* harmony export */   "POFS_ADVERB": () => (/* binding */ POFS_ADVERB),
+/* harmony export */   "POFS_ADVERBIAL": () => (/* binding */ POFS_ADVERBIAL),
+/* harmony export */   "POFS_ARTICLE": () => (/* binding */ POFS_ARTICLE),
+/* harmony export */   "POFS_CONJUNCTION": () => (/* binding */ POFS_CONJUNCTION),
+/* harmony export */   "POFS_EXCLAMATION": () => (/* binding */ POFS_EXCLAMATION),
+/* harmony export */   "POFS_INTERJECTION": () => (/* binding */ POFS_INTERJECTION),
+/* harmony export */   "POFS_NOUN": () => (/* binding */ POFS_NOUN),
+/* harmony export */   "POFS_NOUN_PROPER": () => (/* binding */ POFS_NOUN_PROPER),
+/* harmony export */   "POFS_NUMERAL": () => (/* binding */ POFS_NUMERAL),
+/* harmony export */   "POFS_PARTICLE": () => (/* binding */ POFS_PARTICLE),
+/* harmony export */   "POFS_PREFIX": () => (/* binding */ POFS_PREFIX),
+/* harmony export */   "POFS_PREPOSITION": () => (/* binding */ POFS_PREPOSITION),
+/* harmony export */   "POFS_PRONOUN": () => (/* binding */ POFS_PRONOUN),
+/* harmony export */   "POFS_SUFFIX": () => (/* binding */ POFS_SUFFIX),
+/* harmony export */   "POFS_GERUNDIVE": () => (/* binding */ POFS_GERUNDIVE),
+/* harmony export */   "POFS_SUPINE": () => (/* binding */ POFS_SUPINE),
+/* harmony export */   "POFS_VERB": () => (/* binding */ POFS_VERB),
+/* harmony export */   "POFS_VERB_PARTICIPLE": () => (/* binding */ POFS_VERB_PARTICIPLE),
+/* harmony export */   "POFS_DENOMINATIVE": () => (/* binding */ POFS_DENOMINATIVE),
+/* harmony export */   "GEND_MASCULINE": () => (/* binding */ GEND_MASCULINE),
+/* harmony export */   "GEND_FEMININE": () => (/* binding */ GEND_FEMININE),
+/* harmony export */   "GEND_NEUTER": () => (/* binding */ GEND_NEUTER),
+/* harmony export */   "GEND_COMMON": () => (/* binding */ GEND_COMMON),
+/* harmony export */   "GEND_ANIMATE": () => (/* binding */ GEND_ANIMATE),
+/* harmony export */   "GEND_INANIMATE": () => (/* binding */ GEND_INANIMATE),
+/* harmony export */   "GEND_PERSONAL_MASCULINE": () => (/* binding */ GEND_PERSONAL_MASCULINE),
+/* harmony export */   "GEND_ANIMATE_MASCULINE": () => (/* binding */ GEND_ANIMATE_MASCULINE),
+/* harmony export */   "GEND_INANIMATE_MASCULINE": () => (/* binding */ GEND_INANIMATE_MASCULINE),
+/* harmony export */   "COMP_POSITIVE": () => (/* binding */ COMP_POSITIVE),
+/* harmony export */   "COMP_COMPARITIVE": () => (/* binding */ COMP_COMPARITIVE),
+/* harmony export */   "COMP_SUPERLATIVE": () => (/* binding */ COMP_SUPERLATIVE),
+/* harmony export */   "CASE_ABESSIVE": () => (/* binding */ CASE_ABESSIVE),
+/* harmony export */   "CASE_ABLATIVE": () => (/* binding */ CASE_ABLATIVE),
+/* harmony export */   "CASE_ABSOLUTIVE": () => (/* binding */ CASE_ABSOLUTIVE),
+/* harmony export */   "CASE_ACCUSATIVE": () => (/* binding */ CASE_ACCUSATIVE),
+/* harmony export */   "CASE_ADDIRECTIVE": () => (/* binding */ CASE_ADDIRECTIVE),
+/* harmony export */   "CASE_ADELATIVE": () => (/* binding */ CASE_ADELATIVE),
+/* harmony export */   "CASE_ADESSIVE": () => (/* binding */ CASE_ADESSIVE),
+/* harmony export */   "CASE_ADVERBIAL": () => (/* binding */ CASE_ADVERBIAL),
+/* harmony export */   "CASE_ALLATIVE": () => (/* binding */ CASE_ALLATIVE),
+/* harmony export */   "CASE_ANTESSIVE": () => (/* binding */ CASE_ANTESSIVE),
+/* harmony export */   "CASE_APUDESSIVE": () => (/* binding */ CASE_APUDESSIVE),
+/* harmony export */   "CASE_AVERSIVE": () => (/* binding */ CASE_AVERSIVE),
+/* harmony export */   "CASE_BENEFACTIVE": () => (/* binding */ CASE_BENEFACTIVE),
+/* harmony export */   "CASE_CARITIVE": () => (/* binding */ CASE_CARITIVE),
+/* harmony export */   "CASE_CAUSAL": () => (/* binding */ CASE_CAUSAL),
+/* harmony export */   "CASE_CAUSAL_FINAL": () => (/* binding */ CASE_CAUSAL_FINAL),
+/* harmony export */   "CASE_COMITATIVE": () => (/* binding */ CASE_COMITATIVE),
+/* harmony export */   "CASE_DATIVE": () => (/* binding */ CASE_DATIVE),
+/* harmony export */   "CASE_DELATIVE": () => (/* binding */ CASE_DELATIVE),
+/* harmony export */   "CASE_DIRECT": () => (/* binding */ CASE_DIRECT),
+/* harmony export */   "CASE_DISTRIBUTIVE": () => (/* binding */ CASE_DISTRIBUTIVE),
+/* harmony export */   "CASE_DISTRIBUTIVE_TEMPORAL": () => (/* binding */ CASE_DISTRIBUTIVE_TEMPORAL),
+/* harmony export */   "CASE_ELATIVE": () => (/* binding */ CASE_ELATIVE),
+/* harmony export */   "CASE_ERGATIVE": () => (/* binding */ CASE_ERGATIVE),
+/* harmony export */   "CASE_ESSIVE": () => (/* binding */ CASE_ESSIVE),
+/* harmony export */   "CASE_ESSIVE_FORMAL": () => (/* binding */ CASE_ESSIVE_FORMAL),
+/* harmony export */   "CASE_ESSIVE_MODAL": () => (/* binding */ CASE_ESSIVE_MODAL),
+/* harmony export */   "CASE_EQUATIVE": () => (/* binding */ CASE_EQUATIVE),
+/* harmony export */   "CASE_EVITATIVE": () => (/* binding */ CASE_EVITATIVE),
+/* harmony export */   "CASE_EXESSIVE": () => (/* binding */ CASE_EXESSIVE),
+/* harmony export */   "CASE_FINAL": () => (/* binding */ CASE_FINAL),
+/* harmony export */   "CASE_FORMAL": () => (/* binding */ CASE_FORMAL),
+/* harmony export */   "CASE_GENITIVE": () => (/* binding */ CASE_GENITIVE),
+/* harmony export */   "CASE_ILLATIVE": () => (/* binding */ CASE_ILLATIVE),
+/* harmony export */   "CASE_INELATIVE": () => (/* binding */ CASE_INELATIVE),
+/* harmony export */   "CASE_INESSIVE": () => (/* binding */ CASE_INESSIVE),
+/* harmony export */   "CASE_INSTRUCTIVE": () => (/* binding */ CASE_INSTRUCTIVE),
+/* harmony export */   "CASE_INSTRUMENTAL": () => (/* binding */ CASE_INSTRUMENTAL),
+/* harmony export */   "CASE_INSTRUMENTAL_COMITATIVE": () => (/* binding */ CASE_INSTRUMENTAL_COMITATIVE),
+/* harmony export */   "CASE_INTRANSITIVE": () => (/* binding */ CASE_INTRANSITIVE),
+/* harmony export */   "CASE_LATIVE": () => (/* binding */ CASE_LATIVE),
+/* harmony export */   "CASE_LOCATIVE": () => (/* binding */ CASE_LOCATIVE),
+/* harmony export */   "CASE_MODAL": () => (/* binding */ CASE_MODAL),
+/* harmony export */   "CASE_MULTIPLICATIVE": () => (/* binding */ CASE_MULTIPLICATIVE),
+/* harmony export */   "CASE_NOMINATIVE": () => (/* binding */ CASE_NOMINATIVE),
+/* harmony export */   "CASE_PARTITIVE": () => (/* binding */ CASE_PARTITIVE),
+/* harmony export */   "CASE_PEGATIVE": () => (/* binding */ CASE_PEGATIVE),
+/* harmony export */   "CASE_PERLATIVE": () => (/* binding */ CASE_PERLATIVE),
+/* harmony export */   "CASE_POSSESSIVE": () => (/* binding */ CASE_POSSESSIVE),
+/* harmony export */   "CASE_POSTELATIVE": () => (/* binding */ CASE_POSTELATIVE),
+/* harmony export */   "CASE_POSTDIRECTIVE": () => (/* binding */ CASE_POSTDIRECTIVE),
+/* harmony export */   "CASE_POSTESSIVE": () => (/* binding */ CASE_POSTESSIVE),
+/* harmony export */   "CASE_POSTPOSITIONAL": () => (/* binding */ CASE_POSTPOSITIONAL),
+/* harmony export */   "CASE_PREPOSITIONAL": () => (/* binding */ CASE_PREPOSITIONAL),
+/* harmony export */   "CASE_PRIVATIVE": () => (/* binding */ CASE_PRIVATIVE),
+/* harmony export */   "CASE_PROLATIVE": () => (/* binding */ CASE_PROLATIVE),
+/* harmony export */   "CASE_PROSECUTIVE": () => (/* binding */ CASE_PROSECUTIVE),
+/* harmony export */   "CASE_PROXIMATIVE": () => (/* binding */ CASE_PROXIMATIVE),
+/* harmony export */   "CASE_SEPARATIVE": () => (/* binding */ CASE_SEPARATIVE),
+/* harmony export */   "CASE_SOCIATIVE": () => (/* binding */ CASE_SOCIATIVE),
+/* harmony export */   "CASE_SUBDIRECTIVE": () => (/* binding */ CASE_SUBDIRECTIVE),
+/* harmony export */   "CASE_SUBESSIVE": () => (/* binding */ CASE_SUBESSIVE),
+/* harmony export */   "CASE_SUBELATIVE": () => (/* binding */ CASE_SUBELATIVE),
+/* harmony export */   "CASE_SUBLATIVE": () => (/* binding */ CASE_SUBLATIVE),
+/* harmony export */   "CASE_SUPERDIRECTIVE": () => (/* binding */ CASE_SUPERDIRECTIVE),
+/* harmony export */   "CASE_SUPERESSIVE": () => (/* binding */ CASE_SUPERESSIVE),
+/* harmony export */   "CASE_SUPERLATIVE": () => (/* binding */ CASE_SUPERLATIVE),
+/* harmony export */   "CASE_SUPPRESSIVE": () => (/* binding */ CASE_SUPPRESSIVE),
+/* harmony export */   "CASE_TEMPORAL": () => (/* binding */ CASE_TEMPORAL),
+/* harmony export */   "CASE_TERMINATIVE": () => (/* binding */ CASE_TERMINATIVE),
+/* harmony export */   "CASE_TRANSLATIVE": () => (/* binding */ CASE_TRANSLATIVE),
+/* harmony export */   "CASE_VIALIS": () => (/* binding */ CASE_VIALIS),
+/* harmony export */   "CASE_VOCATIVE": () => (/* binding */ CASE_VOCATIVE),
+/* harmony export */   "MOOD_ADMIRATIVE": () => (/* binding */ MOOD_ADMIRATIVE),
+/* harmony export */   "MOOD_COHORTATIVE": () => (/* binding */ MOOD_COHORTATIVE),
+/* harmony export */   "MOOD_CONDITIONAL": () => (/* binding */ MOOD_CONDITIONAL),
+/* harmony export */   "MOOD_DECLARATIVE": () => (/* binding */ MOOD_DECLARATIVE),
+/* harmony export */   "MOOD_DUBITATIVE": () => (/* binding */ MOOD_DUBITATIVE),
+/* harmony export */   "MOOD_ENERGETIC": () => (/* binding */ MOOD_ENERGETIC),
+/* harmony export */   "MOOD_EVENTIVE": () => (/* binding */ MOOD_EVENTIVE),
+/* harmony export */   "MOOD_GENERIC": () => (/* binding */ MOOD_GENERIC),
+/* harmony export */   "MOOD_GERUNDIVE": () => (/* binding */ MOOD_GERUNDIVE),
+/* harmony export */   "MOOD_HYPOTHETICAL": () => (/* binding */ MOOD_HYPOTHETICAL),
+/* harmony export */   "MOOD_IMPERATIVE": () => (/* binding */ MOOD_IMPERATIVE),
+/* harmony export */   "MOOD_INDICATIVE": () => (/* binding */ MOOD_INDICATIVE),
+/* harmony export */   "MOOD_INFERENTIAL": () => (/* binding */ MOOD_INFERENTIAL),
+/* harmony export */   "MOOD_INFINITIVE": () => (/* binding */ MOOD_INFINITIVE),
+/* harmony export */   "MOOD_INTERROGATIVE": () => (/* binding */ MOOD_INTERROGATIVE),
+/* harmony export */   "MOOD_JUSSIVE": () => (/* binding */ MOOD_JUSSIVE),
+/* harmony export */   "MOOD_NEGATIVE": () => (/* binding */ MOOD_NEGATIVE),
+/* harmony export */   "MOOD_OPTATIVE": () => (/* binding */ MOOD_OPTATIVE),
+/* harmony export */   "MOOD_PARTICIPLE": () => (/* binding */ MOOD_PARTICIPLE),
+/* harmony export */   "MOOD_PRESUMPTIVE": () => (/* binding */ MOOD_PRESUMPTIVE),
+/* harmony export */   "MOOD_RENARRATIVE": () => (/* binding */ MOOD_RENARRATIVE),
+/* harmony export */   "MOOD_SUBJUNCTIVE": () => (/* binding */ MOOD_SUBJUNCTIVE),
+/* harmony export */   "MOOD_SUPINE": () => (/* binding */ MOOD_SUPINE),
+/* harmony export */   "NUM_SINGULAR": () => (/* binding */ NUM_SINGULAR),
+/* harmony export */   "NUM_PLURAL": () => (/* binding */ NUM_PLURAL),
+/* harmony export */   "NUM_DUAL": () => (/* binding */ NUM_DUAL),
+/* harmony export */   "NUM_TRIAL": () => (/* binding */ NUM_TRIAL),
+/* harmony export */   "NUM_PAUCAL": () => (/* binding */ NUM_PAUCAL),
+/* harmony export */   "NUM_SINGULATIVE": () => (/* binding */ NUM_SINGULATIVE),
+/* harmony export */   "NUM_COLLECTIVE": () => (/* binding */ NUM_COLLECTIVE),
+/* harmony export */   "NUM_DISTRIBUTIVE_PLURAL": () => (/* binding */ NUM_DISTRIBUTIVE_PLURAL),
+/* harmony export */   "NRL_CARDINAL": () => (/* binding */ NRL_CARDINAL),
+/* harmony export */   "NRL_ORDINAL": () => (/* binding */ NRL_ORDINAL),
+/* harmony export */   "NRL_DISTRIBUTIVE": () => (/* binding */ NRL_DISTRIBUTIVE),
+/* harmony export */   "NURL_NUMERAL_ADVERB": () => (/* binding */ NURL_NUMERAL_ADVERB),
+/* harmony export */   "ORD_1ST": () => (/* binding */ ORD_1ST),
+/* harmony export */   "ORD_2ND": () => (/* binding */ ORD_2ND),
+/* harmony export */   "ORD_3RD": () => (/* binding */ ORD_3RD),
+/* harmony export */   "ORD_4TH": () => (/* binding */ ORD_4TH),
+/* harmony export */   "ORD_5TH": () => (/* binding */ ORD_5TH),
+/* harmony export */   "ORD_6TH": () => (/* binding */ ORD_6TH),
+/* harmony export */   "ORD_7TH": () => (/* binding */ ORD_7TH),
+/* harmony export */   "ORD_8TH": () => (/* binding */ ORD_8TH),
+/* harmony export */   "ORD_9TH": () => (/* binding */ ORD_9TH),
+/* harmony export */   "TENSE_AORIST": () => (/* binding */ TENSE_AORIST),
+/* harmony export */   "TENSE_FUTURE": () => (/* binding */ TENSE_FUTURE),
+/* harmony export */   "TENSE_FUTURE_PERFECT": () => (/* binding */ TENSE_FUTURE_PERFECT),
+/* harmony export */   "TENSE_IMPERFECT": () => (/* binding */ TENSE_IMPERFECT),
+/* harmony export */   "TENSE_PAST_ABSOLUTE": () => (/* binding */ TENSE_PAST_ABSOLUTE),
+/* harmony export */   "TENSE_PERFECT": () => (/* binding */ TENSE_PERFECT),
+/* harmony export */   "TENSE_PLUPERFECT": () => (/* binding */ TENSE_PLUPERFECT),
+/* harmony export */   "TENSE_PRESENT": () => (/* binding */ TENSE_PRESENT),
+/* harmony export */   "VKIND_TO_BE": () => (/* binding */ VKIND_TO_BE),
+/* harmony export */   "VKIND_COMPOUNDS_OF_TO_BE": () => (/* binding */ VKIND_COMPOUNDS_OF_TO_BE),
+/* harmony export */   "VKIND_TAKING_ABLATIVE": () => (/* binding */ VKIND_TAKING_ABLATIVE),
+/* harmony export */   "VKIND_TAKING_DATIVE": () => (/* binding */ VKIND_TAKING_DATIVE),
+/* harmony export */   "VKIND_TAKING_GENITIVE": () => (/* binding */ VKIND_TAKING_GENITIVE),
+/* harmony export */   "VKIND_TRANSITIVE": () => (/* binding */ VKIND_TRANSITIVE),
+/* harmony export */   "VKIND_INTRANSITIVE": () => (/* binding */ VKIND_INTRANSITIVE),
+/* harmony export */   "VKIND_IMPERSONAL": () => (/* binding */ VKIND_IMPERSONAL),
+/* harmony export */   "VKIND_DEPONENT": () => (/* binding */ VKIND_DEPONENT),
+/* harmony export */   "VKIND_SEMIDEPONENT": () => (/* binding */ VKIND_SEMIDEPONENT),
+/* harmony export */   "VKIND_PERFECT_DEFINITE": () => (/* binding */ VKIND_PERFECT_DEFINITE),
+/* harmony export */   "VOICE_ACTIVE": () => (/* binding */ VOICE_ACTIVE),
+/* harmony export */   "VOICE_PASSIVE": () => (/* binding */ VOICE_PASSIVE),
+/* harmony export */   "VOICE_MEDIOPASSIVE": () => (/* binding */ VOICE_MEDIOPASSIVE),
+/* harmony export */   "VOICE_IMPERSONAL_PASSIVE": () => (/* binding */ VOICE_IMPERSONAL_PASSIVE),
+/* harmony export */   "VOICE_MIDDLE": () => (/* binding */ VOICE_MIDDLE),
+/* harmony export */   "VOICE_ANTIPASSIVE": () => (/* binding */ VOICE_ANTIPASSIVE),
+/* harmony export */   "VOICE_REFLEXIVE": () => (/* binding */ VOICE_REFLEXIVE),
+/* harmony export */   "VOICE_RECIPROCAL": () => (/* binding */ VOICE_RECIPROCAL),
+/* harmony export */   "VOICE_CAUSATIVE": () => (/* binding */ VOICE_CAUSATIVE),
+/* harmony export */   "VOICE_ADJUTATIVE": () => (/* binding */ VOICE_ADJUTATIVE),
+/* harmony export */   "VOICE_APPLICATIVE": () => (/* binding */ VOICE_APPLICATIVE),
+/* harmony export */   "VOICE_CIRCUMSTANTIAL": () => (/* binding */ VOICE_CIRCUMSTANTIAL),
+/* harmony export */   "VOICE_DEPONENT": () => (/* binding */ VOICE_DEPONENT),
+/* harmony export */   "TYPE_IRREGULAR": () => (/* binding */ TYPE_IRREGULAR),
+/* harmony export */   "TYPE_REGULAR": () => (/* binding */ TYPE_REGULAR),
+/* harmony export */   "CLASS_PERSONAL": () => (/* binding */ CLASS_PERSONAL),
+/* harmony export */   "CLASS_REFLEXIVE": () => (/* binding */ CLASS_REFLEXIVE),
+/* harmony export */   "CLASS_POSSESSIVE": () => (/* binding */ CLASS_POSSESSIVE),
+/* harmony export */   "CLASS_DEMONSTRATIVE": () => (/* binding */ CLASS_DEMONSTRATIVE),
+/* harmony export */   "CLASS_RELATIVE": () => (/* binding */ CLASS_RELATIVE),
+/* harmony export */   "CLASS_INTERROGATIVE": () => (/* binding */ CLASS_INTERROGATIVE),
+/* harmony export */   "CLASS_GENERAL_RELATIVE": () => (/* binding */ CLASS_GENERAL_RELATIVE),
+/* harmony export */   "CLASS_INDEFINITE": () => (/* binding */ CLASS_INDEFINITE),
+/* harmony export */   "CLASS_INTENSIVE": () => (/* binding */ CLASS_INTENSIVE),
+/* harmony export */   "CLASS_RECIPROCAL": () => (/* binding */ CLASS_RECIPROCAL),
+/* harmony export */   "PARADIGM_CAT_KAYLO": () => (/* binding */ PARADIGM_CAT_KAYLO),
+/* harmony export */   "PARADIGM_CAT_STATE": () => (/* binding */ PARADIGM_CAT_STATE)
 /* harmony export */ });
 /* eslint-disable no-unused-vars */
 const LANG_UNIT_WORD = Symbol('word')
@@ -4554,7 +4883,7 @@ const PARADIGM_CAT_STATE = 'state'
 /***/ }),
 
 /***/ "./definition-set.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./definition-set.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4562,7 +4891,7 @@ const PARADIGM_CAT_STATE = 'state'
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ DefinitionSet
+/* harmony export */   "default": () => (/* binding */ DefinitionSet)
 /* harmony export */ });
 /* harmony import */ var _definition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./definition */ "./definition.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
@@ -4685,7 +5014,7 @@ class DefinitionSet {
 /***/ }),
 
 /***/ "./definition.js":
-/*!***********************!*
+/*!***********************!*\
   !*** ./definition.js ***!
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4693,7 +5022,7 @@ class DefinitionSet {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
@@ -4749,7 +5078,7 @@ class Definition {
 /***/ }),
 
 /***/ "./digest.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./digest.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4757,7 +5086,7 @@ class Definition {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Digest
+/* harmony export */   "default": () => (/* binding */ Digest)
 /* harmony export */ });
 /* harmony import */ var _sha1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sha1.js */ "./sha1.js");
 
@@ -4795,7 +5124,7 @@ class Digest {
 /***/ }),
 
 /***/ "./driver.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4803,47 +5132,49 @@ class Digest {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Constants": () => /* reexport module object */ _constants_js__WEBPACK_IMPORTED_MODULE_0__,
-/* harmony export */   "Definition": () => /* reexport safe */ _definition_js__WEBPACK_IMPORTED_MODULE_1__.default,
-/* harmony export */   "DefinitionSet": () => /* reexport safe */ _definition_set__WEBPACK_IMPORTED_MODULE_2__.default,
-/* harmony export */   "Feature": () => /* reexport safe */ _feature_js__WEBPACK_IMPORTED_MODULE_3__.default,
-/* harmony export */   "GrmFeature": () => /* reexport safe */ _grm_feature_js__WEBPACK_IMPORTED_MODULE_4__.default,
-/* harmony export */   "FeatureType": () => /* reexport safe */ _feature_type_js__WEBPACK_IMPORTED_MODULE_5__.default,
-/* harmony export */   "FeatureList": () => /* reexport safe */ _feature_list_js__WEBPACK_IMPORTED_MODULE_6__.default,
-/* harmony export */   "FeatureImporter": () => /* reexport safe */ _feature_importer_js__WEBPACK_IMPORTED_MODULE_7__.default,
-/* harmony export */   "Inflection": () => /* reexport safe */ _inflection_js__WEBPACK_IMPORTED_MODULE_13__.default,
-/* harmony export */   "LanguageModelFactory": () => /* reexport safe */ _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__.default,
-/* harmony export */   "HomonymGroup": () => /* reexport safe */ _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__.default,
-/* harmony export */   "Homonym": () => /* reexport safe */ _homonym_js__WEBPACK_IMPORTED_MODULE_10__.default,
-/* harmony export */   "Lexeme": () => /* reexport safe */ _lexeme_js__WEBPACK_IMPORTED_MODULE_11__.default,
-/* harmony export */   "Lemma": () => /* reexport safe */ _lemma_js__WEBPACK_IMPORTED_MODULE_12__.default,
-/* harmony export */   "Language": () => /* reexport safe */ _language_js__WEBPACK_IMPORTED_MODULE_14__.default,
-/* harmony export */   "LatinLanguageModel": () => /* reexport safe */ _latin_language_model_js__WEBPACK_IMPORTED_MODULE_15__.default,
-/* harmony export */   "GreekLanguageModel": () => /* reexport safe */ _greek_language_model_js__WEBPACK_IMPORTED_MODULE_16__.default,
-/* harmony export */   "ArabicLanguageModel": () => /* reexport safe */ _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_17__.default,
-/* harmony export */   "PersianLanguageModel": () => /* reexport safe */ _persian_language_model_js__WEBPACK_IMPORTED_MODULE_18__.default,
-/* harmony export */   "GeezLanguageModel": () => /* reexport safe */ _geez_language_model_js__WEBPACK_IMPORTED_MODULE_19__.default,
-/* harmony export */   "ChineseLanguageModel": () => /* reexport safe */ _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_20__.default,
-/* harmony export */   "SyriacLanguageModel": () => /* reexport safe */ _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_21__.default,
-/* harmony export */   "ResourceProvider": () => /* reexport safe */ _resource_provider_js__WEBPACK_IMPORTED_MODULE_22__.default,
-/* harmony export */   "Translation": () => /* reexport safe */ _translation_js__WEBPACK_IMPORTED_MODULE_25__.default,
-/* harmony export */   "PsEvent": () => /* reexport safe */ _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_23__.default,
-/* harmony export */   "PsEventData": () => /* reexport safe */ _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_24__.default,
-/* harmony export */   "TextQuoteSelector": () => /* reexport safe */ _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_26__.default,
-/* harmony export */   "WordUsageExample": () => /* reexport safe */ _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_27__.default,
-/* harmony export */   "Author": () => /* reexport safe */ _texts_author_js__WEBPACK_IMPORTED_MODULE_28__.default,
-/* harmony export */   "TextWork": () => /* reexport safe */ _texts_text_work_js__WEBPACK_IMPORTED_MODULE_29__.default,
-/* harmony export */   "WordItem": () => /* reexport safe */ _word_item_js__WEBPACK_IMPORTED_MODULE_30__.default,
-/* harmony export */   "WordList": () => /* reexport safe */ _word_list_js__WEBPACK_IMPORTED_MODULE_31__.default,
-/* harmony export */   "TreebankDataItem": () => /* reexport safe */ _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_32__.default,
-/* harmony export */   "Logger": () => /* reexport safe */ _logging_logger_js__WEBPACK_IMPORTED_MODULE_33__.default,
-/* harmony export */   "Digest": () => /* reexport safe */ _digest_js__WEBPACK_IMPORTED_MODULE_34__.default,
-/* harmony export */   "Options": () => /* reexport safe */ _options_options_js__WEBPACK_IMPORTED_MODULE_35__.default,
-/* harmony export */   "DefaultsLoader": () => /* reexport safe */ _storages_defaults_loader_js__WEBPACK_IMPORTED_MODULE_36__.default,
-/* harmony export */   "ExtensionSyncStorage": () => /* reexport safe */ _storages_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_37__.default,
-/* harmony export */   "LocalStorageArea": () => /* reexport safe */ _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_38__.default,
-/* harmony export */   "RemoteAuthStorageArea": () => /* reexport safe */ _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_39__.default,
-/* harmony export */   "TempStorageArea": () => /* reexport safe */ _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_40__.default
+/* harmony export */   "Constants": () => (/* reexport module object */ _constants_js__WEBPACK_IMPORTED_MODULE_0__),
+/* harmony export */   "Definition": () => (/* reexport safe */ _definition_js__WEBPACK_IMPORTED_MODULE_1__.default),
+/* harmony export */   "DefinitionSet": () => (/* reexport safe */ _definition_set__WEBPACK_IMPORTED_MODULE_2__.default),
+/* harmony export */   "Feature": () => (/* reexport safe */ _feature_js__WEBPACK_IMPORTED_MODULE_3__.default),
+/* harmony export */   "GrmFeature": () => (/* reexport safe */ _grm_feature_js__WEBPACK_IMPORTED_MODULE_4__.default),
+/* harmony export */   "FeatureType": () => (/* reexport safe */ _feature_type_js__WEBPACK_IMPORTED_MODULE_5__.default),
+/* harmony export */   "FeatureList": () => (/* reexport safe */ _feature_list_js__WEBPACK_IMPORTED_MODULE_6__.default),
+/* harmony export */   "FeatureImporter": () => (/* reexport safe */ _feature_importer_js__WEBPACK_IMPORTED_MODULE_7__.default),
+/* harmony export */   "Inflection": () => (/* reexport safe */ _inflection_js__WEBPACK_IMPORTED_MODULE_13__.default),
+/* harmony export */   "LanguageModelFactory": () => (/* reexport safe */ _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__.default),
+/* harmony export */   "HomonymGroup": () => (/* reexport safe */ _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__.default),
+/* harmony export */   "Homonym": () => (/* reexport safe */ _homonym_js__WEBPACK_IMPORTED_MODULE_10__.default),
+/* harmony export */   "Lexeme": () => (/* reexport safe */ _lexeme_js__WEBPACK_IMPORTED_MODULE_11__.default),
+/* harmony export */   "Lemma": () => (/* reexport safe */ _lemma_js__WEBPACK_IMPORTED_MODULE_12__.default),
+/* harmony export */   "Language": () => (/* reexport safe */ _language_js__WEBPACK_IMPORTED_MODULE_14__.default),
+/* harmony export */   "LatinLanguageModel": () => (/* reexport safe */ _latin_language_model_js__WEBPACK_IMPORTED_MODULE_15__.default),
+/* harmony export */   "GreekLanguageModel": () => (/* reexport safe */ _greek_language_model_js__WEBPACK_IMPORTED_MODULE_16__.default),
+/* harmony export */   "ArabicLanguageModel": () => (/* reexport safe */ _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_17__.default),
+/* harmony export */   "PersianLanguageModel": () => (/* reexport safe */ _persian_language_model_js__WEBPACK_IMPORTED_MODULE_18__.default),
+/* harmony export */   "GeezLanguageModel": () => (/* reexport safe */ _geez_language_model_js__WEBPACK_IMPORTED_MODULE_19__.default),
+/* harmony export */   "ChineseLanguageModel": () => (/* reexport safe */ _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_20__.default),
+/* harmony export */   "SyriacLanguageModel": () => (/* reexport safe */ _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_21__.default),
+/* harmony export */   "ResourceProvider": () => (/* reexport safe */ _resource_provider_js__WEBPACK_IMPORTED_MODULE_22__.default),
+/* harmony export */   "Translation": () => (/* reexport safe */ _translation_js__WEBPACK_IMPORTED_MODULE_25__.default),
+/* harmony export */   "PsEvent": () => (/* reexport safe */ _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_23__.default),
+/* harmony export */   "PsEventData": () => (/* reexport safe */ _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_24__.default),
+/* harmony export */   "TextQuoteSelector": () => (/* reexport safe */ _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_26__.default),
+/* harmony export */   "WordUsageExample": () => (/* reexport safe */ _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_27__.default),
+/* harmony export */   "Author": () => (/* reexport safe */ _texts_author_js__WEBPACK_IMPORTED_MODULE_28__.default),
+/* harmony export */   "TextWork": () => (/* reexport safe */ _texts_text_work_js__WEBPACK_IMPORTED_MODULE_29__.default),
+/* harmony export */   "WordItem": () => (/* reexport safe */ _word_item_js__WEBPACK_IMPORTED_MODULE_30__.default),
+/* harmony export */   "WordList": () => (/* reexport safe */ _word_list_js__WEBPACK_IMPORTED_MODULE_31__.default),
+/* harmony export */   "TreebankDataItem": () => (/* reexport safe */ _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_32__.default),
+/* harmony export */   "Logger": () => (/* reexport safe */ _logging_logger_js__WEBPACK_IMPORTED_MODULE_33__.default),
+/* harmony export */   "Digest": () => (/* reexport safe */ _digest_js__WEBPACK_IMPORTED_MODULE_34__.default),
+/* harmony export */   "Options": () => (/* reexport safe */ _options_options_js__WEBPACK_IMPORTED_MODULE_35__.default),
+/* harmony export */   "DefaultsLoader": () => (/* reexport safe */ _storages_defaults_loader_js__WEBPACK_IMPORTED_MODULE_36__.default),
+/* harmony export */   "ExtensionSyncStorage": () => (/* reexport safe */ _storages_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_37__.default),
+/* harmony export */   "LocalStorageArea": () => (/* reexport safe */ _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_38__.default),
+/* harmony export */   "RemoteAuthStorageArea": () => (/* reexport safe */ _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_39__.default),
+/* harmony export */   "TempStorageArea": () => (/* reexport safe */ _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_40__.default),
+/* harmony export */   "Collection": () => (/* reexport safe */ _dts_collection_js__WEBPACK_IMPORTED_MODULE_41__.default),
+/* harmony export */   "Resource": () => (/* reexport safe */ _dts_resource_js__WEBPACK_IMPORTED_MODULE_42__.default)
 /* harmony export */ });
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _definition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./definition.js */ "./definition.js");
@@ -4886,6 +5217,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./storages/local-storage-area.js */ "./storages/local-storage-area.js");
 /* harmony import */ var _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./storages/remote-auth-storage-area.js */ "./storages/remote-auth-storage-area.js");
 /* harmony import */ var _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./storages/temp-storage-area.js */ "./storages/temp-storage-area.js");
+/* harmony import */ var _dts_collection_js__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./dts/collection.js */ "./dts/collection.js");
+/* harmony import */ var _dts_resource_js__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./dts/resource.js */ "./dts/resource.js");
 
 ;
 
@@ -4937,10 +5270,74 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+/***/ }),
+
+/***/ "./dts/collection.js":
+/*!***************************!*\
+  !*** ./dts/collection.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Collection)
+/* harmony export */ });
+/* harmony import */ var _resource_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource.js */ "./dts/resource.js");
+
+
+class Collection {
+  constructor ({ totalItems, title, id } = {}) {
+    this.totalItems = totalItems
+    this.title = title
+    this.id = id
+    this.members = []
+    this.navigation = null
+  }
+
+  addMember (jsonObj) {
+    if (jsonObj.type === 'Collection') {
+      this.members.push(new Collection(jsonObj))
+    }
+    if (jsonObj.type === 'Resource') {
+      this.navigation = new _resource_js__WEBPACK_IMPORTED_MODULE_0__.default(jsonObj)
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./dts/resource.js":
+/*!*************************!*\
+  !*** ./dts/resource.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Resource)
+/* harmony export */ });
+class Resource {
+  constructor ({ id } = {}) {
+    this.id = id
+  }
+
+  uploadRefs ({ refs, passage } = {}) {
+    this.passage = passage
+    this.refs = refs
+  }
+}
+
+
 /***/ }),
 
 /***/ "./feature.js":
-/*!********************!*
+/*!********************!*\
   !*** ./feature.js ***!
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4948,7 +5345,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Feature
+/* harmony export */   "default": () => (/* binding */ Feature)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
@@ -5480,7 +5877,7 @@ Feature.errMsgs = {
 /***/ }),
 
 /***/ "./feature_importer.js":
-/*!*****************************!*
+/*!*****************************!*\
   !*** ./feature_importer.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5488,7 +5885,7 @@ Feature.errMsgs = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class FeatureImporter {
   /**
@@ -5559,7 +5956,7 @@ class FeatureImporter {
 /***/ }),
 
 /***/ "./feature_list.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./feature_list.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5567,7 +5964,7 @@ class FeatureImporter {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /**
  * A list of grammatical features that characterizes a language unit. Has some additional service methods,
@@ -5637,7 +6034,7 @@ class FeatureList {
 /***/ }),
 
 /***/ "./feature_type.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./feature_type.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5645,7 +6042,7 @@ class FeatureList {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
@@ -5904,7 +6301,7 @@ FeatureType.UNRESTRICTED_VALUE = Symbol('unrestricted')
 /***/ }),
 
 /***/ "./geez_language_model.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./geez_language_model.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5912,7 +6309,7 @@ FeatureType.UNRESTRICTED_VALUE = Symbol('unrestricted')
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ GeezLanguageModel
+/* harmony export */   "default": () => (/* binding */ GeezLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -6011,7 +6408,7 @@ for the current node
 /***/ }),
 
 /***/ "./greek_language_model.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./greek_language_model.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6019,7 +6416,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ GreekLanguageModel
+/* harmony export */   "default": () => (/* binding */ GreekLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -6472,7 +6869,7 @@ for the current node
 /***/ }),
 
 /***/ "./grm-feature.js":
-/*!************************!*
+/*!************************!*\
   !*** ./grm-feature.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6480,7 +6877,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
@@ -6656,7 +7053,7 @@ GrmFeature.types = {
 /***/ }),
 
 /***/ "./homonym-group.js":
-/*!**************************!*
+/*!**************************!*\
   !*** ./homonym-group.js ***!
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6664,7 +7061,7 @@ GrmFeature.types = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ HomonymGroup
+/* harmony export */   "default": () => (/* binding */ HomonymGroup)
 /* harmony export */ });
 /* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
 
@@ -6748,7 +7145,7 @@ HomonymGroup.errors = {
 /***/ }),
 
 /***/ "./homonym.js":
-/*!********************!*
+/*!********************!*\
   !*** ./homonym.js ***!
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6756,7 +7153,7 @@ HomonymGroup.errors = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
 /* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
@@ -6977,7 +7374,7 @@ class Homonym {
 /***/ }),
 
 /***/ "./inflection.js":
-/*!***********************!*
+/*!***********************!*\
   !*** ./inflection.js ***!
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6985,7 +7382,7 @@ class Homonym {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
@@ -7408,7 +7805,7 @@ class Inflection {
 /***/ }),
 
 /***/ "./inflection_group.js":
-/*!*****************************!*
+/*!*****************************!*\
   !*** ./inflection_group.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7416,7 +7813,7 @@ class Inflection {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class InflectionGroup {
   /**
@@ -7446,7 +7843,7 @@ class InflectionGroup {
 /***/ }),
 
 /***/ "./inflection_grouping_key.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./inflection_grouping_key.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7454,7 +7851,7 @@ class InflectionGroup {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 
@@ -7510,7 +7907,7 @@ is included in the grouping key
 /***/ }),
 
 /***/ "./language.js":
-/*!*********************!*
+/*!*********************!*\
   !*** ./language.js ***!
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7518,8 +7915,8 @@ is included in the grouping key
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Lang": () => /* binding */ Lang,
-/* harmony export */   "default": () => /* binding */ Language
+/* harmony export */   "Lang": () => (/* binding */ Lang),
+/* harmony export */   "default": () => (/* binding */ Language)
 /* harmony export */ });
 /**
  * Constants that define a macrolanguage.
@@ -7641,7 +8038,7 @@ class Language {
 /***/ }),
 
 /***/ "./language_model.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./language_model.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7649,7 +8046,7 @@ class Language {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
@@ -8385,7 +8782,7 @@ class LanguageModel {
 /***/ }),
 
 /***/ "./language_model_factory.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./language_model_factory.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8393,7 +8790,7 @@ class LanguageModel {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language.js */ "./language.js");
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
@@ -8603,7 +9000,7 @@ class LanguageModelFactory {
 /***/ }),
 
 /***/ "./languages/greek-chars.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./languages/greek-chars.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8611,7 +9008,7 @@ class LanguageModelFactory {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ GreekChars
+/* harmony export */   "default": () => (/* binding */ GreekChars)
 /* harmony export */ });
 class GreekChars {
   static get chars () {
@@ -8932,7 +9329,7 @@ class GreekChars {
 /***/ }),
 
 /***/ "./latin_language_model.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./latin_language_model.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -8940,7 +9337,7 @@ class GreekChars {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ LatinLanguageModel
+/* harmony export */   "default": () => (/* binding */ LatinLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -9199,7 +9596,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 /***/ }),
 
 /***/ "./lemma.js":
-/*!******************!*
+/*!******************!*\
   !*** ./lemma.js ***!
   \******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9207,7 +9604,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -9506,7 +9903,7 @@ class Lemma {
 /***/ }),
 
 /***/ "./lexeme.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./lexeme.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9514,7 +9911,7 @@ class Lemma {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
 /* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
@@ -9861,7 +10258,7 @@ class Lexeme {
 /***/ }),
 
 /***/ "./logging/logger.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./logging/logger.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -9869,7 +10266,7 @@ class Lexeme {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Logger
+/* harmony export */   "default": () => (/* binding */ Logger)
 /* harmony export */ });
 let singleInstance
 
@@ -10019,7 +10416,7 @@ class Logger {
 /***/ }),
 
 /***/ "./options/option-item.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./options/option-item.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10027,7 +10424,7 @@ class Logger {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ OptionItem
+/* harmony export */   "default": () => (/* binding */ OptionItem)
 /* harmony export */ });
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
 
@@ -10157,7 +10554,7 @@ class OptionItem {
 /***/ }),
 
 /***/ "./options/options.js":
-/*!****************************!*
+/*!****************************!*\
   !*** ./options/options.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10165,7 +10562,7 @@ class OptionItem {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Options
+/* harmony export */   "default": () => (/* binding */ Options)
 /* harmony export */ });
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
 /* harmony import */ var _option_item_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./option-item.js */ "./options/option-item.js");
@@ -10363,7 +10760,7 @@ class Options {
 /***/ }),
 
 /***/ "./persian_language_model.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./persian_language_model.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10371,7 +10768,7 @@ class Options {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ PersianLanguageModel
+/* harmony export */   "default": () => (/* binding */ PersianLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -10438,7 +10835,7 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /***/ }),
 
 /***/ "./ps-events/ps-event-data.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./ps-events/ps-event-data.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10446,7 +10843,7 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ PsEventData
+/* harmony export */   "default": () => (/* binding */ PsEventData)
 /* harmony export */ });
 /**
  * A public information about published event that is returned to subscriber.
@@ -10489,7 +10886,7 @@ class PsEventData {
 /***/ }),
 
 /***/ "./ps-events/ps-event.js":
-/*!*******************************!*
+/*!*******************************!*\
   !*** ./ps-events/ps-event.js ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10497,7 +10894,7 @@ class PsEventData {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ PsEvent
+/* harmony export */   "default": () => (/* binding */ PsEvent)
 /* harmony export */ });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
@@ -10594,7 +10991,7 @@ class PsEvent {
 /***/ }),
 
 /***/ "./resource_provider.js":
-/*!******************************!*
+/*!******************************!*\
   !*** ./resource_provider.js ***!
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10602,7 +10999,7 @@ class PsEvent {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /**
  * An abstraction of an Alpheios resource provider
@@ -10677,7 +11074,7 @@ class ResourceProvider {
 /***/ }),
 
 /***/ "./sha1.js":
-/*!*****************!*
+/*!*****************!*\
   !*** ./sha1.js ***!
   \*****************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10685,7 +11082,7 @@ class ResourceProvider {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* eslint-disable */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
@@ -10861,7 +11258,7 @@ class Sha1 {
 /***/ }),
 
 /***/ "./storages/defaults-loader.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./storages/defaults-loader.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10869,7 +11266,7 @@ class Sha1 {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ DefaultsLoader
+/* harmony export */   "default": () => (/* binding */ DefaultsLoader)
 /* harmony export */ });
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
 
@@ -10889,7 +11286,7 @@ class DefaultsLoader {
 /***/ }),
 
 /***/ "./storages/extension-sync-storage.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ./storages/extension-sync-storage.js ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10897,7 +11294,7 @@ class DefaultsLoader {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ ExtensionSyncStorage
+/* harmony export */   "default": () => (/* binding */ ExtensionSyncStorage)
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
 /* global browser */
@@ -10944,7 +11341,7 @@ class ExtensionSyncStorage extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_
 /***/ }),
 
 /***/ "./storages/local-storage-area.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ./storages/local-storage-area.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -10952,7 +11349,7 @@ class ExtensionSyncStorage extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ LocalStorageArea
+/* harmony export */   "default": () => (/* binding */ LocalStorageArea)
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
 
@@ -11106,7 +11503,7 @@ class LocalStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.
 /***/ }),
 
 /***/ "./storages/remote-auth-storage-area.js":
-/*!**********************************************!*
+/*!**********************************************!*\
   !*** ./storages/remote-auth-storage-area.js ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11114,7 +11511,7 @@ class LocalStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ RemoteAuthStorageArea
+/* harmony export */   "default": () => (/* binding */ RemoteAuthStorageArea)
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
@@ -11210,7 +11607,7 @@ class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE
 /***/ }),
 
 /***/ "./storages/storage-adapter.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./storages/storage-adapter.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11218,7 +11615,7 @@ class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ StorageAdapter
+/* harmony export */   "default": () => (/* binding */ StorageAdapter)
 /* harmony export */ });
 /**
  * An abstract storage adapter class for an Options object. Implements two methods: set() and get().
@@ -11288,7 +11685,7 @@ class StorageAdapter {
 /***/ }),
 
 /***/ "./storages/temp-storage-area.js":
-/*!***************************************!*
+/*!***************************************!*\
   !*** ./storages/temp-storage-area.js ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11296,7 +11693,7 @@ class StorageAdapter {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ TempStorageArea
+/* harmony export */   "default": () => (/* binding */ TempStorageArea)
 /* harmony export */ });
 /* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
 
@@ -11338,7 +11735,7 @@ class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.d
 /***/ }),
 
 /***/ "./syriac_language_model.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./syriac_language_model.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11346,7 +11743,7 @@ class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.d
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ SyriacLanguageModel
+/* harmony export */   "default": () => (/* binding */ SyriacLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language.js */ "./language.js");
@@ -11586,7 +11983,7 @@ for the current node
 /***/ }),
 
 /***/ "./texts/author.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./texts/author.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11594,7 +11991,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class Author {
   /**
@@ -11661,7 +12058,7 @@ class Author {
 /***/ }),
 
 /***/ "./texts/text-work.js":
-/*!****************************!*
+/*!****************************!*\
   !*** ./texts/text-work.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11669,7 +12066,7 @@ class Author {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class TextWork {
   /**
@@ -11747,7 +12144,7 @@ class TextWork {
 /***/ }),
 
 /***/ "./texts/word-usage-example.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./texts/word-usage-example.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11755,7 +12152,7 @@ class TextWork {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordUsageExample
+/* harmony export */   "default": () => (/* binding */ WordUsageExample)
 /* harmony export */ });
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../language_model_factory.js */ "./language_model_factory.js");
@@ -11853,7 +12250,7 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
 /***/ }),
 
 /***/ "./translation.js":
-/*!************************!*
+/*!************************!*\
   !*** ./translation.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11861,7 +12258,7 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
 
@@ -11932,7 +12329,7 @@ class Translation {
 /***/ }),
 
 /***/ "./treebank_data_item.js":
-/*!*******************************!*
+/*!*******************************!*\
   !*** ./treebank_data_item.js ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -11940,7 +12337,7 @@ class Translation {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ TreebankDataItem
+/* harmony export */   "default": () => (/* binding */ TreebankDataItem)
 /* harmony export */ });
 class TreebankDataItem {
   /**
@@ -12128,7 +12525,7 @@ class TreebankDataItem {
 /***/ }),
 
 /***/ "./w3c/text-quote-selector.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./w3c/text-quote-selector.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -12136,7 +12533,7 @@ class TreebankDataItem {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ TextQuoteSelector
+/* harmony export */   "default": () => (/* binding */ TextQuoteSelector)
 /* harmony export */ });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
@@ -12195,7 +12592,7 @@ class TextQuoteSelector {
 /***/ }),
 
 /***/ "./word-item.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./word-item.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -12203,7 +12600,7 @@ class TextQuoteSelector {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordItem
+/* harmony export */   "default": () => (/* binding */ WordItem)
 /* harmony export */ });
 /* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
@@ -12356,7 +12753,7 @@ class WordItem {
 /***/ }),
 
 /***/ "./word-list.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./word-list.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -12364,7 +12761,7 @@ class WordItem {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordList
+/* harmony export */   "default": () => (/* binding */ WordList)
 /* harmony export */ });
 /* harmony import */ var _word_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-item */ "./word-item.js");
 
@@ -12475,7 +12872,7 @@ class WordList {
 /***/ }),
 
 /***/ "assert":
-/*!*************************!*
+/*!*************************!*\
   !*** external "assert" ***!
   \*************************/
 /***/ ((module) => {
@@ -12486,7 +12883,7 @@ module.exports = require("assert");;
 /***/ }),
 
 /***/ "crypto":
-/*!*************************!*
+/*!*************************!*\
   !*** external "crypto" ***!
   \*************************/
 /***/ ((module) => {
@@ -12496,19 +12893,8 @@ module.exports = require("crypto");;
 
 /***/ }),
 
-/***/ "fs":
-/*!*********************!*
-  !*** external "fs" ***!
-  \*********************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs");;
-
-/***/ }),
-
 /***/ "http":
-/*!***********************!*
+/*!***********************!*\
   !*** external "http" ***!
   \***********************/
 /***/ ((module) => {
@@ -12519,7 +12905,7 @@ module.exports = require("http");;
 /***/ }),
 
 /***/ "https":
-/*!************************!*
+/*!************************!*\
   !*** external "https" ***!
   \************************/
 /***/ ((module) => {
@@ -12529,19 +12915,19 @@ module.exports = require("https");;
 
 /***/ }),
 
-/***/ "net":
-/*!**********************!*
-  !*** external "net" ***!
-  \**********************/
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("net");;
+module.exports = require("os");;
 
 /***/ }),
 
 /***/ "stream":
-/*!*************************!*
+/*!*************************!*\
   !*** external "stream" ***!
   \*************************/
 /***/ ((module) => {
@@ -12552,7 +12938,7 @@ module.exports = require("stream");;
 /***/ }),
 
 /***/ "tty":
-/*!**********************!*
+/*!**********************!*\
   !*** external "tty" ***!
   \**********************/
 /***/ ((module) => {
@@ -12563,7 +12949,7 @@ module.exports = require("tty");;
 /***/ }),
 
 /***/ "url":
-/*!**********************!*
+/*!**********************!*\
   !*** external "url" ***!
   \**********************/
 /***/ ((module) => {
@@ -12574,7 +12960,7 @@ module.exports = require("url");;
 /***/ }),
 
 /***/ "util":
-/*!***********************!*
+/*!***********************!*\
   !*** external "util" ***!
   \***********************/
 /***/ ((module) => {
@@ -12585,7 +12971,7 @@ module.exports = require("util");;
 /***/ }),
 
 /***/ "zlib":
-/*!***********************!*
+/*!***********************!*\
   !*** external "zlib" ***!
   \***********************/
 /***/ ((module) => {
@@ -12626,8 +13012,8 @@ module.exports = require("zlib");;
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
 /******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
@@ -12647,7 +13033,7 @@ module.exports = require("zlib");;
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */

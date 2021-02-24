@@ -3,7 +3,7 @@
 import 'whatwg-fetch'
 import ClientAdapters from '@clAdapters/client-adapters.js'
 import { Fixture, TranslationsFixture } from 'alpheios-fixtures'
-import { Constants, Homonym, Author, WordUsageExample, LocalStorageArea, Options } from 'alpheios-data-models'
+import { Constants, Homonym, Author, WordUsageExample, LocalStorageArea, Options, Collection, Resource } from 'alpheios-data-models'
 
 describe('client-adapters.test.js', () => {
   console.error = function () {}
@@ -495,4 +495,120 @@ describe('client-adapters.test.js', () => {
     expect(res.result).not.toBeDefined()
   })
 
+  it('25 ClientAdapters - dtsApiMethod - getCollection returns a root collection if id is not defined', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/'
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result).toEqual(expect.any(Collection))
+  })
+
+  it('26 ClientAdapters - dtsApiMethod - getCollection returns collection for the given id', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: 'urn:cts:latinLit:phi0472'
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result).toEqual(expect.any(Collection))
+  })
+
+  it('27 ClientAdapters - dtsApiMethod - getNavigation updates collection with refs', async () => {
+    ClientAdapters.init()
+
+    let res1 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: 'urn:cts:latinLit:phi0472.phi001'
+      }
+    })
+
+    expect(res1.errors).toEqual([])
+    expect(res1.result).toEqual(expect.any(Collection))
+
+    const collection = res1.result
+
+    let res2 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getNavigation',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: 'urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1',
+        collection
+      }
+    })
+
+    expect(res2.errors).toEqual([])
+    expect(res2.result).toEqual(expect.any(Collection))
+
+    expect(collection.navigation).toEqual(expect.any(Resource))
+  })
+
+  it('28 ClientAdapters - dtsApiMethod - getDocument retrieves TEI Document - by ref, start, end', async () => {
+    ClientAdapters.init()
+
+    let res1 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: 'urn:cts:latinLit:phi0472.phi001'
+      }
+    })
+
+    expect(res1.errors).toEqual([])
+    expect(res1.result).toEqual(expect.any(Collection))
+
+    const collection = res1.result
+
+    let res2 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getNavigation',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: 'urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1',
+        collection
+      }
+    })
+
+    expect(res2.errors).toEqual([])
+    expect(res2.result).toEqual(expect.any(Collection))
+    expect(collection.navigation).toEqual(expect.any(Resource))
+
+    const regexTEI = new RegExp('^<TEI.+')
+
+    let res3 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getDocument',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: collection.navigation.id, 
+        refParams: { ref: collection.navigation.refs[0] }
+      }
+    })
+    
+    expect(regexTEI.test(res3.result)).toBeTruthy()
+
+    let res4 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getDocument',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: collection.navigation.id, 
+        refParams: { start: collection.navigation.refs[collection.navigation.refs.length-2] }
+      }
+    })
+    
+    expect(regexTEI.test(res4.result)).toBeTruthy()
+
+  })
 })

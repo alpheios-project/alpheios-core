@@ -85,7 +85,7 @@ describe('word-item-panel.test.js', () => {
     expect(cmp.vm.itemClasses['alpheios-wordlist-language__worditem__active']).toBeTruthy()
   })
 
-  it('3 WordItemPanel - computed lemmasList returns lemmas array', () => {
+  it('3 WordItemPanel - computed lemmasList returns lemmas array', async () => {
     let cmp = shallowMount(WordItemPanel, {
       store,
       localVue,
@@ -102,6 +102,7 @@ describe('word-item-panel.test.js', () => {
     })
     store.commit('app/setTestWordListUpdateTime', 1)
 
+    await Vue.nextTick()
     expect(cmp.vm.lemmasList.length).toEqual(2)
   })
 
