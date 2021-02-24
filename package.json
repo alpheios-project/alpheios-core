@@ -5,7 +5,7 @@
   "author": "The Alpheios Project, Ltd.",
   "license": "ISC",
   "scripts": {
-    "set-node-build-deps": "npm i -D git://github.com/alpheios-project/node-build.git#v3-update && npx install-peerdeps@v2.0.2 alpheios-node-build --dev --only-peers && npm un alpheios-node-build",
+    "set-node-build-deps": "npm i -D git://github.com/alpheios-project/node-build.git#v3 && npx install-peerdeps@v2.0.2 alpheios-node-build --dev --only-peers && npm un alpheios-node-build",
     "bootstrap": "npx lerna bootstrap --hoist --nohoist=eslint-config-standard --nohoist=coveralls",
     "clean": "npx lerna clean --yes && npx shx rm -rf ./node_modules",
     "list-mismatching-deps": "npx syncpack list-mismatches; exit(0)",

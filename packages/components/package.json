@@ -58,7 +58,7 @@
     "alpheios-inflection-tables": "^3.3.1-dev.20201109453",
     "alpheios-l10n": "^3.3.1-dev.20201109453",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
-    "alpheios-node-build": "github:alpheios-project/node-build#v3-update",
+    "alpheios-node-build": "github:alpheios-project/node-build#v3",
     "alpheios-res-client": "^3.3.1-dev.20201109453",
     "alpheios-wordlist": "^3.3.1-dev.20201109453",
     "autoprefixer": "^10.1.0",
