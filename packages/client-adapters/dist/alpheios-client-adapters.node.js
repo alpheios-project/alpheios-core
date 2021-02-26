@@ -5386,8 +5386,6 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
       baseUrl: this.config.baseUrl
     })
 
-    console.info('rootCollection - ', this.config.baseUrl, rootCollection)
-
     if (collectionsJSON.member) {
       collectionsJSON.member.forEach(collJson => {
         let obj
@@ -5420,10 +5418,20 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
    * @param {Collection} collection
    */
   convertToResources (refs, collection) {
-    collection.navigation.uploadRefs({
-      refs: refs['hydra:member'].map(refObj => refObj.ref),
-      passage: refs.passage
-    })
+    let finalRefs
+
+    if (refs['hydra:member'] && refs['hydra:member'].length > 0) {
+      finalRefs = refs['hydra:member'].map(refObj => refObj.ref)
+    } else if (refs.member && refs.member.length > 0) {
+      finalRefs = refs.member.map(refObj => refObj['dts:ref'])
+    }
+
+    if (finalRefs) {
+      collection.navigation.uploadRefs({
+        refs: finalRefs,
+        passage: refs.passage
+      })
+    }
     return true
   }
 }
