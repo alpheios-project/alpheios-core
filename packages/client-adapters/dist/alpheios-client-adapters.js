@@ -3238,8 +3238,10 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
     try {
       const url = this.getCollectionUrl(id)
       const collections = await this.fetch(url)
-
-      return this.convertToCollections(collections)
+      if (collections) {
+        return this.convertToCollections(collections)
+      }
+      return false
     } catch (error) {
       this.addError(this.l10n.getMsg('DTSAPI_FETCH_ERROR', { message: error.message }))
     }
@@ -3255,9 +3257,11 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
     try {
       const url = this.getNavigationUrl(id)
       const refs = await this.fetch(url)
-
-      this.convertToResources(refs, collection)
-      return collection
+      if (refs) {
+        this.convertToResources(refs, collection)
+        return collection
+      }
+      return false
     } catch (error) {
       this.addError(this.l10n.getMsg('DTSAPI_FETCH_ERROR', { message: error.message }))
     }
@@ -3329,7 +3333,7 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
     if (ref) { return `${url}&ref=${ref}` }
 
     url = `${url}&start=${start}`
-    if (end) { return `${url}&ref=${end}` }
+    if (end) { return `${url}&end=${end}` }
 
     return url
   }
@@ -3344,7 +3348,7 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
       totalItems: collectionsJSON.totalItems,
       title: collectionsJSON.title !== 'None' ? collectionsJSON.title : 'Alpheios',
       id: collectionsJSON['@id'] !== 'default' ? collectionsJSON['@id'] : null,
-      baseUrl: this.baseUrl
+      baseUrl: this.config.baseUrl
     })
 
     if (collectionsJSON.member) {
@@ -3355,12 +3359,14 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
             totalItems: collJson.totalItems,
             title: collJson.title,
             id: collJson['@id'],
-            type: collJson['@type']
+            type: collJson['@type'],
+            baseUrl: this.config.baseUrl
           }
         } else if (collJson['@type'] === 'Resource') {
           obj = {
             id: collJson['@id'],
-            type: collJson['@type']
+            type: collJson['@type'],
+            baseUrl: this.config.baseUrl
           }
         }
 
@@ -3377,10 +3383,20 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
    * @param {Collection} collection
    */
   convertToResources (refs, collection) {
-    collection.navigation.uploadRefs({
-      refs: refs['hydra:member'].map(refObj => refObj.ref),
-      passage: refs.passage
-    })
+    let finalRefs
+
+    if (refs['hydra:member'] && refs['hydra:member'].length > 0) {
+      finalRefs = refs['hydra:member'].map(refObj => refObj.ref)
+    } else if (refs.member && refs.member.length > 0) {
+      finalRefs = refs.member.map(refObj => refObj['dts:ref'])
+    }
+
+    if (finalRefs) {
+      collection.navigation.uploadRefs({
+        refs: finalRefs,
+        passage: refs.passage
+      })
+    }
     return true
   }
 }

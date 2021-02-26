@@ -5290,10 +5290,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Collection {
-  constructor ({ totalItems, title, id } = {}) {
+  constructor ({ totalItems, title, id, baseUrl } = {}) {
     this.totalItems = totalItems
     this.title = title
     this.id = id
+    this.baseUrl = baseUrl
+
     this.members = []
     this.navigation = null
   }
