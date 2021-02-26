@@ -132,8 +132,6 @@ export default class DTSAPIAdapter extends BaseAdapter {
       baseUrl: this.config.baseUrl
     })
 
-    console.info('rootCollection - ', this.config.baseUrl, rootCollection)
-
     if (collectionsJSON.member) {
       collectionsJSON.member.forEach(collJson => {
         let obj

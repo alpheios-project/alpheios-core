@@ -3347,7 +3347,6 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
       baseUrl: this.config.baseUrl
     })
 
-    console.info('rootCollection - ', this.config.baseUrl, rootCollection)
 
     if (collectionsJSON.member) {
       collectionsJSON.member.forEach(collJson => {

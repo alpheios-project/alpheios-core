@@ -48,7 +48,7 @@ describe('dtsapi/adapter.test.js', () => {
 
     const collections = await adapter.getCollection()
     
-    expect(collections.members.length).toEqual(3)
+    expect(collections.members.length).toEqual(2)
     expect(adapter.errors.length).toEqual(0)
   })
 
