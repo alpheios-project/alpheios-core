@@ -3329,7 +3329,7 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
     if (ref) { return `${url}&ref=${ref}` }
 
     url = `${url}&start=${start}`
-    if (end) { return `${url}&ref=${end}` }
+    if (end) { return `${url}&end=${end}` }
 
     return url
   }
@@ -3344,8 +3344,10 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
       totalItems: collectionsJSON.totalItems,
       title: collectionsJSON.title !== 'None' ? collectionsJSON.title : 'Alpheios',
       id: collectionsJSON['@id'] !== 'default' ? collectionsJSON['@id'] : null,
-      baseUrl: this.baseUrl
+      baseUrl: this.config.baseUrl
     })
+
+    console.info('rootCollection - ', this.config.baseUrl, rootCollection)
 
     if (collectionsJSON.member) {
       collectionsJSON.member.forEach(collJson => {
@@ -3355,12 +3357,14 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
             totalItems: collJson.totalItems,
             title: collJson.title,
             id: collJson['@id'],
-            type: collJson['@type']
+            type: collJson['@type'],
+            baseUrl: this.config.baseUrl
           }
         } else if (collJson['@type'] === 'Resource') {
           obj = {
             id: collJson['@id'],
-            type: collJson['@type']
+            type: collJson['@type'],
+            baseUrl: this.config.baseUrl
           }
         }
 
