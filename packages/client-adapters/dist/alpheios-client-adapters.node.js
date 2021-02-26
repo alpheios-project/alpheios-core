@@ -5277,8 +5277,10 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
     try {
       const url = this.getCollectionUrl(id)
       const collections = await this.fetch(url)
-
-      return this.convertToCollections(collections)
+      if (collections) {
+        return this.convertToCollections(collections)
+      }
+      return false
     } catch (error) {
       this.addError(this.l10n.getMsg('DTSAPI_FETCH_ERROR', { message: error.message }))
     }
@@ -5294,9 +5296,11 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
     try {
       const url = this.getNavigationUrl(id)
       const refs = await this.fetch(url)
-
-      this.convertToResources(refs, collection)
-      return collection
+      if (refs) {
+        this.convertToResources(refs, collection)
+        return collection
+      }
+      return false
     } catch (error) {
       this.addError(this.l10n.getMsg('DTSAPI_FETCH_ERROR', { message: error.message }))
     }
