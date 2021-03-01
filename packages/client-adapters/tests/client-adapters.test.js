@@ -547,14 +547,14 @@ describe('client-adapters.test.js', () => {
       params: {
         baseUrl: 'https://dts.alpheios.net/api/dts/',
         id: 'urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1',
-        collection
+        resource: collection.resources[0]
       }
     })
 
     expect(res2.errors).toEqual([])
-    expect(res2.result).toEqual(expect.any(Collection))
+    expect(res2.result).toEqual(expect.any(Resource))
 
-    expect(collection.navigation).toEqual(expect.any(Resource))
+    expect(collection.resources[0]).toEqual(expect.any(Resource))
   })
 
   it('28 ClientAdapters - dtsApiMethod - getDocument retrieves TEI Document - by ref, start, end', async () => {
@@ -578,13 +578,13 @@ describe('client-adapters.test.js', () => {
       params: {
         baseUrl: 'https://dts.alpheios.net/api/dts/',
         id: 'urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1',
-        collection
+        resource: collection.resources[0]
       }
     })
 
     expect(res2.errors).toEqual([])
-    expect(res2.result).toEqual(expect.any(Collection))
-    expect(collection.navigation).toEqual(expect.any(Resource))
+    expect(res2.result).toEqual(expect.any(Resource))
+    expect(collection.resources[0]).toEqual(expect.any(Resource))
 
     const regexTEI = new RegExp('^<TEI.+')
 
@@ -592,8 +592,8 @@ describe('client-adapters.test.js', () => {
       method: 'getDocument',
       params: {
         baseUrl: 'https://dts.alpheios.net/api/dts/',
-        id: collection.navigation.id, 
-        refParams: { ref: collection.navigation.refs[0] }
+        id: collection.resources[0].id, 
+        refParams: { ref: collection.resources[0].refs[0] }
       }
     })
     
@@ -603,8 +603,8 @@ describe('client-adapters.test.js', () => {
       method: 'getDocument',
       params: {
         baseUrl: 'https://dts.alpheios.net/api/dts/',
-        id: collection.navigation.id, 
-        refParams: { start: collection.navigation.refs[collection.navigation.refs.length-2] }
+        id: collection.resources[0].id, 
+        refParams: { start: collection.resources[0].refs[collection.resources[0].refs.length-2] }
       }
     })
     
