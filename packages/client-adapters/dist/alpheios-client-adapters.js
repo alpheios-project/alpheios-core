@@ -3253,13 +3253,13 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
    * @param {Collection} collection - would be updated with retrieve data
    *
    */
-  async getNavigation (id, collection) {
+  async getNavigation (id, resource) {
     try {
       const url = this.getNavigationUrl(id)
       const refs = await this.fetch(url)
       if (refs) {
-        this.convertToResources(refs, collection)
-        return collection
+        this.convertToRefs(refs, resource)
+        return resource
       }
       return false
     } catch (error) {
@@ -3348,32 +3348,22 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
       totalItems: collectionsJSON.totalItems,
       title: collectionsJSON.title !== 'None' ? collectionsJSON.title : 'Alpheios',
       id: collectionsJSON['@id'] !== 'default' ? collectionsJSON['@id'] : null,
-      baseUrl: this.config.baseUrl
+      baseUrl: this.config.baseUrl,
+      description: collectionsJSON.description
     })
 
     if (collectionsJSON.member) {
       collectionsJSON.member.forEach(collJson => {
-        let obj
-        if (collJson['@type'] === 'Collection') {
-          obj = {
-            totalItems: collJson.totalItems,
-            title: collJson.title,
-            id: collJson['@id'],
-            type: collJson['@type'],
-            baseUrl: this.config.baseUrl
-          }
-        } else if (collJson['@type'] === 'Resource') {
-          obj = {
-            id: collJson['@id'],
-            type: collJson['@type'],
-            baseUrl: this.config.baseUrl
-          }
-        }
-
-        rootCollection.addMember(obj)
+        rootCollection.addMember({
+          totalItems: collJson.totalItems,
+          title: collJson.title,
+          id: collJson['@id'],
+          type: collJson['@type'],
+          description: collJson.description,
+          baseUrl: this.config.baseUrl
+        })
       })
     }
-
     return rootCollection
   }
 
@@ -3382,7 +3372,7 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
    * @param {Array[Object]} refs - array of passage's refs - [ { ref: '1' }, { ref: '1a' } .. ]
    * @param {Collection} collection
    */
-  convertToResources (refs, collection) {
+  convertToRefs (refs, resource) {
     let finalRefs
 
     if (refs['hydra:member'] && refs['hydra:member'].length > 0) {
@@ -3392,9 +3382,9 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
     }
 
     if (finalRefs) {
-      collection.navigation.uploadRefs({
+      resource.uploadRefs({
         refs: finalRefs,
-        passage: refs.passage
+        passage: refs.passage ? refs.passage : refs['dts:passage']
       })
     }
     return true
