@@ -3407,8 +3407,20 @@ class Resource {
       title: this.title,
       id: this.id,
       description: this.description,
-      type: 'resource'
+      type: 'resource',
+      resource: this
     }
+  }
+
+  get refsLinks () {
+    return this.refs.map(ref => {
+      return {
+        baseUrl: this.baseUrl,
+        id: this.id,
+        ref,
+        type: 'document'
+      }
+    })
   }
 }
 

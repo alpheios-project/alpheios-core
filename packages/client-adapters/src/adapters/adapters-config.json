@@ -95,7 +95,7 @@
       "methods": [ "getCollection", "getNavigation", "getDocument" ],
       "params": {
         "getCollection": ["baseUrl"],
-        "getNavigation": ["baseUrl", "id", "collection"],
+        "getNavigation": ["baseUrl", "id", "resource"],
         "getDocument": ["baseUrl", "id", "refParams"]
       }
     }
