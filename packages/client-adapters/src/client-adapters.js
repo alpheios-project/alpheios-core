@@ -448,7 +448,7 @@ class ClientAdapters {
     }
 
     if (options.method === 'getNavigation') {
-      const res = await localDTSAPIAdapter.getNavigation(options.params.id, options.params.collection)
+      const res = await localDTSAPIAdapter.getNavigation(options.params.id, options.params.resource)
       return { result: res, errors: localDTSAPIAdapter.errors }
     }
 

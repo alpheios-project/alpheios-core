@@ -46,9 +46,8 @@ describe('dtsapi/adapter.test.js', () => {
       baseUrl: 'https://dts.alpheios.net/api/dts/'
     })
 
-    const collections = await adapter.getCollection()
-    
-    expect(collections.members.length).toEqual(2)
+    const collection = await adapter.getCollection()
+    expect(collection.members.length).toEqual(2)
     expect(adapter.errors.length).toEqual(0)
   })
 
@@ -60,9 +59,9 @@ describe('dtsapi/adapter.test.js', () => {
       baseUrl: 'https://dts.alpheios.net/api/dts/'
     })
 
-    const collections = await adapter.getCollection('urn:alpheios:latinLit')
+    const collection = await adapter.getCollection('urn:alpheios:latinLit')
     
-    expect(collections.members.length).toEqual(3)
+    expect(collection.members.length).toEqual(3)
     expect(adapter.errors.length).toEqual(0)
   })
 
@@ -74,9 +73,9 @@ describe('dtsapi/adapter.test.js', () => {
       baseUrl: 'https://dts.alpheios.net/api/dts/'
     })
 
-    const collections = await adapter.getCollection('urn:cts:latinLit:phi0472')
+    const collection = await adapter.getCollection('urn:cts:latinLit:phi0472')
     
-    expect(collections.members.length).toEqual(1)
+    expect(collection.members.length).toEqual(1)
     expect(adapter.errors.length).toEqual(0)
   })
 
@@ -89,9 +88,8 @@ describe('dtsapi/adapter.test.js', () => {
     })
 
     const collection = await adapter.getCollection('urn:cts:latinLit:phi0472.phi001')
-    expect(collection.navigation).toBeDefined()
-
-    expect(collection.navigation).toEqual(expect.any(Resource))
+    expect(collection.members.length).toEqual(0)
+    expect(collection.resources.length).toEqual(1)
     expect(adapter.errors.length).toEqual(0)
   })
 
@@ -104,10 +102,10 @@ describe('dtsapi/adapter.test.js', () => {
     })
 
     const collection = await adapter.getCollection('urn:cts:latinLit:phi0472.phi001')
-    await adapter.getNavigation('urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1', collection)
-   
-    expect(collection.navigation).toEqual(expect.any(Resource))
-
+    await adapter.getNavigation('urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1', collection.resources[0])
+    
+    expect(collection.resources[0]).toEqual(expect.any(Resource))
+    expect(collection.resources[0].refs.length).toBeGreaterThan(0)
     expect(adapter.errors.length).toEqual(0)
   })
 
@@ -120,11 +118,11 @@ describe('dtsapi/adapter.test.js', () => {
     })
 
     const collection = await adapter.getCollection('urn:cts:latinLit:phi0472.phi001')
-    await adapter.getNavigation('urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1', collection)
+    await adapter.getNavigation('urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1', collection.resources[0])
 
     const regexTEI = new RegExp('^<TEI.+')
 
-    const document = await adapter.getDocument(collection.navigation.id, { ref: collection.navigation.refs[0] })
+    const document = await adapter.getDocument(collection.resources[0].id, { ref: collection.resources[0].refs[0] })
     expect(document.length).toBeGreaterThan(0)  
     expect(regexTEI.test(document)).toBeTruthy()
 
@@ -140,19 +138,69 @@ describe('dtsapi/adapter.test.js', () => {
     })
 
     const collection = await adapter.getCollection('urn:cts:latinLit:phi0472.phi001')
-    await adapter.getNavigation('urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1', collection)
+    await adapter.getNavigation('urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1', collection.resources[0])
     
     const regexTEI = new RegExp('^<TEI.+')
 
-    const document1 = await adapter.getDocument(collection.navigation.id, { start: collection.navigation.refs[collection.navigation.refs.length-2] })
+    const document1 = await adapter.getDocument(collection.resources[0].id, { start: collection.resources[0].refs[collection.resources[0].refs.length-2] })
     expect(document1.length).toBeGreaterThan(0)
     expect(regexTEI.test(document1)).toBeTruthy()
 
-    const document2 = await adapter.getDocument(collection.navigation.id, { start: collection.navigation.refs[0], end: collection.navigation.refs[1] })
+    const document2 = await adapter.getDocument(collection.resources[0].id, { start: collection.resources[0].refs[0], end: collection.resources[0].refs[1] })
     expect(document2.length).toBeGreaterThan(0)
     expect(regexTEI.test(document2)).toBeTruthy()
 
     expect(adapter.errors.length).toEqual(0)
   })
 
+  it.skip('2 DTSAPIAdapter - getCollection - retrieves the first level of collections', async () => {
+    let adapter = new DTSAPIAdapter({
+      category: 'datsapiGroup',
+      adapterName: 'dtsapiMethod',
+      method: 'getCollection',
+      // baseUrl: 'https://dts.alpheios.net/api/dts/'
+      baseUrl: 'https://betamasaheft.eu/api/dts/'
+    })
+
+    const col1 = await adapter.getCollection()
+    console.info(col1.links)
+
+    const col2 = await adapter.getCollection(col1.links[0].id)
+    console.info(col2.links)
+
+    const resource = await adapter.getNavigation(col2.links[0].id, col2.resources[0])
+    console.info(resource)
+
+    const doc = await adapter.getDocument(resource.id, { ref: resource.refs[0] })
+    console.info(doc.substr(0, 20))
+  }, 500000)
+
+  it.skip('2 DTSAPIAdapter - getCollection - retrieves the first level of collections', async () => {
+    let adapter = new DTSAPIAdapter({
+      category: 'datsapiGroup',
+      adapterName: 'dtsapiMethod',
+      method: 'getCollection',
+      baseUrl: 'https://dts.alpheios.net/api/dts/'
+      // baseUrl: 'https://betamasaheft.eu/api/dts/'
+    })
+
+    const col1 = await adapter.getCollection()
+    console.info(col1.links)
+
+    const col2 = await adapter.getCollection(col1.links[0].id)
+    console.info(col2.links)
+
+    const col3 = await adapter.getCollection(col2.links[0].id)
+    console.info(col3.links)
+
+    const col4 = await adapter.getCollection(col3.links[0].id)
+    console.info(col4.links)
+
+    const resource = await adapter.getNavigation(col4.links[0].id, col4.resources[0])
+    console.info(resource)
+
+    const doc = await adapter.getDocument(resource.id, { ref: resource.refs[0] })
+    console.info(doc.substr(0, 20))
+
+  }, 500000)
 })
