@@ -57,7 +57,7 @@
     "params": ["error"]
   },
   "BASIC_ADAPTER_NO_DATA_FROM_URL": {
-    "message": "Unable to get data from url - {url}",
+    "message": "Remote service is unavailable - {url}",
     "description": "Error message for basic adapter - when no data was returned from the url",
     "component": "basic_adapter",
     "params": ["url"]
