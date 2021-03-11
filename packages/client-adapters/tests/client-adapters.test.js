@@ -3,7 +3,7 @@
 import 'whatwg-fetch'
 import ClientAdapters from '@clAdapters/client-adapters.js'
 import { Fixture, TranslationsFixture } from 'alpheios-fixtures'
-import { Constants, Homonym, Author, WordUsageExample } from 'alpheios-data-models'
+import { Constants, Homonym, Author, WordUsageExample, LocalStorageArea, Options, Collection, Resource } from 'alpheios-data-models'
 
 describe('client-adapters.test.js', () => {
   console.error = function () {}
@@ -126,7 +126,6 @@ describe('client-adapters.test.js', () => {
       langCode: 'lat', adapter: 'tufts', word: 'foo'
     })
 
-
     let res = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
@@ -190,7 +189,7 @@ describe('client-adapters.test.js', () => {
       method: 'fetchTranslations',
       params: {
         homonym: reHomonym.result,
-        browserLang: 'spa'
+        browserLang: 'es'
       },
       sourceData: {
         langs: TranslationsFixture.allLangs,
@@ -227,7 +226,7 @@ describe('client-adapters.test.js', () => {
     expect(res.errors.length).toBeGreaterThan(0)
   })
 
-  it('14 ClientAdapters - lexicons returns empty errors if adapter returns correct data', async () => {
+  it.skip('14 ClientAdapters - lexicons returns empty errors if adapter returns correct data', async () => {
     ClientAdapters.init()
 
     let sourceJson = Fixture.getFixtureRes({
@@ -409,5 +408,207 @@ describe('client-adapters.test.js', () => {
     expect(Array.isArray(res.result)).toBeTruthy()
   })
 
+  it('21 ClientAdapters - tokenizationMethod - getTokens returns array of segments - lat', async () => {
+    ClientAdapters.init()
 
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getTokens',
+      params: {
+        text: 'veni vidi vichi',
+        fetchOptions: {
+          lang: 'lat',
+          sourceType: 'text',
+          segments: 'singleline'
+        }
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result.segments.length).toEqual(1)
+    expect(res.result.segments[0].tokens.length).toEqual(3)
+  })
+
+  it('22 ClientAdapters - tokenizationMethod - getTokens returns array of errors - if passed incorrect parameters', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getTokens',
+      params: {
+        text: 'veni vidi vichi',
+        fetchOptions: {
+          lang: 'lat',
+          sourceType: 'tei',
+          segments: 'singleline'
+        }
+      }
+    })
+
+    expect(res.errors.length).toEqual(1)
+    expect(res.result).not.toBeDefined()
+  })
+
+  it('22 ClientAdapters - tokenizationMethod - getTokens returns array of errors - if passed incorrect parameters', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getTokens',
+      params: {
+        text: 'veni vidi vichi',
+        fetchOptions: {
+          lang: 'lat',
+          sourceType: 'tei',
+          segments: 'singleline'
+        }
+      }
+    })
+
+    expect(res.errors.length).toEqual(1)
+    expect(res.result).not.toBeDefined()
+  })
+
+  it('23 ClientAdapters - tokenizationMethod - getConfig returns Options for tei and text', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getConfig',
+      params: {
+        storage: LocalStorageArea
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result.tei).toEqual(expect.any(Options))
+    expect(res.result.text).toEqual(expect.any(Options))
+  })
+
+  it('24 ClientAdapters - tokenizationMethod - getConfig returns array of errors - if passed incorrect parameters', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.tokenizationGroup.alpheios({
+      method: 'getConfig',
+      params: {}
+    })
+
+    expect(res.errors.length).toEqual(1)
+    expect(res.result).not.toBeDefined()
+  })
+
+  it('25 ClientAdapters - dtsApiMethod - getCollection returns a root collection if id is not defined', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/'
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result).toEqual(expect.any(Collection))
+  })
+
+  it('26 ClientAdapters - dtsApiMethod - getCollection returns collection for the given id', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: 'urn:cts:latinLit:phi0472'
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result).toEqual(expect.any(Collection))
+  })
+
+  it('27 ClientAdapters - dtsApiMethod - getNavigation updates collection with refs', async () => {
+    ClientAdapters.init()
+
+    let res1 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: 'urn:cts:latinLit:phi0472.phi001'
+      }
+    })
+
+    expect(res1.errors).toEqual([])
+    expect(res1.result).toEqual(expect.any(Collection))
+
+    const collection = res1.result
+
+    let res2 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getNavigation',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: 'urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1',
+        resource: collection.resources[0]
+      }
+    })
+
+    expect(res2.errors).toEqual([])
+    expect(res2.result).toEqual(expect.any(Resource))
+
+    expect(collection.resources[0]).toEqual(expect.any(Resource))
+  })
+
+  it('28 ClientAdapters - dtsApiMethod - getDocument retrieves TEI Document - by ref, start, end', async () => {
+    ClientAdapters.init()
+
+    let res1 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: 'urn:cts:latinLit:phi0472.phi001'
+      }
+    })
+
+    expect(res1.errors).toEqual([])
+    expect(res1.result).toEqual(expect.any(Collection))
+
+    const collection = res1.result
+
+    let res2 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getNavigation',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: 'urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1',
+        resource: collection.resources[0]
+      }
+    })
+
+    expect(res2.errors).toEqual([])
+    expect(res2.result).toEqual(expect.any(Resource))
+    expect(collection.resources[0]).toEqual(expect.any(Resource))
+
+    const regexTEI = new RegExp('^<TEI.+')
+
+    let res3 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getDocument',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: collection.resources[0].id, 
+        refParams: { ref: collection.resources[0].refs[0] }
+      }
+    })
+    
+    expect(regexTEI.test(res3.result)).toBeTruthy()
+
+    let res4 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getDocument',
+      params: {
+        baseUrl: 'https://dts.alpheios.net/api/dts/',
+        id: collection.resources[0].id, 
+        refParams: { start: collection.resources[0].refs[collection.resources[0].refs.length-2] }
+      }
+    })
+    
+    expect(regexTEI.test(res4.result)).toBeTruthy()
+
+  })
 })

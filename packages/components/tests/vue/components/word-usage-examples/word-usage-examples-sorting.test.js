@@ -72,7 +72,7 @@ describe('word-usage-examples.test.js', () => {
     expect(cmp.vm.availableSortBy).toBeTruthy()
   })
 
-  it('3 WordUsageExamplesSorting - computed finalTypeSortingList returns current sorting ', () => {
+  it('3 WordUsageExamplesSorting - computed finalTypeSortingList returns current sorting ', async () => {
     let cmp = shallowMount(WordUsageExamplesSorting, {
       store,
       localVue,
@@ -86,6 +86,8 @@ describe('word-usage-examples.test.js', () => {
     cmp.setProps({
       reloadSorting: 1
     })
+
+    await Vue.nextTick()
 
     expect(cmp.vm.finalTypeSortingList).toEqual('fooSorting')
   })

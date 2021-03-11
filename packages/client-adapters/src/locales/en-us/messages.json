@@ -57,7 +57,7 @@
     "params": ["error"]
   },
   "BASIC_ADAPTER_NO_DATA_FROM_URL": {
-    "message": "Unable to get data from url - {url}",
+    "message": "Remote service is unavailable - {url}",
     "description": "Error message for basic adapter - when no data was returned from the url",
     "component": "basic_adapter",
     "params": ["url"]
@@ -176,5 +176,33 @@
     "message": "There are no fetch options for Logeion API request",
     "description": "Error message for autoCompleteWords.logeion adapter - no apikey and baseurl for Logeion API",
     "component": "autoCompleteWords.logeion"
+  },
+  "TOKENIZATION_FETCH_ERROR": {
+    "message": "Some problems with fetching words from Alpheios Tokenization API - {message}",
+    "description": "Error message for Alpheios Tokenization adapter - problems with fetching words from api",
+    "component": "tokenizationGroup.alpheios",
+    "params": ["message"]
+  },
+  "TOKENIZATION_FETCH_OPTIONS_ERROR": {
+    "message": "There are no fetch options for Alpheios Tokenization API request",
+    "description": "Error message - no apikey and baseurl for Alpheios Tokenization API",
+    "component": "tokenizationGroup.alpheios"
+  },
+  "TOKENIZATION_AVAILABILITY_ERROR": {
+    "message": "Tokenization service is not available for passed fetch parameters (language)",
+    "description": "Error message - tokenization service doesn't support passed language",
+    "component": "tokenizationGroup.alpheios"
+  },
+  "DTSAPI_FETCH_ERROR": {
+    "message": "Some problems with fetching words from DTS API - {message}",
+    "description": "Error message for DTS API adapter - problems with fetching words from api",
+    "component": "dtsapiGroup.general",
+    "params": ["message"]
+  },
+  "DTSAPI_NO_OBLIGATORY_PROPS": {
+    "message": "Not all obligatory parameters are defined for the method - {message}",
+    "description": "Error message for DTS API adapter - problems with fetching words from api",
+    "component": "dtsapiGroup.general",
+    "params": ["message"]
   }
 }

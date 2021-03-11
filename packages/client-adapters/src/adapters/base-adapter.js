@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Logger } from 'alpheios-data-models'
 import { L10n } from 'alpheios-l10n'
 import AdapterError from '@clAdapters/errors/adapter-error'
+import AdapterWarning from '@clAdapters/errors/adapter-warning.js'
 import RemoteError from '@clAdapters/errors/remote-error.js'
 
 import Locales from '@clAdapters/locales/locales.js'
@@ -24,14 +25,19 @@ class BaseAdapter {
    * This method is used for adding error meassage with additional data
    * @param {String} message  - message text for the error
   */
-  addError (message) {
-    const error = new AdapterError(this.config.category, this.config.adapterName, this.config.method, message)
+  addError (message, statusCode) {
+    const error = new AdapterError(this.config.category, this.config.adapterName, this.config.method, message, statusCode)
     this.errors.push(error)
   }
 
   addRemoteError (errorCode, message) {
     const error = new RemoteError(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
+  }
+
+  addWarning (errorCode, message) {
+    const warning = new AdapterWarning(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+    this.errors.push(warning)
   }
 
   /**
@@ -47,8 +53,14 @@ class BaseAdapter {
     })
 
     Object.keys(defaultConfig).forEach(configKey => {
-      if (configRes[configKey] === undefined) {
+      if (!configRes[configKey]) {
         configRes[configKey] = defaultConfig[configKey]
+      } else if (Array.isArray(configRes[configKey])) {
+        configRes[configKey] = configRes[configKey].map((item, index) => {
+          return { ...defaultConfig[configKey][index], ...item }
+        })
+      } else if (configRes[configKey] instanceof Object) {
+        configRes[configKey] = { ...defaultConfig[configKey], ...configRes[configKey] }
       }
     })
 
@@ -75,9 +87,16 @@ class BaseAdapter {
   async fetchWindow (url, options = { type: 'json' }) {
     if (url) {
       try {
-        const response = await window.fetch(url)
+        const response = await window.fetch(url, options.requestParams)
         if (!response.ok) {
-          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText: response.statusText }))
+          let statusText
+
+          if (response.status === 400) {
+            const resultResponse = await response.json()
+            statusText = (resultResponse && resultResponse.message) ? resultResponse.message : response.statusText
+          }
+
+          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText }), response.status)
           return
         }
         if (options.type === 'xml') {
@@ -111,7 +130,7 @@ class BaseAdapter {
           reject(new Error('Request timed out', url))
         }, options.timeout)
 
-        window.fetch(url)
+        window.fetch(url, options.requestParams)
           .then((response) => {
             clearTimeout(timeout)
             if (!didTimeOut) {
@@ -142,13 +161,9 @@ class BaseAdapter {
   */
   async fetchAxios (url, options) {
     if (url) {
+      const finalOptions = Object.assign({ url: encodeURI(decodeURI(url)) }, options)
       try {
-        let res
-        if (options && options.timeout > 0) {
-          res = await axios.get(encodeURI(decodeURI(url)), { timeout: options.timeout })
-        } else {
-          res = await axios.get(encodeURI(decodeURI(url)))
-        }
+        const res = await axios(finalOptions)
         return res.data
       } catch (error) {
         this.addError(this.l10n.getMsg('BASIC_ADAPTER_NO_DATA_FROM_URL', { url: url }))
@@ -184,7 +199,7 @@ class BaseAdapter {
    *     @param {Number} options.timeout - timeout ms amount
    * @return {Object|String}
   */
-  async fetch (url, options) {
+  async fetch (url, options = {}) {
     let res
 
     if (url) {

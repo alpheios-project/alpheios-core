@@ -76,5 +76,28 @@
         "getWords": ["text", "lang", "fetchOptions"]
       }
     }
+  },
+
+  "tokenizationGroup": {
+    "alpheios": {
+      "adapter": "tokenizationMethod",
+      "methods": [ "getTokens", "getConfig" ],
+      "params": {
+        "getTokens": ["text"],
+        "getConfig": ["storage"]
+      }
+    }
+  },
+
+  "dtsapiGroup": {
+    "dtsapi": {
+      "adapter": "dtsApiMethod",
+      "methods": [ "getCollection", "getNavigation", "getDocument" ],
+      "params": {
+        "getCollection": ["baseUrl"],
+        "getNavigation": ["baseUrl", "id", "resource"],
+        "getDocument": ["baseUrl", "id", "refParams"]
+      }
+    }
   }
 }

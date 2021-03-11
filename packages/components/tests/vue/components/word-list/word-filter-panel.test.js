@@ -113,7 +113,7 @@ describe('word-filter-panel.test.js', () => {
     expect(cmp.vm.currentTypeFilter.value).toEqual('byImportant')
   })
 
-  it('4 WordFilterPanel - computed currentClickedLemma executes setClickedLemmaFilter if clickedLemma is not null', () => {
+  it('4 WordFilterPanel - computed currentClickedLemma executes setClickedLemmaFilter if clickedLemma is not null', async () => {
     let cmp = shallowMount(WordFilterPanel, {
       store,
       localVue,
@@ -134,6 +134,8 @@ describe('word-filter-panel.test.js', () => {
     cmp.setProps({
       clickedLemma: 'male'
     })
+
+    await Vue.nextTick()
 
     res = cmp.vm.currentClickedLemma
     expect(cmp.vm.setClickedLemmaFilter).toHaveBeenCalled()
@@ -522,7 +524,7 @@ describe('word-filter-panel.test.js', () => {
     expect(cmp.emitted()['changedFilterBy'][0]).toEqual([null, null])
   })
 
-  it('23 WordFilterPanel - method setClickedLemmaFilter defines selectedFilterBy, textInput and executes clickFilterBy', () => {
+  it('23 WordFilterPanel - method setClickedLemmaFilter defines selectedFilterBy, textInput and executes clickFilterBy', async () => {
     let cmp = shallowMount(WordFilterPanel, {
       store,
       localVue,
@@ -539,8 +541,12 @@ describe('word-filter-panel.test.js', () => {
       clickedLemma: 'cupido'
     })
 
+    await Vue.nextTick()
+    
     cmp.vm.clickFilterBy = jest.fn()
     cmp.vm.setClickedLemmaFilter()
+
+    await Vue.nextTick()
 
     expect(cmp.vm.selectedFilterBy).toEqual('byLemma')
     expect(cmp.vm.textInput).toEqual('cupido')
