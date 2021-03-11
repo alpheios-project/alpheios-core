@@ -12,18 +12,18 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "../../../node_modules/axios/package.json":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/package.json ***!
   \************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"_from\":\"axios@^0.21.0\",\"_id\":\"axios@0.21.1\",\"_inBundle\":false,\"_integrity\":\"sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"^0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.1.tgz\",\"_shasum\":\"22563481962f4d6bde9a76d516ef0e5d3c09b2b8\",\"_spec\":\"axios@^0.21.0\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.1\"}");
+module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.1\",\"C:\\\\_Alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.21.1\",\"_id\":\"axios@0.21.1\",\"_inBundle\":false,\"_integrity\":\"sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.1\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.1\",\"saveSpec\":null,\"fetchSpec\":\"0.21.1\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.1.tgz\",\"_spec\":\"0.21.1\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.1\"}");
 
 /***/ }),
 
 /***/ "../../../node_modules/axios/index.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ../../../node_modules/axios/index.js ***!
   \********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -33,7 +33,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/http.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/http.js ***!
   \********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -347,7 +347,7 @@ module.exports = function httpAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/xhr.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/xhr.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -537,7 +537,7 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/axios.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/lib/axios.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -604,7 +604,7 @@ module.exports.default = axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/Cancel.js ***!
   \********************************************************/
 /***/ ((module) => {
@@ -634,7 +634,7 @@ module.exports = Cancel;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/CancelToken.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -702,7 +702,7 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/isCancel.js ***!
   \**********************************************************/
 /***/ ((module) => {
@@ -718,7 +718,7 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/Axios.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/axios/lib/core/Axios.js ***!
   \*****************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -824,7 +824,7 @@ module.exports = Axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/InterceptorManager.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -887,7 +887,7 @@ module.exports = InterceptorManager;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/buildFullPath.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -918,7 +918,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/createError.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/createError.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -947,7 +947,7 @@ module.exports = function createError(message, config, code, request, response) 
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/dispatchRequest.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1037,7 +1037,7 @@ module.exports = function dispatchRequest(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/enhanceError.js":
-/*!************************************************************!*
+/*!************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/enhanceError.js ***!
   \************************************************************/
 /***/ ((module) => {
@@ -1090,7 +1090,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/mergeConfig.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1188,7 +1188,7 @@ module.exports = function mergeConfig(config1, config2) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/settle.js":
-/*!******************************************************!*
+/*!******************************************************!*\
   !*** ../../../node_modules/axios/lib/core/settle.js ***!
   \******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1224,7 +1224,7 @@ module.exports = function settle(resolve, reject, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/transformData.js":
-/*!*************************************************************!*
+/*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/transformData.js ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1255,7 +1255,7 @@ module.exports = function transformData(data, headers, fns) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/defaults.js":
-/*!***************************************************!*
+/*!***************************************************!*\
   !*** ../../../node_modules/axios/lib/defaults.js ***!
   \***************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1364,7 +1364,7 @@ module.exports = defaults;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/bind.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/bind.js ***!
   \*******************************************************/
 /***/ ((module) => {
@@ -1386,7 +1386,7 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
-/*!***********************************************************!*
+/*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/buildURL.js ***!
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1467,7 +1467,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
-/*!**************************************************************!*
+/*!**************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/combineURLs.js ***!
   \**************************************************************/
 /***/ ((module) => {
@@ -1492,7 +1492,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/cookies.js":
-/*!**********************************************************!*
+/*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/cookies.js ***!
   \**********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1556,7 +1556,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!****************************************************************!*
+/*!****************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
   \****************************************************************/
 /***/ ((module) => {
@@ -1581,7 +1581,7 @@ module.exports = function isAbsoluteURL(url) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAxiosError.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAxiosError.js ***!
   \***************************************************************/
 /***/ ((module) => {
@@ -1603,7 +1603,7 @@ module.exports = function isAxiosError(payload) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!******************************************************************!*
+/*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
   \******************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1682,7 +1682,7 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!**********************************************************************!*
+/*!**********************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
   \**********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1705,7 +1705,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!***************************************************************!*
+/*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/parseHeaders.js ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -1769,7 +1769,7 @@ module.exports = function parseHeaders(headers) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/spread.js":
-/*!*********************************************************!*
+/*!*********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/spread.js ***!
   \*********************************************************/
 /***/ ((module) => {
@@ -1807,7 +1807,7 @@ module.exports = function spread(callback) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/utils.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/axios/lib/utils.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2169,7 +2169,7 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/browser.js":
-/*!**************************************************!*
+/*!**************************************************!*\
   !*** ../../../node_modules/debug/src/browser.js ***!
   \**************************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -2364,7 +2364,7 @@ function localstorage() {
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/debug.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/debug/src/debug.js ***!
   \************************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -2576,7 +2576,7 @@ function coerce(val) {
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/index.js":
-/*!************************************************!*
+/*!************************************************!*\
   !*** ../../../node_modules/debug/src/index.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2596,7 +2596,7 @@ if (typeof process !== 'undefined' && process.type === 'renderer') {
 /***/ }),
 
 /***/ "../../../node_modules/debug/src/node.js":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ../../../node_modules/debug/src/node.js ***!
   \***********************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -2854,7 +2854,7 @@ exports.enable(load());
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/debug.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/follow-redirects/debug.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2878,7 +2878,7 @@ module.exports = function () {
 /***/ }),
 
 /***/ "../../../node_modules/follow-redirects/index.js":
-/*!*******************************************************!*
+/*!*******************************************************!*\
   !*** ../../../node_modules/follow-redirects/index.js ***!
   \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -2945,6 +2945,17 @@ function RedirectableRequest(options, responseCallback) {
   this._performRequest();
 }
 RedirectableRequest.prototype = Object.create(Writable.prototype);
+
+RedirectableRequest.prototype.abort = function () {
+  // Abort the internal request
+  this._currentRequest.removeAllListeners();
+  this._currentRequest.on("error", noop);
+  this._currentRequest.abort();
+
+  // Abort this request
+  this.emit("abort");
+  this.removeAllListeners();
+};
 
 // Writes buffered data to the current native request
 RedirectableRequest.prototype.write = function (data, encoding, callback) {
@@ -3025,18 +3036,39 @@ RedirectableRequest.prototype.removeHeader = function (name) {
 
 // Global timeout for all underlying requests
 RedirectableRequest.prototype.setTimeout = function (msecs, callback) {
+  var self = this;
   if (callback) {
-    this.once("timeout", callback);
+    this.on("timeout", callback);
   }
 
+  // Sets up a timer to trigger a timeout event
+  function startTimer() {
+    if (self._timeout) {
+      clearTimeout(self._timeout);
+    }
+    self._timeout = setTimeout(function () {
+      self.emit("timeout");
+      clearTimer();
+    }, msecs);
+  }
+
+  // Prevent a timeout from triggering
+  function clearTimer() {
+    clearTimeout(this._timeout);
+    if (callback) {
+      self.removeListener("timeout", callback);
+    }
+    if (!this.socket) {
+      self._currentRequest.removeListener("socket", startTimer);
+    }
+  }
+
+  // Start the timer when the socket is opened
   if (this.socket) {
-    startTimer(this, msecs);
+    startTimer();
   }
   else {
-    var self = this;
-    this._currentRequest.once("socket", function () {
-      startTimer(self, msecs);
-    });
+    this._currentRequest.once("socket", startTimer);
   }
 
   this.once("response", clearTimer);
@@ -3045,20 +3077,9 @@ RedirectableRequest.prototype.setTimeout = function (msecs, callback) {
   return this;
 };
 
-function startTimer(request, msecs) {
-  clearTimeout(request._timeout);
-  request._timeout = setTimeout(function () {
-    request.emit("timeout");
-  }, msecs);
-}
-
-function clearTimer() {
-  clearTimeout(this._timeout);
-}
-
 // Proxy all other public ClientRequest methods
 [
-  "abort", "flushHeaders", "getHeader",
+  "flushHeaders", "getHeader",
   "setNoDelay", "setSocketKeepAlive",
 ].forEach(function (method) {
   RedirectableRequest.prototype[method] = function (a, b) {
@@ -3392,7 +3413,7 @@ module.exports.wrap = wrap;
 /***/ }),
 
 /***/ "../../../node_modules/ms/index.js":
-/*!*****************************************!*
+/*!*****************************************!*\
   !*** ../../../node_modules/ms/index.js ***!
   \*****************************************/
 /***/ ((module) => {
@@ -3554,7 +3575,7 @@ function plural(ms, n, name) {
 /***/ }),
 
 /***/ "../../../node_modules/xmltojson/lib/xmlToJSON.js":
-/*!********************************************************!*
+/*!********************************************************!*\
   !*** ../../../node_modules/xmltojson/lib/xmlToJSON.js ***!
   \********************************************************/
 /***/ ((module, exports, __webpack_require__) => {
@@ -3808,7 +3829,7 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 /***/ }),
 
 /***/ "./adapters/alpheiostb/adapter.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ./adapters/alpheiostb/adapter.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3816,7 +3837,7 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
@@ -3949,7 +3970,7 @@ class AlpheiosTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 /***/ }),
 
 /***/ "./adapters/arethusa/adapter.js":
-/*!**************************************!*
+/*!**************************************!*\
   !*** ./adapters/arethusa/adapter.js ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3957,7 +3978,7 @@ class AlpheiosTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/transformers/alpheios-lexicon-transformer */ "./transformers/alpheios-lexicon-transformer.js");
@@ -4143,7 +4164,7 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 /***/ }),
 
 /***/ "./adapters/base-adapter.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./adapters/base-adapter.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4151,7 +4172,7 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -4160,10 +4181,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_l10n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-l10n */ "alpheios-l10n");
 /* harmony import */ var alpheios_l10n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_l10n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/errors/adapter-error */ "./errors/adapter-error.js");
-/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
-/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+/* harmony import */ var _clAdapters_errors_adapter_warning_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/errors/adapter-warning.js */ "./errors/adapter-warning.js");
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+
 
 
 
@@ -4181,23 +4204,28 @@ class BaseAdapter {
   constructor () {
     this.errors = []
     this.l10n = new alpheios_l10n__WEBPACK_IMPORTED_MODULE_2__.L10n()
-      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__.default.en_US)
-      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__.default.en_GB)
-      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_5__.default.en_US)
+      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_7__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__.default.en_US)
+      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_8__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__.default.en_GB)
+      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_6__.default.en_US)
   }
 
   /**
    * This method is used for adding error meassage with additional data
    * @param {String} message  - message text for the error
   */
-  addError (message) {
-    const error = new _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__.default(this.config.category, this.config.adapterName, this.config.method, message)
+  addError (message, statusCode) {
+    const error = new _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_3__.default(this.config.category, this.config.adapterName, this.config.method, message, statusCode)
     this.errors.push(error)
   }
 
   addRemoteError (errorCode, message) {
-    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_4__.default(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_5__.default(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
+  }
+
+  addWarning (errorCode, message) {
+    const warning = new _clAdapters_errors_adapter_warning_js__WEBPACK_IMPORTED_MODULE_4__.default(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+    this.errors.push(warning)
   }
 
   /**
@@ -4213,8 +4241,14 @@ class BaseAdapter {
     })
 
     Object.keys(defaultConfig).forEach(configKey => {
-      if (configRes[configKey] === undefined) {
+      if (!configRes[configKey]) {
         configRes[configKey] = defaultConfig[configKey]
+      } else if (Array.isArray(configRes[configKey])) {
+        configRes[configKey] = configRes[configKey].map((item, index) => {
+          return { ...defaultConfig[configKey][index], ...item }
+        })
+      } else if (configRes[configKey] instanceof Object) {
+        configRes[configKey] = { ...defaultConfig[configKey], ...configRes[configKey] }
       }
     })
 
@@ -4241,9 +4275,16 @@ class BaseAdapter {
   async fetchWindow (url, options = { type: 'json' }) {
     if (url) {
       try {
-        const response = await window.fetch(url)
+        const response = await window.fetch(url, options.requestParams)
         if (!response.ok) {
-          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText: response.statusText }))
+          let statusText
+
+          if (response.status === 400) {
+            const resultResponse = await response.json()
+            statusText = (resultResponse && resultResponse.message) ? resultResponse.message : response.statusText
+          }
+
+          this.addError(this.l10n.getMsg('BASIC_ADAPTER_URL_RESPONSE_FAILED', { statusCode: response.status, statusText }), response.status)
           return
         }
         if (options.type === 'xml') {
@@ -4277,7 +4318,7 @@ class BaseAdapter {
           reject(new Error('Request timed out', url))
         }, options.timeout)
 
-        window.fetch(url)
+        window.fetch(url, options.requestParams)
           .then((response) => {
             clearTimeout(timeout)
             if (!didTimeOut) {
@@ -4308,13 +4349,9 @@ class BaseAdapter {
   */
   async fetchAxios (url, options) {
     if (url) {
+      const finalOptions = Object.assign({ url: encodeURI(decodeURI(url)) }, options)
       try {
-        let res
-        if (options && options.timeout > 0) {
-          res = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(encodeURI(decodeURI(url)), { timeout: options.timeout })
-        } else {
-          res = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(encodeURI(decodeURI(url)))
-        }
+        const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()(finalOptions)
         return res.data
       } catch (error) {
         this.addError(this.l10n.getMsg('BASIC_ADAPTER_NO_DATA_FROM_URL', { url: url }))
@@ -4350,7 +4387,7 @@ class BaseAdapter {
    *     @param {Number} options.timeout - timeout ms amount
    * @return {Object|String}
   */
-  async fetch (url, options) {
+  async fetch (url, options = {}) {
     let res
 
     if (url) {
@@ -4381,7 +4418,7 @@ class BaseAdapter {
 /***/ }),
 
 /***/ "./adapters/chineseloc/adapter.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ./adapters/chineseloc/adapter.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4389,8 +4426,8 @@ class BaseAdapter {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "CedictCharacterForms": () => /* binding */ CedictCharacterForms,
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "CedictCharacterForms": () => (/* binding */ CedictCharacterForms),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
@@ -4566,7 +4603,7 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
 /***/ }),
 
 /***/ "./adapters/concordance/adapter.js":
-/*!*****************************************!*
+/*!*****************************************!*\
   !*** ./adapters/concordance/adapter.js ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4574,7 +4611,7 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_adapters_concordance_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/concordance/config.json */ "./adapters/concordance/config.json");
 /* harmony import */ var _clAdapters_adapters_concordance_author_work_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/concordance/author-work.json */ "./adapters/concordance/author-work.json");
@@ -4893,8 +4930,203 @@ class AlpheiosConcordanceAdapter extends _clAdapters_adapters_base_adapter__WEBP
 
 /***/ }),
 
+/***/ "./adapters/dtsapi/adapter.js":
+/*!************************************!*\
+  !*** ./adapters/dtsapi/adapter.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ DTSAPIAdapter)
+/* harmony export */ });
+/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+
+class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__.default {
+  /**
+   *
+   * @param {Object} config - properties for the adapter
+   */
+  constructor (config = {}) {
+    super()
+    this.config = {
+      baseUrl: config.baseUrl
+    }
+  }
+
+  /**
+   * Retrieves collection
+   * @param {String} id - @id for the collection for example urn:alpheios:latinLit, if it is null would be retrieved the root collections
+   * @return {Collection}
+   */
+  async getCollection (id) {
+    try {
+      const url = this.getCollectionUrl(id)
+      const collections = await this.fetch(url)
+      if (collections) {
+        return this.convertToCollections(collections)
+      }
+      return false
+    } catch (error) {
+      this.addError(this.l10n.getMsg('DTSAPI_FETCH_ERROR', { message: error.message }))
+    }
+  }
+
+  /**
+   * Retrieves refs
+   * @param {String} id - @id for the Resource for example urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1
+   * @param {Collection} collection - would be updated with retrieve data
+   *
+   */
+  async getNavigation (id, resource) {
+    try {
+      const url = this.getNavigationUrl(id)
+      const refs = await this.fetch(url)
+      if (refs) {
+        this.convertToRefs(refs, resource)
+        return resource
+      }
+      return false
+    } catch (error) {
+      this.addError(this.l10n.getMsg('DTSAPI_FETCH_ERROR', { message: error.message }))
+    }
+  }
+
+  /**
+   * Retrieves TEI document - by setting ref, start, end
+   * @param {String} id - @id for the document for example urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1
+   * @param {Object} refParams
+   *        {String} ref - a ref for the passage (if defined start and end are ignored)
+   *        {String} start - a starting ref from it the text would be retrieved
+   *        {String} end - an ending ref till it the text would be retrieved (if it is not defined - would be retrieved till the end of the text)
+   * @retunrs {String} - TEI xml document
+   */
+  async getDocument (id, refParams = {}) {
+    try {
+      const url = this.getDocumentUrl(id, refParams)
+      if (!url) { return }
+
+      const document = await this.fetch(url, { type: 'xml' })
+      return document
+    } catch (error) {
+      this.addError(this.l10n.getMsg('DTSAPI_FETCH_ERROR', { message: error.message }))
+    }
+  }
+
+  /**
+   *
+   * @param {String} id - @id
+   * @returns {string} - url for getting collections
+   */
+  getCollectionUrl (id) {
+    let url = `${this.config.baseUrl}collections`
+    if (id) {
+      url = `${url}?id=${id}`
+    }
+    return url
+  }
+
+  /**
+   *
+   * @param {String} id - @id
+   * @returns {string} - url for getting resources
+   */
+  getNavigationUrl (id) {
+    let url = `${this.config.baseUrl}navigation`
+    if (id) {
+      url = `${url}?id=${id}`
+    }
+    return url
+  }
+
+  /**
+   *
+   * @param {String} id - @id
+   * @returns {string} - url for getting document
+   */
+  getDocumentUrl (id, refParams) {
+    const { ref, start, end } = refParams
+    let url = `${this.config.baseUrl}document`
+    if (!id || (!ref && !start)) {
+      const message = 'getDocumentUrl - not defined id or ref/start'
+      this.addError(this.l10n.getMsg('DTSAPI_NO_OBLIGATORY_PROPS', { message }))
+      return
+    }
+
+    url = `${url}?id=${id}`
+
+    if (ref) { return `${url}&ref=${ref}` }
+
+    url = `${url}&start=${start}`
+    if (end) { return `${url}&end=${end}` }
+
+    return url
+  }
+
+  /**
+   * Converts JSON object to Collection with members
+   * @param {Object} collectionsJSON - JSON object retrieved from the remote
+   * @returns {Collection}
+   */
+  convertToCollections (collectionsJSON) {
+    const rootCollection = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__.Collection({
+      totalItems: collectionsJSON.totalItems,
+      title: collectionsJSON.title !== 'None' ? collectionsJSON.title : 'Alpheios',
+      id: collectionsJSON['@id'] !== 'default' ? collectionsJSON['@id'] : null,
+      baseUrl: this.config.baseUrl,
+      description: collectionsJSON.description
+    })
+
+    if (collectionsJSON.member) {
+      collectionsJSON.member.forEach(collJson => {
+        rootCollection.addMember({
+          totalItems: collJson.totalItems,
+          title: collJson.title,
+          id: collJson['@id'],
+          type: collJson['@type'],
+          description: collJson.description,
+          baseUrl: this.config.baseUrl
+        })
+      })
+    }
+    return rootCollection
+  }
+
+  /**
+   * Converts and uploads passage's refs to collection
+   * @param {Array[Object]} refs - array of passage's refs - [ { ref: '1' }, { ref: '1a' } .. ]
+   * @param {Collection} collection
+   */
+  convertToRefs (refs, resource) {
+    let finalRefs
+
+    if (refs['hydra:member'] && refs['hydra:member'].length > 0) {
+      finalRefs = refs['hydra:member'].map(refObj => refObj.ref)
+    } else if (refs.member && refs.member.length > 0) {
+      finalRefs = refs.member.map(refObj => refObj['dts:ref'])
+    }
+
+    if (finalRefs) {
+      resource.uploadRefs({
+        refs: finalRefs,
+        passage: refs.passage ? refs.passage : refs['dts:passage']
+      })
+    }
+    return true
+  }
+}
+
+
+/***/ }),
+
 /***/ "./adapters/lexicons/adapter.js":
-/*!**************************************!*
+/*!**************************************!*\
   !*** ./adapters/lexicons/adapter.js ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4902,7 +5134,7 @@ class AlpheiosConcordanceAdapter extends _clAdapters_adapters_base_adapter__WEBP
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
@@ -5455,7 +5687,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 /***/ }),
 
 /***/ "./adapters/logeion/adapter.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./adapters/logeion/adapter.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5463,7 +5695,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_adapters_logeion_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/logeion/config.json */ "./adapters/logeion/config.json");
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
@@ -5571,8 +5803,192 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
 
 /***/ }),
 
+/***/ "./adapters/tokenization/adapter.js":
+/*!******************************************!*\
+  !*** ./adapters/tokenization/adapter.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _clAdapters_adapters_tokenization_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/tokenization/config.json */ "./adapters/tokenization/config.json");
+/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+
+class AlpheiosTokenizationAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__.default {
+  /**
+   * Adapter uploads config data
+   * @param {Object} config - properties with higher priority
+  */
+  constructor (config = {}) {
+    super()
+    this.config = this.uploadConfig(config, _clAdapters_adapters_tokenization_config_json__WEBPACK_IMPORTED_MODULE_0__)
+    this.available = true
+    this.sourceData = config.sourceData
+    this.fetchOptions = this.config.fetchOptions
+    this.storage = this.config.storage
+  }
+
+  /**
+  * This method uploads segments data with tokens from tokenization service
+  * @param {String} text - text for retrieving variants
+  * @return {Array} - array of segments
+  */
+  async getTokens (text) {
+    try {
+      const requestParams = {
+        method: 'POST',
+        headers: this.defineContentType(),
+        body: text
+      }
+
+      const url = this.createTokenizeFetchURL()
+      if (!url) {
+        this.addError(this.l10n.getMsg('TOKENIZATION_FETCH_OPTIONS_ERROR'))
+        return
+      }
+
+      if (this.sourceData) {
+        return this.sourceData
+      } else {
+        const segments = await this.fetch(url, { requestParams })
+        return segments
+      }
+    } catch (error) {
+      this.addError(this.l10n.getMsg('TOKENIZATION_FETCH_ERROR', { message: error.message }))
+    }
+  }
+
+  /**
+  * This method uploads default config data from tokenization service
+  * @return {Array} - array of settings
+  */
+  async getConfig () {
+    try {
+      const url = this.createConfigFetchURL()
+      if (!url) {
+        this.addError(this.l10n.getMsg('TOKENIZATION_FETCH_OPTIONS_ERROR'))
+        return
+      }
+
+      let configData
+      if (this.sourceData) {
+        configData = this.sourceData
+      } else {
+        configData = await this.fetch(url)
+      }
+      return this.formatSettings(configData)
+    } catch (error) {
+      this.addError(this.l10n.getMsg('TOKENIZATION_FETCH_ERROR', { message: error.message }))
+    }
+  }
+
+  /**
+   * Converts JSON response to Options for text and tei
+   * @param {Object} configData - Response from config fetch request
+   */
+  formatSettings (configData) {
+    return {
+      tei: this.convertToOptions(configData, 'tei'),
+      text: this.convertToOptions(configData, 'text')
+    }
+  }
+
+  /**
+   *
+   * @param {Object} configData Response from config fetch request
+   * @param {String} textType - tei/text
+   */
+  convertToOptions (configData, textType) {
+    const configDataPath = configData.paths[`/tokenize/${textType}`].post
+
+    const exludeParameters = ['lang', 'direction']
+    const dataFormatted = {
+      domain: `alpheios-remote-tokenization-${textType}`,
+      version: configData.info.version,
+      description: configDataPath.description,
+      items: {}
+    }
+    configDataPath.parameters.filter(param => (param.in === 'query') && !exludeParameters.includes(param.name)).forEach(param => {
+      const result = {
+        defaultValue: param.schema.default,
+        labelText: param.description,
+        select: Boolean(param.schema.enum),
+        boolean: param.schema.type === 'boolean'
+      }
+      if (result.select) {
+        result.values = param.schema.enum.map(val => { return { value: val, text: val } })
+      }
+
+      dataFormatted.items[param.name] = result
+    })
+    return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__.Options(dataFormatted, new this.storage(dataFormatted.domain)) // eslint-disable-line new-cap
+  }
+
+  /**
+  * This method constructs full url for getting tokenize data
+  * @return {String}
+  */
+  createTokenizeFetchURL () {
+    if (this.fetchOptions) {
+      if (!this.fetchOptions.lang || !this.fetchOptions.sourceType) {
+        return
+      }
+      const exclude = ['baseUrl', 'sourceType', 'tokenizer']
+
+      let url = `${this.fetchOptions.baseUrl}tokenize/${this.fetchOptions.sourceType}`
+      let wasFirst = false
+
+      Object.keys(this.fetchOptions).forEach(option => {
+        if ((exclude.indexOf(option) === -1) && (this.fetchOptions[option] !== undefined)) {
+          let sign = '&'
+          if (!wasFirst) {
+            sign = '?'
+            wasFirst = true
+          }
+          url = `${url}${sign}${option}=${this.fetchOptions[option]}`
+        }
+      })
+
+      return url
+    }
+  }
+
+  /**
+  * This method constructs full url for getting config data
+  * @return {String}
+  */
+  createConfigFetchURL () {
+    return this.fetchOptions.baseUrl
+  }
+
+  /**
+   * This method defines type of Content-Type based on the source text type
+   * @returns {Object} - { 'Content-Type':  <mime type> }
+   */
+  defineContentType () {
+    if (this.fetchOptions.sourceType === 'tei') {
+      return { 'Content-Type': 'application/xml' }
+    }
+    return { 'Content-Type': 'text/plain' }
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AlpheiosTokenizationAdapter);
+
+
+/***/ }),
+
 /***/ "./adapters/translations/adapter.js":
-/*!******************************************!*
+/*!******************************************!*\
   !*** ./adapters/translations/adapter.js ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5580,7 +5996,7 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_adapters_translations_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/translations/config.json */ "./adapters/translations/config.json");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
@@ -5711,7 +6127,7 @@ class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter
 /***/ }),
 
 /***/ "./adapters/tufts/adapter.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./adapters/tufts/adapter.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5719,7 +6135,7 @@ class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
@@ -5842,7 +6258,7 @@ class AlpheiosTuftsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IM
 /***/ }),
 
 /***/ "./adapters/tufts/engine/aramorph.js":
-/*!*******************************************!*
+/*!*******************************************!*\
   !*** ./adapters/tufts/engine/aramorph.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5850,7 +6266,7 @@ class AlpheiosTuftsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IM
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
@@ -5866,7 +6282,7 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 /***/ }),
 
 /***/ "./adapters/tufts/engine/hazm.js":
-/*!***************************************!*
+/*!***************************************!*\
   !*** ./adapters/tufts/engine/hazm.js ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5874,7 +6290,7 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
@@ -5893,7 +6309,7 @@ data.setLexemeFilter(function (lexeme) { return Boolean(lexeme.lemma.word) })
 /***/ }),
 
 /***/ "./adapters/tufts/engine/morpheusgrc.js":
-/*!**********************************************!*
+/*!**********************************************!*\
   !*** ./adapters/tufts/engine/morpheusgrc.js ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5901,7 +6317,7 @@ data.setLexemeFilter(function (lexeme) { return Boolean(lexeme.lemma.word) })
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
@@ -5971,7 +6387,7 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
 /***/ }),
 
 /***/ "./adapters/tufts/engine/sedra.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ./adapters/tufts/engine/sedra.js ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5979,7 +6395,7 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
@@ -6023,7 +6439,7 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
 /***/ }),
 
 /***/ "./adapters/tufts/engine/traces.js":
-/*!*****************************************!*
+/*!*****************************************!*\
   !*** ./adapters/tufts/engine/traces.js ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6031,7 +6447,7 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
@@ -6047,7 +6463,7 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 /***/ }),
 
 /***/ "./adapters/tufts/engine/whitakers.js":
-/*!********************************************!*
+/*!********************************************!*\
   !*** ./adapters/tufts/engine/whitakers.js ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6055,7 +6471,7 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
@@ -6180,7 +6596,7 @@ data.setLemmaParser(function (lemma) {
 /***/ }),
 
 /***/ "./adapters/tufts/engines-set.js":
-/*!***************************************!*
+/*!***************************************!*\
   !*** ./adapters/tufts/engines-set.js ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6188,7 +6604,7 @@ data.setLemmaParser(function (lemma) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_adapters_tufts_engine_whitakers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engine/whitakers */ "./adapters/tufts/engine/whitakers.js");
 /* harmony import */ var _clAdapters_adapters_tufts_engine_morpheusgrc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engine/morpheusgrc */ "./adapters/tufts/engine/morpheusgrc.js");
@@ -6245,7 +6661,7 @@ class EnginesSet {
 /***/ }),
 
 /***/ "./client-adapters.js":
-/*!****************************!*
+/*!****************************!*\
   !*** ./client-adapters.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6253,7 +6669,7 @@ class EnginesSet {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_adapters_tufts_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/tufts/adapter */ "./adapters/tufts/adapter.js");
 /* harmony import */ var _clAdapters_adapters_chineseloc_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/chineseloc/adapter */ "./adapters/chineseloc/adapter.js");
@@ -6263,9 +6679,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_concordance_adapter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/adapters/concordance/adapter */ "./adapters/concordance/adapter.js");
 /* harmony import */ var _clAdapters_adapters_arethusa_adapter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/adapters/arethusa/adapter */ "./adapters/arethusa/adapter.js");
 /* harmony import */ var _clAdapters_adapters_logeion_adapter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/adapters/logeion/adapter */ "./adapters/logeion/adapter.js");
-/* harmony import */ var _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/errors/wrong-method-error */ "./errors/wrong-method-error.js");
-/* harmony import */ var _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @clAdapters/errors/no-required-param-error */ "./errors/no-required-param-error.js");
-/* harmony import */ var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json");
+/* harmony import */ var _clAdapters_adapters_tokenization_adapter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/adapters/tokenization/adapter */ "./adapters/tokenization/adapter.js");
+/* harmony import */ var _clAdapters_adapters_dtsapi_adapter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @clAdapters/adapters/dtsapi/adapter */ "./adapters/dtsapi/adapter.js");
+/* harmony import */ var _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @clAdapters/errors/wrong-method-error */ "./errors/wrong-method-error.js");
+/* harmony import */ var _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @clAdapters/errors/no-required-param-error */ "./errors/no-required-param-error.js");
+/* harmony import */ var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json");
+
+
 
 
 
@@ -6289,10 +6709,10 @@ class ClientAdapters {
   */
   static init () {
     if (cachedConfig.size === 0) {
-      for (const category in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_10__) {
+      for (const category in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_12__) {
         let adapters = {} // eslint-disable-line prefer-const
-        for (const adapterKey in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_10__[category]) {
-          const adapterData = _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_10__[category][adapterKey]
+        for (const adapterKey in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_12__[category]) {
+          const adapterData = _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_12__[category][adapterKey]
 
           adapters[adapterKey] = {
             adapter: ClientAdapters[adapterData.adapter],
@@ -6349,6 +6769,16 @@ class ClientAdapters {
     return cachedAdaptersList.get('autocompleteWords')
   }
 
+  static get tokenizationGroup () {
+    ClientAdapters.init()
+    return cachedAdaptersList.get('tokenizationGroup')
+  }
+
+  static get dtsapiGroup () {
+    ClientAdapters.init()
+    return cachedAdaptersList.get('dtsapiGroup')
+  }
+
   /**
   * This method checks if given method is registered in config for category.adapterName
   * @param {String} category - category name - morphology, lemmatranslation, lexicon
@@ -6357,7 +6787,7 @@ class ClientAdapters {
   */
   static checkMethod (category, adapterName, methodName) {
     if (!cachedConfig.get(category)[adapterName].methods.includes(methodName)) {
-      throw new _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_8__.default(category, adapterName, methodName)
+      throw new _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_10__.default(category, adapterName, methodName)
     }
   }
 
@@ -6373,7 +6803,7 @@ class ClientAdapters {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
         // Param values other than `undefined` such as `null` or empty strings could be valid values
         if (params && typeof params[paramName] === 'undefined') {
-          throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_9__.default(category, adapterName, methodName, paramName)
+          throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_11__.default(category, adapterName, methodName, paramName)
         }
       })
     }
@@ -6647,6 +7077,68 @@ class ClientAdapters {
     }
     return null
   }
+
+  /**
+   * It is used for getting segments and tokens from Alpheios Tokenization Service
+   * @param {Object} options
+   */
+  static async tokenizationMethod (options) {
+    ClientAdapters.checkMethodParam('tokenizationGroup', 'alpheios', options)
+
+    const localTokenizationAdapter = new _clAdapters_adapters_tokenization_adapter__WEBPACK_IMPORTED_MODULE_8__.default({
+      category: 'tokenizationGroup',
+      adapterName: 'alpheios',
+      method: options.method,
+      clientId: options.clientId,
+      fetchOptions: options.params.fetchOptions,
+      storage: options.params.storage,
+      sourceData: options.params.sourceData
+    })
+
+    if (!localTokenizationAdapter.available) {
+      localTokenizationAdapter.addError(localTokenizationAdapter.l10n.getMsg('TOKENIZATION_AVAILABILITY_ERROR'))
+      return {
+        errors: localTokenizationAdapter.errors
+      }
+    }
+
+    if (options.method === 'getTokens') {
+      const res = await localTokenizationAdapter.getTokens(options.params.text)
+      return { result: res, errors: localTokenizationAdapter.errors }
+    }
+    if (options.method === 'getConfig') {
+      const res = await localTokenizationAdapter.getConfig()
+      return { result: res, errors: localTokenizationAdapter.errors }
+    }
+    return null
+  }
+
+  static async dtsApiMethod (options) {
+    ClientAdapters.checkMethodParam('dtsapiGroup', 'dtsapi', options)
+
+    const localDTSAPIAdapter = new _clAdapters_adapters_dtsapi_adapter__WEBPACK_IMPORTED_MODULE_9__.default({
+      category: 'dtsapiGroup',
+      adapterName: 'dtsapi',
+      method: options.method,
+      clientId: options.clientId,
+      baseUrl: options.params.baseUrl
+    })
+
+    if (options.method === 'getCollection') {
+      const res = await localDTSAPIAdapter.getCollection(options.params.id)
+      return { result: res, errors: localDTSAPIAdapter.errors }
+    }
+
+    if (options.method === 'getNavigation') {
+      const res = await localDTSAPIAdapter.getNavigation(options.params.id, options.params.resource)
+      return { result: res, errors: localDTSAPIAdapter.errors }
+    }
+
+    if (options.method === 'getDocument') {
+      const res = await localDTSAPIAdapter.getDocument(options.params.id, options.params.refParams)
+      return { result: res, errors: localDTSAPIAdapter.errors }
+    }
+  }
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ClientAdapters);
@@ -6655,7 +7147,7 @@ class ClientAdapters {
 /***/ }),
 
 /***/ "./errors/adapter-error.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./errors/adapter-error.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6663,13 +7155,14 @@ class ClientAdapters {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class AdapterError extends Error {
-  constructor (category, adapterName, methodName, messageError) {
+  constructor (category, adapterName, methodName, messageError, statusCode) {
     super(messageError)
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName
+    this.statusCode = statusCode
 
     if (this.adapter && this.methodName) {
       this.message = `${this.message} (${this.adapter}.${this.methodName})`
@@ -6681,6 +7174,11 @@ class AdapterError extends Error {
     }
   }
 
+  /**
+   * @deprecated
+   * This method is obsolete. It will be removed in future versions.
+   * No replacement for its functionality has been provided as it is not used anywhere.
+   */
   update (config) {
     this.adapter = `${config.category}.${config.adapterName}`
     this.methodName = config.method
@@ -6695,8 +7193,45 @@ class AdapterError extends Error {
 
 /***/ }),
 
+/***/ "./errors/adapter-warning.js":
+/*!***********************************!*\
+  !*** ./errors/adapter-warning.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ AdapterWarning)
+/* harmony export */ });
+/**
+ A warning represents a problem that is less severe than an error.
+ In case of an error the problem that caused it cannot be ignored and,
+ because of that, the normal execution of the workflow is impossible.
+ The warning, in contrast, represents a issue that is important enough to be noticed,
+ but that does not, on itself, prevent the code from being executed normally.
+ */
+class AdapterWarning extends Error {
+  /**
+   * @param {string} category
+   * @param {string} adapterName - The name of the client adapter where the warning was originated.
+   * @param {string} methodName - The name of the method from where the warning came from.
+   * @param {string} errorCode - A short string representing the alphanumeric error code, such as `SOME_DATA_MISSING`
+   * @param errorMessage
+   */
+  constructor (category, adapterName, methodName, errorCode, errorMessage) {
+    super(errorMessage)
+    this.adapter = `${category}.${adapterName}`
+    this.methodName = methodName
+    this.errorCode = errorCode
+  }
+}
+
+
+/***/ }),
+
 /***/ "./errors/no-required-param-error.js":
-/*!*******************************************!*
+/*!*******************************************!*\
   !*** ./errors/no-required-param-error.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6704,7 +7239,7 @@ class AdapterError extends Error {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class NoRequiredParamError extends Error {
   constructor (category, adapterName, methodName, paramName) {
@@ -6723,7 +7258,7 @@ class NoRequiredParamError extends Error {
 /***/ }),
 
 /***/ "./errors/remote-error.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./errors/remote-error.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6731,7 +7266,7 @@ class NoRequiredParamError extends Error {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ RemoteError
+/* harmony export */   "default": () => (/* binding */ RemoteError)
 /* harmony export */ });
 class RemoteError extends Error {
   constructor (category, adapterName, methodName, errorCode, errorMessage) {
@@ -6754,7 +7289,7 @@ class RemoteError extends Error {
 /***/ }),
 
 /***/ "./errors/wrong-method-error.js":
-/*!**************************************!*
+/*!**************************************!*\
   !*** ./errors/wrong-method-error.js ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6762,7 +7297,7 @@ class RemoteError extends Error {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class WrongMethodError extends Error {
   constructor (category, adapterName, methodName) {
@@ -6780,7 +7315,7 @@ class WrongMethodError extends Error {
 /***/ }),
 
 /***/ "./index.js":
-/*!******************!*
+/*!******************!*\
   !*** ./index.js ***!
   \******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6788,11 +7323,14 @@ class WrongMethodError extends Error {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ClientAdapters": () => /* reexport safe */ _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__.default,
-/* harmony export */   "RemoteError": () => /* reexport safe */ _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__.default
+/* harmony export */   "ClientAdapters": () => (/* reexport safe */ _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__.default),
+/* harmony export */   "AdapterError": () => (/* reexport safe */ _clAdapters_errors_adapter_error_js__WEBPACK_IMPORTED_MODULE_1__.default),
+/* harmony export */   "RemoteError": () => (/* reexport safe */ _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__.default)
 /* harmony export */ });
 /* harmony import */ var _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/client-adapters.js */ "./client-adapters.js");
-/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony import */ var _clAdapters_errors_adapter_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/adapter-error.js */ "./errors/adapter-error.js");
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+
 
 
 
@@ -6802,7 +7340,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./locales/locales.js":
-/*!****************************!*
+/*!****************************!*\
   !*** ./locales/locales.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6810,7 +7348,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _en_us_messages_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./en-us/messages.json */ "./locales/en-us/messages.json");
 /* harmony import */ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./en-gb/messages.json */ "./locales/en-gb/messages.json");
@@ -6830,7 +7368,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ "./transformers/alpheios-lexicon-transformer.js":
-/*!******************************************************!*
+/*!******************************************************!*\
   !*** ./transformers/alpheios-lexicon-transformer.js ***!
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6838,7 +7376,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
@@ -7156,7 +7694,7 @@ class AlpheiosLexiconTransformer {
 /***/ }),
 
 /***/ "./transformers/import-morph-data.js":
-/*!*******************************************!*
+/*!*******************************************!*\
   !*** ./transformers/import-morph-data.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7164,7 +7702,7 @@ class AlpheiosLexiconTransformer {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
@@ -7455,18 +7993,18 @@ class ImportMorphData {
 /***/ }),
 
 /***/ "./adapters/adapters-config.json":
-/*!***************************************!*
+/*!***************************************!*\
   !*** ./adapters/adapters-config.json ***!
   \***************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\",\"gotoSentence\",\"findWord\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"],\"gotoSentence\":[\"provider\",\"sentenceId\",\"wordIds\"],\"findWord\":[\"provider\",\"word\",\"prefix\",\"suffix\",\"sentenceId\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\",\"fetchOptions\"]}}}}");
+module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\",\"gotoSentence\",\"findWord\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"],\"gotoSentence\":[\"provider\",\"sentenceId\",\"wordIds\"],\"findWord\":[\"provider\",\"word\",\"prefix\",\"suffix\",\"sentenceId\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\",\"fetchOptions\"]}}},\"tokenizationGroup\":{\"alpheios\":{\"adapter\":\"tokenizationMethod\",\"methods\":[\"getTokens\",\"getConfig\"],\"params\":{\"getTokens\":[\"text\"],\"getConfig\":[\"storage\"]}}},\"dtsapiGroup\":{\"dtsapi\":{\"adapter\":\"dtsApiMethod\",\"methods\":[\"getCollection\",\"getNavigation\",\"getDocument\"],\"params\":{\"getCollection\":[\"baseUrl\"],\"getNavigation\":[\"baseUrl\",\"id\",\"resource\"],\"getDocument\":[\"baseUrl\",\"id\",\"refParams\"]}}}}");
 
 /***/ }),
 
 /***/ "./adapters/alpheiostb/config.json":
-/*!*****************************************!*
+/*!*****************************************!*\
   !*** ./adapters/alpheiostb/config.json ***!
   \*****************************************/
 /***/ ((module) => {
@@ -7477,7 +8015,7 @@ module.exports = JSON.parse("{\"servers\":[{\"texts\":[],\"isDefault\":true,\"ur
 /***/ }),
 
 /***/ "./adapters/concordance/author-work.json":
-/*!***********************************************!*
+/*!***********************************************!*\
   !*** ./adapters/concordance/author-work.json ***!
   \***********************************************/
 /***/ ((module) => {
@@ -7488,7 +8026,7 @@ module.exports = JSON.parse("{\"authors\":[{\"urn\":\"urn:cts:latinLit:phi2456\"
 /***/ }),
 
 /***/ "./adapters/concordance/config.json":
-/*!******************************************!*
+/*!******************************************!*\
   !*** ./adapters/concordance/config.json ***!
   \******************************************/
 /***/ ((module) => {
@@ -7499,7 +8037,7 @@ module.exports = JSON.parse("{\"url\":\"https://latin.packhum.org/rst/concordanc
 /***/ }),
 
 /***/ "./adapters/lexicons/config.json":
-/*!***************************************!*
+/*!***************************************!*\
   !*** ./adapters/lexicons/config.json ***!
   \***************************************/
 /***/ ((module) => {
@@ -7510,7 +8048,7 @@ module.exports = JSON.parse("{\"https://github.com/alpheios-project/mjm\":{\"url
 /***/ }),
 
 /***/ "./adapters/logeion/config.json":
-/*!**************************************!*
+/*!**************************************!*\
   !*** ./adapters/logeion/config.json ***!
   \**************************************/
 /***/ ((module) => {
@@ -7520,8 +8058,19 @@ module.exports = JSON.parse("{\"url\":\"https://api-v2.logeion.org/search?q=\",\
 
 /***/ }),
 
+/***/ "./adapters/tokenization/config.json":
+/*!*******************************************!*\
+  !*** ./adapters/tokenization/config.json ***!
+  \*******************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse("{\"fetchOptions\":{\"baseUrl\":\"https://tools.alpheios.net/tokenizer/\",\"sourceType\":\"text\"}}");
+
+/***/ }),
+
 /***/ "./adapters/translations/config.json":
-/*!*******************************************!*
+/*!*******************************************!*\
   !*** ./adapters/translations/config.json ***!
   \*******************************************/
 /***/ ((module) => {
@@ -7532,7 +8081,7 @@ module.exports = JSON.parse("{\"url\":\"https://ats.alpheios.net\",\"availableLa
 /***/ }),
 
 /***/ "./adapters/tufts/config.json":
-/*!************************************!*
+/*!************************************!*\
   !*** ./adapters/tufts/config.json ***!
   \************************************/
 /***/ ((module) => {
@@ -7543,7 +8092,7 @@ module.exports = JSON.parse("{\"engine\":{\"lat\":[\"whitakerLat\"],\"grc\":[\"m
 /***/ }),
 
 /***/ "./locales/en-gb/messages.json":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./locales/en-gb/messages.json ***!
   \*************************************/
 /***/ ((module) => {
@@ -7554,18 +8103,18 @@ module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a t
 /***/ }),
 
 /***/ "./locales/en-us/messages.json":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE\":{\"message\":\"There is no engine for the given languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no engine is found for given languageID\",\"component\":\"morphology.tufts\",\"params\":[\"languageID\"]},\"MORPH_NO_HOMONYM\":{\"message\":\"There is no homonym for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no homonym was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_TUFTS_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no data was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.tufts adapter - unknown\",\"component\":\"morphology.tufts\",\"params\":[\"message\"]},\"MORPH_TRANSFORM_NO_LANGUAGE\":{\"message\":\"No Language was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_LEMMA\":{\"message\":\"No Lemma was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_MAPPING_DATA\":{\"message\":\"No mapping data found for {language}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"language\"]},\"MORPH_TRANSFORM_INFLECTION_ERROR\":{\"message\":\"Error parsing inflection: {error}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"error\"]},\"BASIC_ADAPTER_NO_DATA_FROM_URL\":{\"message\":\"Unable to get data from url - {url}\",\"description\":\"Error message for basic adapter - when no data was returned from the url\",\"component\":\"basic_adapter\",\"params\":[\"url\"]},\"BASIC_ADAPTER_EMPTY_URL\":{\"message\":\"Unable to get data from empty url\",\"description\":\"Error message for basic adapter - when empty url was given\",\"component\":\"basic_adapter\"},\"BASIC_ADAPTER_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"message\"]},\"BASIC_ADAPTER_URL_RESPONSE_FAILED\":{\"message\":\"Request doesn't return data - {statusCode}: {statusText}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"statusCode\",\"statusText\"]},\"MORPH_TREEBANK_MISSING_REF\":{\"message\":\"Reference is missing from treebank request = {request}\",\"description\":\"Missing reference in treebank request\",\"component\":\"morph.treebank\",\"params\":[\"request\"]},\"MORPH_TREEBANK_UNSUPPORTED_LANGUAGE\":{\"message\":\"Unsupported treebank language ${languageId}\",\"description\":\"Unsupported treebank language\",\"component\":\"morph.treebank\",\"params\":[\"languageId\"]},\"MORPH_TREEBANK_NO_URL\":{\"message\":\"There is a problem with creating url for the given word - {word}\",\"description\":\"Error message for morph.treebank - no url for fetching data from treebank\",\"component\":\"morph.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word}\",\"description\":\"Error message for morphology.treebank adapter - when no data was returned from the source\",\"component\":\"morphology.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.treebank adapter - unknown\",\"component\":\"morphology.treebank\",\"params\":[\"message\"]},\"TRANSLATION_INPUT_PREPARE_ERROR\":{\"message\":\"Some problems with preparing input for geting translations - {input}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - problems with input\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"input\"]},\"TRANSLATION_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - unknown\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"message\"]},\"TRANSLATION_INCORRECT_LEXEMES\":{\"message\":\"There is no correct homonym in input\",\"description\":\"Error message for lemmatranslation.alpheios adapter - no lexemes\",\"component\":\"lemmatranslation.alpheios\"},\"LEXICONS_NO_ALLOWED_URL\":{\"message\":\"There are no allowed urls in the options\",\"description\":\"Error message for lexicon.alpheios adapter - no urls were found in options\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_FAILED_CACHED_DATA\":{\"message\":\"There is a problem with catching data from lexicon source - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with getting cached data\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_FAILED_APPEND_DEFS\":{\"message\":\"There is a problem with updating definitions - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with updating definitions\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_NO_FULL_URL\":{\"message\":\"No full url is defined for definitions\",\"description\":\"Error message for lexicon.alpheios adapter - no full url is defined\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_NO_DATA_FROM_URL\":{\"message\":\"No data recieved from url - {url}\",\"description\":\"Error message for lexicon.alpheios adapter - no data from url\",\"component\":\"lexicon.alpheios\",\"params\":[\"url\"]},\"CONCORDANCE_AUTHOR_UPLOAD_ERROR\":{\"message\":\"Some problems with retrieving from author/textWork config file - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"CONCORDANCE_WORD_USAGE_FETCH_ERROR\":{\"message\":\"Some problems with fetching word usage examples from concordance api - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"LOGEION_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from logeion api - {message}\",\"description\":\"Error message for autoCompleteWords.logeion adapter - problems with fetching words from logeion api\",\"component\":\"autoCompleteWords.logeion\",\"params\":[\"message\"]},\"LOGEION_FETCH_OPTIONS_ERROR\":{\"message\":\"There are no fetch options for Logeion API request\",\"description\":\"Error message for autoCompleteWords.logeion adapter - no apikey and baseurl for Logeion API\",\"component\":\"autoCompleteWords.logeion\"}}");
+module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE\":{\"message\":\"There is no engine for the given languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no engine is found for given languageID\",\"component\":\"morphology.tufts\",\"params\":[\"languageID\"]},\"MORPH_NO_HOMONYM\":{\"message\":\"There is no homonym for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no homonym was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_TUFTS_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no data was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.tufts adapter - unknown\",\"component\":\"morphology.tufts\",\"params\":[\"message\"]},\"MORPH_TRANSFORM_NO_LANGUAGE\":{\"message\":\"No Language was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_LEMMA\":{\"message\":\"No Lemma was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_MAPPING_DATA\":{\"message\":\"No mapping data found for {language}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"language\"]},\"MORPH_TRANSFORM_INFLECTION_ERROR\":{\"message\":\"Error parsing inflection: {error}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"error\"]},\"BASIC_ADAPTER_NO_DATA_FROM_URL\":{\"message\":\"Remote service is unavailable - {url}\",\"description\":\"Error message for basic adapter - when no data was returned from the url\",\"component\":\"basic_adapter\",\"params\":[\"url\"]},\"BASIC_ADAPTER_EMPTY_URL\":{\"message\":\"Unable to get data from empty url\",\"description\":\"Error message for basic adapter - when empty url was given\",\"component\":\"basic_adapter\"},\"BASIC_ADAPTER_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"message\"]},\"BASIC_ADAPTER_URL_RESPONSE_FAILED\":{\"message\":\"Request doesn't return data - {statusCode}: {statusText}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"statusCode\",\"statusText\"]},\"MORPH_TREEBANK_MISSING_REF\":{\"message\":\"Reference is missing from treebank request = {request}\",\"description\":\"Missing reference in treebank request\",\"component\":\"morph.treebank\",\"params\":[\"request\"]},\"MORPH_TREEBANK_UNSUPPORTED_LANGUAGE\":{\"message\":\"Unsupported treebank language ${languageId}\",\"description\":\"Unsupported treebank language\",\"component\":\"morph.treebank\",\"params\":[\"languageId\"]},\"MORPH_TREEBANK_NO_URL\":{\"message\":\"There is a problem with creating url for the given word - {word}\",\"description\":\"Error message for morph.treebank - no url for fetching data from treebank\",\"component\":\"morph.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word}\",\"description\":\"Error message for morphology.treebank adapter - when no data was returned from the source\",\"component\":\"morphology.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.treebank adapter - unknown\",\"component\":\"morphology.treebank\",\"params\":[\"message\"]},\"TRANSLATION_INPUT_PREPARE_ERROR\":{\"message\":\"Some problems with preparing input for geting translations - {input}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - problems with input\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"input\"]},\"TRANSLATION_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - unknown\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"message\"]},\"TRANSLATION_INCORRECT_LEXEMES\":{\"message\":\"There is no correct homonym in input\",\"description\":\"Error message for lemmatranslation.alpheios adapter - no lexemes\",\"component\":\"lemmatranslation.alpheios\"},\"LEXICONS_NO_ALLOWED_URL\":{\"message\":\"There are no allowed urls in the options\",\"description\":\"Error message for lexicon.alpheios adapter - no urls were found in options\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_FAILED_CACHED_DATA\":{\"message\":\"There is a problem with catching data from lexicon source - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with getting cached data\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_FAILED_APPEND_DEFS\":{\"message\":\"There is a problem with updating definitions - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with updating definitions\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_NO_FULL_URL\":{\"message\":\"No full url is defined for definitions\",\"description\":\"Error message for lexicon.alpheios adapter - no full url is defined\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_NO_DATA_FROM_URL\":{\"message\":\"No data recieved from url - {url}\",\"description\":\"Error message for lexicon.alpheios adapter - no data from url\",\"component\":\"lexicon.alpheios\",\"params\":[\"url\"]},\"CONCORDANCE_AUTHOR_UPLOAD_ERROR\":{\"message\":\"Some problems with retrieving from author/textWork config file - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"CONCORDANCE_WORD_USAGE_FETCH_ERROR\":{\"message\":\"Some problems with fetching word usage examples from concordance api - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"LOGEION_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from logeion api - {message}\",\"description\":\"Error message for autoCompleteWords.logeion adapter - problems with fetching words from logeion api\",\"component\":\"autoCompleteWords.logeion\",\"params\":[\"message\"]},\"LOGEION_FETCH_OPTIONS_ERROR\":{\"message\":\"There are no fetch options for Logeion API request\",\"description\":\"Error message for autoCompleteWords.logeion adapter - no apikey and baseurl for Logeion API\",\"component\":\"autoCompleteWords.logeion\"},\"TOKENIZATION_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from Alpheios Tokenization API - {message}\",\"description\":\"Error message for Alpheios Tokenization adapter - problems with fetching words from api\",\"component\":\"tokenizationGroup.alpheios\",\"params\":[\"message\"]},\"TOKENIZATION_FETCH_OPTIONS_ERROR\":{\"message\":\"There are no fetch options for Alpheios Tokenization API request\",\"description\":\"Error message - no apikey and baseurl for Alpheios Tokenization API\",\"component\":\"tokenizationGroup.alpheios\"},\"TOKENIZATION_AVAILABILITY_ERROR\":{\"message\":\"Tokenization service is not available for passed fetch parameters (language)\",\"description\":\"Error message - tokenization service doesn't support passed language\",\"component\":\"tokenizationGroup.alpheios\"},\"DTSAPI_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from DTS API - {message}\",\"description\":\"Error message for DTS API adapter - problems with fetching words from api\",\"component\":\"dtsapiGroup.general\",\"params\":[\"message\"]},\"DTSAPI_NO_OBLIGATORY_PROPS\":{\"message\":\"Not all obligatory parameters are defined for the method - {message}\",\"description\":\"Error message for DTS API adapter - problems with fetching words from api\",\"component\":\"dtsapiGroup.general\",\"params\":[\"message\"]}}");
 
 /***/ }),
 
 /***/ "alpheios-data-models":
-/*!***************************************!*
+/*!***************************************!*\
   !*** external "alpheios-data-models" ***!
   \***************************************/
 /***/ ((module) => {
@@ -7576,7 +8125,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /***/ }),
 
 /***/ "alpheios-l10n":
-/*!********************************!*
+/*!********************************!*\
   !*** external "alpheios-l10n" ***!
   \********************************/
 /***/ ((module) => {
@@ -7587,7 +8136,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_l10n__;
 /***/ }),
 
 /***/ "alpheios-messaging":
-/*!*************************************!*
+/*!*************************************!*\
   !*** external "alpheios-messaging" ***!
   \*************************************/
 /***/ ((module) => {
@@ -7598,7 +8147,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_messaging__;
 /***/ }),
 
 /***/ "assert":
-/*!*************************!*
+/*!*************************!*\
   !*** external "assert" ***!
   \*************************/
 /***/ ((module) => {
@@ -7609,7 +8158,7 @@ module.exports = require("assert");;
 /***/ }),
 
 /***/ "fs":
-/*!*********************!*
+/*!*********************!*\
   !*** external "fs" ***!
   \*********************/
 /***/ ((module) => {
@@ -7620,7 +8169,7 @@ module.exports = require("fs");;
 /***/ }),
 
 /***/ "http":
-/*!***********************!*
+/*!***********************!*\
   !*** external "http" ***!
   \***********************/
 /***/ ((module) => {
@@ -7631,7 +8180,7 @@ module.exports = require("http");;
 /***/ }),
 
 /***/ "https":
-/*!************************!*
+/*!************************!*\
   !*** external "https" ***!
   \************************/
 /***/ ((module) => {
@@ -7642,7 +8191,7 @@ module.exports = require("https");;
 /***/ }),
 
 /***/ "net":
-/*!**********************!*
+/*!**********************!*\
   !*** external "net" ***!
   \**********************/
 /***/ ((module) => {
@@ -7653,7 +8202,7 @@ module.exports = require("net");;
 /***/ }),
 
 /***/ "papaparse":
-/*!****************************!*
+/*!****************************!*\
   !*** external "papaparse" ***!
   \****************************/
 /***/ ((module) => {
@@ -7664,7 +8213,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_papaparse__;
 /***/ }),
 
 /***/ "stream":
-/*!*************************!*
+/*!*************************!*\
   !*** external "stream" ***!
   \*************************/
 /***/ ((module) => {
@@ -7675,7 +8224,7 @@ module.exports = require("stream");;
 /***/ }),
 
 /***/ "tty":
-/*!**********************!*
+/*!**********************!*\
   !*** external "tty" ***!
   \**********************/
 /***/ ((module) => {
@@ -7686,7 +8235,7 @@ module.exports = require("tty");;
 /***/ }),
 
 /***/ "url":
-/*!**********************!*
+/*!**********************!*\
   !*** external "url" ***!
   \**********************/
 /***/ ((module) => {
@@ -7697,7 +8246,7 @@ module.exports = require("url");;
 /***/ }),
 
 /***/ "util":
-/*!***********************!*
+/*!***********************!*\
   !*** external "util" ***!
   \***********************/
 /***/ ((module) => {
@@ -7708,7 +8257,7 @@ module.exports = require("util");;
 /***/ }),
 
 /***/ "zlib":
-/*!***********************!*
+/*!***********************!*\
   !*** external "zlib" ***!
   \***********************/
 /***/ ((module) => {
@@ -7752,8 +8301,8 @@ module.exports = require("zlib");;
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
 /******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
@@ -7773,7 +8322,7 @@ module.exports = require("zlib");;
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */

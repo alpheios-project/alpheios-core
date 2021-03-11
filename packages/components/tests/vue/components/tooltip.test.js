@@ -58,7 +58,7 @@ describe('tooltip.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
   })
 
-  it('2 Tooltip - renders a vue instance (min requirements)', () => {
+  it('2 Tooltip - renders a vue instance (min requirements)', async () => {
     let storeLocal = new Vuex.Store({
       modules: {
         app: {
@@ -92,67 +92,81 @@ describe('tooltip.test.js', () => {
       tooltipDirection: 'top'
     })
 
+    await Vue.nextTick()
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-top': true })
 
     cmp.setProps({
       tooltipDirection: 'foo value'
     })
 
+    await Vue.nextTick()
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom': true })
 
     cmp.setProps({
       tooltipDirection: 'TOP'
     })
 
+    await Vue.nextTick()
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-top': true })
 
     cmp.setProps({
       additionalStyles: { color: 'red' }
     })
 
-    Vue.nextTick().then(() => {
-      expect(cmp.find('.tooltiptext').element.style.color).toEqual('red')
-    })
-    
+    await Vue.nextTick()
+
+    expect(cmp.find('.alpheios-tooltiptext').element.style.color).toEqual('red')
+        
 
     cmp.setProps({
       tooltipDirection: 'bottom-wide'
     })
+
+    await Vue.nextTick()
+
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom-wide': true })
 
     cmp.setProps({
       tooltipDirection: 'bottom-narrow'
     })
+    await Vue.nextTick()
+
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom-narrow': true })
 
     cmp.setProps({
       tooltipDirection: 'bottom-narrow2'
     })
+    await Vue.nextTick()
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom-narrow2': true })
 
     cmp.setProps({
       tooltipDirection: 'left'
     })
+    await Vue.nextTick()
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-left': true })
 
     cmp.setProps({
       tooltipDirection: 'right'
     })
+    await Vue.nextTick()
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-right': true })
 
     cmp.setProps({
       tooltipDirection: 'bottom-right'
     })
+    await Vue.nextTick()
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom-right': true })
 
     cmp.setProps({
       tooltipDirection: 'top-right'
     })
+    await Vue.nextTick()
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-top-right': true })
 
     cmp.setProps({
       tooltipDirection: 'top-left'
     })
+    await Vue.nextTick()
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-top-left': true })
 
   })
@@ -220,4 +234,5 @@ describe('tooltip.test.js', () => {
 
     expect(cmp.vm.renderTooltip).toBeFalsy()
   })
+
 })

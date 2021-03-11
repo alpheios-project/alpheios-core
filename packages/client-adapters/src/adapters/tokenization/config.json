@@ -1,0 +1,6 @@
+{
+  "fetchOptions": {
+    "baseUrl": "https://tools.alpheios.net/tokenizer/",
+    "sourceType": "text"
+  }
+}

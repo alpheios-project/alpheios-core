@@ -11,8 +11,1840 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "../../../node_modules/axios/index.js":
+/*!********************************************!*\
+  !*** ../../../node_modules/axios/index.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/axios/lib/axios.js");
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/adapters/xhr.js":
+/*!*******************************************************!*\
+  !*** ../../../node_modules/axios/lib/adapters/xhr.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+var settle = __webpack_require__(/*! ./../core/settle */ "../../../node_modules/axios/lib/core/settle.js");
+var cookies = __webpack_require__(/*! ./../helpers/cookies */ "../../../node_modules/axios/lib/helpers/cookies.js");
+var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../../../node_modules/axios/lib/helpers/buildURL.js");
+var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "../../../node_modules/axios/lib/core/buildFullPath.js");
+var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "../../../node_modules/axios/lib/helpers/parseHeaders.js");
+var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js");
+var createError = __webpack_require__(/*! ../core/createError */ "../../../node_modules/axios/lib/core/createError.js");
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    var fullPath = buildFullPath(config.baseURL, config.url);
+    request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        status: request.status,
+        statusText: request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle browser request cancellation (as opposed to a manual cancellation)
+    request.onabort = function handleAbort() {
+      if (!request) {
+        return;
+      }
+
+      reject(createError('Request aborted', config, 'ECONNABORTED', request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      var timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
+      if (config.timeoutErrorMessage) {
+        timeoutErrorMessage = config.timeoutErrorMessage;
+      }
+      reject(createError(timeoutErrorMessage, config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
+        cookies.read(config.xsrfCookieName) :
+        undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (!utils.isUndefined(config.withCredentials)) {
+      request.withCredentials = !!config.withCredentials;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (!requestData) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/axios.js":
+/*!************************************************!*\
+  !*** ../../../node_modules/axios/lib/axios.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./utils */ "../../../node_modules/axios/lib/utils.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "../../../node_modules/axios/lib/helpers/bind.js");
+var Axios = __webpack_require__(/*! ./core/Axios */ "../../../node_modules/axios/lib/core/Axios.js");
+var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "../../../node_modules/axios/lib/core/mergeConfig.js");
+var defaults = __webpack_require__(/*! ./defaults */ "../../../node_modules/axios/lib/defaults.js");
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
+}
+
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(mergeConfig(axios.defaults, instanceConfig));
+};
+
+// Expose Cancel & CancelToken
+axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "../../../node_modules/axios/lib/cancel/Cancel.js");
+axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "../../../node_modules/axios/lib/cancel/CancelToken.js");
+axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "../../../node_modules/axios/lib/cancel/isCancel.js");
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = __webpack_require__(/*! ./helpers/spread */ "../../../node_modules/axios/lib/helpers/spread.js");
+
+// Expose isAxiosError
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "../../../node_modules/axios/lib/helpers/isAxiosError.js");
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
+/*!********************************************************!*\
+  !*** ../../../node_modules/axios/lib/cancel/Cancel.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
+/*!*************************************************************!*\
+  !*** ../../../node_modules/axios/lib/cancel/CancelToken.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(/*! ./Cancel */ "../../../node_modules/axios/lib/cancel/Cancel.js");
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
+/*!**********************************************************!*\
+  !*** ../../../node_modules/axios/lib/cancel/isCancel.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/core/Axios.js":
+/*!*****************************************************!*\
+  !*** ../../../node_modules/axios/lib/core/Axios.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "../../../node_modules/axios/lib/helpers/buildURL.js");
+var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "../../../node_modules/axios/lib/core/InterceptorManager.js");
+var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "../../../node_modules/axios/lib/core/dispatchRequest.js");
+var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "../../../node_modules/axios/lib/core/mergeConfig.js");
+
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = arguments[1] || {};
+    config.url = arguments[0];
+  } else {
+    config = config || {};
+  }
+
+  config = mergeConfig(this.defaults, config);
+
+  // Set config.method
+  if (config.method) {
+    config.method = config.method.toLowerCase();
+  } else if (this.defaults.method) {
+    config.method = this.defaults.method.toLowerCase();
+  } else {
+    config.method = 'get';
+  }
+
+  // Hook up interceptors middleware
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+Axios.prototype.getUri = function getUri(config) {
+  config = mergeConfig(this.defaults, config);
+  return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, config) {
+    return this.request(mergeConfig(config || {}, {
+      method: method,
+      url: url,
+      data: (config || {}).data
+    }));
+  };
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, data, config) {
+    return this.request(mergeConfig(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});
+
+module.exports = Axios;
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
+/*!******************************************************************!*\
+  !*** ../../../node_modules/axios/lib/core/InterceptorManager.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
+/*!*************************************************************!*\
+  !*** ../../../node_modules/axios/lib/core/buildFullPath.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var isAbsoluteURL = __webpack_require__(/*! ../helpers/isAbsoluteURL */ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js");
+var combineURLs = __webpack_require__(/*! ../helpers/combineURLs */ "../../../node_modules/axios/lib/helpers/combineURLs.js");
+
+/**
+ * Creates a new URL by combining the baseURL with the requestedURL,
+ * only when the requestedURL is not already an absolute URL.
+ * If the requestURL is absolute, this function returns the requestedURL untouched.
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} requestedURL Absolute or relative URL to combine
+ * @returns {string} The combined full path
+ */
+module.exports = function buildFullPath(baseURL, requestedURL) {
+  if (baseURL && !isAbsoluteURL(requestedURL)) {
+    return combineURLs(baseURL, requestedURL);
+  }
+  return requestedURL;
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/core/createError.js":
+/*!***********************************************************!*\
+  !*** ../../../node_modules/axios/lib/core/createError.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(/*! ./enhanceError */ "../../../node_modules/axios/lib/core/enhanceError.js");
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
+/*!***************************************************************!*\
+  !*** ../../../node_modules/axios/lib/core/dispatchRequest.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+var transformData = __webpack_require__(/*! ./transformData */ "../../../node_modules/axios/lib/core/transformData.js");
+var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "../../../node_modules/axios/lib/cancel/isCancel.js");
+var defaults = __webpack_require__(/*! ../defaults */ "../../../node_modules/axios/lib/defaults.js");
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(
+    config.data,
+    config.headers,
+    config.transformRequest
+  );
+
+  // Flatten headers
+  config.headers = utils.merge(
+    config.headers.common || {},
+    config.headers[config.method] || {},
+    config.headers
+  );
+
+  utils.forEach(
+    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+    function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    }
+  );
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(
+      response.data,
+      response.headers,
+      config.transformResponse
+    );
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(
+          reason.response.data,
+          reason.response.headers,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/core/enhanceError.js":
+/*!************************************************************!*\
+  !*** ../../../node_modules/axios/lib/core/enhanceError.js ***!
+  \************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+
+  error.request = request;
+  error.response = response;
+  error.isAxiosError = true;
+
+  error.toJSON = function toJSON() {
+    return {
+      // Standard
+      message: this.message,
+      name: this.name,
+      // Microsoft
+      description: this.description,
+      number: this.number,
+      // Mozilla
+      fileName: this.fileName,
+      lineNumber: this.lineNumber,
+      columnNumber: this.columnNumber,
+      stack: this.stack,
+      // Axios
+      config: this.config,
+      code: this.code
+    };
+  };
+  return error;
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
+/*!***********************************************************!*\
+  !*** ../../../node_modules/axios/lib/core/mergeConfig.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "../../../node_modules/axios/lib/utils.js");
+
+/**
+ * Config-specific merge-function which creates a new config-object
+ * by merging two configuration objects together.
+ *
+ * @param {Object} config1
+ * @param {Object} config2
+ * @returns {Object} New object resulting from merging config2 to config1
+ */
+module.exports = function mergeConfig(config1, config2) {
+  // eslint-disable-next-line no-param-reassign
+  config2 = config2 || {};
+  var config = {};
+
+  var valueFromConfig2Keys = ['url', 'method', 'data'];
+  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy', 'params'];
+  var defaultToConfig2Keys = [
+    'baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer',
+    'timeout', 'timeoutMessage', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'decompress',
+    'maxContentLength', 'maxBodyLength', 'maxRedirects', 'transport', 'httpAgent',
+    'httpsAgent', 'cancelToken', 'socketPath', 'responseEncoding'
+  ];
+  var directMergeKeys = ['validateStatus'];
+
+  function getMergedValue(target, source) {
+    if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
+      return utils.merge(target, source);
+    } else if (utils.isPlainObject(source)) {
+      return utils.merge({}, source);
+    } else if (utils.isArray(source)) {
+      return source.slice();
+    }
+    return source;
+  }
+
+  function mergeDeepProperties(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  }
+
+  utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
+    }
+  });
+
+  utils.forEach(mergeDeepPropertiesKeys, mergeDeepProperties);
+
+  utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  });
+
+  utils.forEach(directMergeKeys, function merge(prop) {
+    if (prop in config2) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (prop in config1) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  });
+
+  var axiosKeys = valueFromConfig2Keys
+    .concat(mergeDeepPropertiesKeys)
+    .concat(defaultToConfig2Keys)
+    .concat(directMergeKeys);
+
+  var otherKeys = Object
+    .keys(config1)
+    .concat(Object.keys(config2))
+    .filter(function filterAxiosKeys(key) {
+      return axiosKeys.indexOf(key) === -1;
+    });
+
+  utils.forEach(otherKeys, mergeDeepProperties);
+
+  return config;
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/core/settle.js":
+/*!******************************************************!*\
+  !*** ../../../node_modules/axios/lib/core/settle.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var createError = __webpack_require__(/*! ./createError */ "../../../node_modules/axios/lib/core/createError.js");
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/core/transformData.js":
+/*!*************************************************************!*\
+  !*** ../../../node_modules/axios/lib/core/transformData.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+
+  return data;
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/defaults.js":
+/*!***************************************************!*\
+  !*** ../../../node_modules/axios/lib/defaults.js ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./utils */ "../../../node_modules/axios/lib/utils.js");
+var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js");
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(/*! ./adapters/xhr */ "../../../node_modules/axios/lib/adapters/xhr.js");
+  } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(/*! ./adapters/http */ "../../../node_modules/axios/lib/adapters/xhr.js");
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Accept');
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+  maxBodyLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/bind.js":
+/*!*******************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/bind.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
+/*!***********************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/buildURL.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+
+function encode(val) {
+  return encodeURIComponent(val).
+    replace(/%3A/gi, ':').
+    replace(/%24/g, '$').
+    replace(/%2C/gi, ',').
+    replace(/%20/g, '+').
+    replace(/%5B/gi, '[').
+    replace(/%5D/gi, ']');
+}
+
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      } else {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    var hashmarkIndex = url.indexOf('#');
+    if (hashmarkIndex !== -1) {
+      url = url.slice(0, hashmarkIndex);
+    }
+
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
+/*!**************************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/combineURLs.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/cookies.js":
+/*!**********************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/cookies.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs support document.cookie
+    (function standardBrowserEnv() {
+      return {
+        write: function write(name, value, expires, path, domain, secure) {
+          var cookie = [];
+          cookie.push(name + '=' + encodeURIComponent(value));
+
+          if (utils.isNumber(expires)) {
+            cookie.push('expires=' + new Date(expires).toGMTString());
+          }
+
+          if (utils.isString(path)) {
+            cookie.push('path=' + path);
+          }
+
+          if (utils.isString(domain)) {
+            cookie.push('domain=' + domain);
+          }
+
+          if (secure === true) {
+            cookie.push('secure');
+          }
+
+          document.cookie = cookie.join('; ');
+        },
+
+        read: function read(name) {
+          var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+          return (match ? decodeURIComponent(match[3]) : null);
+        },
+
+        remove: function remove(name) {
+          this.write(name, '', Date.now() - 86400000);
+        }
+      };
+    })() :
+
+  // Non standard browser env (web workers, react-native) lack needed support.
+    (function nonStandardBrowserEnv() {
+      return {
+        write: function write() {},
+        read: function read() { return null; },
+        remove: function remove() {}
+      };
+    })()
+);
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
+/*!****************************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/isAxiosError.js":
+/*!***************************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+module.exports = function isAxiosError(payload) {
+  return (typeof payload === 'object') && (payload.isAxiosError === true);
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
+/*!******************************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs have full support of the APIs needed to test
+  // whether the request URL is of the same origin as current location.
+    (function standardBrowserEnv() {
+      var msie = /(msie|trident)/i.test(navigator.userAgent);
+      var urlParsingNode = document.createElement('a');
+      var originURL;
+
+      /**
+    * Parse a URL to discover it's components
+    *
+    * @param {String} url The URL to be parsed
+    * @returns {Object}
+    */
+      function resolveURL(url) {
+        var href = url;
+
+        if (msie) {
+        // IE needs attribute set twice to normalize properties
+          urlParsingNode.setAttribute('href', href);
+          href = urlParsingNode.href;
+        }
+
+        urlParsingNode.setAttribute('href', href);
+
+        // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+        return {
+          href: urlParsingNode.href,
+          protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+          host: urlParsingNode.host,
+          search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+          hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+          hostname: urlParsingNode.hostname,
+          port: urlParsingNode.port,
+          pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+            urlParsingNode.pathname :
+            '/' + urlParsingNode.pathname
+        };
+      }
+
+      originURL = resolveURL(window.location.href);
+
+      /**
+    * Determine if a URL shares the same origin as the current location
+    *
+    * @param {String} requestURL The URL to test
+    * @returns {boolean} True if URL shares the same origin, otherwise false
+    */
+      return function isURLSameOrigin(requestURL) {
+        var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+        return (parsed.protocol === originURL.protocol &&
+            parsed.host === originURL.host);
+      };
+    })() :
+
+  // Non standard browser envs (web workers, react-native) lack needed support.
+    (function nonStandardBrowserEnv() {
+      return function isURLSameOrigin() {
+        return true;
+      };
+    })()
+);
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
+/*!**********************************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \**********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "../../../node_modules/axios/lib/utils.js");
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
+/*!***************************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+  'age', 'authorization', 'content-length', 'content-type', 'etag',
+  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
+  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
+  'referer', 'retry-after', 'user-agent'
+];
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) { return parsed; }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
+    }
+  });
+
+  return parsed;
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/helpers/spread.js":
+/*!*********************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/spread.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/lib/utils.js":
+/*!************************************************!*\
+  !*** ../../../node_modules/axios/lib/utils.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var bind = __webpack_require__(/*! ./helpers/bind */ "../../../node_modules/axios/lib/helpers/bind.js");
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is a Buffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Buffer, otherwise false
+ */
+function isBuffer(val) {
+  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
+    && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a plain Object
+ *
+ * @param {Object} val The value to test
+ * @return {boolean} True if value is a plain Object, otherwise false
+ */
+function isPlainObject(val) {
+  if (toString.call(val) !== '[object Object]') {
+    return false;
+  }
+
+  var prototype = Object.getPrototypeOf(val);
+  return prototype === null || prototype === Object.prototype;
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ * nativescript
+ *  navigator.product -> 'NativeScript' or 'NS'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && (navigator.product === 'ReactNative' ||
+                                           navigator.product === 'NativeScript' ||
+                                           navigator.product === 'NS')) {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (isPlainObject(result[key]) && isPlainObject(val)) {
+      result[key] = merge(result[key], val);
+    } else if (isPlainObject(val)) {
+      result[key] = merge({}, val);
+    } else if (isArray(val)) {
+      result[key] = val.slice();
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+/**
+ * Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
+ *
+ * @param {string} content with BOM
+ * @return {string} content value without BOM
+ */
+function stripBOM(content) {
+  if (content.charCodeAt(0) === 0xFEFF) {
+    content = content.slice(1);
+  }
+  return content;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isPlainObject: isPlainObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim,
+  stripBOM: stripBOM
+};
+
+
+/***/ }),
+
 /***/ "../../../node_modules/uuid/index.js":
-/*!*******************************************!*
+/*!*******************************************!*\
   !*** ../../../node_modules/uuid/index.js ***!
   \*******************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -30,7 +1862,7 @@ module.exports = uuid;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/lib/bytesToUuid.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/uuid/lib/bytesToUuid.js ***!
   \*****************************************************/
 /***/ ((module) => {
@@ -66,7 +1898,7 @@ module.exports = bytesToUuid;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/lib/rng-browser.js":
-/*!*****************************************************!*
+/*!*****************************************************!*\
   !*** ../../../node_modules/uuid/lib/rng-browser.js ***!
   \*****************************************************/
 /***/ ((module) => {
@@ -110,7 +1942,7 @@ if (getRandomValues) {
 /***/ }),
 
 /***/ "../../../node_modules/uuid/v1.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ../../../node_modules/uuid/v1.js ***!
   \****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -229,7 +2061,7 @@ module.exports = v1;
 /***/ }),
 
 /***/ "../../../node_modules/uuid/v4.js":
-/*!****************************************!*
+/*!****************************************!*\
   !*** ../../../node_modules/uuid/v4.js ***!
   \****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -268,7 +2100,7 @@ module.exports = v4;
 /***/ }),
 
 /***/ "./arabic_language_model.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./arabic_language_model.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -276,7 +2108,7 @@ module.exports = v4;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ ArabicLanguageModel
+/* harmony export */   "default": () => (/* binding */ ArabicLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
@@ -413,7 +2245,7 @@ for the current node
 /***/ }),
 
 /***/ "./chinese_language_model.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./chinese_language_model.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -421,7 +2253,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ ChineseLanguageModel
+/* harmony export */   "default": () => (/* binding */ ChineseLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
@@ -556,7 +2388,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /***/ }),
 
 /***/ "./constants.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./constants.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -564,232 +2396,232 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LANG_UNIT_WORD": () => /* binding */ LANG_UNIT_WORD,
-/* harmony export */   "LANG_UNIT_CHAR": () => /* binding */ LANG_UNIT_CHAR,
-/* harmony export */   "LANG_DIR_LTR": () => /* binding */ LANG_DIR_LTR,
-/* harmony export */   "LANG_DIR_RTL": () => /* binding */ LANG_DIR_RTL,
-/* harmony export */   "LANG_UNDEFINED": () => /* binding */ LANG_UNDEFINED,
-/* harmony export */   "LANG_LATIN": () => /* binding */ LANG_LATIN,
-/* harmony export */   "LANG_GREEK": () => /* binding */ LANG_GREEK,
-/* harmony export */   "LANG_ARABIC": () => /* binding */ LANG_ARABIC,
-/* harmony export */   "LANG_PERSIAN": () => /* binding */ LANG_PERSIAN,
-/* harmony export */   "LANG_GEEZ": () => /* binding */ LANG_GEEZ,
-/* harmony export */   "LANG_CHINESE": () => /* binding */ LANG_CHINESE,
-/* harmony export */   "LANG_SYRIAC": () => /* binding */ LANG_SYRIAC,
-/* harmony export */   "STR_LANG_CODE_UNDEFINED": () => /* binding */ STR_LANG_CODE_UNDEFINED,
-/* harmony export */   "STR_LANG_CODE_LAT": () => /* binding */ STR_LANG_CODE_LAT,
-/* harmony export */   "STR_LANG_CODE_LA": () => /* binding */ STR_LANG_CODE_LA,
-/* harmony export */   "STR_LANG_CODE_GRC": () => /* binding */ STR_LANG_CODE_GRC,
-/* harmony export */   "STR_LANG_CODE_ARA": () => /* binding */ STR_LANG_CODE_ARA,
-/* harmony export */   "STR_LANG_CODE_AR": () => /* binding */ STR_LANG_CODE_AR,
-/* harmony export */   "STR_LANG_CODE_FAS": () => /* binding */ STR_LANG_CODE_FAS,
-/* harmony export */   "STR_LANG_CODE_PER": () => /* binding */ STR_LANG_CODE_PER,
-/* harmony export */   "STR_LANG_CODE_FA_IR": () => /* binding */ STR_LANG_CODE_FA_IR,
-/* harmony export */   "STR_LANG_CODE_FA": () => /* binding */ STR_LANG_CODE_FA,
-/* harmony export */   "STR_LANG_CODE_GEZ": () => /* binding */ STR_LANG_CODE_GEZ,
-/* harmony export */   "STR_LANG_CODE_ZHO": () => /* binding */ STR_LANG_CODE_ZHO,
-/* harmony export */   "STR_LANG_CODE_ZH": () => /* binding */ STR_LANG_CODE_ZH,
-/* harmony export */   "STR_LANG_CODE_ZH_HANT": () => /* binding */ STR_LANG_CODE_ZH_HANT,
-/* harmony export */   "STR_LANG_CODE_ZH_HANS": () => /* binding */ STR_LANG_CODE_ZH_HANS,
-/* harmony export */   "STR_LANG_CODE_SYC": () => /* binding */ STR_LANG_CODE_SYC,
-/* harmony export */   "STR_LANG_CODE_SYR": () => /* binding */ STR_LANG_CODE_SYR,
-/* harmony export */   "STR_LANG_CODE_SYR_SYRJ": () => /* binding */ STR_LANG_CODE_SYR_SYRJ,
-/* harmony export */   "STR_LANG_CODE_ENG": () => /* binding */ STR_LANG_CODE_ENG,
-/* harmony export */   "POFS_ADJECTIVE": () => /* binding */ POFS_ADJECTIVE,
-/* harmony export */   "POFS_ADVERB": () => /* binding */ POFS_ADVERB,
-/* harmony export */   "POFS_ADVERBIAL": () => /* binding */ POFS_ADVERBIAL,
-/* harmony export */   "POFS_ARTICLE": () => /* binding */ POFS_ARTICLE,
-/* harmony export */   "POFS_CONJUNCTION": () => /* binding */ POFS_CONJUNCTION,
-/* harmony export */   "POFS_EXCLAMATION": () => /* binding */ POFS_EXCLAMATION,
-/* harmony export */   "POFS_INTERJECTION": () => /* binding */ POFS_INTERJECTION,
-/* harmony export */   "POFS_NOUN": () => /* binding */ POFS_NOUN,
-/* harmony export */   "POFS_NOUN_PROPER": () => /* binding */ POFS_NOUN_PROPER,
-/* harmony export */   "POFS_NUMERAL": () => /* binding */ POFS_NUMERAL,
-/* harmony export */   "POFS_PARTICLE": () => /* binding */ POFS_PARTICLE,
-/* harmony export */   "POFS_PREFIX": () => /* binding */ POFS_PREFIX,
-/* harmony export */   "POFS_PREPOSITION": () => /* binding */ POFS_PREPOSITION,
-/* harmony export */   "POFS_PRONOUN": () => /* binding */ POFS_PRONOUN,
-/* harmony export */   "POFS_SUFFIX": () => /* binding */ POFS_SUFFIX,
-/* harmony export */   "POFS_GERUNDIVE": () => /* binding */ POFS_GERUNDIVE,
-/* harmony export */   "POFS_SUPINE": () => /* binding */ POFS_SUPINE,
-/* harmony export */   "POFS_VERB": () => /* binding */ POFS_VERB,
-/* harmony export */   "POFS_VERB_PARTICIPLE": () => /* binding */ POFS_VERB_PARTICIPLE,
-/* harmony export */   "POFS_DENOMINATIVE": () => /* binding */ POFS_DENOMINATIVE,
-/* harmony export */   "GEND_MASCULINE": () => /* binding */ GEND_MASCULINE,
-/* harmony export */   "GEND_FEMININE": () => /* binding */ GEND_FEMININE,
-/* harmony export */   "GEND_NEUTER": () => /* binding */ GEND_NEUTER,
-/* harmony export */   "GEND_COMMON": () => /* binding */ GEND_COMMON,
-/* harmony export */   "GEND_ANIMATE": () => /* binding */ GEND_ANIMATE,
-/* harmony export */   "GEND_INANIMATE": () => /* binding */ GEND_INANIMATE,
-/* harmony export */   "GEND_PERSONAL_MASCULINE": () => /* binding */ GEND_PERSONAL_MASCULINE,
-/* harmony export */   "GEND_ANIMATE_MASCULINE": () => /* binding */ GEND_ANIMATE_MASCULINE,
-/* harmony export */   "GEND_INANIMATE_MASCULINE": () => /* binding */ GEND_INANIMATE_MASCULINE,
-/* harmony export */   "COMP_POSITIVE": () => /* binding */ COMP_POSITIVE,
-/* harmony export */   "COMP_COMPARITIVE": () => /* binding */ COMP_COMPARITIVE,
-/* harmony export */   "COMP_SUPERLATIVE": () => /* binding */ COMP_SUPERLATIVE,
-/* harmony export */   "CASE_ABESSIVE": () => /* binding */ CASE_ABESSIVE,
-/* harmony export */   "CASE_ABLATIVE": () => /* binding */ CASE_ABLATIVE,
-/* harmony export */   "CASE_ABSOLUTIVE": () => /* binding */ CASE_ABSOLUTIVE,
-/* harmony export */   "CASE_ACCUSATIVE": () => /* binding */ CASE_ACCUSATIVE,
-/* harmony export */   "CASE_ADDIRECTIVE": () => /* binding */ CASE_ADDIRECTIVE,
-/* harmony export */   "CASE_ADELATIVE": () => /* binding */ CASE_ADELATIVE,
-/* harmony export */   "CASE_ADESSIVE": () => /* binding */ CASE_ADESSIVE,
-/* harmony export */   "CASE_ADVERBIAL": () => /* binding */ CASE_ADVERBIAL,
-/* harmony export */   "CASE_ALLATIVE": () => /* binding */ CASE_ALLATIVE,
-/* harmony export */   "CASE_ANTESSIVE": () => /* binding */ CASE_ANTESSIVE,
-/* harmony export */   "CASE_APUDESSIVE": () => /* binding */ CASE_APUDESSIVE,
-/* harmony export */   "CASE_AVERSIVE": () => /* binding */ CASE_AVERSIVE,
-/* harmony export */   "CASE_BENEFACTIVE": () => /* binding */ CASE_BENEFACTIVE,
-/* harmony export */   "CASE_CARITIVE": () => /* binding */ CASE_CARITIVE,
-/* harmony export */   "CASE_CAUSAL": () => /* binding */ CASE_CAUSAL,
-/* harmony export */   "CASE_CAUSAL_FINAL": () => /* binding */ CASE_CAUSAL_FINAL,
-/* harmony export */   "CASE_COMITATIVE": () => /* binding */ CASE_COMITATIVE,
-/* harmony export */   "CASE_DATIVE": () => /* binding */ CASE_DATIVE,
-/* harmony export */   "CASE_DELATIVE": () => /* binding */ CASE_DELATIVE,
-/* harmony export */   "CASE_DIRECT": () => /* binding */ CASE_DIRECT,
-/* harmony export */   "CASE_DISTRIBUTIVE": () => /* binding */ CASE_DISTRIBUTIVE,
-/* harmony export */   "CASE_DISTRIBUTIVE_TEMPORAL": () => /* binding */ CASE_DISTRIBUTIVE_TEMPORAL,
-/* harmony export */   "CASE_ELATIVE": () => /* binding */ CASE_ELATIVE,
-/* harmony export */   "CASE_ERGATIVE": () => /* binding */ CASE_ERGATIVE,
-/* harmony export */   "CASE_ESSIVE": () => /* binding */ CASE_ESSIVE,
-/* harmony export */   "CASE_ESSIVE_FORMAL": () => /* binding */ CASE_ESSIVE_FORMAL,
-/* harmony export */   "CASE_ESSIVE_MODAL": () => /* binding */ CASE_ESSIVE_MODAL,
-/* harmony export */   "CASE_EQUATIVE": () => /* binding */ CASE_EQUATIVE,
-/* harmony export */   "CASE_EVITATIVE": () => /* binding */ CASE_EVITATIVE,
-/* harmony export */   "CASE_EXESSIVE": () => /* binding */ CASE_EXESSIVE,
-/* harmony export */   "CASE_FINAL": () => /* binding */ CASE_FINAL,
-/* harmony export */   "CASE_FORMAL": () => /* binding */ CASE_FORMAL,
-/* harmony export */   "CASE_GENITIVE": () => /* binding */ CASE_GENITIVE,
-/* harmony export */   "CASE_ILLATIVE": () => /* binding */ CASE_ILLATIVE,
-/* harmony export */   "CASE_INELATIVE": () => /* binding */ CASE_INELATIVE,
-/* harmony export */   "CASE_INESSIVE": () => /* binding */ CASE_INESSIVE,
-/* harmony export */   "CASE_INSTRUCTIVE": () => /* binding */ CASE_INSTRUCTIVE,
-/* harmony export */   "CASE_INSTRUMENTAL": () => /* binding */ CASE_INSTRUMENTAL,
-/* harmony export */   "CASE_INSTRUMENTAL_COMITATIVE": () => /* binding */ CASE_INSTRUMENTAL_COMITATIVE,
-/* harmony export */   "CASE_INTRANSITIVE": () => /* binding */ CASE_INTRANSITIVE,
-/* harmony export */   "CASE_LATIVE": () => /* binding */ CASE_LATIVE,
-/* harmony export */   "CASE_LOCATIVE": () => /* binding */ CASE_LOCATIVE,
-/* harmony export */   "CASE_MODAL": () => /* binding */ CASE_MODAL,
-/* harmony export */   "CASE_MULTIPLICATIVE": () => /* binding */ CASE_MULTIPLICATIVE,
-/* harmony export */   "CASE_NOMINATIVE": () => /* binding */ CASE_NOMINATIVE,
-/* harmony export */   "CASE_PARTITIVE": () => /* binding */ CASE_PARTITIVE,
-/* harmony export */   "CASE_PEGATIVE": () => /* binding */ CASE_PEGATIVE,
-/* harmony export */   "CASE_PERLATIVE": () => /* binding */ CASE_PERLATIVE,
-/* harmony export */   "CASE_POSSESSIVE": () => /* binding */ CASE_POSSESSIVE,
-/* harmony export */   "CASE_POSTELATIVE": () => /* binding */ CASE_POSTELATIVE,
-/* harmony export */   "CASE_POSTDIRECTIVE": () => /* binding */ CASE_POSTDIRECTIVE,
-/* harmony export */   "CASE_POSTESSIVE": () => /* binding */ CASE_POSTESSIVE,
-/* harmony export */   "CASE_POSTPOSITIONAL": () => /* binding */ CASE_POSTPOSITIONAL,
-/* harmony export */   "CASE_PREPOSITIONAL": () => /* binding */ CASE_PREPOSITIONAL,
-/* harmony export */   "CASE_PRIVATIVE": () => /* binding */ CASE_PRIVATIVE,
-/* harmony export */   "CASE_PROLATIVE": () => /* binding */ CASE_PROLATIVE,
-/* harmony export */   "CASE_PROSECUTIVE": () => /* binding */ CASE_PROSECUTIVE,
-/* harmony export */   "CASE_PROXIMATIVE": () => /* binding */ CASE_PROXIMATIVE,
-/* harmony export */   "CASE_SEPARATIVE": () => /* binding */ CASE_SEPARATIVE,
-/* harmony export */   "CASE_SOCIATIVE": () => /* binding */ CASE_SOCIATIVE,
-/* harmony export */   "CASE_SUBDIRECTIVE": () => /* binding */ CASE_SUBDIRECTIVE,
-/* harmony export */   "CASE_SUBESSIVE": () => /* binding */ CASE_SUBESSIVE,
-/* harmony export */   "CASE_SUBELATIVE": () => /* binding */ CASE_SUBELATIVE,
-/* harmony export */   "CASE_SUBLATIVE": () => /* binding */ CASE_SUBLATIVE,
-/* harmony export */   "CASE_SUPERDIRECTIVE": () => /* binding */ CASE_SUPERDIRECTIVE,
-/* harmony export */   "CASE_SUPERESSIVE": () => /* binding */ CASE_SUPERESSIVE,
-/* harmony export */   "CASE_SUPERLATIVE": () => /* binding */ CASE_SUPERLATIVE,
-/* harmony export */   "CASE_SUPPRESSIVE": () => /* binding */ CASE_SUPPRESSIVE,
-/* harmony export */   "CASE_TEMPORAL": () => /* binding */ CASE_TEMPORAL,
-/* harmony export */   "CASE_TERMINATIVE": () => /* binding */ CASE_TERMINATIVE,
-/* harmony export */   "CASE_TRANSLATIVE": () => /* binding */ CASE_TRANSLATIVE,
-/* harmony export */   "CASE_VIALIS": () => /* binding */ CASE_VIALIS,
-/* harmony export */   "CASE_VOCATIVE": () => /* binding */ CASE_VOCATIVE,
-/* harmony export */   "MOOD_ADMIRATIVE": () => /* binding */ MOOD_ADMIRATIVE,
-/* harmony export */   "MOOD_COHORTATIVE": () => /* binding */ MOOD_COHORTATIVE,
-/* harmony export */   "MOOD_CONDITIONAL": () => /* binding */ MOOD_CONDITIONAL,
-/* harmony export */   "MOOD_DECLARATIVE": () => /* binding */ MOOD_DECLARATIVE,
-/* harmony export */   "MOOD_DUBITATIVE": () => /* binding */ MOOD_DUBITATIVE,
-/* harmony export */   "MOOD_ENERGETIC": () => /* binding */ MOOD_ENERGETIC,
-/* harmony export */   "MOOD_EVENTIVE": () => /* binding */ MOOD_EVENTIVE,
-/* harmony export */   "MOOD_GENERIC": () => /* binding */ MOOD_GENERIC,
-/* harmony export */   "MOOD_GERUNDIVE": () => /* binding */ MOOD_GERUNDIVE,
-/* harmony export */   "MOOD_HYPOTHETICAL": () => /* binding */ MOOD_HYPOTHETICAL,
-/* harmony export */   "MOOD_IMPERATIVE": () => /* binding */ MOOD_IMPERATIVE,
-/* harmony export */   "MOOD_INDICATIVE": () => /* binding */ MOOD_INDICATIVE,
-/* harmony export */   "MOOD_INFERENTIAL": () => /* binding */ MOOD_INFERENTIAL,
-/* harmony export */   "MOOD_INFINITIVE": () => /* binding */ MOOD_INFINITIVE,
-/* harmony export */   "MOOD_INTERROGATIVE": () => /* binding */ MOOD_INTERROGATIVE,
-/* harmony export */   "MOOD_JUSSIVE": () => /* binding */ MOOD_JUSSIVE,
-/* harmony export */   "MOOD_NEGATIVE": () => /* binding */ MOOD_NEGATIVE,
-/* harmony export */   "MOOD_OPTATIVE": () => /* binding */ MOOD_OPTATIVE,
-/* harmony export */   "MOOD_PARTICIPLE": () => /* binding */ MOOD_PARTICIPLE,
-/* harmony export */   "MOOD_PRESUMPTIVE": () => /* binding */ MOOD_PRESUMPTIVE,
-/* harmony export */   "MOOD_RENARRATIVE": () => /* binding */ MOOD_RENARRATIVE,
-/* harmony export */   "MOOD_SUBJUNCTIVE": () => /* binding */ MOOD_SUBJUNCTIVE,
-/* harmony export */   "MOOD_SUPINE": () => /* binding */ MOOD_SUPINE,
-/* harmony export */   "NUM_SINGULAR": () => /* binding */ NUM_SINGULAR,
-/* harmony export */   "NUM_PLURAL": () => /* binding */ NUM_PLURAL,
-/* harmony export */   "NUM_DUAL": () => /* binding */ NUM_DUAL,
-/* harmony export */   "NUM_TRIAL": () => /* binding */ NUM_TRIAL,
-/* harmony export */   "NUM_PAUCAL": () => /* binding */ NUM_PAUCAL,
-/* harmony export */   "NUM_SINGULATIVE": () => /* binding */ NUM_SINGULATIVE,
-/* harmony export */   "NUM_COLLECTIVE": () => /* binding */ NUM_COLLECTIVE,
-/* harmony export */   "NUM_DISTRIBUTIVE_PLURAL": () => /* binding */ NUM_DISTRIBUTIVE_PLURAL,
-/* harmony export */   "NRL_CARDINAL": () => /* binding */ NRL_CARDINAL,
-/* harmony export */   "NRL_ORDINAL": () => /* binding */ NRL_ORDINAL,
-/* harmony export */   "NRL_DISTRIBUTIVE": () => /* binding */ NRL_DISTRIBUTIVE,
-/* harmony export */   "NURL_NUMERAL_ADVERB": () => /* binding */ NURL_NUMERAL_ADVERB,
-/* harmony export */   "ORD_1ST": () => /* binding */ ORD_1ST,
-/* harmony export */   "ORD_2ND": () => /* binding */ ORD_2ND,
-/* harmony export */   "ORD_3RD": () => /* binding */ ORD_3RD,
-/* harmony export */   "ORD_4TH": () => /* binding */ ORD_4TH,
-/* harmony export */   "ORD_5TH": () => /* binding */ ORD_5TH,
-/* harmony export */   "ORD_6TH": () => /* binding */ ORD_6TH,
-/* harmony export */   "ORD_7TH": () => /* binding */ ORD_7TH,
-/* harmony export */   "ORD_8TH": () => /* binding */ ORD_8TH,
-/* harmony export */   "ORD_9TH": () => /* binding */ ORD_9TH,
-/* harmony export */   "TENSE_AORIST": () => /* binding */ TENSE_AORIST,
-/* harmony export */   "TENSE_FUTURE": () => /* binding */ TENSE_FUTURE,
-/* harmony export */   "TENSE_FUTURE_PERFECT": () => /* binding */ TENSE_FUTURE_PERFECT,
-/* harmony export */   "TENSE_IMPERFECT": () => /* binding */ TENSE_IMPERFECT,
-/* harmony export */   "TENSE_PAST_ABSOLUTE": () => /* binding */ TENSE_PAST_ABSOLUTE,
-/* harmony export */   "TENSE_PERFECT": () => /* binding */ TENSE_PERFECT,
-/* harmony export */   "TENSE_PLUPERFECT": () => /* binding */ TENSE_PLUPERFECT,
-/* harmony export */   "TENSE_PRESENT": () => /* binding */ TENSE_PRESENT,
-/* harmony export */   "VKIND_TO_BE": () => /* binding */ VKIND_TO_BE,
-/* harmony export */   "VKIND_COMPOUNDS_OF_TO_BE": () => /* binding */ VKIND_COMPOUNDS_OF_TO_BE,
-/* harmony export */   "VKIND_TAKING_ABLATIVE": () => /* binding */ VKIND_TAKING_ABLATIVE,
-/* harmony export */   "VKIND_TAKING_DATIVE": () => /* binding */ VKIND_TAKING_DATIVE,
-/* harmony export */   "VKIND_TAKING_GENITIVE": () => /* binding */ VKIND_TAKING_GENITIVE,
-/* harmony export */   "VKIND_TRANSITIVE": () => /* binding */ VKIND_TRANSITIVE,
-/* harmony export */   "VKIND_INTRANSITIVE": () => /* binding */ VKIND_INTRANSITIVE,
-/* harmony export */   "VKIND_IMPERSONAL": () => /* binding */ VKIND_IMPERSONAL,
-/* harmony export */   "VKIND_DEPONENT": () => /* binding */ VKIND_DEPONENT,
-/* harmony export */   "VKIND_SEMIDEPONENT": () => /* binding */ VKIND_SEMIDEPONENT,
-/* harmony export */   "VKIND_PERFECT_DEFINITE": () => /* binding */ VKIND_PERFECT_DEFINITE,
-/* harmony export */   "VOICE_ACTIVE": () => /* binding */ VOICE_ACTIVE,
-/* harmony export */   "VOICE_PASSIVE": () => /* binding */ VOICE_PASSIVE,
-/* harmony export */   "VOICE_MEDIOPASSIVE": () => /* binding */ VOICE_MEDIOPASSIVE,
-/* harmony export */   "VOICE_IMPERSONAL_PASSIVE": () => /* binding */ VOICE_IMPERSONAL_PASSIVE,
-/* harmony export */   "VOICE_MIDDLE": () => /* binding */ VOICE_MIDDLE,
-/* harmony export */   "VOICE_ANTIPASSIVE": () => /* binding */ VOICE_ANTIPASSIVE,
-/* harmony export */   "VOICE_REFLEXIVE": () => /* binding */ VOICE_REFLEXIVE,
-/* harmony export */   "VOICE_RECIPROCAL": () => /* binding */ VOICE_RECIPROCAL,
-/* harmony export */   "VOICE_CAUSATIVE": () => /* binding */ VOICE_CAUSATIVE,
-/* harmony export */   "VOICE_ADJUTATIVE": () => /* binding */ VOICE_ADJUTATIVE,
-/* harmony export */   "VOICE_APPLICATIVE": () => /* binding */ VOICE_APPLICATIVE,
-/* harmony export */   "VOICE_CIRCUMSTANTIAL": () => /* binding */ VOICE_CIRCUMSTANTIAL,
-/* harmony export */   "VOICE_DEPONENT": () => /* binding */ VOICE_DEPONENT,
-/* harmony export */   "TYPE_IRREGULAR": () => /* binding */ TYPE_IRREGULAR,
-/* harmony export */   "TYPE_REGULAR": () => /* binding */ TYPE_REGULAR,
-/* harmony export */   "CLASS_PERSONAL": () => /* binding */ CLASS_PERSONAL,
-/* harmony export */   "CLASS_REFLEXIVE": () => /* binding */ CLASS_REFLEXIVE,
-/* harmony export */   "CLASS_POSSESSIVE": () => /* binding */ CLASS_POSSESSIVE,
-/* harmony export */   "CLASS_DEMONSTRATIVE": () => /* binding */ CLASS_DEMONSTRATIVE,
-/* harmony export */   "CLASS_RELATIVE": () => /* binding */ CLASS_RELATIVE,
-/* harmony export */   "CLASS_INTERROGATIVE": () => /* binding */ CLASS_INTERROGATIVE,
-/* harmony export */   "CLASS_GENERAL_RELATIVE": () => /* binding */ CLASS_GENERAL_RELATIVE,
-/* harmony export */   "CLASS_INDEFINITE": () => /* binding */ CLASS_INDEFINITE,
-/* harmony export */   "CLASS_INTENSIVE": () => /* binding */ CLASS_INTENSIVE,
-/* harmony export */   "CLASS_RECIPROCAL": () => /* binding */ CLASS_RECIPROCAL,
-/* harmony export */   "PARADIGM_CAT_KAYLO": () => /* binding */ PARADIGM_CAT_KAYLO,
-/* harmony export */   "PARADIGM_CAT_STATE": () => /* binding */ PARADIGM_CAT_STATE
+/* harmony export */   "LANG_UNIT_WORD": () => (/* binding */ LANG_UNIT_WORD),
+/* harmony export */   "LANG_UNIT_CHAR": () => (/* binding */ LANG_UNIT_CHAR),
+/* harmony export */   "LANG_DIR_LTR": () => (/* binding */ LANG_DIR_LTR),
+/* harmony export */   "LANG_DIR_RTL": () => (/* binding */ LANG_DIR_RTL),
+/* harmony export */   "LANG_UNDEFINED": () => (/* binding */ LANG_UNDEFINED),
+/* harmony export */   "LANG_LATIN": () => (/* binding */ LANG_LATIN),
+/* harmony export */   "LANG_GREEK": () => (/* binding */ LANG_GREEK),
+/* harmony export */   "LANG_ARABIC": () => (/* binding */ LANG_ARABIC),
+/* harmony export */   "LANG_PERSIAN": () => (/* binding */ LANG_PERSIAN),
+/* harmony export */   "LANG_GEEZ": () => (/* binding */ LANG_GEEZ),
+/* harmony export */   "LANG_CHINESE": () => (/* binding */ LANG_CHINESE),
+/* harmony export */   "LANG_SYRIAC": () => (/* binding */ LANG_SYRIAC),
+/* harmony export */   "STR_LANG_CODE_UNDEFINED": () => (/* binding */ STR_LANG_CODE_UNDEFINED),
+/* harmony export */   "STR_LANG_CODE_LAT": () => (/* binding */ STR_LANG_CODE_LAT),
+/* harmony export */   "STR_LANG_CODE_LA": () => (/* binding */ STR_LANG_CODE_LA),
+/* harmony export */   "STR_LANG_CODE_GRC": () => (/* binding */ STR_LANG_CODE_GRC),
+/* harmony export */   "STR_LANG_CODE_ARA": () => (/* binding */ STR_LANG_CODE_ARA),
+/* harmony export */   "STR_LANG_CODE_AR": () => (/* binding */ STR_LANG_CODE_AR),
+/* harmony export */   "STR_LANG_CODE_FAS": () => (/* binding */ STR_LANG_CODE_FAS),
+/* harmony export */   "STR_LANG_CODE_PER": () => (/* binding */ STR_LANG_CODE_PER),
+/* harmony export */   "STR_LANG_CODE_FA_IR": () => (/* binding */ STR_LANG_CODE_FA_IR),
+/* harmony export */   "STR_LANG_CODE_FA": () => (/* binding */ STR_LANG_CODE_FA),
+/* harmony export */   "STR_LANG_CODE_GEZ": () => (/* binding */ STR_LANG_CODE_GEZ),
+/* harmony export */   "STR_LANG_CODE_ZHO": () => (/* binding */ STR_LANG_CODE_ZHO),
+/* harmony export */   "STR_LANG_CODE_ZH": () => (/* binding */ STR_LANG_CODE_ZH),
+/* harmony export */   "STR_LANG_CODE_ZH_HANT": () => (/* binding */ STR_LANG_CODE_ZH_HANT),
+/* harmony export */   "STR_LANG_CODE_ZH_HANS": () => (/* binding */ STR_LANG_CODE_ZH_HANS),
+/* harmony export */   "STR_LANG_CODE_SYC": () => (/* binding */ STR_LANG_CODE_SYC),
+/* harmony export */   "STR_LANG_CODE_SYR": () => (/* binding */ STR_LANG_CODE_SYR),
+/* harmony export */   "STR_LANG_CODE_SYR_SYRJ": () => (/* binding */ STR_LANG_CODE_SYR_SYRJ),
+/* harmony export */   "STR_LANG_CODE_ENG": () => (/* binding */ STR_LANG_CODE_ENG),
+/* harmony export */   "POFS_ADJECTIVE": () => (/* binding */ POFS_ADJECTIVE),
+/* harmony export */   "POFS_ADVERB": () => (/* binding */ POFS_ADVERB),
+/* harmony export */   "POFS_ADVERBIAL": () => (/* binding */ POFS_ADVERBIAL),
+/* harmony export */   "POFS_ARTICLE": () => (/* binding */ POFS_ARTICLE),
+/* harmony export */   "POFS_CONJUNCTION": () => (/* binding */ POFS_CONJUNCTION),
+/* harmony export */   "POFS_EXCLAMATION": () => (/* binding */ POFS_EXCLAMATION),
+/* harmony export */   "POFS_INTERJECTION": () => (/* binding */ POFS_INTERJECTION),
+/* harmony export */   "POFS_NOUN": () => (/* binding */ POFS_NOUN),
+/* harmony export */   "POFS_NOUN_PROPER": () => (/* binding */ POFS_NOUN_PROPER),
+/* harmony export */   "POFS_NUMERAL": () => (/* binding */ POFS_NUMERAL),
+/* harmony export */   "POFS_PARTICLE": () => (/* binding */ POFS_PARTICLE),
+/* harmony export */   "POFS_PREFIX": () => (/* binding */ POFS_PREFIX),
+/* harmony export */   "POFS_PREPOSITION": () => (/* binding */ POFS_PREPOSITION),
+/* harmony export */   "POFS_PRONOUN": () => (/* binding */ POFS_PRONOUN),
+/* harmony export */   "POFS_SUFFIX": () => (/* binding */ POFS_SUFFIX),
+/* harmony export */   "POFS_GERUNDIVE": () => (/* binding */ POFS_GERUNDIVE),
+/* harmony export */   "POFS_SUPINE": () => (/* binding */ POFS_SUPINE),
+/* harmony export */   "POFS_VERB": () => (/* binding */ POFS_VERB),
+/* harmony export */   "POFS_VERB_PARTICIPLE": () => (/* binding */ POFS_VERB_PARTICIPLE),
+/* harmony export */   "POFS_DENOMINATIVE": () => (/* binding */ POFS_DENOMINATIVE),
+/* harmony export */   "GEND_MASCULINE": () => (/* binding */ GEND_MASCULINE),
+/* harmony export */   "GEND_FEMININE": () => (/* binding */ GEND_FEMININE),
+/* harmony export */   "GEND_NEUTER": () => (/* binding */ GEND_NEUTER),
+/* harmony export */   "GEND_COMMON": () => (/* binding */ GEND_COMMON),
+/* harmony export */   "GEND_ANIMATE": () => (/* binding */ GEND_ANIMATE),
+/* harmony export */   "GEND_INANIMATE": () => (/* binding */ GEND_INANIMATE),
+/* harmony export */   "GEND_PERSONAL_MASCULINE": () => (/* binding */ GEND_PERSONAL_MASCULINE),
+/* harmony export */   "GEND_ANIMATE_MASCULINE": () => (/* binding */ GEND_ANIMATE_MASCULINE),
+/* harmony export */   "GEND_INANIMATE_MASCULINE": () => (/* binding */ GEND_INANIMATE_MASCULINE),
+/* harmony export */   "COMP_POSITIVE": () => (/* binding */ COMP_POSITIVE),
+/* harmony export */   "COMP_COMPARITIVE": () => (/* binding */ COMP_COMPARITIVE),
+/* harmony export */   "COMP_SUPERLATIVE": () => (/* binding */ COMP_SUPERLATIVE),
+/* harmony export */   "CASE_ABESSIVE": () => (/* binding */ CASE_ABESSIVE),
+/* harmony export */   "CASE_ABLATIVE": () => (/* binding */ CASE_ABLATIVE),
+/* harmony export */   "CASE_ABSOLUTIVE": () => (/* binding */ CASE_ABSOLUTIVE),
+/* harmony export */   "CASE_ACCUSATIVE": () => (/* binding */ CASE_ACCUSATIVE),
+/* harmony export */   "CASE_ADDIRECTIVE": () => (/* binding */ CASE_ADDIRECTIVE),
+/* harmony export */   "CASE_ADELATIVE": () => (/* binding */ CASE_ADELATIVE),
+/* harmony export */   "CASE_ADESSIVE": () => (/* binding */ CASE_ADESSIVE),
+/* harmony export */   "CASE_ADVERBIAL": () => (/* binding */ CASE_ADVERBIAL),
+/* harmony export */   "CASE_ALLATIVE": () => (/* binding */ CASE_ALLATIVE),
+/* harmony export */   "CASE_ANTESSIVE": () => (/* binding */ CASE_ANTESSIVE),
+/* harmony export */   "CASE_APUDESSIVE": () => (/* binding */ CASE_APUDESSIVE),
+/* harmony export */   "CASE_AVERSIVE": () => (/* binding */ CASE_AVERSIVE),
+/* harmony export */   "CASE_BENEFACTIVE": () => (/* binding */ CASE_BENEFACTIVE),
+/* harmony export */   "CASE_CARITIVE": () => (/* binding */ CASE_CARITIVE),
+/* harmony export */   "CASE_CAUSAL": () => (/* binding */ CASE_CAUSAL),
+/* harmony export */   "CASE_CAUSAL_FINAL": () => (/* binding */ CASE_CAUSAL_FINAL),
+/* harmony export */   "CASE_COMITATIVE": () => (/* binding */ CASE_COMITATIVE),
+/* harmony export */   "CASE_DATIVE": () => (/* binding */ CASE_DATIVE),
+/* harmony export */   "CASE_DELATIVE": () => (/* binding */ CASE_DELATIVE),
+/* harmony export */   "CASE_DIRECT": () => (/* binding */ CASE_DIRECT),
+/* harmony export */   "CASE_DISTRIBUTIVE": () => (/* binding */ CASE_DISTRIBUTIVE),
+/* harmony export */   "CASE_DISTRIBUTIVE_TEMPORAL": () => (/* binding */ CASE_DISTRIBUTIVE_TEMPORAL),
+/* harmony export */   "CASE_ELATIVE": () => (/* binding */ CASE_ELATIVE),
+/* harmony export */   "CASE_ERGATIVE": () => (/* binding */ CASE_ERGATIVE),
+/* harmony export */   "CASE_ESSIVE": () => (/* binding */ CASE_ESSIVE),
+/* harmony export */   "CASE_ESSIVE_FORMAL": () => (/* binding */ CASE_ESSIVE_FORMAL),
+/* harmony export */   "CASE_ESSIVE_MODAL": () => (/* binding */ CASE_ESSIVE_MODAL),
+/* harmony export */   "CASE_EQUATIVE": () => (/* binding */ CASE_EQUATIVE),
+/* harmony export */   "CASE_EVITATIVE": () => (/* binding */ CASE_EVITATIVE),
+/* harmony export */   "CASE_EXESSIVE": () => (/* binding */ CASE_EXESSIVE),
+/* harmony export */   "CASE_FINAL": () => (/* binding */ CASE_FINAL),
+/* harmony export */   "CASE_FORMAL": () => (/* binding */ CASE_FORMAL),
+/* harmony export */   "CASE_GENITIVE": () => (/* binding */ CASE_GENITIVE),
+/* harmony export */   "CASE_ILLATIVE": () => (/* binding */ CASE_ILLATIVE),
+/* harmony export */   "CASE_INELATIVE": () => (/* binding */ CASE_INELATIVE),
+/* harmony export */   "CASE_INESSIVE": () => (/* binding */ CASE_INESSIVE),
+/* harmony export */   "CASE_INSTRUCTIVE": () => (/* binding */ CASE_INSTRUCTIVE),
+/* harmony export */   "CASE_INSTRUMENTAL": () => (/* binding */ CASE_INSTRUMENTAL),
+/* harmony export */   "CASE_INSTRUMENTAL_COMITATIVE": () => (/* binding */ CASE_INSTRUMENTAL_COMITATIVE),
+/* harmony export */   "CASE_INTRANSITIVE": () => (/* binding */ CASE_INTRANSITIVE),
+/* harmony export */   "CASE_LATIVE": () => (/* binding */ CASE_LATIVE),
+/* harmony export */   "CASE_LOCATIVE": () => (/* binding */ CASE_LOCATIVE),
+/* harmony export */   "CASE_MODAL": () => (/* binding */ CASE_MODAL),
+/* harmony export */   "CASE_MULTIPLICATIVE": () => (/* binding */ CASE_MULTIPLICATIVE),
+/* harmony export */   "CASE_NOMINATIVE": () => (/* binding */ CASE_NOMINATIVE),
+/* harmony export */   "CASE_PARTITIVE": () => (/* binding */ CASE_PARTITIVE),
+/* harmony export */   "CASE_PEGATIVE": () => (/* binding */ CASE_PEGATIVE),
+/* harmony export */   "CASE_PERLATIVE": () => (/* binding */ CASE_PERLATIVE),
+/* harmony export */   "CASE_POSSESSIVE": () => (/* binding */ CASE_POSSESSIVE),
+/* harmony export */   "CASE_POSTELATIVE": () => (/* binding */ CASE_POSTELATIVE),
+/* harmony export */   "CASE_POSTDIRECTIVE": () => (/* binding */ CASE_POSTDIRECTIVE),
+/* harmony export */   "CASE_POSTESSIVE": () => (/* binding */ CASE_POSTESSIVE),
+/* harmony export */   "CASE_POSTPOSITIONAL": () => (/* binding */ CASE_POSTPOSITIONAL),
+/* harmony export */   "CASE_PREPOSITIONAL": () => (/* binding */ CASE_PREPOSITIONAL),
+/* harmony export */   "CASE_PRIVATIVE": () => (/* binding */ CASE_PRIVATIVE),
+/* harmony export */   "CASE_PROLATIVE": () => (/* binding */ CASE_PROLATIVE),
+/* harmony export */   "CASE_PROSECUTIVE": () => (/* binding */ CASE_PROSECUTIVE),
+/* harmony export */   "CASE_PROXIMATIVE": () => (/* binding */ CASE_PROXIMATIVE),
+/* harmony export */   "CASE_SEPARATIVE": () => (/* binding */ CASE_SEPARATIVE),
+/* harmony export */   "CASE_SOCIATIVE": () => (/* binding */ CASE_SOCIATIVE),
+/* harmony export */   "CASE_SUBDIRECTIVE": () => (/* binding */ CASE_SUBDIRECTIVE),
+/* harmony export */   "CASE_SUBESSIVE": () => (/* binding */ CASE_SUBESSIVE),
+/* harmony export */   "CASE_SUBELATIVE": () => (/* binding */ CASE_SUBELATIVE),
+/* harmony export */   "CASE_SUBLATIVE": () => (/* binding */ CASE_SUBLATIVE),
+/* harmony export */   "CASE_SUPERDIRECTIVE": () => (/* binding */ CASE_SUPERDIRECTIVE),
+/* harmony export */   "CASE_SUPERESSIVE": () => (/* binding */ CASE_SUPERESSIVE),
+/* harmony export */   "CASE_SUPERLATIVE": () => (/* binding */ CASE_SUPERLATIVE),
+/* harmony export */   "CASE_SUPPRESSIVE": () => (/* binding */ CASE_SUPPRESSIVE),
+/* harmony export */   "CASE_TEMPORAL": () => (/* binding */ CASE_TEMPORAL),
+/* harmony export */   "CASE_TERMINATIVE": () => (/* binding */ CASE_TERMINATIVE),
+/* harmony export */   "CASE_TRANSLATIVE": () => (/* binding */ CASE_TRANSLATIVE),
+/* harmony export */   "CASE_VIALIS": () => (/* binding */ CASE_VIALIS),
+/* harmony export */   "CASE_VOCATIVE": () => (/* binding */ CASE_VOCATIVE),
+/* harmony export */   "MOOD_ADMIRATIVE": () => (/* binding */ MOOD_ADMIRATIVE),
+/* harmony export */   "MOOD_COHORTATIVE": () => (/* binding */ MOOD_COHORTATIVE),
+/* harmony export */   "MOOD_CONDITIONAL": () => (/* binding */ MOOD_CONDITIONAL),
+/* harmony export */   "MOOD_DECLARATIVE": () => (/* binding */ MOOD_DECLARATIVE),
+/* harmony export */   "MOOD_DUBITATIVE": () => (/* binding */ MOOD_DUBITATIVE),
+/* harmony export */   "MOOD_ENERGETIC": () => (/* binding */ MOOD_ENERGETIC),
+/* harmony export */   "MOOD_EVENTIVE": () => (/* binding */ MOOD_EVENTIVE),
+/* harmony export */   "MOOD_GENERIC": () => (/* binding */ MOOD_GENERIC),
+/* harmony export */   "MOOD_GERUNDIVE": () => (/* binding */ MOOD_GERUNDIVE),
+/* harmony export */   "MOOD_HYPOTHETICAL": () => (/* binding */ MOOD_HYPOTHETICAL),
+/* harmony export */   "MOOD_IMPERATIVE": () => (/* binding */ MOOD_IMPERATIVE),
+/* harmony export */   "MOOD_INDICATIVE": () => (/* binding */ MOOD_INDICATIVE),
+/* harmony export */   "MOOD_INFERENTIAL": () => (/* binding */ MOOD_INFERENTIAL),
+/* harmony export */   "MOOD_INFINITIVE": () => (/* binding */ MOOD_INFINITIVE),
+/* harmony export */   "MOOD_INTERROGATIVE": () => (/* binding */ MOOD_INTERROGATIVE),
+/* harmony export */   "MOOD_JUSSIVE": () => (/* binding */ MOOD_JUSSIVE),
+/* harmony export */   "MOOD_NEGATIVE": () => (/* binding */ MOOD_NEGATIVE),
+/* harmony export */   "MOOD_OPTATIVE": () => (/* binding */ MOOD_OPTATIVE),
+/* harmony export */   "MOOD_PARTICIPLE": () => (/* binding */ MOOD_PARTICIPLE),
+/* harmony export */   "MOOD_PRESUMPTIVE": () => (/* binding */ MOOD_PRESUMPTIVE),
+/* harmony export */   "MOOD_RENARRATIVE": () => (/* binding */ MOOD_RENARRATIVE),
+/* harmony export */   "MOOD_SUBJUNCTIVE": () => (/* binding */ MOOD_SUBJUNCTIVE),
+/* harmony export */   "MOOD_SUPINE": () => (/* binding */ MOOD_SUPINE),
+/* harmony export */   "NUM_SINGULAR": () => (/* binding */ NUM_SINGULAR),
+/* harmony export */   "NUM_PLURAL": () => (/* binding */ NUM_PLURAL),
+/* harmony export */   "NUM_DUAL": () => (/* binding */ NUM_DUAL),
+/* harmony export */   "NUM_TRIAL": () => (/* binding */ NUM_TRIAL),
+/* harmony export */   "NUM_PAUCAL": () => (/* binding */ NUM_PAUCAL),
+/* harmony export */   "NUM_SINGULATIVE": () => (/* binding */ NUM_SINGULATIVE),
+/* harmony export */   "NUM_COLLECTIVE": () => (/* binding */ NUM_COLLECTIVE),
+/* harmony export */   "NUM_DISTRIBUTIVE_PLURAL": () => (/* binding */ NUM_DISTRIBUTIVE_PLURAL),
+/* harmony export */   "NRL_CARDINAL": () => (/* binding */ NRL_CARDINAL),
+/* harmony export */   "NRL_ORDINAL": () => (/* binding */ NRL_ORDINAL),
+/* harmony export */   "NRL_DISTRIBUTIVE": () => (/* binding */ NRL_DISTRIBUTIVE),
+/* harmony export */   "NURL_NUMERAL_ADVERB": () => (/* binding */ NURL_NUMERAL_ADVERB),
+/* harmony export */   "ORD_1ST": () => (/* binding */ ORD_1ST),
+/* harmony export */   "ORD_2ND": () => (/* binding */ ORD_2ND),
+/* harmony export */   "ORD_3RD": () => (/* binding */ ORD_3RD),
+/* harmony export */   "ORD_4TH": () => (/* binding */ ORD_4TH),
+/* harmony export */   "ORD_5TH": () => (/* binding */ ORD_5TH),
+/* harmony export */   "ORD_6TH": () => (/* binding */ ORD_6TH),
+/* harmony export */   "ORD_7TH": () => (/* binding */ ORD_7TH),
+/* harmony export */   "ORD_8TH": () => (/* binding */ ORD_8TH),
+/* harmony export */   "ORD_9TH": () => (/* binding */ ORD_9TH),
+/* harmony export */   "TENSE_AORIST": () => (/* binding */ TENSE_AORIST),
+/* harmony export */   "TENSE_FUTURE": () => (/* binding */ TENSE_FUTURE),
+/* harmony export */   "TENSE_FUTURE_PERFECT": () => (/* binding */ TENSE_FUTURE_PERFECT),
+/* harmony export */   "TENSE_IMPERFECT": () => (/* binding */ TENSE_IMPERFECT),
+/* harmony export */   "TENSE_PAST_ABSOLUTE": () => (/* binding */ TENSE_PAST_ABSOLUTE),
+/* harmony export */   "TENSE_PERFECT": () => (/* binding */ TENSE_PERFECT),
+/* harmony export */   "TENSE_PLUPERFECT": () => (/* binding */ TENSE_PLUPERFECT),
+/* harmony export */   "TENSE_PRESENT": () => (/* binding */ TENSE_PRESENT),
+/* harmony export */   "VKIND_TO_BE": () => (/* binding */ VKIND_TO_BE),
+/* harmony export */   "VKIND_COMPOUNDS_OF_TO_BE": () => (/* binding */ VKIND_COMPOUNDS_OF_TO_BE),
+/* harmony export */   "VKIND_TAKING_ABLATIVE": () => (/* binding */ VKIND_TAKING_ABLATIVE),
+/* harmony export */   "VKIND_TAKING_DATIVE": () => (/* binding */ VKIND_TAKING_DATIVE),
+/* harmony export */   "VKIND_TAKING_GENITIVE": () => (/* binding */ VKIND_TAKING_GENITIVE),
+/* harmony export */   "VKIND_TRANSITIVE": () => (/* binding */ VKIND_TRANSITIVE),
+/* harmony export */   "VKIND_INTRANSITIVE": () => (/* binding */ VKIND_INTRANSITIVE),
+/* harmony export */   "VKIND_IMPERSONAL": () => (/* binding */ VKIND_IMPERSONAL),
+/* harmony export */   "VKIND_DEPONENT": () => (/* binding */ VKIND_DEPONENT),
+/* harmony export */   "VKIND_SEMIDEPONENT": () => (/* binding */ VKIND_SEMIDEPONENT),
+/* harmony export */   "VKIND_PERFECT_DEFINITE": () => (/* binding */ VKIND_PERFECT_DEFINITE),
+/* harmony export */   "VOICE_ACTIVE": () => (/* binding */ VOICE_ACTIVE),
+/* harmony export */   "VOICE_PASSIVE": () => (/* binding */ VOICE_PASSIVE),
+/* harmony export */   "VOICE_MEDIOPASSIVE": () => (/* binding */ VOICE_MEDIOPASSIVE),
+/* harmony export */   "VOICE_IMPERSONAL_PASSIVE": () => (/* binding */ VOICE_IMPERSONAL_PASSIVE),
+/* harmony export */   "VOICE_MIDDLE": () => (/* binding */ VOICE_MIDDLE),
+/* harmony export */   "VOICE_ANTIPASSIVE": () => (/* binding */ VOICE_ANTIPASSIVE),
+/* harmony export */   "VOICE_REFLEXIVE": () => (/* binding */ VOICE_REFLEXIVE),
+/* harmony export */   "VOICE_RECIPROCAL": () => (/* binding */ VOICE_RECIPROCAL),
+/* harmony export */   "VOICE_CAUSATIVE": () => (/* binding */ VOICE_CAUSATIVE),
+/* harmony export */   "VOICE_ADJUTATIVE": () => (/* binding */ VOICE_ADJUTATIVE),
+/* harmony export */   "VOICE_APPLICATIVE": () => (/* binding */ VOICE_APPLICATIVE),
+/* harmony export */   "VOICE_CIRCUMSTANTIAL": () => (/* binding */ VOICE_CIRCUMSTANTIAL),
+/* harmony export */   "VOICE_DEPONENT": () => (/* binding */ VOICE_DEPONENT),
+/* harmony export */   "TYPE_IRREGULAR": () => (/* binding */ TYPE_IRREGULAR),
+/* harmony export */   "TYPE_REGULAR": () => (/* binding */ TYPE_REGULAR),
+/* harmony export */   "CLASS_PERSONAL": () => (/* binding */ CLASS_PERSONAL),
+/* harmony export */   "CLASS_REFLEXIVE": () => (/* binding */ CLASS_REFLEXIVE),
+/* harmony export */   "CLASS_POSSESSIVE": () => (/* binding */ CLASS_POSSESSIVE),
+/* harmony export */   "CLASS_DEMONSTRATIVE": () => (/* binding */ CLASS_DEMONSTRATIVE),
+/* harmony export */   "CLASS_RELATIVE": () => (/* binding */ CLASS_RELATIVE),
+/* harmony export */   "CLASS_INTERROGATIVE": () => (/* binding */ CLASS_INTERROGATIVE),
+/* harmony export */   "CLASS_GENERAL_RELATIVE": () => (/* binding */ CLASS_GENERAL_RELATIVE),
+/* harmony export */   "CLASS_INDEFINITE": () => (/* binding */ CLASS_INDEFINITE),
+/* harmony export */   "CLASS_INTENSIVE": () => (/* binding */ CLASS_INTENSIVE),
+/* harmony export */   "CLASS_RECIPROCAL": () => (/* binding */ CLASS_RECIPROCAL),
+/* harmony export */   "PARADIGM_CAT_KAYLO": () => (/* binding */ PARADIGM_CAT_KAYLO),
+/* harmony export */   "PARADIGM_CAT_STATE": () => (/* binding */ PARADIGM_CAT_STATE)
 /* harmony export */ });
 /* eslint-disable no-unused-vars */
 const LANG_UNIT_WORD = Symbol('word')
@@ -1032,7 +2864,7 @@ const PARADIGM_CAT_STATE = 'state'
 /***/ }),
 
 /***/ "./definition-set.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./definition-set.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1040,7 +2872,7 @@ const PARADIGM_CAT_STATE = 'state'
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ DefinitionSet
+/* harmony export */   "default": () => (/* binding */ DefinitionSet)
 /* harmony export */ });
 /* harmony import */ var _definition__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./definition */ "./definition.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
@@ -1163,7 +2995,7 @@ class DefinitionSet {
 /***/ }),
 
 /***/ "./definition.js":
-/*!***********************!*
+/*!***********************!*\
   !*** ./definition.js ***!
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1171,7 +3003,7 @@ class DefinitionSet {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
@@ -1227,7 +3059,7 @@ class Definition {
 /***/ }),
 
 /***/ "./driver.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1235,39 +3067,47 @@ class Definition {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Constants": () => /* reexport module object */ _constants_js__WEBPACK_IMPORTED_MODULE_0__,
-/* harmony export */   "Definition": () => /* reexport safe */ _definition_js__WEBPACK_IMPORTED_MODULE_1__.default,
-/* harmony export */   "DefinitionSet": () => /* reexport safe */ _definition_set__WEBPACK_IMPORTED_MODULE_2__.default,
-/* harmony export */   "Feature": () => /* reexport safe */ _feature_js__WEBPACK_IMPORTED_MODULE_3__.default,
-/* harmony export */   "GrmFeature": () => /* reexport safe */ _grm_feature_js__WEBPACK_IMPORTED_MODULE_4__.default,
-/* harmony export */   "FeatureType": () => /* reexport safe */ _feature_type_js__WEBPACK_IMPORTED_MODULE_5__.default,
-/* harmony export */   "FeatureList": () => /* reexport safe */ _feature_list_js__WEBPACK_IMPORTED_MODULE_6__.default,
-/* harmony export */   "FeatureImporter": () => /* reexport safe */ _feature_importer_js__WEBPACK_IMPORTED_MODULE_7__.default,
-/* harmony export */   "Inflection": () => /* reexport safe */ _inflection_js__WEBPACK_IMPORTED_MODULE_13__.default,
-/* harmony export */   "LanguageModelFactory": () => /* reexport safe */ _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__.default,
-/* harmony export */   "HomonymGroup": () => /* reexport safe */ _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__.default,
-/* harmony export */   "Homonym": () => /* reexport safe */ _homonym_js__WEBPACK_IMPORTED_MODULE_10__.default,
-/* harmony export */   "Lexeme": () => /* reexport safe */ _lexeme_js__WEBPACK_IMPORTED_MODULE_11__.default,
-/* harmony export */   "Lemma": () => /* reexport safe */ _lemma_js__WEBPACK_IMPORTED_MODULE_12__.default,
-/* harmony export */   "LatinLanguageModel": () => /* reexport safe */ _latin_language_model_js__WEBPACK_IMPORTED_MODULE_14__.default,
-/* harmony export */   "GreekLanguageModel": () => /* reexport safe */ _greek_language_model_js__WEBPACK_IMPORTED_MODULE_15__.default,
-/* harmony export */   "ArabicLanguageModel": () => /* reexport safe */ _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_16__.default,
-/* harmony export */   "PersianLanguageModel": () => /* reexport safe */ _persian_language_model_js__WEBPACK_IMPORTED_MODULE_17__.default,
-/* harmony export */   "GeezLanguageModel": () => /* reexport safe */ _geez_language_model_js__WEBPACK_IMPORTED_MODULE_18__.default,
-/* harmony export */   "ChineseLanguageModel": () => /* reexport safe */ _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_19__.default,
-/* harmony export */   "SyriacLanguageModel": () => /* reexport safe */ _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_20__.default,
-/* harmony export */   "ResourceProvider": () => /* reexport safe */ _resource_provider_js__WEBPACK_IMPORTED_MODULE_21__.default,
-/* harmony export */   "Translation": () => /* reexport safe */ _translation_js__WEBPACK_IMPORTED_MODULE_24__.default,
-/* harmony export */   "PsEvent": () => /* reexport safe */ _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_22__.default,
-/* harmony export */   "PsEventData": () => /* reexport safe */ _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_23__.default,
-/* harmony export */   "TextQuoteSelector": () => /* reexport safe */ _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_25__.default,
-/* harmony export */   "WordUsageExample": () => /* reexport safe */ _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_26__.default,
-/* harmony export */   "Author": () => /* reexport safe */ _texts_author_js__WEBPACK_IMPORTED_MODULE_27__.default,
-/* harmony export */   "TextWork": () => /* reexport safe */ _texts_text_work_js__WEBPACK_IMPORTED_MODULE_28__.default,
-/* harmony export */   "WordItem": () => /* reexport safe */ _word_item_js__WEBPACK_IMPORTED_MODULE_29__.default,
-/* harmony export */   "WordList": () => /* reexport safe */ _word_list_js__WEBPACK_IMPORTED_MODULE_30__.default,
-/* harmony export */   "TreebankDataItem": () => /* reexport safe */ _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__.default,
-/* harmony export */   "Logger": () => /* reexport safe */ _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__.default
+/* harmony export */   "Constants": () => (/* reexport module object */ _constants_js__WEBPACK_IMPORTED_MODULE_0__),
+/* harmony export */   "Definition": () => (/* reexport safe */ _definition_js__WEBPACK_IMPORTED_MODULE_1__.default),
+/* harmony export */   "DefinitionSet": () => (/* reexport safe */ _definition_set__WEBPACK_IMPORTED_MODULE_2__.default),
+/* harmony export */   "Feature": () => (/* reexport safe */ _feature_js__WEBPACK_IMPORTED_MODULE_3__.default),
+/* harmony export */   "GrmFeature": () => (/* reexport safe */ _grm_feature_js__WEBPACK_IMPORTED_MODULE_4__.default),
+/* harmony export */   "FeatureType": () => (/* reexport safe */ _feature_type_js__WEBPACK_IMPORTED_MODULE_5__.default),
+/* harmony export */   "FeatureList": () => (/* reexport safe */ _feature_list_js__WEBPACK_IMPORTED_MODULE_6__.default),
+/* harmony export */   "FeatureImporter": () => (/* reexport safe */ _feature_importer_js__WEBPACK_IMPORTED_MODULE_7__.default),
+/* harmony export */   "Inflection": () => (/* reexport safe */ _inflection_js__WEBPACK_IMPORTED_MODULE_13__.default),
+/* harmony export */   "LanguageModelFactory": () => (/* reexport safe */ _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__.default),
+/* harmony export */   "HomonymGroup": () => (/* reexport safe */ _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__.default),
+/* harmony export */   "Homonym": () => (/* reexport safe */ _homonym_js__WEBPACK_IMPORTED_MODULE_10__.default),
+/* harmony export */   "Lexeme": () => (/* reexport safe */ _lexeme_js__WEBPACK_IMPORTED_MODULE_11__.default),
+/* harmony export */   "Lemma": () => (/* reexport safe */ _lemma_js__WEBPACK_IMPORTED_MODULE_12__.default),
+/* harmony export */   "LatinLanguageModel": () => (/* reexport safe */ _latin_language_model_js__WEBPACK_IMPORTED_MODULE_14__.default),
+/* harmony export */   "GreekLanguageModel": () => (/* reexport safe */ _greek_language_model_js__WEBPACK_IMPORTED_MODULE_15__.default),
+/* harmony export */   "ArabicLanguageModel": () => (/* reexport safe */ _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_16__.default),
+/* harmony export */   "PersianLanguageModel": () => (/* reexport safe */ _persian_language_model_js__WEBPACK_IMPORTED_MODULE_17__.default),
+/* harmony export */   "GeezLanguageModel": () => (/* reexport safe */ _geez_language_model_js__WEBPACK_IMPORTED_MODULE_18__.default),
+/* harmony export */   "ChineseLanguageModel": () => (/* reexport safe */ _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_19__.default),
+/* harmony export */   "SyriacLanguageModel": () => (/* reexport safe */ _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_20__.default),
+/* harmony export */   "ResourceProvider": () => (/* reexport safe */ _resource_provider_js__WEBPACK_IMPORTED_MODULE_21__.default),
+/* harmony export */   "Translation": () => (/* reexport safe */ _translation_js__WEBPACK_IMPORTED_MODULE_24__.default),
+/* harmony export */   "PsEvent": () => (/* reexport safe */ _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_22__.default),
+/* harmony export */   "PsEventData": () => (/* reexport safe */ _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_23__.default),
+/* harmony export */   "TextQuoteSelector": () => (/* reexport safe */ _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_25__.default),
+/* harmony export */   "WordUsageExample": () => (/* reexport safe */ _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_26__.default),
+/* harmony export */   "Author": () => (/* reexport safe */ _texts_author_js__WEBPACK_IMPORTED_MODULE_27__.default),
+/* harmony export */   "TextWork": () => (/* reexport safe */ _texts_text_work_js__WEBPACK_IMPORTED_MODULE_28__.default),
+/* harmony export */   "WordItem": () => (/* reexport safe */ _word_item_js__WEBPACK_IMPORTED_MODULE_29__.default),
+/* harmony export */   "WordList": () => (/* reexport safe */ _word_list_js__WEBPACK_IMPORTED_MODULE_30__.default),
+/* harmony export */   "TreebankDataItem": () => (/* reexport safe */ _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__.default),
+/* harmony export */   "Logger": () => (/* reexport safe */ _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__.default),
+/* harmony export */   "Options": () => (/* reexport safe */ _options_options_js__WEBPACK_IMPORTED_MODULE_33__.default),
+/* harmony export */   "DefaultsLoader": () => (/* reexport safe */ _storages_defaults_loader_js__WEBPACK_IMPORTED_MODULE_34__.default),
+/* harmony export */   "ExtensionSyncStorage": () => (/* reexport safe */ _storages_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_35__.default),
+/* harmony export */   "LocalStorageArea": () => (/* reexport safe */ _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_36__.default),
+/* harmony export */   "RemoteAuthStorageArea": () => (/* reexport safe */ _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_37__.default),
+/* harmony export */   "TempStorageArea": () => (/* reexport safe */ _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_38__.default),
+/* harmony export */   "Collection": () => (/* reexport safe */ _dts_collection_js__WEBPACK_IMPORTED_MODULE_39__.default),
+/* harmony export */   "Resource": () => (/* reexport safe */ _dts_resource_js__WEBPACK_IMPORTED_MODULE_40__.default)
 /* harmony export */ });
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _definition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./definition.js */ "./definition.js");
@@ -1302,6 +3142,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _word_list_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./word-list.js */ "./word-list.js");
 /* harmony import */ var _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./treebank_data_item.js */ "./treebank_data_item.js");
 /* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _options_options_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./options/options.js */ "./options/options.js");
+/* harmony import */ var _storages_defaults_loader_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./storages/defaults-loader.js */ "./storages/defaults-loader.js");
+/* harmony import */ var _storages_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./storages/extension-sync-storage.js */ "./storages/extension-sync-storage.js");
+/* harmony import */ var _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./storages/local-storage-area.js */ "./storages/local-storage-area.js");
+/* harmony import */ var _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./storages/remote-auth-storage-area.js */ "./storages/remote-auth-storage-area.js");
+/* harmony import */ var _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./storages/temp-storage-area.js */ "./storages/temp-storage-area.js");
+/* harmony import */ var _dts_collection_js__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./dts/collection.js */ "./dts/collection.js");
+/* harmony import */ var _dts_resource_js__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./dts/resource.js */ "./dts/resource.js");
 
 ;
 
@@ -1343,10 +3191,186 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./dts/collection.js":
+/*!***************************!*\
+  !*** ./dts/collection.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Collection)
+/* harmony export */ });
+/* harmony import */ var _resource_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource.js */ "./dts/resource.js");
+
+
+class Collection {
+  /**
+   * Created from DTS API Json
+   *
+   * @param {number} totalItems - amount of items in a collection
+   * @param {string} title
+   * @param {string} id
+   * @param {string} baseUrl - baseURL for DTS API
+   * @param {string} description
+   */
+  constructor ({ totalItems, title, id, baseUrl, description } = {}) {
+    this.totalItems = totalItems
+    this.title = title
+    this.id = id
+    this.baseUrl = baseUrl
+    this.description = description
+
+    this.members = []
+    this.resources = []
+  }
+
+  /**
+   * Adds level - membered collection or resource
+   *
+   * @param {JSON Object} jsonObj  - described in Collection/Resource constructors
+   */
+  addMember (jsonObj) {
+    if (jsonObj.type === 'Collection') {
+      this.members.push(new Collection(jsonObj))
+    }
+    if (jsonObj.type === 'Resource') {
+      this.resources.push(new _resource_js__WEBPACK_IMPORTED_MODULE_0__.default(jsonObj))
+    }
+  }
+
+  /**
+   * @returns {string} - title with totalItems in brackets
+   */
+  get formattedTitle () {
+    const totalItems = this.totalItems ? ` (${this.totalItems})` : ''
+    return `${this.title}${totalItems}`
+  }
+
+  /**
+   * @returns {object} - data for creating link for next step retrieval (descendant)
+   */
+  get linkData () {
+    return {
+      baseUrl: this.baseUrl,
+      totalItems: this.totalItems,
+      formattedTitle: this.formattedTitle,
+      title: this.title,
+      id: this.id,
+      type: 'collection'
+    }
+  }
+
+  /**
+   * @returns {Array[Object]} - array of links from membered collections
+   */
+  get membersLinks () {
+    return this.members.map(memberCollection => memberCollection.linkData)
+  }
+
+  /**
+   * @returns {Array[Object]} - array of links from membered resources
+   */
+  get resourcesLinks () {
+    return this.resources.map(resource => resource.linkData)
+  }
+
+  /**
+   * @returns {Array[Object]} - array of links - collections or resources
+   */
+  get links () {
+    if (this.members.length > 0) {
+      return this.membersLinks
+    } else if (this.resources.length > 0) {
+      return this.resourcesLinks
+    }
+    return []
+  }
+}
+
+
+/***/ }),
+
+/***/ "./dts/resource.js":
+/*!*************************!*\
+  !*** ./dts/resource.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Resource)
+/* harmony export */ });
+class Resource {
+  /**
+   * @param {string} title
+   * @param {string} id
+   * @param {string} baseUrl - baseURL for DTS API
+   * @param {string} description
+   */
+  constructor ({ title, id, baseUrl, description } = {}) {
+    this.title = title
+    this.id = id
+    this.baseUrl = baseUrl
+    this.description = description
+  }
+
+  /**
+   *
+   * @param {Array[String]} refs - a list of refs to passages
+   * @param {string} passage - a url template for getting XML document
+   */
+  uploadRefs ({ refs, passage } = {}) {
+    this.passage = passage
+    this.refs = refs
+  }
+
+  /**
+   * @returns {object} - data for creating link for next step retrieval (descendant)
+   */
+  get linkData () {
+    return {
+      baseUrl: this.baseUrl,
+      title: this.title,
+      id: this.id,
+      description: this.description,
+      type: 'resource',
+      resource: this
+    }
+  }
+
+  get refsLinks () {
+    return this.refs.map(ref => {
+      return {
+        baseUrl: this.baseUrl,
+        id: this.id,
+        ref,
+        type: 'document'
+      }
+    })
+  }
+}
+
+
 /***/ }),
 
 /***/ "./feature.js":
-/*!********************!*
+/*!********************!*\
   !*** ./feature.js ***!
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1354,7 +3378,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Feature
+/* harmony export */   "default": () => (/* binding */ Feature)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
@@ -1886,7 +3910,7 @@ Feature.errMsgs = {
 /***/ }),
 
 /***/ "./feature_importer.js":
-/*!*****************************!*
+/*!*****************************!*\
   !*** ./feature_importer.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1894,7 +3918,7 @@ Feature.errMsgs = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class FeatureImporter {
   /**
@@ -1965,7 +3989,7 @@ class FeatureImporter {
 /***/ }),
 
 /***/ "./feature_list.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./feature_list.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1973,7 +3997,7 @@ class FeatureImporter {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /**
  * A list of grammatical features that characterizes a language unit. Has some additional service methods,
@@ -2043,7 +4067,7 @@ class FeatureList {
 /***/ }),
 
 /***/ "./feature_type.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./feature_type.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2051,7 +4075,7 @@ class FeatureList {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
@@ -2310,7 +4334,7 @@ FeatureType.UNRESTRICTED_VALUE = Symbol('unrestricted')
 /***/ }),
 
 /***/ "./geez_language_model.js":
-/*!********************************!*
+/*!********************************!*\
   !*** ./geez_language_model.js ***!
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2318,7 +4342,7 @@ FeatureType.UNRESTRICTED_VALUE = Symbol('unrestricted')
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ GeezLanguageModel
+/* harmony export */   "default": () => (/* binding */ GeezLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
@@ -2413,7 +4437,7 @@ for the current node
 /***/ }),
 
 /***/ "./greek_language_model.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./greek_language_model.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2421,7 +4445,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ GreekLanguageModel
+/* harmony export */   "default": () => (/* binding */ GreekLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
@@ -2871,7 +4895,7 @@ for the current node
 /***/ }),
 
 /***/ "./grm-feature.js":
-/*!************************!*
+/*!************************!*\
   !*** ./grm-feature.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2879,7 +4903,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
@@ -3055,7 +5079,7 @@ GrmFeature.types = {
 /***/ }),
 
 /***/ "./homonym-group.js":
-/*!**************************!*
+/*!**************************!*\
   !*** ./homonym-group.js ***!
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3063,7 +5087,7 @@ GrmFeature.types = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ HomonymGroup
+/* harmony export */   "default": () => (/* binding */ HomonymGroup)
 /* harmony export */ });
 /* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
 
@@ -3110,7 +5134,7 @@ HomonymGroup.errors = {
 /***/ }),
 
 /***/ "./homonym.js":
-/*!********************!*
+/*!********************!*\
   !*** ./homonym.js ***!
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3118,7 +5142,7 @@ HomonymGroup.errors = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
 /* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
@@ -3332,7 +5356,7 @@ class Homonym {
 /***/ }),
 
 /***/ "./inflection.js":
-/*!***********************!*
+/*!***********************!*\
   !*** ./inflection.js ***!
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3340,7 +5364,7 @@ class Homonym {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
@@ -3763,7 +5787,7 @@ class Inflection {
 /***/ }),
 
 /***/ "./inflection_group.js":
-/*!*****************************!*
+/*!*****************************!*\
   !*** ./inflection_group.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3771,7 +5795,7 @@ class Inflection {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class InflectionGroup {
   /**
@@ -3801,7 +5825,7 @@ class InflectionGroup {
 /***/ }),
 
 /***/ "./inflection_grouping_key.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./inflection_grouping_key.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3809,7 +5833,7 @@ class InflectionGroup {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
 
@@ -3865,7 +5889,7 @@ is included in the grouping key
 /***/ }),
 
 /***/ "./language_model.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./language_model.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3873,7 +5897,7 @@ is included in the grouping key
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
@@ -4609,7 +6633,7 @@ class LanguageModel {
 /***/ }),
 
 /***/ "./language_model_factory.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./language_model_factory.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4617,7 +6641,7 @@ class LanguageModel {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./latin_language_model.js */ "./latin_language_model.js");
@@ -4789,7 +6813,7 @@ class LanguageModelFactory {
 /***/ }),
 
 /***/ "./languages/greek-chars.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./languages/greek-chars.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4797,7 +6821,7 @@ class LanguageModelFactory {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ GreekChars
+/* harmony export */   "default": () => (/* binding */ GreekChars)
 /* harmony export */ });
 class GreekChars {
   static get chars () {
@@ -5118,7 +7142,7 @@ class GreekChars {
 /***/ }),
 
 /***/ "./latin_language_model.js":
-/*!*********************************!*
+/*!*********************************!*\
   !*** ./latin_language_model.js ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5126,7 +7150,7 @@ class GreekChars {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ LatinLanguageModel
+/* harmony export */   "default": () => (/* binding */ LatinLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
@@ -5382,7 +7406,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 /***/ }),
 
 /***/ "./lemma.js":
-/*!******************!*
+/*!******************!*\
   !*** ./lemma.js ***!
   \******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5390,7 +7414,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
@@ -5684,7 +7708,7 @@ class Lemma {
 /***/ }),
 
 /***/ "./lexeme.js":
-/*!*******************!*
+/*!*******************!*\
   !*** ./lexeme.js ***!
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -5692,7 +7716,7 @@ class Lemma {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
 /* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
@@ -6039,7 +8063,7 @@ class Lexeme {
 /***/ }),
 
 /***/ "./logging/logger.js":
-/*!***************************!*
+/*!***************************!*\
   !*** ./logging/logger.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6047,7 +8071,7 @@ class Lexeme {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Logger
+/* harmony export */   "default": () => (/* binding */ Logger)
 /* harmony export */ });
 let singleInstance
 
@@ -6196,8 +8220,352 @@ class Logger {
 
 /***/ }),
 
+/***/ "./options/option-item.js":
+/*!********************************!*\
+  !*** ./options/option-item.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ OptionItem)
+/* harmony export */ });
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
+
+
+/**
+ * A single option item with access methods.
+ */
+class OptionItem {
+  constructor (item, key, storageAdapter) {
+    if (!item) {
+      throw new Error('Item cannot be empty')
+    }
+    if (!key) {
+      throw new Error('Key cannot be empty')
+    }
+    if (!storageAdapter) {
+      throw new Error('Storage adapter object should be provided')
+    }
+    for (const key of Object.keys(item)) {
+      this[key] = item[key]
+    }
+    this.currentValue = this.defaultValue
+    this.name = key
+    this.storageAdapter = storageAdapter
+  }
+
+  textValues () {
+    return this.values.map(value => value.text)
+  }
+
+  /**
+   * If `prop` is not specified, returns a value object of a current item.
+   * Otherwise, returns a value of a property specified by `prop`.
+   *
+   * @param {string} prop - A name of a property of a current items that must be returned.
+   *        Values currently supported are: `text`, `value`, undefined.
+   * @returns {* | Array<*>} - A single item or an array of items. Item type depends
+   * on the value of the `prop` or the lack of it.
+   */
+  currentItem (prop = undefined) {
+    let item = []
+    for (const value of this.values) {
+      if (this.multiValue) {
+        if (this.currentValue.includes(value.value)) {
+          const itemValue = prop ? value[prop] : value
+          item.push(itemValue)
+        }
+      } else {
+        if (value.value === this.currentValue) {
+          item = prop ? value[prop] : value
+        }
+      }
+    }
+    return item
+  }
+
+  currentTextValue () {
+    return this.currentItem('text')
+  }
+
+  addValue (value, text) {
+    this.values.push({ value: value, text: text })
+    return this
+  }
+
+  setValue (value) {
+    this.currentValue = value
+    this.save()
+    return this
+  }
+
+  setTextValue (textValue) {
+    this.currentValue = this.multiValue ? [] : ''
+    for (const value of this.values) {
+      if (this.multiValue) {
+        for (const tv of textValue) {
+          if (value.text === tv) { this.currentValue.push(value.value) }
+        }
+      } else {
+        if (value.text === textValue) { this.currentValue = value.value }
+      }
+    }
+    this.save()
+    return this
+  }
+
+  removeItem () {
+    this.currentValue = null
+    this.storageAdapter.remove(this.name).then(
+      () => {
+        // Options storage succeeded
+      },
+      (errorMessage) => {
+        _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().error(`Unexpected error resetting Alpheios option ${this.name}: ${errorMessage}`)
+      }
+    )
+  }
+
+  /**
+   * Saves an option value to the local storage.
+   */
+  save () {
+    let option = {} // eslint-disable-line prefer-const
+    option[this.name] = JSON.stringify(this.currentValue)
+
+    this.storageAdapter.set(option).then(
+      () => {
+        // Options storage succeeded
+      },
+      (errorMessage) => {
+        _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().error(`Unexpected error storing Alpheios option ${this.name}: ${errorMessage}`)
+      }
+    )
+  }
+
+  /**
+   *
+   * @param {Array[Object]} valuesArr - Array[option's values]
+   */
+  uploadValuesFromArray (valuesArr) {
+    this.values = [...valuesArr]
+    this.defaultValue = this.values[0].value
+  }
+}
+
+
+/***/ }),
+
+/***/ "./options/options.js":
+/*!****************************!*\
+  !*** ./options/options.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Options)
+/* harmony export */ });
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _option_item_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./option-item.js */ "./options/option-item.js");
+
+
+/**
+ * A set of options grouped by domain. Domain name should be passed in `defaults.domain`.
+ */
+class Options {
+  /**
+   * Options is a class which encapsulates defaults and user preferences
+   *
+   * @param {object} defaults - defaults for the instance of the class.
+   * Use DefaultsLoader class to convert defaults data from different sources.
+   * Mandatory fields:
+   *    {string} domain - A domain name that defines options context
+   *    {Object} items - An object that represents options that are exposed to the user. Each property is an option name.
+   * @param {StorageAdapter} storageAdapter - A storage adapter implementation
+   */
+  constructor (defaults, storageAdapter) {
+    if (!defaults || !defaults.domain || !defaults.items || !defaults.version) {
+      throw new Error('Defaults have no obligatory "domain", "version" and "items" properties')
+    }
+    if (!storageAdapter) {
+      throw new Error('No storage adapter implementation provided')
+    }
+
+    this.defaults = defaults
+    this.domain = defaults.domain
+    this.version = defaults.version.toString()
+    this.storageAdapter = storageAdapter
+    this.items = Options.initItems(this.defaults.items, this.storageAdapter, this.domain, this.version)
+  }
+
+  static initItems (defaults, storageAdapter, domain, version) {
+    let items = {} // eslint-disable-line prefer-const
+    for (const [option, value] of Object.entries(defaults)) {
+      if (value.group) {
+        items[option] = []
+        for (const [group, item] of Object.entries(value.group)) {
+          const key = Options.constructKey(domain, version, option, group)
+          items[option].push(new _option_item_js__WEBPACK_IMPORTED_MODULE_1__.default(item, key, storageAdapter))
+        }
+      } else {
+        const key = Options.constructKey(domain, version, option)
+        items[option] = new _option_item_js__WEBPACK_IMPORTED_MODULE_1__.default(value, key, storageAdapter)
+      }
+    }
+    return items
+  }
+
+  /**
+   * Reset all options to default values
+   */
+  async reset () {
+    await this.storageAdapter.clearAll()
+    this.items = Options.initItems(this.defaults.items, this.storageAdapter, this.domain, this.version)
+  }
+
+  get names () {
+    return Object.keys(this.items)
+  }
+
+  /**
+   * Loads options from the storage. Returns a promise that is resolved if options are loaded
+   * successfully and that is rejectd if there was an error retrieving them.
+   *
+   * @returns {Promise<Options>}
+   */
+  async load () {
+    try {
+      const values = await this.storageAdapter.get()
+      for (const key in values) {
+        const parsedKey = Options.parseKey(key)
+        // TODO when we do increase the version we should handle conversion
+        if (this.items.hasOwnProperty(parsedKey.name) && this.version === parsedKey.version) { // eslint-disable-line no-prototype-builtins
+          if (parsedKey.group) {
+            this.items[parsedKey.name].forEach((f) => {
+              if (f.name === key) {
+                try {
+                  f.currentValue = JSON.parse(values[key])
+                } catch (e) {
+                  _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
+                }
+              }
+            })
+          } else {
+            try {
+              this.items[parsedKey.name].currentValue = JSON.parse(values[key])
+            } catch (e) {
+              // invalid value
+              _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
+            }
+          }
+        }
+      }
+      return this
+    } catch (error) {
+      const message = `Unexpected error retrieving options for Alpheios from local storage: ${error}. Default values ` +
+      'will be used instead'
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().error(message)
+    }
+  }
+
+  /**
+   * Construct a key for a stored setting
+   * To future proof the stored settings, we include domain and version
+   * in the key name. Grouped settings are also flattened.
+   *
+   * @param {string} domain - the setting domain
+   * @param {string} version - the setting version
+   * @param {string} name - the setting name
+   * @param {string} group - optional setting group
+   */
+  static constructKey (domain, version, name, group = null) {
+    let key = `${domain}__${version}__${name}`
+    if (group) {
+      key = `${key}__${group}`
+    }
+    return key
+  }
+
+  /**
+   * Parse a stored setting name into a semantically meaningful object
+   *
+   * @param key
+   */
+  static parseKey (key) {
+    const [domain, version, name, group] = key.split('__', 4)
+    let parsed
+    try {
+      parsed = {
+        domain: domain,
+        version: version,
+        name: name,
+        group: group
+      }
+    } catch (e) {
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().warn(`Failed to parse stored Alpheios options key ${key}`)
+    }
+    return parsed
+  }
+
+  /**
+   * Converts optionItems to the object: { name of the option: currentValue }
+   *
+   * @returns {object}
+   */
+  get formatLabelValueList () {
+    let result = {} // eslint-disable-line prefer-const
+    Object.keys(this.items).forEach(nameItem => {
+      if (this.items[nameItem].currentValue !== undefined) {
+        result[nameItem] = this.items[nameItem].currentValue
+      }
+    })
+    return result
+  }
+
+  /**
+   * Uploads values list from array if an option has valuesArray feature
+   *
+   * @param {object} valuesArrayList - with format nameValuesArray: Array[option's values]
+   */
+  checkAndUploadValuesFromArray (valuesArrayList) {
+    Object.values(this.items).forEach(optionItem => {
+      if (optionItem.valuesArray && !optionItem.values && valuesArrayList[optionItem.valuesArray]) {
+        optionItem.uploadValuesFromArray(valuesArrayList[optionItem.valuesArray])
+      }
+    })
+  }
+
+  /**
+   *
+   * @param {string} domainPostfix - additional string for creating unique domain name
+   * @param {StorageAdapter} storageAdapter - class of the storage adapter
+   */
+  clone (domainPostfix, storageAdapter) {
+    let defaults = Object.assign({}, this.defaults) // eslint-disable-line prefer-const
+
+    defaults.domain = `${defaults.domain}-${domainPostfix}`
+    const newOptions = new Options(defaults, new storageAdapter(defaults.domain)) // eslint-disable-line new-cap
+    Object.keys(newOptions.items).forEach(optionKey => {
+      let newOptionItem = newOptions.items[optionKey] // eslint-disable-line prefer-const
+
+      if (this.items[optionKey].values) {
+        newOptionItem.uploadValuesFromArray(this.items[optionKey].values)
+      }
+    })
+
+    return newOptions
+  }
+}
+
+
+/***/ }),
+
 /***/ "./persian_language_model.js":
-/*!***********************************!*
+/*!***********************************!*\
   !*** ./persian_language_model.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6205,7 +8573,7 @@ class Logger {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ PersianLanguageModel
+/* harmony export */   "default": () => (/* binding */ PersianLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
@@ -6268,7 +8636,7 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /***/ }),
 
 /***/ "./ps-events/ps-event-data.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./ps-events/ps-event-data.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6276,7 +8644,7 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ PsEventData
+/* harmony export */   "default": () => (/* binding */ PsEventData)
 /* harmony export */ });
 /**
  * A public information about published event that is returned to subscriber.
@@ -6319,7 +8687,7 @@ class PsEventData {
 /***/ }),
 
 /***/ "./ps-events/ps-event.js":
-/*!*******************************!*
+/*!*******************************!*\
   !*** ./ps-events/ps-event.js ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6327,7 +8695,7 @@ class PsEventData {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ PsEvent
+/* harmony export */   "default": () => (/* binding */ PsEvent)
 /* harmony export */ });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
@@ -6424,7 +8792,7 @@ class PsEvent {
 /***/ }),
 
 /***/ "./resource_provider.js":
-/*!******************************!*
+/*!******************************!*\
   !*** ./resource_provider.js ***!
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6432,7 +8800,7 @@ class PsEvent {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /**
  * An abstraction of an Alpheios resource provider
@@ -6506,8 +8874,485 @@ class ResourceProvider {
 
 /***/ }),
 
+/***/ "./storages/defaults-loader.js":
+/*!*************************************!*\
+  !*** ./storages/defaults-loader.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ DefaultsLoader)
+/* harmony export */ });
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logging/logger.js */ "./logging/logger.js");
+
+
+class DefaultsLoader {
+  static fromJSON (jsonString) {
+    try {
+      return JSON.parse(jsonString)
+    } catch (err) {
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().error('Unable to parse Alpheios JSON options string:', err)
+      return {}
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./storages/extension-sync-storage.js":
+/*!********************************************!*\
+  !*** ./storages/extension-sync-storage.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ExtensionSyncStorage)
+/* harmony export */ });
+/* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
+/* global browser */
+
+
+/**
+ * An implementation of a StorageAdapter interface for an extension synchronized storage.
+ */
+class ExtensionSyncStorage extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.default {
+  /**
+   * A wrapper around a `browser.storage.sync.set()` of webextension.
+   * It allows to store one or several key-value pairs to local storage.
+   *
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  set (keysObject) {
+    return browser.storage.sync.set(keysObject)
+  }
+
+  /**
+   * A wrapper around a `browser.storage.sync.get()` of webextension. It retrieves one or several values from
+   * local storage.
+   *
+   * @param {string | Array | object | null | undefined } keys - A key (string)
+   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
+   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
+   * or an undefined value, the entire storage contents will be retrieved.
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  get (keys = undefined) {
+    return browser.storage.sync.get(keys)
+  }
+
+  clearAll () {
+    return browser.storage.sync.clear()
+  }
+}
+
+
+/***/ }),
+
+/***/ "./storages/local-storage-area.js":
+/*!****************************************!*\
+  !*** ./storages/local-storage-area.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LocalStorageArea)
+/* harmony export */ });
+/* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
+
+
+/**
+ * An implementation of a StorageAdapter interface for a local storage.
+ */
+class LocalStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.default {
+  /**
+   * A wrapper around a local storage `setItem()` function.
+   * It allows to store one or several key-value pairs to local storage.
+   *
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  set (keysObject) {
+    return new Promise((resolve, reject) => {
+      try {
+        let keys = window.localStorage.getItem(`${this.domain}-keys`)
+        if (keys) {
+          keys = JSON.parse(keys)
+        } else {
+          keys = [] // No keys in storage yet
+        }
+        for (const [key, value] of Object.entries(keysObject)) {
+          window.localStorage.setItem(key, value)
+          if (!keys.includes(key)) {
+            keys.push(key)
+          }
+        }
+        // Save a list of keys to the local storage
+        window.localStorage.setItem(`${this.domain}-keys`, JSON.stringify(keys))
+      } catch (e) {
+        reject(e)
+      }
+      resolve()
+    })
+  }
+
+  /**
+   * A wrapper around a local storage `removeItem()` function.
+   * It allows to remove one key-value pair from the local storage.
+   *
+   * @param {string} key - a key of the item to be removed.
+   * If a pair with the key specified exists, it will be removed.
+   * @returns {Promise} - A promise that is resolved with with `true` if a key-value pair was removed
+   * successfully. If the pair for removal is not in the storage, a promise is resolved with the `null` value.
+   * If a removal operation fails for any reason, a promise is rejected with the error.
+   */
+  remove (key) {
+    return new Promise((resolve, reject) => {
+      try {
+        if (key) {
+          let keys = window.localStorage.getItem(`${this.domain}-keys`)
+          if (keys) {
+            keys = JSON.parse(keys)
+
+            const index = keys.indexOf(key)
+            if (index !== -1) { keys.splice(index, 1) }
+
+            window.localStorage.setItem(`${this.domain}-keys`, JSON.stringify(keys))
+            window.localStorage.removeItem(key)
+            // the key-value pair was removed successfully, resolving with `true`
+            resolve(true)
+          } else {
+            // Nothing to retrieve, resolve promise with `null`
+            resolve(null)
+          }
+        }
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
+
+  /**
+   * A wrapper around a local storage `getItem()` function. It retrieves one or several values from
+   * local storage.
+   *
+   * @param {string | Array | object | null | undefined } keys - A key (string)
+   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
+   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
+   * or an undefined value, the entire storage contents will be retrieved.
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  get (keys = undefined) {
+    return new Promise((resolve, reject) => {
+      try {
+        if (!keys) {
+          keys = []
+        } else if (Array.isArray(keys) && keys.length === 0) {
+          keys = []
+        } else if (typeof keys === 'string') {
+          keys = [keys]
+        } else if (typeof keys === 'object') {
+          keys = Object.keys(keys)
+        } else {
+          keys = []
+        }
+
+        let result = {} // eslint-disable-line prefer-const
+        if (keys.length === 0) {
+          // If no keys specified, will retrieve all values
+          keys = window.localStorage.getItem(`${this.domain}-keys`)
+          if (keys) {
+            keys = JSON.parse(keys)
+          } else {
+            // Nothing to retrieve
+            resolve(result)
+          }
+        }
+
+        for (const key of keys) {
+          result[key] = window.localStorage.getItem(key)
+        }
+
+        resolve(result)
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
+
+  clearAll () {
+    return new Promise((resolve, reject) => {
+      try {
+        let result = null // eslint-disable-line prefer-const
+        let keys = window.localStorage.getItem(`${this.domain}-keys`)
+        if (keys) {
+          keys = JSON.parse(keys)
+          for (const key of keys) {
+            window.localStorage.removeItem(key)
+          }
+          window.localStorage.setItem(`${this.domain}-keys`, JSON.stringify([]))
+          resolve(true)
+        } else {
+          // Nothing to retrieve
+          resolve(result)
+        }
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
+}
+
+
+/***/ }),
+
+/***/ "./storages/remote-auth-storage-area.js":
+/*!**********************************************!*\
+  !*** ./storages/remote-auth-storage-area.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ RemoteAuthStorageArea)
+/* harmony export */ });
+/* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+/**
+ * An implementation of the StorageAdapterinterface that retrieves
+ * data from an authentication-protected remote service implementing
+ * the Alpheios user-settings-api.
+ *
+ * @param {string} domain a string identifying the storage domain
+ * @param {object} auth athentication details object adhering to:
+ *                      { endpoints: {settings: <baseUrl of settings api},
+ *                        accessToken: JWT token identying user and granting
+ *                                     access to the settings api
+ *                      }
+ *
+ */
+class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.default {
+  constructor (domain = 'alpheios-storage-domain', auth = null) {
+    super(domain)
+    if (!auth ||
+        !auth.endpoints ||
+        !auth.endpoints.settings.match(/^https:\/\//) ||
+        !auth.accessToken) {
+      throw new Error('Authentication details missing or invalid')
+    }
+    this.baseURL = auth.endpoints.settings
+    this.requestContext = {
+      headers: {
+        common: {
+          Authorization: 'bearer ' + auth.accessToken,
+          'Content-Type': 'application/json'
+        }
+      }
+    }
+  }
+
+  /**
+   * A proxy for the Alpheios user-settings-api
+   * It allows for storing key/value pairs to the api with an authorized user account
+   *
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  async set (keysObject) {
+    for (const [key, value] of Object.entries(keysObject)) {
+      const url = `${this.baseURL}/${key}`
+      const result = await axios__WEBPACK_IMPORTED_MODULE_1___default().post(url, value, this.requestContext)
+      if (result.status !== 201) {
+        throw new Error(`Unexpected result status from settings api: ${result.status}`)
+      }
+    }
+  }
+
+  /**
+   * proxy for the Alpheios user-settings-api LIST operation
+   * Retrieves all data for the storage domain.
+   *
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  async get () {
+    const url = `${this.baseURL}?domain=${this.domain}`
+    const result = await axios__WEBPACK_IMPORTED_MODULE_1___default().get(url, this.requestContext)
+    if (result.status === 200) {
+      return result.data
+    } else {
+      throw new Error(`Unexpected result status from settings api: ${result.status}`)
+    }
+  }
+
+  /**
+   * proxy for the Alpheios user-settings DELETE LIST operation
+   * deletes all settings for the domain from storage
+   *
+   * @returns {Promise} A Promise that executes the operation.
+   */
+  async clearAll () {
+    const url = `${this.baseURL}?domain=${this.domain}`
+    const result = await axios__WEBPACK_IMPORTED_MODULE_1___default().delete(url, this.requestContext)
+    if (result.status !== 200) {
+      throw new Error(`Unexpected result status from settings api: ${result.status}`)
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./storages/storage-adapter.js":
+/*!*************************************!*\
+  !*** ./storages/storage-adapter.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ StorageAdapter)
+/* harmony export */ });
+/**
+ * An abstract storage adapter class for an Options object. Implements two methods: set() and get().
+ * A `domain` argument of a constructor designates a storage area where options key-value pairs
+ * are stored. This allows to avoid possible collisions with other options objects.
+ *
+ * Local storage can contain multiple key-value pairs. get() with an empty parameter
+ * should return all keys related to the particular object (e.g. set of options). A set of those keys
+ * is defined by the `domain` concept. A key named `domain-name-key` is saved to the
+ * local storage along with its key-value pairs. This special key
+ * will contain an array of keys that belong to the storage domain. If no key values are provided,
+ * get() function will use a list of those stored keys to retrieve all values that belong to a domain.
+ */
+class StorageAdapter {
+  constructor (domain = 'alpheios-storage-domain') {
+    this.domain = domain
+  }
+
+  /**
+   * Stores one or several key-value pairs to local storage.
+   *
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  set (keysObject) {
+    return new Promise((resolve, reject) => reject(new Error('Set method should be implemented in a subclass')))
+  }
+
+  /**
+   * Retrieves one or several values from local storage.
+   *
+   * @param {string | Array | object | null | undefined } keys - A key (string)
+   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
+   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
+   * or an undefined value, the entire storage contents will be retrieved.
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  get (keys) {
+    return new Promise((resolve, reject) => reject(new Error('Get method should be implemented in a subclass')))
+  }
+
+  /**
+   * A wrapper around a local storage `removeItem()` function.
+   * It allows to remove one key-value pair from local storage.
+   *
+   * @param {string} key - key of the item to be removed.
+   * If a particular item exists, it will be removed.
+   * @returns {Promise} - A promise that is resolved with with true if a key was removed
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  remove (key) {
+    return new Promise((resolve, reject) => reject(new Error('Remove method should be implemented in a subclass')))
+  }
+
+  /**
+   * clear all items in the storage
+   */
+  clearAll () {
+    return new Promise((resolve, reject) => reject(new Error('clearAll method should be implemented in a subclass')))
+  }
+}
+
+
+/***/ }),
+
+/***/ "./storages/temp-storage-area.js":
+/*!***************************************!*\
+  !*** ./storages/temp-storage-area.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ TempStorageArea)
+/* harmony export */ });
+/* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./storages/storage-adapter.js");
+
+
+/**
+ * An implementation of a StorageAdapter interface for temporary storage
+ */
+class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.default {
+  /**
+   * A wrapper around a local storage `setItem()` function.
+   * It allows to store one or several key-value pairs to local storage.
+   *
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  set (keysObject) {
+    return new Promise((resolve) => { resolve('TempStorageArea does not store any values permanently') })
+  }
+
+  /**
+   * A wrapper around a local storage `getItem()` function. It retrieves one or several values from
+   * local storage.
+   *
+   * @param {string | Array | object | null | undefined } keys - A key (string)
+   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
+   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
+   * or an undefined value, the entire storage contents will be retrieved.
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  get (keys = undefined) {
+    return new Promise((resolve) => { resolve('TempStorageArea does not have any stored values') })
+  }
+}
+
+
+/***/ }),
+
 /***/ "./syriac_language_model.js":
-/*!**********************************!*
+/*!**********************************!*\
   !*** ./syriac_language_model.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6515,7 +9360,7 @@ class ResourceProvider {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ SyriacLanguageModel
+/* harmony export */   "default": () => (/* binding */ SyriacLanguageModel)
 /* harmony export */ });
 /* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
 /* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
@@ -6751,7 +9596,7 @@ for the current node
 /***/ }),
 
 /***/ "./texts/author.js":
-/*!*************************!*
+/*!*************************!*\
   !*** ./texts/author.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6759,7 +9604,7 @@ for the current node
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class Author {
   /**
@@ -6826,7 +9671,7 @@ class Author {
 /***/ }),
 
 /***/ "./texts/text-work.js":
-/*!****************************!*
+/*!****************************!*\
   !*** ./texts/text-work.js ***!
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6834,7 +9679,7 @@ class Author {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 class TextWork {
   /**
@@ -6912,7 +9757,7 @@ class TextWork {
 /***/ }),
 
 /***/ "./texts/word-usage-example.js":
-/*!*************************************!*
+/*!*************************************!*\
   !*** ./texts/word-usage-example.js ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -6920,7 +9765,7 @@ class TextWork {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordUsageExample
+/* harmony export */   "default": () => (/* binding */ WordUsageExample)
 /* harmony export */ });
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../language_model_factory.js */ "./language_model_factory.js");
@@ -7018,7 +9863,7 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
 /***/ }),
 
 /***/ "./translation.js":
-/*!************************!*
+/*!************************!*\
   !*** ./translation.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7026,7 +9871,7 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
 
@@ -7097,7 +9942,7 @@ class Translation {
 /***/ }),
 
 /***/ "./treebank_data_item.js":
-/*!*******************************!*
+/*!*******************************!*\
   !*** ./treebank_data_item.js ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7105,7 +9950,7 @@ class Translation {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ TreebankDataItem
+/* harmony export */   "default": () => (/* binding */ TreebankDataItem)
 /* harmony export */ });
 class TreebankDataItem {
   /**
@@ -7293,7 +10138,7 @@ class TreebankDataItem {
 /***/ }),
 
 /***/ "./w3c/text-quote-selector.js":
-/*!************************************!*
+/*!************************************!*\
   !*** ./w3c/text-quote-selector.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7301,7 +10146,7 @@ class TreebankDataItem {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ TextQuoteSelector
+/* harmony export */   "default": () => (/* binding */ TextQuoteSelector)
 /* harmony export */ });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "../../../node_modules/uuid/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_0__);
@@ -7360,7 +10205,7 @@ class TextQuoteSelector {
 /***/ }),
 
 /***/ "./word-item.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./word-item.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7368,7 +10213,7 @@ class TextQuoteSelector {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordItem
+/* harmony export */   "default": () => (/* binding */ WordItem)
 /* harmony export */ });
 /* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
@@ -7521,7 +10366,7 @@ class WordItem {
 /***/ }),
 
 /***/ "./word-list.js":
-/*!**********************!*
+/*!**********************!*\
   !*** ./word-list.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -7529,7 +10374,7 @@ class WordItem {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordList
+/* harmony export */   "default": () => (/* binding */ WordList)
 /* harmony export */ });
 /* harmony import */ var _word_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-item */ "./word-item.js");
 
@@ -7670,8 +10515,8 @@ class WordList {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
 /******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
@@ -7691,7 +10536,7 @@ class WordList {
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */

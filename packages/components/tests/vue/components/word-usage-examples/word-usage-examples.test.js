@@ -91,7 +91,7 @@ describe('word-usage-examples.test.js', () => {
     expect(cmp.vm.finalCollapsedHeader).toBeFalsy()
   })
 
-  it('3 WordUsageExamples - computed targetWord returns targetWord from homonym if it is ready', () => {
+  it('3 WordUsageExamples - computed targetWord returns targetWord from homonym if it is ready', async () => {
     let api = {
       ui: BaseTestHelp.uiAPI(),
       settings: BaseTestHelp.settingsAPI(),
@@ -110,12 +110,20 @@ describe('word-usage-examples.test.js', () => {
     
     store.commit('app/setTestHomonymDataReady', false)
 
+    await Vue.nextTick()
+
     expect(cmp.vm.targetWord).toBeNull()
 
     store.commit('app/setTestHomonymDataReady', true)
+
+    await Vue.nextTick()
+
     expect(cmp.vm.targetWord).toBeNull()
 
     api.app.homonym = homonym
+
+    await Vue.nextTick()
+    
     expect(cmp.vm.targetWord).toEqual(homonym.targetWord)
 
   })
