@@ -266,7 +266,7 @@ describe('lexicons/adapter.test.js', () => {
     }
   })
 
-  it('12 AlpheiosLexiconsAdapter - checkCachedData execute fetch, fillMap only once - if successed', async () => {
+  it.skip('12 AlpheiosLexiconsAdapter - checkCachedData execute fetch, fillMap only once - if successed', async () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',

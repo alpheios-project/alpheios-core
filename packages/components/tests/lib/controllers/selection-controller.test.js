@@ -22,7 +22,7 @@ describe('SelectionController', () => {
 
   it('SelectionController - constructor: should create an instance with a specified language function', () => {
     const langFn = jest.fn(() => 'grc')
-    selC = new SelectionController(langFn)
+    selC = new SelectionController({ getDefaultLangCodeFn: langFn })
     expect(selC._getDefaultLangCode).toBe(langFn)
   })
 
@@ -150,6 +150,7 @@ describe('SelectionController', () => {
     // target.ownerDocument.location.href
     event.end = {
       target: {
+        textContent: 'mare',
         ownerDocument: {
           location: {
             href: 'test.com'
@@ -167,6 +168,7 @@ describe('SelectionController', () => {
     const domEvent = {}
     selC = new SelectionController()
     const textSelectedSpy = jest.spyOn(SelectionController.evt.TEXT_SELECTED, 'pub')
+    
     selC.onTextSelected(event, domEvent)
     expect(textSelectedSpy).toBeCalledTimes(1)
     // Text selector will be undefined because a valid instance cannot be created from a test event

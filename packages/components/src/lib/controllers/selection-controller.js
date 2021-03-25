@@ -10,7 +10,7 @@ export default class SelectionController {
    * @param {Function} getDefaultLangCodeFn - A function that returns a default language code in ISO 639-3 format.
    *        This language code will be used to determine a language if language info is not provided by the page.
    */
-  constructor ({ getDefaultLangCodeFn, getPrioritizeDefaultLanguageFn }) {
+  constructor ({ getDefaultLangCodeFn, getPrioritizeDefaultLanguageFn } = {}) {
     this._evc = new UIEventController()
     /**
      * A function that returns a default language code in ISO 639-3 format.

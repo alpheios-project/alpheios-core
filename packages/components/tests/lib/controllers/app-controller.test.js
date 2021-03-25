@@ -288,7 +288,8 @@ describe('AppController', () => {
       providers: [],
       queryStillActive: false,
 
-      mouseMoveOverrideUpdate: 1
+      mouseMoveOverrideUpdate: 1,
+      prioritizeDefaultLanguage: false
     })
   })
 
