@@ -54,6 +54,7 @@
     "alpheios-data-models": "^3.3.3-0",
     "alpheios-experience": "github:alpheios-project/experience",
     "alpheios-fixtures": "github:alpheios-project/fixtures",
+    "alpheios-language-detect": "github:alpheios-project/language-detect",
     "alpheios-inflection-tables": "^3.3.3-0",
     "alpheios-l10n": "^3.3.3-0",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",

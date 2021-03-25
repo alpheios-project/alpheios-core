@@ -1,5 +1,6 @@
 import 'element-closest' // To polyfill Element.closest() if required
 import { Constants, LanguageModelFactory, Logger } from 'alpheios-data-models'
+import { LanguageDetect } from 'alpheios-language-detect'
 import TextSelector from '../text-selector'
 import MediaSelector from './media-selector'
 
@@ -17,7 +18,6 @@ export default class HTMLSelector extends MediaSelector {
     this.target = event.end.target
     // Determine a language ID based on an environment of a target
     this.languageID = this.getLanguageID(defaultLanguageCode)
-
     this.defineInitialData()
   }
 
@@ -200,6 +200,7 @@ export default class HTMLSelector extends MediaSelector {
         languageCode = closestLangElement.getAttribute('lang') || closestLangElement.getAttribute('xml:lang')
       }
     }
+
     return languageCode
   }
 
@@ -492,5 +493,20 @@ export default class HTMLSelector extends MediaSelector {
     let sel = window.getSelection() // eslint-disable-line prefer-const
     sel.removeAllRanges()
     sel.addRange(range)
+  }
+
+  defineLanguage (textSelector, prioritizeDefaultLanguage = false) {
+    const text = textSelector.text
+    let languages
+
+    if (prioritizeDefaultLanguage) {
+      languages = [this.defaultLanguageCode, this.languageFromSource, LanguageDetect.detect(text)]
+    } else {
+      languages = [this.languageFromSource, LanguageDetect.detect(text), this.defaultLanguageCode]
+    }
+    const finalLangCode = languages.find(lang => lang)
+    this.languageID = LanguageModelFactory.getLanguageIdFromCode(finalLangCode)
+
+    textSelector.updateLanguage(this.languageID)
   }
 }
