@@ -139,9 +139,11 @@ export default class SelectionController {
     const htmlSelector = new HTMLSelector(event, defaultLangCode)
 
     const textSelector = htmlSelector.createTextSelector()
-    const prioritizeDefaultLanguage = this._getPrioritizeDefaultLanguageFn()
 
-    htmlSelector.defineLanguage(textSelector, prioritizeDefaultLanguage)
+    if (textSelector) {
+      const prioritizeDefaultLanguage = this._getPrioritizeDefaultLanguageFn()
+      htmlSelector.defineLanguage(textSelector, prioritizeDefaultLanguage)
+    }
 
     SelectionController.evt.TEXT_SELECTED.pub({ textSelector, domEvent })
   }
