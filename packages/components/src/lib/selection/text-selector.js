@@ -86,4 +86,9 @@ export default class TextSelector {
   createTextQuoteSelector (prefix, suffix) {
     this.textQuoteSelector = new TextQuoteSelector(this.languageCode, this.normalizedText, prefix, suffix, window.location.href)
   }
+
+  updateLanguage (langId) {
+    this.languageID = langId
+    this.model = LanguageModelFactory.getLanguageModel(this.languageID)
+  }
 }

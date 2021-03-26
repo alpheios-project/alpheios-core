@@ -10,7 +10,7 @@ export default class SelectionController {
    * @param {Function} getDefaultLangCodeFn - A function that returns a default language code in ISO 639-3 format.
    *        This language code will be used to determine a language if language info is not provided by the page.
    */
-  constructor (getDefaultLangCodeFn = () => 'lat') {
+  constructor ({ getDefaultLangCodeFn, getPrioritizeDefaultLanguageFn } = {}) {
     this._evc = new UIEventController()
     /**
      * A function that returns a default language code in ISO 639-3 format.
@@ -19,7 +19,8 @@ export default class SelectionController {
      * @type {Function}
      * @private
      */
-    this._getDefaultLangCode = getDefaultLangCodeFn
+    this._getDefaultLangCode = getDefaultLangCodeFn || (() => 'lat')
+    this._getPrioritizeDefaultLanguageFn = getPrioritizeDefaultLanguageFn || (() => false)
   }
 
   /**
@@ -136,7 +137,14 @@ export default class SelectionController {
   onTextSelected (event, domEvent) {
     const defaultLangCode = this._getDefaultLangCode()
     const htmlSelector = new HTMLSelector(event, defaultLangCode)
+
     const textSelector = htmlSelector.createTextSelector()
+
+    if (textSelector) {
+      const prioritizeDefaultLanguage = this._getPrioritizeDefaultLanguageFn()
+      htmlSelector.defineLanguage(textSelector, prioritizeDefaultLanguage)
+    }
+
     SelectionController.evt.TEXT_SELECTED.pub({ textSelector, domEvent })
   }
 }

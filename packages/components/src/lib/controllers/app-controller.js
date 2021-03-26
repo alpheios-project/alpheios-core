@@ -121,7 +121,10 @@ export default class AppController {
      * @type {UIEventController}
      */
     this._evc = new UIEventController()
-    this._selc = new SelectionController(this.getDefaultLangCode.bind(this))
+    this._selc = new SelectionController({
+      getDefaultLangCodeFn: this.getDefaultLangCode.bind(this),
+      getPrioritizeDefaultLanguageFn: this.getPrioritizeDefaultLanguage.bind(this)
+    })
 
     this._wordlistC = {} // This is a word list controller
   }
@@ -493,7 +496,8 @@ export default class AppController {
         providers: [], // A list of resource providers
         queryStillActive: false, // it is for Persian case, when we canReset
 
-        mouseMoveOverrideUpdate: 1
+        mouseMoveOverrideUpdate: 1,
+        prioritizeDefaultLanguage: false
       },
 
       getters: {
@@ -643,6 +647,10 @@ export default class AppController {
 
         setMouseMoveOverrideUpdate (state) {
           state.mouseMoveOverrideUpdate = state.mouseMoveOverrideUpdate + 1
+        },
+
+        setPrioritizeDefaultLanguage (state, value = true) {
+          state.prioritizeDefaultLanguage = value
         }
       }
     })
@@ -785,6 +793,10 @@ export default class AppController {
 
   getDefaultLangCode () {
     return this._options.overridePreferredLanguage ? this._options.textLangCode : this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue
+  }
+
+  getPrioritizeDefaultLanguage () {
+    return this._store.state.app.prioritizeDefaultLanguage
   }
 
   getMouseMoveOverride () {
@@ -1421,6 +1433,7 @@ export default class AppController {
           return
         }
       }
+      this._store.commit('app/setPrioritizeDefaultLanguage', false)
       this.api.lexis.getSelectedText(textSelector, domEvent.target)
     }
   }

@@ -485,7 +485,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
           lastAlt.push(strippedAll[0])
         }
       }
-      if (lastAlt.length > 0) {
+      if (data && lastAlt.length > 0) {
         for (const l of lastAlt) {
           for (let entry of data.entries()) { // eslint-disable-line prefer-const
             // a normal lookup in the dataset map would only return

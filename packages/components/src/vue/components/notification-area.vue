@@ -213,6 +213,10 @@ export default {
       const keyinfo = Options.parseKey(name)
       this.settings.featureOptionChange(keyinfo.name, value)
       this.app.applyFeatureOption(keyinfo.name)
+
+      if (keyinfo.name === "preferredLanguage") {
+        this.$store.commit('app/setPrioritizeDefaultLanguage', true)
+      }
     },
 
     hideLoginPrompt: function () {
