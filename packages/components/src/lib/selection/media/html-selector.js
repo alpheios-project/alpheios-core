@@ -17,7 +17,10 @@ export default class HTMLSelector extends MediaSelector {
     this.event = event
     this.target = event.end.target
     // Determine a language ID based on an environment of a target
-    this.languageID = this.getLanguageID(defaultLanguageCode)
+    const { languageFromSource, languageID } = this.getLanguageID(defaultLanguageCode)
+    this.languageID = languageID
+    this.defaultLanguageCode = defaultLanguageCode
+    this.languageFromSource = languageFromSource
     this.defineInitialData()
   }
 

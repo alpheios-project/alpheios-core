@@ -52,8 +52,8 @@ describe('media-selector.test.js', () => {
   it('4 MediaSelector - getLanguageID returns langCode from arguments', () => {
     let testMSelector = new MediaSelector(testEvent)
 
-    expect(testMSelector.getLanguageID('lat')).toEqual(Constants.LANG_LATIN)
-    expect(testMSelector.getLanguageID()).toEqual(Constants.LANG_UNDEFINED)
-    expect(testMSelector.getLanguageID('latdef')).toEqual(Constants.LANG_UNDEFINED)
+    expect(testMSelector.getLanguageID('lat')).toEqual({ languageID: Constants.LANG_LATIN })
+    expect(testMSelector.getLanguageID()).toEqual({ languageID: Constants.LANG_UNDEFINED })
+    expect(testMSelector.getLanguageID('latdef')).toEqual({ languageID: Constants.LANG_UNDEFINED })
   })
 })
