@@ -133,7 +133,7 @@ export default {
         const wordItem = source[i]
         if (!wordItem.homonym || !wordItem.homonym.lexemes || !wordItem.homonym.hasShortDefs) {
           this.showProgress = true
-          const textSelector = TextSelector.createObjectFromText(wordItem.targetWord, this.languageID)
+          const textSelector = TextSelector.createObjectFromText(wordItem.targetWord, this.languageID, this.languageCode)
           await this.lexis.lookupForWordlist(textSelector)
         }
       }

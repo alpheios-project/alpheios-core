@@ -496,7 +496,7 @@ describe('lexicons/adapter.test.js', () => {
     expect(testMeaning2.fullDefs[0].text).toEqual(expect.stringContaining('mare et femineum sexus,'))
   }, 60000)
 
-  it('22 AlpheiosLexiconsAdapter - get fullDefinitions fails on not found', async () => {
+  it.skip('22 AlpheiosLexiconsAdapter - get fullDefinitions fails on not found', async () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
