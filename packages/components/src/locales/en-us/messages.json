@@ -292,7 +292,7 @@
     "component": "Popup"
   },
   "PLACEHOLDER_UNSUPPORTED_LANGUAGE": {
-    "message": "{lang} is not supported for a lexical query",
+    "message": "The language ({lang}) is not supported for a lexical query.",
     "description": "placeholder text for popup data",
     "component": "Popup",
     "params": ["lang"]
