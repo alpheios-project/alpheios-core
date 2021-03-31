@@ -528,11 +528,11 @@ export default class AppController {
         setEmbedLibActive (state, status) {
           state.embedLibActive = status
         },
-        setCurrentLanguage (state, languageCodeOrID) {
-          const langDetails = AppController.getLanguageName(languageCodeOrID)
+        setCurrentLanguage (state, languageCodeOrIDData) {
+          const langDetails = AppController.getLanguageName(languageCodeOrIDData.languageID)
           state.currentLanguageID = langDetails.id
           state.currentLanguageName = langDetails.name
-          state.currentLanguageCode = langDetails.code
+          state.currentLanguageCode = languageCodeOrIDData.languageCode || langDetails.code
         },
 
         setSelectedLookupLang (state, langCode) {
@@ -542,7 +542,7 @@ export default class AppController {
         setTextData (state, data) {
           const langDetails = AppController.getLanguageName(data.languageID)
           state.languageName = langDetails.name
-          state.languageCode = langDetails.code
+          state.languageCode = data.languageCode
           state.selectedText = data.text
         },
 
@@ -669,7 +669,7 @@ export default class AppController {
     const defaultLangID = LanguageModelFactory.getLanguageIdFromCode(defaultLangCode)
     // Set the lookup
     this.api.settings.getFeatureOptions().items.lookupLanguage.setValue(defaultLangCode)
-    this.updateLanguage(defaultLangID)
+    this.updateLanguage(defaultLangID, defaultLangCode)
     if (this.hasUIController) { this._uic.init({ api: this.api, store: this._store }) }
 
     try {
@@ -937,7 +937,7 @@ export default class AppController {
    * @param {LexicalQuery.sources} source - source of the request. Possible values: 'page', 'lookup', or 'wordlist'
    *                          default is 'page'
    */
-  newLexicalRequest (targetWord, languageID, data = null, source = LexicalQuery.sources.PAGE) {
+  newLexicalRequest (targetWord, languageID, languageCode, data = null, source = LexicalQuery.sources.PAGE) {
     // Reset old word-related data
     this.api.app.homonym = null
     this._store.commit('app/resetWordData')
@@ -953,9 +953,9 @@ export default class AppController {
     }
 
     // Set new data values
-    this._store.commit('app/setTextData', { text: targetWord, languageID: languageID })
+    this._store.commit('app/setTextData', { text: targetWord, languageID, languageCode })
     this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
-    this.updateLanguage(languageID)
+    this.updateLanguage(languageID, languageCode)
     // this.updateWordAnnotationData(data)
     this._store.commit('app/lexicalRequestStarted', { targetWord: targetWord, source: source })
 
@@ -1039,19 +1039,20 @@ export default class AppController {
     }
   }
 
-  updateLanguage (currentLanguageID) {
+  updateLanguage (currentLanguageID, currentLanguageCode) {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
       Logger.getInstance().warn('updateLanguage was called with a string value')
       currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
     }
-    this._store.commit('app/setCurrentLanguage', currentLanguageID)
+    this._store.commit('app/setCurrentLanguage', { languageID: currentLanguageID, languageCode: currentLanguageCode })
     this.notifyExperimental(currentLanguageID)
     const newLanguageCode = LanguageModelFactory.getLanguageCodeFromId(currentLanguageID)
     if (this.state.currentLanguage !== newLanguageCode) {
       this.state.setItem('currentLanguage', newLanguageCode)
     }
+
     this.resetInflData()
   }
 
@@ -1172,7 +1173,7 @@ export default class AppController {
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
 
     // Update status info with data from a morphological analyzer
-    this._store.commit('app/setTextData', { text: homonym.targetWord, languageID: homonym.languageID })
+    this._store.commit('app/setTextData', { text: homonym.targetWord, languageID: homonym.languageID, languageCode: homonym.languageCode })
 
     // Update inflections data
     const inflectionsViewSet = ViewSetFactory.create(homonym, this.api.settings.getFeatureOptions().items.locale.currentValue)
@@ -1270,7 +1271,7 @@ export default class AppController {
       return
     }
     const languageID = LanguageModelFactory.getLanguageIdFromCode(wordItem.languageCode)
-    this.newLexicalRequest(wordItem.targetWord, languageID, null, 'wordlist')
+    this.newLexicalRequest(wordItem.targetWord, languageID, wordItem.languageCode, null, 'wordlist')
 
     let homonym
     if (this._userDataManager) {
@@ -1298,7 +1299,7 @@ export default class AppController {
       this._store.commit('app/lexicalRequestFinished')
     } else {
       // otherwise we can query for it as usual
-      const textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID)
+      const textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID, homonym.languageCode)
       this.api.lexis.lookupText(textSelector)
     }
   }

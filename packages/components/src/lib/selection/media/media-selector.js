@@ -28,15 +28,16 @@ export default class MediaSelector {
    * @return {symbol} A language ID of a selection
    */
   getLanguageID (defaultLanguageCode) {
-    this.defaultLanguageCode = defaultLanguageCode
-    this.languageFromSource = this.getLanguageCodeFromSource()
+    const result = { languageFromSource: this.getLanguageCodeFromSource() }
 
-    const code = this.languageFromSource || this.defaultLanguageCode
-    let langId = LanguageModelFactory.getLanguageIdFromCode(code)
-    if (langId === Constants.LANG_UNDEFINED) {
-      langId = LanguageModelFactory.getLanguageIdFromCode(defaultLanguageCode)
+    const code = result.languageFromSource || defaultLanguageCode
+    let languageID = LanguageModelFactory.getLanguageIdFromCode(code)
+    if (languageID === Constants.LANG_UNDEFINED) {
+      languageID = LanguageModelFactory.getLanguageIdFromCode(defaultLanguageCode)
     }
 
-    return langId
+    result.languageID = languageID
+
+    return result
   }
 }

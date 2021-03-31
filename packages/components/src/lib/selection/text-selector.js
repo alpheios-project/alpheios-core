@@ -11,9 +11,10 @@ export default class TextSelector {
   /**
    * @param {symbol} languageID - A language ID of a selector
    */
-  constructor (languageID) {
+  constructor (languageID, languageCode) {
     this.text = '' // Calculated?
     this.languageID = languageID || null
+    this.languageCode = languageCode
     this.model = undefined
     this.location = ''
 
@@ -57,24 +58,26 @@ export default class TextSelector {
   // languageCodes
 
   static readObject (jsonObject) {
-    let textSelector = new TextSelector(LanguageModelFactory.getLanguageIdFromCode(jsonObject.languageCode)) // eslint-disable-line prefer-const
+    const languageId = LanguageModelFactory.getLanguageIdFromCode(jsonObject.languageCode)
+    let textSelector = new TextSelector(languageId, jsonObject.languageCode) // eslint-disable-line prefer-const
     textSelector.text = jsonObject.text
     // textSelector.language = TextSelector.getLanguage(textSelector.languageCode)
     return textSelector
   }
 
-  static createObjectFromText (text, languageID) {
-    let textSelector = new TextSelector(languageID) // eslint-disable-line prefer-const
+  static createObjectFromText (text, languageID, languageCode) {
+    let textSelector = new TextSelector(languageID, languageCode) // eslint-disable-line prefer-const
     textSelector.text = text
 
     textSelector.model = LanguageModelFactory.getLanguageModel(textSelector.languageID)
     return textSelector
   }
 
+  /*
   get languageCode () {
     return (this.languageID) ? LanguageModelFactory.getLanguageCodeFromId(this.languageID) : ''
   }
-
+  */
   isEmpty () {
     return this.text === ''
   }
@@ -87,8 +90,9 @@ export default class TextSelector {
     this.textQuoteSelector = new TextQuoteSelector(this.languageCode, this.normalizedText, prefix, suffix, window.location.href)
   }
 
-  updateLanguage (langId) {
+  updateLanguage (langId, langCode) {
     this.languageID = langId
     this.model = LanguageModelFactory.getLanguageModel(this.languageID)
+    this.languageCode = langCode
   }
 }

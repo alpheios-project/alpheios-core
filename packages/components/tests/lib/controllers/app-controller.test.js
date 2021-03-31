@@ -1130,6 +1130,7 @@ describe('AppController', () => {
       inflections: [],
       targetWord,
       languageID,
+      languageCode: 'grc',
       hasShortDefs: () => true
     }
     const sortSpy = jest.spyOn(homonym.lexemes, 'sort')
@@ -1313,7 +1314,7 @@ describe('AppController', () => {
     expect(appC._store.state.app.fullDefUpdateTime).toBe(0)
     await appC.onWordItemSelected(wordItem)
     expect(newLexicalRequestSpy).toBeCalledTimes(1)
-    expect(newLexicalRequestSpy).toBeCalledWith(wordItem.targetWord, languageID, null, 'wordlist')
+    expect(newLexicalRequestSpy).toBeCalledWith(wordItem.targetWord, languageID, 'lat', null, 'wordlist')
     expect(onHomonymReadySpy).toBeCalledTimes(1)
     expect(onHomonymReadySpy).toBeCalledWith(wordItem.homonym)
     expect(wlHomonymReadySpy).toBeCalledTimes(1)

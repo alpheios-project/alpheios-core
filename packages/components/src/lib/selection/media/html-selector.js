@@ -17,7 +17,10 @@ export default class HTMLSelector extends MediaSelector {
     this.event = event
     this.target = event.end.target
     // Determine a language ID based on an environment of a target
-    this.languageID = this.getLanguageID(defaultLanguageCode)
+    const { languageFromSource, languageID } = this.getLanguageID(defaultLanguageCode)
+    this.languageID = languageID
+    this.defaultLanguageCode = defaultLanguageCode
+    this.languageFromSource = languageFromSource
     this.defineInitialData()
   }
 
@@ -64,7 +67,8 @@ export default class HTMLSelector extends MediaSelector {
   }
 
   createTextSelector () {
-    let textSelector = new TextSelector(this.languageID)
+    const langCode = this.languageFromSource || this.defaultLanguageCode
+    let textSelector = new TextSelector(this.languageID, langCode)
     textSelector.model = LanguageModelFactory.getLanguageModel(this.languageID)
     textSelector.location = this.location
     textSelector.data = this.data
@@ -507,6 +511,6 @@ export default class HTMLSelector extends MediaSelector {
     const finalLangCode = languages.find(lang => lang)
     this.languageID = LanguageModelFactory.getLanguageIdFromCode(finalLangCode)
 
-    textSelector.updateLanguage(this.languageID)
+    textSelector.updateLanguage(this.languageID, finalLangCode)
   }
 }

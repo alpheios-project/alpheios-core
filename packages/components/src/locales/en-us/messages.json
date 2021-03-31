@@ -291,6 +291,12 @@
     "description": "placeholder text for popup data",
     "component": "Popup"
   },
+  "PLACEHOLDER_UNSUPPORTED_LANGUAGE": {
+    "message": "The language ({lang}) is not supported for a lexical query.",
+    "description": "placeholder text for popup data",
+    "component": "Popup",
+    "params": ["lang"]
+  },
   "LABEL_PROVIDERS_CREDITS": {
     "message": "Credits",
     "description": "label for credits on popup",

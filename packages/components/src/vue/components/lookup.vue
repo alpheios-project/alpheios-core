@@ -156,7 +156,7 @@ export default {
        */
       const selectedLangCode = this.lookupLanguage
       const selectedLangID = LanguageModelFactory.getLanguageIdFromCode(selectedLangCode)
-      const textSelector = TextSelector.createObjectFromText(this.lookuptext, selectedLangID)
+      const textSelector = TextSelector.createObjectFromText(this.lookuptext, selectedLangID, selectedLangCode)
 
       try {
         this.lexis.lookupText(textSelector)

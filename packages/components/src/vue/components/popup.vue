@@ -79,6 +79,10 @@
              v-show="noLexicalResult">
           {{ l10n.getText('PLACEHOLDER_NO_MORPH_DATA') }}
         </div>
+        <div class="alpheios-popup__definitions--placeholder"
+             v-show="unsupportedLanguage">
+          {{ unsupportedLanguageMessage }}
+        </div>
         <div :id="lexicalDataContainerID"
              v-show="targetWordHasData"
         >
@@ -207,6 +211,12 @@ export default {
     noLexicalResult () {
       return (this.$store.state.app.shortDefUpdateTime || this.$store.state.app.morphDataReady) && !this.app.hasMorphData() && !this.noLanguage
     },
+    unsupportedLanguage () {
+      return Boolean(this.currentLangCode) && this.noLanguage
+    },
+    unsupportedLanguageMessage () {
+      return this.l10n.getMsg('PLACEHOLDER_UNSUPPORTED_LANGUAGE', { lang: this.currentLangCode })
+    },
     showToolbar: function () {
       return Boolean(this.moduleConfig.showNav)
     },
@@ -226,7 +236,10 @@ export default {
       }
     },
 
-    noLanguage: function () {
+    currentLangCode () {
+      return this.$store.state.app.currentLanguageCode ? this.$store.state.app.currentLanguageCode : 'NO'
+    },
+    noLanguage () {
       return Boolean(!this.$store.state.app.currentLanguageName)
     },
 
