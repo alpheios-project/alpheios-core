@@ -153,7 +153,7 @@ describe('dtsapi/adapter.test.js', () => {
     expect(adapter.errors.length).toEqual(0)
   })
 
-  it.skip('2 DTSAPIAdapter - getCollection - retrieves the first level of collections', async () => {
+  it.skip('9 DTSAPIAdapter - getCollection - retrieves the first level of collections', async () => {
     let adapter = new DTSAPIAdapter({
       category: 'datsapiGroup',
       adapterName: 'dtsapiMethod',
@@ -175,7 +175,7 @@ describe('dtsapi/adapter.test.js', () => {
     console.info(doc.substr(0, 20))
   }, 500000)
 
-  it.skip('2 DTSAPIAdapter - getCollection - retrieves the first level of collections', async () => {
+  it.skip('10 DTSAPIAdapter - getCollection - retrieves the first level of collections', async () => {
     let adapter = new DTSAPIAdapter({
       category: 'datsapiGroup',
       adapterName: 'dtsapiMethod',
@@ -201,6 +201,26 @@ describe('dtsapi/adapter.test.js', () => {
 
     const doc = await adapter.getDocument(resource.id, { ref: resource.refs[0] })
     console.info(doc.substr(0, 20))
+
+  }, 500000)
+
+  it.skip('11 DTSAPIAdapter - getCollection - retrieves the first level of collections - pagination', async () => {
+    let adapter = new DTSAPIAdapter({
+      category: 'datsapiGroup',
+      adapterName: 'dtsapiMethod',
+      method: 'getCollection',
+      // baseUrl: 'https://dts.alpheios.net/api/dts/'
+      baseUrl: 'https://betamasaheft.eu/api/dts/'
+    })
+
+    const col1 = await adapter.getCollection()
+    expect(col1.pagination).not.toBeDefined()
+
+    const col2 = await adapter.getCollection(col1.links[0].id)
+    expect(col2.pagination).toEqual({ first: 1, next: 2, last: 204, previous: null, current: 1 })
+
+    const col3 = await adapter.getCollection(col1.links[0].id, 3)
+    expect(col3.pagination).toEqual({ first: 1, next: 4, last: 204, previous: 2, current: 3 })
 
   }, 500000)
 })

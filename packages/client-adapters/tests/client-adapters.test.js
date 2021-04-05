@@ -611,4 +611,65 @@ describe('client-adapters.test.js', () => {
     expect(regexTEI.test(res4.result)).toBeTruthy()
 
   })
+
+  it('28 ClientAdapters - dtsApiMethod - getCollection could have pagination', async () => {
+    ClientAdapters.init()
+
+    let res1 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://betamasaheft.eu/api/dts/',
+        id: 'https://betamasaheft.eu/textualunits',
+        page: 3
+      }
+    })
+
+    expect(res1.errors).toEqual([])
+    expect(res1.result).toEqual(expect.any(Collection))
+
+    expect(res1.result.pagination).toEqual({ first: 1, next: 4, last: 204, previous: 2, current: 3 })
+  }, 50000)
+
+  it.skip('29 ClientAdapters - dtsApiMethod - getCollection could have pagination', async () => {
+    ClientAdapters.init()
+
+    let resCol = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://betamasaheft.eu/api/dts/',
+        id: 'https://betamasaheft.eu/textualunits',
+        page: 1
+      }
+    })
+
+    expect(resCol.errors).toEqual([])
+    expect(resCol.result).toEqual(expect.any(Collection))
+
+    // console.info('resCol.result - ', resCol.result)
+
+    let resNav= await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getNavigation',
+      params: {
+        baseUrl: 'https://betamasaheft.eu/api/dts/',
+        id: 'https://betamasaheft.eu/LIT4230Conclusion',
+        resource: resCol.result.resources[0]
+      }
+    })
+
+    expect(resNav.errors).toEqual([])
+
+    // console.info('resNav.result - ', resNav.result)
+
+    let resDoc= await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getDocument',
+      params: {
+        baseUrl: 'https://betamasaheft.eu/api/dts/',
+        id: 'https://betamasaheft.eu/LIT4230Conclusion'
+      }
+    })
+
+    expect(resDoc.errors).toEqual([])
+
+    console.info('resDoc.result - ', resDoc.result)
+  }, 50000)
 })

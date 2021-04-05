@@ -19,9 +19,9 @@ export default class DTSAPIAdapter extends BaseAdapter {
    * @param {String} id - @id for the collection for example urn:alpheios:latinLit, if it is null would be retrieved the root collections
    * @return {Collection}
    */
-  async getCollection (id) {
+  async getCollection (id, page) {
     try {
-      const url = this.getCollectionUrl(id)
+      const url = this.getCollectionUrl(id, page)
       const collections = await this.fetch(url)
       if (collections) {
         return this.convertToCollections(collections)
@@ -35,7 +35,7 @@ export default class DTSAPIAdapter extends BaseAdapter {
   /**
    * Retrieves refs
    * @param {String} id - @id for the Resource for example urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1
-   * @param {Collection} collection - would be updated with retrieve data
+   * @param {Resource} resource - would be updated with retrieve data
    *
    */
   async getNavigation (id, resource) {
@@ -61,7 +61,7 @@ export default class DTSAPIAdapter extends BaseAdapter {
    *        {String} end - an ending ref till it the text would be retrieved (if it is not defined - would be retrieved till the end of the text)
    * @retunrs {String} - TEI xml document
    */
-  async getDocument (id, refParams = {}) {
+  async getDocument (id, refParams) {
     try {
       const url = this.getDocumentUrl(id, refParams)
       if (!url) { return }
@@ -78,10 +78,13 @@ export default class DTSAPIAdapter extends BaseAdapter {
    * @param {String} id - @id
    * @returns {string} - url for getting collections
    */
-  getCollectionUrl (id) {
+  getCollectionUrl (id, page) {
     let url = `${this.config.baseUrl}collections`
     if (id) {
       url = `${url}?id=${id}`
+    }
+    if (page) {
+      url = `${url}&page=${page}`
     }
     return url
   }
@@ -105,21 +108,22 @@ export default class DTSAPIAdapter extends BaseAdapter {
    * @returns {string} - url for getting document
    */
   getDocumentUrl (id, refParams) {
-    const { ref, start, end } = refParams
     let url = `${this.config.baseUrl}document`
-    if (!id || (!ref && !start)) {
-      const message = 'getDocumentUrl - not defined id or ref/start'
+    if (!id) {
+      const message = 'getDocumentUrl - not defined id'
       this.addError(this.l10n.getMsg('DTSAPI_NO_OBLIGATORY_PROPS', { message }))
       return
     }
 
     url = `${url}?id=${id}`
 
-    if (ref) { return `${url}&ref=${ref}` }
+    if (refParams) {
+      const { ref, start, end } = refParams
+      if (ref) { return `${url}&ref=${ref}` }
 
-    url = `${url}&start=${start}`
-    if (end) { return `${url}&end=${end}` }
-
+      url = `${url}&start=${start}`
+      if (end) { return `${url}&end=${end}` }
+    }
     return url
   }
 
@@ -134,7 +138,8 @@ export default class DTSAPIAdapter extends BaseAdapter {
       title: collectionsJSON.title !== 'None' ? collectionsJSON.title : 'Alpheios',
       id: collectionsJSON['@id'] !== 'default' ? collectionsJSON['@id'] : null,
       baseUrl: this.config.baseUrl,
-      description: collectionsJSON.description
+      description: collectionsJSON.description,
+      pagination: collectionsJSON.view
     })
 
     if (collectionsJSON.member) {
@@ -145,7 +150,8 @@ export default class DTSAPIAdapter extends BaseAdapter {
           id: collJson['@id'],
           type: collJson['@type'],
           description: collJson.description,
-          baseUrl: this.config.baseUrl
+          baseUrl: this.config.baseUrl,
+          pagination: collectionsJSON.view
         })
       })
     }
