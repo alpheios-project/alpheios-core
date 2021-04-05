@@ -4965,9 +4965,9 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
    * @param {String} id - @id for the collection for example urn:alpheios:latinLit, if it is null would be retrieved the root collections
    * @return {Collection}
    */
-  async getCollection (id) {
+  async getCollection (id, page) {
     try {
-      const url = this.getCollectionUrl(id)
+      const url = this.getCollectionUrl(id, page)
       const collections = await this.fetch(url)
       if (collections) {
         return this.convertToCollections(collections)
@@ -5024,10 +5024,13 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
    * @param {String} id - @id
    * @returns {string} - url for getting collections
    */
-  getCollectionUrl (id) {
+  getCollectionUrl (id, page) {
     let url = `${this.config.baseUrl}collections`
     if (id) {
       url = `${url}?id=${id}`
+    }
+    if (page) {
+      url = `${url}&page=${page}`
     }
     return url
   }
@@ -5080,7 +5083,8 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
       title: collectionsJSON.title !== 'None' ? collectionsJSON.title : 'Alpheios',
       id: collectionsJSON['@id'] !== 'default' ? collectionsJSON['@id'] : null,
       baseUrl: this.config.baseUrl,
-      description: collectionsJSON.description
+      description: collectionsJSON.description,
+      pagination: collectionsJSON.view
     })
 
     if (collectionsJSON.member) {
@@ -7125,7 +7129,7 @@ class ClientAdapters {
     })
 
     if (options.method === 'getCollection') {
-      const res = await localDTSAPIAdapter.getCollection(options.params.id)
+      const res = await localDTSAPIAdapter.getCollection(options.params.id, options.params.page)
       return { result: res, errors: localDTSAPIAdapter.errors }
     }
 

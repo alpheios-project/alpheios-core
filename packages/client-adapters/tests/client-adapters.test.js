@@ -611,4 +611,22 @@ describe('client-adapters.test.js', () => {
     expect(regexTEI.test(res4.result)).toBeTruthy()
 
   })
+
+  it.skip('28 ClientAdapters - dtsApiMethod - getCollection could have pagination', async () => {
+    ClientAdapters.init()
+
+    let res1 = await ClientAdapters.dtsapiGroup.dtsapi({
+      method: 'getCollection',
+      params: {
+        baseUrl: 'https://betamasaheft.eu/api/dts/',
+        id: 'https://betamasaheft.eu/textualunits',
+        page: 3
+      }
+    })
+
+    expect(res1.errors).toEqual([])
+    expect(res1.result).toEqual(expect.any(Collection))
+
+    expect(res1.result.pagination).toEqual({ first: 1, next: 4, last: 204, previous: 2, current: 3 })
+  }, 50000)
 })

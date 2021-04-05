@@ -4933,7 +4933,7 @@ class Collection {
    * @param {string} baseUrl - baseURL for DTS API
    * @param {string} description
    */
-  constructor ({ totalItems, title, id, baseUrl, description } = {}) {
+  constructor ({ totalItems, title, id, baseUrl, description, pagination } = {}) {
     this.totalItems = totalItems
     this.title = title
     this.id = id
@@ -4942,6 +4942,10 @@ class Collection {
 
     this.members = []
     this.resources = []
+
+    if (pagination) {
+      this.pagination = this.definePagination(pagination)
+    }
   }
 
   /**
@@ -5004,6 +5008,26 @@ class Collection {
       return this.resourcesLinks
     }
     return []
+  }
+
+  extractPageNum (link) {
+    if (link) {
+      const pageData = link.match(/page=(\d+)$/)
+      return pageData ? parseInt(pageData[1]) : null
+    }
+    return null
+  }
+
+  definePagination (pagination) {
+    const pagintaionFinal = {
+      first: this.extractPageNum(pagination.first),
+      next: this.extractPageNum(pagination.next),
+      last: this.extractPageNum(pagination.last),
+      previous: this.extractPageNum(pagination.previous)
+    }
+
+    pagintaionFinal.current = pagintaionFinal.next ? pagintaionFinal.next - 1 : (pagintaionFinal.previous ? pagintaionFinal.previous + 1 : 1)
+    return pagintaionFinal
   }
 }
 

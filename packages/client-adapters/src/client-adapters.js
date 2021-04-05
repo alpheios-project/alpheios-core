@@ -439,7 +439,7 @@ class ClientAdapters {
     })
 
     if (options.method === 'getCollection') {
-      const res = await localDTSAPIAdapter.getCollection(options.params.id)
+      const res = await localDTSAPIAdapter.getCollection(options.params.id, options.params.page)
       return { result: res, errors: localDTSAPIAdapter.errors }
     }
 

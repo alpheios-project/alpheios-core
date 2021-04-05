@@ -19,9 +19,9 @@ export default class DTSAPIAdapter extends BaseAdapter {
    * @param {String} id - @id for the collection for example urn:alpheios:latinLit, if it is null would be retrieved the root collections
    * @return {Collection}
    */
-  async getCollection (id) {
+  async getCollection (id, page) {
     try {
-      const url = this.getCollectionUrl(id)
+      const url = this.getCollectionUrl(id, page)
       const collections = await this.fetch(url)
       if (collections) {
         return this.convertToCollections(collections)
@@ -78,10 +78,13 @@ export default class DTSAPIAdapter extends BaseAdapter {
    * @param {String} id - @id
    * @returns {string} - url for getting collections
    */
-  getCollectionUrl (id) {
+  getCollectionUrl (id, page) {
     let url = `${this.config.baseUrl}collections`
     if (id) {
       url = `${url}?id=${id}`
+    }
+    if (page) {
+      url = `${url}&page=${page}`
     }
     return url
   }
@@ -134,7 +137,8 @@ export default class DTSAPIAdapter extends BaseAdapter {
       title: collectionsJSON.title !== 'None' ? collectionsJSON.title : 'Alpheios',
       id: collectionsJSON['@id'] !== 'default' ? collectionsJSON['@id'] : null,
       baseUrl: this.config.baseUrl,
-      description: collectionsJSON.description
+      description: collectionsJSON.description,
+      pagination: collectionsJSON.view
     })
 
     if (collectionsJSON.member) {
