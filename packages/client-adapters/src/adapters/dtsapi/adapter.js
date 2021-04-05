@@ -35,7 +35,7 @@ export default class DTSAPIAdapter extends BaseAdapter {
   /**
    * Retrieves refs
    * @param {String} id - @id for the Resource for example urn:cts:latinLit:phi0472.phi001.alpheios-text-lat1
-   * @param {Collection} collection - would be updated with retrieve data
+   * @param {Resource} resource - would be updated with retrieve data
    *
    */
   async getNavigation (id, resource) {
@@ -61,7 +61,7 @@ export default class DTSAPIAdapter extends BaseAdapter {
    *        {String} end - an ending ref till it the text would be retrieved (if it is not defined - would be retrieved till the end of the text)
    * @retunrs {String} - TEI xml document
    */
-  async getDocument (id, refParams = {}) {
+  async getDocument (id, refParams) {
     try {
       const url = this.getDocumentUrl(id, refParams)
       if (!url) { return }
@@ -108,21 +108,22 @@ export default class DTSAPIAdapter extends BaseAdapter {
    * @returns {string} - url for getting document
    */
   getDocumentUrl (id, refParams) {
-    const { ref, start, end } = refParams
     let url = `${this.config.baseUrl}document`
-    if (!id || (!ref && !start)) {
-      const message = 'getDocumentUrl - not defined id or ref/start'
+    if (!id) {
+      const message = 'getDocumentUrl - not defined id'
       this.addError(this.l10n.getMsg('DTSAPI_NO_OBLIGATORY_PROPS', { message }))
       return
     }
 
     url = `${url}?id=${id}`
 
-    if (ref) { return `${url}&ref=${ref}` }
+    if (refParams) {
+      const { ref, start, end } = refParams
+      if (ref) { return `${url}&ref=${ref}` }
 
-    url = `${url}&start=${start}`
-    if (end) { return `${url}&end=${end}` }
-
+      url = `${url}&start=${start}`
+      if (end) { return `${url}&end=${end}` }
+    }
     return url
   }
 

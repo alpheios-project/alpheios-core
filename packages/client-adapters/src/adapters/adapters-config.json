@@ -96,7 +96,7 @@
       "params": {
         "getCollection": ["baseUrl"],
         "getNavigation": ["baseUrl", "id", "resource"],
-        "getDocument": ["baseUrl", "id", "refParams"]
+        "getDocument": ["baseUrl", "id"]
       }
     }
   }
