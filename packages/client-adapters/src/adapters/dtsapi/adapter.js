@@ -150,7 +150,8 @@ export default class DTSAPIAdapter extends BaseAdapter {
           id: collJson['@id'],
           type: collJson['@type'],
           description: collJson.description,
-          baseUrl: this.config.baseUrl
+          baseUrl: this.config.baseUrl,
+          pagination: collectionsJSON.view
         })
       })
     }

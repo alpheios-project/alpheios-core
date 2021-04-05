@@ -3365,7 +3365,8 @@ class DTSAPIAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_
           id: collJson['@id'],
           type: collJson['@type'],
           description: collJson.description,
-          baseUrl: this.config.baseUrl
+          baseUrl: this.config.baseUrl,
+          pagination: collectionsJSON.view
         })
       })
     }
