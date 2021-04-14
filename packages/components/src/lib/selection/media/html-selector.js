@@ -509,8 +509,13 @@ export default class HTMLSelector extends MediaSelector {
       languages = [this.languageFromSource, LanguageDetect.detect(text), this.defaultLanguageCode]
     }
     const finalLangCode = languages.find(lang => lang)
-    this.languageID = LanguageModelFactory.getLanguageIdFromCode(finalLangCode)
 
+    let langId = LanguageModelFactory.getLanguageIdFromCode(finalLangCode)
+    if (langId === Constants.LANG_UNDEFINED) {
+      langId = LanguageModelFactory.getLanguageIdFromCode(this.defaultLanguageCode)
+    }
+
+    this.languageID = langId
     textSelector.updateLanguage(this.languageID, finalLangCode)
   }
 }
