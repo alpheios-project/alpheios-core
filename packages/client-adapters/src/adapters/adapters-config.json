@@ -106,7 +106,7 @@
       "adapter": "detectLangMethod",
       "methods": [ "getDetectedLangsList" ],
       "params": {
-        "getDetectedLangsList": ["baseUrl", "text"]
+        "getDetectedLangsList": ["text"]
       }
     }
   }
