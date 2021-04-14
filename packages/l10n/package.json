@@ -1,6 +1,6 @@
 {
   "name": "alpheios-l10n",
-  "version": "3.3.3-i644-language-detect-adapter.20210414.66",
+  "version": "3.3.3-incr-3.3.x.20210331255",
   "description": "Alpheios Localization",
   "private": true,
   "main": "dist/alpheios-l10n.min.js",
