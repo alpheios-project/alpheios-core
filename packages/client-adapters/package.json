@@ -8,7 +8,7 @@
     "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-no-coverage": "jest",
     "test-c": "jest tests/client-adapters.test.js",
-    "test-u": "jest tests/adapters/dtsapi/adapter.test.js",
+    "test-u": "jest tests/adapters/detectlang/adapter.test.js  --coverage",
     "test-l": "jest tests/adapters/logeion/adapter.test.js",
     "test-a": "jest tests/adapters/arethusa/adapter.test.js",
     "build": "npm run build-lib && npm run build-node",

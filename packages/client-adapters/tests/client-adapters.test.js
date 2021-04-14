@@ -672,4 +672,25 @@ describe('client-adapters.test.js', () => {
 
     console.info('resDoc.result - ', resDoc.result)
   }, 50000)
+
+  it('30 ClientAdapters - detectLangMethod - getDetectedLangsList - detects language from the text (sourceData)', async () => {
+    ClientAdapters.init()
+
+    let res1 = await ClientAdapters.detectlangGroup.detectlang({
+      method: 'getDetectedLangsList',
+      params: {
+        sourceData: { data: {
+          detections: [
+            { language: 'en', isReliable: true, confidence: 3.36 },
+            { language: 'pt', isReliable: false, confidence: 3.36 },
+            { language: 'eu', isReliable: false, confidence: 3.36 }
+          ]
+        }},
+        text: 'mare male'
+      }
+    })
+
+    expect(res1.errors).toEqual([])
+    expect(res1.result).toEqual('eng')
+  }, 50000)
 })

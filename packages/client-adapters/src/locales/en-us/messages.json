@@ -204,5 +204,16 @@
     "description": "Error message for DTS API adapter - problems with fetching words from api",
     "component": "dtsapiGroup.general",
     "params": ["message"]
+  },
+  "DETECT_LANG_URL_ERROR": {
+    "message": "There are not enough parameters for detect language request",
+    "description": "Error message - no apikey and baseurl for Alpheios Tokenization API",
+    "component": "detectlangGroup.detectlang"
+  },
+  "DETECT_LANG_FETCH_ERROR": {
+    "message": "Some problems with detection language request API - {message}",
+    "description": "Error message for DetectLang adapter",
+    "component": "detectlangGroup.detectlang",
+    "params": ["message"]
   }
 }
