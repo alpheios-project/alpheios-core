@@ -1,9 +1,8 @@
 name: QA incr Build
 on: 
   push:
-    branches: [ incr-3.3.x ]
-  
-  workflow_dispatch:
+    branches-ignore: 
+      - 'master'
   
 jobs:
   test_components_1: 
