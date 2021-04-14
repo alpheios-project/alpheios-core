@@ -433,6 +433,10 @@ class ClientAdapters {
     return null
   }
 
+  /**
+   * It is used for getting TEI texts from DTS API
+   * @param {Object} options
+   */
   static async dtsApiMethod (options) {
     ClientAdapters.checkMethodParam('dtsapiGroup', 'dtsapi', options)
 
@@ -460,6 +464,10 @@ class ClientAdapters {
     }
   }
 
+  /**
+   * It is used for detecting language by text
+   * @param {Object} options
+   */
   static async detectLangMethod (options) {
     ClientAdapters.checkMethodParam('detectlangGroup', 'detectlang', options)
 
