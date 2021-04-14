@@ -6444,7 +6444,7 @@ module.exports = JSON.parse("{\"url\":\"https://latin.packhum.org/rst/concordanc
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"baseurl\":\"https://ws.detectlanguage.com/0.2/detect\",\"api\":\"PLACE_DETECT_LANG_API_HERE\"}");
+module.exports = JSON.parse("{\"baseurl\":\"https://ws.detectlanguage.com/0.2/detect\",\"api\":\"30e63bcc426af7b7c650aab568ed9ad7\"}");
 
 /***/ }),
 

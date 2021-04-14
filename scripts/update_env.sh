@@ -1,1 +1,0 @@
-sed -i "s/PLACE_DETECT_LANG_API_HERE/$1/g" packages/client-adapters/src/adapters/detectlang/config.json
