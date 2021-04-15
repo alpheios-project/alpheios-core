@@ -3231,7 +3231,7 @@ class DetectLangAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPOR
   /**
    *
    * @param {String} text - text for analysis
-   * @returns {String} - langCode ISO-3 - a detected language
+   * @returns {String} - langCode ISO 639-3 - a detected language
    */
   async getDetectedLangsList (text) {
     try {
@@ -3279,18 +3279,17 @@ class DetectLangAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPOR
           { language: 'eu', isReliable: false, confidence: 3.36 }
         ]
       }}
-   * We need return only one the most reliable languageCode in ISO-3 format
+   * We need return only one the most reliable languageCode in ISO 639-3 format
    * @param {Object} langsData
-   * @returns {String|null} lang code in ISO-3
+   * @returns {String|null} lang code in ISO 639-3
    */
   chooseOneLanguage (langsData) {
     if (langsData && langsData.data && langsData.data.detections && langsData.data.detections.length > 0) {
       const reliableLangs = langsData.data.detections
         .filter(langItem => langItem.isReliable)
-      if (reliableLangs) {
-        const lang = reliableLangs.sort((a, b) => a.confidence.localeCompare(b.confidence, undefined, { numeric: true }))
+      if (reliableLangs && (reliableLangs.length > 0)) {
+        const lang = reliableLangs.sort((a, b) => a.confidence - b.confidence)
           .reverse()[0].language
-
         return _clAdapters_adapters_detectlang_langs_list_json__WEBPACK_IMPORTED_MODULE_2__[lang] ? _clAdapters_adapters_detectlang_langs_list_json__WEBPACK_IMPORTED_MODULE_2__[lang].langCode : lang
       }
     }

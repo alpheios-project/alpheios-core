@@ -51,14 +51,15 @@ describe('detectlang/adapter.test.js', () => {
       method: 'detectLanguage',
       sourceData: { data: {
         detections: [
-          { language: 'en', isReliable: true, confidence: 3.36 },
-          { language: 'pt', isReliable: false, confidence: 3.36 },
+          { language: 'en', isReliable: true, confidence: 5.36 },
+          { language: 'pt', isReliable: true, confidence: 4.36 },
           { language: 'eu', isReliable: false, confidence: 3.36 }
         ]
       }}
     })
 
     const result = await adapter.getDetectedLangsList('Mare male')
+
     expect(result).toEqual('eng')
   }, 50000)
 
@@ -103,4 +104,5 @@ describe('detectlang/adapter.test.js', () => {
     expect(result).toBeUndefined()
     expect(adapter.errors.length).toEqual(1)
   }, 50000)
+
 })
