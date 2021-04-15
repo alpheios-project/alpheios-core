@@ -3199,6 +3199,107 @@ class AlpheiosConcordanceAdapter extends _clAdapters_adapters_base_adapter__WEBP
 
 /***/ }),
 
+/***/ "./adapters/detectlang/adapter.js":
+/*!****************************************!*\
+  !*** ./adapters/detectlang/adapter.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ DetectLangAdapter)
+/* harmony export */ });
+/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var _clAdapters_adapters_detectlang_config_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/detectlang/config.json */ "./adapters/detectlang/config.json");
+/* harmony import */ var _clAdapters_adapters_detectlang_langs_list_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/detectlang/langs-list.json */ "./adapters/detectlang/langs-list.json");
+
+
+
+
+class DetectLangAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__.default {
+  /**
+   *
+   * @param {Object} config - properties for the adapter
+   */
+  constructor (config = {}) {
+    super()
+    this.config = this.uploadConfig(config, _clAdapters_adapters_detectlang_config_json__WEBPACK_IMPORTED_MODULE_1__)
+    this.sourceData = config.sourceData
+  }
+
+  /**
+   *
+   * @param {String} text - text for analysis
+   * @returns {String} - langCode ISO 639-3 - a detected language
+   */
+  async getDetectedLangsList (text) {
+    try {
+      const requestParams = {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${this.config.api}` }
+      }
+
+      const url = this.getUrl(text)
+      if (!url) {
+        this.addError(this.l10n.getMsg('DETECT_LANG_URL_ERROR'))
+        return
+      }
+
+      let langsData
+      if (this.sourceData) {
+        langsData = this.sourceData
+      } else {
+        langsData = await this.fetch(url, { requestParams })
+      }
+      return this.chooseOneLanguage(langsData)
+    } catch (error) {
+      this.addError(this.l10n.getMsg('DETECT_LANG_FETCH_ERROR', { message: error.message }))
+    }
+  }
+
+  /**
+   *
+   * @param {String} text - text for analysis
+   * @returns {String} - constructed URL
+   */
+  getUrl (text) {
+    if (text) {
+      return `${this.config.baseurl}?q=${encodeURIComponent(text)}`
+    }
+    return null
+  }
+
+  /**
+   * The remote service returns the following format
+   * { data: {
+        detections: [
+          { language: 'en', isReliable: true, confidence: 3.36 },
+          { language: 'pt', isReliable: false, confidence: 3.36 },
+          { language: 'eu', isReliable: false, confidence: 3.36 }
+        ]
+      }}
+   * We need return only one the most reliable languageCode in ISO 639-3 format
+   * @param {Object} langsData
+   * @returns {String|null} lang code in ISO 639-3
+   */
+  chooseOneLanguage (langsData) {
+    if (langsData && langsData.data && langsData.data.detections && langsData.data.detections.length > 0) {
+      const reliableLangs = langsData.data.detections
+        .filter(langItem => langItem.isReliable)
+      if (reliableLangs && (reliableLangs.length > 0)) {
+        const lang = reliableLangs.sort((a, b) => a.confidence - b.confidence)
+          .reverse()[0].language
+        return _clAdapters_adapters_detectlang_langs_list_json__WEBPACK_IMPORTED_MODULE_2__[lang] ? _clAdapters_adapters_detectlang_langs_list_json__WEBPACK_IMPORTED_MODULE_2__[lang].langCode : lang
+      }
+    }
+    return null
+  }
+}
+
+
+/***/ }),
+
 /***/ "./adapters/dtsapi/adapter.js":
 /*!************************************!*\
   !*** ./adapters/dtsapi/adapter.js ***!
@@ -4956,9 +5057,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_logeion_adapter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/adapters/logeion/adapter */ "./adapters/logeion/adapter.js");
 /* harmony import */ var _clAdapters_adapters_tokenization_adapter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/adapters/tokenization/adapter */ "./adapters/tokenization/adapter.js");
 /* harmony import */ var _clAdapters_adapters_dtsapi_adapter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @clAdapters/adapters/dtsapi/adapter */ "./adapters/dtsapi/adapter.js");
-/* harmony import */ var _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @clAdapters/errors/wrong-method-error */ "./errors/wrong-method-error.js");
-/* harmony import */ var _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @clAdapters/errors/no-required-param-error */ "./errors/no-required-param-error.js");
-/* harmony import */ var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json");
+/* harmony import */ var _clAdapters_adapters_detectlang_adapter__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @clAdapters/adapters/detectlang/adapter */ "./adapters/detectlang/adapter.js");
+/* harmony import */ var _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @clAdapters/errors/wrong-method-error */ "./errors/wrong-method-error.js");
+/* harmony import */ var _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @clAdapters/errors/no-required-param-error */ "./errors/no-required-param-error.js");
+/* harmony import */ var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json");
+
 
 
 
@@ -4984,10 +5087,10 @@ class ClientAdapters {
   */
   static init () {
     if (cachedConfig.size === 0) {
-      for (const category in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_12__) {
+      for (const category in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_13__) {
         let adapters = {} // eslint-disable-line prefer-const
-        for (const adapterKey in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_12__[category]) {
-          const adapterData = _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_12__[category][adapterKey]
+        for (const adapterKey in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_13__[category]) {
+          const adapterData = _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_13__[category][adapterKey]
 
           adapters[adapterKey] = {
             adapter: ClientAdapters[adapterData.adapter],
@@ -5054,6 +5157,11 @@ class ClientAdapters {
     return cachedAdaptersList.get('dtsapiGroup')
   }
 
+  static get detectlangGroup () {
+    ClientAdapters.init()
+    return cachedAdaptersList.get('detectlangGroup')
+  }
+
   /**
   * This method checks if given method is registered in config for category.adapterName
   * @param {String} category - category name - morphology, lemmatranslation, lexicon
@@ -5062,7 +5170,7 @@ class ClientAdapters {
   */
   static checkMethod (category, adapterName, methodName) {
     if (!cachedConfig.get(category)[adapterName].methods.includes(methodName)) {
-      throw new _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_10__.default(category, adapterName, methodName)
+      throw new _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_11__.default(category, adapterName, methodName)
     }
   }
 
@@ -5078,7 +5186,7 @@ class ClientAdapters {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
         // Param values other than `undefined` such as `null` or empty strings could be valid values
         if (params && typeof params[paramName] === 'undefined') {
-          throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_11__.default(category, adapterName, methodName, paramName)
+          throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_12__.default(category, adapterName, methodName, paramName)
         }
       })
     }
@@ -5388,6 +5496,10 @@ class ClientAdapters {
     return null
   }
 
+  /**
+   * It is used for getting TEI texts from DTS API
+   * @param {Object} options
+   */
   static async dtsApiMethod (options) {
     ClientAdapters.checkMethodParam('dtsapiGroup', 'dtsapi', options)
 
@@ -5412,6 +5524,27 @@ class ClientAdapters {
     if (options.method === 'getDocument') {
       const res = await localDTSAPIAdapter.getDocument(options.params.id, options.params.refParams)
       return { result: res, errors: localDTSAPIAdapter.errors }
+    }
+  }
+
+  /**
+   * It is used for detecting language by text
+   * @param {Object} options
+   */
+  static async detectLangMethod (options) {
+    ClientAdapters.checkMethodParam('detectlangGroup', 'detectlang', options)
+
+    const localDetectLangAdapter = new _clAdapters_adapters_detectlang_adapter__WEBPACK_IMPORTED_MODULE_10__.default({
+      category: 'detectlangGroup',
+      adapterName: 'detectlang',
+      method: options.method,
+      clientId: options.clientId,
+      sourceData: options.params.sourceData
+    })
+
+    if (options.method === 'getDetectedLangsList') {
+      const res = await localDetectLangAdapter.getDetectedLangsList(options.params.text)
+      return { result: res, errors: localDetectLangAdapter.errors }
     }
   }
 }
@@ -6274,7 +6407,7 @@ class ImportMorphData {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\",\"gotoSentence\",\"findWord\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"],\"gotoSentence\":[\"provider\",\"sentenceId\",\"wordIds\"],\"findWord\":[\"provider\",\"word\",\"prefix\",\"suffix\",\"sentenceId\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\",\"fetchOptions\"]}}},\"tokenizationGroup\":{\"alpheios\":{\"adapter\":\"tokenizationMethod\",\"methods\":[\"getTokens\",\"getConfig\"],\"params\":{\"getTokens\":[\"text\"],\"getConfig\":[\"storage\"]}}},\"dtsapiGroup\":{\"dtsapi\":{\"adapter\":\"dtsApiMethod\",\"methods\":[\"getCollection\",\"getNavigation\",\"getDocument\"],\"params\":{\"getCollection\":[\"baseUrl\"],\"getNavigation\":[\"baseUrl\",\"id\",\"resource\"],\"getDocument\":[\"baseUrl\",\"id\"]}}}}");
+module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\",\"gotoSentence\",\"findWord\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"],\"gotoSentence\":[\"provider\",\"sentenceId\",\"wordIds\"],\"findWord\":[\"provider\",\"word\",\"prefix\",\"suffix\",\"sentenceId\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\",\"fetchOptions\"]}}},\"tokenizationGroup\":{\"alpheios\":{\"adapter\":\"tokenizationMethod\",\"methods\":[\"getTokens\",\"getConfig\"],\"params\":{\"getTokens\":[\"text\"],\"getConfig\":[\"storage\"]}}},\"dtsapiGroup\":{\"dtsapi\":{\"adapter\":\"dtsApiMethod\",\"methods\":[\"getCollection\",\"getNavigation\",\"getDocument\"],\"params\":{\"getCollection\":[\"baseUrl\"],\"getNavigation\":[\"baseUrl\",\"id\",\"resource\"],\"getDocument\":[\"baseUrl\",\"id\"]}}},\"detectlangGroup\":{\"detectlang\":{\"adapter\":\"detectLangMethod\",\"methods\":[\"getDetectedLangsList\"],\"params\":{\"getDetectedLangsList\":[\"text\"]}}}}");
 
 /***/ }),
 
@@ -6308,6 +6441,28 @@ module.exports = JSON.parse("{\"authors\":[{\"urn\":\"urn:cts:latinLit:phi2456\"
 
 "use strict";
 module.exports = JSON.parse("{\"url\":\"https://latin.packhum.org/rst/concordance/\",\"sourceTextUrl\":\"https://latin.packhum.org\",\"rights\":\"Word usage examples are provided by The Packard Humanities Institute (https://packhum.org/). They are to be used only for personal study and are subject to the “Fair Use” principles of U.S. Copyright law.\",\"maxResultsOverride\":10000000}");
+
+/***/ }),
+
+/***/ "./adapters/detectlang/config.json":
+/*!*****************************************!*\
+  !*** ./adapters/detectlang/config.json ***!
+  \*****************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse("{\"baseurl\":\"https://ws.detectlanguage.com/0.2/detect\",\"api\":\"30e63bcc426af7b7c650aab568ed9ad7\"}");
+
+/***/ }),
+
+/***/ "./adapters/detectlang/langs-list.json":
+/*!*********************************************!*\
+  !*** ./adapters/detectlang/langs-list.json ***!
+  \*********************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse("{\"aa\":{\"label\":\"Afar\",\"langCode\":\"aar\"},\"ab\":{\"label\":\"Abkhazian\",\"langCode\":\"abk\"},\"af\":{\"label\":\"Afrikaans\",\"langCode\":\"afr\"},\"ak\":{\"label\":\"Akan\",\"langCode\":\"aka\"},\"am\":{\"label\":\"Amharic\",\"langCode\":\"amh\"},\"ar\":{\"label\":\"Arabic\",\"langCode\":\"ara\"},\"as\":{\"label\":\"Assamese\",\"langCode\":\"asm\"},\"ay\":{\"label\":\"Aymara\",\"langCode\":\"aym\"},\"az\":{\"label\":\"Azerbaijani\",\"langCode\":\"aze\"},\"ba\":{\"label\":\"Bashkir\",\"langCode\":\"bak\"},\"be\":{\"label\":\"Belarusian\",\"langCode\":\"bel\"},\"bg\":{\"label\":\"Bulgarian\",\"langCode\":\"bul\"},\"bh\":{\"label\":\"Bihari\",\"langCode\":\"bih\"},\"bi\":{\"label\":\"Bislama\",\"langCode\":\"bis\"},\"bn\":{\"label\":\"Bengali\",\"langCode\":\"ben\"},\"bo\":{\"label\":\"Tibetan\",\"langCode\":\"bod\"},\"br\":{\"label\":\"Breton\",\"langCode\":\"bre\"},\"bs\":{\"label\":\"Bosnian\",\"langCode\":\"bos\"},\"bug\":{\"label\":\"Buginese\",\"langCode\":\"bug\"},\"ca\":{\"label\":\"Catalan\",\"langCode\":\"cat\"},\"ceb\":{\"label\":\"Cebuano\",\"langCode\":\"ceb\"},\"chr\":{\"label\":\"Cherokee\",\"langCode\":\"chr\"},\"co\":{\"label\":\"Corsican\",\"langCode\":\"cos\"},\"crs\":{\"label\":\"Seselwa\",\"langCode\":\"crs\"},\"cs\":{\"label\":\"Czech\",\"langCode\":\"ces\"},\"cy\":{\"label\":\"Welsh\",\"langCode\":\"cym\"},\"da\":{\"label\":\"Danish\",\"langCode\":\"dan\"},\"de\":{\"label\":\"German\",\"langCode\":\"deu\"},\"dv\":{\"label\":\"Dhivehi\",\"langCode\":\"div\"},\"dz\":{\"label\":\"Dzongkha\",\"langCode\":\"dzo\"},\"egy\":{\"label\":\"Egyptian\",\"langCode\":\"egy\"},\"el\":{\"label\":\"Greek\",\"langCode\":\"grc\"},\"en\":{\"label\":\"English\",\"langCode\":\"eng\"},\"eo\":{\"label\":\"Esperanto\",\"langCode\":\"epo\"},\"es\":{\"label\":\"Spanish\",\"langCode\":\"spa\"},\"et\":{\"label\":\"Estonian\",\"langCode\":\"est\"},\"eu\":{\"label\":\"Basque\",\"langCode\":\"eus\"},\"fa\":{\"label\":\"Persian\",\"langCode\":\"per\"},\"fi\":{\"label\":\"Finnish\",\"langCode\":\"fin\"},\"fj\":{\"label\":\"Fijian\",\"langCode\":\"fij\"},\"fo\":{\"label\":\"Faroese\",\"langCode\":\"fao\"},\"fr\":{\"label\":\"French\",\"langCode\":\"fra\"},\"fy\":{\"label\":\"Frisian\",\"langCode\":\"frr\"},\"ga\":{\"label\":\"Irish\",\"langCode\":\"gle\"},\"gd\":{\"label\":\"Scots Gaelic\",\"langCode\":\"gla\"},\"gl\":{\"label\":\"Galician\",\"langCode\":\"glg\"},\"gn\":{\"label\":\"Guarani\",\"langCode\":\"grn\"},\"got\":{\"label\":\"Gothic\",\"langCode\":\"got\"},\"gu\":{\"label\":\"Gujarati\",\"langCode\":\"guj\"},\"gv\":{\"label\":\"Manx\",\"langCode\":\"glv\"},\"ha\":{\"label\":\"Hausa\",\"langCode\":\"hau\"},\"haw\":{\"label\":\"Hawaiian\",\"langCode\":\"haw\"},\"hi\":{\"label\":\"Hindi\",\"langCode\":\"hin\"},\"hmn\":{\"label\":\"Hmong\",\"langCode\":\"hmn\"},\"hr\":{\"label\":\"Croatian\",\"langCode\":\"hrv\"},\"ht\":{\"label\":\"Haitian Creole\",\"langCode\":\"hat\"},\"hu\":{\"label\":\"Hungarian\",\"langCode\":\"hun\"},\"hy\":{\"label\":\"Armenian\",\"langCode\":\"hye\"},\"ia\":{\"label\":\"Interlingua\",\"langCode\":\"ina\"},\"id\":{\"label\":\"Indonesian\",\"langCode\":\"ind\"},\"ie\":{\"label\":\"Interlingue\",\"langCode\":\"ile\"},\"ig\":{\"label\":\"Igbo\",\"langCode\":\"ibo\"},\"ik\":{\"label\":\"Inupiaq\",\"langCode\":\"ipk\"},\"is\":{\"label\":\"Icelandic\",\"langCode\":\"isl\"},\"it\":{\"label\":\"Italian\",\"langCode\":\"ita\"},\"iu\":{\"label\":\"Inuktitut\",\"langCode\":\"iku\"},\"iw\":{\"label\":\"Hebrew\",\"langCode\":\"heb\"},\"ja\":{\"label\":\"Japanese\",\"langCode\":\"jpn\"},\"jw\":{\"label\":\"Javanese\",\"langCode\":\"jav\"},\"ka\":{\"label\":\"Georgian\",\"langCode\":\"kat\"},\"kha\":{\"label\":\"Khasi\",\"langCode\":\"kha\"},\"kk\":{\"label\":\"Kazakh\",\"langCode\":\"kaz\"},\"kl\":{\"label\":\"Greenlandic\",\"langCode\":\"kal\"},\"km\":{\"label\":\"Khmer\",\"langCode\":\"khm\"},\"kn\":{\"label\":\"Kannada\",\"langCode\":\"kan\"},\"ko\":{\"label\":\"Korean\",\"langCode\":\"kor\"},\"ks\":{\"label\":\"Kashmiri\",\"langCode\":\"kas\"},\"ku\":{\"label\":\"Kurdish\",\"langCode\":\"kur\"},\"ky\":{\"label\":\"Kyrgyz\",\"langCode\":\"kir\"},\"la\":{\"label\":\"Latin\",\"langCode\":\"lat\"},\"lb\":{\"label\":\"Luxembourgish\",\"langCode\":\"ltz\"},\"lg\":{\"label\":\"Ganda\",\"langCode\":\"lug\"},\"li\":{\"label\":\"Limbu\",\"langCode\":\"lim\"},\"ln\":{\"label\":\"Lingala\",\"langCode\":\"lin\"},\"lo\":{\"label\":\"Laothian\",\"langCode\":\"lao\"},\"lt\":{\"label\":\"Lithuanian\",\"langCode\":\"lit\"},\"lv\":{\"label\":\"Latvian\",\"langCode\":\"lav\"},\"mfe\":{\"label\":\"Mauritian Creole\",\"langCode\":\"mfe\"},\"mg\":{\"label\":\"Malagasy\",\"langCode\":\"mlg\"},\"mi\":{\"label\":\"Maori\",\"langCode\":\"mao\"},\"mk\":{\"label\":\"Macedonian\",\"langCode\":\"mac\"},\"ml\":{\"label\":\"Malayalam\",\"langCode\":\"mal\"},\"mn\":{\"label\":\"Mongolian\",\"langCode\":\"mon\"},\"mr\":{\"label\":\"Marathi\",\"langCode\":\"mar\"},\"ms\":{\"label\":\"Malay\",\"langCode\":\"msa\"},\"mt\":{\"label\":\"Maltese\",\"langCode\":\"mlt\"},\"my\":{\"label\":\"Burmese\",\"langCode\":\"mya\"},\"na\":{\"label\":\"Nauru\",\"langCode\":\"nau\"},\"ne\":{\"label\":\"Nepali\",\"langCode\":\"nep\"},\"nl\":{\"label\":\"Dutch\",\"langCode\":\"nld\"},\"no\":{\"label\":\"Norwegian\",\"langCode\":\"nor\"},\"nr\":{\"label\":\"Ndebele\",\"langCode\":\"nbl\"},\"nso\":{\"label\":\"Pedi\",\"langCode\":\"nso\"},\"ny\":{\"label\":\"Nyanja\",\"langCode\":\"nya\"},\"oc\":{\"label\":\"Occitan\",\"langCode\":\"oci\"},\"om\":{\"label\":\"Oromo\",\"langCode\":\"orm\"},\"or\":{\"label\":\"Oriya\",\"langCode\":\"ori\"},\"pa\":{\"label\":\"Punjabi\",\"langCode\":\"pan\"},\"pl\":{\"label\":\"Polish\",\"langCode\":\"pol\"},\"ps\":{\"label\":\"Pashto\",\"langCode\":\"pus\"},\"pt\":{\"label\":\"Portuguese\",\"langCode\":\"por\"},\"qu\":{\"label\":\"Quechua\",\"langCode\":\"que\"},\"rm\":{\"label\":\"Rhaeto Romance\",\"langCode\":\"roh\"},\"rn\":{\"label\":\"Rundi\",\"langCode\":\"run\"},\"ro\":{\"label\":\"Romanian\",\"langCode\":\"ron\"},\"ru\":{\"label\":\"Russian\",\"langCode\":\"rus\"},\"rw\":{\"label\":\"Kinyarwanda\",\"langCode\":\"kin\"},\"sa\":{\"label\":\"Sanskrit\",\"langCode\":\"san\"},\"sco\":{\"label\":\"Scots\",\"langCode\":\"sco\"},\"sd\":{\"label\":\"Sindhi\",\"langCode\":\"snd\"},\"sg\":{\"label\":\"Sango\",\"langCode\":\"sag\"},\"si\":{\"label\":\"Sinhalese\",\"langCode\":\"sin\"},\"sk\":{\"label\":\"Slovak\",\"langCode\":\"slk\"},\"sl\":{\"label\":\"Slovenian\",\"langCode\":\"slv\"},\"sm\":{\"label\":\"Samoan\",\"langCode\":\"smo\"},\"sn\":{\"label\":\"Shona\",\"langCode\":\"sna\"},\"so\":{\"label\":\"Somali\",\"langCode\":\"som\"},\"sq\":{\"label\":\"Albanian\",\"langCode\":\"sqi\"},\"sr\":{\"label\":\"Serbian\",\"langCode\":\"srp\"},\"ss\":{\"label\":\"Siswant\",\"langCode\":\"ssw\"},\"st\":{\"label\":\"Sesotho\",\"langCode\":\"sot\"},\"su\":{\"label\":\"Sundanese\",\"langCode\":\"sun\"},\"sv\":{\"label\":\"Swedish\",\"langCode\":\"swe\"},\"sw\":{\"label\":\"Swahili\",\"langCode\":\"swa\"},\"syr\":{\"label\":\"Syriac\",\"langCode\":\"syr\"},\"ta\":{\"label\":\"Tamil\",\"langCode\":\"tam\"},\"te\":{\"label\":\"Telugu\",\"langCode\":\"tel\"},\"tg\":{\"label\":\"Tajik\",\"langCode\":\"tgk\"},\"th\":{\"label\":\"Thai\",\"langCode\":\"tha\"},\"ti\":{\"label\":\"Tigrinya\",\"langCode\":\"tir\"},\"tk\":{\"label\":\"Turkmen\",\"langCode\":\"tuk\"},\"tl\":{\"label\":\"Tagalog\",\"langCode\":\"tgl\"},\"tlh\":{\"label\":\"Klingon\",\"langCode\":\"tlh\"},\"tn\":{\"label\":\"Tswana\",\"langCode\":\"tsn\"},\"to\":{\"label\":\"Tonga\",\"langCode\":\"tog\"},\"tr\":{\"label\":\"Turkish\",\"langCode\":\"tur\"},\"ts\":{\"label\":\"Tsonga\",\"langCode\":\"tso\"},\"tt\":{\"label\":\"Tatar\",\"langCode\":\"tat\"},\"ug\":{\"label\":\"Uighur\",\"langCode\":\"uig\"},\"uk\":{\"label\":\"Ukrainian\",\"langCode\":\"ukr\"},\"ur\":{\"label\":\"Urdu\",\"langCode\":\"urd\"},\"uz\":{\"label\":\"Uzbek\",\"langCode\":\"uzb\"},\"ve\":{\"label\":\"Venda\",\"langCode\":\"ven\"},\"vi\":{\"label\":\"Vietnamese\",\"langCode\":\"vie\"},\"vo\":{\"label\":\"Volapuk\",\"langCode\":\"vol\"},\"war\":{\"label\":\"Waray Philippines\",\"langCode\":\"war\"},\"wo\":{\"label\":\"Wolof\",\"langCode\":\"wol\"},\"xh\":{\"label\":\"Xhosa\",\"langCode\":\"xho\"},\"yi\":{\"label\":\"Yiddish\",\"langCode\":\"yid\"},\"yo\":{\"label\":\"Yoruba\",\"langCode\":\"yor\"},\"za\":{\"label\":\"Zhuang\",\"langCode\":\"zha\"},\"zh\":{\"label\":\"Chinese Simplified\",\"langCode\":\"zho\"},\"zh-Hant\":{\"label\":\"Chinese Traditional\",\"langCode\":\"zho\"},\"zu\":{\"label\":\"Zulu\",\"langCode\":\"zul\"}}");
 
 /***/ }),
 
@@ -6384,7 +6539,7 @@ module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a t
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE\":{\"message\":\"There is no engine for the given languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no engine is found for given languageID\",\"component\":\"morphology.tufts\",\"params\":[\"languageID\"]},\"MORPH_NO_HOMONYM\":{\"message\":\"There is no homonym for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no homonym was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_TUFTS_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no data was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.tufts adapter - unknown\",\"component\":\"morphology.tufts\",\"params\":[\"message\"]},\"MORPH_TRANSFORM_NO_LANGUAGE\":{\"message\":\"No Language was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_LEMMA\":{\"message\":\"No Lemma was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_MAPPING_DATA\":{\"message\":\"No mapping data found for {language}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"language\"]},\"MORPH_TRANSFORM_INFLECTION_ERROR\":{\"message\":\"Error parsing inflection: {error}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"error\"]},\"BASIC_ADAPTER_NO_DATA_FROM_URL\":{\"message\":\"Remote service is unavailable - {url}\",\"description\":\"Error message for basic adapter - when no data was returned from the url\",\"component\":\"basic_adapter\",\"params\":[\"url\"]},\"BASIC_ADAPTER_EMPTY_URL\":{\"message\":\"Unable to get data from empty url\",\"description\":\"Error message for basic adapter - when empty url was given\",\"component\":\"basic_adapter\"},\"BASIC_ADAPTER_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"message\"]},\"BASIC_ADAPTER_URL_RESPONSE_FAILED\":{\"message\":\"Request doesn't return data - {statusCode}: {statusText}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"statusCode\",\"statusText\"]},\"MORPH_TREEBANK_MISSING_REF\":{\"message\":\"Reference is missing from treebank request = {request}\",\"description\":\"Missing reference in treebank request\",\"component\":\"morph.treebank\",\"params\":[\"request\"]},\"MORPH_TREEBANK_UNSUPPORTED_LANGUAGE\":{\"message\":\"Unsupported treebank language ${languageId}\",\"description\":\"Unsupported treebank language\",\"component\":\"morph.treebank\",\"params\":[\"languageId\"]},\"MORPH_TREEBANK_NO_URL\":{\"message\":\"There is a problem with creating url for the given word - {word}\",\"description\":\"Error message for morph.treebank - no url for fetching data from treebank\",\"component\":\"morph.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word}\",\"description\":\"Error message for morphology.treebank adapter - when no data was returned from the source\",\"component\":\"morphology.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.treebank adapter - unknown\",\"component\":\"morphology.treebank\",\"params\":[\"message\"]},\"TRANSLATION_INPUT_PREPARE_ERROR\":{\"message\":\"Some problems with preparing input for geting translations - {input}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - problems with input\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"input\"]},\"TRANSLATION_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - unknown\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"message\"]},\"TRANSLATION_INCORRECT_LEXEMES\":{\"message\":\"There is no correct homonym in input\",\"description\":\"Error message for lemmatranslation.alpheios adapter - no lexemes\",\"component\":\"lemmatranslation.alpheios\"},\"LEXICONS_NO_ALLOWED_URL\":{\"message\":\"There are no allowed urls in the options\",\"description\":\"Error message for lexicon.alpheios adapter - no urls were found in options\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_FAILED_CACHED_DATA\":{\"message\":\"There is a problem with catching data from lexicon source - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with getting cached data\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_FAILED_APPEND_DEFS\":{\"message\":\"There is a problem with updating definitions - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with updating definitions\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_NO_FULL_URL\":{\"message\":\"No full url is defined for definitions\",\"description\":\"Error message for lexicon.alpheios adapter - no full url is defined\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_NO_DATA_FROM_URL\":{\"message\":\"No data recieved from url - {url}\",\"description\":\"Error message for lexicon.alpheios adapter - no data from url\",\"component\":\"lexicon.alpheios\",\"params\":[\"url\"]},\"CONCORDANCE_AUTHOR_UPLOAD_ERROR\":{\"message\":\"Some problems with retrieving from author/textWork config file - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"CONCORDANCE_WORD_USAGE_FETCH_ERROR\":{\"message\":\"Some problems with fetching word usage examples from concordance api - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"LOGEION_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from logeion api - {message}\",\"description\":\"Error message for autoCompleteWords.logeion adapter - problems with fetching words from logeion api\",\"component\":\"autoCompleteWords.logeion\",\"params\":[\"message\"]},\"LOGEION_FETCH_OPTIONS_ERROR\":{\"message\":\"There are no fetch options for Logeion API request\",\"description\":\"Error message for autoCompleteWords.logeion adapter - no apikey and baseurl for Logeion API\",\"component\":\"autoCompleteWords.logeion\"},\"TOKENIZATION_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from Alpheios Tokenization API - {message}\",\"description\":\"Error message for Alpheios Tokenization adapter - problems with fetching words from api\",\"component\":\"tokenizationGroup.alpheios\",\"params\":[\"message\"]},\"TOKENIZATION_FETCH_OPTIONS_ERROR\":{\"message\":\"There are no fetch options for Alpheios Tokenization API request\",\"description\":\"Error message - no apikey and baseurl for Alpheios Tokenization API\",\"component\":\"tokenizationGroup.alpheios\"},\"TOKENIZATION_AVAILABILITY_ERROR\":{\"message\":\"Tokenization service is not available for passed fetch parameters (language)\",\"description\":\"Error message - tokenization service doesn't support passed language\",\"component\":\"tokenizationGroup.alpheios\"},\"DTSAPI_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from DTS API - {message}\",\"description\":\"Error message for DTS API adapter - problems with fetching words from api\",\"component\":\"dtsapiGroup.general\",\"params\":[\"message\"]},\"DTSAPI_NO_OBLIGATORY_PROPS\":{\"message\":\"Not all obligatory parameters are defined for the method - {message}\",\"description\":\"Error message for DTS API adapter - problems with fetching words from api\",\"component\":\"dtsapiGroup.general\",\"params\":[\"message\"]}}");
+module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE\":{\"message\":\"There is no engine for the given languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no engine is found for given languageID\",\"component\":\"morphology.tufts\",\"params\":[\"languageID\"]},\"MORPH_NO_HOMONYM\":{\"message\":\"There is no homonym for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no homonym was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_TUFTS_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no data was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.tufts adapter - unknown\",\"component\":\"morphology.tufts\",\"params\":[\"message\"]},\"MORPH_TRANSFORM_NO_LANGUAGE\":{\"message\":\"No Language was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_LEMMA\":{\"message\":\"No Lemma was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_MAPPING_DATA\":{\"message\":\"No mapping data found for {language}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"language\"]},\"MORPH_TRANSFORM_INFLECTION_ERROR\":{\"message\":\"Error parsing inflection: {error}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"error\"]},\"BASIC_ADAPTER_NO_DATA_FROM_URL\":{\"message\":\"Remote service is unavailable - {url}\",\"description\":\"Error message for basic adapter - when no data was returned from the url\",\"component\":\"basic_adapter\",\"params\":[\"url\"]},\"BASIC_ADAPTER_EMPTY_URL\":{\"message\":\"Unable to get data from empty url\",\"description\":\"Error message for basic adapter - when empty url was given\",\"component\":\"basic_adapter\"},\"BASIC_ADAPTER_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"message\"]},\"BASIC_ADAPTER_URL_RESPONSE_FAILED\":{\"message\":\"Request doesn't return data - {statusCode}: {statusText}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"statusCode\",\"statusText\"]},\"MORPH_TREEBANK_MISSING_REF\":{\"message\":\"Reference is missing from treebank request = {request}\",\"description\":\"Missing reference in treebank request\",\"component\":\"morph.treebank\",\"params\":[\"request\"]},\"MORPH_TREEBANK_UNSUPPORTED_LANGUAGE\":{\"message\":\"Unsupported treebank language ${languageId}\",\"description\":\"Unsupported treebank language\",\"component\":\"morph.treebank\",\"params\":[\"languageId\"]},\"MORPH_TREEBANK_NO_URL\":{\"message\":\"There is a problem with creating url for the given word - {word}\",\"description\":\"Error message for morph.treebank - no url for fetching data from treebank\",\"component\":\"morph.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word}\",\"description\":\"Error message for morphology.treebank adapter - when no data was returned from the source\",\"component\":\"morphology.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.treebank adapter - unknown\",\"component\":\"morphology.treebank\",\"params\":[\"message\"]},\"TRANSLATION_INPUT_PREPARE_ERROR\":{\"message\":\"Some problems with preparing input for geting translations - {input}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - problems with input\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"input\"]},\"TRANSLATION_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - unknown\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"message\"]},\"TRANSLATION_INCORRECT_LEXEMES\":{\"message\":\"There is no correct homonym in input\",\"description\":\"Error message for lemmatranslation.alpheios adapter - no lexemes\",\"component\":\"lemmatranslation.alpheios\"},\"LEXICONS_NO_ALLOWED_URL\":{\"message\":\"There are no allowed urls in the options\",\"description\":\"Error message for lexicon.alpheios adapter - no urls were found in options\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_FAILED_CACHED_DATA\":{\"message\":\"There is a problem with catching data from lexicon source - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with getting cached data\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_FAILED_APPEND_DEFS\":{\"message\":\"There is a problem with updating definitions - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with updating definitions\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_NO_FULL_URL\":{\"message\":\"No full url is defined for definitions\",\"description\":\"Error message for lexicon.alpheios adapter - no full url is defined\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_NO_DATA_FROM_URL\":{\"message\":\"No data recieved from url - {url}\",\"description\":\"Error message for lexicon.alpheios adapter - no data from url\",\"component\":\"lexicon.alpheios\",\"params\":[\"url\"]},\"CONCORDANCE_AUTHOR_UPLOAD_ERROR\":{\"message\":\"Some problems with retrieving from author/textWork config file - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"CONCORDANCE_WORD_USAGE_FETCH_ERROR\":{\"message\":\"Some problems with fetching word usage examples from concordance api - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"LOGEION_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from logeion api - {message}\",\"description\":\"Error message for autoCompleteWords.logeion adapter - problems with fetching words from logeion api\",\"component\":\"autoCompleteWords.logeion\",\"params\":[\"message\"]},\"LOGEION_FETCH_OPTIONS_ERROR\":{\"message\":\"There are no fetch options for Logeion API request\",\"description\":\"Error message for autoCompleteWords.logeion adapter - no apikey and baseurl for Logeion API\",\"component\":\"autoCompleteWords.logeion\"},\"TOKENIZATION_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from Alpheios Tokenization API - {message}\",\"description\":\"Error message for Alpheios Tokenization adapter - problems with fetching words from api\",\"component\":\"tokenizationGroup.alpheios\",\"params\":[\"message\"]},\"TOKENIZATION_FETCH_OPTIONS_ERROR\":{\"message\":\"There are no fetch options for Alpheios Tokenization API request\",\"description\":\"Error message - no apikey and baseurl for Alpheios Tokenization API\",\"component\":\"tokenizationGroup.alpheios\"},\"TOKENIZATION_AVAILABILITY_ERROR\":{\"message\":\"Tokenization service is not available for passed fetch parameters (language)\",\"description\":\"Error message - tokenization service doesn't support passed language\",\"component\":\"tokenizationGroup.alpheios\"},\"DTSAPI_FETCH_ERROR\":{\"message\":\"Some problems with fetching words from DTS API - {message}\",\"description\":\"Error message for DTS API adapter - problems with fetching words from api\",\"component\":\"dtsapiGroup.general\",\"params\":[\"message\"]},\"DTSAPI_NO_OBLIGATORY_PROPS\":{\"message\":\"Not all obligatory parameters are defined for the method - {message}\",\"description\":\"Error message for DTS API adapter - problems with fetching words from api\",\"component\":\"dtsapiGroup.general\",\"params\":[\"message\"]},\"DETECT_LANG_URL_ERROR\":{\"message\":\"There are not enough parameters for detect language request\",\"description\":\"Error message - no apikey and baseurl for Alpheios Tokenization API\",\"component\":\"detectlangGroup.detectlang\"},\"DETECT_LANG_FETCH_ERROR\":{\"message\":\"Some problems with detection language request API - {message}\",\"description\":\"Error message for DetectLang adapter\",\"component\":\"detectlangGroup.detectlang\",\"params\":[\"message\"]}}");
 
 /***/ }),
 

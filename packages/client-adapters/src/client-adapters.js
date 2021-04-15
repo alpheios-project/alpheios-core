@@ -8,6 +8,7 @@ import ArethusaTreebankAdapter from '@clAdapters/adapters/arethusa/adapter'
 import AlpheiosLogeionAdapter from '@clAdapters/adapters/logeion/adapter'
 import AlpheiosTokenizationAdapter from '@clAdapters/adapters/tokenization/adapter'
 import DTSAPIAdapter from '@clAdapters/adapters/dtsapi/adapter'
+import DetectLangAdapter from '@clAdapters/adapters/detectlang/adapter'
 
 import WrongMethodError from '@clAdapters/errors/wrong-method-error'
 import NoRequiredParamError from '@clAdapters/errors/no-required-param-error'
@@ -91,6 +92,11 @@ class ClientAdapters {
   static get dtsapiGroup () {
     ClientAdapters.init()
     return cachedAdaptersList.get('dtsapiGroup')
+  }
+
+  static get detectlangGroup () {
+    ClientAdapters.init()
+    return cachedAdaptersList.get('detectlangGroup')
   }
 
   /**
@@ -427,6 +433,10 @@ class ClientAdapters {
     return null
   }
 
+  /**
+   * It is used for getting TEI texts from DTS API
+   * @param {Object} options
+   */
   static async dtsApiMethod (options) {
     ClientAdapters.checkMethodParam('dtsapiGroup', 'dtsapi', options)
 
@@ -451,6 +461,27 @@ class ClientAdapters {
     if (options.method === 'getDocument') {
       const res = await localDTSAPIAdapter.getDocument(options.params.id, options.params.refParams)
       return { result: res, errors: localDTSAPIAdapter.errors }
+    }
+  }
+
+  /**
+   * It is used for detecting language by text
+   * @param {Object} options
+   */
+  static async detectLangMethod (options) {
+    ClientAdapters.checkMethodParam('detectlangGroup', 'detectlang', options)
+
+    const localDetectLangAdapter = new DetectLangAdapter({
+      category: 'detectlangGroup',
+      adapterName: 'detectlang',
+      method: options.method,
+      clientId: options.clientId,
+      sourceData: options.params.sourceData
+    })
+
+    if (options.method === 'getDetectedLangsList') {
+      const res = await localDetectLangAdapter.getDetectedLangsList(options.params.text)
+      return { result: res, errors: localDetectLangAdapter.errors }
     }
   }
 }

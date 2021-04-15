@@ -99,5 +99,15 @@
         "getDocument": ["baseUrl", "id"]
       }
     }
+  },
+
+  "detectlangGroup": {
+    "detectlang": {
+      "adapter": "detectLangMethod",
+      "methods": [ "getDetectedLangsList" ],
+      "params": {
+        "getDetectedLangsList": ["text"]
+      }
+    }
   }
 }

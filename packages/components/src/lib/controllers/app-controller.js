@@ -1434,7 +1434,7 @@ export default class AppController {
           return
         }
       }
-      this._store.commit('app/setPrioritizeDefaultLanguage', false)
+      // this._store.commit('app/setPrioritizeDefaultLanguage', false)
       this.api.lexis.getSelectedText(textSelector, domEvent.target)
     }
   }
