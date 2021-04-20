@@ -63,6 +63,25 @@ describe('detectlang/adapter.test.js', () => {
     expect(result).toEqual('eng')
   }, 50000)
 
+  it('3 DetectLangAdapter - getDetectedLangsList - sourceData - full response - no reliable languages', async () => {
+    let adapter = new DetectLangAdapter({
+      category: 'detectlangGroup',
+      adapterName: 'detectlangMethod',
+      method: 'detectLanguage',
+      sourceData: { data: {
+        detections: [
+          { language: 'en', isReliable: false, confidence: 4.36 },
+          { language: 'pt', isReliable: false, confidence: 5.36 },
+          { language: 'eu', isReliable: false, confidence: 3.36 }
+        ]
+      }}
+    })
+
+    const result = await adapter.getDetectedLangsList('Mare male')
+
+    expect(result).toEqual('por')
+  }, 50000)
+
   it('4 DetectLangAdapter - getDetectedLangsList - sourceData - empty response', async () => {
     let adapter = new DetectLangAdapter({
       category: 'detectlangGroup',
