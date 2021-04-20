@@ -70,10 +70,15 @@ export default class DetectLangAdapter extends BaseAdapter {
    */
   chooseOneLanguage (langsData) {
     if (langsData && langsData.data && langsData.data.detections && langsData.data.detections.length > 0) {
-      const reliableLangs = langsData.data.detections
+      let finalLangs = langsData.data.detections
         .filter(langItem => langItem.isReliable)
-      if (reliableLangs && (reliableLangs.length > 0)) {
-        const lang = reliableLangs.sort((a, b) => a.confidence - b.confidence)
+
+      if (finalLangs.length === 0) {
+        finalLangs = langsData.data.detections
+      }
+
+      if (finalLangs && (finalLangs.length > 0)) {
+        const lang = finalLangs.sort((a, b) => a.confidence - b.confidence)
           .reverse()[0].language
         return LangsList[lang] ? LangsList[lang].langCode : lang
       }
