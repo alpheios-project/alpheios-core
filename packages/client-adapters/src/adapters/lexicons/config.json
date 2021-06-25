@@ -145,5 +145,17 @@
     },
     "description": "\"A Comprehensive Persian-English Dictionary\" (Francis Joseph Steingass)",
     "rights": "\"A Comprehensive Persian-English Dictionary\" (Francis Joseph Steingass). Provided by the Center for Advanced Study of Language (CASL) at the University of Maryland, College Park."
+  },
+  "https://github.com/alpheios-project/paidea-glossary": {
+    "urls": {
+      "short": "https://irina-sklyarova.ru/external/alpheios/lat-1a-reader.dat"
+    },
+    "langs": {
+      "source": "lat",
+      "target": "en"
+    },
+    "format": { "short" :"text/html" },
+    "description": "Definitions derived from Paidea Glossary.",
+    "rights_keys": ""
   }
 }

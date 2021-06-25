@@ -84,6 +84,23 @@
       "labelText": "Lexicons (Short Definitions)",
       "labelL10n": "LEXICONS_SHORT_TITLE",
       "group": {
+        "lat": {
+          "defaultValue": [
+            "empty"
+          ],
+          "labelText": "Latin",
+          "multiValue": true,
+          "values": [
+            {
+              "value": "empty",
+              "text": "Whitaker"
+            },
+            {
+              "value": "https://github.com/alpheios-project/paidea-glossary",
+              "text": "Paidea Glossary"
+            }
+          ]
+        },
         "grc": {
           "defaultValue": [
             "https://github.com/alpheios-project/mjm"

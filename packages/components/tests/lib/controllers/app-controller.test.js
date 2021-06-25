@@ -217,6 +217,7 @@ describe('AppController', () => {
       getMouseMoveOverride: expect.any(Function),
       clearMouseMoveOverride: expect.any(Function),
       applyAllOptions: expect.any(Function),
+      applyResourceOption: expect.any(Function),
       applyUIOption: expect.any(Function),
       applyFeatureOption: expect.any(Function),
       updateLanguage: expect.any(Function),

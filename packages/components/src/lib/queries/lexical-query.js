@@ -216,7 +216,9 @@ export default class LexicalQuery extends Query {
     // if lexicon options are set for short definitions, we want to override any
     // short definitions provided by the maAdapter
     if (lexiconShortOpts.allow && lexiconShortOpts.allow.length > 0) {
-      this.homonym.lexemes.forEach((l) => { l.meaning.clearShortDefs() })
+      if (!lexiconShortOpts.allow.includes('empty')) {
+        this.homonym.lexemes.forEach((l) => { l.meaning.clearShortDefs() })
+      }
 
       if (this._source !== LexicalQuery.sources.WORDLIST) {
         LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)

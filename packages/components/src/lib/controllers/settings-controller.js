@@ -1,5 +1,5 @@
-import Options from '@comp/lib/options/options.js'
-import { Logger } from 'alpheios-data-models'
+// import Options from '@comp/lib/options/options.js'
+import { Logger, Options } from 'alpheios-data-models'
 import FeatureOptionsDefaults from '@comp/settings/feature-options-defaults.json'
 import UIOptionsDefaults from '@comp/settings/ui-options-defaults.json'
 import ResourcesOptionsDefaults from '@comp/settings/language-options-defaults.json'
@@ -30,7 +30,7 @@ export default class SettingsController {
     }
   }
 
-  async init ({ api, store, configServiceUrl, clientId, appName, appVersion, branch, buildNumber, storageAdapter } = {}) {
+  async init ({ api, store, configServiceUrl, clientId, appName, appVersion, branch, buildNumber, storageAdapter, languageOptions } = {}) {
     if (!api) {
       throw new Error('API object is required for a settings controller initialization')
     }
@@ -41,6 +41,7 @@ export default class SettingsController {
     this._api = api
     this._store = store
     this._storageAdapter = storageAdapter
+    this._languageOptions = languageOptions
 
     this._configServiceUrl = configServiceUrl
     this._clientId = clientId
@@ -62,7 +63,9 @@ export default class SettingsController {
        */
       this.initNonConfigurableOptions()
       const [appConfigResponse] = await Promise.all([appConfigPromise, ...initOptionsPromise])
+
       this._appConfig = await appConfigResponse.json() // Parse an app config's response into JSON
+      this.updateLanguageOptDefaults()
     } catch (err) {
       Logger.getInstance().error(`Unable to retrieve an app configuration from ${this._configServiceUrl}: ${err.message}`)
       this._appConfig = this._appConfig || {}
@@ -140,9 +143,23 @@ export default class SettingsController {
    */
   initOptions (StorageAdapter = this._storageAdapter, authData = null) {
     this._featureOptions = new Options(FeatureOptionsDefaults, new StorageAdapter(FeatureOptionsDefaults.domain, authData))
+
     this._resourceOptions = new Options(ResourcesOptionsDefaults, new StorageAdapter(ResourcesOptionsDefaults.domain, authData))
     this._uiOptions = new Options(UIOptionsDefaults, new StorageAdapter(UIOptionsDefaults.domain, authData))
     return [this._featureOptions.load(), this._resourceOptions.load(), this._uiOptions.load()]
+  }
+
+  updateLanguageOptDefaults () {
+    if (this._languageOptions && Object.keys(this._languageOptions).length > 0) {
+      Object.keys(this._languageOptions).forEach(langOptGroup => {
+        if (this._resourceOptions.items[langOptGroup]) {
+          Object.keys(this._languageOptions[langOptGroup]).forEach(optGroupName => {
+            const optItem = this._resourceOptions.items[langOptGroup].find(optItem => Options.parseKey(optItem.name).group === optGroupName)
+            optItem.setValue(this._languageOptions[langOptGroup][optGroupName])
+          })
+        }
+      })
+    }
   }
 
   initNonConfigurableOptions () {
