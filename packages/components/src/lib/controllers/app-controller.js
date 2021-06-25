@@ -269,7 +269,8 @@ export default class AppController {
       arethusaTbRefreshRetryCount: 5,
       arethusaTbRefreshDelay: 200,
       // A URL of a server that provides an app configuration
-      configServiceUrl: 'https://config.alpheios.net/v1/config'
+      configServiceUrl: 'https://config.alpheios.net/v1/config',
+      languageOptions: null
     }
   }
 
@@ -378,7 +379,8 @@ export default class AppController {
       appVersion: this._options.app.version,
       branch: this._options.app.buildBranch,
       buildNumber: this._options.app.buildNumber,
-      storageAdapter: this._options.storageAdapter
+      storageAdapter: this._options.storageAdapter,
+      languageOptions: this._options.languageOptions
     })
     // All options has been loaded and initialized after this point
 
@@ -453,7 +455,9 @@ export default class AppController {
       newLexicalRequest: this.newLexicalRequest.bind(this),
       getWordUsageExamplesQueryParams: this.getWordUsageExamplesQueryParams.bind(this),
 
-      restoreGrammarIndex: this.restoreGrammarIndex.bind(this)
+      restoreGrammarIndex: this.restoreGrammarIndex.bind(this),
+
+      applyResourceOption: this.applyResourceOption.bind(this)
     }
 
     this._store.registerModule('app', {
