@@ -627,7 +627,7 @@ describe('client-adapters.test.js', () => {
     expect(res1.errors).toEqual([])
     expect(res1.result).toEqual(expect.any(Collection))
 
-    expect(res1.result.pagination).toEqual({ first: 1, next: 4, last: 204, previous: 2, current: 3 })
+    expect(res1.result.pagination).toEqual({ first: 1, next: 4, last: 206, previous: 2, current: 3 })
   }, 50000)
 
   it.skip('29 ClientAdapters - dtsApiMethod - getCollection could have pagination', async () => {
