@@ -116,7 +116,7 @@ export default class AppController {
 
     /**
      * `evc` holds an instance of an event controller that handle key events.
-     * It will be initialized at a later stage.
+     * It will be initialized at a later stage of the process.
      *
      * @type {UIEventController}
      */
