@@ -192,6 +192,7 @@ describe('AppController', () => {
   it('AppController - init: should create the App API', async () => {
     appC = AppController.jestCreate(uiState)
     await appC.init()
+    //added method
     expect(appC.api.app).toEqual({
       name: expect.any(String),
       version: expect.any(String),
