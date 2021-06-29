@@ -775,7 +775,7 @@ describe('user-data-manager.test.js', () => {
     expect(resultQuery.length).toEqual(1)
   }, 50000)
 
-  it.skip('21 UserDataManager - clear unsubscribes events', async () => {
+  it('21 UserDataManager - clear unsubscribes events', async () => {
     let mockUnsub = jest.fn()
     let mockEvent = {
       sub: () => {
