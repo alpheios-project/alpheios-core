@@ -1,6 +1,6 @@
 {
   "name": "alpheios-data-models",
-  "version": "3.3.3-incr-3.3.x.20210629273",
+  "version": "3.3.3-incr-3.3.x.20210629291",
   "description": "Alpheios Data Models",
   "private": true,
   "main": "dist/alpheios-data-models.min.js",
