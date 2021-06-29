@@ -23,6 +23,8 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     this.config.lexicons = this.uploadConfig(remoteConfig, DefaultConfig)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
     this.async = Boolean(this.config.callBackEvtSuccess)
+
+    console.info('this.config - ', this.config)
   }
 
   /**
