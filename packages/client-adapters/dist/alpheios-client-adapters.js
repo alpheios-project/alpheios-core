@@ -3548,8 +3548,6 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     this.config.lexicons = this.uploadConfig(remoteConfig, _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
     this.async = Boolean(this.config.callBackEvtSuccess)
-
-    console.info('this.config - ', this.config)
   }
 
   /**
