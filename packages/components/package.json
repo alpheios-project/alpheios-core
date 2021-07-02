@@ -22,6 +22,7 @@
     "test-g": "jest tests/lib/controllers/selection-controller.test.js",
     "test-s": "AUTH_TOKEN=alpheiosMockUserIdlP0DWnmNxe ENDPOINT='https://8wkx9pxc55.execute-api.us-east-2.amazonaws.com/prod/settings' jest tests/lib/options --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-m": "jest tests/lib/custom-pointer-events/ponter-evt.test.js ",
+    "test-p": "jest tests/paideia/paideia-glossary.test.js ",
     "build": "npm run build-safari && npm run build-regular",
     "build-regular": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M all -p vue -c config.mjs",
     "build-safari": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M all -p vue-postcss -c config-safari.mjs",

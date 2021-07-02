@@ -148,7 +148,7 @@
   },
   "https://github.com/alpheios-project/paidea-glossary": {
     "urls": {
-      "short": "https://irina-sklyarova.ru/external/alpheios/lat-1a-reader.dat"
+      "short": "https://repos1.alpheios.net/lexdata/paideia/dat/lat-1a-reader.dat"
     },
     "langs": {
       "source": "lat",

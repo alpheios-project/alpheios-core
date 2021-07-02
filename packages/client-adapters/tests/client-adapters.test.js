@@ -612,7 +612,7 @@ describe('client-adapters.test.js', () => {
 
   })
 
-  it('28 ClientAdapters - dtsApiMethod - getCollection could have pagination', async () => {
+  it.skip('28 ClientAdapters - dtsApiMethod - getCollection could have pagination', async () => {
     ClientAdapters.init()
 
     let res1 = await ClientAdapters.dtsapiGroup.dtsapi({
@@ -645,8 +645,6 @@ describe('client-adapters.test.js', () => {
     expect(resCol.errors).toEqual([])
     expect(resCol.result).toEqual(expect.any(Collection))
 
-    // console.info('resCol.result - ', resCol.result)
-
     let resNav= await ClientAdapters.dtsapiGroup.dtsapi({
       method: 'getNavigation',
       params: {
@@ -657,8 +655,6 @@ describe('client-adapters.test.js', () => {
     })
 
     expect(resNav.errors).toEqual([])
-
-    // console.info('resNav.result - ', resNav.result)
 
     let resDoc= await ClientAdapters.dtsapiGroup.dtsapi({
       method: 'getDocument',

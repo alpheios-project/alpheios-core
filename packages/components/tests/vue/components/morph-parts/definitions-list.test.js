@@ -103,7 +103,7 @@ describe('definitions-list.test.js', () => {
 
     store.commit('app/setTestShortDefUpdateTime', 2)
 
-    console.info('testHomonymGreek', testHomonymGreek.lexemes)
+    // console.info('testHomonymGreek', testHomonymGreek.lexemes)
     // console.info('cmp.vm.lexeme', cmp.vm.lexeme)
 
     expect(cmp.vm.definitions.length).toEqual(1)
