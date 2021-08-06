@@ -494,7 +494,8 @@ export default {
       this.resizedHeight = null
     },
 
-    attachTrackingClick: function (event) {
+    attachTrackingClick (event) {
+      const settingClose = this.settings.getUiOptions().items.hidePopupOnClickAway.currentValue
       /*
       When a popup is dragged outside of the viewport and then moved back
       by an adjustment procedure in dragEndListener(), a drag end mouse release event
@@ -509,7 +510,9 @@ export default {
         event.clientY >= 0 &&
         event.clientY <= this.app.platform.viewport.height
       ) {
-        this.closePopup()
+        if (settingClose) {
+          this.closePopup()
+        }
       }
     },
 

@@ -37,6 +37,12 @@
         @change="uiOptionChanged"
     >
     </setting>
+    <setting
+        :classes="['alpheios-ui-options__item']"
+        :data="uiOptions.items.hidePopupOnClickAway"
+        @change="uiOptionChanged"
+    >
+    </setting>
   </div>
 </template>
 <script>

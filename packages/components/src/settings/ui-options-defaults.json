@@ -151,6 +151,21 @@
       "defaultValue": "docs-editor-container",
       "labelText": "Google Docs Top-Level Container Id",
       "text": true
+    },
+    "hidePopupOnClickAway": {
+      "defaultValue": true,
+      "labelText": "Hide Popup on Clickway",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
     }
   }
 }
