@@ -146,6 +146,7 @@ export default class SettingsController {
 
     this._resourceOptions = new Options(ResourcesOptionsDefaults, new StorageAdapter(ResourcesOptionsDefaults.domain, authData))
     this._uiOptions = new Options(UIOptionsDefaults, new StorageAdapter(UIOptionsDefaults.domain, authData))
+
     return [this._featureOptions.load(), this._resourceOptions.load(), this._uiOptions.load()]
   }
 
@@ -247,7 +248,8 @@ export default class SettingsController {
       'mouseMoveAccuracy',
       'enableMouseMoveLimitedByIdCheck',
       'mouseMoveLimitedById',
-      'forceMouseMoveGoogleDocs'
+      'forceMouseMoveGoogleDocs',
+      'hidePopupOnClickAway'
     ]
     if (nonTextFeatures.includes(name)) {
       this._uiOptions.items[name].setValue(value)

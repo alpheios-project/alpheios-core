@@ -13,6 +13,7 @@
         :searchable="false"
         placeholder="Pick some"
         v-if="dataModel.multiValue"
+        track-by="text"
         v-model="selected"
     >
     </multiselect>
