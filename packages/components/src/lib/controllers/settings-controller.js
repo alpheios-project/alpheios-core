@@ -30,7 +30,7 @@ export default class SettingsController {
     }
   }
 
-  async init ({ api, store, configServiceUrl, clientId, appName, appVersion, branch, buildNumber, storageAdapter, languageOptions } = {}) {
+  async init ({ api, store, configServiceUrl, clientId, appName, appVersion, branch, buildNumber, storageAdapter, languageOptions, uiOptions } = {}) {
     if (!api) {
       throw new Error('API object is required for a settings controller initialization')
     }
@@ -42,6 +42,7 @@ export default class SettingsController {
     this._store = store
     this._storageAdapter = storageAdapter
     this._languageOptions = languageOptions
+    this._uiOutOptions = uiOptions
 
     this._configServiceUrl = configServiceUrl
     this._clientId = clientId
@@ -66,6 +67,7 @@ export default class SettingsController {
 
       this._appConfig = await appConfigResponse.json() // Parse an app config's response into JSON
       this.updateLanguageOptDefaults()
+      this.updateUiOptDefaults()
     } catch (err) {
       Logger.getInstance().error(`Unable to retrieve an app configuration from ${this._configServiceUrl}: ${err.message}`)
       this._appConfig = this._appConfig || {}
@@ -159,6 +161,15 @@ export default class SettingsController {
             optItem.setValue(this._languageOptions[langOptGroup][optGroupName])
           })
         }
+      })
+    }
+  }
+
+  updateUiOptDefaults () {
+    if (this._uiOutOptions && Object.keys(this._uiOutOptions).length > 0) {
+      Object.keys(this._uiOutOptions).forEach(uiOutOptName => {
+        const optItem = this._uiOptions.items[uiOutOptName]
+        optItem.setValue(this._uiOutOptions[uiOutOptName])
       })
     }
   }

@@ -270,7 +270,8 @@ export default class AppController {
       arethusaTbRefreshDelay: 200,
       // A URL of a server that provides an app configuration
       configServiceUrl: 'https://config.alpheios.net/v1/config',
-      languageOptions: null
+      languageOptions: null,
+      uiOptions: null
     }
   }
 
@@ -380,7 +381,8 @@ export default class AppController {
       branch: this._options.app.buildBranch,
       buildNumber: this._options.app.buildNumber,
       storageAdapter: this._options.storageAdapter,
-      languageOptions: this._options.languageOptions
+      languageOptions: this._options.languageOptions,
+      uiOptions: this._options.uiOptions
     })
     // All options has been loaded and initialized after this point
 
