@@ -303,7 +303,7 @@
             },
             {
                 "viewID": "greek_lemma_gender_pronoun_view",
-                "form": "τούτω", "title": "Demonstrative Pronoun Declension"
+                "form": "οὗτος", "title": "Demonstrative Pronoun Declension"
             },
             {
                 "viewID": "greek_gender_pronoun_view",
@@ -315,7 +315,7 @@
             },
             {
                 "viewID": "greek_gender_pronoun_interr_view",
-                "form": "τίνε", "title": "Interrogative Pronoun Declension"
+                "form": "τίς", "title": "Interrogative Pronoun Declension"
             },
             {
                 "viewID": "greek_gender_pronoun_view",
