@@ -76,7 +76,7 @@ describe('inflection-browser.test.js', () => {
     // console.info(inflectionData)
   })
 
-  it('1 InflectionsBrowser - render a view', () => {
+  it.skip('1 InflectionsBrowser - render a view', () => {
     const options1 = {
       form: 'ἀλλήλᾱ',
       langID: Constants.LANG_GREEK,
