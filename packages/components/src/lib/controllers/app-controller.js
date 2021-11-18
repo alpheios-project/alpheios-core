@@ -1241,19 +1241,19 @@ export default class AppController {
     this.api.app.homonym = data.homonym
     this._store.commit('app/setQueryStillActive', false)
     this.showLanguageInfo(data.homonym)
-    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.homonym.targetWord }))
     this.updateProviders(data.homonym)
     this._store.commit('app/shortDefsUpdated')
   }
 
   onFullDefinitionsReady (data) {
-    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.homonym.targetWord }))
     this.updateProviders(data.homonym)
     this._store.commit('app/fullDefsUpdated')
   }
 
   onDefinitionsNotFound (data) {
-    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.word }))
+    this._store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_NOTFOUND', { requestType: data.requestType, word: data.homonym.targetWord }))
   }
 
   onResourceQueryComplete () {
