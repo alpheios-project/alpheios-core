@@ -1194,7 +1194,7 @@ describe('AppController', () => {
 
   it('88 AppController - onShortDefinitionsReady: should update the short definitions data', async () => {
     const homonym = {
-      lexemes: [], language: 'lat'
+      lexemes: [], language: 'lat', targetWord: 'bar'
     }
     appC = AppController.jestCreate(uiState)
     await appC.init()
@@ -1203,7 +1203,7 @@ describe('AppController', () => {
     const showLanguageInfoSpy = jest.spyOn(appC, 'showLanguageInfo')
     expect(appC._store.state.ui.messages).toEqual([])
     expect(appC._store.state.app.shortDefUpdateTime).toBe(0)
-    appC.onShortDefinitionsReady({ homonym, requestType: 'foo', word: 'bar' })
+    appC.onShortDefinitionsReady({ homonym, requestType: 'foo' })
     expect(appC.api.app.homonym).toBe(homonym)
     expect(updateProvidersSpy).toBeCalledTimes(1)
     expect(updateProvidersSpy).toBeCalledWith(homonym)
@@ -1216,7 +1216,7 @@ describe('AppController', () => {
 
   it('89 AppController - onFullDefinitionsReady: should update the full definitions data', async () => {
     const homonym = {
-      lexemes: [], language: 'lat'
+      lexemes: [], language: 'lat', targetWord: 'bar'
     }
     appC = AppController.jestCreate(uiState)
     await appC.init()
@@ -1224,7 +1224,7 @@ describe('AppController', () => {
     const updateProvidersSpy = jest.spyOn(appC, 'updateProviders')
     expect(appC._store.state.ui.messages).toEqual([])
     expect(appC._store.state.app.fullDefUpdateTime).toBe(0)
-    appC.onFullDefinitionsReady({ homonym, requestType: 'foo', word: 'bar' })
+    appC.onFullDefinitionsReady({ homonym, requestType: 'foo' })
     expect(updateProvidersSpy).toBeCalledTimes(1)
     expect(updateProvidersSpy).toBeCalledWith(homonym)
     expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('request is completed successfully. Lemma')])
@@ -1232,9 +1232,12 @@ describe('AppController', () => {
   })
 
   it('90 AppController - onDefinitionsNotFound: should commit a message', async () => {
+    const homonym = {
+      lexemes: [], language: 'lat', targetWord: 'bar'
+    }
     const data = {
-      requestType: 'Test request type',
-      word: 'Test word'
+      homonym,
+      requestType: 'Test request type'
     }
     appC = AppController.jestCreate(uiState)
     await appC.init()
