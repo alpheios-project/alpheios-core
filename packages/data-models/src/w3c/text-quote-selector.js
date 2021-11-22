@@ -47,4 +47,8 @@ export default class TextQuoteSelector {
       this.languageCode === otherTqs.languageCode &&
       checkContextThis === checkContextOther
   }
+
+  updateLanguage (langCode) {
+    this.languageCode = langCode
+  }
 }

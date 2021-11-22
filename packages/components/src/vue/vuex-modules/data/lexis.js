@@ -369,6 +369,7 @@ export default class Lexis extends Module {
       annotatedHomonyms,
       source
     })
+
     const result = lexQuery.getData()
 
     // Hide a CEDICT notification on a new lexical query
