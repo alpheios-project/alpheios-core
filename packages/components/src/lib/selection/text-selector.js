@@ -91,6 +91,7 @@ export default class TextSelector {
   }
 
   updateLanguage (langId, langCode) {
+    console.info('updateLanguage - ', langId, langCode)
     this.languageID = langId
     this.model = LanguageModelFactory.getLanguageModel(this.languageID)
     this.languageCode = langCode

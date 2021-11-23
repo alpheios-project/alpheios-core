@@ -27,6 +27,7 @@ export default class LexicalQuery extends Query {
 
     // Suppress events that will trigger UI messages if source is wordlist
     if (this.selector.textQuoteSelector && this._source !== LexicalQuery.sources.WORDLIST) {
+      console.info('new LexicalQuery', this.selector.languageCode, this.selector.textQuoteSelector.languageCode, this.selector)
       LexicalQuery.evt.TEXT_QUOTE_SELECTOR_RECEIVED.pub(this.selector.textQuoteSelector)
     }
     this.logger = Logger.getInstance()
