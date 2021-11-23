@@ -101,8 +101,8 @@ export default {
     }
   },
   methods: {
-    resetAllOptions: function () {
-      this.settings.resetAllOptions()
+    async resetAllOptions () {
+      await this.settings.resetAllOptions()
       this.app.applyAllOptions()
     }
   }
