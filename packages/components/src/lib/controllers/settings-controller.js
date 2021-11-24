@@ -3,7 +3,6 @@ import { Logger, Options } from 'alpheios-data-models'
 import FeatureOptionsDefaults from '@comp/settings/feature-options-defaults.json'
 import UIOptionsDefaults from '@comp/settings/ui-options-defaults.json'
 import ResourcesOptionsDefaults from '@comp/settings/language-options-defaults.json'
-import SiteOptionsDefaults from '@comp/settings/site-options.json'
 
 export default class SettingsController {
   constructor () {
@@ -176,12 +175,6 @@ export default class SettingsController {
 
   initNonConfigurableOptions () {
     this._siteOptions = [] // eslint-disable-line prefer-const
-    for (const site of SiteOptionsDefaults) {
-      for (const domain of site.options) {
-        const siteOpts = new Options(domain, new this._storageAdapter(domain.domain)) // eslint-disable-line new-cap
-        this._siteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
-      }
-    }
   }
 
   getLexisOptions () {
