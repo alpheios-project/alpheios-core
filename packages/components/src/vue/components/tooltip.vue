@@ -83,7 +83,7 @@ export default {
       color: var(--alpheios-text-color);
       border: 1px solid var(--alpheios-border-color);
       border-radius: uisize(10px);
-      z-index: 1;
+      z-index: 10;
       opacity: 0;
       transition: opacity .6s;
       display: none;
