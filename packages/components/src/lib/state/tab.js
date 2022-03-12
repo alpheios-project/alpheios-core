@@ -33,4 +33,8 @@ export default class Tab {
   static createUniqueId (tabId, windowId) {
     return Symbol.for(`Alpheios_tabId:${tabId.toString()},windowId:${windowId.toString()}`)
   }
+
+  static createUniqueIdNew (tabId, windowId) {
+    return `Alpheios_tabId:${tabId.toString()},windowId:${windowId.toString()}`
+  }
 }
