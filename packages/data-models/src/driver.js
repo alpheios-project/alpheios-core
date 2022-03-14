@@ -47,6 +47,10 @@ import TempStorageArea from './storages/temp-storage-area.js'
 import Collection from './dts/collection.js'
 import Resource from './dts/resource.js'
 
+import Tab from './state/tab.js'
+import TabScript from './state/tab-script.js'
+import UIStateAPI from './state/ui-state-api.js'
+
 export {
   Constants,
   Definition,
@@ -89,5 +93,9 @@ export {
   TempStorageArea,
 
   Collection,
-  Resource
+  Resource,
+
+  Tab,
+  TabScript,
+  UIStateAPI
 }

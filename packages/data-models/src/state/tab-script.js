@@ -1,9 +1,10 @@
-import UIStateAPI from '@/lib/state/ui-state-api.js'
-import Tab from '@/lib/state/tab.js'
+import UIStateAPI from '@/state/ui-state-api.js'
+import Tab from '@/state/tab.js'
 /**
  * Contains a state of a tab (page) content script.
- * @property {Number} tabID - An ID of a tab where the content script is loaded
- * @property {Symbol} status - A status of a current script (Active, Deactivated, Pending)
+ *
+ * @property {number} tabID - An ID of a tab where the content script is loaded
+ * @property {symbol} status - A status of a current script (Active, Deactivated, Pending)
  * @property {panelStatus} panelStatus
  */
 export default class TabScript extends UIStateAPI {
@@ -107,7 +108,8 @@ export default class TabScript extends UIStateAPI {
    * Only certain features will be stored within a serialized version of a TabScript. This is done
    * to prevent context-specific features (such as local event handlers) to be passed over the network
    * to a different context where they would make no sense. This getter returns a list of such fields.
-   * @return {String[]}
+   *
+   * @returns {string[]}
    */
   static get dataProps () {
     return TabScript.symbolProps.concat(TabScript.stringProps).concat(TabScript.booleanProps)
@@ -115,8 +117,9 @@ export default class TabScript extends UIStateAPI {
 
   /**
    * A copy constructor.
+   *
    * @param {TabScript} source - An instance of TabScript object we need to copy.
-   * @return {TabScript} A copy of a source object.
+   * @returns {TabScript} A copy of a source object.
    */
   static create (source) {
     let copy = new TabScript() // eslint-disable-line prefer-const
@@ -155,9 +158,10 @@ export default class TabScript extends UIStateAPI {
 
   /**
    * Sets a watcher function that is called every time a property is changed using a setItem() method.
-   * @param {String} property - A name of a property that should be monitored
+   *
+   * @param {string} property - A name of a property that should be monitored
    * @param {Function} watchFunc - A function that will be called every time a property changes
-   * @return {TabScript} Reference to self for chaining
+   * @returns {TabScript} Reference to self for chaining
    */
   setWatcher (property, watchFunc) {
     this.watchers.set(property, watchFunc)
@@ -169,9 +173,10 @@ export default class TabScript extends UIStateAPI {
    * there is no way to know if a property was changed. However, if a property was changed using setItem() method,
    * and if there is a watcher function registered for a changed property name,
    * this function will be called on every property change, passing a changed property name as an argument.
+   *
    * @param key
    * @param value
-   * @return {TabScript}
+   * @returns {TabScript}
    */
   setItem (key, value) {
     this[key] = value
@@ -308,8 +313,9 @@ export default class TabScript extends UIStateAPI {
    * Compares the current state with a targetState. A targetState is a state to where the current state should transform.
    * If any field value in the state is undefined, it means that there is no transformation goal for this field
    * (i.e we don't care about it value). Because of this, we will not include such fields into a diff result.
+   *
    * @param targetState
-   * @return {{_changedKeys: Array, _changedEntries: Array}}
+   * @returns {{_changedKeys: Array, _changedEntries: Array}}
    */
   diff (targetState) {
     let diff = { // eslint-disable-line prefer-const
@@ -362,8 +368,9 @@ export default class TabScript extends UIStateAPI {
    * Requirements of this algorithm are that a serializable object to have no Function or Error properties,
    * neither any DOM Nodes. That's why an empty serializable object is created and only
    * selected properties are copied into it.
+   *
    * @param {TabScript} source - An object to be serialized.
-   * @return {Object} A serializable copy of a source.
+   * @returns {object} A serializable copy of a source.
    */
   static serializable (source) {
     let serializable = {} // eslint-disable-line prefer-const

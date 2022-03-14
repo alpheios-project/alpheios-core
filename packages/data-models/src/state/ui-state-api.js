@@ -39,9 +39,10 @@ export default class UIStateAPI {
    * there is no way to know if a property was changed. However, if a property was changed using setItem() method,
    * and if there is a watcher function registered for a changed property name,
    * this function will be called on every property change, passing a changed property name as an argument.
+   *
    * @param key
    * @param value
-   * @return {UIStateAPI}
+   * @returns {UIStateAPI}
    */
   setItem (key, value) {
     this[key] = value
@@ -53,9 +54,10 @@ export default class UIStateAPI {
 
   /**
    * Sets a watcher function that is called every time a property is changed using a setItem() method.
-   * @param {String} property - A name of a property that should be monitored
+   *
+   * @param {string} property - A name of a property that should be monitored
    * @param {Function} watchFunc - A function that will be called every time a property changes
-   * @return {UIStateAPI} Reference to self for chaining
+   * @returns {UIStateAPI} Reference to self for chaining
    */
   setWatcher (property, watchFunc) {
     this.watchers.set(property, watchFunc)
@@ -64,7 +66,8 @@ export default class UIStateAPI {
 
   /**
    * Check if the state of the panel is open
-   * @return {boolean} true if open false if closed
+   *
+   * @returns {boolean} true if open false if closed
    */
   isPanelOpen () {
     return false
@@ -72,7 +75,8 @@ export default class UIStateAPI {
 
   /**
    * Check if the state of the panel is closed
-   * @return {boolean} true if closed false if open
+   *
+   * @returns {boolean} true if closed false if open
    */
   isPanelClosed () {
     return false
@@ -80,7 +84,8 @@ export default class UIStateAPI {
 
   /**
    * Set the state of the panel to open
-   * @return {UIStateAPI} the updated state object
+   *
+   * @returns {UIStateAPI} the updated state object
    */
   setPanelOpen () {
     return this
@@ -88,7 +93,8 @@ export default class UIStateAPI {
 
   /**
    * Set the state of the panel to closed
-   * @return {UIStateAPI} the updated state object
+   *
+   * @returns {UIStateAPI} the updated state object
    */
   setPanelClosed () {
     return this
@@ -96,7 +102,8 @@ export default class UIStateAPI {
 
   /**
    * Check if the state of the UI is active (i.e. fully loaded and ready to use)
-   * @return {boolean} true if active false if not
+   *
+   * @returns {boolean} true if active false if not
    */
   uiIsActive () {
     return false
@@ -104,7 +111,8 @@ export default class UIStateAPI {
 
   /**
    * Set the state of the UI to active (i.e. fully loaded and ready to use)
-   * @return {IState} the updated state object
+   *
+   * @returns {IState} the updated state object
    */
   activateUI () {
     return this
@@ -112,8 +120,9 @@ export default class UIStateAPI {
 
   /**
    * Set the currently active panel tab
-   * @param {String} tabName name of the tab
-   * @return {UIStateAPI} the updated state object
+   *
+   * @param {string} tabName name of the tab
+   * @returns {UIStateAPI} the updated state object
    */
   changeTab (tabName) {
     return this
