@@ -9150,8 +9150,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ TabScript)
 /* harmony export */ });
-Object(function webpackMissingModule() { var e = new Error("Cannot find module '@/state/ui-state-api.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-Object(function webpackMissingModule() { var e = new Error("Cannot find module '@/state/tab.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _ui_state_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui-state-api.js */ "./state/ui-state-api.js");
+/* harmony import */ var _tab_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab.js */ "./state/tab.js");
 
 
 /**
@@ -9161,7 +9161,7 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
  * @property {symbol} status - A status of a current script (Active, Deactivated, Pending)
  * @property {panelStatus} panelStatus
  */
-class TabScript extends Object(function webpackMissingModule() { var e = new Error("Cannot find module '@/state/ui-state-api.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()) {
+class TabScript extends _ui_state_api_js__WEBPACK_IMPORTED_MODULE_0__.default {
   constructor (tabObj) {
     super()
     this.tabID = tabObj ? tabObj.uniqueId : undefined
@@ -9176,7 +9176,7 @@ class TabScript extends Object(function webpackMissingModule() { var e = new Err
   }
 
   updateTabObject (tabId, windowId) {
-    this.tabObj = new Object(function webpackMissingModule() { var e = new Error("Cannot find module '@/state/tab.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(tabId, windowId)
+    this.tabObj = new _tab_js__WEBPACK_IMPORTED_MODULE_1__.default(tabId, windowId)
     this.tabID = this.tabObj.uniqueId
     return this
   }
@@ -9546,7 +9546,7 @@ class TabScript extends Object(function webpackMissingModule() { var e = new Err
   }
 
   static readObject (jsonObject) {
-    const tabObj = (jsonObject.tabObj && jsonObject.tabObj.tabId && jsonObject.tabObj.windowId) ? new Object(function webpackMissingModule() { var e = new Error("Cannot find module '@/state/tab.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(jsonObject.tabObj.tabId, jsonObject.tabObj.windowId, jsonObject.tabObj.status) : undefined
+    const tabObj = (jsonObject.tabObj && jsonObject.tabObj.tabId && jsonObject.tabObj.windowId) ? new _tab_js__WEBPACK_IMPORTED_MODULE_1__.default(jsonObject.tabObj.tabId, jsonObject.tabObj.windowId, jsonObject.tabObj.status) : undefined
     let tabScript = new TabScript(tabObj) // eslint-disable-line prefer-const
 
     for (const prop of TabScript.symbolProps) {

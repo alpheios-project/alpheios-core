@@ -1,5 +1,5 @@
-import UIStateAPI from '@/state/ui-state-api.js'
-import Tab from '@/state/tab.js'
+import UIStateAPI from './ui-state-api.js'
+import Tab from './tab.js'
 /**
  * Contains a state of a tab (page) content script.
  *
