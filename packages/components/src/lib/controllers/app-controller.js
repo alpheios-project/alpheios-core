@@ -384,6 +384,7 @@ export default class AppController {
       languageOptions: this._options.languageOptions,
       uiOptions: this._options.uiOptions
     })
+
     // All options has been loaded and initialized after this point
 
     // The following options will be applied to all logging done via a single Logger instance

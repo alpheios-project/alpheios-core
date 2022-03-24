@@ -11364,7 +11364,7 @@ class Tab {
   }
 
   get uniqueId () {
-    return this.constructor.createUniqueId(this.tabId, this.windowId)
+    return this.constructor.createUniqueIdNew(this.tabId, this.windowId)
   }
 
   get isDeattached () {
