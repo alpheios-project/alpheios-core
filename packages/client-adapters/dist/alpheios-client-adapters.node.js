@@ -18,7 +18,7 @@ return /******/ (() => { // webpackBootstrap
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.1\",\"C:\\\\_Alpheios\\\\alpheios-core\"]],\"_from\":\"axios@0.21.1\",\"_id\":\"axios@0.21.1\",\"_inBundle\":false,\"_integrity\":\"sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.1\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.1\",\"saveSpec\":null,\"fetchSpec\":\"0.21.1\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.1.tgz\",\"_spec\":\"0.21.1\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.10.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.1\"}");
+module.exports = JSON.parse("{\"_from\":\"axios@^0.21.0\",\"_id\":\"axios@0.21.4\",\"_inBundle\":false,\"_integrity\":\"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"^0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz\",\"_shasum\":\"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575\",\"_spec\":\"axios@^0.21.0\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.14.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.3.0\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^23.0.0\",\"grunt-karma\":\"^4.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^4.0.2\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^6.3.2\",\"karma-chrome-launcher\":\"^3.1.0\",\"karma-firefox-launcher\":\"^2.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^4.3.6\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.8\",\"karma-webpack\":\"^4.0.2\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^8.2.1\",\"sinon\":\"^4.5.0\",\"terser-webpack-plugin\":\"^4.2.3\",\"typescript\":\"^4.0.5\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^4.44.2\",\"webpack-dev-server\":\"^3.11.0\"},\"homepage\":\"https://axios-http.com\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.4\"}");
 
 /***/ }),
 
@@ -95,9 +95,16 @@ module.exports = function httpAdapter(config) {
     var headers = config.headers;
 
     // Set User-Agent (required by some servers)
-    // Only set header if it hasn't been set in config
     // See https://github.com/axios/axios/issues/69
-    if (!headers['User-Agent'] && !headers['user-agent']) {
+    if ('User-Agent' in headers || 'user-agent' in headers) {
+      // User-Agent is specified; handle case where no UA header is desired
+      if (!headers['User-Agent'] && !headers['user-agent']) {
+        delete headers['User-Agent'];
+        delete headers['user-agent'];
+      }
+      // Otherwise, use specified value
+    } else {
+      // Only set header if it hasn't been set in config
       headers['User-Agent'] = 'axios/' + pkg.version;
     }
 
@@ -272,11 +279,13 @@ module.exports = function httpAdapter(config) {
         settle(resolve, reject, response);
       } else {
         var responseBuffer = [];
+        var totalResponseBytes = 0;
         stream.on('data', function handleStreamData(chunk) {
           responseBuffer.push(chunk);
+          totalResponseBytes += chunk.length;
 
           // make sure the content length is not over the maxContentLength if specified
-          if (config.maxContentLength > -1 && Buffer.concat(responseBuffer).length > config.maxContentLength) {
+          if (config.maxContentLength > -1 && totalResponseBytes > config.maxContentLength) {
             stream.destroy();
             reject(createError('maxContentLength size of ' + config.maxContentLength + ' exceeded',
               config, null, lastRequest));
@@ -311,14 +320,33 @@ module.exports = function httpAdapter(config) {
 
     // Handle request timeout
     if (config.timeout) {
+      // This is forcing a int timeout to avoid problems if the `req` interface doesn't handle other types.
+      var timeout = parseInt(config.timeout, 10);
+
+      if (isNaN(timeout)) {
+        reject(createError(
+          'error trying to parse `config.timeout` to int',
+          config,
+          'ERR_PARSE_TIMEOUT',
+          req
+        ));
+
+        return;
+      }
+
       // Sometime, the response will be very slow, and does not respond, the connect event will be block by event loop system.
       // And timer callback will be fired, and abort() will be invoked before connection, then get "socket hang up" and code ECONNRESET.
       // At this time, if we have a large number of request, nodejs will hang up some socket on background. and the number will up and up.
       // And then these socket which be hang up will devoring CPU little by little.
       // ClientRequest.setTimeout will be fired on the specify milliseconds, and can make sure that abort() will be fired after connect.
-      req.setTimeout(config.timeout, function handleRequestTimeout() {
+      req.setTimeout(timeout, function handleRequestTimeout() {
         req.abort();
-        reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED', req));
+        reject(createError(
+          'timeout of ' + timeout + 'ms exceeded',
+          config,
+          config.transitional && config.transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED',
+          req
+        ));
       });
     }
 
@@ -368,6 +396,7 @@ module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
     var requestData = config.data;
     var requestHeaders = config.headers;
+    var responseType = config.responseType;
 
     if (utils.isFormData(requestData)) {
       delete requestHeaders['Content-Type']; // Let the browser set it
@@ -388,23 +417,14 @@ module.exports = function xhrAdapter(config) {
     // Set the request timeout in MS
     request.timeout = config.timeout;
 
-    // Listen for ready state
-    request.onreadystatechange = function handleLoad() {
-      if (!request || request.readyState !== 4) {
+    function onloadend() {
+      if (!request) {
         return;
       }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
       // Prepare the response
       var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var responseData = !responseType || responseType === 'text' ||  responseType === 'json' ?
+        request.responseText : request.response;
       var response = {
         data: responseData,
         status: request.status,
@@ -418,7 +438,30 @@ module.exports = function xhrAdapter(config) {
 
       // Clean up request
       request = null;
-    };
+    }
+
+    if ('onloadend' in request) {
+      // Use onloadend if available
+      request.onloadend = onloadend;
+    } else {
+      // Listen for ready state to emulate onloadend
+      request.onreadystatechange = function handleLoad() {
+        if (!request || request.readyState !== 4) {
+          return;
+        }
+
+        // The request errored out and we didn't get a response, this will be
+        // handled by onerror instead
+        // With one exception: request that using file: protocol, most browsers
+        // will return status as 0 even though it's a successful request
+        if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+          return;
+        }
+        // readystate handler is calling before onerror or ontimeout handlers,
+        // so we should call onloadend on the next 'tick'
+        setTimeout(onloadend);
+      };
+    }
 
     // Handle browser request cancellation (as opposed to a manual cancellation)
     request.onabort = function handleAbort() {
@@ -448,7 +491,10 @@ module.exports = function xhrAdapter(config) {
       if (config.timeoutErrorMessage) {
         timeoutErrorMessage = config.timeoutErrorMessage;
       }
-      reject(createError(timeoutErrorMessage, config, 'ECONNABORTED',
+      reject(createError(
+        timeoutErrorMessage,
+        config,
+        config.transitional && config.transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED',
         request));
 
       // Clean up request
@@ -488,16 +534,8 @@ module.exports = function xhrAdapter(config) {
     }
 
     // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-        if (config.responseType !== 'json') {
-          throw e;
-        }
-      }
+    if (responseType && responseType !== 'json') {
+      request.responseType = config.responseType;
     }
 
     // Handle progress if needed
@@ -731,7 +769,9 @@ var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "../../../node_mod
 var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "../../../node_modules/axios/lib/core/InterceptorManager.js");
 var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "../../../node_modules/axios/lib/core/dispatchRequest.js");
 var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "../../../node_modules/axios/lib/core/mergeConfig.js");
+var validator = __webpack_require__(/*! ../helpers/validator */ "../../../node_modules/axios/lib/helpers/validator.js");
 
+var validators = validator.validators;
 /**
  * Create a new instance of Axios
  *
@@ -771,20 +811,71 @@ Axios.prototype.request = function request(config) {
     config.method = 'get';
   }
 
-  // Hook up interceptors middleware
-  var chain = [dispatchRequest, undefined];
-  var promise = Promise.resolve(config);
+  var transitional = config.transitional;
 
+  if (transitional !== undefined) {
+    validator.assertOptions(transitional, {
+      silentJSONParsing: validators.transitional(validators.boolean, '1.0.0'),
+      forcedJSONParsing: validators.transitional(validators.boolean, '1.0.0'),
+      clarifyTimeoutError: validators.transitional(validators.boolean, '1.0.0')
+    }, false);
+  }
+
+  // filter out skipped interceptors
+  var requestInterceptorChain = [];
+  var synchronousRequestInterceptors = true;
   this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
-    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+    if (typeof interceptor.runWhen === 'function' && interceptor.runWhen(config) === false) {
+      return;
+    }
+
+    synchronousRequestInterceptors = synchronousRequestInterceptors && interceptor.synchronous;
+
+    requestInterceptorChain.unshift(interceptor.fulfilled, interceptor.rejected);
   });
 
+  var responseInterceptorChain = [];
   this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
-    chain.push(interceptor.fulfilled, interceptor.rejected);
+    responseInterceptorChain.push(interceptor.fulfilled, interceptor.rejected);
   });
 
-  while (chain.length) {
-    promise = promise.then(chain.shift(), chain.shift());
+  var promise;
+
+  if (!synchronousRequestInterceptors) {
+    var chain = [dispatchRequest, undefined];
+
+    Array.prototype.unshift.apply(chain, requestInterceptorChain);
+    chain = chain.concat(responseInterceptorChain);
+
+    promise = Promise.resolve(config);
+    while (chain.length) {
+      promise = promise.then(chain.shift(), chain.shift());
+    }
+
+    return promise;
+  }
+
+
+  var newConfig = config;
+  while (requestInterceptorChain.length) {
+    var onFulfilled = requestInterceptorChain.shift();
+    var onRejected = requestInterceptorChain.shift();
+    try {
+      newConfig = onFulfilled(newConfig);
+    } catch (error) {
+      onRejected(error);
+      break;
+    }
+  }
+
+  try {
+    promise = dispatchRequest(newConfig);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  while (responseInterceptorChain.length) {
+    promise = promise.then(responseInterceptorChain.shift(), responseInterceptorChain.shift());
   }
 
   return promise;
@@ -846,10 +937,12 @@ function InterceptorManager() {
  *
  * @return {Number} An ID used to remove interceptor later
  */
-InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+InterceptorManager.prototype.use = function use(fulfilled, rejected, options) {
   this.handlers.push({
     fulfilled: fulfilled,
-    rejected: rejected
+    rejected: rejected,
+    synchronous: options ? options.synchronous : false,
+    runWhen: options ? options.runWhen : null
   });
   return this.handlers.length - 1;
 };
@@ -982,7 +1075,8 @@ module.exports = function dispatchRequest(config) {
   config.headers = config.headers || {};
 
   // Transform request data
-  config.data = transformData(
+  config.data = transformData.call(
+    config,
     config.data,
     config.headers,
     config.transformRequest
@@ -1008,7 +1102,8 @@ module.exports = function dispatchRequest(config) {
     throwIfCancellationRequested(config);
 
     // Transform response data
-    response.data = transformData(
+    response.data = transformData.call(
+      config,
       response.data,
       response.headers,
       config.transformResponse
@@ -1021,7 +1116,8 @@ module.exports = function dispatchRequest(config) {
 
       // Transform response data
       if (reason && reason.response) {
-        reason.response.data = transformData(
+        reason.response.data = transformData.call(
+          config,
           reason.response.data,
           reason.response.headers,
           config.transformResponse
@@ -1233,6 +1329,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+var defaults = __webpack_require__(/*! ./../defaults */ "../../../node_modules/axios/lib/defaults.js");
 
 /**
  * Transform the data for a request or a response
@@ -1243,9 +1340,10 @@ var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/l
  * @returns {*} The resulting transformed data
  */
 module.exports = function transformData(data, headers, fns) {
+  var context = this || defaults;
   /*eslint no-param-reassign:0*/
   utils.forEach(fns, function transform(fn) {
-    data = fn(data, headers);
+    data = fn.call(context, data, headers);
   });
 
   return data;
@@ -1265,6 +1363,7 @@ module.exports = function transformData(data, headers, fns) {
 
 var utils = __webpack_require__(/*! ./utils */ "../../../node_modules/axios/lib/utils.js");
 var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js");
+var enhanceError = __webpack_require__(/*! ./core/enhanceError */ "../../../node_modules/axios/lib/core/enhanceError.js");
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -1288,12 +1387,35 @@ function getDefaultAdapter() {
   return adapter;
 }
 
+function stringifySafely(rawValue, parser, encoder) {
+  if (utils.isString(rawValue)) {
+    try {
+      (parser || JSON.parse)(rawValue);
+      return utils.trim(rawValue);
+    } catch (e) {
+      if (e.name !== 'SyntaxError') {
+        throw e;
+      }
+    }
+  }
+
+  return (encoder || JSON.stringify)(rawValue);
+}
+
 var defaults = {
+
+  transitional: {
+    silentJSONParsing: true,
+    forcedJSONParsing: true,
+    clarifyTimeoutError: false
+  },
+
   adapter: getDefaultAdapter(),
 
   transformRequest: [function transformRequest(data, headers) {
     normalizeHeaderName(headers, 'Accept');
     normalizeHeaderName(headers, 'Content-Type');
+
     if (utils.isFormData(data) ||
       utils.isArrayBuffer(data) ||
       utils.isBuffer(data) ||
@@ -1310,20 +1432,32 @@ var defaults = {
       setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
       return data.toString();
     }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
+    if (utils.isObject(data) || (headers && headers['Content-Type'] === 'application/json')) {
+      setContentTypeIfUnset(headers, 'application/json');
+      return stringifySafely(data);
     }
     return data;
   }],
 
   transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
+    var transitional = this.transitional;
+    var silentJSONParsing = transitional && transitional.silentJSONParsing;
+    var forcedJSONParsing = transitional && transitional.forcedJSONParsing;
+    var strictJSONParsing = !silentJSONParsing && this.responseType === 'json';
+
+    if (strictJSONParsing || (forcedJSONParsing && utils.isString(data) && data.length)) {
       try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
+        return JSON.parse(data);
+      } catch (e) {
+        if (strictJSONParsing) {
+          if (e.name === 'SyntaxError') {
+            throw enhanceError(e, this, 'E_JSON_PARSE');
+          }
+          throw e;
+        }
+      }
     }
+
     return data;
   }],
 
@@ -1806,6 +1940,122 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
+/***/ "../../../node_modules/axios/lib/helpers/validator.js":
+/*!************************************************************!*\
+  !*** ../../../node_modules/axios/lib/helpers/validator.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var pkg = __webpack_require__(/*! ./../../package.json */ "../../../node_modules/axios/package.json");
+
+var validators = {};
+
+// eslint-disable-next-line func-names
+['object', 'boolean', 'number', 'function', 'string', 'symbol'].forEach(function(type, i) {
+  validators[type] = function validator(thing) {
+    return typeof thing === type || 'a' + (i < 1 ? 'n ' : ' ') + type;
+  };
+});
+
+var deprecatedWarnings = {};
+var currentVerArr = pkg.version.split('.');
+
+/**
+ * Compare package versions
+ * @param {string} version
+ * @param {string?} thanVersion
+ * @returns {boolean}
+ */
+function isOlderVersion(version, thanVersion) {
+  var pkgVersionArr = thanVersion ? thanVersion.split('.') : currentVerArr;
+  var destVer = version.split('.');
+  for (var i = 0; i < 3; i++) {
+    if (pkgVersionArr[i] > destVer[i]) {
+      return true;
+    } else if (pkgVersionArr[i] < destVer[i]) {
+      return false;
+    }
+  }
+  return false;
+}
+
+/**
+ * Transitional option validator
+ * @param {function|boolean?} validator
+ * @param {string?} version
+ * @param {string} message
+ * @returns {function}
+ */
+validators.transitional = function transitional(validator, version, message) {
+  var isDeprecated = version && isOlderVersion(version);
+
+  function formatMessage(opt, desc) {
+    return '[Axios v' + pkg.version + '] Transitional option \'' + opt + '\'' + desc + (message ? '. ' + message : '');
+  }
+
+  // eslint-disable-next-line func-names
+  return function(value, opt, opts) {
+    if (validator === false) {
+      throw new Error(formatMessage(opt, ' has been removed in ' + version));
+    }
+
+    if (isDeprecated && !deprecatedWarnings[opt]) {
+      deprecatedWarnings[opt] = true;
+      // eslint-disable-next-line no-console
+      console.warn(
+        formatMessage(
+          opt,
+          ' has been deprecated since v' + version + ' and will be removed in the near future'
+        )
+      );
+    }
+
+    return validator ? validator(value, opt, opts) : true;
+  };
+};
+
+/**
+ * Assert object's properties type
+ * @param {object} options
+ * @param {object} schema
+ * @param {boolean?} allowUnknown
+ */
+
+function assertOptions(options, schema, allowUnknown) {
+  if (typeof options !== 'object') {
+    throw new TypeError('options must be an object');
+  }
+  var keys = Object.keys(options);
+  var i = keys.length;
+  while (i-- > 0) {
+    var opt = keys[i];
+    var validator = schema[opt];
+    if (validator) {
+      var value = options[opt];
+      var result = value === undefined || validator(value, opt, options);
+      if (result !== true) {
+        throw new TypeError('option ' + opt + ' must be ' + result);
+      }
+      continue;
+    }
+    if (allowUnknown !== true) {
+      throw Error('Unknown option ' + opt);
+    }
+  }
+}
+
+module.exports = {
+  isOlderVersion: isOlderVersion,
+  assertOptions: assertOptions,
+  validators: validators
+};
+
+
+/***/ }),
+
 /***/ "../../../node_modules/axios/lib/utils.js":
 /*!************************************************!*\
   !*** ../../../node_modules/axios/lib/utils.js ***!
@@ -1816,8 +2066,6 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "../../../node_modules/axios/lib/helpers/bind.js");
-
-/*global toString:true*/
 
 // utils is a library of generic helper functions non-specific to axios
 
@@ -2002,7 +2250,7 @@ function isURLSearchParams(val) {
  * @returns {String} The String freed of excess whitespace
  */
 function trim(str) {
-  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+  return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g, '');
 }
 
 /**
@@ -2867,7 +3115,8 @@ module.exports = function () {
       /* eslint global-require: off */
       debug = __webpack_require__(/*! debug */ "../../../node_modules/debug/src/index.js")("follow-redirects");
     }
-    catch (error) {
+    catch (error) { /* */ }
+    if (typeof debug !== "function") {
       debug = function () { /* */ };
     }
   }
@@ -2892,8 +3141,9 @@ var assert = __webpack_require__(/*! assert */ "assert");
 var debug = __webpack_require__(/*! ./debug */ "../../../node_modules/follow-redirects/debug.js");
 
 // Create handlers that pass events from native requests
+var events = ["abort", "aborted", "connect", "error", "socket", "timeout"];
 var eventHandlers = Object.create(null);
-["abort", "aborted", "connect", "error", "socket", "timeout"].forEach(function (event) {
+events.forEach(function (event) {
   eventHandlers[event] = function (arg1, arg2, arg3) {
     this._redirectable.emit(event, arg1, arg2, arg3);
   };
@@ -2902,7 +3152,7 @@ var eventHandlers = Object.create(null);
 // Error types with codes
 var RedirectionError = createErrorType(
   "ERR_FR_REDIRECTION_FAILURE",
-  ""
+  "Redirected request failed"
 );
 var TooManyRedirectsError = createErrorType(
   "ERR_FR_TOO_MANY_REDIRECTS",
@@ -2947,14 +3197,8 @@ function RedirectableRequest(options, responseCallback) {
 RedirectableRequest.prototype = Object.create(Writable.prototype);
 
 RedirectableRequest.prototype.abort = function () {
-  // Abort the internal request
-  this._currentRequest.removeAllListeners();
-  this._currentRequest.on("error", noop);
-  this._currentRequest.abort();
-
-  // Abort this request
+  abortRequest(this._currentRequest);
   this.emit("abort");
-  this.removeAllListeners();
 };
 
 // Writes buffered data to the current native request
@@ -3037,12 +3281,16 @@ RedirectableRequest.prototype.removeHeader = function (name) {
 // Global timeout for all underlying requests
 RedirectableRequest.prototype.setTimeout = function (msecs, callback) {
   var self = this;
-  if (callback) {
-    this.on("timeout", callback);
+
+  // Destroys the socket on timeout
+  function destroyOnTimeout(socket) {
+    socket.setTimeout(msecs);
+    socket.removeListener("timeout", socket.destroy);
+    socket.addListener("timeout", socket.destroy);
   }
 
   // Sets up a timer to trigger a timeout event
-  function startTimer() {
+  function startTimer(socket) {
     if (self._timeout) {
       clearTimeout(self._timeout);
     }
@@ -3050,29 +3298,47 @@ RedirectableRequest.prototype.setTimeout = function (msecs, callback) {
       self.emit("timeout");
       clearTimer();
     }, msecs);
+    destroyOnTimeout(socket);
   }
 
-  // Prevent a timeout from triggering
+  // Stops a timeout from triggering
   function clearTimer() {
-    clearTimeout(this._timeout);
+    // Clear the timeout
+    if (self._timeout) {
+      clearTimeout(self._timeout);
+      self._timeout = null;
+    }
+
+    // Clean up all attached listeners
+    self.removeListener("abort", clearTimer);
+    self.removeListener("error", clearTimer);
+    self.removeListener("response", clearTimer);
     if (callback) {
       self.removeListener("timeout", callback);
     }
-    if (!this.socket) {
+    if (!self.socket) {
       self._currentRequest.removeListener("socket", startTimer);
     }
   }
 
-  // Start the timer when the socket is opened
+  // Attach callback if passed
+  if (callback) {
+    this.on("timeout", callback);
+  }
+
+  // Start the timer if or when the socket is opened
   if (this.socket) {
-    startTimer();
+    startTimer(this.socket);
   }
   else {
     this._currentRequest.once("socket", startTimer);
   }
 
-  this.once("response", clearTimer);
-  this.once("error", clearTimer);
+  // Clean up on events
+  this.on("socket", destroyOnTimeout);
+  this.on("abort", clearTimer);
+  this.on("error", clearTimer);
+  this.on("response", clearTimer);
 
   return this;
 };
@@ -3149,11 +3415,8 @@ RedirectableRequest.prototype._performRequest = function () {
 
   // Set up event handlers
   request._redirectable = this;
-  for (var event in eventHandlers) {
-    /* istanbul ignore else */
-    if (event) {
-      request.on(event, eventHandlers[event]);
-    }
+  for (var e = 0; e < events.length; e++) {
+    request.on(events[e], eventHandlers[events[e]]);
   }
 
   // End a redirected request
@@ -3207,86 +3470,101 @@ RedirectableRequest.prototype._processResponse = function (response) {
   // the user agent MAY automatically redirect its request to the URI
   // referenced by the Location field value,
   // even if the specific status code is not understood.
+
+  // If the response is not a redirect; return it as-is
   var location = response.headers.location;
-  if (location && this._options.followRedirects !== false &&
-      statusCode >= 300 && statusCode < 400) {
-    // Abort the current request
-    this._currentRequest.removeAllListeners();
-    this._currentRequest.on("error", noop);
-    this._currentRequest.abort();
-    // Discard the remainder of the response to avoid waiting for data
-    response.destroy();
-
-    // RFC7231§6.4: A client SHOULD detect and intervene
-    // in cyclical redirections (i.e., "infinite" redirection loops).
-    if (++this._redirectCount > this._options.maxRedirects) {
-      this.emit("error", new TooManyRedirectsError());
-      return;
-    }
-
-    // RFC7231§6.4: Automatic redirection needs to done with
-    // care for methods not known to be safe, […]
-    // RFC7231§6.4.2–3: For historical reasons, a user agent MAY change
-    // the request method from POST to GET for the subsequent request.
-    if ((statusCode === 301 || statusCode === 302) && this._options.method === "POST" ||
-        // RFC7231§6.4.4: The 303 (See Other) status code indicates that
-        // the server is redirecting the user agent to a different resource […]
-        // A user agent can perform a retrieval request targeting that URI
-        // (a GET or HEAD request if using HTTP) […]
-        (statusCode === 303) && !/^(?:GET|HEAD)$/.test(this._options.method)) {
-      this._options.method = "GET";
-      // Drop a possible entity and headers related to it
-      this._requestBodyBuffers = [];
-      removeMatchingHeaders(/^content-/i, this._options.headers);
-    }
-
-    // Drop the Host header, as the redirect might lead to a different host
-    var previousHostName = removeMatchingHeaders(/^host$/i, this._options.headers) ||
-      url.parse(this._currentUrl).hostname;
-
-    // Create the redirected request
-    var redirectUrl = url.resolve(this._currentUrl, location);
-    debug("redirecting to", redirectUrl);
-    this._isRedirect = true;
-    var redirectUrlParts = url.parse(redirectUrl);
-    Object.assign(this._options, redirectUrlParts);
-
-    // Drop the Authorization header if redirecting to another host
-    if (redirectUrlParts.hostname !== previousHostName) {
-      removeMatchingHeaders(/^authorization$/i, this._options.headers);
-    }
-
-    // Evaluate the beforeRedirect callback
-    if (typeof this._options.beforeRedirect === "function") {
-      var responseDetails = { headers: response.headers };
-      try {
-        this._options.beforeRedirect.call(null, this._options, responseDetails);
-      }
-      catch (err) {
-        this.emit("error", err);
-        return;
-      }
-      this._sanitizeOptions(this._options);
-    }
-
-    // Perform the redirected request
-    try {
-      this._performRequest();
-    }
-    catch (cause) {
-      var error = new RedirectionError("Redirected request failed: " + cause.message);
-      error.cause = cause;
-      this.emit("error", error);
-    }
-  }
-  else {
-    // The response is not a redirect; return it as-is
+  if (!location || this._options.followRedirects === false ||
+      statusCode < 300 || statusCode >= 400) {
     response.responseUrl = this._currentUrl;
     response.redirects = this._redirects;
     this.emit("response", response);
 
     // Clean up
     this._requestBodyBuffers = [];
+    return;
+  }
+
+  // The response is a redirect, so abort the current request
+  abortRequest(this._currentRequest);
+  // Discard the remainder of the response to avoid waiting for data
+  response.destroy();
+
+  // RFC7231§6.4: A client SHOULD detect and intervene
+  // in cyclical redirections (i.e., "infinite" redirection loops).
+  if (++this._redirectCount > this._options.maxRedirects) {
+    this.emit("error", new TooManyRedirectsError());
+    return;
+  }
+
+  // RFC7231§6.4: Automatic redirection needs to done with
+  // care for methods not known to be safe, […]
+  // RFC7231§6.4.2–3: For historical reasons, a user agent MAY change
+  // the request method from POST to GET for the subsequent request.
+  if ((statusCode === 301 || statusCode === 302) && this._options.method === "POST" ||
+      // RFC7231§6.4.4: The 303 (See Other) status code indicates that
+      // the server is redirecting the user agent to a different resource […]
+      // A user agent can perform a retrieval request targeting that URI
+      // (a GET or HEAD request if using HTTP) […]
+      (statusCode === 303) && !/^(?:GET|HEAD)$/.test(this._options.method)) {
+    this._options.method = "GET";
+    // Drop a possible entity and headers related to it
+    this._requestBodyBuffers = [];
+    removeMatchingHeaders(/^content-/i, this._options.headers);
+  }
+
+  // Drop the Host header, as the redirect might lead to a different host
+  var currentHostHeader = removeMatchingHeaders(/^host$/i, this._options.headers);
+
+  // If the redirect is relative, carry over the host of the last request
+  var currentUrlParts = url.parse(this._currentUrl);
+  var currentHost = currentHostHeader || currentUrlParts.host;
+  var currentUrl = /^\w+:/.test(location) ? this._currentUrl :
+    url.format(Object.assign(currentUrlParts, { host: currentHost }));
+
+  // Determine the URL of the redirection
+  var redirectUrl;
+  try {
+    redirectUrl = url.resolve(currentUrl, location);
+  }
+  catch (cause) {
+    this.emit("error", new RedirectionError(cause));
+    return;
+  }
+
+  // Create the redirected request
+  debug("redirecting to", redirectUrl);
+  this._isRedirect = true;
+  var redirectUrlParts = url.parse(redirectUrl);
+  Object.assign(this._options, redirectUrlParts);
+
+  // Drop confidential headers when redirecting to a less secure protocol
+  // or to a different domain that is not a superdomain
+  if (redirectUrlParts.protocol !== currentUrlParts.protocol &&
+     redirectUrlParts.protocol !== "https:" ||
+     redirectUrlParts.host !== currentHost &&
+     !isSubdomain(redirectUrlParts.host, currentHost)) {
+    removeMatchingHeaders(/^(?:authorization|cookie)$/i, this._options.headers);
+  }
+
+  // Evaluate the beforeRedirect callback
+  if (typeof this._options.beforeRedirect === "function") {
+    var responseDetails = { headers: response.headers };
+    try {
+      this._options.beforeRedirect.call(null, this._options, responseDetails);
+    }
+    catch (err) {
+      this.emit("error", err);
+      return;
+    }
+    this._sanitizeOptions(this._options);
+  }
+
+  // Perform the redirected request
+  try {
+    this._performRequest();
+  }
+  catch (cause) {
+    this.emit("error", new RedirectionError(cause));
   }
 };
 
@@ -3390,19 +3668,39 @@ function removeMatchingHeaders(regex, headers) {
       delete headers[header];
     }
   }
-  return lastValue;
+  return (lastValue === null || typeof lastValue === "undefined") ?
+    undefined : String(lastValue).trim();
 }
 
 function createErrorType(code, defaultMessage) {
-  function CustomError(message) {
+  function CustomError(cause) {
     Error.captureStackTrace(this, this.constructor);
-    this.message = message || defaultMessage;
+    if (!cause) {
+      this.message = defaultMessage;
+    }
+    else {
+      this.message = defaultMessage + ": " + cause.message;
+      this.cause = cause;
+    }
   }
   CustomError.prototype = new Error();
   CustomError.prototype.constructor = CustomError;
   CustomError.prototype.name = "Error [" + code + "]";
   CustomError.prototype.code = code;
   return CustomError;
+}
+
+function abortRequest(request) {
+  for (var e = 0; e < events.length; e++) {
+    request.removeListener(events[e], eventHandlers[events[e]]);
+  }
+  request.on("error", noop);
+  request.abort();
+}
+
+function isSubdomain(subdomain, domain) {
+  const dot = subdomain.length - domain.length - 1;
+  return dot > 0 && subdomain[dot] === "." && subdomain.endsWith(domain);
 }
 
 // Exports
@@ -7275,7 +7573,8 @@ class ClientAdapters {
       adapterName: 'detectlang',
       method: options.method,
       clientId: options.clientId,
-      sourceData: options.params.sourceData
+      sourceData: options.params.sourceData,
+      api: options.params.api
     })
 
     if (options.method === 'getDetectedLangsList') {
@@ -8187,7 +8486,7 @@ module.exports = JSON.parse("{\"url\":\"https://latin.packhum.org/rst/concordanc
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("{\"baseurl\":\"https://ws.detectlanguage.com/0.2/detect\",\"api\":\"30e63bcc426af7b7c650aab568ed9ad7\"}");
+module.exports = JSON.parse("{\"baseurl\":\"https://ws.detectlanguage.com/0.2/detect\"}");
 
 /***/ }),
 
