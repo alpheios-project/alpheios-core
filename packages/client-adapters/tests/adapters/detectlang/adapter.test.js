@@ -21,7 +21,7 @@ describe('detectlang/adapter.test.js', () => {
     jest.clearAllMocks()
   })
 
-  it('1 DetectLangAdapter - constructor uploads config, available', () => {
+  it.skip('1 DetectLangAdapter - constructor uploads config, available', () => {
     let adapter = new DetectLangAdapter({
       category: 'detectlangGroup',
       adapterName: 'detectlangMethod',
@@ -44,7 +44,7 @@ describe('detectlang/adapter.test.js', () => {
     expect(result).toEqual('eng')
   }, 50000)
 
-  it('3 DetectLangAdapter - getDetectedLangsList - sourceData - full response', async () => {
+  it.skip('3 DetectLangAdapter - getDetectedLangsList - sourceData - full response', async () => {
     let adapter = new DetectLangAdapter({
       category: 'detectlangGroup',
       adapterName: 'detectlangMethod',
@@ -63,7 +63,7 @@ describe('detectlang/adapter.test.js', () => {
     expect(result).toEqual('eng')
   }, 50000)
 
-  it('3 DetectLangAdapter - getDetectedLangsList - sourceData - full response - no reliable languages', async () => {
+  it.skip('3 DetectLangAdapter - getDetectedLangsList - sourceData - full response - no reliable languages', async () => {
     let adapter = new DetectLangAdapter({
       category: 'detectlangGroup',
       adapterName: 'detectlangMethod',
@@ -82,7 +82,7 @@ describe('detectlang/adapter.test.js', () => {
     expect(result).toEqual('por')
   }, 50000)
 
-  it('4 DetectLangAdapter - getDetectedLangsList - sourceData - empty response', async () => {
+  it.skip('4 DetectLangAdapter - getDetectedLangsList - sourceData - empty response', async () => {
     let adapter = new DetectLangAdapter({
       category: 'detectlangGroup',
       adapterName: 'detectlangMethod',
@@ -97,7 +97,7 @@ describe('detectlang/adapter.test.js', () => {
   }, 50000)
 
 
-  it('5 DetectLangAdapter - getDetectedLangsList - not enough data for url', async () => {
+  it.skip('5 DetectLangAdapter - getDetectedLangsList - not enough data for url', async () => {
     let adapter = new DetectLangAdapter({
       category: 'detectlangGroup',
       adapterName: 'detectlangMethod',
@@ -109,7 +109,7 @@ describe('detectlang/adapter.test.js', () => {
     expect(adapter.errors.length).toEqual(1)
   }, 50000)
 
-  it('6 DetectLangAdapter - getDetectedLangsList - errors on fetching', async () => {
+  it.skip('6 DetectLangAdapter - getDetectedLangsList - errors on fetching', async () => {
     let adapter = new DetectLangAdapter({
       category: 'detectlangGroup',
       adapterName: 'detectlangMethod',
