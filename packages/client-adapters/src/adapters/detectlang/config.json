@@ -1,4 +1,3 @@
 {
-  "baseurl": "https://ws.detectlanguage.com/0.2/detect",
-  "api": "30e63bcc426af7b7c650aab568ed9ad7"
+  "baseurl": "https://ws.detectlanguage.com/0.2/detect"
 }
