@@ -279,8 +279,8 @@ var _a;
 
 
 
-var SPACE_SEPARATOR_START_REGEX = new RegExp("^" + _regex_generated__WEBPACK_IMPORTED_MODULE_2__.SPACE_SEPARATOR_REGEX.source + "*");
-var SPACE_SEPARATOR_END_REGEX = new RegExp(_regex_generated__WEBPACK_IMPORTED_MODULE_2__.SPACE_SEPARATOR_REGEX.source + "*$");
+var SPACE_SEPARATOR_START_REGEX = new RegExp("^".concat(_regex_generated__WEBPACK_IMPORTED_MODULE_2__.SPACE_SEPARATOR_REGEX.source, "*"));
+var SPACE_SEPARATOR_END_REGEX = new RegExp("".concat(_regex_generated__WEBPACK_IMPORTED_MODULE_2__.SPACE_SEPARATOR_REGEX.source, "*$"));
 function createLocation(start, end) {
     return { start: start, end: end };
 }
@@ -527,7 +527,7 @@ var Parser = /** @class */ (function () {
             return {
                 val: {
                     type: _types__WEBPACK_IMPORTED_MODULE_1__.TYPE.literal,
-                    value: "<" + tagName + "/>",
+                    value: "<".concat(tagName, "/>"),
                     location: createLocation(startPosition, this.clonePosition()),
                 },
                 err: null,
@@ -1133,7 +1133,7 @@ var Parser = /** @class */ (function () {
         }
         var code = codePointAt(this.message, offset);
         if (code === undefined) {
-            throw Error("Offset " + offset + " is at invalid UTF-16 code unit boundary");
+            throw Error("Offset ".concat(offset, " is at invalid UTF-16 code unit boundary"));
         }
         return code;
     };
@@ -1201,7 +1201,7 @@ var Parser = /** @class */ (function () {
      */
     Parser.prototype.bumpTo = function (targetOffset) {
         if (this.offset() > targetOffset) {
-            throw Error("targetOffset " + targetOffset + " must be greater than or equal to the current offset " + this.offset());
+            throw Error("targetOffset ".concat(targetOffset, " must be greater than or equal to the current offset ").concat(this.offset()));
         }
         targetOffset = Math.min(targetOffset, this.message.length);
         while (true) {
@@ -1210,7 +1210,7 @@ var Parser = /** @class */ (function () {
                 break;
             }
             if (offset > targetOffset) {
-                throw Error("targetOffset " + targetOffset + " is at invalid UTF-16 code unit boundary");
+                throw Error("targetOffset ".concat(targetOffset, " is at invalid UTF-16 code unit boundary"));
             }
             this.bump();
             if (this.isEOF()) {
@@ -3031,7 +3031,7 @@ var FormatError = /** @class */ (function (_super) {
         return _this;
     }
     FormatError.prototype.toString = function () {
-        return "[formatjs Error: " + this.code + "] " + this.message;
+        return "[formatjs Error: ".concat(this.code, "] ").concat(this.message);
     };
     return FormatError;
 }(Error));
@@ -3039,7 +3039,7 @@ var FormatError = /** @class */ (function (_super) {
 var InvalidValueError = /** @class */ (function (_super) {
     (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__extends)(InvalidValueError, _super);
     function InvalidValueError(variableId, value, options, originalMessage) {
-        return _super.call(this, "Invalid values for \"" + variableId + "\": \"" + value + "\". Options are \"" + Object.keys(options).join('", "') + "\"", ErrorCode.INVALID_VALUE, originalMessage) || this;
+        return _super.call(this, "Invalid values for \"".concat(variableId, "\": \"").concat(value, "\". Options are \"").concat(Object.keys(options).join('", "'), "\""), ErrorCode.INVALID_VALUE, originalMessage) || this;
     }
     return InvalidValueError;
 }(FormatError));
@@ -3047,7 +3047,7 @@ var InvalidValueError = /** @class */ (function (_super) {
 var InvalidValueTypeError = /** @class */ (function (_super) {
     (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__extends)(InvalidValueTypeError, _super);
     function InvalidValueTypeError(value, type, originalMessage) {
-        return _super.call(this, "Value for \"" + value + "\" must be of type " + type, ErrorCode.INVALID_VALUE, originalMessage) || this;
+        return _super.call(this, "Value for \"".concat(value, "\" must be of type ").concat(type), ErrorCode.INVALID_VALUE, originalMessage) || this;
     }
     return InvalidValueTypeError;
 }(FormatError));
@@ -3055,7 +3055,7 @@ var InvalidValueTypeError = /** @class */ (function (_super) {
 var MissingValueError = /** @class */ (function (_super) {
     (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__extends)(MissingValueError, _super);
     function MissingValueError(variableId, originalMessage) {
-        return _super.call(this, "The intl string context variable \"" + variableId + "\" was not provided to the string \"" + originalMessage + "\"", ErrorCode.MISSING_VALUE, originalMessage) || this;
+        return _super.call(this, "The intl string context variable \"".concat(variableId, "\" was not provided to the string \"").concat(originalMessage, "\""), ErrorCode.MISSING_VALUE, originalMessage) || this;
     }
     return MissingValueError;
 }(FormatError));
@@ -3142,7 +3142,7 @@ originalMessage) {
         }
         var varName = el.value;
         // Enforce that all required values are provided by the caller.
-        if (!(values && values[varName] != null)) {
+        if (!(values && varName in values)) {
             throw new _error__WEBPACK_IMPORTED_MODULE_1__.MissingValueError(varName, originalMessage);
         }
         var value = values[varName];
@@ -3236,7 +3236,7 @@ originalMessage) {
             continue;
         }
         if ((0,_formatjs_icu_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__.isPluralElement)(el)) {
-            var opt = el.options["=" + value];
+            var opt = el.options["=".concat(value)];
             if (!opt) {
                 if (!Intl.PluralRules) {
                     throw new _error__WEBPACK_IMPORTED_MODULE_1__.FormatError("Intl.PluralRules is not available in this environment.\nTry polyfilling it using \"@formatjs/intl-pluralrules\"\n", _error__WEBPACK_IMPORTED_MODULE_1__.ErrorCode.MISSING_INTL_API, originalMessage);
