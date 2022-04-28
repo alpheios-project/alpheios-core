@@ -2720,11 +2720,11 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-worditem__targetWord {
   font-weight: bold;
-  width: calc((100% - 250px)/2);
+  width: calc((100% - 250px) / 2);
   cursor: pointer;
 }
 .alpheios-worditem__lemmasList {
-  width: calc((100% - 250px)/2);
+  width: calc((100% - 250px) / 2);
 }
 .alpheios-worditem__frequency {
   width: 20px;
