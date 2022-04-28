@@ -100,7 +100,7 @@
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^4.2.3",
     "uuid": "^3.4.0",
-    "vue": "^2.6.12",
+    "vue": "^2.6.14",
     "vue-eslint-parser": "^7.2.0",
     "vue-jest": "^3.0.7",
     "vue-loader": "^15.9.5",
