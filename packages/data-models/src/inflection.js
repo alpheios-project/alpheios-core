@@ -147,7 +147,7 @@ class Inflection {
    * Sets grammar properties based on inflection info
    */
   setConstraints () {
-    if (this.model.hasOwnProperty('getInflectionConstraints')) {
+    if (this.model.hasOwnProperty('getInflectionConstraints')) { // eslint-disable-line no-prototype-builtins
       const constraintData = this.model.getInflectionConstraints(this)
       this.constraints = Object.assign(this.constraints, constraintData)
     }
@@ -168,8 +168,8 @@ class Inflection {
    */
   smartWordCompare (word, className, options = {}) {
     // Default values
-    if (!options.hasOwnProperty('normalize')) { options.normalize = true }
-    if (!options.hasOwnProperty('fuzzySuffix')) { options.fuzzySuffix = false }
+    if (!options.hasOwnProperty('normalize')) { options.normalize = true } // eslint-disable-line no-prototype-builtins
+    if (!options.hasOwnProperty('fuzzySuffix')) { options.fuzzySuffix = false } // eslint-disable-line no-prototype-builtins
 
     let value
     if (!this.constraints.irregular) {
@@ -278,7 +278,7 @@ class Inflection {
    * Values are taken from features and stored in a 'feature.type' property as an array of values.
    * @param {Feature | Feature[]} data
    */
-  set feature (data) {
+  set feature (data) { // eslint-disable-line accessor-pairs
     Logger.getInstance().warn('Please use "addFeature" instead.')
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
@@ -352,7 +352,7 @@ class Inflection {
    * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
   hasFeatureValue (featureName, featureValue, { normalize = false } = {}) {
-    if (this.hasOwnProperty(featureName)) {
+    if (this.hasOwnProperty(featureName)) { // eslint-disable-line no-prototype-builtins
       return this[featureName].values.some(v => this.modelCompareFeatureValue(featureName, v, featureValue))
     }
     return false

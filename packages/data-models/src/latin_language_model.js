@@ -227,7 +227,7 @@ export default class LatinLanguageModel extends LanguageModel {
       suffixBased: false,
       pronounClassRequired: false
     }
-    if (inflection.hasOwnProperty(Feature.types.part)) {
+    if (inflection.hasOwnProperty(Feature.types.part)) { // eslint-disable-line no-prototype-builtins
       if ([Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE, Constants.POFS_SUPINE, Constants.POFS_GERUNDIVE].includes(inflection[Feature.types.part].value)) {
         grammar.fullFormBased = true
         grammar.suffixBased = true

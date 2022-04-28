@@ -16,12 +16,17 @@ return /******/ (() => { // webpackBootstrap
 /*!*****************************************************************!*\
   !*** ../../../node_modules/@formatjs/fast-memoize/lib/index.js ***!
   \*****************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export strategies [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ memoize),
-/* harmony export */   "strategies": () => (/* binding */ strategies)
+/* harmony export */   "default": () => /* binding */ memoize,
+/* harmony export */   "strategies": () => /* binding */ strategies
 /* harmony export */ });
 //
 // Main
@@ -105,15 +110,121 @@ var strategies = {
 
 /***/ }),
 
-/***/ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/error.js":
-/*!*****************************************************************************!*\
-  !*** ../../../node_modules/@formatjs/icu-messageformat-parser/lib/error.js ***!
-  \*****************************************************************************/
+/***/ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/date-time-pattern-generator.js":
+/*!***************************************************************************************************!*\
+  !*** ../../../node_modules/@formatjs/icu-messageformat-parser/lib/date-time-pattern-generator.js ***!
+  \***************************************************************************************************/
+/*! namespace exports */
+/*! export getBestPattern [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ErrorKind": () => (/* binding */ ErrorKind)
+/* harmony export */   "getBestPattern": () => /* binding */ getBestPattern
+/* harmony export */ });
+/* harmony import */ var _time_data_generated__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./time-data.generated */ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/time-data.generated.js");
+;
+/**
+ * Returns the best matching date time pattern if a date time skeleton
+ * pattern is provided with a locale. Follows the Unicode specification:
+ * https://www.unicode.org/reports/tr35/tr35-dates.html#table-mapping-requested-time-skeletons-to-patterns
+ * @param skeleton date time skeleton pattern that possibly includes j, J or C
+ * @param locale
+ */
+function getBestPattern(skeleton, locale) {
+    var skeletonCopy = '';
+    for (var patternPos = 0; patternPos < skeleton.length; patternPos++) {
+        var patternChar = skeleton.charAt(patternPos);
+        if (patternChar === 'j') {
+            var extraLength = 0;
+            while (patternPos + 1 < skeleton.length &&
+                skeleton.charAt(patternPos + 1) === patternChar) {
+                extraLength++;
+                patternPos++;
+            }
+            var hourLen = 1 + (extraLength & 1);
+            var dayPeriodLen = extraLength < 2 ? 1 : 3 + (extraLength >> 1);
+            var dayPeriodChar = 'a';
+            var hourChar = getDefaultHourSymbolFromLocale(locale);
+            if (hourChar == 'H' || hourChar == 'k') {
+                dayPeriodLen = 0;
+            }
+            while (dayPeriodLen-- > 0) {
+                skeletonCopy += dayPeriodChar;
+            }
+            while (hourLen-- > 0) {
+                skeletonCopy = hourChar + skeletonCopy;
+            }
+        }
+        else if (patternChar === 'J') {
+            skeletonCopy += 'H';
+        }
+        else {
+            skeletonCopy += patternChar;
+        }
+    }
+    return skeletonCopy;
+}
+/**
+ * Maps the [hour cycle type](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/hourCycle)
+ * of the given `locale` to the corresponding time pattern.
+ * @param locale
+ */
+function getDefaultHourSymbolFromLocale(locale) {
+    var hourCycle = locale.hourCycle;
+    if (hourCycle === undefined &&
+        // @ts-ignore hourCycle(s) is not identified yet
+        locale.hourCycles &&
+        // @ts-ignore
+        locale.hourCycles.length) {
+        // @ts-ignore
+        hourCycle = locale.hourCycles[0];
+    }
+    if (hourCycle) {
+        switch (hourCycle) {
+            case 'h24':
+                return 'k';
+            case 'h23':
+                return 'H';
+            case 'h12':
+                return 'h';
+            case 'h11':
+                return 'K';
+            default:
+                throw new Error('Invalid hourCycle');
+        }
+    }
+    // TODO: Once hourCycle is fully supported remove the following with data generation
+    var languageTag = locale.language;
+    var regionTag;
+    if (languageTag !== 'root') {
+        regionTag = locale.maximize().region;
+    }
+    var hourCycles = _time_data_generated__WEBPACK_IMPORTED_MODULE_0__.timeData[regionTag || ''] ||
+        _time_data_generated__WEBPACK_IMPORTED_MODULE_0__.timeData[languageTag || ''] ||
+        _time_data_generated__WEBPACK_IMPORTED_MODULE_0__.timeData["".concat(languageTag, "-001")] ||
+        _time_data_generated__WEBPACK_IMPORTED_MODULE_0__.timeData["001"];
+    return hourCycles[0];
+}
+
+
+/***/ }),
+
+/***/ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/error.js":
+/*!*****************************************************************************!*\
+  !*** ../../../node_modules/@formatjs/icu-messageformat-parser/lib/error.js ***!
+  \*****************************************************************************/
+/*! namespace exports */
+/*! export ErrorKind [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ErrorKind": () => /* binding */ ErrorKind
 /* harmony export */ });
 var ErrorKind;
 (function (ErrorKind) {
@@ -186,32 +297,51 @@ var ErrorKind;
 /*!*****************************************************************************!*\
   !*** ../../../node_modules/@formatjs/icu-messageformat-parser/lib/index.js ***!
   \*****************************************************************************/
+/*! namespace exports */
+/*! export SKELETON_TYPE [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .SKELETON_TYPE */
+/*! export TYPE [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .TYPE */
+/*! export createLiteralElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .createLiteralElement */
+/*! export createNumberElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .createNumberElement */
+/*! export isArgumentElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isArgumentElement */
+/*! export isDateElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isDateElement */
+/*! export isDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isDateTimeSkeleton */
+/*! export isLiteralElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isLiteralElement */
+/*! export isNumberElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isNumberElement */
+/*! export isNumberSkeleton [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isNumberSkeleton */
+/*! export isPluralElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isPluralElement */
+/*! export isPoundElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isPoundElement */
+/*! export isSelectElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isSelectElement */
+/*! export isTagElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isTagElement */
+/*! export isTimeElement [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js .isTimeElement */
+/*! export parse [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "parse": () => (/* binding */ parse),
-/* harmony export */   "SKELETON_TYPE": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.SKELETON_TYPE),
-/* harmony export */   "TYPE": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.TYPE),
-/* harmony export */   "createLiteralElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.createLiteralElement),
-/* harmony export */   "createNumberElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.createNumberElement),
-/* harmony export */   "isArgumentElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isArgumentElement),
-/* harmony export */   "isDateElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isDateElement),
-/* harmony export */   "isDateTimeSkeleton": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isDateTimeSkeleton),
-/* harmony export */   "isLiteralElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isLiteralElement),
-/* harmony export */   "isNumberElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isNumberElement),
-/* harmony export */   "isNumberSkeleton": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isNumberSkeleton),
-/* harmony export */   "isPluralElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isPluralElement),
-/* harmony export */   "isPoundElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isPoundElement),
-/* harmony export */   "isSelectElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isSelectElement),
-/* harmony export */   "isTagElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isTagElement),
-/* harmony export */   "isTimeElement": () => (/* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isTimeElement)
+/* harmony export */   "parse": () => /* binding */ parse,
+/* harmony export */   "SKELETON_TYPE": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.SKELETON_TYPE,
+/* harmony export */   "TYPE": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.TYPE,
+/* harmony export */   "createLiteralElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.createLiteralElement,
+/* harmony export */   "createNumberElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.createNumberElement,
+/* harmony export */   "isArgumentElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isArgumentElement,
+/* harmony export */   "isDateElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isDateElement,
+/* harmony export */   "isDateTimeSkeleton": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isDateTimeSkeleton,
+/* harmony export */   "isLiteralElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isLiteralElement,
+/* harmony export */   "isNumberElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isNumberElement,
+/* harmony export */   "isNumberSkeleton": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isNumberSkeleton,
+/* harmony export */   "isPluralElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isPluralElement,
+/* harmony export */   "isPoundElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isPoundElement,
+/* harmony export */   "isSelectElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isSelectElement,
+/* harmony export */   "isTagElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isTagElement,
+/* harmony export */   "isTimeElement": () => /* reexport safe */ _types__WEBPACK_IMPORTED_MODULE_2__.isTimeElement
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ "../../../node_modules/@formatjs/icu-messageformat-parser/node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./error */ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/error.js");
 /* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parser */ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/parser.js");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./types */ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js");
-
+;
 
 
 
@@ -262,18 +392,24 @@ function parse(message, opts) {
 /*!******************************************************************************!*\
   !*** ../../../node_modules/@formatjs/icu-messageformat-parser/lib/parser.js ***!
   \******************************************************************************/
+/*! namespace exports */
+/*! export Parser [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Parser": () => (/* binding */ Parser)
+/* harmony export */   "Parser": () => /* binding */ Parser
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ "../../../node_modules/@formatjs/icu-messageformat-parser/node_modules/tslib/tslib.es6.js");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ "../../../node_modules/@formatjs/icu-messageformat-parser/node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./error */ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/error.js");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js");
 /* harmony import */ var _regex_generated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./regex.generated */ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/regex.generated.js");
 /* harmony import */ var _formatjs_icu_skeleton_parser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @formatjs/icu-skeleton-parser */ "../../../node_modules/@formatjs/icu-skeleton-parser/lib/index.js");
+/* harmony import */ var _date_time_pattern_generator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./date-time-pattern-generator */ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/date-time-pattern-generator.js");
 var _a;
+
 
 
 
@@ -437,6 +573,7 @@ var Parser = /** @class */ (function () {
         this.message = message;
         this.position = { offset: 0, line: 1, column: 1 };
         this.ignoreTag = !!options.ignoreTag;
+        this.locale = options.locale;
         this.requiresOtherClause = !!options.requiresOtherClause;
         this.shouldParseSkeletons = !!options.shouldParseSkeletons;
     }
@@ -812,12 +949,19 @@ var Parser = /** @class */ (function () {
                         if (skeleton.length === 0) {
                             return this.error(_error__WEBPACK_IMPORTED_MODULE_0__.ErrorKind.EXPECT_DATE_TIME_SKELETON, location_1);
                         }
+                        var dateTimePattern = skeleton;
+                        // Get "best match" pattern only if locale is passed, if not, let it
+                        // pass as-is where `parseDateTimeSkeleton()` will throw an error
+                        // for unsupported patterns.
+                        if (this.locale) {
+                            dateTimePattern = (0,_date_time_pattern_generator__WEBPACK_IMPORTED_MODULE_4__.getBestPattern)(skeleton, this.locale);
+                        }
                         var style = {
                             type: _types__WEBPACK_IMPORTED_MODULE_1__.SKELETON_TYPE.dateTime,
-                            pattern: skeleton,
+                            pattern: dateTimePattern,
                             location: styleAndLocation.styleLocation,
                             parsedOptions: this.shouldParseSkeletons
-                                ? (0,_formatjs_icu_skeleton_parser__WEBPACK_IMPORTED_MODULE_3__.parseDateTimeSkeleton)(skeleton)
+                                ? (0,_formatjs_icu_skeleton_parser__WEBPACK_IMPORTED_MODULE_3__.parseDateTimeSkeleton)(dateTimePattern)
                                 : {},
                         };
                         var type = argType === 'date' ? _types__WEBPACK_IMPORTED_MODULE_1__.TYPE.date : _types__WEBPACK_IMPORTED_MODULE_1__.TYPE.time;
@@ -851,7 +995,7 @@ var Parser = /** @class */ (function () {
                 var typeEndPosition_1 = this.clonePosition();
                 this.bumpSpace();
                 if (!this.bumpIf(',')) {
-                    return this.error(_error__WEBPACK_IMPORTED_MODULE_0__.ErrorKind.EXPECT_SELECT_ARGUMENT_OPTIONS, createLocation(typeEndPosition_1, (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__assign)({}, typeEndPosition_1)));
+                    return this.error(_error__WEBPACK_IMPORTED_MODULE_0__.ErrorKind.EXPECT_SELECT_ARGUMENT_OPTIONS, createLocation(typeEndPosition_1, (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__assign)({}, typeEndPosition_1)));
                 }
                 this.bumpSpace();
                 // Parse offset:
@@ -1548,12 +1692,17 @@ function _isPatternSyntax(c) {
 /*!***************************************************************************************!*\
   !*** ../../../node_modules/@formatjs/icu-messageformat-parser/lib/regex.generated.js ***!
   \***************************************************************************************/
+/*! namespace exports */
+/*! export SPACE_SEPARATOR_REGEX [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export WHITE_SPACE_REGEX [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "SPACE_SEPARATOR_REGEX": () => (/* binding */ SPACE_SEPARATOR_REGEX),
-/* harmony export */   "WHITE_SPACE_REGEX": () => (/* binding */ WHITE_SPACE_REGEX)
+/* harmony export */   "SPACE_SEPARATOR_REGEX": () => /* binding */ SPACE_SEPARATOR_REGEX,
+/* harmony export */   "WHITE_SPACE_REGEX": () => /* binding */ WHITE_SPACE_REGEX
 /* harmony export */ });
 // @generated from regex-gen.ts
 var SPACE_SEPARATOR_REGEX = /[ \xA0\u1680\u2000-\u200A\u202F\u205F\u3000]/;
@@ -1562,29 +1711,1404 @@ var WHITE_SPACE_REGEX = /[\t-\r \x85\u200E\u200F\u2028\u2029]/;
 
 /***/ }),
 
-/***/ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js":
-/*!*****************************************************************************!*\
-  !*** ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js ***!
-  \*****************************************************************************/
+/***/ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/time-data.generated.js":
+/*!*******************************************************************************************!*\
+  !*** ../../../node_modules/@formatjs/icu-messageformat-parser/lib/time-data.generated.js ***!
+  \*******************************************************************************************/
+/*! namespace exports */
+/*! export timeData [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TYPE": () => (/* binding */ TYPE),
-/* harmony export */   "SKELETON_TYPE": () => (/* binding */ SKELETON_TYPE),
-/* harmony export */   "isLiteralElement": () => (/* binding */ isLiteralElement),
-/* harmony export */   "isArgumentElement": () => (/* binding */ isArgumentElement),
-/* harmony export */   "isNumberElement": () => (/* binding */ isNumberElement),
-/* harmony export */   "isDateElement": () => (/* binding */ isDateElement),
-/* harmony export */   "isTimeElement": () => (/* binding */ isTimeElement),
-/* harmony export */   "isSelectElement": () => (/* binding */ isSelectElement),
-/* harmony export */   "isPluralElement": () => (/* binding */ isPluralElement),
-/* harmony export */   "isPoundElement": () => (/* binding */ isPoundElement),
-/* harmony export */   "isTagElement": () => (/* binding */ isTagElement),
-/* harmony export */   "isNumberSkeleton": () => (/* binding */ isNumberSkeleton),
-/* harmony export */   "isDateTimeSkeleton": () => (/* binding */ isDateTimeSkeleton),
-/* harmony export */   "createLiteralElement": () => (/* binding */ createLiteralElement),
-/* harmony export */   "createNumberElement": () => (/* binding */ createNumberElement)
+/* harmony export */   "timeData": () => /* binding */ timeData
+/* harmony export */ });
+// @generated from time-data-gen.ts
+// prettier-ignore  
+var timeData = {
+    "AX": [
+        "H"
+    ],
+    "BQ": [
+        "H"
+    ],
+    "CP": [
+        "H"
+    ],
+    "CZ": [
+        "H"
+    ],
+    "DK": [
+        "H"
+    ],
+    "FI": [
+        "H"
+    ],
+    "ID": [
+        "H"
+    ],
+    "IS": [
+        "H"
+    ],
+    "ML": [
+        "H"
+    ],
+    "NE": [
+        "H"
+    ],
+    "RU": [
+        "H"
+    ],
+    "SE": [
+        "H"
+    ],
+    "SJ": [
+        "H"
+    ],
+    "SK": [
+        "H"
+    ],
+    "AS": [
+        "h",
+        "H"
+    ],
+    "BT": [
+        "h",
+        "H"
+    ],
+    "DJ": [
+        "h",
+        "H"
+    ],
+    "ER": [
+        "h",
+        "H"
+    ],
+    "GH": [
+        "h",
+        "H"
+    ],
+    "IN": [
+        "h",
+        "H"
+    ],
+    "LS": [
+        "h",
+        "H"
+    ],
+    "PG": [
+        "h",
+        "H"
+    ],
+    "PW": [
+        "h",
+        "H"
+    ],
+    "SO": [
+        "h",
+        "H"
+    ],
+    "TO": [
+        "h",
+        "H"
+    ],
+    "VU": [
+        "h",
+        "H"
+    ],
+    "WS": [
+        "h",
+        "H"
+    ],
+    "001": [
+        "H",
+        "h"
+    ],
+    "AL": [
+        "h",
+        "H",
+        "hB"
+    ],
+    "TD": [
+        "h",
+        "H",
+        "hB"
+    ],
+    "ca-ES": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "CF": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "CM": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "fr-CA": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "gl-ES": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "it-CH": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "it-IT": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "LU": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "NP": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "PF": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "SC": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "SM": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "SN": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "TF": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "VA": [
+        "H",
+        "h",
+        "hB"
+    ],
+    "CY": [
+        "h",
+        "H",
+        "hb",
+        "hB"
+    ],
+    "GR": [
+        "h",
+        "H",
+        "hb",
+        "hB"
+    ],
+    "CO": [
+        "h",
+        "H",
+        "hB",
+        "hb"
+    ],
+    "DO": [
+        "h",
+        "H",
+        "hB",
+        "hb"
+    ],
+    "KP": [
+        "h",
+        "H",
+        "hB",
+        "hb"
+    ],
+    "KR": [
+        "h",
+        "H",
+        "hB",
+        "hb"
+    ],
+    "NA": [
+        "h",
+        "H",
+        "hB",
+        "hb"
+    ],
+    "PA": [
+        "h",
+        "H",
+        "hB",
+        "hb"
+    ],
+    "PR": [
+        "h",
+        "H",
+        "hB",
+        "hb"
+    ],
+    "VE": [
+        "h",
+        "H",
+        "hB",
+        "hb"
+    ],
+    "AC": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "AI": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "BW": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "BZ": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "CC": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "CK": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "CX": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "DG": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "FK": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "GB": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "GG": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "GI": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "IE": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "IM": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "IO": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "JE": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "LT": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "MK": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "MN": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "MS": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "NF": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "NG": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "NR": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "NU": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "PN": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "SH": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "SX": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "TA": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "ZA": [
+        "H",
+        "h",
+        "hb",
+        "hB"
+    ],
+    "af-ZA": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "AR": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "CL": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "CR": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "CU": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "EA": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "es-BO": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "es-BR": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "es-EC": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "es-ES": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "es-GQ": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "es-PE": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "GT": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "HN": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "IC": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "KG": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "KM": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "LK": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "MA": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "MX": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "NI": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "PY": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "SV": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "UY": [
+        "H",
+        "h",
+        "hB",
+        "hb"
+    ],
+    "JP": [
+        "H",
+        "h",
+        "K"
+    ],
+    "AD": [
+        "H",
+        "hB"
+    ],
+    "AM": [
+        "H",
+        "hB"
+    ],
+    "AO": [
+        "H",
+        "hB"
+    ],
+    "AT": [
+        "H",
+        "hB"
+    ],
+    "AW": [
+        "H",
+        "hB"
+    ],
+    "BE": [
+        "H",
+        "hB"
+    ],
+    "BF": [
+        "H",
+        "hB"
+    ],
+    "BJ": [
+        "H",
+        "hB"
+    ],
+    "BL": [
+        "H",
+        "hB"
+    ],
+    "BR": [
+        "H",
+        "hB"
+    ],
+    "CG": [
+        "H",
+        "hB"
+    ],
+    "CI": [
+        "H",
+        "hB"
+    ],
+    "CV": [
+        "H",
+        "hB"
+    ],
+    "DE": [
+        "H",
+        "hB"
+    ],
+    "EE": [
+        "H",
+        "hB"
+    ],
+    "FR": [
+        "H",
+        "hB"
+    ],
+    "GA": [
+        "H",
+        "hB"
+    ],
+    "GF": [
+        "H",
+        "hB"
+    ],
+    "GN": [
+        "H",
+        "hB"
+    ],
+    "GP": [
+        "H",
+        "hB"
+    ],
+    "GW": [
+        "H",
+        "hB"
+    ],
+    "HR": [
+        "H",
+        "hB"
+    ],
+    "IL": [
+        "H",
+        "hB"
+    ],
+    "IT": [
+        "H",
+        "hB"
+    ],
+    "KZ": [
+        "H",
+        "hB"
+    ],
+    "MC": [
+        "H",
+        "hB"
+    ],
+    "MD": [
+        "H",
+        "hB"
+    ],
+    "MF": [
+        "H",
+        "hB"
+    ],
+    "MQ": [
+        "H",
+        "hB"
+    ],
+    "MZ": [
+        "H",
+        "hB"
+    ],
+    "NC": [
+        "H",
+        "hB"
+    ],
+    "NL": [
+        "H",
+        "hB"
+    ],
+    "PM": [
+        "H",
+        "hB"
+    ],
+    "PT": [
+        "H",
+        "hB"
+    ],
+    "RE": [
+        "H",
+        "hB"
+    ],
+    "RO": [
+        "H",
+        "hB"
+    ],
+    "SI": [
+        "H",
+        "hB"
+    ],
+    "SR": [
+        "H",
+        "hB"
+    ],
+    "ST": [
+        "H",
+        "hB"
+    ],
+    "TG": [
+        "H",
+        "hB"
+    ],
+    "TR": [
+        "H",
+        "hB"
+    ],
+    "WF": [
+        "H",
+        "hB"
+    ],
+    "YT": [
+        "H",
+        "hB"
+    ],
+    "BD": [
+        "h",
+        "hB",
+        "H"
+    ],
+    "PK": [
+        "h",
+        "hB",
+        "H"
+    ],
+    "AZ": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "BA": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "BG": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "CH": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "GE": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "LI": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "ME": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "RS": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "UA": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "UZ": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "XK": [
+        "H",
+        "hB",
+        "h"
+    ],
+    "AG": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "AU": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "BB": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "BM": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "BS": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "CA": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "DM": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "en-001": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "FJ": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "FM": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "GD": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "GM": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "GU": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "GY": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "JM": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "KI": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "KN": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "KY": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "LC": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "LR": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "MH": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "MP": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "MW": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "NZ": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "SB": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "SG": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "SL": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "SS": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "SZ": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "TC": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "TT": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "UM": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "US": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "VC": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "VG": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "VI": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "ZM": [
+        "h",
+        "hb",
+        "H",
+        "hB"
+    ],
+    "BO": [
+        "H",
+        "hB",
+        "h",
+        "hb"
+    ],
+    "EC": [
+        "H",
+        "hB",
+        "h",
+        "hb"
+    ],
+    "ES": [
+        "H",
+        "hB",
+        "h",
+        "hb"
+    ],
+    "GQ": [
+        "H",
+        "hB",
+        "h",
+        "hb"
+    ],
+    "PE": [
+        "H",
+        "hB",
+        "h",
+        "hb"
+    ],
+    "AE": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "ar-001": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "BH": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "DZ": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "EG": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "EH": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "HK": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "IQ": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "JO": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "KW": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "LB": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "LY": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "MO": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "MR": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "OM": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "PH": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "PS": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "QA": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "SA": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "SD": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "SY": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "TN": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "YE": [
+        "h",
+        "hB",
+        "hb",
+        "H"
+    ],
+    "AF": [
+        "H",
+        "hb",
+        "hB",
+        "h"
+    ],
+    "LA": [
+        "H",
+        "hb",
+        "hB",
+        "h"
+    ],
+    "CN": [
+        "H",
+        "hB",
+        "hb",
+        "h"
+    ],
+    "LV": [
+        "H",
+        "hB",
+        "hb",
+        "h"
+    ],
+    "TL": [
+        "H",
+        "hB",
+        "hb",
+        "h"
+    ],
+    "zu-ZA": [
+        "H",
+        "hB",
+        "hb",
+        "h"
+    ],
+    "CD": [
+        "hB",
+        "H"
+    ],
+    "IR": [
+        "hB",
+        "H"
+    ],
+    "hi-IN": [
+        "hB",
+        "h",
+        "H"
+    ],
+    "kn-IN": [
+        "hB",
+        "h",
+        "H"
+    ],
+    "ml-IN": [
+        "hB",
+        "h",
+        "H"
+    ],
+    "te-IN": [
+        "hB",
+        "h",
+        "H"
+    ],
+    "KH": [
+        "hB",
+        "h",
+        "H",
+        "hb"
+    ],
+    "ta-IN": [
+        "hB",
+        "h",
+        "hb",
+        "H"
+    ],
+    "BN": [
+        "hb",
+        "hB",
+        "h",
+        "H"
+    ],
+    "MY": [
+        "hb",
+        "hB",
+        "h",
+        "H"
+    ],
+    "ET": [
+        "hB",
+        "hb",
+        "h",
+        "H"
+    ],
+    "gu-IN": [
+        "hB",
+        "hb",
+        "h",
+        "H"
+    ],
+    "mr-IN": [
+        "hB",
+        "hb",
+        "h",
+        "H"
+    ],
+    "pa-IN": [
+        "hB",
+        "hb",
+        "h",
+        "H"
+    ],
+    "TW": [
+        "hB",
+        "hb",
+        "h",
+        "H"
+    ],
+    "KE": [
+        "hB",
+        "hb",
+        "H",
+        "h"
+    ],
+    "MM": [
+        "hB",
+        "hb",
+        "H",
+        "h"
+    ],
+    "TZ": [
+        "hB",
+        "hb",
+        "H",
+        "h"
+    ],
+    "UG": [
+        "hB",
+        "hb",
+        "H",
+        "h"
+    ]
+};
+
+
+/***/ }),
+
+/***/ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js":
+/*!*****************************************************************************!*\
+  !*** ../../../node_modules/@formatjs/icu-messageformat-parser/lib/types.js ***!
+  \*****************************************************************************/
+/*! namespace exports */
+/*! export SKELETON_TYPE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export TYPE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export createLiteralElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export createNumberElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isArgumentElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isDateElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isLiteralElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isNumberElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isNumberSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isPluralElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isPoundElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isSelectElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isTagElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isTimeElement [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TYPE": () => /* binding */ TYPE,
+/* harmony export */   "SKELETON_TYPE": () => /* binding */ SKELETON_TYPE,
+/* harmony export */   "isLiteralElement": () => /* binding */ isLiteralElement,
+/* harmony export */   "isArgumentElement": () => /* binding */ isArgumentElement,
+/* harmony export */   "isNumberElement": () => /* binding */ isNumberElement,
+/* harmony export */   "isDateElement": () => /* binding */ isDateElement,
+/* harmony export */   "isTimeElement": () => /* binding */ isTimeElement,
+/* harmony export */   "isSelectElement": () => /* binding */ isSelectElement,
+/* harmony export */   "isPluralElement": () => /* binding */ isPluralElement,
+/* harmony export */   "isPoundElement": () => /* binding */ isPoundElement,
+/* harmony export */   "isTagElement": () => /* binding */ isTagElement,
+/* harmony export */   "isNumberSkeleton": () => /* binding */ isNumberSkeleton,
+/* harmony export */   "isDateTimeSkeleton": () => /* binding */ isDateTimeSkeleton,
+/* harmony export */   "createLiteralElement": () => /* binding */ createLiteralElement,
+/* harmony export */   "createNumberElement": () => /* binding */ createNumberElement
 /* harmony export */ });
 var TYPE;
 (function (TYPE) {
@@ -1688,36 +3212,65 @@ function createNumberElement(value, style) {
 /*!************************************************************************************************!*\
   !*** ../../../node_modules/@formatjs/icu-messageformat-parser/node_modules/tslib/tslib.es6.js ***!
   \************************************************************************************************/
+/*! namespace exports */
+/*! export __assign [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __asyncDelegator [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __asyncGenerator [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __asyncValues [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __await [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __awaiter [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __classPrivateFieldGet [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __classPrivateFieldIn [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __classPrivateFieldSet [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __createBinding [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __decorate [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __exportStar [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __extends [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __generator [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __importDefault [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __importStar [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __makeTemplateObject [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __metadata [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __param [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __read [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __rest [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __spread [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __spreadArray [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __spreadArrays [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __values [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "__extends": () => (/* binding */ __extends),
-/* harmony export */   "__assign": () => (/* binding */ __assign),
-/* harmony export */   "__rest": () => (/* binding */ __rest),
-/* harmony export */   "__decorate": () => (/* binding */ __decorate),
-/* harmony export */   "__param": () => (/* binding */ __param),
-/* harmony export */   "__metadata": () => (/* binding */ __metadata),
-/* harmony export */   "__awaiter": () => (/* binding */ __awaiter),
-/* harmony export */   "__generator": () => (/* binding */ __generator),
-/* harmony export */   "__createBinding": () => (/* binding */ __createBinding),
-/* harmony export */   "__exportStar": () => (/* binding */ __exportStar),
-/* harmony export */   "__values": () => (/* binding */ __values),
-/* harmony export */   "__read": () => (/* binding */ __read),
-/* harmony export */   "__spread": () => (/* binding */ __spread),
-/* harmony export */   "__spreadArrays": () => (/* binding */ __spreadArrays),
-/* harmony export */   "__spreadArray": () => (/* binding */ __spreadArray),
-/* harmony export */   "__await": () => (/* binding */ __await),
-/* harmony export */   "__asyncGenerator": () => (/* binding */ __asyncGenerator),
-/* harmony export */   "__asyncDelegator": () => (/* binding */ __asyncDelegator),
-/* harmony export */   "__asyncValues": () => (/* binding */ __asyncValues),
-/* harmony export */   "__makeTemplateObject": () => (/* binding */ __makeTemplateObject),
-/* harmony export */   "__importStar": () => (/* binding */ __importStar),
-/* harmony export */   "__importDefault": () => (/* binding */ __importDefault),
-/* harmony export */   "__classPrivateFieldGet": () => (/* binding */ __classPrivateFieldGet),
-/* harmony export */   "__classPrivateFieldSet": () => (/* binding */ __classPrivateFieldSet)
+/* harmony export */   "__extends": () => /* binding */ __extends,
+/* harmony export */   "__assign": () => /* binding */ __assign,
+/* harmony export */   "__rest": () => /* binding */ __rest,
+/* harmony export */   "__decorate": () => /* binding */ __decorate,
+/* harmony export */   "__param": () => /* binding */ __param,
+/* harmony export */   "__metadata": () => /* binding */ __metadata,
+/* harmony export */   "__awaiter": () => /* binding */ __awaiter,
+/* harmony export */   "__generator": () => /* binding */ __generator,
+/* harmony export */   "__createBinding": () => /* binding */ __createBinding,
+/* harmony export */   "__exportStar": () => /* binding */ __exportStar,
+/* harmony export */   "__values": () => /* binding */ __values,
+/* harmony export */   "__read": () => /* binding */ __read,
+/* harmony export */   "__spread": () => /* binding */ __spread,
+/* harmony export */   "__spreadArrays": () => /* binding */ __spreadArrays,
+/* harmony export */   "__spreadArray": () => /* binding */ __spreadArray,
+/* harmony export */   "__await": () => /* binding */ __await,
+/* harmony export */   "__asyncGenerator": () => /* binding */ __asyncGenerator,
+/* harmony export */   "__asyncDelegator": () => /* binding */ __asyncDelegator,
+/* harmony export */   "__asyncValues": () => /* binding */ __asyncValues,
+/* harmony export */   "__makeTemplateObject": () => /* binding */ __makeTemplateObject,
+/* harmony export */   "__importStar": () => /* binding */ __importStar,
+/* harmony export */   "__importDefault": () => /* binding */ __importDefault,
+/* harmony export */   "__classPrivateFieldGet": () => /* binding */ __classPrivateFieldGet,
+/* harmony export */   "__classPrivateFieldSet": () => /* binding */ __classPrivateFieldSet,
+/* harmony export */   "__classPrivateFieldIn": () => /* binding */ __classPrivateFieldIn
 /* harmony export */ });
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -1826,7 +3379,11 @@ function __generator(thisArg, body) {
 
 var __createBinding = Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -1957,6 +3514,11 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+
 
 /***/ }),
 
@@ -1964,11 +3526,15 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
 /*!****************************************************************************!*\
   !*** ../../../node_modules/@formatjs/icu-skeleton-parser/lib/date-time.js ***!
   \****************************************************************************/
+/*! namespace exports */
+/*! export parseDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "parseDateTimeSkeleton": () => (/* binding */ parseDateTimeSkeleton)
+/* harmony export */   "parseDateTimeSkeleton": () => /* binding */ parseDateTimeSkeleton
 /* harmony export */ });
 /**
  * https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
@@ -2099,13 +3665,19 @@ function parseDateTimeSkeleton(skeleton) {
 /*!************************************************************************!*\
   !*** ../../../node_modules/@formatjs/icu-skeleton-parser/lib/index.js ***!
   \************************************************************************/
+/*! namespace exports */
+/*! export parseDateTimeSkeleton [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-skeleton-parser/lib/date-time.js .parseDateTimeSkeleton */
+/*! export parseNumberSkeleton [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-skeleton-parser/lib/number.js .parseNumberSkeleton */
+/*! export parseNumberSkeletonFromString [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/@formatjs/icu-skeleton-parser/lib/number.js .parseNumberSkeletonFromString */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "parseDateTimeSkeleton": () => (/* reexport safe */ _date_time__WEBPACK_IMPORTED_MODULE_0__.parseDateTimeSkeleton),
-/* harmony export */   "parseNumberSkeleton": () => (/* reexport safe */ _number__WEBPACK_IMPORTED_MODULE_1__.parseNumberSkeleton),
-/* harmony export */   "parseNumberSkeletonFromString": () => (/* reexport safe */ _number__WEBPACK_IMPORTED_MODULE_1__.parseNumberSkeletonFromString)
+/* harmony export */   "parseDateTimeSkeleton": () => /* reexport safe */ _date_time__WEBPACK_IMPORTED_MODULE_0__.parseDateTimeSkeleton,
+/* harmony export */   "parseNumberSkeleton": () => /* reexport safe */ _number__WEBPACK_IMPORTED_MODULE_1__.parseNumberSkeleton,
+/* harmony export */   "parseNumberSkeletonFromString": () => /* reexport safe */ _number__WEBPACK_IMPORTED_MODULE_1__.parseNumberSkeletonFromString
 /* harmony export */ });
 /* harmony import */ var _date_time__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./date-time */ "../../../node_modules/@formatjs/icu-skeleton-parser/lib/date-time.js");
 /* harmony import */ var _number__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./number */ "../../../node_modules/@formatjs/icu-skeleton-parser/lib/number.js");
@@ -2119,16 +3691,21 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************************************!*\
   !*** ../../../node_modules/@formatjs/icu-skeleton-parser/lib/number.js ***!
   \*************************************************************************/
+/*! namespace exports */
+/*! export parseNumberSkeleton [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export parseNumberSkeletonFromString [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "parseNumberSkeletonFromString": () => (/* binding */ parseNumberSkeletonFromString),
-/* harmony export */   "parseNumberSkeleton": () => (/* binding */ parseNumberSkeleton)
+/* harmony export */   "parseNumberSkeletonFromString": () => /* binding */ parseNumberSkeletonFromString,
+/* harmony export */   "parseNumberSkeleton": () => /* binding */ parseNumberSkeleton
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "../../../node_modules/@formatjs/icu-skeleton-parser/node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _regex_generated__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./regex.generated */ "../../../node_modules/@formatjs/icu-skeleton-parser/lib/regex.generated.js");
-
+;
 
 function parseNumberSkeletonFromString(skeleton) {
     if (skeleton.length === 0) {
@@ -2431,11 +4008,15 @@ function parseNumberSkeleton(tokens) {
 /*!**********************************************************************************!*\
   !*** ../../../node_modules/@formatjs/icu-skeleton-parser/lib/regex.generated.js ***!
   \**********************************************************************************/
+/*! namespace exports */
+/*! export WHITE_SPACE_REGEX [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "WHITE_SPACE_REGEX": () => (/* binding */ WHITE_SPACE_REGEX)
+/* harmony export */   "WHITE_SPACE_REGEX": () => /* binding */ WHITE_SPACE_REGEX
 /* harmony export */ });
 // @generated from regex-gen.ts
 var WHITE_SPACE_REGEX = /[\t-\r \x85\u200E\u200F\u2028\u2029]/i;
@@ -2447,36 +4028,65 @@ var WHITE_SPACE_REGEX = /[\t-\r \x85\u200E\u200F\u2028\u2029]/i;
 /*!*******************************************************************************************!*\
   !*** ../../../node_modules/@formatjs/icu-skeleton-parser/node_modules/tslib/tslib.es6.js ***!
   \*******************************************************************************************/
+/*! namespace exports */
+/*! export __assign [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __asyncDelegator [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __asyncGenerator [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __asyncValues [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __await [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __awaiter [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __classPrivateFieldGet [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __classPrivateFieldIn [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __classPrivateFieldSet [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __createBinding [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __decorate [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __exportStar [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __extends [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __generator [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __importDefault [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __importStar [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __makeTemplateObject [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __metadata [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __param [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __read [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __rest [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __spread [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __spreadArray [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __spreadArrays [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __values [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "__extends": () => (/* binding */ __extends),
-/* harmony export */   "__assign": () => (/* binding */ __assign),
-/* harmony export */   "__rest": () => (/* binding */ __rest),
-/* harmony export */   "__decorate": () => (/* binding */ __decorate),
-/* harmony export */   "__param": () => (/* binding */ __param),
-/* harmony export */   "__metadata": () => (/* binding */ __metadata),
-/* harmony export */   "__awaiter": () => (/* binding */ __awaiter),
-/* harmony export */   "__generator": () => (/* binding */ __generator),
-/* harmony export */   "__createBinding": () => (/* binding */ __createBinding),
-/* harmony export */   "__exportStar": () => (/* binding */ __exportStar),
-/* harmony export */   "__values": () => (/* binding */ __values),
-/* harmony export */   "__read": () => (/* binding */ __read),
-/* harmony export */   "__spread": () => (/* binding */ __spread),
-/* harmony export */   "__spreadArrays": () => (/* binding */ __spreadArrays),
-/* harmony export */   "__spreadArray": () => (/* binding */ __spreadArray),
-/* harmony export */   "__await": () => (/* binding */ __await),
-/* harmony export */   "__asyncGenerator": () => (/* binding */ __asyncGenerator),
-/* harmony export */   "__asyncDelegator": () => (/* binding */ __asyncDelegator),
-/* harmony export */   "__asyncValues": () => (/* binding */ __asyncValues),
-/* harmony export */   "__makeTemplateObject": () => (/* binding */ __makeTemplateObject),
-/* harmony export */   "__importStar": () => (/* binding */ __importStar),
-/* harmony export */   "__importDefault": () => (/* binding */ __importDefault),
-/* harmony export */   "__classPrivateFieldGet": () => (/* binding */ __classPrivateFieldGet),
-/* harmony export */   "__classPrivateFieldSet": () => (/* binding */ __classPrivateFieldSet)
+/* harmony export */   "__extends": () => /* binding */ __extends,
+/* harmony export */   "__assign": () => /* binding */ __assign,
+/* harmony export */   "__rest": () => /* binding */ __rest,
+/* harmony export */   "__decorate": () => /* binding */ __decorate,
+/* harmony export */   "__param": () => /* binding */ __param,
+/* harmony export */   "__metadata": () => /* binding */ __metadata,
+/* harmony export */   "__awaiter": () => /* binding */ __awaiter,
+/* harmony export */   "__generator": () => /* binding */ __generator,
+/* harmony export */   "__createBinding": () => /* binding */ __createBinding,
+/* harmony export */   "__exportStar": () => /* binding */ __exportStar,
+/* harmony export */   "__values": () => /* binding */ __values,
+/* harmony export */   "__read": () => /* binding */ __read,
+/* harmony export */   "__spread": () => /* binding */ __spread,
+/* harmony export */   "__spreadArrays": () => /* binding */ __spreadArrays,
+/* harmony export */   "__spreadArray": () => /* binding */ __spreadArray,
+/* harmony export */   "__await": () => /* binding */ __await,
+/* harmony export */   "__asyncGenerator": () => /* binding */ __asyncGenerator,
+/* harmony export */   "__asyncDelegator": () => /* binding */ __asyncDelegator,
+/* harmony export */   "__asyncValues": () => /* binding */ __asyncValues,
+/* harmony export */   "__makeTemplateObject": () => /* binding */ __makeTemplateObject,
+/* harmony export */   "__importStar": () => /* binding */ __importStar,
+/* harmony export */   "__importDefault": () => /* binding */ __importDefault,
+/* harmony export */   "__classPrivateFieldGet": () => /* binding */ __classPrivateFieldGet,
+/* harmony export */   "__classPrivateFieldSet": () => /* binding */ __classPrivateFieldSet,
+/* harmony export */   "__classPrivateFieldIn": () => /* binding */ __classPrivateFieldIn
 /* harmony export */ });
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -2585,7 +4195,11 @@ function __generator(thisArg, body) {
 
 var __createBinding = Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -2716,6 +4330,11 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+
 
 /***/ }),
 
@@ -2723,20 +4342,33 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
 /*!*************************************************************!*\
   !*** ../../../node_modules/intl-messageformat/lib/index.js ***!
   \*************************************************************/
+/*! namespace exports */
+/*! export ErrorCode [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .ErrorCode */
+/*! export FormatError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .FormatError */
+/*! export IntlMessageFormat [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/core.js .IntlMessageFormat */
+/*! export InvalidValueError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .InvalidValueError */
+/*! export InvalidValueTypeError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .InvalidValueTypeError */
+/*! export MissingValueError [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/error.js .MissingValueError */
+/*! export PART_TYPE [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/formatters.js .PART_TYPE */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export formatToParts [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/formatters.js .formatToParts */
+/*! export isFormatXMLElementFn [provided] [no usage info] [missing usage info prevents renaming] -> ../../../node_modules/intl-messageformat/lib/src/formatters.js .isFormatXMLElementFn */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "PART_TYPE": () => (/* reexport safe */ _src_formatters__WEBPACK_IMPORTED_MODULE_0__.PART_TYPE),
-/* harmony export */   "formatToParts": () => (/* reexport safe */ _src_formatters__WEBPACK_IMPORTED_MODULE_0__.formatToParts),
-/* harmony export */   "isFormatXMLElementFn": () => (/* reexport safe */ _src_formatters__WEBPACK_IMPORTED_MODULE_0__.isFormatXMLElementFn),
-/* harmony export */   "IntlMessageFormat": () => (/* reexport safe */ _src_core__WEBPACK_IMPORTED_MODULE_1__.IntlMessageFormat),
-/* harmony export */   "ErrorCode": () => (/* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.ErrorCode),
-/* harmony export */   "FormatError": () => (/* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.FormatError),
-/* harmony export */   "InvalidValueError": () => (/* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.InvalidValueError),
-/* harmony export */   "InvalidValueTypeError": () => (/* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.InvalidValueTypeError),
-/* harmony export */   "MissingValueError": () => (/* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.MissingValueError),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "PART_TYPE": () => /* reexport safe */ _src_formatters__WEBPACK_IMPORTED_MODULE_0__.PART_TYPE,
+/* harmony export */   "formatToParts": () => /* reexport safe */ _src_formatters__WEBPACK_IMPORTED_MODULE_0__.formatToParts,
+/* harmony export */   "isFormatXMLElementFn": () => /* reexport safe */ _src_formatters__WEBPACK_IMPORTED_MODULE_0__.isFormatXMLElementFn,
+/* harmony export */   "IntlMessageFormat": () => /* reexport safe */ _src_core__WEBPACK_IMPORTED_MODULE_1__.IntlMessageFormat,
+/* harmony export */   "ErrorCode": () => /* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.ErrorCode,
+/* harmony export */   "FormatError": () => /* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.FormatError,
+/* harmony export */   "InvalidValueError": () => /* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.InvalidValueError,
+/* harmony export */   "InvalidValueTypeError": () => /* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.InvalidValueTypeError,
+/* harmony export */   "MissingValueError": () => /* reexport safe */ _src_error__WEBPACK_IMPORTED_MODULE_2__.MissingValueError,
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _src_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/core */ "../../../node_modules/intl-messageformat/lib/src/core.js");
 /* harmony import */ var _src_formatters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/formatters */ "../../../node_modules/intl-messageformat/lib/src/formatters.js");
@@ -2746,7 +4378,7 @@ Copyright (c) 2014, Yahoo! Inc. All rights reserved.
 Copyrights licensed under the New BSD License.
 See the accompanying LICENSE file for terms.
 */
-
+;
 
 
 
@@ -2759,11 +4391,15 @@ See the accompanying LICENSE file for terms.
 /*!****************************************************************!*\
   !*** ../../../node_modules/intl-messageformat/lib/src/core.js ***!
   \****************************************************************/
+/*! namespace exports */
+/*! export IntlMessageFormat [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "IntlMessageFormat": () => (/* binding */ IntlMessageFormat)
+/* harmony export */   "IntlMessageFormat": () => /* binding */ IntlMessageFormat
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "../../../node_modules/intl-messageformat/node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _formatjs_icu_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @formatjs/icu-messageformat-parser */ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/index.js");
@@ -2774,7 +4410,7 @@ Copyright (c) 2014, Yahoo! Inc. All rights reserved.
 Copyrights licensed under the New BSD License.
 See the accompanying LICENSE file for terms.
 */
-
+;
 
 
 
@@ -2888,9 +4524,12 @@ var IntlMessageFormat = /** @class */ (function () {
             return (0,_formatters__WEBPACK_IMPORTED_MODULE_3__.formatToParts)(_this.ast, _this.locales, _this.formatters, _this.formats, values, undefined, _this.message);
         };
         this.resolvedOptions = function () { return ({
-            locale: Intl.NumberFormat.supportedLocalesOf(_this.locales)[0],
+            locale: _this.resolvedLocale.toString(),
         }); };
         this.getAst = function () { return _this.ast; };
+        // Defined first because it's used to build the format pattern.
+        this.locales = locales;
+        this.resolvedLocale = IntlMessageFormat.resolveLocale(locales);
         if (typeof message === 'string') {
             this.message = message;
             if (!IntlMessageFormat.__parse) {
@@ -2899,6 +4538,7 @@ var IntlMessageFormat = /** @class */ (function () {
             // Parse string messages into an AST.
             this.ast = IntlMessageFormat.__parse(message, {
                 ignoreTag: opts === null || opts === void 0 ? void 0 : opts.ignoreTag,
+                locale: this.resolvedLocale,
             });
         }
         else {
@@ -2910,8 +4550,6 @@ var IntlMessageFormat = /** @class */ (function () {
         // Creates a new object with the specified `formats` merged with the default
         // formats.
         this.formats = mergeConfigs(IntlMessageFormat.formats, overrideFormats);
-        // Defined first because it's used to build the format pattern.
-        this.locales = locales;
         this.formatters =
             (opts && opts.formatters) || createDefaultFormatters(this.formatterCache);
     }
@@ -2927,6 +4565,13 @@ var IntlMessageFormat = /** @class */ (function () {
         configurable: true
     });
     IntlMessageFormat.memoizedDefaultLocale = null;
+    IntlMessageFormat.resolveLocale = function (locales) {
+        var supportedLocales = Intl.NumberFormat.supportedLocalesOf(locales);
+        if (supportedLocales.length > 0) {
+            return new Intl.Locale(supportedLocales[0]);
+        }
+        return new Intl.Locale(typeof locales === 'string' ? locales : locales[0]);
+    };
     IntlMessageFormat.__parse = _formatjs_icu_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__.parse;
     // Default format options used as the prototype of the `formats` provided to the
     // constructor. These are used when constructing the internal Intl.NumberFormat
@@ -3001,18 +4646,26 @@ var IntlMessageFormat = /** @class */ (function () {
 /*!*****************************************************************!*\
   !*** ../../../node_modules/intl-messageformat/lib/src/error.js ***!
   \*****************************************************************/
+/*! namespace exports */
+/*! export ErrorCode [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export FormatError [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export InvalidValueError [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export InvalidValueTypeError [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export MissingValueError [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ErrorCode": () => (/* binding */ ErrorCode),
-/* harmony export */   "FormatError": () => (/* binding */ FormatError),
-/* harmony export */   "InvalidValueError": () => (/* binding */ InvalidValueError),
-/* harmony export */   "InvalidValueTypeError": () => (/* binding */ InvalidValueTypeError),
-/* harmony export */   "MissingValueError": () => (/* binding */ MissingValueError)
+/* harmony export */   "ErrorCode": () => /* binding */ ErrorCode,
+/* harmony export */   "FormatError": () => /* binding */ FormatError,
+/* harmony export */   "InvalidValueError": () => /* binding */ InvalidValueError,
+/* harmony export */   "InvalidValueTypeError": () => /* binding */ InvalidValueTypeError,
+/* harmony export */   "MissingValueError": () => /* binding */ MissingValueError
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../../../node_modules/intl-messageformat/node_modules/tslib/tslib.es6.js");
-
+;
 var ErrorCode;
 (function (ErrorCode) {
     // When we have a placeholder but no value to format
@@ -3068,17 +4721,23 @@ var MissingValueError = /** @class */ (function (_super) {
 /*!**********************************************************************!*\
   !*** ../../../node_modules/intl-messageformat/lib/src/formatters.js ***!
   \**********************************************************************/
+/*! namespace exports */
+/*! export PART_TYPE [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export formatToParts [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export isFormatXMLElementFn [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "PART_TYPE": () => (/* binding */ PART_TYPE),
-/* harmony export */   "isFormatXMLElementFn": () => (/* binding */ isFormatXMLElementFn),
-/* harmony export */   "formatToParts": () => (/* binding */ formatToParts)
+/* harmony export */   "PART_TYPE": () => /* binding */ PART_TYPE,
+/* harmony export */   "isFormatXMLElementFn": () => /* binding */ isFormatXMLElementFn,
+/* harmony export */   "formatToParts": () => /* binding */ formatToParts
 /* harmony export */ });
 /* harmony import */ var _formatjs_icu_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @formatjs/icu-messageformat-parser */ "../../../node_modules/@formatjs/icu-messageformat-parser/lib/index.js");
 /* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./error */ "../../../node_modules/intl-messageformat/lib/src/error.js");
-
+;
 
 var PART_TYPE;
 (function (PART_TYPE) {
@@ -3181,7 +4840,7 @@ originalMessage) {
                 ? formats.time[el.style]
                 : (0,_formatjs_icu_messageformat_parser__WEBPACK_IMPORTED_MODULE_0__.isDateTimeSkeleton)(el.style)
                     ? el.style.parsedOptions
-                    : undefined;
+                    : formats.time.medium;
             result.push({
                 type: PART_TYPE.literal,
                 value: formatters
@@ -3263,36 +4922,65 @@ originalMessage) {
 /*!********************************************************************************!*\
   !*** ../../../node_modules/intl-messageformat/node_modules/tslib/tslib.es6.js ***!
   \********************************************************************************/
+/*! namespace exports */
+/*! export __assign [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __asyncDelegator [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __asyncGenerator [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __asyncValues [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __await [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __awaiter [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __classPrivateFieldGet [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __classPrivateFieldIn [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __classPrivateFieldSet [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __createBinding [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __decorate [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __exportStar [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __extends [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __generator [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __importDefault [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __importStar [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __makeTemplateObject [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __metadata [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __param [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __read [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __rest [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __spread [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __spreadArray [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __spreadArrays [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export __values [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "__extends": () => (/* binding */ __extends),
-/* harmony export */   "__assign": () => (/* binding */ __assign),
-/* harmony export */   "__rest": () => (/* binding */ __rest),
-/* harmony export */   "__decorate": () => (/* binding */ __decorate),
-/* harmony export */   "__param": () => (/* binding */ __param),
-/* harmony export */   "__metadata": () => (/* binding */ __metadata),
-/* harmony export */   "__awaiter": () => (/* binding */ __awaiter),
-/* harmony export */   "__generator": () => (/* binding */ __generator),
-/* harmony export */   "__createBinding": () => (/* binding */ __createBinding),
-/* harmony export */   "__exportStar": () => (/* binding */ __exportStar),
-/* harmony export */   "__values": () => (/* binding */ __values),
-/* harmony export */   "__read": () => (/* binding */ __read),
-/* harmony export */   "__spread": () => (/* binding */ __spread),
-/* harmony export */   "__spreadArrays": () => (/* binding */ __spreadArrays),
-/* harmony export */   "__spreadArray": () => (/* binding */ __spreadArray),
-/* harmony export */   "__await": () => (/* binding */ __await),
-/* harmony export */   "__asyncGenerator": () => (/* binding */ __asyncGenerator),
-/* harmony export */   "__asyncDelegator": () => (/* binding */ __asyncDelegator),
-/* harmony export */   "__asyncValues": () => (/* binding */ __asyncValues),
-/* harmony export */   "__makeTemplateObject": () => (/* binding */ __makeTemplateObject),
-/* harmony export */   "__importStar": () => (/* binding */ __importStar),
-/* harmony export */   "__importDefault": () => (/* binding */ __importDefault),
-/* harmony export */   "__classPrivateFieldGet": () => (/* binding */ __classPrivateFieldGet),
-/* harmony export */   "__classPrivateFieldSet": () => (/* binding */ __classPrivateFieldSet)
+/* harmony export */   "__extends": () => /* binding */ __extends,
+/* harmony export */   "__assign": () => /* binding */ __assign,
+/* harmony export */   "__rest": () => /* binding */ __rest,
+/* harmony export */   "__decorate": () => /* binding */ __decorate,
+/* harmony export */   "__param": () => /* binding */ __param,
+/* harmony export */   "__metadata": () => /* binding */ __metadata,
+/* harmony export */   "__awaiter": () => /* binding */ __awaiter,
+/* harmony export */   "__generator": () => /* binding */ __generator,
+/* harmony export */   "__createBinding": () => /* binding */ __createBinding,
+/* harmony export */   "__exportStar": () => /* binding */ __exportStar,
+/* harmony export */   "__values": () => /* binding */ __values,
+/* harmony export */   "__read": () => /* binding */ __read,
+/* harmony export */   "__spread": () => /* binding */ __spread,
+/* harmony export */   "__spreadArrays": () => /* binding */ __spreadArrays,
+/* harmony export */   "__spreadArray": () => /* binding */ __spreadArray,
+/* harmony export */   "__await": () => /* binding */ __await,
+/* harmony export */   "__asyncGenerator": () => /* binding */ __asyncGenerator,
+/* harmony export */   "__asyncDelegator": () => /* binding */ __asyncDelegator,
+/* harmony export */   "__asyncValues": () => /* binding */ __asyncValues,
+/* harmony export */   "__makeTemplateObject": () => /* binding */ __makeTemplateObject,
+/* harmony export */   "__importStar": () => /* binding */ __importStar,
+/* harmony export */   "__importDefault": () => /* binding */ __importDefault,
+/* harmony export */   "__classPrivateFieldGet": () => /* binding */ __classPrivateFieldGet,
+/* harmony export */   "__classPrivateFieldSet": () => /* binding */ __classPrivateFieldSet,
+/* harmony export */   "__classPrivateFieldIn": () => /* binding */ __classPrivateFieldIn
 /* harmony export */ });
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -3401,7 +5089,11 @@ function __generator(thisArg, body) {
 
 var __createBinding = Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -3532,6 +5224,11 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+
 
 /***/ }),
 
@@ -3539,16 +5236,21 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
 /*!*******************!*\
   !*** ../index.js ***!
   \*******************/
+/*! namespace exports */
+/*! export L10n [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./l10n.js .default */
+/*! export MessageBundle [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./message-bundle.js .default */
+/*! other exports [not provided] [maybe used in main (runtime-defined)] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "L10n": () => (/* reexport safe */ _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_0__.default),
-/* harmony export */   "MessageBundle": () => (/* reexport safe */ _l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_1__.default)
+/* harmony export */   "L10n": () => /* reexport safe */ _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_0__.default,
+/* harmony export */   "MessageBundle": () => /* reexport safe */ _l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_1__.default
 /* harmony export */ });
 /* harmony import */ var _l10n_l10n_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @l10n/l10n.js */ "./l10n.js");
 /* harmony import */ var _l10n_message_bundle_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @l10n/message-bundle.js */ "./message-bundle.js");
-
+;
 
 
 
@@ -3559,14 +5261,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************!*\
   !*** ./l10n.js ***!
   \*****************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ L10n)
+/* harmony export */   "default": () => /* binding */ L10n
 /* harmony export */ });
 /* harmony import */ var _l10n_message_bundle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @l10n/message-bundle */ "./message-bundle.js");
-
+;
 
 /**
  * Combines several message bundles of different locales.
@@ -3675,14 +5381,18 @@ class L10n {
 /*!***************************!*\
   !*** ./message-bundle.js ***!
   \***************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ MessageBundle)
+/* harmony export */   "default": () => /* binding */ MessageBundle
 /* harmony export */ });
 /* harmony import */ var _l10n_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @l10n/message.js */ "./message.js");
-
+;
 // TODO: Deal with situations when message is not available, but is requested
 
 /**
@@ -3865,14 +5575,18 @@ class MessageBundle {
 /*!********************!*\
   !*** ./message.js ***!
   \********************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Message)
+/* harmony export */   "default": () => /* binding */ Message
 /* harmony export */ });
 /* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat */ "../../../node_modules/intl-messageformat/lib/index.js");
-
+;
 
 /**
  * Represents a single message object
@@ -3992,7 +5706,7 @@ class Message {
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */

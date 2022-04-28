@@ -57,7 +57,7 @@ class FeatureList {
    * @returns {boolean} Whether a feature list has a feature of a particular type.
    */
   hasType (type) {
-    return this._types.hasOwnProperty(type)
+    return this._types.hasOwnProperty(type) // eslint-disable-line no-prototype-builtins
   }
 }
 export default FeatureList

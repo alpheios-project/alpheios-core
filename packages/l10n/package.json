@@ -11,9 +11,9 @@
     "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-no-coverage": "jest",
     "build": "npm run build-dev && npm run build-prod",
-    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib -c config.mjs",
-    "build-dev": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p lib -c config.mjs",
-    "lint": "eslint --fix src/**/*.js"
+    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M production -p lib -c config.mjs",
+    "build-dev": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M development -p lib -c config.mjs",
+    "lint": "npx eslint --fix src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
     "@babel/runtime": "^7.12.5",
-    "alpheios-node-build": "github:alpheios-project/node-build#v3",
+    "alpheios-node-build": "https://github.com/alpheios-project/node-build#v4",
     "coveralls": "^3.1.0",
     "eslint": "^7.15.0",
     "eslint-config-standard": "^16.0.2",

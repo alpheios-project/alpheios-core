@@ -321,7 +321,7 @@ for the current node
       pronounClassRequired: false
     }
     const formBasedList = [Constants.POFS_PRONOUN, Constants.POFS_NUMERAL, Constants.POFS_ARTICLE]
-    if (inflection.hasOwnProperty(Feature.types.part)) {
+    if (inflection.hasOwnProperty(Feature.types.part)) { // eslint-disable-line no-prototype-builtins
       if (formBasedList.includes(inflection[Feature.types.part].value)) {
         constraints.fullFormBased = true
       } else {
@@ -333,7 +333,7 @@ for the current node
 
     constraints.pronounClassRequired =
       LanguageModelFactory.compareLanguages(GreekLanguageModel.languageID, inflection.languageID) &&
-      inflection.hasOwnProperty(Feature.types.part) &&
+      inflection.hasOwnProperty(Feature.types.part) && // eslint-disable-line no-prototype-builtins
       inflection[Feature.types.part].value === Constants.POFS_PRONOUN
 
     return constraints
@@ -370,7 +370,7 @@ for the current node
       }
     )
     for (const matchingForm of matchingForms) {
-      if (matchingForm.features.hasOwnProperty(Feature.types.grmClass)) {
+      if (matchingForm.features.hasOwnProperty(Feature.types.grmClass)) { // eslint-disable-line no-prototype-builtins
         for (const value of matchingForm.features[Feature.types.grmClass].values) {
           matchingValues.add(value)
         }

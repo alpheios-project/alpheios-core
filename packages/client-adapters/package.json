@@ -12,11 +12,11 @@
     "test-l": "jest tests/adapters/logeion/adapter.test.js",
     "test-a": "jest tests/adapters/arethusa/adapter.test.js",
     "build": "npm run build-lib && npm run build-node",
-    "build-lib": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p vue -c config.mjs",
-    "build-node": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p node-lib -c config-node.mjs",
-    "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p vue -c config.mjs",
-    "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p vue -c config.mjs",
-    "lint": "eslint --fix src/**/*.js"
+    "build-lib": "npm run lint &&  node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M all -p vue -c config.mjs",
+    "build-node": "npm run lint &&  node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M all -p node-lib -c config-node.mjs",
+    "build-prod": "npm run lint &&  node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M production -p vue -c config.mjs",
+    "build-dev": "npm run lint &&  node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M development -p vue -c config.mjs",
+    "lint": "npx eslint --fix src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -34,11 +34,11 @@
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/runtime": "^7.12.5",
     "@vue/test-utils": "^1.1.1",
-    "alpheios-data-models": "^3.3.3-incr-3.4.x.20220418329",
-    "alpheios-fixtures": "github:alpheios-project/fixtures",
-    "alpheios-l10n": "^3.3.3-incr-3.4.x.20220418329",
-    "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
-    "alpheios-node-build": "github:alpheios-project/node-build#v3",
+    "alpheios-data-models": "3.3.3-incr-3.4.x.20220418329",
+    "alpheios-l10n": "3.3.3-incr-3.4.x.20220418329",
+    "alpheios-fixtures": "https://github.com/alpheios-project/fixtures",
+    "alpheios-messaging": "https://github.com/alpheios-project/alpheios-messaging",
+    "alpheios-node-build": "https://github.com/alpheios-project/node-build#v4",
     "axios": "^0.21.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.1.0",
@@ -116,10 +116,10 @@
     "**/support"
   ],
   "peerDependencies": {
-    "alpheios-data-models": "^3.3.0",
-    "alpheios-l10n": "^3.3.0",
-    "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
-    "papaparse": "^5.2.0",
+    "alpheios-data-models": "3.3.3-incr-3.4.x.20220418329",
+    "alpheios-l10n": "3.3.3-incr-3.4.x.20220418329",
+    "alpheios-messaging": "",
+    "papaparse": "^5.3.0",
     "readable-stream": "^3.6.0"
   }
 }
