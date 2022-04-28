@@ -95,6 +95,8 @@ export default class TextSelector {
     this.model = LanguageModelFactory.getLanguageModel(this.languageID)
     this.languageCode = langCode
 
-    this.textQuoteSelector.updateLanguage(langCode)
+    if (this.textQuoteSelector) {
+      this.textQuoteSelector.updateLanguage(langCode)
+    }
   }
 }

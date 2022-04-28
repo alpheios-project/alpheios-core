@@ -1,6 +1,6 @@
 {
   "name": "alpheios-res-client",
-  "version": "3.3.3-incr-3.4.x.20220418329",
+  "version": "3.4.0",
   "description": "Alpheios Resource Client Library",
   "private": true,
   "main": "dist/alpheios-res-client.min.js",
@@ -8,10 +8,10 @@
   "scripts": {
     "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-no-coverage": "jest",
-    "build": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p lib",
-    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib",
-    "build-dev": "node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p lib",
-    "lint": "eslint --fix src/**/*.js"
+    "build": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M all -p lib",
+    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M production -p lib",
+    "build-dev": "node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M development -p lib",
+    "lint": "npx eslint --fix src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
     "@babel/runtime": "^7.12.5",
-    "alpheios-node-build": "github:alpheios-project/node-build#v3",
+    "alpheios-node-build": "https://github.com/alpheios-project/node-build#v4",
     "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.1.0",
@@ -46,7 +46,7 @@
     "shx": "^0.3.3"
   },
   "peerDependencies": {
-    "alpheios-data-models": "^3.3.0"
+    "alpheios-data-models": "3.3.3-incr-3.4.x.20220418329"
   },
   "engines": {
     "node": ">= 9.10.1",

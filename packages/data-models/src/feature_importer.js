@@ -42,7 +42,7 @@ class FeatureImporter {
    * @returns {boolean} - Tru if value is in a map, false otherwise.
    */
   has (importedValue) {
-    return this.hash.hasOwnProperty(importedValue)
+    return this.hash.hasOwnProperty(importedValue) // eslint-disable-line no-prototype-builtins
   }
 
   /**

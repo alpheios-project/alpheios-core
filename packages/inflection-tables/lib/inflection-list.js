@@ -5,6 +5,7 @@ export default class InflectionList {
     this.type = type
     this.items = [] // Suffixes or forms
     this.footnotesMap = new Map() // Footnotes (if any)
+    this.itemsIds = []
   }
 
   /**
@@ -16,6 +17,7 @@ export default class InflectionList {
       throw new Error('Inflection item cannot be empty')
     }
     this.items.push(item)
+    this.itemsIds.push(item.id)
   }
 
   /**
@@ -36,6 +38,7 @@ export default class InflectionList {
     for (const item of items) {
       if (!this.hasItem(item)) {
         this.items.push(item)
+        this.itemsIds.push(item.id)
       }
     }
   }
@@ -55,7 +58,8 @@ export default class InflectionList {
    * @return {boolean} True if this item is stored in inflection data, false otherwise.
    */
   hasItem (morpheme) {
-    return this.items.some(i => i.id === morpheme.id)
+    // return this.items.some(i => i.id === morpheme.id)
+    return this.itemsIds.includes(morpheme.id)
   }
 
   /**

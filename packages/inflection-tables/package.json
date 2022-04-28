@@ -1,6 +1,6 @@
 {
   "name": "alpheios-inflection-tables",
-  "version": "3.3.3-incr-3.4.x.20220418329",
+  "version": "3.4.2",
   "description": "Inflection library for an Alpheios project",
   "private": true,
   "main": "dist/alpheios-inflection-tables.min.js",
@@ -23,8 +23,8 @@
     "build-dev": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M development -p lib -c config.mjs",
     "code-analysis-prod": "node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M production -p lib -c config.mjs -a",
     "code-analysis-dev": "node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M development -p lib -c config.mjs -a",
-    "lint": "eslint --fix ./{lib,views}/**/*.js",
-    "lint-nofix": "eslint ./{lib,views}/**/*.js",
+    "lint": "npx eslint --fix ./{lib,views}/**/*.js",
+    "lint-nofix": "npx eslint ./{lib,views}/**/*.js",
     "convert": "node ./tools/inflections-xml2csv/converter.js"
   },
   "repository": {
@@ -43,10 +43,10 @@
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
     "@babel/runtime": "^7.12.5",
-    "alpheios-client-adapters": "^3.3.3-incr-3.4.x.20220418329",
-    "alpheios-data-models": "^3.3.3-incr-3.4.x.20220418329",
-    "alpheios-fixtures": "github:alpheios-project/fixtures",
-    "alpheios-node-build": "github:alpheios-project/node-build#v3",
+    "alpheios-client-adapters": "^3.4.1",
+    "alpheios-data-models": "^3.4.1",
+    "alpheios-fixtures": "https://github.com/alpheios-project/fixtures",
+    "alpheios-node-build": "https://github.com/alpheios-project/node-build#v4",
     "coveralls": "^3.1.0",
     "eslint": "^7.15.0",
     "eslint-config-standard": "^16.0.2",
@@ -64,8 +64,8 @@
     "xmltojson": "^1.3.5"
   },
   "peerDependencies": {
-    "alpheios-data-models": "^3.3.0",
-    "papaparse": "^5.2.0",
+    "alpheios-data-models": "3.3.3-incr-3.4.x.20220418329",
+    "papaparse": "^5.3.0",
     "readable-stream": "^3.6.0",
     "uuid": "^3.4.0"
   },
