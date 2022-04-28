@@ -10486,7 +10486,7 @@ class Lemma {
     // Check if words are the same
     const areSameWords = normalize
       ? lm.compareWords(this.word, lemma.word, true,
-        { normalizeTrailingDigit: true })
+          { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
     // if they have differing trailing digits, they cannot be the same
