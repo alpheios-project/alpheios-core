@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "description": "Alpheios Components",
   "main": "dist/alpheios-components.min.js",
   "scripts": {
@@ -55,7 +55,7 @@
     "alpheios-data-models": "^3.4.1",
     "alpheios-experience": "https://github.com/alpheios-project/experience",
     "alpheios-fixtures": "https://github.com/alpheios-project/fixtures",
-    "alpheios-inflection-tables": "^3.4.1",
+    "alpheios-inflection-tables": "^3.4.2",
     "alpheios-l10n": "^3.4.0",
     "alpheios-language-detect": "https://github.com/alpheios-project/language-detect",
     "alpheios-messaging": "https://github.com/alpheios-project/alpheios-messaging",
