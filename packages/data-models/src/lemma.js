@@ -91,7 +91,7 @@ class Lemma {
    * Values are taken from features and stored in a 'feature.type' property as an array of values.
    * @param {Feature | Feature[]} data
    */
-  set feature (data) {
+  set feature (data) { // eslint-disable-line accessor-pairs
     Logger.getInstance().warn('Please use "addFeature" instead')
     if (!data) {
       throw new Error('feature data cannot be empty.')
