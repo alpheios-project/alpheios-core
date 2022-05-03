@@ -180,7 +180,6 @@ class FeatureType {
    * It means that genders.masculine and genders.feminine belong to the same group. They will have the same index
    * and will be stored inside an _orderIndex as an array. genders.masculine and genders.feminine will be grouped together
    * during filtering and will be in the same bin during sorting.
-   *
    */
   set order (values) { // eslint-disable-line accessor-pairs
     if (!values || (Array.isArray(values) && values.length === 0)) {

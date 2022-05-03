@@ -30,7 +30,8 @@
     "build-dev": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p vue -c config.mjs",
     "code-analysis-prod": "node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p vue -c config.mjs -a",
     "code-analysis-dev": "node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p vue -c config.mjs -a",
-    "lint": "npx eslint --no-eslintrc -c eslint-standard-conf.json --fix src/**/*.js",
+    "lint": "npx eslint --fix src/**/*.js",
+    "lint-stansard": "npx eslint --no-eslintrc -c eslint-standard-conf.json --fix src/**/*.js",
     "lint-jsdoc": "npx eslint --no-eslintrc -c eslint-jsdoc-conf.json src/**/*.js",
     "lint-vue": "npx eslint --no-eslintrc --fix-dry-run -c eslint-vue-conf.json src/**/*.vue"
   },
@@ -46,14 +47,11 @@
   "homepage": "https://github.com/alpheios-project/components#readme",
   "devDependencies": {
     "@apollo/client": "^3.3.4",
-    "@babel/core": "^7.12.9",
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
-    "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/runtime": "^7.12.5",
     "@vue/test-utils": "^1.1.1",
     "alpheios-client-adapters": "^3.4.3-incr-3.4.x.20220428394",
     "alpheios-data-models": "^3.4.3-incr-3.4.x.20220428394",
-    "alpheios-experience": "https://github.com/alpheios-project/experience",
     "alpheios-fixtures": "https://github.com/alpheios-project/fixtures",
     "alpheios-inflection-tables": "^3.4.3-incr-3.4.x.20220428394",
     "alpheios-l10n": "^3.4.3-incr-3.4.x.20220428394",
@@ -65,22 +63,11 @@
     "autoprefixer": "^10.1.0",
     "axios": "^0.21.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.1.0",
     "cross-fetch": "^3.0.6",
-    "css-loader": "^5.0.1",
     "element-closest": "^3.0.2",
-    "eslint": "^7.15.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsdoc": "^30.7.8",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^5.0.0",
-    "eslint-plugin-vue": "^7.2.0",
-    "eslint-scope": "^5.1.1",
     "file-loader": "^6.2.0",
     "graphql": "^15.4.0",
     "imports-loader": "^1.2.0",
@@ -88,24 +75,15 @@
     "jest": "^26.6.3",
     "jump.js": "^1.0.2",
     "papaparse": "^5.3.0",
-    "postcss-import": "^14.0.0",
-    "postcss-loader": "^5.0.0",
-    "postcss-safe-important": "^1.2.0",
-    "postcss-scss": "^3.0.4",
     "raw-loader": "^4.0.2",
     "readable-stream": "^3.6.0",
-    "sass-loader": "^11.0.1",
-    "shx": "^0.3.3",
-    "source-map-loader": "^2.0.1",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^4.2.3",
-    "uuid": "^3.4.0",
+    "uuid": "^7.0.3",
     "vue": "^2.6.14",
     "vue-eslint-parser": "^7.2.0",
     "vue-jest": "^3.0.7",
-    "vue-loader": "^15.9.5",
     "vue-multiselect": "^2.1.6",
-    "vue-style-loader": "^4.1.2",
     "vue-svg-loader": "^0.16.0",
     "vue-template-compiler": "^2.6.14",
     "vue-template-loader": "^1.1.0",
@@ -154,16 +132,16 @@
   },
   "eslintConfig": {
     "extends": [
-      "standard",
-      "plugin:jsdoc/recommended",
+      "eslint:recommended",
       "plugin:vue/essential"
     ],
     "env": {
+      "es6": true,
       "browser": true,
       "node": true
     },
     "parserOptions": {
-      "parser": "babel-eslint",
+      "parser": "@babel/eslint-parser",
       "ecmaVersion": 2019,
       "sourceType": "module",
       "allowImportExportEverywhere": true
@@ -171,7 +149,13 @@
     "rules": {
       "no-prototype-builtins": "warn",
       "dot-notation": "warn",
-      "accessor-pairs": "warn"
+      "accessor-pairs": "warn",
+      "no-unused-vars": "warn",
+      "getter-return": "warn",
+      "no-setter-return": "warn",
+      "no-constant-condition": "warn",
+      "no-empty": "warn"
+
     }
   },
   "eslintIgnore": [

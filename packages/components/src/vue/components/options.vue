@@ -127,8 +127,8 @@ export default {
 
     .alpheios-tab-options-switch--item {
         display: inline-block;
-        padding: $iconSize/3 $iconSize*0.65;
-        margin-left: $iconSize / 4;
+        padding: calc($iconSize / 3) calc($iconSize * 0.65);
+        margin-left: calc($iconSize / 4);
         border-radius: $iconSize;
         font-weight: bold;
         background: var(--alpheios-desktop-panel-icon-bg);

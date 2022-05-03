@@ -164,7 +164,7 @@ for the current node
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    *                   or null if no part of speech data is present on the lexeme
-   **/
+   */
   static normalizePartOfSpeechValue (lexeme) {
     if (lexeme.lemma.features[Feature.types.part]) {
       if (lexeme.lemma.features[Feature.types.part].value === Constants.POFS_PARTICLE) {

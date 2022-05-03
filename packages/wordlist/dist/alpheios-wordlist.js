@@ -7,142 +7,14 @@
 		var a = typeof exports === 'object' ? factory(require("alpheios-data-models")) : factory(root["alpheios-data-models"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(self, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) {
+})(self, (__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "../../../node_modules/axios/package.json":
-/*!************************************************!*\
-  !*** ../../../node_modules/axios/package.json ***!
-  \************************************************/
-/*! default exports */
-/*! export _from [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _id [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _inBundle [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _integrity [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _location [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _phantomChildren [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   exports [not provided] [no usage info] */
-/*! export _requested [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export escapedName [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export fetchSpec [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export name [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export raw [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export rawSpec [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export registry [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export saveSpec [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export type [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export _requiredBy [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export _resolved [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _shasum [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _spec [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export _where [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export author [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export name [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export browser [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export ./lib/adapters/http.js [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export bugs [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export url [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export bundleDependencies [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export bundlesize [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export path [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     export threshold [provided] [no usage info] [missing usage info prevents renaming] */
-/*!     other exports [not provided] [no usage info] */
-/*!   other exports [not provided] [no usage info] */
-/*! export dependencies [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export follow-redirects [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export deprecated [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export description [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export devDependencies [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export coveralls [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export es6-promise [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-banner [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-cli [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-contrib-clean [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-contrib-watch [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-eslint [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-karma [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-mocha-test [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-ts [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export grunt-webpack [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export istanbul-instrumenter-loader [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export jasmine-core [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-chrome-launcher [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-firefox-launcher [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-jasmine [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-jasmine-ajax [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-safari-launcher [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-sauce-launcher [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-sinon [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-sourcemap-loader [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export karma-webpack [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export load-grunt-tasks [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export minimist [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export mocha [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export sinon [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export terser-webpack-plugin [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export typescript [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export url-search-params [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export webpack [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export webpack-dev-server [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export homepage [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export jsdelivr [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export keywords [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 0 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 1 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 2 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 3 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export 4 [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export license [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export main [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export name [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export repository [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export type [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export url [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export scripts [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export build [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export coveralls [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export examples [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export fix [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export postversion [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export preversion [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export start [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export test [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   export version [provided] [no usage info] [missing usage info prevents renaming] */
-/*!   other exports [not provided] [no usage info] */
-/*! export typings [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unpkg [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export version [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: module */
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse("{\"_from\":\"axios@^0.21.0\",\"_id\":\"axios@0.21.4\",\"_inBundle\":false,\"_integrity\":\"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"^0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz\",\"_shasum\":\"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575\",\"_spec\":\"axios@^0.21.0\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.14.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.3.0\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^23.0.0\",\"grunt-karma\":\"^4.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^4.0.2\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^6.3.2\",\"karma-chrome-launcher\":\"^3.1.0\",\"karma-firefox-launcher\":\"^2.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^4.3.6\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.8\",\"karma-webpack\":\"^4.0.2\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^8.2.1\",\"sinon\":\"^4.5.0\",\"terser-webpack-plugin\":\"^4.2.3\",\"typescript\":\"^4.0.5\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^4.44.2\",\"webpack-dev-server\":\"^3.11.0\"},\"homepage\":\"https://axios-http.com\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.4\"}");
-
-/***/ }),
 
 /***/ "../../../node_modules/axios/index.js":
 /*!********************************************!*\
   !*** ../../../node_modules/axios/index.js ***!
   \********************************************/
-/*! dynamic exports */
-/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] -> ../../../node_modules/axios/lib/axios.js .__esModule */
-/*! other exports [maybe provided (runtime-defined)] [no usage info] -> ../../../node_modules/axios/lib/axios.js */
-/*! runtime requirements: module, __webpack_require__ */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/axios/lib/axios.js");
@@ -153,9 +25,6 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/adapters/xhr.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -356,9 +225,6 @@ module.exports = function xhrAdapter(config) {
 /*!************************************************!*\
   !*** ../../../node_modules/axios/lib/axios.js ***!
   \************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 53:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -417,7 +283,7 @@ axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "../../..
 module.exports = axios;
 
 // Allow use of default import syntax in TypeScript
-module.exports.default = axios;
+module.exports["default"] = axios;
 
 
 /***/ }),
@@ -426,9 +292,6 @@ module.exports.default = axios;
 /*!********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/Cancel.js ***!
   \********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 19:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -459,9 +322,6 @@ module.exports = Cancel;
 /*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/CancelToken.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 57:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -530,9 +390,6 @@ module.exports = CancelToken;
 /*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/cancel/isCancel.js ***!
   \**********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -549,9 +406,6 @@ module.exports = function isCancel(value) {
 /*!*****************************************************!*\
   !*** ../../../node_modules/axios/lib/core/Axios.js ***!
   \*****************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 148:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -711,9 +565,6 @@ module.exports = Axios;
 /*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/InterceptorManager.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 54:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -779,9 +630,6 @@ module.exports = InterceptorManager;
 /*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/buildFullPath.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 15:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -813,9 +661,6 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/createError.js ***!
   \***********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 15:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -845,9 +690,6 @@ module.exports = function createError(message, config, code, request, response) 
 /*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/dispatchRequest.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -941,9 +783,6 @@ module.exports = function dispatchRequest(config) {
 /*!************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/enhanceError.js ***!
   \************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -997,9 +836,6 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/core/mergeConfig.js ***!
   \***********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1098,9 +934,6 @@ module.exports = function mergeConfig(config1, config2) {
 /*!******************************************************!*\
   !*** ../../../node_modules/axios/lib/core/settle.js ***!
   \******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1137,9 +970,6 @@ module.exports = function settle(resolve, reject, response) {
 /*!*************************************************************!*\
   !*** ../../../node_modules/axios/lib/core/transformData.js ***!
   \*************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 14:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1173,9 +1003,6 @@ module.exports = function transformData(data, headers, fns) {
 /*!***************************************************!*\
   !*** ../../../node_modules/axios/lib/defaults.js ***!
   \***************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 134:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1321,9 +1148,6 @@ module.exports = defaults;
 /*!*******************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/bind.js ***!
   \*******************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1346,9 +1170,6 @@ module.exports = function bind(fn, thisArg) {
 /*!***********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/buildURL.js ***!
   \***********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 22:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1430,9 +1251,6 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /*!**************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/combineURLs.js ***!
   \**************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1458,9 +1276,6 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /*!**********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/cookies.js ***!
   \**********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1525,9 +1340,6 @@ module.exports = (
 /*!****************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
   \****************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1553,9 +1365,6 @@ module.exports = function isAbsoluteURL(url) {
 /*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isAxiosError.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1578,9 +1387,6 @@ module.exports = function isAxiosError(payload) {
 /*!******************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
   \******************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1660,9 +1466,6 @@ module.exports = (
 /*!**********************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
   \**********************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1686,9 +1489,6 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /*!***************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/parseHeaders.js ***!
   \***************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 27:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1753,9 +1553,6 @@ module.exports = function parseHeaders(headers) {
 /*!*********************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/spread.js ***!
   \*********************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1794,9 +1591,6 @@ module.exports = function spread(callback) {
 /*!************************************************************!*\
   !*** ../../../node_modules/axios/lib/helpers/validator.js ***!
   \************************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 101:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1913,9 +1707,6 @@ module.exports = {
 /*!************************************************!*\
   !*** ../../../node_modules/axios/lib/utils.js ***!
   \************************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 326:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -2276,16 +2067,12 @@ module.exports = {
 /*!***************************!*\
   !*** ./common/utility.js ***!
   \***************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ Utility
+/* harmony export */   "default": () => (/* binding */ Utility)
 /* harmony export */ });
 class Utility {
 /**
@@ -2311,16 +2098,12 @@ class Utility {
 /*!******************************************!*\
   !*** ./controllers/user-data-manager.js ***!
   \******************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ UserDataManager
+/* harmony export */   "default": () => (/* binding */ UserDataManager)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
@@ -2328,7 +2111,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordlist_storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordlist/storage/worditem-remotedb-driver.js */ "./storage/worditem-remotedb-driver.js");
 /* harmony import */ var _wordlist_storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordlist/storage/indexed-db-adapter.js */ "./storage/indexed-db-adapter.js");
 /* harmony import */ var _wordlist_storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordlist/storage/remote-db-adapter.js */ "./storage/remote-db-adapter.js");
-;
+
 
 
 
@@ -2376,7 +2159,7 @@ class UserDataManager {
    */
   _localStorageAdapter(dataType) {
     let dbDriver = new UserDataManager.LOCAL_DRIVER_CLASSES[dataType](this.auth.userId)
-    return new _wordlist_storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__.default(dbDriver)
+    return new _wordlist_storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__["default"](dbDriver)
   }
 
   /**
@@ -2386,7 +2169,7 @@ class UserDataManager {
    */
   _remoteStorageAdapter(dataType) {
     let dbDriver = new UserDataManager.REMOTE_DRIVER_CLASSES[dataType](this.auth)
-    return new _wordlist_storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_4__.default(dbDriver)
+    return new _wordlist_storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_4__["default"](dbDriver)
   }
 
   /**
@@ -2688,10 +2471,10 @@ class UserDataManager {
 
 // Constants (could be done better, dynamically, etc.)
 UserDataManager.LOCAL_DRIVER_CLASSES = {
-  WordItem: _wordlist_storage_worditem_indexeddb_driver_js__WEBPACK_IMPORTED_MODULE_1__.default
+  WordItem: _wordlist_storage_worditem_indexeddb_driver_js__WEBPACK_IMPORTED_MODULE_1__["default"]
 }
 UserDataManager.REMOTE_DRIVER_CLASSES = {
-  WordItem: _wordlist_storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_2__.default
+  WordItem: _wordlist_storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_2__["default"]
 }
 
 
@@ -2701,21 +2484,17 @@ UserDataManager.REMOTE_DRIVER_CLASSES = {
 /*!********************************************!*\
   !*** ./controllers/wordlist-controller.js ***!
   \********************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordlistController
+/* harmony export */   "default": () => (/* binding */ WordlistController)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
-;
+
 
 
 class WordlistController {
@@ -2848,7 +2627,7 @@ class WordlistController {
     if (wordList) {
       wordItem = wordList.getWordItem(targetWord, create, WordlistController.evt.WORDITEM_UPDATED)
       if (create) {
-        wordItem.createdDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+        wordItem.createdDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       }
     }
     if (!wordItem) {
@@ -2868,7 +2647,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
     wordItem.currentSession = true
-    wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+    wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     wordItem.frequency = wordItem.frequency ? wordItem.frequency + 1 : 1
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
@@ -2901,7 +2680,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.homonym.languageID),data.homonym.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
-      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       wordItem.homonym = data.homonym
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -2936,7 +2715,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
-      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       wordItem.homonym = data
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -2971,7 +2750,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(data.languageCode, data.normalizedText, true)
     if (wordItem) {
       wordItem.currentSession = true
-      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       wordItem.addContext([data])
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'context'}})
       // emit a wordlist updated event too in case the wordlist was updated
@@ -2993,7 +2772,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(languageCode, targetWord,false)
     if (wordItem) {
       wordItem.important = important
-      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     } else {
       alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Logger.getInstance().error("Alpheios error: unexpected error updating user word list: request to set important flag on non-existent item")
@@ -3010,7 +2789,7 @@ class WordlistController {
     let wordList = this.getWordList(languageCode, false)
     wordList.values.forEach(wordItem => {
       wordItem.important = important
-      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     })
   }
@@ -3094,51 +2873,20 @@ WordlistController.evt = {
 
 /***/ }),
 
-/***/ "./index.js":
-/*!******************!*\
-  !*** ./index.js ***!
-  \******************/
-/*! namespace exports */
-/*! export UserDataManager [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./controllers/user-data-manager.js .default */
-/*! export WordlistController [provided] [maybe used in main (runtime-defined)] [usage prevents renaming] -> ./controllers/wordlist-controller.js .default */
-/*! other exports [not provided] [maybe used in main (runtime-defined)] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "WordlistController": () => /* reexport safe */ _wordlist_controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_0__.default,
-/* harmony export */   "UserDataManager": () => /* reexport safe */ _wordlist_controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_1__.default
-/* harmony export */ });
-/* harmony import */ var _wordlist_controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordlist/controllers/wordlist-controller.js */ "./controllers/wordlist-controller.js");
-/* harmony import */ var _wordlist_controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/controllers/user-data-manager.js */ "./controllers/user-data-manager.js");
-;
-
-
-
-
-
-/***/ }),
-
 /***/ "./storage/indexed-db-adapter.js":
 /*!***************************************!*\
   !*** ./storage/indexed-db-adapter.js ***!
   \***************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ IndexedDBAdapter
+/* harmony export */   "default": () => (/* binding */ IndexedDBAdapter)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-;
+
 
 /**
  * An interface to IndexedDB Storage
@@ -3593,20 +3341,16 @@ class IndexedDBAdapter {
 /*!************************************************************!*\
   !*** ./storage/indexeddbDriver/indexed-db-load-process.js ***!
   \************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ IndexedDBLoadProcess
+/* harmony export */   "default": () => (/* binding */ IndexedDBLoadProcess)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-;
+
 
 class IndexedDBLoadProcess {
   /**
@@ -3675,16 +3419,12 @@ class IndexedDBLoadProcess {
 /*!***********************************************************************!*\
   !*** ./storage/indexeddbDriver/indexed-db-object-stores-structure.js ***!
   \***********************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ IndexedDBObjectStoresStructure
+/* harmony export */   "default": () => (/* binding */ IndexedDBObjectStoresStructure)
 /* harmony export */ });
 class IndexedDBObjectStoresStructure {
   /**
@@ -3749,20 +3489,16 @@ class IndexedDBObjectStoresStructure {
 /*!**************************************!*\
   !*** ./storage/remote-db-adapter.js ***!
   \**************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ RemoteDBAdapter
+/* harmony export */   "default": () => (/* binding */ RemoteDBAdapter)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-;
+
 
 class RemoteDBAdapter {
   /**
@@ -3883,7 +3619,7 @@ class RemoteDBAdapter {
   async deleteOne(data) {
     try {
       let url = this.dbDriver.storageMap.deleteOne.url(data)
-      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default().delete(url, this.dbDriver.requestsParams)
+      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](url, this.dbDriver.requestsParams)
       let updated = this.dbDriver.storageMap.deleteOne.checkResult(result)
       return updated
     } catch (error) {
@@ -3904,7 +3640,7 @@ class RemoteDBAdapter {
     try {
       let url = this.dbDriver.storageMap.deleteMany.url(data)
 
-      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default().delete(url, this.dbDriver.requestsParams)
+      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](url, this.dbDriver.requestsParams)
       let updated = this.dbDriver.storageMap.deleteMany.checkResult(result)
       return updated
     } catch (error) {
@@ -3951,23 +3687,19 @@ class RemoteDBAdapter {
 /*!**********************************************!*\
   !*** ./storage/worditem-indexeddb-driver.js ***!
   \**********************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordItemIndexedDbDriver
+/* harmony export */   "default": () => (/* binding */ WordItemIndexedDbDriver)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/storage/indexeddbDriver/indexed-db-object-stores-structure */ "./storage/indexeddbDriver/indexed-db-object-stores-structure.js");
 /* harmony import */ var _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordlist/storage/indexeddbDriver/indexed-db-load-process */ "./storage/indexeddbDriver/indexed-db-load-process.js");
 /* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
-;
+
 
 
 
@@ -3988,9 +3720,9 @@ class WordItemIndexedDbDriver {
         sync: true,
         objectStoreData: {
           name: 'WordListsCommon',
-          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__.default.WordListsCommon
+          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsCommon
         },
-        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__.default.loadBaseObject,
+        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadBaseObject,
         serialize: this._serializeCommon.bind(this),
         delete: this._segmentSelectQueryByID.bind(this),
         select: this._segmentSelectQueryByID.bind(this)
@@ -4000,10 +3732,10 @@ class WordItemIndexedDbDriver {
         sync: true,
         objectStoreData: {
           name: 'WordListsContext',
-          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__.default.WordListsContext
+          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsContext
         },
         serialize: this._serializeContext.bind(this),
-        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__.default.loadContext,
+        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadContext,
         delete: this._segmentSelectQueryByWordItemID.bind(this),
         select: this._segmentSelectQueryByWordItemID.bind(this)
       },
@@ -4012,10 +3744,10 @@ class WordItemIndexedDbDriver {
         sync: true,
         objectStoreData: {
           name: 'WordListsHomonym',
-          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__.default.WordListsHomonym
+          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsHomonym
         },
         serialize: this._serializeHomonym.bind(this),
-        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__.default.loadHomonym,
+        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadHomonym,
         delete: this._segmentSelectQueryByID.bind(this),
         select: this._segmentSelectQueryByID.bind(this)
       },
@@ -4023,10 +3755,10 @@ class WordItemIndexedDbDriver {
         type: 'segment',
         objectStoreData: {
           name: 'WordListsFullHomonym',
-          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__.default.WordListsFullHomonym
+          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsFullHomonym
         },
         serialize: this._serializeHomonymWithFullDefs.bind(this),
-        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__.default.loadHomonym,
+        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadHomonym,
         delete: this._segmentSelectQueryByID.bind(this),
         select: this._segmentSelectQueryByID.bind(this)
       }
@@ -4279,7 +4011,7 @@ class WordItemIndexedDbDriver {
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
-      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__.default.currentDate,
+      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate,
       updatedDT: wordItem.updatedDT,
       frequency: wordItem.frequency
     }]
@@ -4416,21 +4148,17 @@ _serializeHomonymWithFullDefs (wordItem) {
 /*!*********************************************!*\
   !*** ./storage/worditem-remotedb-driver.js ***!
   \*********************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ WordItemRemoteDbDriver
+/* harmony export */   "default": () => (/* binding */ WordItemRemoteDbDriver)
 /* harmony export */ });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
-;
+
 
 
 class WordItemRemoteDbDriver {
@@ -4602,7 +4330,7 @@ class WordItemRemoteDbDriver {
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
-      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate,
+      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
       updatedDT: wordItem.updatedDT,
       frequency: wordItem.frequency
     }
@@ -4677,7 +4405,7 @@ class WordItemRemoteDbDriver {
       },
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
-      createdDT: _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      createdDT: _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     }
   }
 
@@ -4746,14 +4474,21 @@ class WordItemRemoteDbDriver {
 /*!***************************************!*\
   !*** external "alpheios-data-models" ***!
   \***************************************/
-/*! dynamic exports */
-/*! export __esModule [maybe provided (runtime-defined)] [no usage info] [provision prevents renaming (no use info)] */
-/*! other exports [maybe provided (runtime-defined)] [no usage info] */
-/*! runtime requirements: module */
 /***/ ((module) => {
 
 "use strict";
 module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/package.json":
+/*!************************************************!*\
+  !*** ../../../node_modules/axios/package.json ***!
+  \************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"Promise based HTTP client for the browser and node.js","main":"index.js","scripts":{"test":"grunt test","start":"node ./sandbox/server.js","build":"NODE_ENV=production grunt build","preversion":"npm test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json","postversion":"git push && git push --tags","examples":"node ./examples/server.js","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","fix":"eslint --fix lib/**/*.js"},"repository":{"type":"git","url":"https://github.com/axios/axios.git"},"keywords":["xhr","http","ajax","promise","node"],"author":"Matt Zabriskie","license":"MIT","bugs":{"url":"https://github.com/axios/axios/issues"},"homepage":"https://axios-http.com","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"jsdelivr":"dist/axios.min.js","unpkg":"dist/axios.min.js","typings":"./index.d.ts","dependencies":{"follow-redirects":"^1.14.0"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}]}');
 
 /***/ })
 
@@ -4765,8 +4500,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -4788,8 +4524,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
 /******/ 		__webpack_require__.n = (module) => {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
@@ -4809,7 +4545,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
@@ -4824,10 +4560,28 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__("./index.js");
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!******************!*\
+  !*** ./index.js ***!
+  \******************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "UserDataManager": () => (/* reexport safe */ _wordlist_controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "WordlistController": () => (/* reexport safe */ _wordlist_controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _wordlist_controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordlist/controllers/wordlist-controller.js */ "./controllers/wordlist-controller.js");
+/* harmony import */ var _wordlist_controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/controllers/user-data-manager.js */ "./controllers/user-data-manager.js");
+
+
+
+
+
+})();
+
+/******/ 	return __webpack_exports__;
 /******/ })()
 ;
 });
