@@ -30,7 +30,7 @@
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
     "@babel/runtime": "^7.12.5",
-    "alpheios-node-build": "github:alpheios-project/node-build#v3",
+    "alpheios-node-build": "github:alpheios-project/node-build#v5",
     "coveralls": "^3.1.0",
     "eslint": "^7.15.0",
     "eslint-config-standard": "^16.0.2",

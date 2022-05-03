@@ -46,7 +46,7 @@
     "alpheios-client-adapters": "^3.3.3-incr-3.4.x.20220418329",
     "alpheios-data-models": "^3.3.3-incr-3.4.x.20220418329",
     "alpheios-fixtures": "github:alpheios-project/fixtures",
-    "alpheios-node-build": "github:alpheios-project/node-build#v3",
+    "alpheios-node-build": "github:alpheios-project/node-build#v5",
     "coveralls": "^3.1.0",
     "eslint": "^7.15.0",
     "eslint-config-standard": "^16.0.2",
