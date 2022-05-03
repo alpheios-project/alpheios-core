@@ -557,7 +557,7 @@ describe('client-adapters.test.js', () => {
     expect(collection.resources[0]).toEqual(expect.any(Resource))
   })
 
-  it('28 ClientAdapters - dtsApiMethod - getDocument retrieves TEI Document - by ref, start, end', async () => {
+  it.skip('28 ClientAdapters - dtsApiMethod - getDocument retrieves TEI Document - by ref, start, end', async () => {
     ClientAdapters.init()
 
     let res1 = await ClientAdapters.dtsapiGroup.dtsapi({

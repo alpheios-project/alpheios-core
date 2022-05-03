@@ -31,7 +31,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/runtime": "^7.12.5",
-    "@vue/test-utils": "^1.1.1",
     "alpheios-data-models": "^3.4.4",
     "alpheios-fixtures": "https://github.com/alpheios-project/fixtures",
     "alpheios-l10n": "^3.4.4",
