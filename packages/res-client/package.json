@@ -1,6 +1,6 @@
 {
   "name": "alpheios-res-client",
-  "version": "3.4.3-incr-3.4.x.20220428394",
+  "version": "3.4.4",
   "description": "Alpheios Resource Client Library",
   "private": true,
   "main": "dist/alpheios-res-client.min.js",
@@ -24,29 +24,18 @@
   },
   "homepage": "https://github.com/alpheios-project/res-client#readme",
   "devDependencies": {
-    "@babel/core": "^7.12.9",
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.1",
-    "@babel/preset-env": "^7.12.7",
     "@babel/runtime": "^7.12.5",
-    "alpheios-node-build": "https://github.com/alpheios-project/node-build#v4",
+    "alpheios-data-models": "^3.4.4",
+    "alpheios-node-build": "https://github.com/alpheios-project/node-build#v5",
     "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.1.0",
-    "eslint": "^7.15.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^5.0.0",
     "jest": "^26.6.3",
     "jest-fetch-mock": "^3.0.3",
     "papaparse": "^5.3.0",
-    "readable-stream": "^3.6.0",
-    "shx": "^0.3.3"
-  },
-  "peerDependencies": {
-    "alpheios-data-models": "3.3.3-incr-3.4.x.20220418329"
+    "readable-stream": "^3.6.0"
   },
   "engines": {
     "node": ">= 9.10.1",
@@ -63,7 +52,11 @@
     }
   },
   "eslintConfig": {
+    "extends": [
+      "eslint:recommended"
+    ],
     "env": {
+      "es6": true,
       "browser": true,
       "node": true,
       "jest": true
@@ -75,7 +68,10 @@
     "rules": {
       "no-prototype-builtins": "warn",
       "dot-notation": "warn",
-      "accessor-pairs": "warn"
+      "accessor-pairs": "warn",
+      "no-unused-vars": "warn",
+      "getter-return": "warn",
+      "no-setter-return": "warn"
     }
   },
   "standard": {

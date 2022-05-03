@@ -12,7 +12,6 @@ import axios from 'axios'
  *                        accessToken: JWT token identying user and granting
  *                                     access to the settings api
  *                      }
- *
  */
 export default class RemoteAuthStorageArea extends StorageAdapter {
   constructor (domain = 'alpheios-storage-domain', auth = null) {

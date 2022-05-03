@@ -15,7 +15,8 @@ const webpack = {
         It is not so, however, with webpack 5 as it disabled all automatic polyfills.
         Solution is to use `readable-stream` as a `stream` polyfill.
          */
-        'stream': path.join(projectRoot, '../../node_modules/readable-stream')
+        'stream': path.join(projectRoot, '../../node_modules/readable-stream'),
+        'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
       }
     }
   },

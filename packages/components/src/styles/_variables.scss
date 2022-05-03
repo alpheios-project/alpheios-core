@@ -3,7 +3,7 @@
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
  */
 @function textsize ($px-size, $base-size: 16px) {
-  @return calc(var(--alpheios-base-text-size) * #{$px-size / $base-size})
+  @return calc(var(--alpheios-base-text-size) * calc($px-size / $base-size))
 }
 
 /*
@@ -11,7 +11,7 @@
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 @function uisize ($px-size, $base-size: 16px) {
-  @return calc(var(--alpheios-base-ui-size) * #{$px-size / $base-size})
+  @return calc(var(--alpheios-base-ui-size) * calc($px-size / $base-size))
 }
 
 // A border of elements that are scaled along with the base UI size

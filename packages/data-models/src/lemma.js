@@ -15,7 +15,6 @@ class Lemma {
    * @param {symbol | string} languageID - A language ID (symbol, please use this) or a language code of a word.
    * @param {string[]} principalParts - the principalParts of a lemma.
    * @param {object} features - the grammatical features of a lemma.
-
    * @param {Translation} transaltions - translations from python service
    */
   constructor (word, languageID, principalParts = [], features = {}) {

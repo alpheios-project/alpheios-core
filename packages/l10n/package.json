@@ -1,6 +1,6 @@
 {
   "name": "alpheios-l10n",
-  "version": "3.4.3-incr-3.4.x.20220428394",
+  "version": "3.4.4",
   "description": "Alpheios Localization",
   "private": true,
   "main": "dist/alpheios-l10n.min.js",
@@ -26,23 +26,11 @@
   },
   "homepage": "https://github.com/alpheios-project/alpheios-core/packages/l10n#readme",
   "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "@babel/plugin-transform-runtime": "^7.12.1",
-    "@babel/preset-env": "^7.12.7",
     "@babel/runtime": "^7.12.5",
-    "alpheios-node-build": "https://github.com/alpheios-project/node-build#v4",
+    "alpheios-node-build": "https://github.com/alpheios-project/node-build#v5",
     "coveralls": "^3.1.0",
-    "eslint": "^7.15.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsdoc": "^30.7.8",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^5.0.0",
-    "eslint-scope": "^5.1.1",
     "intl-messageformat": "^9.0.2",
-    "jest": "^26.6.3",
-    "shx": "^0.3.3"
+    "jest": "^26.6.3"
   },
   "jest": {
     "verbose": true,
@@ -52,15 +40,15 @@
   },
   "eslintConfig": {
     "extends": [
-      "standard",
-      "plugin:jsdoc/recommended"
+      "eslint:recommended"
     ],
     "env": {
+      "es6": true,
       "browser": true,
       "node": true
     },
     "parserOptions": {
-      "parser": "babel-eslint",
+      "parser": "@babel/eslint-parser",
       "ecmaVersion": 2019,
       "sourceType": "module",
       "allowImportExportEverywhere": true
@@ -68,7 +56,10 @@
     "rules": {
       "no-prototype-builtins": "warn",
       "dot-notation": "warn",
-      "accessor-pairs": "warn"
+      "accessor-pairs": "warn",
+      "no-unused-vars": "warn",
+      "getter-return": "warn",
+      "no-setter-return": "warn"
     }
   },
   "eslintIgnore": [

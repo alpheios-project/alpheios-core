@@ -1,3 +1,6 @@
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!./styles/style.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
 @charset "UTF-8";
 html {
   --alpheios-base-text-size: 16px;
@@ -878,6 +881,9 @@ body {
   -ms-user-select: auto !important;
   user-select: auto !important;
 }
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/lemma-translation.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -895,6 +901,9 @@ body {
 p.alpheios-lemma__translations-value {
   margin-bottom: 5px !important;
 }
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/infl-attribute.vue?vue&type=style&index=0&lang=scss& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -925,6 +934,9 @@ p.alpheios-lemma__translations-value {
 .alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__linkedattr:hover {
   color: var(--alpheios-desktop-popup-link-color-hover) !important;
 }
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1104,6 +1116,9 @@ p.alpheios-lemma__translations-value {
   border-style: solid !important;
   border-color: transparent transparent transparent var(--alpheios-border-color) !important;
 }
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/morph-parts/principal-parts.vue?vue&type=style&index=0&lang=scss& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1183,6 +1198,9 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
   display: block;
   height: 22px !important;
 }
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/morph-parts/morph-data.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1218,6 +1236,9 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
 .alpheios-morph-data__morphdata .alpheios-morph-data__pofs span {
   padding-right: 5px !important;
 }
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/progress-bar.vue?vue&type=style&index=0&lang=scss& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1266,6 +1287,9 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
     transform: translateX(0%) scaleX(1);
 }
 }
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/shortdef.vue?vue&type=style&index=0&lang=scss& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1279,6 +1303,9 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
   font-size: calc(var(--alpheios-base-text-size) * 1.125) !important;
   font-weight: bold !important;
 }
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/morph-parts/definitions-list.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1303,6 +1330,9 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
 .alpheios-morph-definitions_list .alpheios-definition__short {
   display: inline-block;
 }
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/morph-parts/inflections-list.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1382,6 +1412,9 @@ div.alpheios-inflections-list__block {
 .alpheios-inflections-list__dupe-infl-set {
   display: none;
 }
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/morph.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1417,7 +1450,13 @@ div.alpheios-inflections-list__block {
   margin-bottom: 0 !important;
   margin-top: 0 !important;
 }
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
 fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spinner{position:absolute !important;right:1px !important;top:1px !important;width:48px !important;height:35px !important;background:#fff !important;display:block}.multiselect__spinner:after,.multiselect__spinner:before{position:absolute !important;content:"" !important;top:50% !important;left:50% !important;margin:-8px 0 0 -8px !important;width:16px !important;height:16px !important;border-radius:100% !important;border:2px solid transparent !important;border-top-color:#41b883 !important;box-shadow:0 0 0 1px transparent !important}.multiselect__spinner:before{animation:spinning 2.4s cubic-bezier(.41,.26,.2,.62);animation-iteration-count:infinite}.multiselect__spinner:after{animation:spinning 2.4s cubic-bezier(.51,.09,.21,.8);animation-iteration-count:infinite}.multiselect__loading-enter-active,.multiselect__loading-leave-active{transition:opacity .4s ease-in-out !important;opacity:1 !important}.multiselect__loading-enter,.multiselect__loading-leave-active{opacity:0 !important}.multiselect,.multiselect__input,.multiselect__single{font-family:inherit !important;font-size:16px !important;-ms-touch-action:manipulation !important;touch-action:manipulation !important}.multiselect{box-sizing:content-box !important;display:block;position:relative !important;width:100% !important;min-height:40px !important;text-align:left !important;color:#35495e !important}.multiselect *{box-sizing:border-box !important}.multiselect:focus{outline:none !important}.multiselect--disabled{background:#ededed !important;pointer-events:none !important;opacity:.6 !important}.multiselect--active{z-index:50 !important}.multiselect--active:not(.multiselect--above) .multiselect__current,.multiselect--active:not(.multiselect--above) .multiselect__input,.multiselect--active:not(.multiselect--above) .multiselect__tags{border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important}.multiselect--active .multiselect__select{transform:rotate(180deg) !important}.multiselect--above.multiselect--active .multiselect__current,.multiselect--above.multiselect--active .multiselect__input,.multiselect--above.multiselect--active .multiselect__tags{border-top-left-radius:0 !important;border-top-right-radius:0 !important}.multiselect__input,.multiselect__single{position:relative !important;display:inline-block;min-height:20px !important;line-height:20px !important;border:none !important;border-radius:5px !important;background:#fff !important;padding:0 0 0 5px !important;width:100% !important;transition:border .1s ease !important;box-sizing:border-box !important;margin-bottom:8px !important;vertical-align:top !important}.multiselect__input:-ms-input-placeholder{color:#35495e !important}.multiselect__input::placeholder{color:#35495e !important}.multiselect__tag~.multiselect__input,.multiselect__tag~.multiselect__single{width:auto !important}.multiselect__input:hover,.multiselect__single:hover{border-color:#cfcfcf !important}.multiselect__input:focus,.multiselect__single:focus{border-color:#a8a8a8 !important;outline:none !important}.multiselect__single{padding-left:5px !important;margin-bottom:8px !important}.multiselect__tags-wrap{display:inline}.multiselect__tags{min-height:40px !important;display:block;padding:8px 40px 0 8px !important;border-radius:5px !important;border:1px solid #e8e8e8 !important;background:#fff !important;font-size:14px !important}.multiselect__tag{position:relative !important;display:inline-block;padding:4px 26px 4px 10px !important;border-radius:5px !important;margin-right:10px !important;color:#fff !important;line-height:1 !important;background:#41b883 !important;margin-bottom:5px !important;white-space:nowrap !important;overflow:hidden !important;max-width:100% !important;text-overflow:ellipsis !important}.multiselect__tag-icon{cursor:pointer !important;margin-left:7px !important;position:absolute !important;right:0 !important;top:0 !important;bottom:0 !important;font-weight:700 !important;font-style:normal !important;width:22px !important;text-align:center !important;line-height:22px !important;transition:all .2s ease !important;border-radius:5px !important}.multiselect__tag-icon:after{content:"\D7" !important;color:#266d4d !important;font-size:14px !important}.multiselect__tag-icon:focus,.multiselect__tag-icon:hover{background:#369a6e !important}.multiselect__tag-icon:focus:after,.multiselect__tag-icon:hover:after{color:#fff !important}.multiselect__current{min-height:40px !important;overflow:hidden !important;padding:8px 30px 0 12px !important;white-space:nowrap !important;border-radius:5px !important;border:1px solid #e8e8e8 !important}.multiselect__current,.multiselect__select{line-height:16px !important;box-sizing:border-box !important;display:block;margin:0 !important;text-decoration:none !important;cursor:pointer !important}.multiselect__select{position:absolute !important;width:40px !important;height:38px !important;right:1px !important;top:1px !important;padding:4px 8px !important;text-align:center !important;transition:transform .2s ease !important}.multiselect__select:before{position:relative !important;right:0 !important;top:65% !important;color:#999 !important;margin-top:4px !important;border-color:#999 transparent transparent !important;border-style:solid !important;border-width:5px 5px 0 !important;content:"" !important}.multiselect__placeholder{color:#adadad !important;display:inline-block;margin-bottom:10px !important;padding-top:2px !important}.multiselect--active .multiselect__placeholder{display:none}.multiselect__content-wrapper{position:absolute !important;display:block;background:#fff !important;width:100% !important;max-height:240px !important;overflow:auto !important;border:1px solid #e8e8e8 !important;border-top:none !important;border-bottom-left-radius:5px !important;border-bottom-right-radius:5px !important;z-index:50 !important;-webkit-overflow-scrolling:touch !important}.multiselect__content{list-style:none !important;display:inline-block;padding:0 !important;margin:0 !important;min-width:100% !important;vertical-align:top !important}.multiselect--above .multiselect__content-wrapper{bottom:100% !important;border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important;border-top-left-radius:5px !important;border-top-right-radius:5px !important;border-bottom:none !important;border-top:1px solid #e8e8e8 !important}.multiselect__content::webkit-scrollbar{display:none}.multiselect__element{display:block}.multiselect__option{display:block;padding:12px !important;min-height:40px !important;line-height:16px !important;text-decoration:none !important;text-transform:none !important;vertical-align:middle !important;position:relative !important;cursor:pointer !important;white-space:nowrap !important}.multiselect__option:after{top:0 !important;right:0 !important;position:absolute !important;line-height:40px !important;padding-right:12px !important;padding-left:20px !important;font-size:13px !important}.multiselect__option--highlight{background:#41b883 !important;outline:none !important;color:#fff !important}.multiselect__option--highlight:after{content:attr(data-select) !important;background:#41b883 !important;color:#fff !important}.multiselect__option--selected{background:#f3f3f3 !important;color:#35495e !important;font-weight:700 !important}.multiselect__option--selected:after{content:attr(data-selected) !important;color:silver !important}.multiselect__option--selected.multiselect__option--highlight{background:#ff6a6a !important;color:#fff !important}.multiselect__option--selected.multiselect__option--highlight:after{background:#ff6a6a !important;content:attr(data-deselect) !important;color:#fff !important}.multiselect--disabled .multiselect__current,.multiselect--disabled .multiselect__select{background:#ededed !important;color:#a6a6a6 !important}.multiselect__option--disabled{background:#ededed!important;color:#a6a6a6!important;cursor:text !important;pointer-events:none !important}.multiselect__option--group{background:#ededed !important;color:#35495e !important}.multiselect__option--group.multiselect__option--highlight{background:#35495e !important;color:#fff !important}.multiselect__option--group.multiselect__option--highlight:after{background:#35495e !important}.multiselect__option--disabled.multiselect__option--highlight{background:#dedede !important}.multiselect__option--group-selected.multiselect__option--highlight{background:#ff6a6a !important;color:#fff !important}.multiselect__option--group-selected.multiselect__option--highlight:after{background:#ff6a6a !important;content:attr(data-deselect) !important;color:#fff !important}.multiselect-enter-active,.multiselect-leave-active{transition:all .15s ease !important}.multiselect-enter,.multiselect-leave-active{opacity:0 !important}.multiselect__strong{margin-bottom:8px !important;line-height:20px !important;display:inline-block;vertical-align:top !important}[dir=rtl] .multiselect{text-align:right !important}[dir=rtl] .multiselect__select{right:auto !important;left:1px !important}[dir=rtl] .multiselect__tags{padding:8px 8px 0 40px !important}[dir=rtl] .multiselect__content{text-align:right !important}[dir=rtl] .multiselect__option:after{right:auto !important;left:0 !important}[dir=rtl] .multiselect__clear{right:auto !important;left:12px !important}[dir=rtl] .multiselect__spinner{right:auto !important;left:1px !important}@keyframes spinning{0%{transform:rotate(0)}to{transform:rotate(2turn)}}
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/setting.vue?vue&type=style&index=1&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1434,6 +1473,9 @@ select.alpheios-setting__control,
 .multiselect.alpheios-setting__control {
   width: 50% !important;
 }
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/notification-area.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1551,6 +1593,9 @@ select.alpheios-setting__control,
 .alpheios-notification-area__hint-btn:active, button.alpheios-notification-area__hint-btn:active {
   box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1) !important;
 }
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/popup.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1721,6 +1766,9 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
 .alpheios-popup__providers-item {
   color: var(--alpheios-desktop-popup-credit-providers-color) !important;
 }
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/nav/navbuttons-compact.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1760,6 +1808,9 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
   stroke: var(--alpheios-icon-color-active) !important;
   background-color: var(--alpheios-icon-bg-color-active) !important;
 }
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/inflections/inflections-subtables-wide.vue?vue&type=style&index=0&lang=scss& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1793,9 +1844,15 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
 .infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink:hover {
   color: var(--alpheios-link-color-hover) !important;
 }
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/inflections/inflections-table-prerendered.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 .alpheios-inflections__title {
   cursor: pointer !important;
 }
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/inflections/infl-footnote.vue?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1889,6 +1946,9 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
   fill: var(--alpheios-color-neutral-light) !important;
   stroke: var(--alpheios-color-neutral-light) !important;
 }
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/inflections/inflections-table-wide.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2122,6 +2182,9 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   background-color: var(--alpheios-inflect-button-control-bg-hover) !important;
   border-color: var(--alpheios-inflect-button-control-border-color-hover) !important;
 }
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/inflections/inflections-supp-table-wide.vue?vue&type=style&index=0&lang=scss& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 h3.alpheios-inflections__supp-table-title {
   font-size: 1rem !important;
   line-height: 1 !important;
@@ -2143,6 +2206,9 @@ h3.alpheios-inflections__supp-table-title {
 .infl-supp-tbl__cont a.infl-supp-tbl__reflink:hover {
   color: var(--alpheios-link-color-hover) !important;
 }
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/wordforms.vue?vue&type=style&index=0&lang=scss& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2162,6 +2228,9 @@ h3.alpheios-inflections__supp-table-title {
 .alpheios-inflections__forms-targetword {
   font-weight: 700 !important;
 }
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/inflections/inflections.vue?vue&type=style&index=0&lang=scss& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2234,6 +2303,9 @@ h3.alpheios-inflections__credits-title {
 .alpheios-inflections__supp-tables {
   margin-top: 4rem !important;
 }
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/grammar.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2342,6 +2414,9 @@ p.alpheios-grammar__block__title.open {
 .alpheios-grammar__frame-progress {
   padding: 20px !important;
 }
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/treebank.vue?vue&type=style&index=0&lang=scss& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2360,6 +2435,9 @@ p.alpheios-grammar__block__title.open {
   flex: 1 1 100vh !important;
   height: 100% !important;
 }
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/inflections/inflections-browser.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2402,6 +2480,9 @@ p.alpheios-grammar__block__title.open {
   margin-left: calc(var(--alpheios-base-text-size) * 2) !important;
   margin-bottom: calc(var(--alpheios-base-text-size) * 1.25) !important;
 }
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/user-auth.vue?vue&type=style&index=0&lang=scss& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2440,6 +2521,9 @@ p.alpheios-grammar__block__title.open {
   color: var(--alpheios-link-color-on-light) !important;
   text-align: right !important;
 }
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-usage-examples/word-usage-examples-filters.vue?vue&type=style&index=0&lang=scss& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2489,6 +2573,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios-word-usage-filters-select {
   margin-bottom: 10px !important;
 }
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-usage-examples/word-usage-examples-sorting.vue?vue&type=style&index=0&lang=scss& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2505,6 +2592,9 @@ p.alpheios-word-usage-filter-title {
   margin-top: 10px !important;
   border-bottom: 1px solid var(--alpheios-border-color) !important;
 }
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-usage-examples/word-usage-examples.vue?vue&type=style&index=0&lang=scss& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2663,6 +2753,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios_word_usage_list_mainblock i {
   font-style: italic !important;
 }
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-list/word-item-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2720,11 +2813,11 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-worditem__targetWord {
   font-weight: bold !important;
-  width: calc((100% - 250px)/2) !important;
+  width: calc((100% - 250px) / 2) !important;
   cursor: pointer !important;
 }
 .alpheios-worditem__lemmasList {
-  width: calc((100% - 250px)/2) !important;
+  width: calc((100% - 250px) / 2) !important;
 }
 .alpheios-worditem__frequency {
   width: 20px !important;
@@ -2745,6 +2838,9 @@ p.alpheios-word-usage-filter-title {
   direction: rtl !important;
   text-align: right !important;
 }
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-list/word-filter-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2865,6 +2961,9 @@ p.alpheios-word-usage-filter-title {
   color: #acacac !important;
   font-size: 90% !important;
 }
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-list/word-sorting-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2911,6 +3010,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-worditem__frequency {
   width: 40px !important;
 }
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-list/download-confirmation.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2946,6 +3048,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios-wordlist-download-confirmation-loading .alpheios-popup-lexdataloading__progress-line {
   background: var(--alpheios-color-vivid-hover) !important;
 }
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-list/word-language-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2989,6 +3094,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios-wordlist-delete-all-confirmation {
   margin-top: 10px !important;
 }
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-list/word-tq-source-block.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3018,10 +3126,16 @@ p.alpheios-word-usage-filter-title {
   display: inline-block;
   padding: 0 5px !important;
 }
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-list/word-context-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 .alpheios-wordlist-commands__item-back {
   fill: var(--alpheios-word-list-context-back-link-color) !important;
   stroke: var(--alpheios-word-list-context-back-link-color) !important;
 }
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/word-list/word-list-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3040,6 +3154,9 @@ p.alpheios-word-usage-filter-title {
   display: inline-block;
   vertical-align: middle !important;
 }
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/resource-settings.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3069,6 +3186,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios-resource-options__item .alpheios-setting__control {
   width: 70% !important;
 }
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/feature-settings.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3096,6 +3216,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios-ui-options__cont-wordselect {
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important;
 }
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/font-size.vue?vue&type=style&index=0&lang=scss& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3132,6 +3255,9 @@ p.alpheios-word-usage-filter-title {
   background: var(--alpheios-settings-font-size-dark-color) !important;
   box-shadow: inset 0 calc(var(--alpheios-base-text-size) * 0.25) calc(var(--alpheios-base-text-size) * 0.25) rgba(0, 0, 0, 0.1) !important;
 }
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/ui-settings.vue?vue&type=style&index=0&lang=scss& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3162,6 +3288,9 @@ p.alpheios-word-usage-filter-title {
   display: flex !important;
   justify-content: space-between !important;
 }
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/advanced-settings.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3192,6 +3321,9 @@ p.alpheios-word-usage-filter-title {
   display: flex;
   justify-content: space-between !important;
 }
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/options.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3252,6 +3384,9 @@ p.alpheios-word-usage-filter-title {
   padding: calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 1.25) calc(var(--alpheios-base-text-size) * 1.25) !important;
   border: 2px groove threedface !important;
 }
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/panel-compact.vue?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3506,6 +3641,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios-panel__tab-panel--options {
   padding-top: 10px !important;
 }
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/info.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3562,6 +3700,9 @@ p.alpheios-word-usage-filter-title {
   flex-direction: row !important;
   justify-content: flex-end !important;
 }
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/panel-large.vue?vue&type=style&index=0&lang=scss& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3632,6 +3773,9 @@ p.alpheios-word-usage-filter-title {
   background-color: var(--alpheios-settings-reset-button-bg-hover) !important;
   border-color: var(--alpheios-settings-reset-button-border-color-hover) !important;
 }
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/embed-lib-warning.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3663,6 +3807,9 @@ p.alpheios-word-usage-filter-title {
   top: 5px !important;
   right: 5px !important;
 }
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/nav/toolbar-compact.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3693,6 +3840,9 @@ p.alpheios-word-usage-filter-title {
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
 }
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/form-components/input-autocomplete.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3743,6 +3893,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios-input-autocomplete-item:hover {
   background: var(--alpheios-color-bright-hover) !important;
 }
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/beta-codes-info.vue?vue&type=style&index=0&lang=scss& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3761,6 +3914,9 @@ p.alpheios-word-usage-filter-title {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/lookup.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3862,6 +4018,9 @@ span.alpheios-lookup__lang-change:hover {
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
 }
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/nav/toolbar-large.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -4013,6 +4172,9 @@ span.alpheios-lookup__lang-change:hover {
   background-color: var(--alpheios-desktop-toolbar-icon-bg-disabled) !important;
   cursor: default !important;
 }
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-5[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./vue/components/nav/action-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.

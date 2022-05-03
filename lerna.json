@@ -2,5 +2,5 @@
   "packages": [
     "packages/*"
   ],
-  "version": "3.4.3-incr-3.4.x.20220428394"
+  "version": "3.4.4"
 }
