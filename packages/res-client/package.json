@@ -1,6 +1,6 @@
 {
   "name": "alpheios-res-client",
-  "version": "3.4.4",
+  "version": "3.4.4-incr-3.4.x.20220503368",
   "description": "Alpheios Resource Client Library",
   "private": true,
   "main": "dist/alpheios-res-client.min.js",
@@ -27,7 +27,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/runtime": "^7.12.5",
-    "alpheios-data-models": "^3.4.4",
+    "alpheios-data-models": "^3.4.4-incr-3.4.x.20220503368",
     "alpheios-node-build": "https://github.com/alpheios-project/node-build#v5",
     "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.0.0",
