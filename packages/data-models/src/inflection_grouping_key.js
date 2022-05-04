@@ -23,7 +23,7 @@ is included in the grouping key
    * @param value
    */
   hasFeatureValue (feature, value) {
-    if (this.hasOwnProperty(feature)) {
+    if (this.hasOwnProperty(feature)) { // eslint-disable-line no-prototype-builtins
       return this[feature].values.includes(value)
     }
     return false

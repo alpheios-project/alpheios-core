@@ -15,7 +15,6 @@ class Lemma {
    * @param {symbol | string} languageID - A language ID (symbol, please use this) or a language code of a word.
    * @param {string[]} principalParts - the principalParts of a lemma.
    * @param {object} features - the grammatical features of a lemma.
-
    * @param {Translation} transaltions - translations from python service
    */
   constructor (word, languageID, principalParts = [], features = {}) {
@@ -91,7 +90,7 @@ class Lemma {
    * Values are taken from features and stored in a 'feature.type' property as an array of values.
    * @param {Feature | Feature[]} data
    */
-  set feature (data) {
+  set feature (data) { // eslint-disable-line accessor-pairs
     Logger.getInstance().warn('Please use "addFeature" instead')
     if (!data) {
       throw new Error('feature data cannot be empty.')

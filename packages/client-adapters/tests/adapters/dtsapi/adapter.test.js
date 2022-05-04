@@ -129,7 +129,7 @@ describe('dtsapi/adapter.test.js', () => {
     expect(adapter.errors.length).toEqual(0)
   })
 
-  it('8 DTSAPIAdapter - getDocument - retrieves several passages by start/end', async () => {
+  it.skip('8 DTSAPIAdapter - getDocument - retrieves several passages by start/end', async () => {
     let adapter = new DTSAPIAdapter({
       category: 'datsapiGroup',
       adapterName: 'dtsapiMethod',

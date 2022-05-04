@@ -7,20 +7,9 @@
 		var a = factory();
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(global, function() {
+})(global, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "../../../node_modules/axios/package.json":
-/*!************************************************!*\
-  !*** ../../../node_modules/axios/package.json ***!
-  \************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse("{\"_from\":\"axios@^0.21.0\",\"_id\":\"axios@0.21.4\",\"_inBundle\":false,\"_integrity\":\"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"^0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz\",\"_shasum\":\"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575\",\"_spec\":\"axios@^0.21.0\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.14.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.3.0\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^23.0.0\",\"grunt-karma\":\"^4.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^4.0.2\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^6.3.2\",\"karma-chrome-launcher\":\"^3.1.0\",\"karma-firefox-launcher\":\"^2.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^4.3.6\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.8\",\"karma-webpack\":\"^4.0.2\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^8.2.1\",\"sinon\":\"^4.5.0\",\"terser-webpack-plugin\":\"^4.2.3\",\"typescript\":\"^4.0.5\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^4.44.2\",\"webpack-dev-server\":\"^3.11.0\"},\"homepage\":\"https://axios-http.com\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.4\"}");
-
-/***/ }),
 
 /***/ "../../../node_modules/axios/index.js":
 /*!********************************************!*\
@@ -47,8 +36,8 @@ var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "../../../n
 var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../../../node_modules/axios/lib/helpers/buildURL.js");
 var http = __webpack_require__(/*! http */ "http");
 var https = __webpack_require__(/*! https */ "https");
-var httpFollow = __webpack_require__(/*! follow-redirects */ "../../../node_modules/follow-redirects/index.js").http;
-var httpsFollow = __webpack_require__(/*! follow-redirects */ "../../../node_modules/follow-redirects/index.js").https;
+var httpFollow = (__webpack_require__(/*! follow-redirects */ "../../../node_modules/follow-redirects/index.js").http);
+var httpsFollow = (__webpack_require__(/*! follow-redirects */ "../../../node_modules/follow-redirects/index.js").https);
 var url = __webpack_require__(/*! url */ "url");
 var zlib = __webpack_require__(/*! zlib */ "zlib");
 var pkg = __webpack_require__(/*! ./../../package.json */ "../../../node_modules/axios/package.json");
@@ -636,7 +625,7 @@ axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "../../..
 module.exports = axios;
 
 // Allow use of default import syntax in TypeScript
-module.exports.default = axios;
+module.exports["default"] = axios;
 
 
 /***/ }),
@@ -2422,34 +2411,109 @@ module.exports = {
   \**************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
+/* eslint-env browser */
+
 /**
  * This is the web browser implementation of `debug()`.
- *
- * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(/*! ./debug */ "../../../node_modules/debug/src/debug.js");
-exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
 exports.load = load;
 exports.useColors = useColors;
-exports.storage = 'undefined' != typeof chrome
-               && 'undefined' != typeof chrome.storage
-                  ? chrome.storage.local
-                  : localstorage();
+exports.storage = localstorage();
+exports.destroy = (() => {
+	let warned = false;
+
+	return () => {
+		if (!warned) {
+			warned = true;
+			console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+		}
+	};
+})();
 
 /**
  * Colors.
  */
 
 exports.colors = [
-  'lightseagreen',
-  'forestgreen',
-  'goldenrod',
-  'dodgerblue',
-  'darkorchid',
-  'crimson'
+	'#0000CC',
+	'#0000FF',
+	'#0033CC',
+	'#0033FF',
+	'#0066CC',
+	'#0066FF',
+	'#0099CC',
+	'#0099FF',
+	'#00CC00',
+	'#00CC33',
+	'#00CC66',
+	'#00CC99',
+	'#00CCCC',
+	'#00CCFF',
+	'#3300CC',
+	'#3300FF',
+	'#3333CC',
+	'#3333FF',
+	'#3366CC',
+	'#3366FF',
+	'#3399CC',
+	'#3399FF',
+	'#33CC00',
+	'#33CC33',
+	'#33CC66',
+	'#33CC99',
+	'#33CCCC',
+	'#33CCFF',
+	'#6600CC',
+	'#6600FF',
+	'#6633CC',
+	'#6633FF',
+	'#66CC00',
+	'#66CC33',
+	'#9900CC',
+	'#9900FF',
+	'#9933CC',
+	'#9933FF',
+	'#99CC00',
+	'#99CC33',
+	'#CC0000',
+	'#CC0033',
+	'#CC0066',
+	'#CC0099',
+	'#CC00CC',
+	'#CC00FF',
+	'#CC3300',
+	'#CC3333',
+	'#CC3366',
+	'#CC3399',
+	'#CC33CC',
+	'#CC33FF',
+	'#CC6600',
+	'#CC6633',
+	'#CC9900',
+	'#CC9933',
+	'#CCCC00',
+	'#CCCC33',
+	'#FF0000',
+	'#FF0033',
+	'#FF0066',
+	'#FF0099',
+	'#FF00CC',
+	'#FF00FF',
+	'#FF3300',
+	'#FF3333',
+	'#FF3366',
+	'#FF3399',
+	'#FF33CC',
+	'#FF33FF',
+	'#FF6600',
+	'#FF6633',
+	'#FF9900',
+	'#FF9933',
+	'#FFCC00',
+	'#FFCC33'
 ];
 
 /**
@@ -2460,38 +2524,31 @@ exports.colors = [
  * TODO: add a `localStorage` variable to explicitly enable/disable colors
  */
 
+// eslint-disable-next-line complexity
 function useColors() {
-  // NB: In an Electron preload script, document will be defined but not fully
-  // initialized. Since we know we're in Chrome, we'll just detect this case
-  // explicitly
-  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
-    return true;
-  }
+	// NB: In an Electron preload script, document will be defined but not fully
+	// initialized. Since we know we're in Chrome, we'll just detect this case
+	// explicitly
+	if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
+		return true;
+	}
 
-  // is webkit? http://stackoverflow.com/a/16459606/376773
-  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
-    // is firebug? http://stackoverflow.com/a/398120/376773
-    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
-    // is firefox >= v31?
-    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
-    // double check webkit in userAgent just in case we are in a worker
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+	// Internet Explorer and Edge do not support colors.
+	if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
+		return false;
+	}
+
+	// Is webkit? http://stackoverflow.com/a/16459606/376773
+	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+		// Is firebug? http://stackoverflow.com/a/398120/376773
+		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+		// Is firefox >= v31?
+		// https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+		// Double check webkit in userAgent just in case we are in a worker
+		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
 }
-
-/**
- * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
- */
-
-exports.formatters.j = function(v) {
-  try {
-    return JSON.stringify(v);
-  } catch (err) {
-    return '[UnexpectedJSONParseError]: ' + err.message;
-  }
-};
-
 
 /**
  * Colorize log arguments if enabled.
@@ -2500,52 +2557,49 @@ exports.formatters.j = function(v) {
  */
 
 function formatArgs(args) {
-  var useColors = this.useColors;
+	args[0] = (this.useColors ? '%c' : '') +
+		this.namespace +
+		(this.useColors ? ' %c' : ' ') +
+		args[0] +
+		(this.useColors ? '%c ' : ' ') +
+		'+' + module.exports.humanize(this.diff);
 
-  args[0] = (useColors ? '%c' : '')
-    + this.namespace
-    + (useColors ? ' %c' : ' ')
-    + args[0]
-    + (useColors ? '%c ' : ' ')
-    + '+' + exports.humanize(this.diff);
+	if (!this.useColors) {
+		return;
+	}
 
-  if (!useColors) return;
+	const c = 'color: ' + this.color;
+	args.splice(1, 0, c, 'color: inherit');
 
-  var c = 'color: ' + this.color;
-  args.splice(1, 0, c, 'color: inherit')
+	// The final "%c" is somewhat tricky, because there could be other
+	// arguments passed either before or after the %c, so we need to
+	// figure out the correct index to insert the CSS into
+	let index = 0;
+	let lastC = 0;
+	args[0].replace(/%[a-zA-Z%]/g, match => {
+		if (match === '%%') {
+			return;
+		}
+		index++;
+		if (match === '%c') {
+			// We only are interested in the *last* %c
+			// (the user may have provided their own)
+			lastC = index;
+		}
+	});
 
-  // the final "%c" is somewhat tricky, because there could be other
-  // arguments passed either before or after the %c, so we need to
-  // figure out the correct index to insert the CSS into
-  var index = 0;
-  var lastC = 0;
-  args[0].replace(/%[a-zA-Z%]/g, function(match) {
-    if ('%%' === match) return;
-    index++;
-    if ('%c' === match) {
-      // we only are interested in the *last* %c
-      // (the user may have provided their own)
-      lastC = index;
-    }
-  });
-
-  args.splice(lastC, 0, c);
+	args.splice(lastC, 0, c);
 }
 
 /**
- * Invokes `console.log()` when available.
- * No-op when `console.log` is not a "function".
+ * Invokes `console.debug()` when available.
+ * No-op when `console.debug` is not a "function".
+ * If `console.debug` is not available, falls back
+ * to `console.log`.
  *
  * @api public
  */
-
-function log() {
-  // this hackery is required for IE8/9, where
-  // the `console.log` function doesn't have 'apply'
-  return 'object' === typeof console
-    && console.log
-    && Function.prototype.apply.call(console.log, console, arguments);
-}
+exports.log = console.debug || console.log || (() => {});
 
 /**
  * Save `namespaces`.
@@ -2553,15 +2607,17 @@ function log() {
  * @param {String} namespaces
  * @api private
  */
-
 function save(namespaces) {
-  try {
-    if (null == namespaces) {
-      exports.storage.removeItem('debug');
-    } else {
-      exports.storage.debug = namespaces;
-    }
-  } catch(e) {}
+	try {
+		if (namespaces) {
+			exports.storage.setItem('debug', namespaces);
+		} else {
+			exports.storage.removeItem('debug');
+		}
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
 }
 
 /**
@@ -2570,26 +2626,22 @@ function save(namespaces) {
  * @return {String} returns the previously persisted debug modes
  * @api private
  */
-
 function load() {
-  var r;
-  try {
-    r = exports.storage.debug;
-  } catch(e) {}
+	let r;
+	try {
+		r = exports.storage.getItem('debug');
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
 
-  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-  if (!r && typeof process !== 'undefined' && 'env' in process) {
-    r = process.env.DEBUG;
-  }
+	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+	if (!r && typeof process !== 'undefined' && 'env' in process) {
+		r = process.env.DEBUG;
+	}
 
-  return r;
+	return r;
 }
-
-/**
- * Enable namespaces listed in `localStorage.debug` initially.
- */
-
-exports.enable(load());
 
 /**
  * Localstorage attempts to return the localstorage.
@@ -2603,222 +2655,315 @@ exports.enable(load());
  */
 
 function localstorage() {
-  try {
-    return window.localStorage;
-  } catch (e) {}
+	try {
+		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
+		// The Browser also has localStorage in the global context.
+		return localStorage;
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
 }
+
+module.exports = __webpack_require__(/*! ./common */ "../../../node_modules/debug/src/common.js")(exports);
+
+const {formatters} = module.exports;
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+formatters.j = function (v) {
+	try {
+		return JSON.stringify(v);
+	} catch (error) {
+		return '[UnexpectedJSONParseError]: ' + error.message;
+	}
+};
 
 
 /***/ }),
 
-/***/ "../../../node_modules/debug/src/debug.js":
-/*!************************************************!*\
-  !*** ../../../node_modules/debug/src/debug.js ***!
-  \************************************************/
-/***/ ((module, exports, __webpack_require__) => {
+/***/ "../../../node_modules/debug/src/common.js":
+/*!*************************************************!*\
+  !*** ../../../node_modules/debug/src/common.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 
 /**
  * This is the common logic for both the Node.js and web browser
  * implementations of `debug()`.
- *
- * Expose `debug()` as the module.
  */
 
-exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
-exports.coerce = coerce;
-exports.disable = disable;
-exports.enable = enable;
-exports.enabled = enabled;
-exports.humanize = __webpack_require__(/*! ms */ "../../../node_modules/ms/index.js");
+function setup(env) {
+	createDebug.debug = createDebug;
+	createDebug.default = createDebug;
+	createDebug.coerce = coerce;
+	createDebug.disable = disable;
+	createDebug.enable = enable;
+	createDebug.enabled = enabled;
+	createDebug.humanize = __webpack_require__(/*! ms */ "../../../node_modules/ms/index.js");
+	createDebug.destroy = destroy;
 
-/**
- * The currently active debug mode names, and names to skip.
- */
+	Object.keys(env).forEach(key => {
+		createDebug[key] = env[key];
+	});
 
-exports.names = [];
-exports.skips = [];
+	/**
+	* The currently active debug mode names, and names to skip.
+	*/
 
-/**
- * Map of special "%n" handling functions, for the debug "format" argument.
- *
- * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
- */
+	createDebug.names = [];
+	createDebug.skips = [];
 
-exports.formatters = {};
+	/**
+	* Map of special "%n" handling functions, for the debug "format" argument.
+	*
+	* Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+	*/
+	createDebug.formatters = {};
 
-/**
- * Previous log timestamp.
- */
+	/**
+	* Selects a color for a debug namespace
+	* @param {String} namespace The namespace string for the debug instance to be colored
+	* @return {Number|String} An ANSI color code for the given namespace
+	* @api private
+	*/
+	function selectColor(namespace) {
+		let hash = 0;
 
-var prevTime;
+		for (let i = 0; i < namespace.length; i++) {
+			hash = ((hash << 5) - hash) + namespace.charCodeAt(i);
+			hash |= 0; // Convert to 32bit integer
+		}
 
-/**
- * Select a color.
- * @param {String} namespace
- * @return {Number}
- * @api private
- */
+		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
+	}
+	createDebug.selectColor = selectColor;
 
-function selectColor(namespace) {
-  var hash = 0, i;
+	/**
+	* Create a debugger with the given `namespace`.
+	*
+	* @param {String} namespace
+	* @return {Function}
+	* @api public
+	*/
+	function createDebug(namespace) {
+		let prevTime;
+		let enableOverride = null;
+		let namespacesCache;
+		let enabledCache;
 
-  for (i in namespace) {
-    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
-    hash |= 0; // Convert to 32bit integer
-  }
+		function debug(...args) {
+			// Disabled?
+			if (!debug.enabled) {
+				return;
+			}
 
-  return exports.colors[Math.abs(hash) % exports.colors.length];
+			const self = debug;
+
+			// Set `diff` timestamp
+			const curr = Number(new Date());
+			const ms = curr - (prevTime || curr);
+			self.diff = ms;
+			self.prev = prevTime;
+			self.curr = curr;
+			prevTime = curr;
+
+			args[0] = createDebug.coerce(args[0]);
+
+			if (typeof args[0] !== 'string') {
+				// Anything else let's inspect with %O
+				args.unshift('%O');
+			}
+
+			// Apply any `formatters` transformations
+			let index = 0;
+			args[0] = args[0].replace(/%([a-zA-Z%])/g, (match, format) => {
+				// If we encounter an escaped % then don't increase the array index
+				if (match === '%%') {
+					return '%';
+				}
+				index++;
+				const formatter = createDebug.formatters[format];
+				if (typeof formatter === 'function') {
+					const val = args[index];
+					match = formatter.call(self, val);
+
+					// Now we need to remove `args[index]` since it's inlined in the `format`
+					args.splice(index, 1);
+					index--;
+				}
+				return match;
+			});
+
+			// Apply env-specific formatting (colors, etc.)
+			createDebug.formatArgs.call(self, args);
+
+			const logFn = self.log || createDebug.log;
+			logFn.apply(self, args);
+		}
+
+		debug.namespace = namespace;
+		debug.useColors = createDebug.useColors();
+		debug.color = createDebug.selectColor(namespace);
+		debug.extend = extend;
+		debug.destroy = createDebug.destroy; // XXX Temporary. Will be removed in the next major release.
+
+		Object.defineProperty(debug, 'enabled', {
+			enumerable: true,
+			configurable: false,
+			get: () => {
+				if (enableOverride !== null) {
+					return enableOverride;
+				}
+				if (namespacesCache !== createDebug.namespaces) {
+					namespacesCache = createDebug.namespaces;
+					enabledCache = createDebug.enabled(namespace);
+				}
+
+				return enabledCache;
+			},
+			set: v => {
+				enableOverride = v;
+			}
+		});
+
+		// Env-specific initialization logic for debug instances
+		if (typeof createDebug.init === 'function') {
+			createDebug.init(debug);
+		}
+
+		return debug;
+	}
+
+	function extend(namespace, delimiter) {
+		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
+		newDebug.log = this.log;
+		return newDebug;
+	}
+
+	/**
+	* Enables a debug mode by namespaces. This can include modes
+	* separated by a colon and wildcards.
+	*
+	* @param {String} namespaces
+	* @api public
+	*/
+	function enable(namespaces) {
+		createDebug.save(namespaces);
+		createDebug.namespaces = namespaces;
+
+		createDebug.names = [];
+		createDebug.skips = [];
+
+		let i;
+		const split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+		const len = split.length;
+
+		for (i = 0; i < len; i++) {
+			if (!split[i]) {
+				// ignore empty strings
+				continue;
+			}
+
+			namespaces = split[i].replace(/\*/g, '.*?');
+
+			if (namespaces[0] === '-') {
+				createDebug.skips.push(new RegExp('^' + namespaces.slice(1) + '$'));
+			} else {
+				createDebug.names.push(new RegExp('^' + namespaces + '$'));
+			}
+		}
+	}
+
+	/**
+	* Disable debug output.
+	*
+	* @return {String} namespaces
+	* @api public
+	*/
+	function disable() {
+		const namespaces = [
+			...createDebug.names.map(toNamespace),
+			...createDebug.skips.map(toNamespace).map(namespace => '-' + namespace)
+		].join(',');
+		createDebug.enable('');
+		return namespaces;
+	}
+
+	/**
+	* Returns true if the given mode name is enabled, false otherwise.
+	*
+	* @param {String} name
+	* @return {Boolean}
+	* @api public
+	*/
+	function enabled(name) {
+		if (name[name.length - 1] === '*') {
+			return true;
+		}
+
+		let i;
+		let len;
+
+		for (i = 0, len = createDebug.skips.length; i < len; i++) {
+			if (createDebug.skips[i].test(name)) {
+				return false;
+			}
+		}
+
+		for (i = 0, len = createDebug.names.length; i < len; i++) {
+			if (createDebug.names[i].test(name)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	* Convert regexp to namespace
+	*
+	* @param {RegExp} regxep
+	* @return {String} namespace
+	* @api private
+	*/
+	function toNamespace(regexp) {
+		return regexp.toString()
+			.substring(2, regexp.toString().length - 2)
+			.replace(/\.\*\?$/, '*');
+	}
+
+	/**
+	* Coerce `val`.
+	*
+	* @param {Mixed} val
+	* @return {Mixed}
+	* @api private
+	*/
+	function coerce(val) {
+		if (val instanceof Error) {
+			return val.stack || val.message;
+		}
+		return val;
+	}
+
+	/**
+	* XXX DO NOT USE. This is a temporary stub function.
+	* XXX It WILL be removed in the next major release.
+	*/
+	function destroy() {
+		console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+	}
+
+	createDebug.enable(createDebug.load());
+
+	return createDebug;
 }
 
-/**
- * Create a debugger with the given `namespace`.
- *
- * @param {String} namespace
- * @return {Function}
- * @api public
- */
-
-function createDebug(namespace) {
-
-  function debug() {
-    // disabled?
-    if (!debug.enabled) return;
-
-    var self = debug;
-
-    // set `diff` timestamp
-    var curr = +new Date();
-    var ms = curr - (prevTime || curr);
-    self.diff = ms;
-    self.prev = prevTime;
-    self.curr = curr;
-    prevTime = curr;
-
-    // turn the `arguments` into a proper Array
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-
-    args[0] = exports.coerce(args[0]);
-
-    if ('string' !== typeof args[0]) {
-      // anything else let's inspect with %O
-      args.unshift('%O');
-    }
-
-    // apply any `formatters` transformations
-    var index = 0;
-    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
-      // if we encounter an escaped % then don't increase the array index
-      if (match === '%%') return match;
-      index++;
-      var formatter = exports.formatters[format];
-      if ('function' === typeof formatter) {
-        var val = args[index];
-        match = formatter.call(self, val);
-
-        // now we need to remove `args[index]` since it's inlined in the `format`
-        args.splice(index, 1);
-        index--;
-      }
-      return match;
-    });
-
-    // apply env-specific formatting (colors, etc.)
-    exports.formatArgs.call(self, args);
-
-    var logFn = debug.log || exports.log || console.log.bind(console);
-    logFn.apply(self, args);
-  }
-
-  debug.namespace = namespace;
-  debug.enabled = exports.enabled(namespace);
-  debug.useColors = exports.useColors();
-  debug.color = selectColor(namespace);
-
-  // env-specific initialization logic for debug instances
-  if ('function' === typeof exports.init) {
-    exports.init(debug);
-  }
-
-  return debug;
-}
-
-/**
- * Enables a debug mode by namespaces. This can include modes
- * separated by a colon and wildcards.
- *
- * @param {String} namespaces
- * @api public
- */
-
-function enable(namespaces) {
-  exports.save(namespaces);
-
-  exports.names = [];
-  exports.skips = [];
-
-  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
-  var len = split.length;
-
-  for (var i = 0; i < len; i++) {
-    if (!split[i]) continue; // ignore empty strings
-    namespaces = split[i].replace(/\*/g, '.*?');
-    if (namespaces[0] === '-') {
-      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
-    } else {
-      exports.names.push(new RegExp('^' + namespaces + '$'));
-    }
-  }
-}
-
-/**
- * Disable debug output.
- *
- * @api public
- */
-
-function disable() {
-  exports.enable('');
-}
-
-/**
- * Returns true if the given mode name is enabled, false otherwise.
- *
- * @param {String} name
- * @return {Boolean}
- * @api public
- */
-
-function enabled(name) {
-  var i, len;
-  for (i = 0, len = exports.skips.length; i < len; i++) {
-    if (exports.skips[i].test(name)) {
-      return false;
-    }
-  }
-  for (i = 0, len = exports.names.length; i < len; i++) {
-    if (exports.names[i].test(name)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-/**
- * Coerce `val`.
- *
- * @param {Mixed} val
- * @return {Mixed}
- * @api private
- */
-
-function coerce(val) {
-  if (val instanceof Error) return val.stack || val.message;
-  return val;
-}
+module.exports = setup;
 
 
 /***/ }),
@@ -2830,14 +2975,14 @@ function coerce(val) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
- * Detect Electron renderer process, which is node, but we should
+ * Detect Electron renderer / nwjs process, which is node, but we should
  * treat as a browser.
  */
 
-if (typeof process !== 'undefined' && process.type === 'renderer') {
-  module.exports = __webpack_require__(/*! ./browser.js */ "../../../node_modules/debug/src/browser.js");
+if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
+	module.exports = __webpack_require__(/*! ./browser.js */ "../../../node_modules/debug/src/browser.js");
 } else {
-  module.exports = __webpack_require__(/*! ./node.js */ "../../../node_modules/debug/src/node.js");
+	module.exports = __webpack_require__(/*! ./node.js */ "../../../node_modules/debug/src/node.js");
 }
 
 
@@ -2853,22 +2998,23 @@ if (typeof process !== 'undefined' && process.type === 'renderer') {
  * Module dependencies.
  */
 
-var tty = __webpack_require__(/*! tty */ "tty");
-var util = __webpack_require__(/*! util */ "util");
+const tty = __webpack_require__(/*! tty */ "tty");
+const util = __webpack_require__(/*! util */ "util");
 
 /**
  * This is the Node.js implementation of `debug()`.
- *
- * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(/*! ./debug */ "../../../node_modules/debug/src/debug.js");
 exports.init = init;
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
 exports.load = load;
 exports.useColors = useColors;
+exports.destroy = util.deprecate(
+	() => {},
+	'Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.'
+);
 
 /**
  * Colors.
@@ -2876,79 +3022,137 @@ exports.useColors = useColors;
 
 exports.colors = [6, 2, 3, 4, 5, 1];
 
+try {
+	// Optional dependency (as in, doesn't need to be installed, NOT like optionalDependencies in package.json)
+	// eslint-disable-next-line import/no-extraneous-dependencies
+	const supportsColor = __webpack_require__(/*! supports-color */ "../../../node_modules/supports-color/index.js");
+
+	if (supportsColor && (supportsColor.stderr || supportsColor).level >= 2) {
+		exports.colors = [
+			20,
+			21,
+			26,
+			27,
+			32,
+			33,
+			38,
+			39,
+			40,
+			41,
+			42,
+			43,
+			44,
+			45,
+			56,
+			57,
+			62,
+			63,
+			68,
+			69,
+			74,
+			75,
+			76,
+			77,
+			78,
+			79,
+			80,
+			81,
+			92,
+			93,
+			98,
+			99,
+			112,
+			113,
+			128,
+			129,
+			134,
+			135,
+			148,
+			149,
+			160,
+			161,
+			162,
+			163,
+			164,
+			165,
+			166,
+			167,
+			168,
+			169,
+			170,
+			171,
+			172,
+			173,
+			178,
+			179,
+			184,
+			185,
+			196,
+			197,
+			198,
+			199,
+			200,
+			201,
+			202,
+			203,
+			204,
+			205,
+			206,
+			207,
+			208,
+			209,
+			214,
+			215,
+			220,
+			221
+		];
+	}
+} catch (error) {
+	// Swallow - we only care if `supports-color` is available; it doesn't have to be.
+}
+
 /**
  * Build up the default `inspectOpts` object from the environment variables.
  *
  *   $ DEBUG_COLORS=no DEBUG_DEPTH=10 DEBUG_SHOW_HIDDEN=enabled node script.js
  */
 
-exports.inspectOpts = Object.keys(process.env).filter(function (key) {
-  return /^debug_/i.test(key);
-}).reduce(function (obj, key) {
-  // camel-case
-  var prop = key
-    .substring(6)
-    .toLowerCase()
-    .replace(/_([a-z])/g, function (_, k) { return k.toUpperCase() });
+exports.inspectOpts = Object.keys(process.env).filter(key => {
+	return /^debug_/i.test(key);
+}).reduce((obj, key) => {
+	// Camel-case
+	const prop = key
+		.substring(6)
+		.toLowerCase()
+		.replace(/_([a-z])/g, (_, k) => {
+			return k.toUpperCase();
+		});
 
-  // coerce string value into JS value
-  var val = process.env[key];
-  if (/^(yes|on|true|enabled)$/i.test(val)) val = true;
-  else if (/^(no|off|false|disabled)$/i.test(val)) val = false;
-  else if (val === 'null') val = null;
-  else val = Number(val);
+	// Coerce string value into JS value
+	let val = process.env[key];
+	if (/^(yes|on|true|enabled)$/i.test(val)) {
+		val = true;
+	} else if (/^(no|off|false|disabled)$/i.test(val)) {
+		val = false;
+	} else if (val === 'null') {
+		val = null;
+	} else {
+		val = Number(val);
+	}
 
-  obj[prop] = val;
-  return obj;
+	obj[prop] = val;
+	return obj;
 }, {});
-
-/**
- * The file descriptor to write the `debug()` calls to.
- * Set the `DEBUG_FD` env variable to override with another value. i.e.:
- *
- *   $ DEBUG_FD=3 node script.js 3>debug.log
- */
-
-var fd = parseInt(process.env.DEBUG_FD, 10) || 2;
-
-if (1 !== fd && 2 !== fd) {
-  util.deprecate(function(){}, 'except for stderr(2) and stdout(1), any other usage of DEBUG_FD is deprecated. Override debug.log if you want to use a different log function (https://git.io/debug_fd)')()
-}
-
-var stream = 1 === fd ? process.stdout :
-             2 === fd ? process.stderr :
-             createWritableStdioStream(fd);
 
 /**
  * Is stdout a TTY? Colored output is enabled when `true`.
  */
 
 function useColors() {
-  return 'colors' in exports.inspectOpts
-    ? Boolean(exports.inspectOpts.colors)
-    : tty.isatty(fd);
+	return 'colors' in exports.inspectOpts ?
+		Boolean(exports.inspectOpts.colors) :
+		tty.isatty(process.stderr.fd);
 }
-
-/**
- * Map %o to `util.inspect()`, all on a single line.
- */
-
-exports.formatters.o = function(v) {
-  this.inspectOpts.colors = this.useColors;
-  return util.inspect(v, this.inspectOpts)
-    .split('\n').map(function(str) {
-      return str.trim()
-    }).join(' ');
-};
-
-/**
- * Map %o to `util.inspect()`, allowing multiple lines if needed.
- */
-
-exports.formatters.O = function(v) {
-  this.inspectOpts.colors = this.useColors;
-  return util.inspect(v, this.inspectOpts);
-};
 
 /**
  * Adds ANSI color escape codes if enabled.
@@ -2957,27 +3161,33 @@ exports.formatters.O = function(v) {
  */
 
 function formatArgs(args) {
-  var name = this.namespace;
-  var useColors = this.useColors;
+	const {namespace: name, useColors} = this;
 
-  if (useColors) {
-    var c = this.color;
-    var prefix = '  \u001b[3' + c + ';1m' + name + ' ' + '\u001b[0m';
+	if (useColors) {
+		const c = this.color;
+		const colorCode = '\u001B[3' + (c < 8 ? c : '8;5;' + c);
+		const prefix = `  ${colorCode};1m${name} \u001B[0m`;
 
-    args[0] = prefix + args[0].split('\n').join('\n' + prefix);
-    args.push('\u001b[3' + c + 'm+' + exports.humanize(this.diff) + '\u001b[0m');
-  } else {
-    args[0] = new Date().toUTCString()
-      + ' ' + name + ' ' + args[0];
-  }
+		args[0] = prefix + args[0].split('\n').join('\n' + prefix);
+		args.push(colorCode + 'm+' + module.exports.humanize(this.diff) + '\u001B[0m');
+	} else {
+		args[0] = getDate() + name + ' ' + args[0];
+	}
+}
+
+function getDate() {
+	if (exports.inspectOpts.hideDate) {
+		return '';
+	}
+	return new Date().toISOString() + ' ';
 }
 
 /**
- * Invokes `util.format()` with the specified arguments and writes to `stream`.
+ * Invokes `util.format()` with the specified arguments and writes to stderr.
  */
 
-function log() {
-  return stream.write(util.format.apply(util, arguments) + '\n');
+function log(...args) {
+	return process.stderr.write(util.format(...args) + '\n');
 }
 
 /**
@@ -2986,15 +3196,14 @@ function log() {
  * @param {String} namespaces
  * @api private
  */
-
 function save(namespaces) {
-  if (null == namespaces) {
-    // If you set a process.env field to null or undefined, it gets cast to the
-    // string 'null' or 'undefined'. Just delete instead.
-    delete process.env.DEBUG;
-  } else {
-    process.env.DEBUG = namespaces;
-  }
+	if (namespaces) {
+		process.env.DEBUG = namespaces;
+	} else {
+		// If you set a process.env field to null or undefined, it gets cast to the
+		// string 'null' or 'undefined'. Just delete instead.
+		delete process.env.DEBUG;
+	}
 }
 
 /**
@@ -3005,75 +3214,7 @@ function save(namespaces) {
  */
 
 function load() {
-  return process.env.DEBUG;
-}
-
-/**
- * Copied from `node/src/node.js`.
- *
- * XXX: It's lame that node doesn't expose this API out-of-the-box. It also
- * relies on the undocumented `tty_wrap.guessHandleType()` which is also lame.
- */
-
-function createWritableStdioStream (fd) {
-  var stream;
-  var tty_wrap = process.binding('tty_wrap');
-
-  // Note stream._type is used for test-module-load-list.js
-
-  switch (tty_wrap.guessHandleType(fd)) {
-    case 'TTY':
-      stream = new tty.WriteStream(fd);
-      stream._type = 'tty';
-
-      // Hack to have stream not keep the event loop alive.
-      // See https://github.com/joyent/node/issues/1726
-      if (stream._handle && stream._handle.unref) {
-        stream._handle.unref();
-      }
-      break;
-
-    case 'FILE':
-      var fs = __webpack_require__(/*! fs */ "fs");
-      stream = new fs.SyncWriteStream(fd, { autoClose: false });
-      stream._type = 'fs';
-      break;
-
-    case 'PIPE':
-    case 'TCP':
-      var net = __webpack_require__(/*! net */ "net");
-      stream = new net.Socket({
-        fd: fd,
-        readable: false,
-        writable: true
-      });
-
-      // FIXME Should probably have an option in net.Socket to create a
-      // stream from an existing fd which is writable only. But for now
-      // we'll just add this hack and set the `readable` member to false.
-      // Test: ./node test/fixtures/echo.js < /etc/passwd
-      stream.readable = false;
-      stream.read = null;
-      stream._type = 'pipe';
-
-      // FIXME Hack to have stream not keep the event loop alive.
-      // See https://github.com/joyent/node/issues/1726
-      if (stream._handle && stream._handle.unref) {
-        stream._handle.unref();
-      }
-      break;
-
-    default:
-      // Probably an error on in uv_guess_handle()
-      throw new Error('Implement me. Unknown stream file type!');
-  }
-
-  // For supporting legacy API we put the FD here.
-  stream.fd = fd;
-
-  stream._isStdio = true;
-
-  return stream;
+	return process.env.DEBUG;
 }
 
 /**
@@ -3083,20 +3224,39 @@ function createWritableStdioStream (fd) {
  * differently for a particular `debug` instance.
  */
 
-function init (debug) {
-  debug.inspectOpts = {};
+function init(debug) {
+	debug.inspectOpts = {};
 
-  var keys = Object.keys(exports.inspectOpts);
-  for (var i = 0; i < keys.length; i++) {
-    debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
-  }
+	const keys = Object.keys(exports.inspectOpts);
+	for (let i = 0; i < keys.length; i++) {
+		debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
+	}
 }
 
+module.exports = __webpack_require__(/*! ./common */ "../../../node_modules/debug/src/common.js")(exports);
+
+const {formatters} = module.exports;
+
 /**
- * Enable namespaces listed in `process.env.DEBUG` initially.
+ * Map %o to `util.inspect()`, all on a single line.
  */
 
-exports.enable(load());
+formatters.o = function (v) {
+	this.inspectOpts.colors = this.useColors;
+	return util.inspect(v, this.inspectOpts)
+		.split('\n')
+		.map(str => str.trim())
+		.join(' ');
+};
+
+/**
+ * Map %O to `util.inspect()`, allowing multiple lines if needed.
+ */
+
+formatters.O = function (v) {
+	this.inspectOpts.colors = this.useColors;
+	return util.inspect(v, this.inspectOpts);
+};
 
 
 /***/ }),
@@ -3136,7 +3296,7 @@ var url = __webpack_require__(/*! url */ "url");
 var URL = url.URL;
 var http = __webpack_require__(/*! http */ "http");
 var https = __webpack_require__(/*! https */ "https");
-var Writable = __webpack_require__(/*! stream */ "stream").Writable;
+var Writable = (__webpack_require__(/*! stream */ "stream").Writable);
 var assert = __webpack_require__(/*! assert */ "assert");
 var debug = __webpack_require__(/*! ./debug */ "../../../node_modules/follow-redirects/debug.js");
 
@@ -3404,7 +3564,7 @@ RedirectableRequest.prototype._performRequest = function () {
   // If specified, use the agent corresponding to the protocol
   // (HTTP and HTTPS use different types of agents)
   if (this._options.agents) {
-    var scheme = protocol.substr(0, protocol.length - 1);
+    var scheme = protocol.slice(0, -1);
     this._options.agent = this._options.agents[scheme];
   }
 
@@ -3496,10 +3656,21 @@ RedirectableRequest.prototype._processResponse = function (response) {
     return;
   }
 
+  // Store the request headers if applicable
+  var requestHeaders;
+  var beforeRedirect = this._options.beforeRedirect;
+  if (beforeRedirect) {
+    requestHeaders = Object.assign({
+      // The Host header was set by nativeProtocol.request
+      Host: response.req.getHeader("host"),
+    }, this._options.headers);
+  }
+
   // RFC7231§6.4: Automatic redirection needs to done with
   // care for methods not known to be safe, […]
   // RFC7231§6.4.2–3: For historical reasons, a user agent MAY change
   // the request method from POST to GET for the subsequent request.
+  var method = this._options.method;
   if ((statusCode === 301 || statusCode === 302) && this._options.method === "POST" ||
       // RFC7231§6.4.4: The 303 (See Other) status code indicates that
       // the server is redirecting the user agent to a different resource […]
@@ -3547,10 +3718,18 @@ RedirectableRequest.prototype._processResponse = function (response) {
   }
 
   // Evaluate the beforeRedirect callback
-  if (typeof this._options.beforeRedirect === "function") {
-    var responseDetails = { headers: response.headers };
+  if (typeof beforeRedirect === "function") {
+    var responseDetails = {
+      headers: response.headers,
+      statusCode: statusCode,
+    };
+    var requestDetails = {
+      url: currentUrl,
+      method: method,
+      headers: requestHeaders,
+    };
     try {
-      this._options.beforeRedirect.call(null, this._options, responseDetails);
+      beforeRedirect(this._options, responseDetails, requestDetails);
     }
     catch (err) {
       this.emit("error", err);
@@ -3710,6 +3889,25 @@ module.exports.wrap = wrap;
 
 /***/ }),
 
+/***/ "../../../node_modules/has-flag/index.js":
+/*!***********************************************!*\
+  !*** ../../../node_modules/has-flag/index.js ***!
+  \***********************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = (flag, argv = process.argv) => {
+	const prefix = flag.startsWith('-') ? '' : (flag.length === 1 ? '-' : '--');
+	const position = argv.indexOf(prefix + flag);
+	const terminatorPosition = argv.indexOf('--');
+	return position !== -1 && (terminatorPosition === -1 || position < terminatorPosition);
+};
+
+
+/***/ }),
+
 /***/ "../../../node_modules/ms/index.js":
 /*!*****************************************!*\
   !*** ../../../node_modules/ms/index.js ***!
@@ -3724,6 +3922,7 @@ var s = 1000;
 var m = s * 60;
 var h = m * 60;
 var d = h * 24;
+var w = d * 7;
 var y = d * 365.25;
 
 /**
@@ -3745,7 +3944,7 @@ module.exports = function(val, options) {
   var type = typeof val;
   if (type === 'string' && val.length > 0) {
     return parse(val);
-  } else if (type === 'number' && isNaN(val) === false) {
+  } else if (type === 'number' && isFinite(val)) {
     return options.long ? fmtLong(val) : fmtShort(val);
   }
   throw new Error(
@@ -3767,7 +3966,7 @@ function parse(str) {
   if (str.length > 100) {
     return;
   }
-  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
+  var match = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
     str
   );
   if (!match) {
@@ -3782,6 +3981,10 @@ function parse(str) {
     case 'yr':
     case 'y':
       return n * y;
+    case 'weeks':
+    case 'week':
+    case 'w':
+      return n * w;
     case 'days':
     case 'day':
     case 'd':
@@ -3824,16 +4027,17 @@ function parse(str) {
  */
 
 function fmtShort(ms) {
-  if (ms >= d) {
+  var msAbs = Math.abs(ms);
+  if (msAbs >= d) {
     return Math.round(ms / d) + 'd';
   }
-  if (ms >= h) {
+  if (msAbs >= h) {
     return Math.round(ms / h) + 'h';
   }
-  if (ms >= m) {
+  if (msAbs >= m) {
     return Math.round(ms / m) + 'm';
   }
-  if (ms >= s) {
+  if (msAbs >= s) {
     return Math.round(ms / s) + 's';
   }
   return ms + 'ms';
@@ -3848,26 +4052,193 @@ function fmtShort(ms) {
  */
 
 function fmtLong(ms) {
-  return plural(ms, d, 'day') ||
-    plural(ms, h, 'hour') ||
-    plural(ms, m, 'minute') ||
-    plural(ms, s, 'second') ||
-    ms + ' ms';
+  var msAbs = Math.abs(ms);
+  if (msAbs >= d) {
+    return plural(ms, msAbs, d, 'day');
+  }
+  if (msAbs >= h) {
+    return plural(ms, msAbs, h, 'hour');
+  }
+  if (msAbs >= m) {
+    return plural(ms, msAbs, m, 'minute');
+  }
+  if (msAbs >= s) {
+    return plural(ms, msAbs, s, 'second');
+  }
+  return ms + ' ms';
 }
 
 /**
  * Pluralization helper.
  */
 
-function plural(ms, n, name) {
-  if (ms < n) {
-    return;
-  }
-  if (ms < n * 1.5) {
-    return Math.floor(ms / n) + ' ' + name;
-  }
-  return Math.ceil(ms / n) + ' ' + name + 's';
+function plural(ms, msAbs, n, name) {
+  var isPlural = msAbs >= n * 1.5;
+  return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
 }
+
+
+/***/ }),
+
+/***/ "../../../node_modules/supports-color/index.js":
+/*!*****************************************************!*\
+  !*** ../../../node_modules/supports-color/index.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+const os = __webpack_require__(/*! os */ "os");
+const tty = __webpack_require__(/*! tty */ "tty");
+const hasFlag = __webpack_require__(/*! has-flag */ "../../../node_modules/has-flag/index.js");
+
+const {env} = process;
+
+let flagForceColor;
+if (hasFlag('no-color') ||
+	hasFlag('no-colors') ||
+	hasFlag('color=false') ||
+	hasFlag('color=never')) {
+	flagForceColor = 0;
+} else if (hasFlag('color') ||
+	hasFlag('colors') ||
+	hasFlag('color=true') ||
+	hasFlag('color=always')) {
+	flagForceColor = 1;
+}
+
+function envForceColor() {
+	if ('FORCE_COLOR' in env) {
+		if (env.FORCE_COLOR === 'true') {
+			return 1;
+		}
+
+		if (env.FORCE_COLOR === 'false') {
+			return 0;
+		}
+
+		return env.FORCE_COLOR.length === 0 ? 1 : Math.min(Number.parseInt(env.FORCE_COLOR, 10), 3);
+	}
+}
+
+function translateLevel(level) {
+	if (level === 0) {
+		return false;
+	}
+
+	return {
+		level,
+		hasBasic: true,
+		has256: level >= 2,
+		has16m: level >= 3
+	};
+}
+
+function supportsColor(haveStream, {streamIsTTY, sniffFlags = true} = {}) {
+	const noFlagForceColor = envForceColor();
+	if (noFlagForceColor !== undefined) {
+		flagForceColor = noFlagForceColor;
+	}
+
+	const forceColor = sniffFlags ? flagForceColor : noFlagForceColor;
+
+	if (forceColor === 0) {
+		return 0;
+	}
+
+	if (sniffFlags) {
+		if (hasFlag('color=16m') ||
+			hasFlag('color=full') ||
+			hasFlag('color=truecolor')) {
+			return 3;
+		}
+
+		if (hasFlag('color=256')) {
+			return 2;
+		}
+	}
+
+	if (haveStream && !streamIsTTY && forceColor === undefined) {
+		return 0;
+	}
+
+	const min = forceColor || 0;
+
+	if (env.TERM === 'dumb') {
+		return min;
+	}
+
+	if (process.platform === 'win32') {
+		// Windows 10 build 10586 is the first Windows release that supports 256 colors.
+		// Windows 10 build 14931 is the first release that supports 16m/TrueColor.
+		const osRelease = os.release().split('.');
+		if (
+			Number(osRelease[0]) >= 10 &&
+			Number(osRelease[2]) >= 10586
+		) {
+			return Number(osRelease[2]) >= 14931 ? 3 : 2;
+		}
+
+		return 1;
+	}
+
+	if ('CI' in env) {
+		if (['TRAVIS', 'CIRCLECI', 'APPVEYOR', 'GITLAB_CI', 'GITHUB_ACTIONS', 'BUILDKITE', 'DRONE'].some(sign => sign in env) || env.CI_NAME === 'codeship') {
+			return 1;
+		}
+
+		return min;
+	}
+
+	if ('TEAMCITY_VERSION' in env) {
+		return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env.TEAMCITY_VERSION) ? 1 : 0;
+	}
+
+	if (env.COLORTERM === 'truecolor') {
+		return 3;
+	}
+
+	if ('TERM_PROGRAM' in env) {
+		const version = Number.parseInt((env.TERM_PROGRAM_VERSION || '').split('.')[0], 10);
+
+		switch (env.TERM_PROGRAM) {
+			case 'iTerm.app':
+				return version >= 3 ? 3 : 2;
+			case 'Apple_Terminal':
+				return 2;
+			// No default
+		}
+	}
+
+	if (/-256(color)?$/i.test(env.TERM)) {
+		return 2;
+	}
+
+	if (/^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(env.TERM)) {
+		return 1;
+	}
+
+	if ('COLORTERM' in env) {
+		return 1;
+	}
+
+	return min;
+}
+
+function getSupportLevel(stream, options = {}) {
+	const level = supportsColor(stream, {
+		streamIsTTY: stream && stream.isTTY,
+		...options
+	});
+
+	return translateLevel(level);
+}
+
+module.exports = {
+	supportsColor: getSupportLevel,
+	stdout: getSupportLevel({isTTY: tty.isatty(1)}),
+	stderr: getSupportLevel({isTTY: tty.isatty(2)})
+};
 
 
 /***/ }),
@@ -4126,7 +4497,7 @@ let typeFeaturesInitialized = false
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
-class ArabicLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class ArabicLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.LANG_ARABIC }
   static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_ARA }
   static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_ARA, _constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_AR] }
@@ -4217,11 +4588,11 @@ for the current node
     // eslint-disable-next-line prefer-const
     let aggregates = { [_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_NOUN]: [], [_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_ADJECTIVE]: [], [_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_NOUN_PROPER]: [] }
     for (const infl of inflections) {
-      if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph].value.match(/ADJ[uaiNK]/)) {
+      if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph].value.match(/ADJ[uaiNK]/)) {
         aggregates[_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_ADJECTIVE].push(infl)
-      } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph].value.match(/NOUN[uaiNK]/)) {
+      } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph].value.match(/NOUN[uaiNK]/)) {
         aggregates[_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_NOUN].push(infl)
-      } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph].value.match(/NOUN_PROP[uaiNK]/)) {
+      } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph].value.match(/NOUN_PROP[uaiNK]/)) {
         aggregates[_constants_js__WEBPACK_IMPORTED_MODULE_1__.POFS_NOUN_PROPER].push(infl)
       } else {
         // we are also going to keep the examples out of the display for now
@@ -4230,7 +4601,7 @@ for the current node
       }
     }
     for (const type of Object.keys(aggregates)) {
-      const base = aggregated.filter((i) => i[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value === type)
+      const base = aggregated.filter((i) => i[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part].value === type)
       if (base.length !== 1) {
         // if we don't have the base form then we don't really know what to do here
         // so just put the inflection back in the ones available for display
@@ -4273,7 +4644,7 @@ let typeFeaturesInitialized = false
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
-class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_CHINESE }
   static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_ZHO }
   static get languageCodes () {
@@ -4293,20 +4664,20 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
   static get featureValues () {
     return new Map([
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.fullForm,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.fullForm,
         []
       ],
 
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.frequency,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.frequency,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.pronunciation,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.pronunciation,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.radical,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.radical,
         []
       ]
 
@@ -4374,7 +4745,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
                   if (k + 1 < pin.length - 1 && pin[k + 1] === ':') { pin = pin.replace('u:', _v[tone]) } else { pin = pin.replace('u', _u[tone]) }
                   break
                 default:
-                  _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('some kind of weird vowel', pin[k])
+                  _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('some kind of weird vowel', pin[k])
               }
               break
             }
@@ -4399,69 +4770,6 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LANG_UNIT_WORD": () => (/* binding */ LANG_UNIT_WORD),
-/* harmony export */   "LANG_UNIT_CHAR": () => (/* binding */ LANG_UNIT_CHAR),
-/* harmony export */   "LANG_DIR_LTR": () => (/* binding */ LANG_DIR_LTR),
-/* harmony export */   "LANG_DIR_RTL": () => (/* binding */ LANG_DIR_RTL),
-/* harmony export */   "LANG_UNDEFINED": () => (/* binding */ LANG_UNDEFINED),
-/* harmony export */   "LANG_LATIN": () => (/* binding */ LANG_LATIN),
-/* harmony export */   "LANG_GREEK": () => (/* binding */ LANG_GREEK),
-/* harmony export */   "LANG_ARABIC": () => (/* binding */ LANG_ARABIC),
-/* harmony export */   "LANG_PERSIAN": () => (/* binding */ LANG_PERSIAN),
-/* harmony export */   "LANG_GEEZ": () => (/* binding */ LANG_GEEZ),
-/* harmony export */   "LANG_CHINESE": () => (/* binding */ LANG_CHINESE),
-/* harmony export */   "LANG_SYRIAC": () => (/* binding */ LANG_SYRIAC),
-/* harmony export */   "STR_LANG_CODE_UNDEFINED": () => (/* binding */ STR_LANG_CODE_UNDEFINED),
-/* harmony export */   "STR_LANG_CODE_LAT": () => (/* binding */ STR_LANG_CODE_LAT),
-/* harmony export */   "STR_LANG_CODE_LA": () => (/* binding */ STR_LANG_CODE_LA),
-/* harmony export */   "STR_LANG_CODE_GRC": () => (/* binding */ STR_LANG_CODE_GRC),
-/* harmony export */   "STR_LANG_CODE_ARA": () => (/* binding */ STR_LANG_CODE_ARA),
-/* harmony export */   "STR_LANG_CODE_AR": () => (/* binding */ STR_LANG_CODE_AR),
-/* harmony export */   "STR_LANG_CODE_FAS": () => (/* binding */ STR_LANG_CODE_FAS),
-/* harmony export */   "STR_LANG_CODE_PER": () => (/* binding */ STR_LANG_CODE_PER),
-/* harmony export */   "STR_LANG_CODE_FA_IR": () => (/* binding */ STR_LANG_CODE_FA_IR),
-/* harmony export */   "STR_LANG_CODE_FA": () => (/* binding */ STR_LANG_CODE_FA),
-/* harmony export */   "STR_LANG_CODE_GEZ": () => (/* binding */ STR_LANG_CODE_GEZ),
-/* harmony export */   "STR_LANG_CODE_ZHO": () => (/* binding */ STR_LANG_CODE_ZHO),
-/* harmony export */   "STR_LANG_CODE_ZH": () => (/* binding */ STR_LANG_CODE_ZH),
-/* harmony export */   "STR_LANG_CODE_ZH_HANT": () => (/* binding */ STR_LANG_CODE_ZH_HANT),
-/* harmony export */   "STR_LANG_CODE_ZH_HANS": () => (/* binding */ STR_LANG_CODE_ZH_HANS),
-/* harmony export */   "STR_LANG_CODE_SYC": () => (/* binding */ STR_LANG_CODE_SYC),
-/* harmony export */   "STR_LANG_CODE_SYR": () => (/* binding */ STR_LANG_CODE_SYR),
-/* harmony export */   "STR_LANG_CODE_SYR_SYRJ": () => (/* binding */ STR_LANG_CODE_SYR_SYRJ),
-/* harmony export */   "STR_LANG_CODE_ENG": () => (/* binding */ STR_LANG_CODE_ENG),
-/* harmony export */   "POFS_ADJECTIVE": () => (/* binding */ POFS_ADJECTIVE),
-/* harmony export */   "POFS_ADVERB": () => (/* binding */ POFS_ADVERB),
-/* harmony export */   "POFS_ADVERBIAL": () => (/* binding */ POFS_ADVERBIAL),
-/* harmony export */   "POFS_ARTICLE": () => (/* binding */ POFS_ARTICLE),
-/* harmony export */   "POFS_CONJUNCTION": () => (/* binding */ POFS_CONJUNCTION),
-/* harmony export */   "POFS_EXCLAMATION": () => (/* binding */ POFS_EXCLAMATION),
-/* harmony export */   "POFS_INTERJECTION": () => (/* binding */ POFS_INTERJECTION),
-/* harmony export */   "POFS_NOUN": () => (/* binding */ POFS_NOUN),
-/* harmony export */   "POFS_NOUN_PROPER": () => (/* binding */ POFS_NOUN_PROPER),
-/* harmony export */   "POFS_NUMERAL": () => (/* binding */ POFS_NUMERAL),
-/* harmony export */   "POFS_PARTICLE": () => (/* binding */ POFS_PARTICLE),
-/* harmony export */   "POFS_PREFIX": () => (/* binding */ POFS_PREFIX),
-/* harmony export */   "POFS_PREPOSITION": () => (/* binding */ POFS_PREPOSITION),
-/* harmony export */   "POFS_PRONOUN": () => (/* binding */ POFS_PRONOUN),
-/* harmony export */   "POFS_SUFFIX": () => (/* binding */ POFS_SUFFIX),
-/* harmony export */   "POFS_GERUNDIVE": () => (/* binding */ POFS_GERUNDIVE),
-/* harmony export */   "POFS_SUPINE": () => (/* binding */ POFS_SUPINE),
-/* harmony export */   "POFS_VERB": () => (/* binding */ POFS_VERB),
-/* harmony export */   "POFS_VERB_PARTICIPLE": () => (/* binding */ POFS_VERB_PARTICIPLE),
-/* harmony export */   "POFS_DENOMINATIVE": () => (/* binding */ POFS_DENOMINATIVE),
-/* harmony export */   "GEND_MASCULINE": () => (/* binding */ GEND_MASCULINE),
-/* harmony export */   "GEND_FEMININE": () => (/* binding */ GEND_FEMININE),
-/* harmony export */   "GEND_NEUTER": () => (/* binding */ GEND_NEUTER),
-/* harmony export */   "GEND_COMMON": () => (/* binding */ GEND_COMMON),
-/* harmony export */   "GEND_ANIMATE": () => (/* binding */ GEND_ANIMATE),
-/* harmony export */   "GEND_INANIMATE": () => (/* binding */ GEND_INANIMATE),
-/* harmony export */   "GEND_PERSONAL_MASCULINE": () => (/* binding */ GEND_PERSONAL_MASCULINE),
-/* harmony export */   "GEND_ANIMATE_MASCULINE": () => (/* binding */ GEND_ANIMATE_MASCULINE),
-/* harmony export */   "GEND_INANIMATE_MASCULINE": () => (/* binding */ GEND_INANIMATE_MASCULINE),
-/* harmony export */   "COMP_POSITIVE": () => (/* binding */ COMP_POSITIVE),
-/* harmony export */   "COMP_COMPARITIVE": () => (/* binding */ COMP_COMPARITIVE),
-/* harmony export */   "COMP_SUPERLATIVE": () => (/* binding */ COMP_SUPERLATIVE),
 /* harmony export */   "CASE_ABESSIVE": () => (/* binding */ CASE_ABESSIVE),
 /* harmony export */   "CASE_ABLATIVE": () => (/* binding */ CASE_ABLATIVE),
 /* harmony export */   "CASE_ABSOLUTIVE": () => (/* binding */ CASE_ABSOLUTIVE),
@@ -4485,11 +4793,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CASE_DISTRIBUTIVE": () => (/* binding */ CASE_DISTRIBUTIVE),
 /* harmony export */   "CASE_DISTRIBUTIVE_TEMPORAL": () => (/* binding */ CASE_DISTRIBUTIVE_TEMPORAL),
 /* harmony export */   "CASE_ELATIVE": () => (/* binding */ CASE_ELATIVE),
+/* harmony export */   "CASE_EQUATIVE": () => (/* binding */ CASE_EQUATIVE),
 /* harmony export */   "CASE_ERGATIVE": () => (/* binding */ CASE_ERGATIVE),
 /* harmony export */   "CASE_ESSIVE": () => (/* binding */ CASE_ESSIVE),
 /* harmony export */   "CASE_ESSIVE_FORMAL": () => (/* binding */ CASE_ESSIVE_FORMAL),
 /* harmony export */   "CASE_ESSIVE_MODAL": () => (/* binding */ CASE_ESSIVE_MODAL),
-/* harmony export */   "CASE_EQUATIVE": () => (/* binding */ CASE_EQUATIVE),
 /* harmony export */   "CASE_EVITATIVE": () => (/* binding */ CASE_EVITATIVE),
 /* harmony export */   "CASE_EXESSIVE": () => (/* binding */ CASE_EXESSIVE),
 /* harmony export */   "CASE_FINAL": () => (/* binding */ CASE_FINAL),
@@ -4511,8 +4819,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CASE_PEGATIVE": () => (/* binding */ CASE_PEGATIVE),
 /* harmony export */   "CASE_PERLATIVE": () => (/* binding */ CASE_PERLATIVE),
 /* harmony export */   "CASE_POSSESSIVE": () => (/* binding */ CASE_POSSESSIVE),
-/* harmony export */   "CASE_POSTELATIVE": () => (/* binding */ CASE_POSTELATIVE),
 /* harmony export */   "CASE_POSTDIRECTIVE": () => (/* binding */ CASE_POSTDIRECTIVE),
+/* harmony export */   "CASE_POSTELATIVE": () => (/* binding */ CASE_POSTELATIVE),
 /* harmony export */   "CASE_POSTESSIVE": () => (/* binding */ CASE_POSTESSIVE),
 /* harmony export */   "CASE_POSTPOSITIONAL": () => (/* binding */ CASE_POSTPOSITIONAL),
 /* harmony export */   "CASE_PREPOSITIONAL": () => (/* binding */ CASE_PREPOSITIONAL),
@@ -4523,8 +4831,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CASE_SEPARATIVE": () => (/* binding */ CASE_SEPARATIVE),
 /* harmony export */   "CASE_SOCIATIVE": () => (/* binding */ CASE_SOCIATIVE),
 /* harmony export */   "CASE_SUBDIRECTIVE": () => (/* binding */ CASE_SUBDIRECTIVE),
-/* harmony export */   "CASE_SUBESSIVE": () => (/* binding */ CASE_SUBESSIVE),
 /* harmony export */   "CASE_SUBELATIVE": () => (/* binding */ CASE_SUBELATIVE),
+/* harmony export */   "CASE_SUBESSIVE": () => (/* binding */ CASE_SUBESSIVE),
 /* harmony export */   "CASE_SUBLATIVE": () => (/* binding */ CASE_SUBLATIVE),
 /* harmony export */   "CASE_SUPERDIRECTIVE": () => (/* binding */ CASE_SUPERDIRECTIVE),
 /* harmony export */   "CASE_SUPERESSIVE": () => (/* binding */ CASE_SUPERESSIVE),
@@ -4535,6 +4843,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CASE_TRANSLATIVE": () => (/* binding */ CASE_TRANSLATIVE),
 /* harmony export */   "CASE_VIALIS": () => (/* binding */ CASE_VIALIS),
 /* harmony export */   "CASE_VOCATIVE": () => (/* binding */ CASE_VOCATIVE),
+/* harmony export */   "CLASS_DEMONSTRATIVE": () => (/* binding */ CLASS_DEMONSTRATIVE),
+/* harmony export */   "CLASS_GENERAL_RELATIVE": () => (/* binding */ CLASS_GENERAL_RELATIVE),
+/* harmony export */   "CLASS_INDEFINITE": () => (/* binding */ CLASS_INDEFINITE),
+/* harmony export */   "CLASS_INTENSIVE": () => (/* binding */ CLASS_INTENSIVE),
+/* harmony export */   "CLASS_INTERROGATIVE": () => (/* binding */ CLASS_INTERROGATIVE),
+/* harmony export */   "CLASS_PERSONAL": () => (/* binding */ CLASS_PERSONAL),
+/* harmony export */   "CLASS_POSSESSIVE": () => (/* binding */ CLASS_POSSESSIVE),
+/* harmony export */   "CLASS_RECIPROCAL": () => (/* binding */ CLASS_RECIPROCAL),
+/* harmony export */   "CLASS_REFLEXIVE": () => (/* binding */ CLASS_REFLEXIVE),
+/* harmony export */   "CLASS_RELATIVE": () => (/* binding */ CLASS_RELATIVE),
+/* harmony export */   "COMP_COMPARITIVE": () => (/* binding */ COMP_COMPARITIVE),
+/* harmony export */   "COMP_POSITIVE": () => (/* binding */ COMP_POSITIVE),
+/* harmony export */   "COMP_SUPERLATIVE": () => (/* binding */ COMP_SUPERLATIVE),
+/* harmony export */   "GEND_ANIMATE": () => (/* binding */ GEND_ANIMATE),
+/* harmony export */   "GEND_ANIMATE_MASCULINE": () => (/* binding */ GEND_ANIMATE_MASCULINE),
+/* harmony export */   "GEND_COMMON": () => (/* binding */ GEND_COMMON),
+/* harmony export */   "GEND_FEMININE": () => (/* binding */ GEND_FEMININE),
+/* harmony export */   "GEND_INANIMATE": () => (/* binding */ GEND_INANIMATE),
+/* harmony export */   "GEND_INANIMATE_MASCULINE": () => (/* binding */ GEND_INANIMATE_MASCULINE),
+/* harmony export */   "GEND_MASCULINE": () => (/* binding */ GEND_MASCULINE),
+/* harmony export */   "GEND_NEUTER": () => (/* binding */ GEND_NEUTER),
+/* harmony export */   "GEND_PERSONAL_MASCULINE": () => (/* binding */ GEND_PERSONAL_MASCULINE),
+/* harmony export */   "LANG_ARABIC": () => (/* binding */ LANG_ARABIC),
+/* harmony export */   "LANG_CHINESE": () => (/* binding */ LANG_CHINESE),
+/* harmony export */   "LANG_DIR_LTR": () => (/* binding */ LANG_DIR_LTR),
+/* harmony export */   "LANG_DIR_RTL": () => (/* binding */ LANG_DIR_RTL),
+/* harmony export */   "LANG_GEEZ": () => (/* binding */ LANG_GEEZ),
+/* harmony export */   "LANG_GREEK": () => (/* binding */ LANG_GREEK),
+/* harmony export */   "LANG_LATIN": () => (/* binding */ LANG_LATIN),
+/* harmony export */   "LANG_PERSIAN": () => (/* binding */ LANG_PERSIAN),
+/* harmony export */   "LANG_SYRIAC": () => (/* binding */ LANG_SYRIAC),
+/* harmony export */   "LANG_UNDEFINED": () => (/* binding */ LANG_UNDEFINED),
+/* harmony export */   "LANG_UNIT_CHAR": () => (/* binding */ LANG_UNIT_CHAR),
+/* harmony export */   "LANG_UNIT_WORD": () => (/* binding */ LANG_UNIT_WORD),
 /* harmony export */   "MOOD_ADMIRATIVE": () => (/* binding */ MOOD_ADMIRATIVE),
 /* harmony export */   "MOOD_COHORTATIVE": () => (/* binding */ MOOD_COHORTATIVE),
 /* harmony export */   "MOOD_CONDITIONAL": () => (/* binding */ MOOD_CONDITIONAL),
@@ -4558,17 +4900,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MOOD_RENARRATIVE": () => (/* binding */ MOOD_RENARRATIVE),
 /* harmony export */   "MOOD_SUBJUNCTIVE": () => (/* binding */ MOOD_SUBJUNCTIVE),
 /* harmony export */   "MOOD_SUPINE": () => (/* binding */ MOOD_SUPINE),
-/* harmony export */   "NUM_SINGULAR": () => (/* binding */ NUM_SINGULAR),
-/* harmony export */   "NUM_PLURAL": () => (/* binding */ NUM_PLURAL),
-/* harmony export */   "NUM_DUAL": () => (/* binding */ NUM_DUAL),
-/* harmony export */   "NUM_TRIAL": () => (/* binding */ NUM_TRIAL),
-/* harmony export */   "NUM_PAUCAL": () => (/* binding */ NUM_PAUCAL),
-/* harmony export */   "NUM_SINGULATIVE": () => (/* binding */ NUM_SINGULATIVE),
+/* harmony export */   "NRL_CARDINAL": () => (/* binding */ NRL_CARDINAL),
+/* harmony export */   "NRL_DISTRIBUTIVE": () => (/* binding */ NRL_DISTRIBUTIVE),
+/* harmony export */   "NRL_ORDINAL": () => (/* binding */ NRL_ORDINAL),
 /* harmony export */   "NUM_COLLECTIVE": () => (/* binding */ NUM_COLLECTIVE),
 /* harmony export */   "NUM_DISTRIBUTIVE_PLURAL": () => (/* binding */ NUM_DISTRIBUTIVE_PLURAL),
-/* harmony export */   "NRL_CARDINAL": () => (/* binding */ NRL_CARDINAL),
-/* harmony export */   "NRL_ORDINAL": () => (/* binding */ NRL_ORDINAL),
-/* harmony export */   "NRL_DISTRIBUTIVE": () => (/* binding */ NRL_DISTRIBUTIVE),
+/* harmony export */   "NUM_DUAL": () => (/* binding */ NUM_DUAL),
+/* harmony export */   "NUM_PAUCAL": () => (/* binding */ NUM_PAUCAL),
+/* harmony export */   "NUM_PLURAL": () => (/* binding */ NUM_PLURAL),
+/* harmony export */   "NUM_SINGULAR": () => (/* binding */ NUM_SINGULAR),
+/* harmony export */   "NUM_SINGULATIVE": () => (/* binding */ NUM_SINGULATIVE),
+/* harmony export */   "NUM_TRIAL": () => (/* binding */ NUM_TRIAL),
 /* harmony export */   "NURL_NUMERAL_ADVERB": () => (/* binding */ NURL_NUMERAL_ADVERB),
 /* harmony export */   "ORD_1ST": () => (/* binding */ ORD_1ST),
 /* harmony export */   "ORD_2ND": () => (/* binding */ ORD_2ND),
@@ -4579,6 +4921,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "ORD_7TH": () => (/* binding */ ORD_7TH),
 /* harmony export */   "ORD_8TH": () => (/* binding */ ORD_8TH),
 /* harmony export */   "ORD_9TH": () => (/* binding */ ORD_9TH),
+/* harmony export */   "PARADIGM_CAT_KAYLO": () => (/* binding */ PARADIGM_CAT_KAYLO),
+/* harmony export */   "PARADIGM_CAT_STATE": () => (/* binding */ PARADIGM_CAT_STATE),
+/* harmony export */   "POFS_ADJECTIVE": () => (/* binding */ POFS_ADJECTIVE),
+/* harmony export */   "POFS_ADVERB": () => (/* binding */ POFS_ADVERB),
+/* harmony export */   "POFS_ADVERBIAL": () => (/* binding */ POFS_ADVERBIAL),
+/* harmony export */   "POFS_ARTICLE": () => (/* binding */ POFS_ARTICLE),
+/* harmony export */   "POFS_CONJUNCTION": () => (/* binding */ POFS_CONJUNCTION),
+/* harmony export */   "POFS_DENOMINATIVE": () => (/* binding */ POFS_DENOMINATIVE),
+/* harmony export */   "POFS_EXCLAMATION": () => (/* binding */ POFS_EXCLAMATION),
+/* harmony export */   "POFS_GERUNDIVE": () => (/* binding */ POFS_GERUNDIVE),
+/* harmony export */   "POFS_INTERJECTION": () => (/* binding */ POFS_INTERJECTION),
+/* harmony export */   "POFS_NOUN": () => (/* binding */ POFS_NOUN),
+/* harmony export */   "POFS_NOUN_PROPER": () => (/* binding */ POFS_NOUN_PROPER),
+/* harmony export */   "POFS_NUMERAL": () => (/* binding */ POFS_NUMERAL),
+/* harmony export */   "POFS_PARTICLE": () => (/* binding */ POFS_PARTICLE),
+/* harmony export */   "POFS_PREFIX": () => (/* binding */ POFS_PREFIX),
+/* harmony export */   "POFS_PREPOSITION": () => (/* binding */ POFS_PREPOSITION),
+/* harmony export */   "POFS_PRONOUN": () => (/* binding */ POFS_PRONOUN),
+/* harmony export */   "POFS_SUFFIX": () => (/* binding */ POFS_SUFFIX),
+/* harmony export */   "POFS_SUPINE": () => (/* binding */ POFS_SUPINE),
+/* harmony export */   "POFS_VERB": () => (/* binding */ POFS_VERB),
+/* harmony export */   "POFS_VERB_PARTICIPLE": () => (/* binding */ POFS_VERB_PARTICIPLE),
+/* harmony export */   "STR_LANG_CODE_AR": () => (/* binding */ STR_LANG_CODE_AR),
+/* harmony export */   "STR_LANG_CODE_ARA": () => (/* binding */ STR_LANG_CODE_ARA),
+/* harmony export */   "STR_LANG_CODE_ENG": () => (/* binding */ STR_LANG_CODE_ENG),
+/* harmony export */   "STR_LANG_CODE_FA": () => (/* binding */ STR_LANG_CODE_FA),
+/* harmony export */   "STR_LANG_CODE_FAS": () => (/* binding */ STR_LANG_CODE_FAS),
+/* harmony export */   "STR_LANG_CODE_FA_IR": () => (/* binding */ STR_LANG_CODE_FA_IR),
+/* harmony export */   "STR_LANG_CODE_GEZ": () => (/* binding */ STR_LANG_CODE_GEZ),
+/* harmony export */   "STR_LANG_CODE_GRC": () => (/* binding */ STR_LANG_CODE_GRC),
+/* harmony export */   "STR_LANG_CODE_LA": () => (/* binding */ STR_LANG_CODE_LA),
+/* harmony export */   "STR_LANG_CODE_LAT": () => (/* binding */ STR_LANG_CODE_LAT),
+/* harmony export */   "STR_LANG_CODE_PER": () => (/* binding */ STR_LANG_CODE_PER),
+/* harmony export */   "STR_LANG_CODE_SYC": () => (/* binding */ STR_LANG_CODE_SYC),
+/* harmony export */   "STR_LANG_CODE_SYR": () => (/* binding */ STR_LANG_CODE_SYR),
+/* harmony export */   "STR_LANG_CODE_SYR_SYRJ": () => (/* binding */ STR_LANG_CODE_SYR_SYRJ),
+/* harmony export */   "STR_LANG_CODE_UNDEFINED": () => (/* binding */ STR_LANG_CODE_UNDEFINED),
+/* harmony export */   "STR_LANG_CODE_ZH": () => (/* binding */ STR_LANG_CODE_ZH),
+/* harmony export */   "STR_LANG_CODE_ZHO": () => (/* binding */ STR_LANG_CODE_ZHO),
+/* harmony export */   "STR_LANG_CODE_ZH_HANS": () => (/* binding */ STR_LANG_CODE_ZH_HANS),
+/* harmony export */   "STR_LANG_CODE_ZH_HANT": () => (/* binding */ STR_LANG_CODE_ZH_HANT),
 /* harmony export */   "TENSE_AORIST": () => (/* binding */ TENSE_AORIST),
 /* harmony export */   "TENSE_FUTURE": () => (/* binding */ TENSE_FUTURE),
 /* harmony export */   "TENSE_FUTURE_PERFECT": () => (/* binding */ TENSE_FUTURE_PERFECT),
@@ -4587,44 +4970,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "TENSE_PERFECT": () => (/* binding */ TENSE_PERFECT),
 /* harmony export */   "TENSE_PLUPERFECT": () => (/* binding */ TENSE_PLUPERFECT),
 /* harmony export */   "TENSE_PRESENT": () => (/* binding */ TENSE_PRESENT),
-/* harmony export */   "VKIND_TO_BE": () => (/* binding */ VKIND_TO_BE),
+/* harmony export */   "TYPE_IRREGULAR": () => (/* binding */ TYPE_IRREGULAR),
+/* harmony export */   "TYPE_REGULAR": () => (/* binding */ TYPE_REGULAR),
 /* harmony export */   "VKIND_COMPOUNDS_OF_TO_BE": () => (/* binding */ VKIND_COMPOUNDS_OF_TO_BE),
+/* harmony export */   "VKIND_DEPONENT": () => (/* binding */ VKIND_DEPONENT),
+/* harmony export */   "VKIND_IMPERSONAL": () => (/* binding */ VKIND_IMPERSONAL),
+/* harmony export */   "VKIND_INTRANSITIVE": () => (/* binding */ VKIND_INTRANSITIVE),
+/* harmony export */   "VKIND_PERFECT_DEFINITE": () => (/* binding */ VKIND_PERFECT_DEFINITE),
+/* harmony export */   "VKIND_SEMIDEPONENT": () => (/* binding */ VKIND_SEMIDEPONENT),
 /* harmony export */   "VKIND_TAKING_ABLATIVE": () => (/* binding */ VKIND_TAKING_ABLATIVE),
 /* harmony export */   "VKIND_TAKING_DATIVE": () => (/* binding */ VKIND_TAKING_DATIVE),
 /* harmony export */   "VKIND_TAKING_GENITIVE": () => (/* binding */ VKIND_TAKING_GENITIVE),
+/* harmony export */   "VKIND_TO_BE": () => (/* binding */ VKIND_TO_BE),
 /* harmony export */   "VKIND_TRANSITIVE": () => (/* binding */ VKIND_TRANSITIVE),
-/* harmony export */   "VKIND_INTRANSITIVE": () => (/* binding */ VKIND_INTRANSITIVE),
-/* harmony export */   "VKIND_IMPERSONAL": () => (/* binding */ VKIND_IMPERSONAL),
-/* harmony export */   "VKIND_DEPONENT": () => (/* binding */ VKIND_DEPONENT),
-/* harmony export */   "VKIND_SEMIDEPONENT": () => (/* binding */ VKIND_SEMIDEPONENT),
-/* harmony export */   "VKIND_PERFECT_DEFINITE": () => (/* binding */ VKIND_PERFECT_DEFINITE),
 /* harmony export */   "VOICE_ACTIVE": () => (/* binding */ VOICE_ACTIVE),
-/* harmony export */   "VOICE_PASSIVE": () => (/* binding */ VOICE_PASSIVE),
-/* harmony export */   "VOICE_MEDIOPASSIVE": () => (/* binding */ VOICE_MEDIOPASSIVE),
-/* harmony export */   "VOICE_IMPERSONAL_PASSIVE": () => (/* binding */ VOICE_IMPERSONAL_PASSIVE),
-/* harmony export */   "VOICE_MIDDLE": () => (/* binding */ VOICE_MIDDLE),
-/* harmony export */   "VOICE_ANTIPASSIVE": () => (/* binding */ VOICE_ANTIPASSIVE),
-/* harmony export */   "VOICE_REFLEXIVE": () => (/* binding */ VOICE_REFLEXIVE),
-/* harmony export */   "VOICE_RECIPROCAL": () => (/* binding */ VOICE_RECIPROCAL),
-/* harmony export */   "VOICE_CAUSATIVE": () => (/* binding */ VOICE_CAUSATIVE),
 /* harmony export */   "VOICE_ADJUTATIVE": () => (/* binding */ VOICE_ADJUTATIVE),
+/* harmony export */   "VOICE_ANTIPASSIVE": () => (/* binding */ VOICE_ANTIPASSIVE),
 /* harmony export */   "VOICE_APPLICATIVE": () => (/* binding */ VOICE_APPLICATIVE),
+/* harmony export */   "VOICE_CAUSATIVE": () => (/* binding */ VOICE_CAUSATIVE),
 /* harmony export */   "VOICE_CIRCUMSTANTIAL": () => (/* binding */ VOICE_CIRCUMSTANTIAL),
 /* harmony export */   "VOICE_DEPONENT": () => (/* binding */ VOICE_DEPONENT),
-/* harmony export */   "TYPE_IRREGULAR": () => (/* binding */ TYPE_IRREGULAR),
-/* harmony export */   "TYPE_REGULAR": () => (/* binding */ TYPE_REGULAR),
-/* harmony export */   "CLASS_PERSONAL": () => (/* binding */ CLASS_PERSONAL),
-/* harmony export */   "CLASS_REFLEXIVE": () => (/* binding */ CLASS_REFLEXIVE),
-/* harmony export */   "CLASS_POSSESSIVE": () => (/* binding */ CLASS_POSSESSIVE),
-/* harmony export */   "CLASS_DEMONSTRATIVE": () => (/* binding */ CLASS_DEMONSTRATIVE),
-/* harmony export */   "CLASS_RELATIVE": () => (/* binding */ CLASS_RELATIVE),
-/* harmony export */   "CLASS_INTERROGATIVE": () => (/* binding */ CLASS_INTERROGATIVE),
-/* harmony export */   "CLASS_GENERAL_RELATIVE": () => (/* binding */ CLASS_GENERAL_RELATIVE),
-/* harmony export */   "CLASS_INDEFINITE": () => (/* binding */ CLASS_INDEFINITE),
-/* harmony export */   "CLASS_INTENSIVE": () => (/* binding */ CLASS_INTENSIVE),
-/* harmony export */   "CLASS_RECIPROCAL": () => (/* binding */ CLASS_RECIPROCAL),
-/* harmony export */   "PARADIGM_CAT_KAYLO": () => (/* binding */ PARADIGM_CAT_KAYLO),
-/* harmony export */   "PARADIGM_CAT_STATE": () => (/* binding */ PARADIGM_CAT_STATE)
+/* harmony export */   "VOICE_IMPERSONAL_PASSIVE": () => (/* binding */ VOICE_IMPERSONAL_PASSIVE),
+/* harmony export */   "VOICE_MEDIOPASSIVE": () => (/* binding */ VOICE_MEDIOPASSIVE),
+/* harmony export */   "VOICE_MIDDLE": () => (/* binding */ VOICE_MIDDLE),
+/* harmony export */   "VOICE_PASSIVE": () => (/* binding */ VOICE_PASSIVE),
+/* harmony export */   "VOICE_RECIPROCAL": () => (/* binding */ VOICE_RECIPROCAL),
+/* harmony export */   "VOICE_REFLEXIVE": () => (/* binding */ VOICE_REFLEXIVE)
 /* harmony export */ });
 /* eslint-disable no-unused-vars */
 const LANG_UNIT_WORD = Symbol('word')
@@ -4898,15 +5269,15 @@ class DefinitionSet {
    * @returns {DefinitionSet} A DefinitionSet object populated with data from JSON object.
    */
   static readObject (jsonObject) {
-    const languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageIdFromCode(jsonObject.languageCode)
+    const languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageIdFromCode(jsonObject.languageCode)
 
     let definitionSet = new DefinitionSet(jsonObject.lemmaWord, languageID) // eslint-disable-line prefer-const
 
     for (const shortDef of jsonObject.shortDefs) {
-      definitionSet.shortDefs.push(_definition__WEBPACK_IMPORTED_MODULE_0__.default.readObject(shortDef))
+      definitionSet.shortDefs.push(_definition__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(shortDef))
     }
     for (const fullDef of jsonObject.fullDefs) {
-      definitionSet.fullDefs.push(_definition__WEBPACK_IMPORTED_MODULE_0__.default.readObject(fullDef))
+      definitionSet.fullDefs.push(_definition__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(fullDef))
     }
 
     return definitionSet
@@ -4984,7 +5355,7 @@ class DefinitionSet {
   }
 
   convertToJSONObject () {
-    const languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageCodeFromId(this.languageID)
+    const languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageCodeFromId(this.languageID)
     return {
       lemmaWord: this.lemmaWord,
       languageCode: languageCode,
@@ -5033,8 +5404,8 @@ class Definition {
     }
 
     if (jsonObject.provider) {
-      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__.default.readObject(jsonObject.provider)
-      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__.default.getProxy(provider, definition)
+      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(jsonObject.provider)
+      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__["default"].getProxy(provider, definition)
     } else {
       return definition
     }
@@ -5057,162 +5428,6 @@ class Definition {
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Definition);
-
-
-/***/ }),
-
-/***/ "./driver.js":
-/*!*******************!*\
-  !*** ./driver.js ***!
-  \*******************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Constants": () => (/* reexport module object */ _constants_js__WEBPACK_IMPORTED_MODULE_0__),
-/* harmony export */   "Definition": () => (/* reexport safe */ _definition_js__WEBPACK_IMPORTED_MODULE_1__.default),
-/* harmony export */   "DefinitionSet": () => (/* reexport safe */ _definition_set__WEBPACK_IMPORTED_MODULE_2__.default),
-/* harmony export */   "Feature": () => (/* reexport safe */ _feature_js__WEBPACK_IMPORTED_MODULE_3__.default),
-/* harmony export */   "GrmFeature": () => (/* reexport safe */ _grm_feature_js__WEBPACK_IMPORTED_MODULE_4__.default),
-/* harmony export */   "FeatureType": () => (/* reexport safe */ _feature_type_js__WEBPACK_IMPORTED_MODULE_5__.default),
-/* harmony export */   "FeatureList": () => (/* reexport safe */ _feature_list_js__WEBPACK_IMPORTED_MODULE_6__.default),
-/* harmony export */   "FeatureImporter": () => (/* reexport safe */ _feature_importer_js__WEBPACK_IMPORTED_MODULE_7__.default),
-/* harmony export */   "Inflection": () => (/* reexport safe */ _inflection_js__WEBPACK_IMPORTED_MODULE_13__.default),
-/* harmony export */   "LanguageModelFactory": () => (/* reexport safe */ _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__.default),
-/* harmony export */   "HomonymGroup": () => (/* reexport safe */ _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__.default),
-/* harmony export */   "Homonym": () => (/* reexport safe */ _homonym_js__WEBPACK_IMPORTED_MODULE_10__.default),
-/* harmony export */   "Lexeme": () => (/* reexport safe */ _lexeme_js__WEBPACK_IMPORTED_MODULE_11__.default),
-/* harmony export */   "Lemma": () => (/* reexport safe */ _lemma_js__WEBPACK_IMPORTED_MODULE_12__.default),
-/* harmony export */   "LatinLanguageModel": () => (/* reexport safe */ _latin_language_model_js__WEBPACK_IMPORTED_MODULE_14__.default),
-/* harmony export */   "GreekLanguageModel": () => (/* reexport safe */ _greek_language_model_js__WEBPACK_IMPORTED_MODULE_15__.default),
-/* harmony export */   "ArabicLanguageModel": () => (/* reexport safe */ _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_16__.default),
-/* harmony export */   "PersianLanguageModel": () => (/* reexport safe */ _persian_language_model_js__WEBPACK_IMPORTED_MODULE_17__.default),
-/* harmony export */   "GeezLanguageModel": () => (/* reexport safe */ _geez_language_model_js__WEBPACK_IMPORTED_MODULE_18__.default),
-/* harmony export */   "ChineseLanguageModel": () => (/* reexport safe */ _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_19__.default),
-/* harmony export */   "SyriacLanguageModel": () => (/* reexport safe */ _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_20__.default),
-/* harmony export */   "ResourceProvider": () => (/* reexport safe */ _resource_provider_js__WEBPACK_IMPORTED_MODULE_21__.default),
-/* harmony export */   "Translation": () => (/* reexport safe */ _translation_js__WEBPACK_IMPORTED_MODULE_24__.default),
-/* harmony export */   "PsEvent": () => (/* reexport safe */ _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_22__.default),
-/* harmony export */   "PsEventData": () => (/* reexport safe */ _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_23__.default),
-/* harmony export */   "TextQuoteSelector": () => (/* reexport safe */ _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_25__.default),
-/* harmony export */   "WordUsageExample": () => (/* reexport safe */ _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_26__.default),
-/* harmony export */   "Author": () => (/* reexport safe */ _texts_author_js__WEBPACK_IMPORTED_MODULE_27__.default),
-/* harmony export */   "TextWork": () => (/* reexport safe */ _texts_text_work_js__WEBPACK_IMPORTED_MODULE_28__.default),
-/* harmony export */   "WordItem": () => (/* reexport safe */ _word_item_js__WEBPACK_IMPORTED_MODULE_29__.default),
-/* harmony export */   "WordList": () => (/* reexport safe */ _word_list_js__WEBPACK_IMPORTED_MODULE_30__.default),
-/* harmony export */   "TreebankDataItem": () => (/* reexport safe */ _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__.default),
-/* harmony export */   "Logger": () => (/* reexport safe */ _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__.default),
-/* harmony export */   "Options": () => (/* reexport safe */ _options_options_js__WEBPACK_IMPORTED_MODULE_33__.default),
-/* harmony export */   "DefaultsLoader": () => (/* reexport safe */ _storages_defaults_loader_js__WEBPACK_IMPORTED_MODULE_34__.default),
-/* harmony export */   "ExtensionSyncStorage": () => (/* reexport safe */ _storages_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_35__.default),
-/* harmony export */   "LocalStorageArea": () => (/* reexport safe */ _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_36__.default),
-/* harmony export */   "RemoteAuthStorageArea": () => (/* reexport safe */ _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_37__.default),
-/* harmony export */   "TempStorageArea": () => (/* reexport safe */ _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_38__.default),
-/* harmony export */   "Collection": () => (/* reexport safe */ _dts_collection_js__WEBPACK_IMPORTED_MODULE_39__.default),
-/* harmony export */   "Resource": () => (/* reexport safe */ _dts_resource_js__WEBPACK_IMPORTED_MODULE_40__.default),
-/* harmony export */   "Tab": () => (/* reexport safe */ _state_tab_js__WEBPACK_IMPORTED_MODULE_41__.default),
-/* harmony export */   "TabScript": () => (/* reexport safe */ _state_tab_script_js__WEBPACK_IMPORTED_MODULE_42__.default),
-/* harmony export */   "UIStateAPI": () => (/* reexport safe */ _state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_43__.default)
-/* harmony export */ });
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-/* harmony import */ var _definition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./definition.js */ "./definition.js");
-/* harmony import */ var _definition_set__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./definition-set */ "./definition-set.js");
-/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _grm_feature_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./grm-feature.js */ "./grm-feature.js");
-/* harmony import */ var _feature_type_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./feature_type.js */ "./feature_type.js");
-/* harmony import */ var _feature_list_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./feature_list.js */ "./feature_list.js");
-/* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
-/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-/* harmony import */ var _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./homonym-group.js */ "./homonym-group.js");
-/* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
-/* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
-/* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
-/* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
-/* harmony import */ var _latin_language_model_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./latin_language_model.js */ "./latin_language_model.js");
-/* harmony import */ var _greek_language_model_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./greek_language_model.js */ "./greek_language_model.js");
-/* harmony import */ var _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./arabic_language_model.js */ "./arabic_language_model.js");
-/* harmony import */ var _persian_language_model_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./persian_language_model.js */ "./persian_language_model.js");
-/* harmony import */ var _geez_language_model_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./geez_language_model.js */ "./geez_language_model.js");
-/* harmony import */ var _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./chinese_language_model.js */ "./chinese_language_model.js");
-/* harmony import */ var _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./syriac_language_model.js */ "./syriac_language_model.js");
-/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-/* harmony import */ var _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ps-events/ps-event.js */ "./ps-events/ps-event.js");
-/* harmony import */ var _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
-/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
-/* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
-/* harmony import */ var _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./texts/word-usage-example.js */ "./texts/word-usage-example.js");
-/* harmony import */ var _texts_author_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./texts/author.js */ "./texts/author.js");
-/* harmony import */ var _texts_text_work_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./texts/text-work.js */ "./texts/text-work.js");
-/* harmony import */ var _word_item_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./word-item.js */ "./word-item.js");
-/* harmony import */ var _word_list_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./word-list.js */ "./word-list.js");
-/* harmony import */ var _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./treebank_data_item.js */ "./treebank_data_item.js");
-/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
-/* harmony import */ var _options_options_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./options/options.js */ "./options/options.js");
-/* harmony import */ var _storages_defaults_loader_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./storages/defaults-loader.js */ "./storages/defaults-loader.js");
-/* harmony import */ var _storages_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./storages/extension-sync-storage.js */ "./storages/extension-sync-storage.js");
-/* harmony import */ var _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./storages/local-storage-area.js */ "./storages/local-storage-area.js");
-/* harmony import */ var _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./storages/remote-auth-storage-area.js */ "./storages/remote-auth-storage-area.js");
-/* harmony import */ var _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./storages/temp-storage-area.js */ "./storages/temp-storage-area.js");
-/* harmony import */ var _dts_collection_js__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./dts/collection.js */ "./dts/collection.js");
-/* harmony import */ var _dts_resource_js__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./dts/resource.js */ "./dts/resource.js");
-/* harmony import */ var _state_tab_js__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./state/tab.js */ "./state/tab.js");
-/* harmony import */ var _state_tab_script_js__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./state/tab-script.js */ "./state/tab-script.js");
-/* harmony import */ var _state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./state/ui-state-api.js */ "./state/ui-state-api.js");
-
-;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /***/ }),
@@ -5266,7 +5481,7 @@ class Collection {
       this.members.push(new Collection(jsonObj))
     }
     if (jsonObj.type === 'Resource') {
-      this.resources.push(new _resource_js__WEBPACK_IMPORTED_MODULE_0__.default(jsonObj))
+      this.resources.push(new _resource_js__WEBPACK_IMPORTED_MODULE_0__["default"](jsonObj))
     }
   }
 
@@ -5452,7 +5667,6 @@ class Feature {
    * Each value of a feature has its `sortOrder` property. This value is used to soft values of a feature
    * between themselves. Feature object has a `sortOrder` property of its own, too. It is used
    * to compare two Feature objects between themselves.
-   *
    * @param {symbol} languageID - A language ID of a feature
    * @param {number} sortOrder - A sort order of a feature when multiple features are compared.
    * @param allowedValues - If feature has a restricted set of allowed values, here will be a list of those
@@ -5559,9 +5773,9 @@ class Feature {
       stemtype: 'stemtype',
       morph: 'morph', // general morphological information
       var: 'var', // variance?
-      /** for CJK languages only **/
+      /** for CJK languages only */
       radical: 'radical',
-      /** used for Syriac **/
+      /** used for Syriac */
       kaylo: 'kaylo',
       state: 'state'
 
@@ -5756,7 +5970,7 @@ class Feature {
   isEqual (feature) {
     return feature &&
       this.type === feature.type &&
-      _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.compareLanguages(this.languageID, feature.languageID) &&
+      _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(this.languageID, feature.languageID) &&
       this.value === feature.value
   }
 
@@ -5776,7 +5990,7 @@ class Feature {
       })
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__.default.getInstance().warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance().warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`)
     }
     return this
   }
@@ -5795,7 +6009,7 @@ class Feature {
       this._data = this._data.concat(normalizedData)
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__.default.getInstance().warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance().warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`)
     }
     return this
   }
@@ -5807,7 +6021,7 @@ class Feature {
    */
   removeValue (value) {
     // TODO: Do we need it?
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__.default.getInstance().warn('This feature is not implemented yet')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance().warn('This feature is not implemented yet')
   }
 
   /**
@@ -5865,7 +6079,7 @@ to create other items of the same type.
    * @param {string} name - A name of an importer.
    * @param {FeatureImporter} importer - A `FeatureImporter` object.
    */
-  addImporter (importer = new _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__.default(), name = this.constructor.defaultImporterName) {
+  addImporter (importer = new _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__["default"](), name = this.constructor.defaultImporterName) {
     if (!this.importers) {
       this.importers = new Map()
     }
@@ -5926,7 +6140,7 @@ to create other items of the same type.
     const data = this._data.map(dataItem => [dataItem.value, dataItem.sortOrder])
     return {
       type: this.type,
-      languageCode: _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageCodeFromId(this.languageID),
+      languageCode: _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageCodeFromId(this.languageID),
       sortOrder: this.sortOrder,
       allowedValues: this.allowedValues,
       data: data
@@ -5934,7 +6148,7 @@ to create other items of the same type.
   }
 
   static readObject (jsonObject) {
-    const languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageIdFromCode(jsonObject.languageCode)
+    const languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageIdFromCode(jsonObject.languageCode)
     return new Feature(jsonObject.type, jsonObject.data, languageID, jsonObject.sortOrder, jsonObject.allowedValues)
   }
 }
@@ -6001,7 +6215,7 @@ class FeatureImporter {
    * @returns {boolean} - Tru if value is in a map, false otherwise.
    */
   has (importedValue) {
-    return this.hash.hasOwnProperty(importedValue)
+    return this.hash.hasOwnProperty(importedValue) // eslint-disable-line no-prototype-builtins
   }
 
   /**
@@ -6095,7 +6309,7 @@ class FeatureList {
    * @returns {boolean} Whether a feature list has a feature of a particular type.
    */
   hasType (type) {
-    return this._types.hasOwnProperty(type)
+    return this._types.hasOwnProperty(type) // eslint-disable-line no-prototype-builtins
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FeatureList);
@@ -6157,7 +6371,7 @@ class FeatureType {
     this.type = type
     this.languageID = undefined
     this.languageCode = undefined
-    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory__WEBPACK_IMPORTED_MODULE_2__.default.getLanguageAttrs(language))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory__WEBPACK_IMPORTED_MODULE_2__["default"].getLanguageAttrs(language))
 
     /*
      This is a sort order index for a grammatical feature values. It is determined by the order of values in
@@ -6170,11 +6384,11 @@ class FeatureType {
       this._orderIndex.push(value)
       if (Array.isArray(value)) {
         for (const element of value) {
-          this[element] = new _feature_js__WEBPACK_IMPORTED_MODULE_0__.default(this.type, element, this.languageID)
+          this[element] = new _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"](this.type, element, this.languageID)
           this._orderLookup[element] = index
         }
       } else {
-        this[value] = new _feature_js__WEBPACK_IMPORTED_MODULE_0__.default(this.type, value, this.languageID)
+        this[value] = new _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"](this.type, value, this.languageID)
         this._orderLookup[value] = index
       }
     }
@@ -6186,7 +6400,7 @@ class FeatureType {
    * @returns {string} A language code.
    */
   get language () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('Please use a "languageID" instead of a "language"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -6209,7 +6423,7 @@ class FeatureType {
    */
   get (value, sortOrder = 1) {
     if (value) {
-      return new _feature_js__WEBPACK_IMPORTED_MODULE_0__.default(this.type, [[value, sortOrder]], this.languageID)
+      return new _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"](this.type, [[value, sortOrder]], this.languageID)
     } else {
       throw new Error('A non-empty value should be provided.')
     }
@@ -6221,7 +6435,7 @@ class FeatureType {
    * @returns {Feature}
    */
   getValues (data) {
-    return new _feature_js__WEBPACK_IMPORTED_MODULE_0__.default(this.type, data, this.languageID)
+    return new _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"](this.type, data, this.languageID)
   }
 
   getFromImporter (importerName, value) {
@@ -6247,7 +6461,7 @@ class FeatureType {
       throw new Error('Importer should have a non-empty name.')
     }
     this.importer = this.importer || {}
-    this.importer[name] = this.importer[name] || new _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__.default()
+    this.importer[name] = this.importer[name] || new _feature_importer_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
     return this.importer[name]
   }
 
@@ -6260,7 +6474,7 @@ class FeatureType {
    * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
    */
   get orderedFeatures () {
-    return this.orderedValues.map((value) => new _feature_js__WEBPACK_IMPORTED_MODULE_0__.default(this.type, value, this.languageID))
+    return this.orderedValues.map((value) => new _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"](this.type, value, this.languageID))
   }
 
   /**
@@ -6300,9 +6514,8 @@ class FeatureType {
    * It means that genders.masculine and genders.feminine belong to the same group. They will have the same index
    * and will be stored inside an _orderIndex as an array. genders.masculine and genders.feminine will be grouped together
    * during filtering and will be in the same bin during sorting.
-   *
    */
-  set order (values) {
+  set order (values) { // eslint-disable-line accessor-pairs
     if (!values || (Array.isArray(values) && values.length === 0)) {
       throw new Error('A non-empty list of values should be provided.')
     }
@@ -6315,7 +6528,7 @@ class FeatureType {
     for (const value of values) {
       if (Array.isArray(value)) {
         for (const element of value) {
-          if (!this.hasOwnProperty(element.value)) {
+          if (!this.hasOwnProperty(element.value)) { // eslint-disable-line no-prototype-builtins
             throw new Error('Trying to order an element with "' + element.value + '" value that is not stored in a "' + this.type + '" type.')
           }
 
@@ -6323,12 +6536,12 @@ class FeatureType {
             throw new Error('Trying to order an element with type "' + element.type + '" that is different from "' + this.type + '".')
           }
 
-          if (!_language_model_factory__WEBPACK_IMPORTED_MODULE_2__.default.compareLanguages(element.languageID, this.languageID)) {
+          if (!_language_model_factory__WEBPACK_IMPORTED_MODULE_2__["default"].compareLanguages(element.languageID, this.languageID)) {
             throw new Error(`Trying to order an element with language "${element.languageID.toString()}" that is different from "${this.languageID.toString()}"`)
           }
         }
       } else {
-        if (!this.hasOwnProperty(value.value)) {
+        if (!this.hasOwnProperty(value.value)) { // eslint-disable-line no-prototype-builtins
           throw new Error('Trying to order an element with "' + value.value + '" value that is not stored in a "' + this.type + '" type.')
         }
 
@@ -6336,7 +6549,7 @@ class FeatureType {
           throw new Error('Trying to order an element with type "' + value.type + '" that is different from "' + this.type + '".')
         }
 
-        if (!_language_model_factory__WEBPACK_IMPORTED_MODULE_2__.default.compareLanguages(value.languageID, this.languageID)) {
+        if (!_language_model_factory__WEBPACK_IMPORTED_MODULE_2__["default"].compareLanguages(value.languageID, this.languageID)) {
           throw new Error(`Trying to order an element with language "${value.languageID.toString()}" that is different from "${this.languageID.toString()}"`)
         }
       }
@@ -6394,7 +6607,7 @@ let typeFeaturesInitialized = false
 /**
  * @class  GezLanguageModel is the lass for Ge'ez specific behavior
  */
-class GeezLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class GeezLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_GEEZ }
 
   static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_GEZ }
@@ -6410,27 +6623,27 @@ class GeezLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.
   static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_UNIT_WORD }
   static get featureValues () {
     return new Map([
-      ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__.default.featureValues,
+      ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"].featureValues,
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase,
         [
           // TODO Valid Values for case for gez
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.number,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.number,
         [
           // TODO Valid Values for number for gez
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.gender,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.gender,
         [
           // TODO Valid Values for gender for gez
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.mood,
         [
           // TODO Valid Values for mood for gez
         ]
@@ -6503,7 +6716,7 @@ let typeFeaturesInitialized = false
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
-class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_GREEK }
   static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_GRC }
   static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_GRC] }
@@ -6518,9 +6731,9 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
     Feature -> LanguageModelFactory -> LanguageModel -> Feature
      */
     return new Map([
-      ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__.default.featureValues,
+      ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"].featureValues,
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmClass,
+        _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.grmClass,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_DEMONSTRATIVE,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_GENERAL_RELATIVE,
@@ -6535,7 +6748,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.number,
+        _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.number,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.NUM_SINGULAR,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.NUM_PLURAL,
@@ -6543,7 +6756,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmCase,
+        _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.grmCase,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_NOMINATIVE,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_GENITIVE,
@@ -6553,7 +6766,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.declension,
+        _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.declension,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_1ST,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_2ND,
@@ -6561,7 +6774,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.tense,
+        _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.tense,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_PRESENT,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_IMPERFECT,
@@ -6573,7 +6786,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.voice,
+        _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.voice,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.VOICE_PASSIVE,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.VOICE_ACTIVE,
@@ -6582,7 +6795,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.mood,
+        _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.mood,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_INDICATIVE,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_SUBJUNCTIVE,
@@ -6592,7 +6805,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
       ],
       [
         // TODO full list of greek dialects
-        _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.dialect,
+        _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.dialect,
         [
           'attic',
           'epic',
@@ -6629,7 +6842,7 @@ for the current node
    */
   static grammarFeatures () {
     // TODO this ideally might be grammar specific
-    return [_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part, _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.voice]
+    return [_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part, _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.voice]
   }
 
   /**
@@ -6656,18 +6869,18 @@ for the current node
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    *                   or null if no part of speech data is present on the lexeme
-   **/
+   */
   static normalizePartOfSpeechValue (lexeme) {
-    if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part]) {
-      if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
+    if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part]) {
+      if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
         // alpheios standard for Greek follows the Perseus Treebank Guidelines
         // which normalize particles as adverbs
         return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB
-      } else if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+      } else if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
         // alpheios normalizes exclamation to interjection (following treebank guidelines)
         return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
       } else {
-        return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value
+        return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part].value
       }
     } else {
       return null
@@ -6684,9 +6897,9 @@ for the current node
   static normalizeFeatureValue (featureType, featureValue) {
     // alpheios standard for Latin is currently following Whitaker, and
     // normalize the gerundive mood to participle
-    if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
+    if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PARTICLE) {
       return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB
-    } else if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+    } else if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
       // alpheios normalizes exclamation to interjection (following treebank guidelines)
       return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
     } else {
@@ -6813,20 +7026,20 @@ for the current node
       pronounClassRequired: false
     }
     const formBasedList = [_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PRONOUN, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_NUMERAL, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ARTICLE]
-    if (inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part)) {
-      if (formBasedList.includes(inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value)) {
+    if (inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part)) { // eslint-disable-line no-prototype-builtins
+      if (formBasedList.includes(inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part].value)) {
         constraints.fullFormBased = true
       } else {
         constraints.suffixBased = true
       }
     } else {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__.default.getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part])
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__["default"].getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part])
     }
 
     constraints.pronounClassRequired =
-      _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.compareLanguages(GreekLanguageModel.languageID, inflection.languageID) &&
-      inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part) &&
-      inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PRONOUN
+      _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].compareLanguages(GreekLanguageModel.languageID, inflection.languageID) &&
+      inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part) && // eslint-disable-line no-prototype-builtins
+      inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PRONOUN
 
     return constraints
   }
@@ -6855,21 +7068,21 @@ for the current node
         // the following test intential looks for an exact equality on the headword rather than
         // using compareWord because exact match on diacritics matters -- the interrogative and indefinite
         // pronouns only differ by diacritics
-        if (form.value && (!form.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.hdwd] || (form.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.hdwd].value === hdwd))) {
+        if (form.value && (!form.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.hdwd] || (form.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.hdwd].value === hdwd))) {
           match = GreekLanguageModel.compareWords(form.value, word, normalize)
         }
         return match
       }
     )
     for (const matchingForm of matchingForms) {
-      if (matchingForm.features.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmClass)) {
-        for (const value of matchingForm.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmClass].values) {
+      if (matchingForm.features.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.grmClass)) { // eslint-disable-line no-prototype-builtins
+        for (const value of matchingForm.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.grmClass].values) {
           matchingValues.add(value)
         }
       }
     }
     if (matchingValues.size > 0) {
-      return new _feature_js__WEBPACK_IMPORTED_MODULE_3__.default(_feature_js__WEBPACK_IMPORTED_MODULE_3__.default.types.grmClass, Array.from(matchingValues), GreekLanguageModel.languageID)
+      return new _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"](_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.grmClass, Array.from(matchingValues), GreekLanguageModel.languageID)
     }
   }
 
@@ -6924,7 +7137,7 @@ for the current node
   }
 
   static isValidUnicode (word) {
-    return _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_5__.default.chars.some(char => word.includes(char))
+    return _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_5__["default"].chars.some(char => word.includes(char))
   }
 }
 
@@ -6984,7 +7197,7 @@ class GrmFeature {
     this.type = type
     this.languageID = undefined
     this.languageCode = undefined
-    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageAttrs(language))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageAttrs(language))
     this.sortOrder = sortOrder
   }
 
@@ -6994,7 +7207,7 @@ class GrmFeature {
    * @returns {string} A language code.
    */
   get language () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__.default.getInstance().warn('Please use a "languageID" instead of a "language"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_2__["default"].getInstance().warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -7005,13 +7218,13 @@ class GrmFeature {
       if (!Array.isArray(this.value) || this.value.length !== feature.value.length) {
         return false
       }
-      let equal = this.type === feature.type && _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.compareLanguages(this.languageID, feature.languageID)
+      let equal = this.type === feature.type && _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(this.languageID, feature.languageID)
       equal = equal && this.value.every(function (element, index) {
         return element === feature.value[index]
       })
       return equal
     } else {
-      return _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.compareLanguages(this.languageID, feature.languageID) && this.type === feature.type && this.value === feature.value
+      return _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(this.languageID, feature.languageID) && this.type === feature.type && this.value === feature.value
     }
   }
 
@@ -7023,7 +7236,7 @@ class GrmFeature {
     const languageID = features[0].languageID // Assume all Feature objects have the same language ID
     const type = features[0].type // Assume all Feature objects have the same type
     const values = features.map(f => f.value)
-    if (_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.compareLanguages(this.languageID, languageID) && this.type === type && values.includes(this.value)) {
+    if (_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(this.languageID, languageID) && this.type === type && values.includes(this.value)) {
       return true
     }
     return false
@@ -7058,15 +7271,15 @@ class GrmFeature {
 
   static toFeature (sourceFeature) {
     if (Array.isArray(sourceFeature)) {
-      if (!(sourceFeature[0] instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+      if (!(sourceFeature[0] instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
         const type = sourceFeature[0].type
         const languageID = sourceFeature[0].languageID
         const values = sourceFeature.map(v => v.value)
-        return new _feature_js__WEBPACK_IMPORTED_MODULE_1__.default(type, values, languageID)
+        return new _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"](type, values, languageID)
       }
     } else {
-      if (!(sourceFeature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
-        return new _feature_js__WEBPACK_IMPORTED_MODULE_1__.default(sourceFeature.type, sourceFeature.value, sourceFeature.languageID)
+      if (!(sourceFeature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
+        return new _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"](sourceFeature.type, sourceFeature.value, sourceFeature.languageID)
       }
     }
     return sourceFeature
@@ -7159,7 +7372,7 @@ class HomonymGroup {
     if (disambiguated) {
       lexemes.forEach(lexeme => { lexeme.disambiguated = true })
     }
-    return new _homonym_js__WEBPACK_IMPORTED_MODULE_0__.default(lexemes, targetWord)
+    return new _homonym_js__WEBPACK_IMPORTED_MODULE_0__["default"](lexemes, targetWord)
   }
 }
 
@@ -7207,7 +7420,7 @@ class Homonym {
     }
 
     for (const lexeme of lexemes) {
-      if (!(lexeme instanceof _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+      if (!(lexeme instanceof _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
         throw new Error('All lexeme data should be of Lexeme object type.')
       }
     }
@@ -7228,8 +7441,8 @@ class Homonym {
    * @returns {Homonym} A newly created homonym object.
    */
   static createSimpleForm (word, languageID, inflections = []) {
-    const lemma = new _lemma_js__WEBPACK_IMPORTED_MODULE_2__.default(word, languageID)
-    const lexeme = new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default(lemma, inflections)
+    const lemma = new _lemma_js__WEBPACK_IMPORTED_MODULE_2__["default"](word, languageID)
+    const lexeme = new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"](lemma, inflections)
     return new Homonym([lexeme], word)
   }
 
@@ -7255,11 +7468,11 @@ class Homonym {
     let lexemes = [] // eslint-disable-line prefer-const
     if (jsonObject.lexemes) {
       for (const lexeme of jsonObject.lexemes) {
-        lexemes.push(_lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.readObject(lexeme))
+        lexemes.push(_lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(lexeme))
       }
     } else {
-      const languageID = _language_model_factory__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageIdFromCode(jsonObject.languageCode)
-      lexemes = [new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default(new _lemma_js__WEBPACK_IMPORTED_MODULE_2__.default(jsonObject.targetWord, languageID), [])]
+      const languageID = _language_model_factory__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageIdFromCode(jsonObject.languageCode)
+      lexemes = [new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"](new _lemma_js__WEBPACK_IMPORTED_MODULE_2__["default"](jsonObject.targetWord, languageID), [])]
     }
     const homonym = new Homonym(lexemes, jsonObject.form || jsonObject.targetWord)
     homonym.lemmasList = jsonObject.lemmasList
@@ -7283,8 +7496,8 @@ class Homonym {
    * @returns {string} A language code, as defined in the `languages` object.
    */
   get language () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('Please use languageID instead')
-    return _language_model_factory__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageCodeFromId(this.languageID)
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('Please use languageID instead')
+    return _language_model_factory__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageCodeFromId(this.languageID)
   }
 
   /**
@@ -7341,7 +7554,7 @@ class Homonym {
     for (const otherLexeme of disambiguator.lexemes) {
       for (const lexeme of base.lexemes) {
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
-        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__.default.disambiguateInflections(lexeme, otherLexeme) : lexeme
+        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].disambiguateInflections(lexeme, otherLexeme) : lexeme
 
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
           if (newLex.getSelectedInflection() !== null) {
@@ -7452,15 +7665,15 @@ class Inflection {
       throw new Error('Language should not be empty.')
     }
 
-    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.supportsLanguage(language)) {
+    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].supportsLanguage(language)) {
       throw new Error(`language ${language} not supported.`)
     }
 
     this.stem = stem
     this.languageID = undefined
     this.languageCode = undefined
-    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageAttrs(language))
-    this.model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModel(this.languageID)
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageAttrs(language))
+    this.model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModel(this.languageID)
     this.features = new Set() // Stores names of features of this inflection, feature objects themselves are stored as props
 
     // TODO: Separate constraints to a class of its own to share definition with language model and provide `clone()` method?
@@ -7548,7 +7761,7 @@ class Inflection {
    * @returns {string} A language code.
    */
   get language () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('Please use a "languageID" instead of a "language"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -7556,7 +7769,7 @@ class Inflection {
    * Sets grammar properties based on inflection info
    */
   setConstraints () {
-    if (this.model.hasOwnProperty('getInflectionConstraints')) {
+    if (this.model.hasOwnProperty('getInflectionConstraints')) { // eslint-disable-line no-prototype-builtins
       const constraintData = this.model.getInflectionConstraints(this)
       this.constraints = Object.assign(this.constraints, constraintData)
     }
@@ -7577,8 +7790,8 @@ class Inflection {
    */
   smartWordCompare (word, className, options = {}) {
     // Default values
-    if (!options.hasOwnProperty('normalize')) { options.normalize = true }
-    if (!options.hasOwnProperty('fuzzySuffix')) { options.fuzzySuffix = false }
+    if (!options.hasOwnProperty('normalize')) { options.normalize = true } // eslint-disable-line no-prototype-builtins
+    if (!options.hasOwnProperty('fuzzySuffix')) { options.fuzzySuffix = false } // eslint-disable-line no-prototype-builtins
 
     let value
     if (!this.constraints.irregular) {
@@ -7587,7 +7800,7 @@ class Inflection {
       if (className === 'Suffix') {
         value = this.suffix
       } else {
-        value = this[_feature_js__WEBPACK_IMPORTED_MODULE_0__.default.types.fullForm] ? this[_feature_js__WEBPACK_IMPORTED_MODULE_0__.default.types.fullForm].value : this.form
+        value = this[_feature_js__WEBPACK_IMPORTED_MODULE_0__["default"].types.fullForm] ? this[_feature_js__WEBPACK_IMPORTED_MODULE_0__["default"].types.fullForm].value : this.form
       }
     }
 
@@ -7618,7 +7831,7 @@ class Inflection {
    * @param {boolean} normalize whether or not to apply normalization
    */
   modelCompareWords (wordA, wordB, normalize = true) {
-    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModel(this.languageID)
+    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModel(this.languageID)
     return model.compareWords(wordA, wordB, normalize)
   }
 
@@ -7632,7 +7845,7 @@ class Inflection {
    * @param {boolean} normalize whether or not to apply normalization
    */
   modelCompareFeatureValue (featureType, valueA, valueB, normalize = true) {
-    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModel(this.languageID)
+    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModel(this.languageID)
     return model.compareFeatureValue(featureType, valueA, valueB, { normalize })
   }
 
@@ -7660,7 +7873,7 @@ class Inflection {
       matched = false
     }
     for (const feature of infl.features) {
-      if (ignorePofs && feature === _feature_js__WEBPACK_IMPORTED_MODULE_0__.default.types.part) {
+      if (ignorePofs && feature === _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"].types.part) {
         continue
       }
       for (const value of infl[feature].values) {
@@ -7687,8 +7900,8 @@ class Inflection {
    * Values are taken from features and stored in a 'feature.type' property as an array of values.
    * @param {Feature | Feature[]} data
    */
-  set feature (data) {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('Please use "addFeature" instead.')
+  set feature (data) { // eslint-disable-line accessor-pairs
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('Please use "addFeature" instead.')
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
     }
@@ -7699,11 +7912,11 @@ class Inflection {
     const type = data[0].type
     this[type] = []
     for (const element of data) {
-      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_0__.default)) {
+      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"])) {
         throw new Error('Inflection feature data must be a Feature object.')
       }
 
-      if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.compareLanguages(element.languageID, this.languageID)) {
+      if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].compareLanguages(element.languageID, this.languageID)) {
         throw new Error(`Language "${element.languageID.toString()}" of a feature does not match
           a language "${this.languageID.toString()}" of an Inflection object.`)
       }
@@ -7723,11 +7936,11 @@ class Inflection {
       throw new Error('feature data cannot be empty.')
     }
 
-    if (!(feature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_0__.default)) {
+    if (!(feature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"])) {
       throw new Error('feature data must be a Feature object.')
     }
 
-    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.compareLanguages(feature.languageID, this.languageID)) {
+    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].compareLanguages(feature.languageID, this.languageID)) {
       throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
         this.languageID.toString() + '" of a Lemma object.')
     }
@@ -7761,7 +7974,7 @@ class Inflection {
    * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
   hasFeatureValue (featureName, featureValue, { normalize = false } = {}) {
-    if (this.hasOwnProperty(featureName)) {
+    if (this.hasOwnProperty(featureName)) { // eslint-disable-line no-prototype-builtins
       return this[featureName].values.some(v => this.modelCompareFeatureValue(featureName, v, featureValue))
     }
     return false
@@ -7789,11 +8002,11 @@ class Inflection {
     let inflection =
       new Inflection(
         jsonObject.stem, jsonObject.languageCode, jsonObject.suffix, jsonObject.prefix, jsonObject.example)
-    inflection.languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageIdFromCode(inflection.languageCode)
+    inflection.languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageIdFromCode(inflection.languageCode)
 
     if (jsonObject.features && jsonObject.features.length > 0) {
       jsonObject.features.forEach(featureSource => {
-        inflection.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(featureSource))
+        inflection.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(featureSource))
       })
     }
     if (lemma) {
@@ -7807,7 +8020,7 @@ class Inflection {
     for (const key of this.features.keys()) {
       resultFeatures.push(this[key].convertToJSONObject())
     }
-    const languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageCodeFromId(this.languageID)
+    const languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageCodeFromId(this.languageID)
     return {
       stem: this.stem,
       languageCode: languageCode,
@@ -7898,7 +8111,7 @@ is included in the grouping key
    * @param value
    */
   hasFeatureValue (feature, value) {
-    if (this.hasOwnProperty(feature)) {
+    if (this.hasOwnProperty(feature)) { // eslint-disable-line no-prototype-builtins
       return this[feature].values.includes(value)
     }
     return false
@@ -7913,7 +8126,7 @@ is included in the grouping key
     let values = [] // eslint-disable-line prefer-const
     for (const prop of Object.getOwnPropertyNames(this).sort()) {
       // A prop can be either a Feature object, or a one of the extras of a string type
-      const value = (this[prop] instanceof _feature_js__WEBPACK_IMPORTED_MODULE_0__.default) ? this[prop].values.sort().join(',') : this[prop]
+      const value = (this[prop] instanceof _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"]) ? this[prop].values.sort().join(',') : this[prop]
       values.push(value)
     }
     return values.join(' ')
@@ -7970,7 +8183,7 @@ class LanguageModel {
    * @deprecated
    */
   get contextForward () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use static "contextForward" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use static "contextForward" instead')
     return this.constructor.contextForward
   }
 
@@ -7978,7 +8191,7 @@ class LanguageModel {
    * @deprecated
    */
   get contextBackward () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use static "contextBackward" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use static "contextBackward" instead')
     return this.constructor.contextBackward
   }
 
@@ -7986,7 +8199,7 @@ class LanguageModel {
    * @deprecated
    */
   get direction () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use static "direction" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use static "direction" instead')
     return this.constructor.direction
   }
 
@@ -7994,7 +8207,7 @@ class LanguageModel {
    * @deprecated
    */
   get baseUnit () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use static "baseUnit" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use static "baseUnit" instead')
     return this.constructor.baseUnit
   }
 
@@ -8002,7 +8215,7 @@ class LanguageModel {
    * @deprecated
    */
   get features () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use individual "getFeatureType" or static "features" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use individual "getFeatureType" or static "features" instead')
     return this.constructor.features
   }
 
@@ -8040,7 +8253,7 @@ class LanguageModel {
    * a feature type (a string), and the value is a Feature object.
    */
   static get typeFeatures () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('This getter must be defined in a descendant class')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('This getter must be defined in a descendant class')
   }
 
   static get features () {
@@ -8069,7 +8282,7 @@ class LanguageModel {
   }
 
   static get codes () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Use static "languageCodes" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Use static "languageCodes" instead')
     return this.languageCodes
   }
 
@@ -8078,7 +8291,7 @@ class LanguageModel {
    * @returns {string[]}
    */
   get codes () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use a static version of "codes" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static version of "codes" instead')
     return this.constructor.languageCodes
   }
 
@@ -8087,7 +8300,7 @@ class LanguageModel {
    * @returns {string}
    */
   toCode () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use a static "languageCode" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static "languageCode" instead')
     return this.constructor.languageCode
   }
 
@@ -8096,7 +8309,7 @@ class LanguageModel {
    * @returns {string}
    */
   static toCode () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use a static "languageCode" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static "languageCode" instead')
     return this.languageCode
   }
 
@@ -8112,7 +8325,7 @@ class LanguageModel {
      */
     return new Map([
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_0__.POFS_ADVERB,
           _constants_js__WEBPACK_IMPORTED_MODULE_0__.POFS_ADVERBIAL,
@@ -8134,7 +8347,7 @@ class LanguageModel {
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.gender,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.gender,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_0__.GEND_MASCULINE,
           _constants_js__WEBPACK_IMPORTED_MODULE_0__.GEND_FEMININE,
@@ -8142,14 +8355,14 @@ class LanguageModel {
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.type,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.type,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_0__.TYPE_REGULAR,
           _constants_js__WEBPACK_IMPORTED_MODULE_0__.TYPE_IRREGULAR
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.person,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.person,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_0__.ORD_1ST,
           _constants_js__WEBPACK_IMPORTED_MODULE_0__.ORD_2ND,
@@ -8157,54 +8370,54 @@ class LanguageModel {
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.number,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.number,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_0__.NUM_SINGULAR,
           _constants_js__WEBPACK_IMPORTED_MODULE_0__.NUM_PLURAL
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.age,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.age,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.area,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.area,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.source,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.source,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.frequency,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.frequency,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.geo,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.geo,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.pronunciation,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.pronunciation,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.kind,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.kind,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.comparison,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.comparison,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.morph,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.stemtype,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.stemtype,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.derivtype,
+        _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.derivtype,
         []
       ]
     ])
@@ -8215,7 +8428,7 @@ class LanguageModel {
    * @returns {symbol} Returns a language ID
    */
   static get sourceLanguage () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use languageID directly')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use languageID directly')
     return this.languageID
   }
 
@@ -8224,7 +8437,7 @@ class LanguageModel {
    * @returns {symbol} Returns a language ID
    */
   get sourceLanguage () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use languageID directly')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use languageID directly')
     return this.constructor.languageID
   }
 
@@ -8234,10 +8447,10 @@ class LanguageModel {
    * @returns {FeatureType}
    */
   static getFeatureType (name) {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use getFeature instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use getFeature instead')
     const featureValues = this.featureValues
     if (featureValues.has(name)) {
-      return new _feature_type_js__WEBPACK_IMPORTED_MODULE_3__.default(name, featureValues.get(name), this.languageID)
+      return new _feature_type_js__WEBPACK_IMPORTED_MODULE_3__["default"](name, featureValues.get(name), this.languageID)
     } else {
       throw new Error(`Feature "${name}" is not defined`)
     }
@@ -8254,7 +8467,7 @@ class LanguageModel {
     const featureValues = this.featureValues // To cache the values
     if (featureValues.has(featureType)) {
       const allowedValues = featureValues.get(featureType)
-      return new _feature_js__WEBPACK_IMPORTED_MODULE_2__.default(featureType, allowedValues, this.languageID, 1, allowedValues)
+      return new _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"](featureType, allowedValues, this.languageID, 1, allowedValues)
     } else {
       throw new Error(`Feature "${featureType}" is not defined`)
     }
@@ -8272,7 +8485,7 @@ class LanguageModel {
    * @deprecated
    */
   grammarFeatures () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use a static version of "grammarFeatures" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static version of "grammarFeatures" instead')
     return this.constructor.grammarFeatures()
   }
 
@@ -8365,10 +8578,10 @@ class LanguageModel {
    *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
-   **/
+   */
   static normalizePartOfSpeechValue (lexeme) {
     // default is to return the value as it exists on the lemma
-    return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] ? lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part].value : null
+    return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part] ? lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part].value : null
   }
 
   /**
@@ -8451,7 +8664,7 @@ class LanguageModel {
    * @returns {string}
    */
   getPunctuation () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use a static version of "getPunctuation"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static version of "getPunctuation"')
     return this.constructor.getPunctuation()
   }
 
@@ -8460,7 +8673,7 @@ class LanguageModel {
   }
 
   isEqual (model) {
-    return _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.compareLanguages(this.languageID, model.languageID)
+    return _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].compareLanguages(this.languageID, model.languageID)
   }
 
   /*
@@ -8509,7 +8722,7 @@ class LanguageModel {
    * @param node
    */
   canInflect (node) {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use a static version of "canInflect" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static version of "canInflect" instead')
     return this.constructor.canInflect(node)
   }
 
@@ -8534,8 +8747,8 @@ class LanguageModel {
 
     // group inflections by part of speech
     for (const infl of aggregated) {
-      const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__.default(infl,
-        [_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.dialect, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.comparison],
+      const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl,
+        [_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.dialect, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.comparison],
         {
           prefix: infl.prefix,
           suffix: infl.suffix,
@@ -8546,7 +8759,7 @@ class LanguageModel {
       if (grouped.has(groupingKeyStr)) {
         grouped.get(groupingKeyStr).append(infl)
       } else {
-        grouped.set(groupingKeyStr, new _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__.default(groupingKey, [infl]))
+        grouped.set(groupingKeyStr, new _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__["default"](groupingKey, [infl]))
       }
     }
 
@@ -8556,30 +8769,30 @@ class LanguageModel {
       for (const infl of kv[1].inflections) {
         let keyprop
         let isCaseInflectionSet = false
-        if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase]) {
+        if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.grmCase]) {
           // grouping on number if case is defined
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.number
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.number
           isCaseInflectionSet = true
-        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.tense]) {
+        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.tense]) {
           // grouping on tense if tense is defined but not case
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.tense
-        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_0__.POFS_VERB) {
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.tense
+        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_0__.POFS_VERB) {
           // grouping on no case or tense but a verb
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part
-        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_0__.POFS_ADVERB) {
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part
+        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_0__.POFS_ADVERB) {
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part
           // grouping on adverbs without case or tense
         } else {
           keyprop = 'misc'
           // grouping on adverbs without case or tense
           // everything else
         }
-        const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__.default(infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
+        const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
         const groupingKeyStr = groupingKey.toString()
         if (inflgrp.has(groupingKeyStr)) {
           inflgrp.get(groupingKeyStr).append(infl)
         } else {
-          inflgrp.set(groupingKeyStr, new _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__.default(groupingKey, [infl]))
+          inflgrp.set(groupingKeyStr, new _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__["default"](groupingKey, [infl]))
         }
       }
       // inflgrp is now a map of groups of inflections grouped by
@@ -8593,13 +8806,13 @@ class LanguageModel {
         const nextGroup = new Map()
         const sortOrder = new Map()
         for (const infl of kv[1].inflections) {
-          const sortkey = infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase] ? Math.max(infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase].items.map(f => f.sortOrder)) : 1
-          const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__.default(infl, [_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.voice])
+          const sortkey = infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.grmCase] ? Math.max(infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.grmCase].items.map(f => f.sortOrder)) : 1
+          const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl, [_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.voice])
           const groupingKeyStr = groupingKey.toString()
           if (nextGroup.has(groupingKeyStr)) {
             nextGroup.get(groupingKeyStr).append(infl)
           } else {
-            nextGroup.set(groupingKeyStr, new _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__.default(groupingKey, [infl], sortkey))
+            nextGroup.set(groupingKeyStr, new _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__["default"](groupingKey, [infl], sortkey))
             sortOrder.set(groupingKeyStr, sortkey)
           }
         }
@@ -8624,14 +8837,14 @@ class LanguageModel {
           let nextGroup = new Map() // eslint-disable-line prefer-const
           for (const infl of group.inflections) {
             // set key is case comp gend pers mood sort
-            const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__.default(infl,
-              [_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.comparison, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.gender, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.number, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.person,
-                _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.voice])
+            const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl,
+              [_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.comparison, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.gender, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.number, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.person,
+                _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.voice])
             const groupingKeyStr = groupingKey.toString()
             if (nextGroup.has(groupingKeyStr)) {
               nextGroup.get(groupingKeyStr).append(infl)
             } else {
-              nextGroup.set(groupingKeyStr, new _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__.default(groupingKey, [infl]))
+              nextGroup.set(groupingKeyStr, new _inflection_group_js__WEBPACK_IMPORTED_MODULE_5__["default"](groupingKey, [infl]))
             }
           }
           group.inflections = Array.from(nextGroup.values()) // now a group of inflection groups
@@ -8659,7 +8872,7 @@ class LanguageModel {
    * @returns {*}
    */
   groupInflectionsForDisplay (inflections) {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__.default.getInstance().warn('Please use a static version of "groupInflectionsForDisplay" instead')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_6__["default"].getInstance().warn('Please use a static version of "groupInflectionsForDisplay" instead')
     return this.constructor.groupInflectionsForDisplay(inflections)
   }
 }
@@ -8700,17 +8913,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const MODELS = new Map([
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_LA, _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_LAT, _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_GRC, _greek_language_model_js__WEBPACK_IMPORTED_MODULE_2__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_ARA, _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_AR, _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_PER, _persian_language_model_js__WEBPACK_IMPORTED_MODULE_4__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_GEZ, _geez_language_model_js__WEBPACK_IMPORTED_MODULE_5__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_ZHO, _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_6__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_SYR, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_SYC, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__.default],
-  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_SYR_SYRJ, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__.default]
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_LA, _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_LAT, _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_GRC, _greek_language_model_js__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_ARA, _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_AR, _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_PER, _persian_language_model_js__WEBPACK_IMPORTED_MODULE_4__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_GEZ, _geez_language_model_js__WEBPACK_IMPORTED_MODULE_5__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_ZHO, _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_SYR, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_SYC, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__.STR_LANG_CODE_SYR_SYRJ, _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__["default"]]
 ])
 
 class LanguageModelFactory {
@@ -8749,7 +8962,7 @@ class LanguageModelFactory {
       return MODELS.get(languageCode)
     } else {
       // A default value
-      return _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default
+      return _language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"]
     }
   }
 
@@ -8760,7 +8973,7 @@ class LanguageModelFactory {
     }
     // for now return a default Model
     // TODO may want to throw an error
-    return new _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default()
+    return new _language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"]()
   }
 
   /**
@@ -9204,7 +9417,7 @@ let typeFeaturesInitialized = false
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
  */
-class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_LATIN }
   static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_LAT }
   static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_LA, _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_LAT] }
@@ -9219,9 +9432,9 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
     Feature -> LanguageModelFactory -> LanguageModel -> Feature
      */
     return new Map([
-      ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__.default.featureValues,
+      ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"].featureValues,
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmClass,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmClass,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_PERSONAL,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.CLASS_REFLEXIVE,
@@ -9232,14 +9445,14 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.number,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.number,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.NUM_SINGULAR,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.NUM_PLURAL
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_NOMINATIVE,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.CASE_GENITIVE,
@@ -9251,7 +9464,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.declension,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.declension,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_1ST,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_2ND,
@@ -9261,7 +9474,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.tense,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_PRESENT,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.TENSE_IMPERFECT,
@@ -9272,14 +9485,14 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.voice,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.voice,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.VOICE_ACTIVE,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.VOICE_PASSIVE
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.mood,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_INDICATIVE,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_SUBJUNCTIVE,
@@ -9292,7 +9505,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.conjugation,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.conjugation,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_1ST,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.ORD_2ND,
@@ -9322,7 +9535,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
    */
   static grammarFeatures () {
     // TODO this ideally might be grammar specific
-    return [_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.conjugation]
+    return [_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.conjugation]
   }
 
   /**
@@ -9371,9 +9584,9 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   static normalizeFeatureValue (featureType, featureValue) {
     // alpheios standard for Latin is currently following Whitaker, and
     // normalize the gerundive mood to participle
-    if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_GERUNDIVE) {
+    if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.mood && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_GERUNDIVE) {
       return _constants_js__WEBPACK_IMPORTED_MODULE_2__.MOOD_PARTICIPLE
-    } else if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+    } else if (featureType === _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part && featureValue === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
       return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
     } else {
       return featureValue
@@ -9385,15 +9598,15 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
    *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
-   **/
+   */
   static normalizePartOfSpeechValue (lexeme) {
-    if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part]) {
+    if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part]) {
       // Alpheios currently follows Whitaker for Latin and normalizes  exclamation
       // to interjection
-      if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
+      if (lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_EXCLAMATION) {
         return _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_INTERJECTION
       } else {
-        return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value
+        return lexeme.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part].value
       }
     } else {
       return null
@@ -9422,17 +9635,17 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
       suffixBased: false,
       pronounClassRequired: false
     }
-    if (inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part)) {
-      if ([_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB_PARTICIPLE, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_SUPINE, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_GERUNDIVE].includes(inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value)) {
+    if (inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part)) { // eslint-disable-line no-prototype-builtins
+      if ([_constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB_PARTICIPLE, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_SUPINE, _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_GERUNDIVE].includes(inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part].value)) {
         grammar.fullFormBased = true
         grammar.suffixBased = true
-      } else if (inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PRONOUN) {
+      } else if (inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part].value === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_PRONOUN) {
         grammar.fullFormBased = true
       } else {
         grammar.suffixBased = true
       }
     } else {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__.default.getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part])
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_3__["default"].getInstance().warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part])
     }
 
     return grammar
@@ -9476,7 +9689,6 @@ class Lemma {
    * @param {symbol | string} languageID - A language ID (symbol, please use this) or a language code of a word.
    * @param {string[]} principalParts - the principalParts of a lemma.
    * @param {object} features - the grammatical features of a lemma.
-
    * @param {Translation} transaltions - translations from python service
    */
   constructor (word, languageID, principalParts = [], features = {}) {
@@ -9491,7 +9703,7 @@ class Lemma {
     // Compatibility code for something providing languageCode instead of languageID
     this.languageID = undefined
     this.languageCode = undefined
-    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageAttrs(languageID))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageAttrs(languageID))
 
     this.word = word
     this.principalParts = principalParts
@@ -9501,7 +9713,7 @@ class Lemma {
   }
 
   get language () {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__.default.getInstance().warn('Please use "languageID" instead of "language"')
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__["default"].getInstance().warn('Please use "languageID" instead of "language"')
     return this.languageCode
   }
 
@@ -9516,12 +9728,12 @@ class Lemma {
 
     if (jsonObject.features && jsonObject.features.length > 0) {
       jsonObject.features.forEach(featureSource => {
-        resLemma.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.readObject(featureSource))
+        resLemma.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(featureSource))
       })
     }
 
     if (jsonObject.translation) {
-      resLemma.translation = _translation_js__WEBPACK_IMPORTED_MODULE_2__.default.readObject(jsonObject.translation, resLemma)
+      resLemma.translation = _translation_js__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.translation, resLemma)
     }
     return resLemma
   }
@@ -9552,8 +9764,8 @@ class Lemma {
    * Values are taken from features and stored in a 'feature.type' property as an array of values.
    * @param {Feature | Feature[]} data
    */
-  set feature (data) {
-    _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__.default.getInstance().warn('Please use "addFeature" instead')
+  set feature (data) { // eslint-disable-line accessor-pairs
+    _logging_logger_js__WEBPACK_IMPORTED_MODULE_4__["default"].getInstance().warn('Please use "addFeature" instead')
     if (!data) {
       throw new Error('feature data cannot be empty.')
     }
@@ -9564,11 +9776,11 @@ class Lemma {
     const type = data[0].type
     this.features[type] = []
     for (const element of data) {
-      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
         throw new Error('feature data must be a Feature object.')
       }
 
-      if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.compareLanguages(element.languageID, this.languageID)) {
+      if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(element.languageID, this.languageID)) {
         throw new Error('Language "' + element.languageID.toString() + '" of a feature does not match a language "' +
                 this.languageID.toString() + '" of a Lemma object.')
       }
@@ -9587,11 +9799,11 @@ class Lemma {
       throw new Error('feature data cannot be empty.')
     }
 
-    if (!(feature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+    if (!(feature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
       throw new Error('feature data must be a Feature object.')
     }
 
-    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.compareLanguages(feature.languageID, this.languageID)) {
+    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(feature.languageID, this.languageID)) {
       throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
         this.languageID.toString() + '" of a Lemma object.')
     }
@@ -9646,13 +9858,13 @@ class Lemma {
     // If parts of speech do not match this is not a full homonym
     // don't check if told to ignorePofs
     if (!ignorePofs &&
-      (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] ||
-      !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] ||
-      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part]))) {
+      (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part] ||
+      !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part] ||
+      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part]))) {
       return false
     }
 
-    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID)
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageModel(this.languageID)
     // Check if words are the same
     const areSameWords = normalize
       ? lm.compareWords(this.word, lemma.word, true,
@@ -9680,7 +9892,7 @@ class Lemma {
    * @returns {string} - A disambiguated word.
    */
   disambiguate (otherLemma) {
-    const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__.default.getLanguageModel(this.languageID)
+    const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageModel(this.languageID)
 
     // Check if words are the same
     const areSameWords = langModel.compareWords(this.word, otherLemma.word, true, { normalizeTrailingDigit: true })
@@ -9787,7 +9999,7 @@ class Lexeme {
       throw new Error('Lemma should not be empty.')
     }
 
-    if (!(lemma instanceof _lemma_js__WEBPACK_IMPORTED_MODULE_0__.default)) {
+    if (!(lemma instanceof _lemma_js__WEBPACK_IMPORTED_MODULE_0__["default"])) {
       throw new Error('Lemma should be of Lemma object type.')
     }
 
@@ -9800,12 +10012,12 @@ class Lexeme {
     }
 
     for (const inflection of inflections) {
-      if (!(inflection instanceof _inflection_js__WEBPACK_IMPORTED_MODULE_1__.default)) {
+      if (!(inflection instanceof _inflection_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
         throw new Error('All inflection data should be of Inflection object type.')
       }
     }
 
-    if (meaning !== null && !(meaning instanceof _definition_set_js__WEBPACK_IMPORTED_MODULE_3__.default)) {
+    if (meaning !== null && !(meaning instanceof _definition_set_js__WEBPACK_IMPORTED_MODULE_3__["default"])) {
       throw new Error('Meaning should be of DefinitionSet object type.')
     }
 
@@ -9813,7 +10025,7 @@ class Lexeme {
     this.altLemmas = []
     this.inflections = []
     this.addInflections(inflections)
-    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_3__.default(this.lemma.word, this.lemma.languageID)
+    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.lemma.word, this.lemma.languageID)
     this.disambiguated = false
     this.selectedInflection = null
   }
@@ -9847,7 +10059,7 @@ class Lexeme {
    */
   getGroupedSelectedInflection () {
     if (this.selectedInflection) {
-      const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(this.lemma.languageID)
+      const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__["default"].getLanguageModel(this.lemma.languageID)
       return lm.groupInflectionsForDisplay([this.selectedInflection])
     } else {
       return []
@@ -9926,10 +10138,10 @@ class Lexeme {
    * @returns {boolean} - true if two aforementioned lemmas are full homonyms, false otherwise.
    */
   isFullHomonym (otherLexeme, { normalize = false } = {}) {
-    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(this.lemma.languageID)
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__["default"].getLanguageModel(this.lemma.languageID)
     const normalizedPofs = lm.normalizePartOfSpeechValue(this)
     if (normalizedPofs === lm.normalizePartOfSpeechValue(otherLexeme)) {
-      const ignorePofs = Boolean(normalizedPofs !== this.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part])
+      const ignorePofs = Boolean(normalizedPofs !== this.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part])
       return this.lemma.isFullHomonym(otherLexeme.lemma, { normalize, ignorePofs })
     } else {
       return false
@@ -9951,7 +10163,7 @@ class Lexeme {
       - some additional information in a word (e.g. a trailing digit) that lemma has not;
       - at least one inflection.
     */
-    const hasExtraFeatures = disambiguator.inflections.length || _language_model_js__WEBPACK_IMPORTED_MODULE_5__.default.hasTrailingDigit(disambiguator.lemma.word)
+    const hasExtraFeatures = disambiguator.inflections.length || _language_model_js__WEBPACK_IMPORTED_MODULE_5__["default"].hasTrailingDigit(disambiguator.lemma.word)
     return this.isFullHomonym(disambiguator, { normalize: true }) && hasExtraFeatures
   }
 
@@ -9965,14 +10177,14 @@ class Lexeme {
    */
   static disambiguateInflections (lexeme, disambiguator) {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
-    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(lexeme.lemma.languageID)
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__["default"].getLanguageModel(lexeme.lemma.languageID)
     if (lexeme.canBeDisambiguatedWith(disambiguator)) {
       // iterate through this lexemes inflections and see if one is disambiguated
       // there should be only one that matches
       for (const inflection of newLexeme.inflections) {
         for (const disambiguatorInflection of disambiguator.inflections) {
           const normalizedPofs = lm.normalizePartOfSpeechValue(disambiguator)
-          const ignorePofs = Boolean(normalizedPofs !== disambiguator.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__.default.types.part])
+          const ignorePofs = Boolean(normalizedPofs !== disambiguator.lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part])
           const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, { ignorePofs })
           if (inflMatch.match) {
             if (inflMatch.exactMatch) {
@@ -10007,25 +10219,25 @@ class Lexeme {
   }
 
   getGroupedInflections () {
-    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__.default.getLanguageModel(this.lemma.languageID)
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_4__["default"].getLanguageModel(this.lemma.languageID)
     return lm.groupInflectionsForDisplay(this.inflections)
   }
 
   static readObject (jsonObject) {
-    const lemma = _lemma_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(jsonObject.lemma)
+    const lemma = _lemma_js__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(jsonObject.lemma)
     let inflections = [] // eslint-disable-line prefer-const
     for (const inflection of jsonObject.inflections) {
-      inflections.push(_inflection_js__WEBPACK_IMPORTED_MODULE_1__.default.readObject(inflection))
+      inflections.push(_inflection_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(inflection))
     }
 
     const lexeme = new Lexeme(lemma, inflections)
     if (jsonObject.meaning) {
-      lexeme.meaning = _definition_set_js__WEBPACK_IMPORTED_MODULE_3__.default.readObject(jsonObject.meaning)
+      lexeme.meaning = _definition_set_js__WEBPACK_IMPORTED_MODULE_3__["default"].readObject(jsonObject.meaning)
     }
 
     if (jsonObject.provider) {
-      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_6__.default.readObject(jsonObject.provider)
-      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_6__.default.getProxy(provider, lexeme)
+      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_6__["default"].readObject(jsonObject.provider)
+      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_6__["default"].getProxy(provider, lexeme)
     } else {
       return lexeme
     }
@@ -10360,7 +10572,7 @@ class OptionItem {
         // Options storage succeeded
       },
       (errorMessage) => {
-        _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().error(`Unexpected error resetting Alpheios option ${this.name}: ${errorMessage}`)
+        _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance().error(`Unexpected error resetting Alpheios option ${this.name}: ${errorMessage}`)
       }
     )
   }
@@ -10377,7 +10589,7 @@ class OptionItem {
         // Options storage succeeded
       },
       (errorMessage) => {
-        _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().error(`Unexpected error storing Alpheios option ${this.name}: ${errorMessage}`)
+        _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance().error(`Unexpected error storing Alpheios option ${this.name}: ${errorMessage}`)
       }
     )
   }
@@ -10446,11 +10658,11 @@ class Options {
         items[option] = []
         for (const [group, item] of Object.entries(value.group)) {
           const key = Options.constructKey(domain, version, option, group)
-          items[option].push(new _option_item_js__WEBPACK_IMPORTED_MODULE_1__.default(item, key, storageAdapter))
+          items[option].push(new _option_item_js__WEBPACK_IMPORTED_MODULE_1__["default"](item, key, storageAdapter))
         }
       } else {
         const key = Options.constructKey(domain, version, option)
-        items[option] = new _option_item_js__WEBPACK_IMPORTED_MODULE_1__.default(value, key, storageAdapter)
+        items[option] = new _option_item_js__WEBPACK_IMPORTED_MODULE_1__["default"](value, key, storageAdapter)
       }
     }
     return items
@@ -10487,7 +10699,7 @@ class Options {
                 try {
                   f.currentValue = JSON.parse(values[key])
                 } catch (e) {
-                  _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
+                  _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance().warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
                 }
               }
             })
@@ -10496,7 +10708,7 @@ class Options {
               this.items[parsedKey.name].currentValue = JSON.parse(values[key])
             } catch (e) {
               // invalid value
-              _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
+              _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance().warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
             }
           }
         }
@@ -10505,7 +10717,7 @@ class Options {
     } catch (error) {
       const message = `Unexpected error retrieving options for Alpheios from local storage: ${error}. Default values ` +
       'will be used instead'
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().error(message)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance().error(message)
     }
   }
 
@@ -10543,7 +10755,7 @@ class Options {
         group: group
       }
     } catch (e) {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().warn(`Failed to parse stored Alpheios options key ${key}`)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance().warn(`Failed to parse stored Alpheios options key ${key}`)
     }
     return parsed
   }
@@ -10623,7 +10835,7 @@ let typeFeaturesInitialized = false
 /**
  * @class  PersianLanguageModel is the lass for Persian specific behavior
  */
-class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.LANG_PERSIAN }
 
   static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_1__.STR_LANG_CODE_PER }
@@ -10814,7 +11026,7 @@ class PsEvent {
    * @param {string} [caller=''] - The name of the function that called `pub`.
    */
   pub (data = {}, caller = '') {
-    this._subscribers.forEach(l => l(data, new _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_1__.default(this, caller)))
+    this._subscribers.forEach(l => l(data, new _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_1__["default"](this, caller)))
   }
 
   /**
@@ -10933,7 +11145,7 @@ __webpack_require__.r(__webpack_exports__);
  * @property {symbol} status - A status of a current script (Active, Deactivated, Pending)
  * @property {panelStatus} panelStatus
  */
-class TabScript extends _ui_state_api_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class TabScript extends _ui_state_api_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor (tabObj) {
     super()
     this.tabID = tabObj ? tabObj.uniqueId : undefined
@@ -10948,7 +11160,7 @@ class TabScript extends _ui_state_api_js__WEBPACK_IMPORTED_MODULE_0__.default {
   }
 
   updateTabObject (tabId, windowId) {
-    this.tabObj = new _tab_js__WEBPACK_IMPORTED_MODULE_1__.default(tabId, windowId)
+    this.tabObj = new _tab_js__WEBPACK_IMPORTED_MODULE_1__["default"](tabId, windowId)
     this.tabID = this.tabObj.uniqueId
     return this
   }
@@ -11318,7 +11530,7 @@ class TabScript extends _ui_state_api_js__WEBPACK_IMPORTED_MODULE_0__.default {
   }
 
   static readObject (jsonObject) {
-    const tabObj = (jsonObject.tabObj && jsonObject.tabObj.tabId && jsonObject.tabObj.windowId) ? new _tab_js__WEBPACK_IMPORTED_MODULE_1__.default(jsonObject.tabObj.tabId, jsonObject.tabObj.windowId, jsonObject.tabObj.status) : undefined
+    const tabObj = (jsonObject.tabObj && jsonObject.tabObj.tabId && jsonObject.tabObj.windowId) ? new _tab_js__WEBPACK_IMPORTED_MODULE_1__["default"](jsonObject.tabObj.tabId, jsonObject.tabObj.windowId, jsonObject.tabObj.status) : undefined
     let tabScript = new TabScript(tabObj) // eslint-disable-line prefer-const
 
     for (const prop of TabScript.symbolProps) {
@@ -11564,7 +11776,7 @@ class DefaultsLoader {
     try {
       return JSON.parse(jsonString)
     } catch (err) {
-      _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().error('Unable to parse Alpheios JSON options string:', err)
+      _logging_logger_js__WEBPACK_IMPORTED_MODULE_0__["default"].getInstance().error('Unable to parse Alpheios JSON options string:', err)
       return {}
     }
   }
@@ -11591,7 +11803,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * An implementation of a StorageAdapter interface for an extension synchronized storage.
  */
-class ExtensionSyncStorage extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class ExtensionSyncStorage extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   /**
    * A wrapper around a `browser.storage.sync.set()` of webextension.
    * It allows to store one or several key-value pairs to local storage.
@@ -11645,7 +11857,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * An implementation of a StorageAdapter interface for a local storage.
  */
-class LocalStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class LocalStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   /**
    * A wrapper around a local storage `setItem()` function.
    * It allows to store one or several key-value pairs to local storage.
@@ -11818,9 +12030,8 @@ __webpack_require__.r(__webpack_exports__);
  *                        accessToken: JWT token identying user and granting
  *                                     access to the settings api
  *                      }
- *
  */
-class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor (domain = 'alpheios-storage-domain', auth = null) {
     super(domain)
     if (!auth ||
@@ -11884,7 +12095,7 @@ class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE
    */
   async clearAll () {
     const url = `${this.baseURL}?domain=${this.domain}`
-    const result = await axios__WEBPACK_IMPORTED_MODULE_1___default().delete(url, this.requestContext)
+    const result = await axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"](url, this.requestContext)
     if (result.status !== 200) {
       throw new Error(`Unexpected result status from settings api: ${result.status}`)
     }
@@ -11989,7 +12200,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * An implementation of a StorageAdapter interface for temporary storage
  */
-class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   /**
    * A wrapper around a local storage `setItem()` function.
    * It allows to store one or several key-value pairs to local storage.
@@ -12050,7 +12261,7 @@ let typeFeaturesInitialized = false
 /**
  * @class  GezLanguageModel is the lass for Ge'ez specific behavior
  */
-class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_SYRIAC }
 
   static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.STR_LANG_CODE_SYR }
@@ -12066,9 +12277,9 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
   static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__.LANG_UNIT_WORD }
   static get featureValues () {
     return new Map([
-      ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__.default.featureValues,
+      ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"].featureValues,
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part,
         [
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB,
           _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERBIAL,
@@ -12091,11 +12302,11 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.kaylo,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.kaylo,
         []
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.state,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.state,
         []
       ]
     ])
@@ -12154,8 +12365,8 @@ for the current node
 
     // group inflections by part of speech
     for (const infl of aggregated) {
-      const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__.default(infl,
-        [_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.kaylo, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.state, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.comparison],
+      const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl,
+        [_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.kaylo, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.state, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.comparison],
         {
           prefix: infl.prefix,
           suffix: infl.suffix,
@@ -12166,7 +12377,7 @@ for the current node
       if (grouped.has(groupingKeyStr)) {
         grouped.get(groupingKeyStr).append(infl)
       } else {
-        grouped.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__.default(groupingKey, [infl]))
+        grouped.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__["default"](groupingKey, [infl]))
       }
     }
 
@@ -12176,30 +12387,30 @@ for the current node
       for (const infl of kv[1].inflections) {
         let keyprop
         let isCaseInflectionSet = false
-        if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase]) {
+        if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase]) {
           // grouping on number if case is defined
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.number
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.number
           isCaseInflectionSet = true
-        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense]) {
+        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.tense]) {
           // grouping on tense if tense is defined but not case
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense
-        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB) {
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.tense
+        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_VERB) {
           // grouping on no case or tense but a verb
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part
-        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB) {
-          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.part
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part
+        } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part] === _constants_js__WEBPACK_IMPORTED_MODULE_2__.POFS_ADVERB) {
+          keyprop = _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part
           // grouping on adverbs without case or tense
         } else {
           keyprop = 'misc'
           // grouping on adverbs without case or tense
           // everything else
         }
-        const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__.default(infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
+        const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
         const groupingKeyStr = groupingKey.toString()
         if (inflgrp.has(groupingKeyStr)) {
           inflgrp.get(groupingKeyStr).append(infl)
         } else {
-          inflgrp.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__.default(groupingKey, [infl]))
+          inflgrp.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__["default"](groupingKey, [infl]))
         }
       }
       // inflgrp is now a map of groups of inflections grouped by
@@ -12213,13 +12424,13 @@ for the current node
         const nextGroup = new Map()
         const sortOrder = new Map()
         for (const infl of kv[1].inflections) {
-          const sortkey = infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase] ? Math.max(infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase].items.map(f => f.sortOrder)) : 1
-          const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__.default(infl, [_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.voice])
+          const sortkey = infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase] ? Math.max(infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase].items.map(f => f.sortOrder)) : 1
+          const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl, [_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.voice])
           const groupingKeyStr = groupingKey.toString()
           if (nextGroup.has(groupingKeyStr)) {
             nextGroup.get(groupingKeyStr).append(infl)
           } else {
-            nextGroup.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__.default(groupingKey, [infl], sortkey))
+            nextGroup.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__["default"](groupingKey, [infl], sortkey))
             sortOrder.set(groupingKeyStr, sortkey)
           }
         }
@@ -12244,14 +12455,14 @@ for the current node
           const nextGroup = new Map()
           for (const infl of group.inflections) {
             // set key is case comp gend pers mood sort
-            const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__.default(infl,
-              [_feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.comparison, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.gender, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.number, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.person,
-                _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_1__.default.types.voice])
+            const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl,
+              [_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.comparison, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.gender, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.number, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.person,
+                _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.voice])
             const groupingKeyStr = groupingKey.toString()
             if (nextGroup.has(groupingKeyStr)) {
               nextGroup.get(groupingKeyStr).append(infl)
             } else {
-              nextGroup.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__.default(groupingKey, [infl]))
+              nextGroup.set(groupingKeyStr, new _inflection_group__WEBPACK_IMPORTED_MODULE_4__["default"](groupingKey, [infl]))
             }
           }
           group.inflections = Array.from(nextGroup.values()) // now a group of inflection groups
@@ -12443,7 +12654,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor (language, targetWord, prefix, suffix, source, cit) {
     super(language, targetWord)
     this.prefix = prefix
@@ -12519,13 +12730,13 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
   }
 
   get prefixForSort () {
-    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModelFromCode(this.languageCode)
+    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModelFromCode(this.languageCode)
     const clearPrefix = this.prefix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), ' ').toUpperCase().split(' ').filter(item => item.length > 0)
     return clearPrefix[clearPrefix.length - 1]
   }
 
   get suffixForSort () {
-    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__.default.getLanguageModelFromCode(this.languageCode)
+    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModelFromCode(this.languageCode)
     return this.suffix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), '').toUpperCase()
   }
 }
@@ -12574,7 +12785,7 @@ class Translation {
     const curTranslations = translationsList.find(function (element) { return element.in === lemma.word })
     const translation = new Translation(lemma, languageCode, curTranslations.translations)
     if (provider) {
-      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__.default.getProxy(provider, translation)
+      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__["default"].getProxy(provider, translation)
     } else {
       return translation
     }
@@ -12600,8 +12811,8 @@ class Translation {
   static readObject (jsonObject, lemma) {
     const translation = new Translation(lemma, jsonObject.languageCode, jsonObject.translations)
     if (jsonObject.provider) {
-      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(jsonObject.provider)
-      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__.default.getProxy(provider, translation)
+      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(jsonObject.provider)
+      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__["default"].getProxy(provider, translation)
     } else {
       return translation
     }
@@ -12955,7 +13166,7 @@ class WordItem {
    * @param jsonObject
    */
   static readHomonym (jsonObject) {
-    return _homonym_js__WEBPACK_IMPORTED_MODULE_0__.default.readObject(jsonObject.homonym)
+    return _homonym_js__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(jsonObject.homonym)
   }
 
   get hasTextQuoteSelectors () {
@@ -12970,7 +13181,7 @@ class WordItem {
   static readContext (jsonObject) {
     let tqs = [] // eslint-disable-line prefer-const
     for (const jsonObj of jsonObject) {
-      const tq = _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_1__.default.readObject(jsonObj)
+      const tq = _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(jsonObj)
       tqs.push(tq)
     }
     return tqs
@@ -13136,7 +13347,7 @@ class WordList {
   getWordItem (targetWord, create = true, eventWordItemUpdated = null) {
     const key = this._makeItemKey(this.languageCode, targetWord)
     if (create && !this.items[key]) {
-      const wordItem = new _word_item__WEBPACK_IMPORTED_MODULE_0__.default({ targetWord: targetWord, languageCode: this.languageCode })
+      const wordItem = new _word_item__WEBPACK_IMPORTED_MODULE_0__["default"]({ targetWord: targetWord, languageCode: this.languageCode })
       if (eventWordItemUpdated) {
         eventWordItemUpdated.pub({ dataObj: wordItem, params: { segment: 'common' } })
       }
@@ -13166,7 +13377,7 @@ class WordList {
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("assert");;
+module.exports = require("assert");
 
 /***/ }),
 
@@ -13177,18 +13388,7 @@ module.exports = require("assert");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("crypto");;
-
-/***/ }),
-
-/***/ "fs":
-/*!*********************!*\
-  !*** external "fs" ***!
-  \*********************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs");;
+module.exports = require("crypto");
 
 /***/ }),
 
@@ -13199,7 +13399,7 @@ module.exports = require("fs");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("http");;
+module.exports = require("http");
 
 /***/ }),
 
@@ -13210,18 +13410,18 @@ module.exports = require("http");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("https");;
+module.exports = require("https");
 
 /***/ }),
 
-/***/ "net":
-/*!**********************!*\
-  !*** external "net" ***!
-  \**********************/
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("net");;
+module.exports = require("os");
 
 /***/ }),
 
@@ -13232,7 +13432,7 @@ module.exports = require("net");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("stream");;
+module.exports = require("stream");
 
 /***/ }),
 
@@ -13243,7 +13443,7 @@ module.exports = require("stream");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("tty");;
+module.exports = require("tty");
 
 /***/ }),
 
@@ -13254,7 +13454,7 @@ module.exports = require("tty");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("url");;
+module.exports = require("url");
 
 /***/ }),
 
@@ -13265,7 +13465,7 @@ module.exports = require("url");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("util");;
+module.exports = require("util");
 
 /***/ }),
 
@@ -13276,7 +13476,18 @@ module.exports = require("util");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("zlib");;
+module.exports = require("zlib");
+
+/***/ }),
+
+/***/ "../../../node_modules/axios/package.json":
+/*!************************************************!*\
+  !*** ../../../node_modules/axios/package.json ***!
+  \************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"Promise based HTTP client for the browser and node.js","main":"index.js","scripts":{"test":"grunt test","start":"node ./sandbox/server.js","build":"NODE_ENV=production grunt build","preversion":"npm test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json","postversion":"git push && git push --tags","examples":"node ./examples/server.js","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","fix":"eslint --fix lib/**/*.js"},"repository":{"type":"git","url":"https://github.com/axios/axios.git"},"keywords":["xhr","http","ajax","promise","node"],"author":"Matt Zabriskie","license":"MIT","bugs":{"url":"https://github.com/axios/axios/issues"},"homepage":"https://axios-http.com","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"jsdelivr":"dist/axios.min.js","unpkg":"dist/axios.min.js","typings":"./index.d.ts","dependencies":{"follow-redirects":"^1.14.0"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}]}');
 
 /***/ })
 
@@ -13288,8 +13499,9 @@ module.exports = require("zlib");;
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -13347,10 +13559,162 @@ module.exports = require("zlib");;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__("./driver.js");
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!*******************!*\
+  !*** ./driver.js ***!
+  \*******************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ArabicLanguageModel": () => (/* reexport safe */ _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_16__["default"]),
+/* harmony export */   "Author": () => (/* reexport safe */ _texts_author_js__WEBPACK_IMPORTED_MODULE_27__["default"]),
+/* harmony export */   "ChineseLanguageModel": () => (/* reexport safe */ _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_19__["default"]),
+/* harmony export */   "Collection": () => (/* reexport safe */ _dts_collection_js__WEBPACK_IMPORTED_MODULE_39__["default"]),
+/* harmony export */   "Constants": () => (/* reexport module object */ _constants_js__WEBPACK_IMPORTED_MODULE_0__),
+/* harmony export */   "DefaultsLoader": () => (/* reexport safe */ _storages_defaults_loader_js__WEBPACK_IMPORTED_MODULE_34__["default"]),
+/* harmony export */   "Definition": () => (/* reexport safe */ _definition_js__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "DefinitionSet": () => (/* reexport safe */ _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "ExtensionSyncStorage": () => (/* reexport safe */ _storages_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_35__["default"]),
+/* harmony export */   "Feature": () => (/* reexport safe */ _feature_js__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "FeatureImporter": () => (/* reexport safe */ _feature_importer_js__WEBPACK_IMPORTED_MODULE_7__["default"]),
+/* harmony export */   "FeatureList": () => (/* reexport safe */ _feature_list_js__WEBPACK_IMPORTED_MODULE_6__["default"]),
+/* harmony export */   "FeatureType": () => (/* reexport safe */ _feature_type_js__WEBPACK_IMPORTED_MODULE_5__["default"]),
+/* harmony export */   "GeezLanguageModel": () => (/* reexport safe */ _geez_language_model_js__WEBPACK_IMPORTED_MODULE_18__["default"]),
+/* harmony export */   "GreekLanguageModel": () => (/* reexport safe */ _greek_language_model_js__WEBPACK_IMPORTED_MODULE_15__["default"]),
+/* harmony export */   "GrmFeature": () => (/* reexport safe */ _grm_feature_js__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "Homonym": () => (/* reexport safe */ _homonym_js__WEBPACK_IMPORTED_MODULE_10__["default"]),
+/* harmony export */   "HomonymGroup": () => (/* reexport safe */ _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__["default"]),
+/* harmony export */   "Inflection": () => (/* reexport safe */ _inflection_js__WEBPACK_IMPORTED_MODULE_13__["default"]),
+/* harmony export */   "LanguageModelFactory": () => (/* reexport safe */ _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__["default"]),
+/* harmony export */   "LatinLanguageModel": () => (/* reexport safe */ _latin_language_model_js__WEBPACK_IMPORTED_MODULE_14__["default"]),
+/* harmony export */   "Lemma": () => (/* reexport safe */ _lemma_js__WEBPACK_IMPORTED_MODULE_12__["default"]),
+/* harmony export */   "Lexeme": () => (/* reexport safe */ _lexeme_js__WEBPACK_IMPORTED_MODULE_11__["default"]),
+/* harmony export */   "LocalStorageArea": () => (/* reexport safe */ _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_36__["default"]),
+/* harmony export */   "Logger": () => (/* reexport safe */ _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__["default"]),
+/* harmony export */   "Options": () => (/* reexport safe */ _options_options_js__WEBPACK_IMPORTED_MODULE_33__["default"]),
+/* harmony export */   "PersianLanguageModel": () => (/* reexport safe */ _persian_language_model_js__WEBPACK_IMPORTED_MODULE_17__["default"]),
+/* harmony export */   "PsEvent": () => (/* reexport safe */ _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_22__["default"]),
+/* harmony export */   "PsEventData": () => (/* reexport safe */ _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_23__["default"]),
+/* harmony export */   "RemoteAuthStorageArea": () => (/* reexport safe */ _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_37__["default"]),
+/* harmony export */   "Resource": () => (/* reexport safe */ _dts_resource_js__WEBPACK_IMPORTED_MODULE_40__["default"]),
+/* harmony export */   "ResourceProvider": () => (/* reexport safe */ _resource_provider_js__WEBPACK_IMPORTED_MODULE_21__["default"]),
+/* harmony export */   "SyriacLanguageModel": () => (/* reexport safe */ _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_20__["default"]),
+/* harmony export */   "Tab": () => (/* reexport safe */ _state_tab_js__WEBPACK_IMPORTED_MODULE_41__["default"]),
+/* harmony export */   "TabScript": () => (/* reexport safe */ _state_tab_script_js__WEBPACK_IMPORTED_MODULE_42__["default"]),
+/* harmony export */   "TempStorageArea": () => (/* reexport safe */ _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_38__["default"]),
+/* harmony export */   "TextQuoteSelector": () => (/* reexport safe */ _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_25__["default"]),
+/* harmony export */   "TextWork": () => (/* reexport safe */ _texts_text_work_js__WEBPACK_IMPORTED_MODULE_28__["default"]),
+/* harmony export */   "Translation": () => (/* reexport safe */ _translation_js__WEBPACK_IMPORTED_MODULE_24__["default"]),
+/* harmony export */   "TreebankDataItem": () => (/* reexport safe */ _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__["default"]),
+/* harmony export */   "UIStateAPI": () => (/* reexport safe */ _state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_43__["default"]),
+/* harmony export */   "WordItem": () => (/* reexport safe */ _word_item_js__WEBPACK_IMPORTED_MODULE_29__["default"]),
+/* harmony export */   "WordList": () => (/* reexport safe */ _word_list_js__WEBPACK_IMPORTED_MODULE_30__["default"]),
+/* harmony export */   "WordUsageExample": () => (/* reexport safe */ _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_26__["default"])
+/* harmony export */ });
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _definition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./definition.js */ "./definition.js");
+/* harmony import */ var _definition_set__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./definition-set */ "./definition-set.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _grm_feature_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./grm-feature.js */ "./grm-feature.js");
+/* harmony import */ var _feature_type_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./feature_type.js */ "./feature_type.js");
+/* harmony import */ var _feature_list_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./feature_list.js */ "./feature_list.js");
+/* harmony import */ var _feature_importer_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./feature_importer.js */ "./feature_importer.js");
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+/* harmony import */ var _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./homonym-group.js */ "./homonym-group.js");
+/* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
+/* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
+/* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
+/* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
+/* harmony import */ var _latin_language_model_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./latin_language_model.js */ "./latin_language_model.js");
+/* harmony import */ var _greek_language_model_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./greek_language_model.js */ "./greek_language_model.js");
+/* harmony import */ var _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./arabic_language_model.js */ "./arabic_language_model.js");
+/* harmony import */ var _persian_language_model_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./persian_language_model.js */ "./persian_language_model.js");
+/* harmony import */ var _geez_language_model_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./geez_language_model.js */ "./geez_language_model.js");
+/* harmony import */ var _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./chinese_language_model.js */ "./chinese_language_model.js");
+/* harmony import */ var _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./syriac_language_model.js */ "./syriac_language_model.js");
+/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+/* harmony import */ var _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ps-events/ps-event.js */ "./ps-events/ps-event.js");
+/* harmony import */ var _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
+/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
+/* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
+/* harmony import */ var _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./texts/word-usage-example.js */ "./texts/word-usage-example.js");
+/* harmony import */ var _texts_author_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./texts/author.js */ "./texts/author.js");
+/* harmony import */ var _texts_text_work_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./texts/text-work.js */ "./texts/text-work.js");
+/* harmony import */ var _word_item_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./word-item.js */ "./word-item.js");
+/* harmony import */ var _word_list_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./word-list.js */ "./word-list.js");
+/* harmony import */ var _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./treebank_data_item.js */ "./treebank_data_item.js");
+/* harmony import */ var _logging_logger_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./logging/logger.js */ "./logging/logger.js");
+/* harmony import */ var _options_options_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./options/options.js */ "./options/options.js");
+/* harmony import */ var _storages_defaults_loader_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./storages/defaults-loader.js */ "./storages/defaults-loader.js");
+/* harmony import */ var _storages_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./storages/extension-sync-storage.js */ "./storages/extension-sync-storage.js");
+/* harmony import */ var _storages_local_storage_area_js__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./storages/local-storage-area.js */ "./storages/local-storage-area.js");
+/* harmony import */ var _storages_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./storages/remote-auth-storage-area.js */ "./storages/remote-auth-storage-area.js");
+/* harmony import */ var _storages_temp_storage_area_js__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./storages/temp-storage-area.js */ "./storages/temp-storage-area.js");
+/* harmony import */ var _dts_collection_js__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./dts/collection.js */ "./dts/collection.js");
+/* harmony import */ var _dts_resource_js__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./dts/resource.js */ "./dts/resource.js");
+/* harmony import */ var _state_tab_js__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./state/tab.js */ "./state/tab.js");
+/* harmony import */ var _state_tab_script_js__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./state/tab-script.js */ "./state/tab-script.js");
+/* harmony import */ var _state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./state/ui-state-api.js */ "./state/ui-state-api.js");
+
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+})();
+
+/******/ 	return __webpack_exports__;
 /******/ })()
 ;
 });

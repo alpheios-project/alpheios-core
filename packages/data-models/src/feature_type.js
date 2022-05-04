@@ -180,9 +180,8 @@ class FeatureType {
    * It means that genders.masculine and genders.feminine belong to the same group. They will have the same index
    * and will be stored inside an _orderIndex as an array. genders.masculine and genders.feminine will be grouped together
    * during filtering and will be in the same bin during sorting.
-   *
    */
-  set order (values) {
+  set order (values) { // eslint-disable-line accessor-pairs
     if (!values || (Array.isArray(values) && values.length === 0)) {
       throw new Error('A non-empty list of values should be provided.')
     }
@@ -195,7 +194,7 @@ class FeatureType {
     for (const value of values) {
       if (Array.isArray(value)) {
         for (const element of value) {
-          if (!this.hasOwnProperty(element.value)) {
+          if (!this.hasOwnProperty(element.value)) { // eslint-disable-line no-prototype-builtins
             throw new Error('Trying to order an element with "' + element.value + '" value that is not stored in a "' + this.type + '" type.')
           }
 
@@ -208,7 +207,7 @@ class FeatureType {
           }
         }
       } else {
-        if (!this.hasOwnProperty(value.value)) {
+        if (!this.hasOwnProperty(value.value)) { // eslint-disable-line no-prototype-builtins
           throw new Error('Trying to order an element with "' + value.value + '" value that is not stored in a "' + this.type + '" type.')
         }
 

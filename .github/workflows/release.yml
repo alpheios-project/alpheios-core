@@ -13,7 +13,10 @@ jobs:
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '14'
-        
+
+    - name: Fix up git URLs
+      run: echo -e '[url "https://github.com/"]\n  insteadOf = "git://github.com/"' >> ~/.gitconfig
+
     - name: prepare for tests
       run: npm run set-node-build-deps && npm run bootstrap
 
@@ -27,7 +30,10 @@ jobs:
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '14'
-        
+
+    - name: Fix up git URLs
+      run: echo -e '[url "https://github.com/"]\n  insteadOf = "git://github.com/"' >> ~/.gitconfig
+
     - name: prepare for tests
       run: npm run set-node-build-deps && npm run bootstrap
 
@@ -41,7 +47,10 @@ jobs:
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '14'
-        
+
+    - name: Fix up git URLs
+      run: echo -e '[url "https://github.com/"]\n  insteadOf = "git://github.com/"' >> ~/.gitconfig
+
     - name: prepare for tests
       run: npm run set-node-build-deps && npm run bootstrap
 
@@ -55,7 +64,10 @@ jobs:
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '14'
-        
+
+    - name: Fix up git URLs
+      run: echo -e '[url "https://github.com/"]\n  insteadOf = "git://github.com/"' >> ~/.gitconfig
+
     - name: prepare for tests
       run: npm run set-node-build-deps && npm run bootstrap
 
@@ -69,7 +81,10 @@ jobs:
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '14'
-        
+
+    - name: Fix up git URLs
+      run: echo -e '[url "https://github.com/"]\n  insteadOf = "git://github.com/"' >> ~/.gitconfig
+
     - name: prepare for tests
       run: npm run set-node-build-deps && npm run bootstrap
 
@@ -83,7 +98,10 @@ jobs:
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '14'
-        
+
+    - name: Fix up git URLs
+      run: echo -e '[url "https://github.com/"]\n  insteadOf = "git://github.com/"' >> ~/.gitconfig
+
     - name: prepare for tests
       run: npm run set-node-build-deps && npm run bootstrap
 
@@ -113,7 +131,10 @@ jobs:
     - uses: actions/setup-node@v2-beta
       with:
         node-version: '14'
-        
+
+    - name: Fix up git URLs
+      run: echo -e '[url "https://github.com/"]\n  insteadOf = "git://github.com/"' >> ~/.gitconfig
+      
     - name: prepare for build
       run: npm run set-node-build-deps && npm run bootstrap
 
@@ -130,7 +151,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
 
     - name: revert package.json
-      run: git checkout -- package.json && git checkout -- package-lock.json
+      run: git checkout -- package.json
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1

@@ -190,7 +190,7 @@ export default class LatinLanguageModel extends LanguageModel {
    *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
-   **/
+   */
   static normalizePartOfSpeechValue (lexeme) {
     if (lexeme.lemma.features[Feature.types.part]) {
       // Alpheios currently follows Whitaker for Latin and normalizes  exclamation
@@ -227,7 +227,7 @@ export default class LatinLanguageModel extends LanguageModel {
       suffixBased: false,
       pronounClassRequired: false
     }
-    if (inflection.hasOwnProperty(Feature.types.part)) {
+    if (inflection.hasOwnProperty(Feature.types.part)) { // eslint-disable-line no-prototype-builtins
       if ([Constants.POFS_VERB, Constants.POFS_VERB_PARTICIPLE, Constants.POFS_SUPINE, Constants.POFS_GERUNDIVE].includes(inflection[Feature.types.part].value)) {
         grammar.fullFormBased = true
         grammar.suffixBased = true

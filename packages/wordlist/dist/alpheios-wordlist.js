@@ -7,20 +7,9 @@
 		var a = typeof exports === 'object' ? factory(require("alpheios-data-models")) : factory(root["alpheios-data-models"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(self, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) {
+})(self, (__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "../../../node_modules/axios/package.json":
-/*!************************************************!*\
-  !*** ../../../node_modules/axios/package.json ***!
-  \************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse("{\"_from\":\"axios@^0.21.0\",\"_id\":\"axios@0.21.4\",\"_inBundle\":false,\"_integrity\":\"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.21.0\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.21.0\",\"saveSpec\":null,\"fetchSpec\":\"^0.21.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz\",\"_shasum\":\"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575\",\"_spec\":\"axios@^0.21.0\",\"_where\":\"C:\\\\_Alpheios\\\\alpheios-core\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.14.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.3.0\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^23.0.0\",\"grunt-karma\":\"^4.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^4.0.2\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^6.3.2\",\"karma-chrome-launcher\":\"^3.1.0\",\"karma-firefox-launcher\":\"^2.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^4.3.6\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.8\",\"karma-webpack\":\"^4.0.2\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^8.2.1\",\"sinon\":\"^4.5.0\",\"terser-webpack-plugin\":\"^4.2.3\",\"typescript\":\"^4.0.5\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^4.44.2\",\"webpack-dev-server\":\"^3.11.0\"},\"homepage\":\"https://axios-http.com\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.4\"}");
-
-/***/ }),
 
 /***/ "../../../node_modules/axios/index.js":
 /*!********************************************!*\
@@ -294,7 +283,7 @@ axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "../../..
 module.exports = axios;
 
 // Allow use of default import syntax in TypeScript
-module.exports.default = axios;
+module.exports["default"] = axios;
 
 
 /***/ }),
@@ -2170,7 +2159,7 @@ class UserDataManager {
    */
   _localStorageAdapter(dataType) {
     let dbDriver = new UserDataManager.LOCAL_DRIVER_CLASSES[dataType](this.auth.userId)
-    return new _wordlist_storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__.default(dbDriver)
+    return new _wordlist_storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__["default"](dbDriver)
   }
 
   /**
@@ -2180,7 +2169,7 @@ class UserDataManager {
    */
   _remoteStorageAdapter(dataType) {
     let dbDriver = new UserDataManager.REMOTE_DRIVER_CLASSES[dataType](this.auth)
-    return new _wordlist_storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_4__.default(dbDriver)
+    return new _wordlist_storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_4__["default"](dbDriver)
   }
 
   /**
@@ -2482,10 +2471,10 @@ class UserDataManager {
 
 // Constants (could be done better, dynamically, etc.)
 UserDataManager.LOCAL_DRIVER_CLASSES = {
-  WordItem: _wordlist_storage_worditem_indexeddb_driver_js__WEBPACK_IMPORTED_MODULE_1__.default
+  WordItem: _wordlist_storage_worditem_indexeddb_driver_js__WEBPACK_IMPORTED_MODULE_1__["default"]
 }
 UserDataManager.REMOTE_DRIVER_CLASSES = {
-  WordItem: _wordlist_storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_2__.default
+  WordItem: _wordlist_storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_2__["default"]
 }
 
 
@@ -2638,7 +2627,7 @@ class WordlistController {
     if (wordList) {
       wordItem = wordList.getWordItem(targetWord, create, WordlistController.evt.WORDITEM_UPDATED)
       if (create) {
-        wordItem.createdDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+        wordItem.createdDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       }
     }
     if (!wordItem) {
@@ -2658,7 +2647,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
     wordItem.currentSession = true
-    wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+    wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     wordItem.frequency = wordItem.frequency ? wordItem.frequency + 1 : 1
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
@@ -2691,7 +2680,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.homonym.languageID),data.homonym.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
-      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       wordItem.homonym = data.homonym
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -2726,7 +2715,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
-      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       wordItem.homonym = data
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -2761,7 +2750,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(data.languageCode, data.normalizedText, true)
     if (wordItem) {
       wordItem.currentSession = true
-      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       wordItem.addContext([data])
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'context'}})
       // emit a wordlist updated event too in case the wordlist was updated
@@ -2783,7 +2772,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(languageCode, targetWord,false)
     if (wordItem) {
       wordItem.important = important
-      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     } else {
       alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.Logger.getInstance().error("Alpheios error: unexpected error updating user word list: request to set important flag on non-existent item")
@@ -2800,7 +2789,7 @@ class WordlistController {
     let wordList = this.getWordList(languageCode, false)
     wordList.values.forEach(wordItem => {
       wordItem.important = important
-      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     })
   }
@@ -2880,28 +2869,6 @@ WordlistController.evt = {
   WORDITEM_DELETED: new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.PsEvent('WordItem deleted', WordlistController)
 
 }
-
-
-/***/ }),
-
-/***/ "./index.js":
-/*!******************!*\
-  !*** ./index.js ***!
-  \******************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "WordlistController": () => (/* reexport safe */ _wordlist_controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_0__.default),
-/* harmony export */   "UserDataManager": () => (/* reexport safe */ _wordlist_controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_1__.default)
-/* harmony export */ });
-/* harmony import */ var _wordlist_controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordlist/controllers/wordlist-controller.js */ "./controllers/wordlist-controller.js");
-/* harmony import */ var _wordlist_controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/controllers/user-data-manager.js */ "./controllers/user-data-manager.js");
-
-
-
-
 
 
 /***/ }),
@@ -3652,7 +3619,7 @@ class RemoteDBAdapter {
   async deleteOne(data) {
     try {
       let url = this.dbDriver.storageMap.deleteOne.url(data)
-      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default().delete(url, this.dbDriver.requestsParams)
+      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](url, this.dbDriver.requestsParams)
       let updated = this.dbDriver.storageMap.deleteOne.checkResult(result)
       return updated
     } catch (error) {
@@ -3673,7 +3640,7 @@ class RemoteDBAdapter {
     try {
       let url = this.dbDriver.storageMap.deleteMany.url(data)
 
-      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default().delete(url, this.dbDriver.requestsParams)
+      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](url, this.dbDriver.requestsParams)
       let updated = this.dbDriver.storageMap.deleteMany.checkResult(result)
       return updated
     } catch (error) {
@@ -3753,9 +3720,9 @@ class WordItemIndexedDbDriver {
         sync: true,
         objectStoreData: {
           name: 'WordListsCommon',
-          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__.default.WordListsCommon
+          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsCommon
         },
-        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__.default.loadBaseObject,
+        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadBaseObject,
         serialize: this._serializeCommon.bind(this),
         delete: this._segmentSelectQueryByID.bind(this),
         select: this._segmentSelectQueryByID.bind(this)
@@ -3765,10 +3732,10 @@ class WordItemIndexedDbDriver {
         sync: true,
         objectStoreData: {
           name: 'WordListsContext',
-          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__.default.WordListsContext
+          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsContext
         },
         serialize: this._serializeContext.bind(this),
-        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__.default.loadContext,
+        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadContext,
         delete: this._segmentSelectQueryByWordItemID.bind(this),
         select: this._segmentSelectQueryByWordItemID.bind(this)
       },
@@ -3777,10 +3744,10 @@ class WordItemIndexedDbDriver {
         sync: true,
         objectStoreData: {
           name: 'WordListsHomonym',
-          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__.default.WordListsHomonym
+          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsHomonym
         },
         serialize: this._serializeHomonym.bind(this),
-        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__.default.loadHomonym,
+        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadHomonym,
         delete: this._segmentSelectQueryByID.bind(this),
         select: this._segmentSelectQueryByID.bind(this)
       },
@@ -3788,10 +3755,10 @@ class WordItemIndexedDbDriver {
         type: 'segment',
         objectStoreData: {
           name: 'WordListsFullHomonym',
-          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__.default.WordListsFullHomonym
+          structure: _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsFullHomonym
         },
         serialize: this._serializeHomonymWithFullDefs.bind(this),
-        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__.default.loadHomonym,
+        load: _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadHomonym,
         delete: this._segmentSelectQueryByID.bind(this),
         select: this._segmentSelectQueryByID.bind(this)
       }
@@ -4044,7 +4011,7 @@ class WordItemIndexedDbDriver {
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
-      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__.default.currentDate,
+      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate,
       updatedDT: wordItem.updatedDT,
       frequency: wordItem.frequency
     }]
@@ -4363,7 +4330,7 @@ class WordItemRemoteDbDriver {
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
-      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate,
+      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
       updatedDT: wordItem.updatedDT,
       frequency: wordItem.frequency
     }
@@ -4438,7 +4405,7 @@ class WordItemRemoteDbDriver {
       },
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
-      createdDT: _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__.default.currentDate
+      createdDT: _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     }
   }
 
@@ -4512,6 +4479,17 @@ class WordItemRemoteDbDriver {
 "use strict";
 module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 
+/***/ }),
+
+/***/ "../../../node_modules/axios/package.json":
+/*!************************************************!*\
+  !*** ../../../node_modules/axios/package.json ***!
+  \************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"Promise based HTTP client for the browser and node.js","main":"index.js","scripts":{"test":"grunt test","start":"node ./sandbox/server.js","build":"NODE_ENV=production grunt build","preversion":"npm test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json","postversion":"git push && git push --tags","examples":"node ./examples/server.js","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","fix":"eslint --fix lib/**/*.js"},"repository":{"type":"git","url":"https://github.com/axios/axios.git"},"keywords":["xhr","http","ajax","promise","node"],"author":"Matt Zabriskie","license":"MIT","bugs":{"url":"https://github.com/axios/axios/issues"},"homepage":"https://axios-http.com","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"jsdelivr":"dist/axios.min.js","unpkg":"dist/axios.min.js","typings":"./index.d.ts","dependencies":{"follow-redirects":"^1.14.0"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}]}');
+
 /***/ })
 
 /******/ 	});
@@ -4522,8 +4500,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -4581,10 +4560,28 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__("./index.js");
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!******************!*\
+  !*** ./index.js ***!
+  \******************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "UserDataManager": () => (/* reexport safe */ _wordlist_controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "WordlistController": () => (/* reexport safe */ _wordlist_controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _wordlist_controllers_wordlist_controller_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordlist/controllers/wordlist-controller.js */ "./controllers/wordlist-controller.js");
+/* harmony import */ var _wordlist_controllers_user_data_manager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/controllers/user-data-manager.js */ "./controllers/user-data-manager.js");
+
+
+
+
+
+})();
+
+/******/ 	return __webpack_exports__;
 /******/ })()
 ;
 });

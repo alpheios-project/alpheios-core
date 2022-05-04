@@ -420,7 +420,7 @@ class LanguageModel {
    *
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
-   **/
+   */
   static normalizePartOfSpeechValue (lexeme) {
     // default is to return the value as it exists on the lemma
     return lexeme.lemma.features[Feature.types.part] ? lexeme.lemma.features[Feature.types.part].value : null

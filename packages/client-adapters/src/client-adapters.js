@@ -476,7 +476,8 @@ class ClientAdapters {
       adapterName: 'detectlang',
       method: options.method,
       clientId: options.clientId,
-      sourceData: options.params.sourceData
+      sourceData: options.params.sourceData,
+      api: options.params.api
     })
 
     if (options.method === 'getDetectedLangsList') {

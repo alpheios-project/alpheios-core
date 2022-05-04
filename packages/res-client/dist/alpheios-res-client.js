@@ -7,7 +7,7 @@
 		var a = typeof exports === 'object' ? factory(require("alpheios-data-models")) : factory(root["alpheios-data-models"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(self, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) {
+})(self, (__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -2667,7 +2667,7 @@ if (typeof Object.create === 'function') {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* @license
 Papa Parse
-v5.3.1
+v5.3.2
 https://github.com/mholt/PapaParse
 License: MIT
 */
@@ -2966,7 +2966,7 @@ License: MIT
 			if (Array.isArray(_input.data))
 			{
 				if (!_input.fields)
-					_input.fields =  _input.meta && _input.meta.fields;
+					_input.fields = _input.meta && _input.meta.fields || _columns;
 
 				if (!_input.fields)
 					_input.fields =  Array.isArray(_input.data[0])
@@ -3026,10 +3026,10 @@ License: MIT
 				_escapedQuote = _config.escapeChar + _quoteChar;
 			}
 
-			if (typeof _config.escapeFormulae === 'boolean')
-				_escapeFormulae = _config.escapeFormulae;
+			if (typeof _config.escapeFormulae === 'boolean' || _config.escapeFormulae instanceof RegExp) {
+				_escapeFormulae = _config.escapeFormulae instanceof RegExp ? _config.escapeFormulae : /^[=+\-@\t\r].*$/;
+			}
 		}
-
 
 		/** The double for loop that iterates the data and writes out a CSV string including header row */
 		function serialize(fields, data, skipEmptyLines)
@@ -3103,13 +3103,17 @@ License: MIT
 			if (str.constructor === Date)
 				return JSON.stringify(str).slice(1, 25);
 
-			if (_escapeFormulae === true && typeof str === "string" && (str.match(/^[=+\-@].*$/) !== null)) {
+			var needsQuotes = false;
+
+			if (_escapeFormulae && typeof str === "string" && _escapeFormulae.test(str)) {
 				str = "'" + str;
+				needsQuotes = true;
 			}
 
 			var escapedQuoteStr = str.toString().replace(quoteCharRegex, _escapedQuote);
 
-			var needsQuotes = (typeof _quotes === 'boolean' && _quotes)
+			needsQuotes = needsQuotes
+							|| _quotes === true
 							|| (typeof _quotes === 'function' && _quotes(str, col))
 							|| (Array.isArray(_quotes) && _quotes[col])
 							|| hasAny(escapedQuoteStr, Papa.BAD_DELIMITERS)
@@ -3560,7 +3564,7 @@ License: MIT
 
 
 	function DuplexStreamStreamer(_config) {
-		var Duplex = __webpack_require__(/*! stream */ "../../../node_modules/readable-stream/readable-browser.js").Duplex;
+		var Duplex = (__webpack_require__(/*! stream */ "../../../node_modules/readable-stream/readable-browser.js").Duplex);
 		var config = copy(_config);
 		var parseOnWrite = true;
 		var writeStreamHasFinished = false;
@@ -3818,9 +3822,9 @@ License: MIT
 
 			if (_config.skipEmptyLines)
 			{
-				for (var i = 0; i < _results.data.length; i++)
-					if (testEmptyLine(_results.data[i]))
-						_results.data.splice(i--, 1);
+				_results.data = _results.data.filter(function(d) {
+					return !testEmptyLine(d);
+				});
 			}
 
 			if (needsHeaderRow())
@@ -4058,8 +4062,7 @@ License: MIT
 		var preview = config.preview;
 		var fastMode = config.fastMode;
 		var quoteChar;
-		/** Allows for no quoteChar by setting quoteChar to undefined in config */
-		if (config.quoteChar === undefined) {
+		if (config.quoteChar === undefined || config.quoteChar === null) {
 			quoteChar = '"';
 		} else {
 			quoteChar = config.quoteChar;
@@ -4214,7 +4217,7 @@ License: MIT
 						var spacesBetweenQuoteAndDelimiter = extraSpaces(checkUpTo);
 
 						// Closing quote followed by delimiter or 'unnecessary spaces + delimiter'
-						if (input[quoteSearch + 1 + spacesBetweenQuoteAndDelimiter] === delim)
+						if (input.substr(quoteSearch + 1 + spacesBetweenQuoteAndDelimiter, delimLen) === delim)
 						{
 							row.push(input.substring(cursor, quoteSearch).replace(quoteCharRegex, quoteChar));
 							cursor = quoteSearch + 1 + spacesBetweenQuoteAndDelimiter + delimLen;
@@ -4910,7 +4913,7 @@ var Duplex;
 Readable.ReadableState = ReadableState;
 /*<replacement>*/
 
-var EE = __webpack_require__(/*! events */ "../../../node_modules/events/events.js").EventEmitter;
+var EE = (__webpack_require__(/*! events */ "../../../node_modules/events/events.js").EventEmitter);
 
 var EElistenerCount = function EElistenerCount(emitter, type) {
   return emitter.listeners(type).length;
@@ -4924,7 +4927,7 @@ var Stream = __webpack_require__(/*! ./internal/streams/stream */ "../../../node
 /*</replacement>*/
 
 
-var Buffer = __webpack_require__(/*! buffer */ "../../../node_modules/buffer/index.js").Buffer;
+var Buffer = (__webpack_require__(/*! buffer */ "../../../node_modules/buffer/index.js").Buffer);
 
 var OurUint8Array = __webpack_require__.g.Uint8Array || function () {};
 
@@ -4938,7 +4941,7 @@ function _isUint8Array(obj) {
 /*<replacement>*/
 
 
-var debugUtil = __webpack_require__(/*! util */ "?0bed");
+var debugUtil = __webpack_require__(/*! util */ "?2fee");
 
 var debug;
 
@@ -4957,7 +4960,7 @@ var destroyImpl = __webpack_require__(/*! ./internal/streams/destroy */ "../../.
 var _require = __webpack_require__(/*! ./internal/streams/state */ "../../../node_modules/readable-stream/lib/internal/streams/state.js"),
     getHighWaterMark = _require.getHighWaterMark;
 
-var _require$codes = __webpack_require__(/*! ../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes,
+var _require$codes = (__webpack_require__(/*! ../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes),
     ERR_INVALID_ARG_TYPE = _require$codes.ERR_INVALID_ARG_TYPE,
     ERR_STREAM_PUSH_AFTER_EOF = _require$codes.ERR_STREAM_PUSH_AFTER_EOF,
     ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED,
@@ -5041,7 +5044,7 @@ function ReadableState(options, stream, isDuplex) {
   this.encoding = null;
 
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(/*! string_decoder/ */ "../../../node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
+    if (!StringDecoder) StringDecoder = (__webpack_require__(/*! string_decoder/ */ "../../../node_modules/string_decoder/lib/string_decoder.js").StringDecoder);
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -5203,7 +5206,7 @@ Readable.prototype.isPaused = function () {
 
 
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(/*! string_decoder/ */ "../../../node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
+  if (!StringDecoder) StringDecoder = (__webpack_require__(/*! string_decoder/ */ "../../../node_modules/string_decoder/lib/string_decoder.js").StringDecoder);
   var decoder = new StringDecoder(enc);
   this._readableState.decoder = decoder; // If setEncoding(null), decoder.encoding equals utf8
 
@@ -6078,7 +6081,7 @@ function indexOf(xs, x) {
 
 module.exports = Transform;
 
-var _require$codes = __webpack_require__(/*! ../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes,
+var _require$codes = (__webpack_require__(/*! ../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes),
     ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED,
     ERR_MULTIPLE_CALLBACK = _require$codes.ERR_MULTIPLE_CALLBACK,
     ERR_TRANSFORM_ALREADY_TRANSFORMING = _require$codes.ERR_TRANSFORM_ALREADY_TRANSFORMING,
@@ -6293,7 +6296,7 @@ var Stream = __webpack_require__(/*! ./internal/streams/stream */ "../../../node
 /*</replacement>*/
 
 
-var Buffer = __webpack_require__(/*! buffer */ "../../../node_modules/buffer/index.js").Buffer;
+var Buffer = (__webpack_require__(/*! buffer */ "../../../node_modules/buffer/index.js").Buffer);
 
 var OurUint8Array = __webpack_require__.g.Uint8Array || function () {};
 
@@ -6310,7 +6313,7 @@ var destroyImpl = __webpack_require__(/*! ./internal/streams/destroy */ "../../.
 var _require = __webpack_require__(/*! ./internal/streams/state */ "../../../node_modules/readable-stream/lib/internal/streams/state.js"),
     getHighWaterMark = _require.getHighWaterMark;
 
-var _require$codes = __webpack_require__(/*! ../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes,
+var _require$codes = (__webpack_require__(/*! ../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes),
     ERR_INVALID_ARG_TYPE = _require$codes.ERR_INVALID_ARG_TYPE,
     ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED,
     ERR_MULTIPLE_CALLBACK = _require$codes.ERR_MULTIPLE_CALLBACK,
@@ -7165,7 +7168,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var _require = __webpack_require__(/*! buffer */ "../../../node_modules/buffer/index.js"),
     Buffer = _require.Buffer;
 
-var _require2 = __webpack_require__(/*! util */ "?0bed"),
+var _require2 = __webpack_require__(/*! util */ "?fb12"),
     inspect = _require2.inspect;
 
 var custom = inspect && inspect.custom || 'inspect';
@@ -7487,7 +7490,7 @@ module.exports = {
 // permission from the author, Mathias Buus (@mafintosh).
 
 
-var ERR_STREAM_PREMATURE_CLOSE = __webpack_require__(/*! ../../../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes.ERR_STREAM_PREMATURE_CLOSE;
+var ERR_STREAM_PREMATURE_CLOSE = (__webpack_require__(/*! ../../../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes.ERR_STREAM_PREMATURE_CLOSE);
 
 function once(callback) {
   var called = false;
@@ -7625,7 +7628,7 @@ function once(callback) {
   };
 }
 
-var _require$codes = __webpack_require__(/*! ../../../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes,
+var _require$codes = (__webpack_require__(/*! ../../../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes),
     ERR_MISSING_ARGS = _require$codes.ERR_MISSING_ARGS,
     ERR_STREAM_DESTROYED = _require$codes.ERR_STREAM_DESTROYED;
 
@@ -7719,7 +7722,7 @@ module.exports = pipeline;
 "use strict";
 
 
-var ERR_INVALID_OPT_VALUE = __webpack_require__(/*! ../../../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes.ERR_INVALID_OPT_VALUE;
+var ERR_INVALID_OPT_VALUE = (__webpack_require__(/*! ../../../errors */ "../../../node_modules/readable-stream/errors-browser.js").codes.ERR_INVALID_OPT_VALUE);
 
 function highWaterMarkFrom(options, isDuplex, duplexKey) {
   return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -7777,78 +7780,6 @@ exports.pipeline = __webpack_require__(/*! ./lib/internal/streams/pipeline.js */
 
 /***/ }),
 
-/***/ "../../../node_modules/safe-buffer/index.js":
-/*!**************************************************!*\
-  !*** ../../../node_modules/safe-buffer/index.js ***!
-  \**************************************************/
-/***/ ((module, exports, __webpack_require__) => {
-
-/* eslint-disable node/no-deprecated-api */
-var buffer = __webpack_require__(/*! buffer */ "../../../node_modules/buffer/index.js")
-var Buffer = buffer.Buffer
-
-// alternative to using Object.keys for old browsers
-function copyProps (src, dst) {
-  for (var key in src) {
-    dst[key] = src[key]
-  }
-}
-if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
-  module.exports = buffer
-} else {
-  // Copy properties from require('buffer')
-  copyProps(buffer, exports)
-  exports.Buffer = SafeBuffer
-}
-
-function SafeBuffer (arg, encodingOrOffset, length) {
-  return Buffer(arg, encodingOrOffset, length)
-}
-
-// Copy static methods from Buffer
-copyProps(Buffer, SafeBuffer)
-
-SafeBuffer.from = function (arg, encodingOrOffset, length) {
-  if (typeof arg === 'number') {
-    throw new TypeError('Argument must not be a number')
-  }
-  return Buffer(arg, encodingOrOffset, length)
-}
-
-SafeBuffer.alloc = function (size, fill, encoding) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  var buf = Buffer(size)
-  if (fill !== undefined) {
-    if (typeof encoding === 'string') {
-      buf.fill(fill, encoding)
-    } else {
-      buf.fill(fill)
-    }
-  } else {
-    buf.fill(0)
-  }
-  return buf
-}
-
-SafeBuffer.allocUnsafe = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return Buffer(size)
-}
-
-SafeBuffer.allocUnsafeSlow = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return buffer.SlowBuffer(size)
-}
-
-
-/***/ }),
-
 /***/ "../../../node_modules/string_decoder/lib/string_decoder.js":
 /*!******************************************************************!*\
   !*** ../../../node_modules/string_decoder/lib/string_decoder.js ***!
@@ -7881,7 +7812,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(/*! safe-buffer */ "../../../node_modules/safe-buffer/index.js").Buffer;
+var Buffer = (__webpack_require__(/*! safe-buffer */ "../../../node_modules/string_decoder/node_modules/safe-buffer/index.js").Buffer);
 /*</replacement>*/
 
 var isEncoding = Buffer.isEncoding || function (encoding) {
@@ -8152,6 +8083,81 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
+
+/***/ }),
+
+/***/ "../../../node_modules/string_decoder/node_modules/safe-buffer/index.js":
+/*!******************************************************************************!*\
+  !*** ../../../node_modules/string_decoder/node_modules/safe-buffer/index.js ***!
+  \******************************************************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+/* eslint-disable node/no-deprecated-api */
+var buffer = __webpack_require__(/*! buffer */ "../../../node_modules/buffer/index.js")
+var Buffer = buffer.Buffer
+
+// alternative to using Object.keys for old browsers
+function copyProps (src, dst) {
+  for (var key in src) {
+    dst[key] = src[key]
+  }
+}
+if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
+  module.exports = buffer
+} else {
+  // Copy properties from require('buffer')
+  copyProps(buffer, exports)
+  exports.Buffer = SafeBuffer
+}
+
+function SafeBuffer (arg, encodingOrOffset, length) {
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.prototype = Object.create(Buffer.prototype)
+
+// Copy static methods from Buffer
+copyProps(Buffer, SafeBuffer)
+
+SafeBuffer.from = function (arg, encodingOrOffset, length) {
+  if (typeof arg === 'number') {
+    throw new TypeError('Argument must not be a number')
+  }
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.alloc = function (size, fill, encoding) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  var buf = Buffer(size)
+  if (fill !== undefined) {
+    if (typeof encoding === 'string') {
+      buf.fill(fill, encoding)
+    } else {
+      buf.fill(fill)
+    }
+  } else {
+    buf.fill(0)
+  }
+  return buf
+}
+
+SafeBuffer.allocUnsafe = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return Buffer(size)
+}
+
+SafeBuffer.allocUnsafeSlow = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return buffer.SlowBuffer(size)
+}
+
 
 /***/ }),
 
@@ -8866,27 +8872,6 @@ class BaseResourceAdapter {
 
 /***/ }),
 
-/***/ "./driver.js":
-/*!*******************!*\
-  !*** ./driver.js ***!
-  \*******************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Grammars": () => (/* reexport safe */ _grammars__WEBPACK_IMPORTED_MODULE_1__.default),
-/* harmony export */   "GrammarResAdapter": () => (/* reexport safe */ _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_0__.default)
-/* harmony export */ });
-/* harmony import */ var _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./grammar/grammar_adapter */ "./grammar/grammar_adapter.js");
-/* harmony import */ var _grammars__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./grammars */ "./grammars.js");
-
-
-
-
-
-/***/ }),
-
 /***/ "./grammar/grammar_adapter.js":
 /*!************************************!*\
   !*** ./grammar/grammar_adapter.js ***!
@@ -8909,7 +8894,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class GrammarResAdapter extends _base_adapter_js__WEBPACK_IMPORTED_MODULE_0__.default {
+class GrammarResAdapter extends _base_adapter_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   /**
    * A Client Adapter for the Alpheios V1 Lexicon service
    * @constructor
@@ -9166,8 +9151,8 @@ class Grammars {
       // As getLexicons need a language code, let's convert a language ID to a code
       let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__.LanguageModelFactory.getLanguageCodeFromId(languageID)
 
-      let grammarsList = _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_1__.default.getProviders(languageCode)
-      grammars.set(languageID, Array.from(grammarsList.keys()).map(id => new _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_1__.default(id)))
+      let grammarsList = _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_1__["default"].getProviders(languageCode)
+      grammars.set(languageID, Array.from(grammarsList.keys()).map(id => new _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_1__["default"](id)))
     }
     const allGrammars =grammars.get(languageID)
     if (options.prefer) {
@@ -9178,17 +9163,6 @@ class Grammars {
   }
 }
 
-
-/***/ }),
-
-/***/ "./grammar/config.json":
-/*!*****************************!*\
-  !*** ./grammar/config.json ***!
-  \*****************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse("{\"https://github.com/alpheios-project/grammar-bennett\":{\"base_url\":\"https://grammars.alpheios.net/bennett/\",\"index_url\":\"https://grammars.alpheios.net/bennett/index/alph-index-bennett\",\"description\":\"New Latin Grammar, by Charles E. Bennett\",\"rights\":\"New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.\",\"langs\":{\"source\":\"lat\",\"target\":\"en\"}},\"https://github.com/alpheios-project/grammar-allen-greenough\":{\"base_url\":\"https://grammars.alpheios.net/allen-greenough/\",\"index_url\":\"https://grammars.alpheios.net/allen-greenough/index/alph-index-allen-greenough\",\"description\":\"Allen and Greenough’s New Latin Grammar for Schools and Colleges\",\"rights\":\"Allen and Greenough’s New Latin Grammar for Schools and Colleges, edited by J.B. Greenough, G.L. Kittredge, A.A. Howard, and Benjamin L. D’Ooge. Boston: Ginn &amp; Company, 1903.\",\"langs\":{\"source\":\"lat\",\"target\":\"en\"}},\"https://github.com/alpheios-project/grammar-smyth\":{\"base_url\":\"https://grammars.alpheios.net/smyth/xhtml/\",\"index_url\":\"https://grammars.alpheios.net/smyth/index/alph-index-smyth\",\"description\":\"Smyth's Greek Grammar For Colleges\",\"rights\":\"Smyth's Greek Grammar for Colleges, by Herbert Weir Smyth.\",\"langs\":{\"source\":\"grc\",\"target\":\"en\"}}}");
 
 /***/ }),
 
@@ -9203,13 +9177,34 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 
 /***/ }),
 
-/***/ "?0bed":
+/***/ "?fb12":
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
 /***/ (() => {
 
 /* (ignored) */
+
+/***/ }),
+
+/***/ "?2fee":
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "./grammar/config.json":
+/*!*****************************!*\
+  !*** ./grammar/config.json ***!
+  \*****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"https://github.com/alpheios-project/grammar-bennett":{"base_url":"https://grammars.alpheios.net/bennett/","index_url":"https://grammars.alpheios.net/bennett/index/alph-index-bennett","description":"New Latin Grammar, by Charles E. Bennett","rights":"New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.","langs":{"source":"lat","target":"en"}},"https://github.com/alpheios-project/grammar-allen-greenough":{"base_url":"https://grammars.alpheios.net/allen-greenough/","index_url":"https://grammars.alpheios.net/allen-greenough/index/alph-index-allen-greenough","description":"Allen and Greenough’s New Latin Grammar for Schools and Colleges","rights":"Allen and Greenough’s New Latin Grammar for Schools and Colleges, edited by J.B. Greenough, G.L. Kittredge, A.A. Howard, and Benjamin L. D’Ooge. Boston: Ginn &amp; Company, 1903.","langs":{"source":"lat","target":"en"}},"https://github.com/alpheios-project/grammar-smyth":{"base_url":"https://grammars.alpheios.net/smyth/xhtml/","index_url":"https://grammars.alpheios.net/smyth/index/alph-index-smyth","description":"Smyth\'s Greek Grammar For Colleges","rights":"Smyth\'s Greek Grammar for Colleges, by Herbert Weir Smyth.","langs":{"source":"grc","target":"en"}}}');
 
 /***/ })
 
@@ -9221,8 +9216,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -9292,10 +9288,27 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__("./driver.js");
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!*******************!*\
+  !*** ./driver.js ***!
+  \*******************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GrammarResAdapter": () => (/* reexport safe */ _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "Grammars": () => (/* reexport safe */ _grammars__WEBPACK_IMPORTED_MODULE_1__["default"])
+/* harmony export */ });
+/* harmony import */ var _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./grammar/grammar_adapter */ "./grammar/grammar_adapter.js");
+/* harmony import */ var _grammars__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./grammars */ "./grammars.js");
+
+
+
+
+})();
+
+/******/ 	return __webpack_exports__;
 /******/ })()
 ;
 });

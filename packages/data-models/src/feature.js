@@ -30,7 +30,6 @@ export default class Feature {
    * Each value of a feature has its `sortOrder` property. This value is used to soft values of a feature
    * between themselves. Feature object has a `sortOrder` property of its own, too. It is used
    * to compare two Feature objects between themselves.
-   *
    * @param {symbol} languageID - A language ID of a feature
    * @param {number} sortOrder - A sort order of a feature when multiple features are compared.
    * @param allowedValues - If feature has a restricted set of allowed values, here will be a list of those
@@ -137,9 +136,9 @@ export default class Feature {
       stemtype: 'stemtype',
       morph: 'morph', // general morphological information
       var: 'var', // variance?
-      /** for CJK languages only **/
+      /** for CJK languages only */
       radical: 'radical',
-      /** used for Syriac **/
+      /** used for Syriac */
       kaylo: 'kaylo',
       state: 'state'
 
