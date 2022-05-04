@@ -9,6 +9,10 @@ export default class Tab {
     return this.constructor.createUniqueId(this.tabId, this.windowId)
   }
 
+  get uniqueIdNew () {
+    return this.constructor.createUniqueIdNew(this.tabId, this.windowId)
+  }
+
   get isDeattached () {
     return this.status === 'deattached'
   }
@@ -32,5 +36,9 @@ export default class Tab {
 
   static createUniqueId (tabId, windowId) {
     return Symbol.for(`Alpheios_tabId:${tabId.toString()},windowId:${windowId.toString()}`)
+  }
+
+  static createUniqueIdNew (tabId, windowId) {
+    return `Alpheios_tabId:${tabId.toString()},windowId:${windowId.toString()}`
   }
 }

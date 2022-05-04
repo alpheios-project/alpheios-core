@@ -9,7 +9,7 @@ import enUS from './locales/en-us/messages.json'
 import enGB from './locales/en-gb/messages.json'
 import AppController from './lib/controllers/app-controller.js'
 import UIEventController from '@/lib/controllers/ui-event-controller.js'
-import UIStateAPI from '@/lib/state/ui-state-api.js'
+
 import Language from './lib/controllers/language.js'
 import HTMLSelector from './lib/selection/media/html-selector.js'
 import LexicalQuery from './lib/queries/lexical-query.js'
@@ -28,8 +28,7 @@ import LongTap from './lib/custom-pointer-events/long-tap.js'
 import Swipe from './lib/custom-pointer-events/swipe.js'
 import AlignmentSelector from './lib/selection/alignment/alignment-selector.js'
 import HTMLPage from './lib/utility/html-page.js'
-import Tab from '@/lib/state/tab.js'
-import TabScript from '@/lib/state/tab-script.js'
+
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 import PanelModule from '@/vue/vuex-modules/ui/panel-module.js'
@@ -41,7 +40,7 @@ import AuthData from '@/lib/auth/auth-data.js'
 import SessionAuthenticator from '@/lib/auth/session-authenticator.js'
 import AppAuthenticator from '@/lib/auth/app-authenticator.js'
 // Logger needs to be re-exported because clients of the components are using it
-import { Logger } from 'alpheios-data-models'
+import { Logger, Tab, TabScript, UIStateAPI } from 'alpheios-data-models'
 import { L10n } from 'alpheios-l10n'
 
 export {
