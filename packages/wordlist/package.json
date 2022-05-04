@@ -1,6 +1,6 @@
 {
   "name": "alpheios-wordlist",
-  "version": "3.4.4-incr-3.4.x.20220503376",
+  "version": "3.4.4-incr-3.4.x.20220504345",
   "description": "Word-In-Context List library for an Alpheios project",
   "private": true,
   "main": "dist/alpheios-wordlist.min.js",
