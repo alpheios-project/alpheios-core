@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Options, TempStorageArea, Constants, LanguageModelFactory } from 'alpheios-data-models'
+import { Options, TempStorageArea, Constants, LanguageModelFactory, Tab } from 'alpheios-data-models'
 import { ClientAdapters, RemoteError } from 'alpheios-client-adapters'
 import TextSelector from '@/lib/selection/text-selector'
 import ResourcesOptionsDefaults from '@comp/settings/language-options-defaults.json'
