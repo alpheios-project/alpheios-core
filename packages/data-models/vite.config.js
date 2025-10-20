@@ -11,11 +11,15 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  esbuild: {
+    keepNames: true // Prevent class name mangling
+  },
   build: {
-    minify: "terser",
-    terserOptions: {
-      keep_fnames: true,
-      keep_classnames: true
+    target: 'es2015',
+    minify: 'esbuild',
+    esbuild: {
+      minifyIdentifiers: false, // Don't minify identifiers
+      keepNames: true // Keep class and function names
     },
     lib: {
       entry: "./src/driver.js",

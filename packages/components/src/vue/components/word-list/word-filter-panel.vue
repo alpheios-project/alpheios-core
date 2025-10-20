@@ -95,7 +95,19 @@ export default {
       selectedFilterBy: null,
       selectedExactForm: null,
       selectedLemma: null,
-      typeFiltersList: [
+      typeFiltersList: [],
+      textInput: null,
+      shownVariantsSelect: false,
+      markLayout: {
+        start: '<span class="alpheios-select-input-filter-part">',
+        end: '</span>'
+      },
+      filterAmount: 0
+    }
+  },
+  mounted () {
+    this.filterAmount = this.wordlistFilterAmountDefault
+    this.typeFiltersList = [
         { value: null },
         { value: 'byCurrentSession', title: this.l10n.getText('WORDLIST_FILTER_BYCURRENTSESSION'), onChange: true },
         { value: 'byImportant', title: this.l10n.getText('WORDLIST_FILTER_BYIMPORTANT'), onChange: true },
@@ -127,18 +139,7 @@ export default {
           onChange: true,
           textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER')
         }
-      ],
-      textInput: null,
-      shownVariantsSelect: false,
-      markLayout: {
-        start: '<span class="alpheios-select-input-filter-part">',
-        end: '</span>'
-      },
-      filterAmount: 0
-    }
-  },
-  mounted () {
-    this.filterAmount = this.wordlistFilterAmountDefault
+      ]
   },
   computed: {
     featureOptions () {

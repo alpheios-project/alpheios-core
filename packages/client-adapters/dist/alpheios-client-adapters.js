@@ -1,503 +1,329 @@
-const LANG_UNIT_WORD = Symbol("word");
-const LANG_UNIT_CHAR = Symbol("char");
-const LANG_DIR_LTR = Symbol("ltr");
-const LANG_DIR_RTL = Symbol("rtl");
-const LANG_UNDEFINED = Symbol("undefined");
-const LANG_LATIN = Symbol("latin");
-const LANG_GREEK = Symbol("greek");
-const LANG_ARABIC = Symbol("arabic");
-const LANG_PERSIAN = Symbol("persian");
-const LANG_GEEZ = Symbol("ge'ez");
-const LANG_CHINESE = Symbol("chinese");
-const LANG_SYRIAC = Symbol("syriac");
-const STR_LANG_CODE_UNDEFINED = "undefined";
-const STR_LANG_CODE_LAT = "lat";
-const STR_LANG_CODE_LA = "la";
-const STR_LANG_CODE_GRC = "grc";
-const STR_LANG_CODE_ARA = "ara";
-const STR_LANG_CODE_AR = "ar";
-const STR_LANG_CODE_FAS = "fas";
-const STR_LANG_CODE_PER = "per";
-const STR_LANG_CODE_FA_IR = "fa-IR";
-const STR_LANG_CODE_FA = "fa";
-const STR_LANG_CODE_GEZ = "gez";
-const STR_LANG_CODE_ZHO = "zho";
-const STR_LANG_CODE_ZH = "zh";
-const STR_LANG_CODE_ZH_HANT = "zh-Hant";
-const STR_LANG_CODE_ZH_HANS = "zh-Hans";
-const STR_LANG_CODE_SYC = "syc";
-const STR_LANG_CODE_SYR = "syr";
-const STR_LANG_CODE_SYR_SYRJ = "syr-Syrj";
-const STR_LANG_CODE_ENG = "eng";
-const POFS_ADJECTIVE = "adjective";
-const POFS_ADVERB = "adverb";
-const POFS_ADVERBIAL = "adverbial";
-const POFS_ARTICLE = "article";
-const POFS_CONJUNCTION = "conjunction";
-const POFS_EXCLAMATION = "exclamation";
-const POFS_INTERJECTION = "interjection";
-const POFS_NOUN = "noun";
-const POFS_NOUN_PROPER = "proper noun";
-const POFS_NUMERAL = "numeral";
-const POFS_PARTICLE = "particle";
-const POFS_PREFIX = "prefix";
-const POFS_PREPOSITION = "preposition";
-const POFS_PRONOUN = "pronoun";
-const POFS_SUFFIX = "suffix";
-const POFS_GERUNDIVE = "gerundive";
-const POFS_SUPINE = "supine";
-const POFS_VERB = "verb";
-const POFS_VERB_PARTICIPLE = "verb participle";
-const POFS_DENOMINATIVE = "denominative";
-const GEND_MASCULINE = "masculine";
-const GEND_FEMININE = "feminine";
-const GEND_NEUTER = "neuter";
-const GEND_COMMON = "common";
-const GEND_ANIMATE = "animate";
-const GEND_INANIMATE = "inanimate";
-const GEND_PERSONAL_MASCULINE = "personal masculine";
-const GEND_ANIMATE_MASCULINE = "animate masculine";
-const GEND_INANIMATE_MASCULINE = "inanimate masculine";
-const COMP_POSITIVE = "positive";
-const COMP_COMPARITIVE = "comparative";
-const COMP_SUPERLATIVE = "superlative";
-const CASE_ABESSIVE = "abessive";
-const CASE_ABLATIVE = "ablative";
-const CASE_ABSOLUTIVE = "absolutive";
-const CASE_ACCUSATIVE = "accusative";
-const CASE_ADDIRECTIVE = "addirective";
-const CASE_ADELATIVE = "adelative";
-const CASE_ADESSIVE = "adessive";
-const CASE_ADVERBIAL = "adverbial";
-const CASE_ALLATIVE = "allative";
-const CASE_ANTESSIVE = "antessive";
-const CASE_APUDESSIVE = "apudessive";
-const CASE_AVERSIVE = "aversive";
-const CASE_BENEFACTIVE = "benefactive";
-const CASE_CARITIVE = "caritive";
-const CASE_CAUSAL = "causal";
-const CASE_CAUSAL_FINAL = "causal-final";
-const CASE_COMITATIVE = "comitative";
-const CASE_DATIVE = "dative";
-const CASE_DELATIVE = "delative";
-const CASE_DIRECT = "direct";
-const CASE_DISTRIBUTIVE = "distributive";
-const CASE_DISTRIBUTIVE_TEMPORAL = "distributive-temporal";
-const CASE_ELATIVE = "elative";
-const CASE_ERGATIVE = "ergative";
-const CASE_ESSIVE = "essive";
-const CASE_ESSIVE_FORMAL = "essive-formal";
-const CASE_ESSIVE_MODAL = "essive-modal";
-const CASE_EQUATIVE = "equative";
-const CASE_EVITATIVE = "evitative";
-const CASE_EXESSIVE = "exessive";
-const CASE_FINAL = "final";
-const CASE_FORMAL = "formal";
-const CASE_GENITIVE = "genitive";
-const CASE_ILLATIVE = "illative";
-const CASE_INELATIVE = "inelative";
-const CASE_INESSIVE = "inessive";
-const CASE_INSTRUCTIVE = "instructive";
-const CASE_INSTRUMENTAL = "instrumental";
-const CASE_INSTRUMENTAL_COMITATIVE = "instrumental-comitative";
-const CASE_INTRANSITIVE = "intransitive";
-const CASE_LATIVE = "lative";
-const CASE_LOCATIVE = "locative";
-const CASE_MODAL = "modal";
-const CASE_MULTIPLICATIVE = "multiplicative";
-const CASE_NOMINATIVE = "nominative";
-const CASE_PARTITIVE = "partitive";
-const CASE_PEGATIVE = "pegative";
-const CASE_PERLATIVE = "perlative";
-const CASE_POSSESSIVE = "possessive";
-const CASE_POSTELATIVE = "postelative";
-const CASE_POSTDIRECTIVE = "postdirective";
-const CASE_POSTESSIVE = "postessive";
-const CASE_POSTPOSITIONAL = "postpositional";
-const CASE_PREPOSITIONAL = "prepositional";
-const CASE_PRIVATIVE = "privative";
-const CASE_PROLATIVE = "prolative";
-const CASE_PROSECUTIVE = "prosecutive";
-const CASE_PROXIMATIVE = "proximative";
-const CASE_SEPARATIVE = "separative";
-const CASE_SOCIATIVE = "sociative";
-const CASE_SUBDIRECTIVE = "subdirective";
-const CASE_SUBESSIVE = "subessive";
-const CASE_SUBELATIVE = "subelative";
-const CASE_SUBLATIVE = "sublative";
-const CASE_SUPERDIRECTIVE = "superdirective";
-const CASE_SUPERESSIVE = "superessive";
-const CASE_SUPERLATIVE = "superlative";
-const CASE_SUPPRESSIVE = "suppressive";
-const CASE_TEMPORAL = "temporal";
-const CASE_TERMINATIVE = "terminative";
-const CASE_TRANSLATIVE = "translative";
-const CASE_VIALIS = "vialis";
-const CASE_VOCATIVE = "vocative";
-const MOOD_ADMIRATIVE = "admirative";
-const MOOD_COHORTATIVE = "cohortative";
-const MOOD_CONDITIONAL = "conditional";
-const MOOD_DECLARATIVE = "declarative";
-const MOOD_DUBITATIVE = "dubitative";
-const MOOD_ENERGETIC = "energetic";
-const MOOD_EVENTIVE = "eventive";
-const MOOD_GENERIC = "generic";
-const MOOD_GERUNDIVE = "gerundive";
-const MOOD_HYPOTHETICAL = "hypothetical";
-const MOOD_IMPERATIVE = "imperative";
-const MOOD_INDICATIVE = "indicative";
-const MOOD_INFERENTIAL = "inferential";
-const MOOD_INFINITIVE = "infinitive";
-const MOOD_INTERROGATIVE = "interrogative";
-const MOOD_JUSSIVE = "jussive";
-const MOOD_NEGATIVE = "negative";
-const MOOD_OPTATIVE = "optative";
-const MOOD_PARTICIPLE = "participle";
-const MOOD_PRESUMPTIVE = "presumptive";
-const MOOD_RENARRATIVE = "renarrative";
-const MOOD_SUBJUNCTIVE = "subjunctive";
-const MOOD_SUPINE = "supine";
-const NUM_SINGULAR = "singular";
-const NUM_PLURAL = "plural";
-const NUM_DUAL = "dual";
-const NUM_TRIAL = "trial";
-const NUM_PAUCAL = "paucal";
-const NUM_SINGULATIVE = "singulative";
-const NUM_COLLECTIVE = "collective";
-const NUM_DISTRIBUTIVE_PLURAL = "distributive plural";
-const NRL_CARDINAL = "cardinal";
-const NRL_ORDINAL = "ordinal";
-const NRL_DISTRIBUTIVE = "distributive";
-const NURL_NUMERAL_ADVERB = "numeral adverb";
-const ORD_1ST = "1st";
-const ORD_2ND = "2nd";
-const ORD_3RD = "3rd";
-const ORD_4TH = "4th";
-const ORD_5TH = "5th";
-const ORD_6TH = "6th";
-const ORD_7TH = "7th";
-const ORD_8TH = "8th";
-const ORD_9TH = "9th";
-const TENSE_AORIST = "aorist";
-const TENSE_FUTURE = "future";
-const TENSE_FUTURE_PERFECT = "future perfect";
-const TENSE_IMPERFECT = "imperfect";
-const TENSE_PAST_ABSOLUTE = "past absolute";
-const TENSE_PERFECT = "perfect";
-const TENSE_PLUPERFECT = "pluperfect";
-const TENSE_PRESENT = "present";
-const VKIND_TO_BE = "to be";
-const VKIND_COMPOUNDS_OF_TO_BE = "compounds of to be";
-const VKIND_TAKING_ABLATIVE = "taking ablative";
-const VKIND_TAKING_DATIVE = "taking dative";
-const VKIND_TAKING_GENITIVE = "taking genitive";
-const VKIND_TRANSITIVE = "transitive";
-const VKIND_INTRANSITIVE = "intransitive";
-const VKIND_IMPERSONAL = "impersonal";
-const VKIND_DEPONENT = "deponent";
-const VKIND_SEMIDEPONENT = "semideponent";
-const VKIND_PERFECT_DEFINITE = "perfect definite";
-const VOICE_ACTIVE = "active";
-const VOICE_PASSIVE = "passive";
-const VOICE_MEDIOPASSIVE = "mediopassive";
-const VOICE_IMPERSONAL_PASSIVE = "impersonal passive";
-const VOICE_MIDDLE = "middle";
-const VOICE_ANTIPASSIVE = "antipassive";
-const VOICE_REFLEXIVE = "reflexive";
-const VOICE_RECIPROCAL = "reciprocal";
-const VOICE_CAUSATIVE = "causative";
-const VOICE_ADJUTATIVE = "adjutative";
-const VOICE_APPLICATIVE = "applicative";
-const VOICE_CIRCUMSTANTIAL = "circumstantial";
-const VOICE_DEPONENT = "deponent";
-const TYPE_IRREGULAR = "irregular";
-const TYPE_REGULAR = "regular";
-const CLASS_PERSONAL = "personal";
-const CLASS_REFLEXIVE = "reflexive";
-const CLASS_POSSESSIVE = "possessive";
-const CLASS_DEMONSTRATIVE = "demonstrative";
-const CLASS_RELATIVE = "relative";
-const CLASS_INTERROGATIVE = "interrogative";
-const CLASS_GENERAL_RELATIVE = "general relative";
-const CLASS_INDEFINITE = "indefinite";
-const CLASS_INTENSIVE = "intensive";
-const CLASS_RECIPROCAL = "reciprocal";
-const PARADIGM_CAT_KAYLO = "kaylo";
-const PARADIGM_CAT_STATE = "state";
-const constants = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  CASE_ABESSIVE,
-  CASE_ABLATIVE,
-  CASE_ABSOLUTIVE,
-  CASE_ACCUSATIVE,
-  CASE_ADDIRECTIVE,
-  CASE_ADELATIVE,
-  CASE_ADESSIVE,
-  CASE_ADVERBIAL,
-  CASE_ALLATIVE,
-  CASE_ANTESSIVE,
-  CASE_APUDESSIVE,
-  CASE_AVERSIVE,
-  CASE_BENEFACTIVE,
-  CASE_CARITIVE,
-  CASE_CAUSAL,
-  CASE_CAUSAL_FINAL,
-  CASE_COMITATIVE,
-  CASE_DATIVE,
-  CASE_DELATIVE,
-  CASE_DIRECT,
-  CASE_DISTRIBUTIVE,
-  CASE_DISTRIBUTIVE_TEMPORAL,
-  CASE_ELATIVE,
-  CASE_EQUATIVE,
-  CASE_ERGATIVE,
-  CASE_ESSIVE,
-  CASE_ESSIVE_FORMAL,
-  CASE_ESSIVE_MODAL,
-  CASE_EVITATIVE,
-  CASE_EXESSIVE,
-  CASE_FINAL,
-  CASE_FORMAL,
-  CASE_GENITIVE,
-  CASE_ILLATIVE,
-  CASE_INELATIVE,
-  CASE_INESSIVE,
-  CASE_INSTRUCTIVE,
-  CASE_INSTRUMENTAL,
-  CASE_INSTRUMENTAL_COMITATIVE,
-  CASE_INTRANSITIVE,
-  CASE_LATIVE,
-  CASE_LOCATIVE,
-  CASE_MODAL,
-  CASE_MULTIPLICATIVE,
-  CASE_NOMINATIVE,
-  CASE_PARTITIVE,
-  CASE_PEGATIVE,
-  CASE_PERLATIVE,
-  CASE_POSSESSIVE,
-  CASE_POSTDIRECTIVE,
-  CASE_POSTELATIVE,
-  CASE_POSTESSIVE,
-  CASE_POSTPOSITIONAL,
-  CASE_PREPOSITIONAL,
-  CASE_PRIVATIVE,
-  CASE_PROLATIVE,
-  CASE_PROSECUTIVE,
-  CASE_PROXIMATIVE,
-  CASE_SEPARATIVE,
-  CASE_SOCIATIVE,
-  CASE_SUBDIRECTIVE,
-  CASE_SUBELATIVE,
-  CASE_SUBESSIVE,
-  CASE_SUBLATIVE,
-  CASE_SUPERDIRECTIVE,
-  CASE_SUPERESSIVE,
-  CASE_SUPERLATIVE,
-  CASE_SUPPRESSIVE,
-  CASE_TEMPORAL,
-  CASE_TERMINATIVE,
-  CASE_TRANSLATIVE,
-  CASE_VIALIS,
-  CASE_VOCATIVE,
-  CLASS_DEMONSTRATIVE,
-  CLASS_GENERAL_RELATIVE,
-  CLASS_INDEFINITE,
-  CLASS_INTENSIVE,
-  CLASS_INTERROGATIVE,
-  CLASS_PERSONAL,
-  CLASS_POSSESSIVE,
-  CLASS_RECIPROCAL,
-  CLASS_REFLEXIVE,
-  CLASS_RELATIVE,
-  COMP_COMPARITIVE,
-  COMP_POSITIVE,
-  COMP_SUPERLATIVE,
-  GEND_ANIMATE,
-  GEND_ANIMATE_MASCULINE,
-  GEND_COMMON,
-  GEND_FEMININE,
-  GEND_INANIMATE,
-  GEND_INANIMATE_MASCULINE,
-  GEND_MASCULINE,
-  GEND_NEUTER,
-  GEND_PERSONAL_MASCULINE,
-  LANG_ARABIC,
-  LANG_CHINESE,
-  LANG_DIR_LTR,
-  LANG_DIR_RTL,
-  LANG_GEEZ,
-  LANG_GREEK,
-  LANG_LATIN,
-  LANG_PERSIAN,
-  LANG_SYRIAC,
-  LANG_UNDEFINED,
-  LANG_UNIT_CHAR,
-  LANG_UNIT_WORD,
-  MOOD_ADMIRATIVE,
-  MOOD_COHORTATIVE,
-  MOOD_CONDITIONAL,
-  MOOD_DECLARATIVE,
-  MOOD_DUBITATIVE,
-  MOOD_ENERGETIC,
-  MOOD_EVENTIVE,
-  MOOD_GENERIC,
-  MOOD_GERUNDIVE,
-  MOOD_HYPOTHETICAL,
-  MOOD_IMPERATIVE,
-  MOOD_INDICATIVE,
-  MOOD_INFERENTIAL,
-  MOOD_INFINITIVE,
-  MOOD_INTERROGATIVE,
-  MOOD_JUSSIVE,
-  MOOD_NEGATIVE,
-  MOOD_OPTATIVE,
-  MOOD_PARTICIPLE,
-  MOOD_PRESUMPTIVE,
-  MOOD_RENARRATIVE,
-  MOOD_SUBJUNCTIVE,
-  MOOD_SUPINE,
-  NRL_CARDINAL,
-  NRL_DISTRIBUTIVE,
-  NRL_ORDINAL,
-  NUM_COLLECTIVE,
-  NUM_DISTRIBUTIVE_PLURAL,
-  NUM_DUAL,
-  NUM_PAUCAL,
-  NUM_PLURAL,
-  NUM_SINGULAR,
-  NUM_SINGULATIVE,
-  NUM_TRIAL,
-  NURL_NUMERAL_ADVERB,
-  ORD_1ST,
-  ORD_2ND,
-  ORD_3RD,
-  ORD_4TH,
-  ORD_5TH,
-  ORD_6TH,
-  ORD_7TH,
-  ORD_8TH,
-  ORD_9TH,
-  PARADIGM_CAT_KAYLO,
-  PARADIGM_CAT_STATE,
-  POFS_ADJECTIVE,
-  POFS_ADVERB,
-  POFS_ADVERBIAL,
-  POFS_ARTICLE,
-  POFS_CONJUNCTION,
-  POFS_DENOMINATIVE,
-  POFS_EXCLAMATION,
-  POFS_GERUNDIVE,
-  POFS_INTERJECTION,
-  POFS_NOUN,
-  POFS_NOUN_PROPER,
-  POFS_NUMERAL,
-  POFS_PARTICLE,
-  POFS_PREFIX,
-  POFS_PREPOSITION,
-  POFS_PRONOUN,
-  POFS_SUFFIX,
-  POFS_SUPINE,
-  POFS_VERB,
-  POFS_VERB_PARTICIPLE,
-  STR_LANG_CODE_AR,
-  STR_LANG_CODE_ARA,
-  STR_LANG_CODE_ENG,
-  STR_LANG_CODE_FA,
-  STR_LANG_CODE_FAS,
-  STR_LANG_CODE_FA_IR,
-  STR_LANG_CODE_GEZ,
-  STR_LANG_CODE_GRC,
-  STR_LANG_CODE_LA,
-  STR_LANG_CODE_LAT,
-  STR_LANG_CODE_PER,
-  STR_LANG_CODE_SYC,
-  STR_LANG_CODE_SYR,
-  STR_LANG_CODE_SYR_SYRJ,
-  STR_LANG_CODE_UNDEFINED,
-  STR_LANG_CODE_ZH,
-  STR_LANG_CODE_ZHO,
-  STR_LANG_CODE_ZH_HANS,
-  STR_LANG_CODE_ZH_HANT,
-  TENSE_AORIST,
-  TENSE_FUTURE,
-  TENSE_FUTURE_PERFECT,
-  TENSE_IMPERFECT,
-  TENSE_PAST_ABSOLUTE,
-  TENSE_PERFECT,
-  TENSE_PLUPERFECT,
-  TENSE_PRESENT,
-  TYPE_IRREGULAR,
-  TYPE_REGULAR,
-  VKIND_COMPOUNDS_OF_TO_BE,
-  VKIND_DEPONENT,
-  VKIND_IMPERSONAL,
-  VKIND_INTRANSITIVE,
-  VKIND_PERFECT_DEFINITE,
-  VKIND_SEMIDEPONENT,
-  VKIND_TAKING_ABLATIVE,
-  VKIND_TAKING_DATIVE,
-  VKIND_TAKING_GENITIVE,
-  VKIND_TO_BE,
-  VKIND_TRANSITIVE,
-  VOICE_ACTIVE,
-  VOICE_ADJUTATIVE,
-  VOICE_ANTIPASSIVE,
-  VOICE_APPLICATIVE,
-  VOICE_CAUSATIVE,
-  VOICE_CIRCUMSTANTIAL,
-  VOICE_DEPONENT,
-  VOICE_IMPERSONAL_PASSIVE,
-  VOICE_MEDIOPASSIVE,
-  VOICE_MIDDLE,
-  VOICE_PASSIVE,
-  VOICE_RECIPROCAL,
-  VOICE_REFLEXIVE
-}, Symbol.toStringTag, { value: "Module" }));
-const byteToHex = [];
-for (let i2 = 0; i2 < 256; ++i2) {
-  byteToHex.push((i2 + 256).toString(16).slice(1));
-}
-function unsafeStringify(arr, offset = 0) {
-  return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
-}
-let getRandomValues;
-const rnds8 = new Uint8Array(16);
-function rng() {
-  if (!getRandomValues) {
-    if (typeof crypto === "undefined" || !crypto.getRandomValues) {
-      throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
+var br$1 = Object.defineProperty, ga$1 = Object.defineProperties;
+var ma = Object.getOwnPropertyDescriptors;
+var wr = Object.getOwnPropertySymbols;
+var ya = Object.prototype.hasOwnProperty, Ea = Object.prototype.propertyIsEnumerable;
+var ue = (r, e) => (e = Symbol[r]) ? e : Symbol.for("Symbol." + r), wa = (r) => {
+  throw TypeError(r);
+};
+var Ir = (r, e, t) => e in r ? br$1(r, e, { enumerable: true, configurable: true, writable: true, value: t }) : r[e] = t, G = (r, e) => {
+  for (var t in e || (e = {}))
+    ya.call(e, t) && Ir(r, t, e[t]);
+  if (wr)
+    for (var t of wr(e))
+      Ea.call(e, t) && Ir(r, t, e[t]);
+  return r;
+}, Sr = (r, e) => ga$1(r, ma(e)), o$1 = (r, e) => br$1(r, "name", { value: e, configurable: true });
+var L = (r, e, t) => new Promise((s, n) => {
+  var a = (d2) => {
+    try {
+      u2(t.next(d2));
+    } catch (h2) {
+      n(h2);
     }
-    getRandomValues = crypto.getRandomValues.bind(crypto);
-  }
-  return getRandomValues(rnds8);
+  }, i2 = (d2) => {
+    try {
+      u2(t.throw(d2));
+    } catch (h2) {
+      n(h2);
+    }
+  }, u2 = (d2) => d2.done ? s(d2.value) : Promise.resolve(d2.value).then(a, i2);
+  u2((t = t.apply(r, e)).next());
+}), j = function(r, e) {
+  this[0] = r, this[1] = e;
+}, Pt = (r, e, t) => {
+  var s = (i2, u2, d2, h2) => {
+    try {
+      var c2 = t[i2](u2), p2 = (u2 = c2.value) instanceof j, g2 = c2.done;
+      Promise.resolve(p2 ? u2[0] : u2).then((y) => p2 ? s(i2 === "return" ? i2 : "next", u2[1] ? { done: y.done, value: y.value } : y, d2, h2) : d2({ value: y, done: g2 })).catch((y) => s("throw", y, d2, h2));
+    } catch (y) {
+      h2(y);
+    }
+  }, n = (i2) => a[i2] = (u2) => new Promise((d2, h2) => s(i2, u2, d2, h2)), a = {};
+  return t = t.apply(r, e), a[ue("asyncIterator")] = () => a, n("next"), n("throw"), n("return"), a;
+}, Vt = (r) => {
+  var e = r[ue("asyncIterator")], t = false, s, n = {};
+  return e == null ? (e = r[ue("iterator")](), s = (a) => n[a] = (i2) => e[a](i2)) : (e = e.call(r), s = (a) => n[a] = (i2) => {
+    if (t) {
+      if (t = false, a === "throw") throw i2;
+      return i2;
+    }
+    return t = true, {
+      done: false,
+      value: new j(new Promise((u2) => {
+        var d2 = e[a](i2);
+        d2 instanceof Object || wa("Object expected"), u2(d2);
+      }), 1)
+    };
+  }), n[ue("iterator")] = () => n, s("next"), "throw" in e ? s("throw") : n.throw = (a) => {
+    throw a;
+  }, "return" in e && s("return"), n;
+}, Ar = (r, e, t) => (e = r[ue("asyncIterator")]) ? e.call(r) : (r = r[ue("iterator")](), e = {}, t = (s, n) => (n = r[s]) && (e[s] = (a) => new Promise((i2, u2, d2) => (a = n.call(r, a), d2 = a.done, Promise.resolve(a.value).then((h2) => i2({ value: h2, done: d2 }), u2)))), t("next"), t("return"), e);
+const J = Symbol("word"), dn = Symbol("char"), ye = Symbol("ltr"), Pe = Symbol("rtl"), us = Symbol("undefined"), pn = Symbol("latin"), gn$1 = Symbol("greek"), mn$1 = Symbol("arabic"), yn = Symbol("persian"), ls = Symbol("ge'ez"), cs$1 = Symbol("chinese"), hs = Symbol("syriac"), fs = "undefined", He = "lat", ds = "la", Ge = "grc", Je = "ara", ps$1 = "ar", En = "fas", Ke = "per", wn = "fa-IR", In = "fa", je = "gez", Xe = "zho", bn$1 = "zh", Sn = "zh-Hant", An = "zh-Hans", gs = "syc", Ye = "syr", ms$1 = "syr-Syrj", Ia = "eng", Oe = "adjective", ne$1 = "adverb", ys = "adverbial", St = "article", Es = "conjunction", ae = "exclamation", ie$1 = "interjection", ve$1 = "noun", $t = "proper noun", At = "numeral", _e = "particle", ws = "prefix", Is = "preposition", de$1 = "pronoun", bs$1 = "suffix", Fn = "gerundive", Ft = "supine", pe = "verb", Ct = "verb participle", Cn = "denominative", Dn = "masculine", Tn = "feminine", On = "neuter", ba$1 = "common", Sa = "animate", Aa = "inanimate", Fa = "personal masculine", Ca = "animate masculine", Da = "inanimate masculine", Ta = "positive", Oa = "comparative", va = "superlative", _a$1 = "abessive", vn = "ablative", Na = "absolutive", Ss = "accusative", xa = "addirective", Ra = "adelative", La = "adessive", Pa = "adverbial", Va = "allative", Ua = "antessive", Ba = "apudessive", Ma = "aversive", ka$1 = "benefactive", $a = "caritive", za$1 = "causal", qa = "causal-final", Wa = "comitative", As = "dative", Ha = "delative", Ga = "direct", Ja = "distributive", Ka = "distributive-temporal", ja$1 = "elative", Xa = "ergative", Ya = "essive", Za = "essive-formal", Qa = "essive-modal", ei = "equative", ti$1 = "evitative", si$1 = "exessive", ri = "final", ni = "formal", Fs = "genitive", ai = "illative", ii = "inelative", oi = "inessive", ui = "instructive", li$1 = "instrumental", ci = "instrumental-comitative", hi$1 = "intransitive", fi$1 = "lative", _n = "locative", di = "modal", pi = "multiplicative", Cs = "nominative", gi = "partitive", mi$1 = "pegative", yi$1 = "perlative", Ei = "possessive", wi = "postelative", Ii = "postdirective", bi$1 = "postessive", Si = "postpositional", Ai = "prepositional", Fi = "privative", Ci = "prolative", Di = "prosecutive", Ti = "proximative", Oi = "separative", vi$1 = "sociative", _i = "subdirective", Ni = "subessive", xi = "subelative", Ri = "sublative", Li = "superdirective", Pi = "superessive", Vi = "superlative", Ui = "suppressive", Bi = "temporal", Mi = "terminative", ki = "translative", $i = "vialis", Ds = "vocative", zi = "admirative", qi = "cohortative", Wi = "conditional", Hi = "declarative", Gi = "dubitative", Ji = "energetic", Ki = "eventive", ji = "generic", zt = "gerundive", Xi = "hypothetical", Ts = "imperative", Os = "indicative", Yi = "inferential", Nn = "infinitive", Zi = "interrogative", Qi = "jussive", eo$1 = "negative", xn = "optative", $e = "participle", to$1 = "presumptive", so$1 = "renarrative", vs = "subjunctive", Rn = "supine", Dt = "singular", Tt = "plural", Ln = "dual", ro$1 = "trial", no$1 = "paucal", ao = "singulative", io = "collective", oo = "distributive plural", uo = "cardinal", lo$1 = "ordinal", co$1 = "distributive", ho = "numeral adverb", Ne = "1st", xe = "2nd", Re = "3rd", qt = "4th", Pn = "5th", fo$1 = "6th", po = "7th", go = "8th", mo = "9th", Vn = "aorist", _s = "future", Ns = "future perfect", xs = "imperfect", yo$1 = "past absolute", Rs = "perfect", Ls = "pluperfect", Ps = "present", Eo = "to be", wo$1 = "compounds of to be", Io = "taking ablative", bo$1 = "taking dative", So = "taking genitive", Ao = "transitive", Fo = "intransitive", Co = "impersonal", Do = "deponent", To = "semideponent", Oo = "perfect definite", Vs = "active", Us = "passive", Un = "mediopassive", vo$1 = "impersonal passive", Bn = "middle", _o = "antipassive", No = "reflexive", xo = "reciprocal", Ro = "causative", Lo = "adjutative", Po = "applicative", Vo = "circumstantial", Uo = "deponent", Mn = "irregular", kn$1 = "regular", Bs = "personal", Ms = "reflexive", ks$1 = "possessive", $s = "demonstrative", zs = "relative", qs = "interrogative", $n = "general relative", zn = "indefinite", qn = "intensive", Wn = "reciprocal", Bo = "kaylo", Mo = "state", bl = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  CASE_ABESSIVE: _a$1,
+  CASE_ABLATIVE: vn,
+  CASE_ABSOLUTIVE: Na,
+  CASE_ACCUSATIVE: Ss,
+  CASE_ADDIRECTIVE: xa,
+  CASE_ADELATIVE: Ra,
+  CASE_ADESSIVE: La,
+  CASE_ADVERBIAL: Pa,
+  CASE_ALLATIVE: Va,
+  CASE_ANTESSIVE: Ua,
+  CASE_APUDESSIVE: Ba,
+  CASE_AVERSIVE: Ma,
+  CASE_BENEFACTIVE: ka$1,
+  CASE_CARITIVE: $a,
+  CASE_CAUSAL: za$1,
+  CASE_CAUSAL_FINAL: qa,
+  CASE_COMITATIVE: Wa,
+  CASE_DATIVE: As,
+  CASE_DELATIVE: Ha,
+  CASE_DIRECT: Ga,
+  CASE_DISTRIBUTIVE: Ja,
+  CASE_DISTRIBUTIVE_TEMPORAL: Ka,
+  CASE_ELATIVE: ja$1,
+  CASE_EQUATIVE: ei,
+  CASE_ERGATIVE: Xa,
+  CASE_ESSIVE: Ya,
+  CASE_ESSIVE_FORMAL: Za,
+  CASE_ESSIVE_MODAL: Qa,
+  CASE_EVITATIVE: ti$1,
+  CASE_EXESSIVE: si$1,
+  CASE_FINAL: ri,
+  CASE_FORMAL: ni,
+  CASE_GENITIVE: Fs,
+  CASE_ILLATIVE: ai,
+  CASE_INELATIVE: ii,
+  CASE_INESSIVE: oi,
+  CASE_INSTRUCTIVE: ui,
+  CASE_INSTRUMENTAL: li$1,
+  CASE_INSTRUMENTAL_COMITATIVE: ci,
+  CASE_INTRANSITIVE: hi$1,
+  CASE_LATIVE: fi$1,
+  CASE_LOCATIVE: _n,
+  CASE_MODAL: di,
+  CASE_MULTIPLICATIVE: pi,
+  CASE_NOMINATIVE: Cs,
+  CASE_PARTITIVE: gi,
+  CASE_PEGATIVE: mi$1,
+  CASE_PERLATIVE: yi$1,
+  CASE_POSSESSIVE: Ei,
+  CASE_POSTDIRECTIVE: Ii,
+  CASE_POSTELATIVE: wi,
+  CASE_POSTESSIVE: bi$1,
+  CASE_POSTPOSITIONAL: Si,
+  CASE_PREPOSITIONAL: Ai,
+  CASE_PRIVATIVE: Fi,
+  CASE_PROLATIVE: Ci,
+  CASE_PROSECUTIVE: Di,
+  CASE_PROXIMATIVE: Ti,
+  CASE_SEPARATIVE: Oi,
+  CASE_SOCIATIVE: vi$1,
+  CASE_SUBDIRECTIVE: _i,
+  CASE_SUBELATIVE: xi,
+  CASE_SUBESSIVE: Ni,
+  CASE_SUBLATIVE: Ri,
+  CASE_SUPERDIRECTIVE: Li,
+  CASE_SUPERESSIVE: Pi,
+  CASE_SUPERLATIVE: Vi,
+  CASE_SUPPRESSIVE: Ui,
+  CASE_TEMPORAL: Bi,
+  CASE_TERMINATIVE: Mi,
+  CASE_TRANSLATIVE: ki,
+  CASE_VIALIS: $i,
+  CASE_VOCATIVE: Ds,
+  CLASS_DEMONSTRATIVE: $s,
+  CLASS_GENERAL_RELATIVE: $n,
+  CLASS_INDEFINITE: zn,
+  CLASS_INTENSIVE: qn,
+  CLASS_INTERROGATIVE: qs,
+  CLASS_PERSONAL: Bs,
+  CLASS_POSSESSIVE: ks$1,
+  CLASS_RECIPROCAL: Wn,
+  CLASS_REFLEXIVE: Ms,
+  CLASS_RELATIVE: zs,
+  COMP_COMPARITIVE: Oa,
+  COMP_POSITIVE: Ta,
+  COMP_SUPERLATIVE: va,
+  GEND_ANIMATE: Sa,
+  GEND_ANIMATE_MASCULINE: Ca,
+  GEND_COMMON: ba$1,
+  GEND_FEMININE: Tn,
+  GEND_INANIMATE: Aa,
+  GEND_INANIMATE_MASCULINE: Da,
+  GEND_MASCULINE: Dn,
+  GEND_NEUTER: On,
+  GEND_PERSONAL_MASCULINE: Fa,
+  LANG_ARABIC: mn$1,
+  LANG_CHINESE: cs$1,
+  LANG_DIR_LTR: ye,
+  LANG_DIR_RTL: Pe,
+  LANG_GEEZ: ls,
+  LANG_GREEK: gn$1,
+  LANG_LATIN: pn,
+  LANG_PERSIAN: yn,
+  LANG_SYRIAC: hs,
+  LANG_UNDEFINED: us,
+  LANG_UNIT_CHAR: dn,
+  LANG_UNIT_WORD: J,
+  MOOD_ADMIRATIVE: zi,
+  MOOD_COHORTATIVE: qi,
+  MOOD_CONDITIONAL: Wi,
+  MOOD_DECLARATIVE: Hi,
+  MOOD_DUBITATIVE: Gi,
+  MOOD_ENERGETIC: Ji,
+  MOOD_EVENTIVE: Ki,
+  MOOD_GENERIC: ji,
+  MOOD_GERUNDIVE: zt,
+  MOOD_HYPOTHETICAL: Xi,
+  MOOD_IMPERATIVE: Ts,
+  MOOD_INDICATIVE: Os,
+  MOOD_INFERENTIAL: Yi,
+  MOOD_INFINITIVE: Nn,
+  MOOD_INTERROGATIVE: Zi,
+  MOOD_JUSSIVE: Qi,
+  MOOD_NEGATIVE: eo$1,
+  MOOD_OPTATIVE: xn,
+  MOOD_PARTICIPLE: $e,
+  MOOD_PRESUMPTIVE: to$1,
+  MOOD_RENARRATIVE: so$1,
+  MOOD_SUBJUNCTIVE: vs,
+  MOOD_SUPINE: Rn,
+  NRL_CARDINAL: uo,
+  NRL_DISTRIBUTIVE: co$1,
+  NRL_ORDINAL: lo$1,
+  NUM_COLLECTIVE: io,
+  NUM_DISTRIBUTIVE_PLURAL: oo,
+  NUM_DUAL: Ln,
+  NUM_PAUCAL: no$1,
+  NUM_PLURAL: Tt,
+  NUM_SINGULAR: Dt,
+  NUM_SINGULATIVE: ao,
+  NUM_TRIAL: ro$1,
+  NURL_NUMERAL_ADVERB: ho,
+  ORD_1ST: Ne,
+  ORD_2ND: xe,
+  ORD_3RD: Re,
+  ORD_4TH: qt,
+  ORD_5TH: Pn,
+  ORD_6TH: fo$1,
+  ORD_7TH: po,
+  ORD_8TH: go,
+  ORD_9TH: mo,
+  PARADIGM_CAT_KAYLO: Bo,
+  PARADIGM_CAT_STATE: Mo,
+  POFS_ADJECTIVE: Oe,
+  POFS_ADVERB: ne$1,
+  POFS_ADVERBIAL: ys,
+  POFS_ARTICLE: St,
+  POFS_CONJUNCTION: Es,
+  POFS_DENOMINATIVE: Cn,
+  POFS_EXCLAMATION: ae,
+  POFS_GERUNDIVE: Fn,
+  POFS_INTERJECTION: ie$1,
+  POFS_NOUN: ve$1,
+  POFS_NOUN_PROPER: $t,
+  POFS_NUMERAL: At,
+  POFS_PARTICLE: _e,
+  POFS_PREFIX: ws,
+  POFS_PREPOSITION: Is,
+  POFS_PRONOUN: de$1,
+  POFS_SUFFIX: bs$1,
+  POFS_SUPINE: Ft,
+  POFS_VERB: pe,
+  POFS_VERB_PARTICIPLE: Ct,
+  STR_LANG_CODE_AR: ps$1,
+  STR_LANG_CODE_ARA: Je,
+  STR_LANG_CODE_ENG: Ia,
+  STR_LANG_CODE_FA: In,
+  STR_LANG_CODE_FAS: En,
+  STR_LANG_CODE_FA_IR: wn,
+  STR_LANG_CODE_GEZ: je,
+  STR_LANG_CODE_GRC: Ge,
+  STR_LANG_CODE_LA: ds,
+  STR_LANG_CODE_LAT: He,
+  STR_LANG_CODE_PER: Ke,
+  STR_LANG_CODE_SYC: gs,
+  STR_LANG_CODE_SYR: Ye,
+  STR_LANG_CODE_SYR_SYRJ: ms$1,
+  STR_LANG_CODE_UNDEFINED: fs,
+  STR_LANG_CODE_ZH: bn$1,
+  STR_LANG_CODE_ZHO: Xe,
+  STR_LANG_CODE_ZH_HANS: An,
+  STR_LANG_CODE_ZH_HANT: Sn,
+  TENSE_AORIST: Vn,
+  TENSE_FUTURE: _s,
+  TENSE_FUTURE_PERFECT: Ns,
+  TENSE_IMPERFECT: xs,
+  TENSE_PAST_ABSOLUTE: yo$1,
+  TENSE_PERFECT: Rs,
+  TENSE_PLUPERFECT: Ls,
+  TENSE_PRESENT: Ps,
+  TYPE_IRREGULAR: Mn,
+  TYPE_REGULAR: kn$1,
+  VKIND_COMPOUNDS_OF_TO_BE: wo$1,
+  VKIND_DEPONENT: Do,
+  VKIND_IMPERSONAL: Co,
+  VKIND_INTRANSITIVE: Fo,
+  VKIND_PERFECT_DEFINITE: Oo,
+  VKIND_SEMIDEPONENT: To,
+  VKIND_TAKING_ABLATIVE: Io,
+  VKIND_TAKING_DATIVE: bo$1,
+  VKIND_TAKING_GENITIVE: So,
+  VKIND_TO_BE: Eo,
+  VKIND_TRANSITIVE: Ao,
+  VOICE_ACTIVE: Vs,
+  VOICE_ADJUTATIVE: Lo,
+  VOICE_ANTIPASSIVE: _o,
+  VOICE_APPLICATIVE: Po,
+  VOICE_CAUSATIVE: Ro,
+  VOICE_CIRCUMSTANTIAL: Vo,
+  VOICE_DEPONENT: Uo,
+  VOICE_IMPERSONAL_PASSIVE: vo$1,
+  VOICE_MEDIOPASSIVE: Un,
+  VOICE_MIDDLE: Bn,
+  VOICE_PASSIVE: Us,
+  VOICE_RECIPROCAL: xo,
+  VOICE_REFLEXIVE: No
+}, Symbol.toStringTag, { value: "Module" })), O = [];
+for (let r = 0; r < 256; ++r)
+  O.push((r + 256).toString(16).slice(1));
+function ko$1(r, e = 0) {
+  return (O[r[e + 0]] + O[r[e + 1]] + O[r[e + 2]] + O[r[e + 3]] + "-" + O[r[e + 4]] + O[r[e + 5]] + "-" + O[r[e + 6]] + O[r[e + 7]] + "-" + O[r[e + 8]] + O[r[e + 9]] + "-" + O[r[e + 10]] + O[r[e + 11]] + O[r[e + 12]] + O[r[e + 13]] + O[r[e + 14]] + O[r[e + 15]]).toLowerCase();
 }
-const randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
-const native = { randomUUID };
-function v4(options, buf, offset) {
-  if (native.randomUUID && true && !options) {
-    return native.randomUUID();
+o$1(ko$1, "unsafeStringify");
+let Ut;
+const $o = new Uint8Array(16);
+function zo() {
+  if (!Ut) {
+    if (typeof crypto == "undefined" || !crypto.getRandomValues)
+      throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
+    Ut = crypto.getRandomValues.bind(crypto);
   }
-  options = options || {};
-  const rnds = options.random ?? options.rng?.() ?? rng();
-  if (rnds.length < 16) {
+  return Ut($o);
+}
+o$1(zo, "rng");
+const qo = typeof crypto != "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto), Fr = { randomUUID: qo };
+function Ot(r, e, t) {
+  var n, a, i2;
+  if (Fr.randomUUID && !r)
+    return Fr.randomUUID();
+  r = r || {};
+  const s = (i2 = (a = r.random) != null ? a : (n = r.rng) == null ? void 0 : n.call(r)) != null ? i2 : zo();
+  if (s.length < 16)
     throw new Error("Random bytes length must be >= 16");
-  }
-  rnds[6] = rnds[6] & 15 | 64;
-  rnds[8] = rnds[8] & 63 | 128;
-  return unsafeStringify(rnds);
+  return s[6] = s[6] & 15 | 64, s[8] = s[8] & 63 | 128, ko$1(s);
 }
-class ResourceProvider {
+o$1(Ot, "v4");
+const ht$1 = class ht {
   /**
    * @param {string} uri - a unique resource identifier for this provider
    * @param {string} rights - rights text
    * @param {Map} rightsTranslations - optional map of translated rights text - keys should be language of text, values the text
    */
-  constructor(uri = "", rights2 = "", rightsTranslations = /* @__PURE__ */ new Map([["default", rights2]])) {
-    this.uri = uri;
-    this.rights = rightsTranslations;
-    if (!this.rights.has("default")) {
-      this.rights.set("default", rights2);
-    }
+  constructor(e = "", t = "", s = /* @__PURE__ */ new Map([["default", t]])) {
+    this.uri = e, this.rights = s, this.rights.has("default") || this.rights.set("default", t);
   }
   /**
    * @returns a string representation of the resource provider, in the default language
@@ -511,72 +337,60 @@ class ResourceProvider {
    * @param {string} languageCode
    * @returns a string representation of the resource provider, in the requested locale if available
    */
-  toLocaleString(languageCode) {
-    return this.rights.get(languageCode) || this.rights.get("default");
+  toLocaleString(e) {
+    return this.rights.get(e) || this.rights.get("default");
   }
-  static getProxy(provider = null, target = {}) {
-    return new Proxy(target, {
-      get: function(target2, name) {
-        return name === "provider" ? provider : target2[name];
-      }
+  static getProxy(e = null, t = {}) {
+    return new Proxy(t, {
+      get: /* @__PURE__ */ o$1(function(s, n) {
+        return n === "provider" ? e : s[n];
+      }, "get")
     });
   }
   convertToJSONObject() {
-    let rights2 = {};
-    for (const [key, value] of this.rights.entries()) {
-      rights2[key] = value;
-    }
-    const resultProvider = {
+    let e = {};
+    for (const [s, n] of this.rights.entries())
+      e[s] = n;
+    return {
       uri: this.uri,
-      rights: rights2
+      rights: e
     };
-    return resultProvider;
   }
-  static readObject(jsonObject) {
-    const rights2 = /* @__PURE__ */ new Map();
-    if (jsonObject.rights) {
-      Object.keys(jsonObject.rights).forEach((key) => {
-        rights2.set(key, jsonObject.rights[key]);
-      });
-    }
-    return new ResourceProvider(jsonObject.uri, "", rights2);
+  static readObject(e) {
+    const t = /* @__PURE__ */ new Map();
+    return e.rights && Object.keys(e.rights).forEach((s) => {
+      t.set(s, e.rights[s]);
+    }), new ht(e.uri, "", t);
   }
-}
-class Definition {
-  constructor(text, language, format, lemmaText) {
-    this.text = text;
-    this.language = language;
-    this.format = format;
-    this.lemmaText = lemmaText;
-    this.ID = v4();
+};
+o$1(ht$1, "ResourceProvider");
+let W = ht$1;
+const ft = class ft2 {
+  constructor(e, t, s, n) {
+    this.text = e, this.language = t, this.format = s, this.lemmaText = n, this.ID = Ot();
   }
-  static readObject(jsonObject) {
-    let definition = new Definition(jsonObject.text, jsonObject.language, jsonObject.format, jsonObject.lemmaText);
-    if (jsonObject.ID) {
-      definition.ID = jsonObject.ID;
-    }
-    if (jsonObject.provider) {
-      const provider = ResourceProvider.readObject(jsonObject.provider);
-      return ResourceProvider.getProxy(provider, definition);
-    } else {
-      return definition;
-    }
+  static readObject(e) {
+    let t = new ft2(e.text, e.language, e.format, e.lemmaText);
+    if (e.ID && (t.ID = e.ID), e.provider) {
+      const s = W.readObject(e.provider);
+      return W.getProxy(s, t);
+    } else
+      return t;
   }
   convertToJSONObject() {
-    let result = {
+    let e = {
       text: this.text,
       language: this.language,
       format: this.format,
       lemmaText: this.lemmaText,
       ID: this.ID
     };
-    if (this.provider) {
-      result.provider = this.provider.convertToJSONObject();
-    }
-    return result;
+    return this.provider && (e.provider = this.provider.convertToJSONObject()), e;
   }
-}
-class FeatureImporter {
+};
+o$1(ft, "Definition");
+let Ze = ft;
+const Js = class Js2 {
   /**
    * @param defaults
    * @param {boolean} returnUnknown - If true, and a source value is not found in the importer,
@@ -584,13 +398,11 @@ class FeatureImporter {
    * will be thrown for unknown source values.
    * @returns {FeatureImporter}
    */
-  constructor(defaults2 = [], returnUnknown = false) {
+  constructor(e = [], t = false) {
     this.hash = {};
-    for (const value of defaults2) {
-      this.map(value, value);
-    }
-    this.returnUnknown = returnUnknown;
-    return this;
+    for (const s of e)
+      this.map(s, s);
+    return this.returnUnknown = t, this;
   }
   /**
    * Sets mapping between external imported value and one or more library standard values. If an importedValue
@@ -599,15 +411,12 @@ class FeatureImporter {
    * @param {string} importedValue - External value
    * @param {object|object[]|string|string[]} libraryValue - Library standard value
    */
-  map(importedValue, libraryValue) {
-    if (!importedValue) {
+  map(e, t) {
+    if (!e)
       throw new Error("Imported value should not be empty.");
-    }
-    if (!libraryValue) {
+    if (!t)
       throw new Error("Library value should not be empty.");
-    }
-    this.hash[importedValue] = libraryValue;
-    return this;
+    return this.hash[e] = t, this;
   }
   /**
    * Checks if value is in a map.
@@ -615,8 +424,8 @@ class FeatureImporter {
    * @param {string} importedValue - A value to test.
    * @returns {boolean} - Tru if value is in a map, false otherwise.
    */
-  has(importedValue) {
-    return this.hash.hasOwnProperty(importedValue);
+  has(e) {
+    return this.hash.hasOwnProperty(e);
   }
   /**
    * Returns one or more library standard values that match an external value
@@ -624,18 +433,17 @@ class FeatureImporter {
    * @param {string} sourceValue - External value
    * @returns {object|string} One or more of library standard values
    */
-  get(sourceValue) {
-    if (this.has(sourceValue)) {
-      return this.hash[sourceValue];
-    } else if (this.returnUnknown) {
-      return sourceValue;
-    } else {
-      throw new Error('A value "' + sourceValue + '" is not found in the importer.');
-    }
+  get(e) {
+    if (this.has(e))
+      return this.hash[e];
+    if (this.returnUnknown)
+      return e;
+    throw new Error('A value "' + e + '" is not found in the importer.');
   }
-}
-let singleInstance;
-class Logger {
+};
+o$1(Js, "FeatureImporter");
+let Qe = Js, le;
+const dt = class dt2 {
   /**
    * Creates an instance of the Logger class with the parameters specified.
    *
@@ -644,10 +452,8 @@ class Logger {
    * @param {boolean} prepend - Whether to prepend text messages with the alpheios message.
    * @param {boolean} trace - Whether to print a call stack.
    */
-  constructor({ verbose = false, prepend = true, trace = false } = {}) {
-    this._verboseMode = verbose;
-    this._prependMode = prepend;
-    this._traceMode = trace;
+  constructor({ verbose: e = false, prepend: t = true, trace: s = false } = {}) {
+    this._verboseMode = e, this._prependMode = t, this._traceMode = s;
   }
   /**
    * Returns a single instance of the Logger object. If one does not exist, it will be created
@@ -657,105 +463,52 @@ class Logger {
    * @param {object} options - Options of the Logger constructor {@see Logger#constructor}.
    * @returns {Logger} - An instance of existing or newly created Logger object.
    */
-  static getInstance(options = {}) {
-    if (!singleInstance) {
-      singleInstance = new Logger(options);
-    } else {
-      if (typeof options.verbose !== "undefined") {
-        console.info("Setting a verbose mode");
-        singleInstance.setVerboseMode(options.verbose);
-      }
-      if (typeof options.prepend !== "undefined") {
-        console.info("Setting a prepend mode");
-        singleInstance.setVerboseMode(options.prepend);
-      }
-      if (typeof options.trace !== "undefined") {
-        console.info("Setting a trace mode");
-        singleInstance.setTraceMode(options.trace);
-      }
-    }
-    return singleInstance;
+  static getInstance(e = {}) {
+    return le ? (typeof e.verbose != "undefined" && (console.info("Setting a verbose mode"), le.setVerboseMode(e.verbose)), typeof e.prepend != "undefined" && (console.info("Setting a prepend mode"), le.setVerboseMode(e.prepend)), typeof e.trace != "undefined" && (console.info("Setting a trace mode"), le.setTraceMode(e.trace))) : le = new dt2(e), le;
   }
-  setVerboseMode(mode) {
-    this._verboseMode = mode;
-    return this;
+  setVerboseMode(e) {
+    return this._verboseMode = e, this;
   }
-  setPrependMode(mode) {
-    this._prependMode = mode;
-    return this;
+  setPrependMode(e) {
+    return this._prependMode = e, this;
   }
-  setTraceMode(mode) {
-    this._traceMode = mode;
-    return this;
+  setTraceMode(e) {
+    return this._traceMode = e, this;
   }
   verboseModeOn() {
-    this.setVerboseMode(true);
-    return this;
+    return this.setVerboseMode(true), this;
   }
   verboseModeOff() {
-    this.setVerboseMode(false);
-    return this;
+    return this.setVerboseMode(false), this;
   }
   prependModeOn() {
-    this.setPrependMode(true);
-    return this;
+    return this.setPrependMode(true), this;
   }
   prependModeOff() {
-    this.setPrependMode(false);
-    return this;
+    return this.setPrependMode(false), this;
   }
   traceModeOn() {
-    this.setTraceMode(true);
-    return this;
+    return this.setTraceMode(true), this;
   }
   traceModeOff() {
-    this.setTraceMode(false);
-    return this;
+    return this.setTraceMode(false), this;
   }
-  error(...data2) {
-    if (this._prependMode && data2 && data2.length > 0 && typeof data2[0] === "string") {
-      data2[0] = `Alpheios error: ${data2[0]}`;
-    }
-    console.error(...data2);
-    if (this._traceMode) {
-      console.trace();
-    }
+  error(...e) {
+    this._prependMode && e && e.length > 0 && typeof e[0] == "string" && (e[0] = `Alpheios error: ${e[0]}`), console.error(...e), this._traceMode && console.trace();
   }
-  warn(...data2) {
-    if (this._verboseMode) {
-      if (this._prependMode && data2 && data2.length > 0 && typeof data2[0] === "string") {
-        data2[0] = `Alpheios warn: ${data2[0]}`;
-      }
-      console.warn(...data2);
-      if (this._traceMode) {
-        console.trace();
-      }
-    }
+  warn(...e) {
+    this._verboseMode && (this._prependMode && e && e.length > 0 && typeof e[0] == "string" && (e[0] = `Alpheios warn: ${e[0]}`), console.warn(...e), this._traceMode && console.trace());
   }
-  log(...data2) {
-    if (this._verboseMode) {
-      if (this._prependMode && data2 && data2.length > 0 && typeof data2[0] === "string") {
-        data2[0] = `Alpheios log: ${data2[0]}`;
-      }
-      console.log(...data2);
-      if (this._traceMode) {
-        console.trace();
-      }
-    }
+  log(...e) {
+    this._verboseMode && (this._prependMode && e && e.length > 0 && typeof e[0] == "string" && (e[0] = `Alpheios log: ${e[0]}`), console.log(...e), this._traceMode && console.trace());
   }
-  info(...data2) {
-    if (this._verboseMode) {
-      if (this._prependMode && data2 && data2.length > 0 && typeof data2[0] === "string") {
-        data2[0] = `Alpheios info: ${data2[0]}`;
-      }
-      console.info(...data2);
-      if (this._traceMode) {
-        console.trace();
-      }
-    }
+  info(...e) {
+    this._verboseMode && (this._prependMode && e && e.length > 0 && typeof e[0] == "string" && (e[0] = `Alpheios info: ${e[0]}`), console.info(...e), this._traceMode && console.trace());
   }
-}
-class Feature {
+};
+o$1(dt, "Logger");
+let S = dt;
+const P = class P2 {
   /**
    *
    * @param {string} type - A type of the feature, allowed values are specified in 'type' getter.
@@ -785,22 +538,14 @@ class Feature {
    * @param allowedValues - If feature has a restricted set of allowed values, here will be a list of those
    * values. An order of those values can define a sort order.
    */
-  constructor(type, data2, languageID, sortOrder = 1, allowedValues = []) {
-    if (!Feature.isAllowedType(type)) {
-      throw new Error('Features of "' + type + '" type are not supported.');
-    }
-    if (!data2) {
+  constructor(e, t, s, n = 1, a = []) {
+    if (!P2.isAllowedType(e))
+      throw new Error('Features of "' + e + '" type are not supported.');
+    if (!t)
       throw new Error("Feature should have a non-empty value(s).");
-    }
-    if (!languageID) {
+    if (!s)
       throw new Error("No language ID is provided");
-    }
-    this.type = type;
-    this.languageID = languageID;
-    this.sortOrder = sortOrder;
-    this.allowedValues = allowedValues;
-    this._data = Feature.dataValuesFromInput(data2);
-    this.sort();
+    this.type = e, this.languageID = s, this.sortOrder = n, this.allowedValues = a, this._data = P2.dataValuesFromInput(t), this.sort();
   }
   /**
    *
@@ -809,24 +554,15 @@ class Feature {
    * @returns {{sortOrder: number, value: *}[]} Array of object in a format that will be used to store
    *          data values along with their sort order within a Feature object
    */
-  static dataValuesFromInput(data2) {
-    let normalized;
-    if (!Array.isArray(data2)) {
-      normalized = [[data2, this.defaultSortOrder]];
-    } else if (!Array.isArray(data2[0])) {
-      normalized = data2.map((v, i2) => [v, data2.length - i2]);
-    } else {
-      normalized = data2;
-    }
-    return normalized.map((d2) => {
-      return { value: d2[0], sortOrder: Number.parseInt(d2[1]) };
-    });
+  static dataValuesFromInput(e) {
+    let t;
+    return Array.isArray(e) ? Array.isArray(e[0]) ? t = e : t = e.map((s, n) => [s, e.length - n]) : t = [[e, this.defaultSortOrder]], t.map((s) => ({ value: s[0], sortOrder: Number.parseInt(s[1]) }));
   }
   /**
    *
    * @param featureData
    */
-  static newFromFtr(featureData) {
+  static newFromFtr(e) {
   }
   static get types() {
     return {
@@ -886,8 +622,8 @@ class Feature {
       state: "state"
     };
   }
-  static isAllowedType(value) {
-    return Object.values(this.types).includes(`${value}`);
+  static isAllowedType(e) {
+    return Object.values(this.types).includes(`${e}`);
   }
   static get defaultSortOrder() {
     return 1;
@@ -913,7 +649,7 @@ class Feature {
    * Sort order is deterministic.
    */
   sort() {
-    this._data.sort((a, b) => a.sortOrder !== b.sortOrder ? b.sortOrder - a.sortOrder : a.value.localeCompare(b.value));
+    this._data.sort((e, t) => e.sortOrder !== t.sortOrder ? t.sortOrder - e.sortOrder : e.value.localeCompare(t.value));
   }
   /**
    * Compares a feature's values to another feature's values for sorting
@@ -921,12 +657,8 @@ class Feature {
    * @param {Feature} otherFeature the feature to compare this feature's values to
    * @returns {number} < 1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
    */
-  compareTo(otherFeature) {
-    if (otherFeature) {
-      return otherFeature._data[0].sortOrder - this._data[0].sortOrder;
-    } else {
-      return -1;
-    }
+  compareTo(e) {
+    return e ? e._data[0].sortOrder - this._data[0].sortOrder : -1;
   }
   get items() {
     return this._data;
@@ -953,9 +685,10 @@ class Feature {
    *          if feature has no value.
    */
   get singleValue() {
-    if (this._data.length === 0) return;
-    if (this._data.length > 1) throw new Error(Feature.errMsgs.NO_SINGLE_VALUE);
-    return this._data[0].value;
+    if (this._data.length !== 0) {
+      if (this._data.length > 1) throw new Error(P2.errMsgs.NO_SINGLE_VALUE);
+      return this._data[0].value;
+    }
   }
   /**
    * Returns an array of string values of a feature, sorted according to each item's sort order.
@@ -964,15 +697,15 @@ class Feature {
    * @returns {*[]} An array of values in a format in which they are stored in the Feature object.
    */
   get values() {
-    return this._data.map((v) => v.value);
+    return this._data.map((e) => e.value);
   }
   /**
    * Retrieves a value object by name. Can be used to update a value object directly.
    *
    * @param {string} featureValue - A feature value of an object to retrieve.
    */
-  getValue(featureValue) {
-    return this._data.find((v) => v.value === featureValue);
+  getValue(e) {
+    return this._data.find((t) => t.value === e);
   }
   /**
    * Returns a number of feature values.
@@ -1005,8 +738,8 @@ class Feature {
    * @param {string} value
    * @returns {boolean} true if the value is included in the feature's values.
    */
-  hasValue(value) {
-    return this.values.includes(value);
+  hasValue(e) {
+    return this.values.includes(e);
   }
   /**
    * Checks if this feature has all value from an array.
@@ -1014,12 +747,11 @@ class Feature {
    * @param {string[]} values - An array of values to check for.
    * @returns {boolean} true if the value is included in the feature's values.
    */
-  hasValues(values) {
-    let hasValues = true;
-    for (const value of values) {
-      hasValues = hasValues && this.hasValue(value);
-    }
-    return hasValues;
+  hasValues(e) {
+    let t = true;
+    for (const s of e)
+      t = t && this.hasValue(s);
+    return t;
   }
   /**
    * Checks if this feature has some value from an array.
@@ -1027,12 +759,11 @@ class Feature {
    * @param {string[]} values - An array of values to check for.
    * @returns {boolean} true if the value is included in the feature's values.
    */
-  hasSomeValues(values) {
-    let hasValues = false;
-    for (const value of values) {
-      hasValues = hasValues || this.hasValue(value);
-    }
-    return hasValues;
+  hasSomeValues(e) {
+    let t = false;
+    for (const s of e)
+      t = t || this.hasValue(s);
+    return t;
   }
   get valuesUnrestricted() {
     return this.allowedValues.length === 0;
@@ -1044,8 +775,8 @@ class Feature {
    * @param {Feature} feature - A GrmFtr object this feature should be compared with.
    * @returns {boolean} True if features are equal, false otherwise.
    */
-  isEqual(feature) {
-    return feature && this.type === feature.type && LanguageModelFactory.compareLanguages(this.languageID, feature.languageID) && this.value === feature.value;
+  isEqual(e) {
+    return e && this.type === e.type && A.compareLanguages(this.languageID, e.languageID) && this.value === e.value;
   }
   /**
    * Adds a single new value to the existing feature object.
@@ -1055,17 +786,11 @@ class Feature {
    * @param {number} sortOrder - A sort order.
    * @returns {Feature} - Self reference for chaining.
    */
-  addValue(value, sortOrder = this.constructor.defaultSortOrder) {
-    if (!this.hasValue(value)) {
-      this._data.push({
-        value,
-        sortOrder
-      });
-      this.sort();
-    } else {
-      Logger.getInstance().warn(`Value "${value}" already exists. If you want to change it, use "getValue" to access it directly.`);
-    }
-    return this;
+  addValue(e, t = this.constructor.defaultSortOrder) {
+    return this.hasValue(e) ? S.getInstance().warn(`Value "${e}" already exists. If you want to change it, use "getValue" to access it directly.`) : (this._data.push({
+      value: e,
+      sortOrder: t
+    }), this.sort()), this;
   }
   /**
    * Adds multiple new values to the existing feature object.
@@ -1074,24 +799,17 @@ class Feature {
    * @param {string | string[] | string[][]} data - Single or multiple values, in different combinations.
    * @returns {Feature} - Self reference for chaining.
    */
-  addValues(data2) {
-    const normalizedData = this.constructor.dataValuesFromInput(data2);
-    const values = normalizedData.map((v) => v.value);
-    if (!this.hasSomeValues(values)) {
-      this._data = this._data.concat(normalizedData);
-      this.sort();
-    } else {
-      Logger.getInstance().warn(`One or several values from "${values}" already exist. If you want to change it, use "getValue" to access a value directly.`);
-    }
-    return this;
+  addValues(e) {
+    const t = this.constructor.dataValuesFromInput(e), s = t.map((n) => n.value);
+    return this.hasSomeValues(s) ? S.getInstance().warn(`One or several values from "${s}" already exist. If you want to change it, use "getValue" to access a value directly.`) : (this._data = this._data.concat(t), this.sort()), this;
   }
   /**
    * Removes a single value from the existing feature object.
    *
    * @param value
    */
-  removeValue(value) {
-    Logger.getInstance().warn("This feature is not implemented yet");
+  removeValue(e) {
+    S.getInstance().warn("This feature is not implemented yet");
   }
   /**
      * Creates a new single value Feature object of the same type and same language,
@@ -1104,8 +822,8 @@ class Feature {
      * @param {number} sortOrder.
      * @returns {Feature} A new Ftr object.
      */
-  createFeature(value, sortOrder = this.constructor.defaultSortOrder) {
-    return new Feature(this.type, [[value, sortOrder]], this.languageID, this.sortOrder, this.allowedValues);
+  createFeature(e, t = this.constructor.defaultSortOrder) {
+    return new P2(this.type, [[e, t]], this.languageID, this.sortOrder, this.allowedValues);
   }
   /**
    * Creates a multiple value Feature object of the same type and same language,
@@ -1115,8 +833,8 @@ class Feature {
    * formatted according to rules described in a Ftr constructor.
    * @returns {Feature} A new Ftr object.
    */
-  createFeatures(data2) {
-    return new Feature(this.type, data2, this.languageID, this.sortOrder, this.allowedValues);
+  createFeatures(e) {
+    return new P2(this.type, e, this.languageID, this.sortOrder, this.allowedValues);
   }
   /**
    * Creates an array of Feature objects where each Feature object is matching one feature value
@@ -1128,14 +846,14 @@ class Feature {
    * from the current object.
    */
   get ownFeatures() {
-    return this.values.map((v) => new Feature(this.type, v, this.languageID, 1, this.allowedValues));
+    return this.values.map((e) => new P2(this.type, e, this.languageID, 1, this.allowedValues));
   }
   /**
    * Create a copy of the feature object.
    */
   getCopy() {
-    const values = this._data.map((item) => [item.value, item.sortOrder]);
-    return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues.slice());
+    const e = this._data.map((t) => [t.value, t.sortOrder]);
+    return new P2(this.type, e, this.languageID, this.sortOrder, this.allowedValues.slice());
   }
   /**
    * Adds an importer to the internal list.
@@ -1143,18 +861,13 @@ class Feature {
    * @param {string} name - A name of an importer.
    * @param {FeatureImporter} importer - A `FeatureImporter` object.
    */
-  addImporter(importer = new FeatureImporter(), name = this.constructor.defaultImporterName) {
-    if (!this.importers) {
-      this.importers = /* @__PURE__ */ new Map();
-    }
-    this.importers.set(name, importer);
-    return importer;
+  addImporter(e = new Qe(), t = this.constructor.defaultImporterName) {
+    return this.importers || (this.importers = /* @__PURE__ */ new Map()), this.importers.set(t, e), e;
   }
-  getImporter(name = this.constructor.defaultImporterName) {
-    if (!this.importers || !this.importers.has(name)) {
-      throw new Error(`Importer "${name}" does not exist`);
-    }
-    return this.importers.get(name);
+  getImporter(e = this.constructor.defaultImporterName) {
+    if (!this.importers || !this.importers.has(e))
+      throw new Error(`Importer "${e}" does not exist`);
+    return this.importers.get(e);
   }
   /**
    * Adds feature values from the imported values.
@@ -1163,17 +876,11 @@ class Feature {
    * @param {string} name - A name of an importer.
    * @returns {Feature} - A new Ftr object.
    */
-  addFromImporter(foreignData, name = this.constructor.defaultImporterName) {
-    if (!this.importers || !this.importers.has(name)) {
-      throw new Error(`Importer "${name}" does not exist`);
-    }
-    const importer = this.importers.get(name);
-    foreignData = this.constructor.dataValuesFromInput(foreignData);
-    this._data.push(...foreignData.map((fv) => {
-      return { value: importer.get(fv.value), sortOrder: fv.sortOrder };
-    }));
-    this.sort();
-    return this;
+  addFromImporter(e, t = this.constructor.defaultImporterName) {
+    if (!this.importers || !this.importers.has(t))
+      throw new Error(`Importer "${t}" does not exist`);
+    const s = this.importers.get(t);
+    return e = this.constructor.dataValuesFromInput(e), this._data.push(...e.map((n) => ({ value: s.get(n.value), sortOrder: n.sortOrder }))), this.sort(), this;
   }
   /**
    * Creates a new feature of the same type and with the same language from the imported values.
@@ -1182,37 +889,35 @@ class Feature {
    * @param {string} name - A name of an importer.
    * @returns {Feature} - A new Ftr object.
    */
-  createFromImporter(foreignData, name = this.constructor.defaultImporterName) {
-    if (!this.importers || !this.importers.has(name)) {
-      throw new Error(`Importer "${name}" does not exist`);
-    }
-    const importer = this.importers.get(name);
-    if (!Array.isArray(foreignData)) {
-      foreignData = [foreignData];
-    }
-    let values = foreignData.map((fv) => importer.get(fv));
-    values = values.reduce((acc, cv) => acc.concat(cv), []);
-    return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues);
+  createFromImporter(e, t = this.constructor.defaultImporterName) {
+    if (!this.importers || !this.importers.has(t))
+      throw new Error(`Importer "${t}" does not exist`);
+    const s = this.importers.get(t);
+    Array.isArray(e) || (e = [e]);
+    let n = e.map((a) => s.get(a));
+    return n = n.reduce((a, i2) => a.concat(i2), []), new P2(this.type, n, this.languageID, this.sortOrder, this.allowedValues);
   }
   convertToJSONObject() {
-    const data2 = this._data.map((dataItem) => [dataItem.value, dataItem.sortOrder]);
+    const e = this._data.map((t) => [t.value, t.sortOrder]);
     return {
       type: this.type,
-      languageCode: LanguageModelFactory.getLanguageCodeFromId(this.languageID),
+      languageCode: A.getLanguageCodeFromId(this.languageID),
       sortOrder: this.sortOrder,
       allowedValues: this.allowedValues,
-      data: data2
+      data: e
     };
   }
-  static readObject(jsonObject) {
-    const languageID = LanguageModelFactory.getLanguageIdFromCode(jsonObject.languageCode);
-    return new Feature(jsonObject.type, jsonObject.data, languageID, jsonObject.sortOrder, jsonObject.allowedValues);
+  static readObject(e) {
+    const t = A.getLanguageIdFromCode(e.languageCode);
+    return new P2(e.type, e.data, t, e.sortOrder, e.allowedValues);
   }
-}
-Feature.errMsgs = {
+};
+o$1(P, "Feature");
+let l$1 = P;
+l$1.errMsgs = {
   NO_SINGLE_VALUE: "More than one value stored"
 };
-class FeatureType {
+const pt$1 = class pt {
   // TODO: value checking
   /**
    * Creates and initializes a Feature Type object.
@@ -1224,31 +929,18 @@ class FeatureType {
    * such as footnotes).
    * @param {string|symbol} language - A language of a feature type.
    */
-  constructor(type, values, language) {
-    if (!values || !Array.isArray(values)) {
+  constructor(e, t, s) {
+    if (!t || !Array.isArray(t))
       throw new Error("Values should be an array (or an empty array) of values.");
-    }
-    if (!language) {
+    if (!s)
       throw new Error("FeatureType constructor requires a language");
-    }
-    this.type = type;
-    this.languageID = void 0;
-    this.languageCode = void 0;
-    ({ languageID: this.languageID, languageCode: this.languageCode } = LanguageModelFactory.getLanguageAttrs(language));
-    this._orderIndex = [];
-    this._orderLookup = {};
-    for (const [index, value] of values.entries()) {
-      this._orderIndex.push(value);
-      if (Array.isArray(value)) {
-        for (const element of value) {
-          this[element] = new Feature(this.type, element, this.languageID);
-          this._orderLookup[element] = index;
-        }
-      } else {
-        this[value] = new Feature(this.type, value, this.languageID);
-        this._orderLookup[value] = index;
-      }
-    }
+    this.type = e, this.languageID = void 0, this.languageCode = void 0, { languageID: this.languageID, languageCode: this.languageCode } = A.getLanguageAttrs(s), this._orderIndex = [], this._orderLookup = {};
+    for (const [n, a] of t.entries())
+      if (this._orderIndex.push(a), Array.isArray(a))
+        for (const i2 of a)
+          this[i2] = new l$1(this.type, i2, this.languageID), this._orderLookup[i2] = n;
+      else
+        this[a] = new l$1(this.type, a, this.languageID), this._orderLookup[a] = n;
   }
   /**
    * This is a compatibility function for legacy code.
@@ -1256,8 +948,7 @@ class FeatureType {
    * @returns {string} A language code.
    */
   get language() {
-    Logger.getInstance().warn('Please use a "languageID" instead of a "language"');
-    return this.languageCode;
+    return S.getInstance().warn('Please use a "languageID" instead of a "language"'), this.languageCode;
   }
   /**
    * test to see if this FeatureType allows unrestricted values
@@ -1265,7 +956,7 @@ class FeatureType {
    * @returns {boolean} true if unrestricted false if not
    */
   hasUnrestrictedValue() {
-    return this.orderedValues.length === 1 && this.orderedValues[0] === FeatureType.UNRESTRICTED_VALUE;
+    return this.orderedValues.length === 1 && this.orderedValues[0] === pt.UNRESTRICTED_VALUE;
   }
   /**
    * Return a Feature with an arbitrary value. This value would not be necessarily present among FeatureType values.
@@ -1275,29 +966,27 @@ class FeatureType {
    * @param {int} sortOrder
    * @returns {Feature}
    */
-  get(value, sortOrder = 1) {
-    if (value) {
-      return new Feature(this.type, [[value, sortOrder]], this.languageID);
-    } else {
-      throw new Error("A non-empty value should be provided.");
-    }
+  get(e, t = 1) {
+    if (e)
+      return new l$1(this.type, [[e, t]], this.languageID);
+    throw new Error("A non-empty value should be provided.");
   }
   /**
    *
    * @param {string[][]} data - An array of value arrays as: [[value1, sortOrder1], [value2, sortOrder2]]
    * @returns {Feature}
    */
-  getValues(data2) {
-    return new Feature(this.type, data2, this.languageID);
+  getValues(e) {
+    return new l$1(this.type, e, this.languageID);
   }
-  getFromImporter(importerName, value) {
-    let mapped;
+  getFromImporter(e, t) {
+    let s;
     try {
-      mapped = this.importer[importerName].get(value);
-    } catch (e) {
-      mapped = this.get(value);
+      s = this.importer[e].get(t);
+    } catch (n) {
+      s = this.get(t);
     }
-    return mapped;
+    return s;
   }
   /**
    * Creates and returns a new importer with a specific name. If an importer with this name already exists,
@@ -1306,13 +995,10 @@ class FeatureType {
    * @param {string} name - A name of an importer object
    * @returns {Importer} A new or existing Importer object that matches a name provided
    */
-  addImporter(name) {
-    if (!name) {
+  addImporter(e) {
+    if (!e)
       throw new Error("Importer should have a non-empty name.");
-    }
-    this.importer = this.importer || {};
-    this.importer[name] = this.importer[name] || new FeatureImporter();
-    return this.importer[name];
+    return this.importer = this.importer || {}, this.importer[e] = this.importer[e] || new Qe(), this.importer[e];
   }
   /**
    * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
@@ -1323,7 +1009,7 @@ class FeatureType {
    * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
    */
   get orderedFeatures() {
-    return this.orderedValues.map((value) => new Feature(this.type, value, this.languageID));
+    return this.orderedValues.map((e) => new l$1(this.type, e, this.languageID));
   }
   /**
    * Return all feature values as strings in a sorted array, according to feature type's sort order.
@@ -1361,68 +1047,53 @@ class FeatureType {
    * and will be stored inside an _orderIndex as an array. genders.masculine and genders.feminine will be grouped together
    * during filtering and will be in the same bin during sorting.
    */
-  set order(values) {
-    if (!values || Array.isArray(values) && values.length === 0) {
+  set order(e) {
+    if (!e || Array.isArray(e) && e.length === 0)
       throw new Error("A non-empty list of values should be provided.");
-    }
-    if (!Array.isArray(values)) {
-      values = [values];
-    }
-    for (const value of values) {
-      if (Array.isArray(value)) {
-        for (const element of value) {
-          if (!this.hasOwnProperty(element.value)) {
-            throw new Error('Trying to order an element with "' + element.value + '" value that is not stored in a "' + this.type + '" type.');
-          }
-          if (element.type !== this.type) {
-            throw new Error('Trying to order an element with type "' + element.type + '" that is different from "' + this.type + '".');
-          }
-          if (!LanguageModelFactory.compareLanguages(element.languageID, this.languageID)) {
-            throw new Error(`Trying to order an element with language "${element.languageID.toString()}" that is different from "${this.languageID.toString()}"`);
-          }
+    Array.isArray(e) || (e = [e]);
+    for (const t of e)
+      if (Array.isArray(t))
+        for (const s of t) {
+          if (!this.hasOwnProperty(s.value))
+            throw new Error('Trying to order an element with "' + s.value + '" value that is not stored in a "' + this.type + '" type.');
+          if (s.type !== this.type)
+            throw new Error('Trying to order an element with type "' + s.type + '" that is different from "' + this.type + '".');
+          if (!A.compareLanguages(s.languageID, this.languageID))
+            throw new Error(`Trying to order an element with language "${s.languageID.toString()}" that is different from "${this.languageID.toString()}"`);
         }
-      } else {
-        if (!this.hasOwnProperty(value.value)) {
-          throw new Error('Trying to order an element with "' + value.value + '" value that is not stored in a "' + this.type + '" type.');
-        }
-        if (value.type !== this.type) {
-          throw new Error('Trying to order an element with type "' + value.type + '" that is different from "' + this.type + '".');
-        }
-        if (!LanguageModelFactory.compareLanguages(value.languageID, this.languageID)) {
-          throw new Error(`Trying to order an element with language "${value.languageID.toString()}" that is different from "${this.languageID.toString()}"`);
-        }
+      else {
+        if (!this.hasOwnProperty(t.value))
+          throw new Error('Trying to order an element with "' + t.value + '" value that is not stored in a "' + this.type + '" type.');
+        if (t.type !== this.type)
+          throw new Error('Trying to order an element with type "' + t.type + '" that is different from "' + this.type + '".');
+        if (!A.compareLanguages(t.languageID, this.languageID))
+          throw new Error(`Trying to order an element with language "${t.languageID.toString()}" that is different from "${this.languageID.toString()}"`);
       }
-    }
-    this._orderLookup = {};
-    this._orderIndex = [];
-    for (const [index, element] of values.entries()) {
-      if (Array.isArray(element)) {
-        let elements = [];
-        for (const subElement of element) {
-          this._orderLookup[subElement.value] = index;
-          elements.push(subElement.value);
-        }
-        this._orderIndex[index] = elements;
-      } else {
-        this._orderLookup[element.value] = index;
-        this._orderIndex[index] = element.value;
-      }
-    }
+    this._orderLookup = {}, this._orderIndex = [];
+    for (const [t, s] of e.entries())
+      if (Array.isArray(s)) {
+        let n = [];
+        for (const a of s)
+          this._orderLookup[a.value] = t, n.push(a.value);
+        this._orderIndex[t] = n;
+      } else
+        this._orderLookup[s.value] = t, this._orderIndex[t] = s.value;
   }
-}
-FeatureType.UNRESTRICTED_VALUE = Symbol("unrestricted");
-class InflectionGroupingKey {
+};
+o$1(pt$1, "FeatureType");
+let et$1 = pt$1;
+et$1.UNRESTRICTED_VALUE = Symbol("unrestricted");
+const Ks = class Ks2 {
   /**
    * @class
    * @param {Inflection} infl inflection with features which are used as a grouping key
    * @param {string[]} features array of feature names which are used as the key
    * @param {object} extras extra property name and value pairs used in the key
    */
-  constructor(infl, features, extras = {}) {
-    for (const feature of features) {
-      this[feature] = infl[feature];
-    }
-    Object.assign(this, extras);
+  constructor(e, t, s = {}) {
+    for (const n of t)
+      this[n] = e[n];
+    Object.assign(this, s);
   }
   /**
      * checks if a feature with a specific value
@@ -1432,11 +1103,8 @@ class InflectionGroupingKey {
      * @param feature
      * @param value
      */
-  hasFeatureValue(feature, value) {
-    if (this.hasOwnProperty(feature)) {
-      return this[feature].values.includes(value);
-    }
-    return false;
+  hasFeatureValue(e, t) {
+    return this.hasOwnProperty(e) ? this[e].values.includes(t) : false;
   }
   /**
    * Return this key as a string
@@ -1444,15 +1112,17 @@ class InflectionGroupingKey {
    * @returns {string} string representation of the key
    */
   toString() {
-    let values = [];
-    for (const prop of Object.getOwnPropertyNames(this).sort()) {
-      const value = this[prop] instanceof Feature ? this[prop].values.sort().join(",") : this[prop];
-      values.push(value);
+    let e = [];
+    for (const t of Object.getOwnPropertyNames(this).sort()) {
+      const s = this[t] instanceof l$1 ? this[t].values.sort().join(",") : this[t];
+      e.push(s);
     }
-    return values.join(" ");
+    return e.join(" ");
   }
-}
-class InflectionGroup {
+};
+o$1(Ks, "InflectionGroupingKey");
+let k = Ks;
+const js = class js2 {
   /**
    * A group of inflections or groups of inflections
    *
@@ -1460,22 +1130,23 @@ class InflectionGroup {
    * @param {Inflection[]|InflectionGroup[]} inflections array of Inflections or InflectionGroups in this group
    * @param sortKey
    */
-  constructor(groupingKey, inflections = [], sortKey = null) {
-    this.groupingKey = groupingKey;
-    this.inflections = inflections;
+  constructor(e, t = [], s = null) {
+    this.groupingKey = e, this.inflections = t;
   }
   /**
    * Add an Inflection or InflectionGroup to the group
    *
    * @param {Inflection|InflectionGroup} inflection
    */
-  append(inflection) {
-    this.inflections.push(inflection);
+  append(e) {
+    this.inflections.push(e);
   }
-}
-class LanguageModel {
+};
+o$1(js, "InflectionGroup");
+let $ = js;
+const Ae = class Ae2 {
   constructor() {
-    this.context_backward = LanguageModel.contextBackward;
+    this.context_backward = Ae2.contextBackward;
   }
   static get contextForward() {
     return 0;
@@ -1484,45 +1155,40 @@ class LanguageModel {
     return 0;
   }
   static get direction() {
-    return LANG_DIR_LTR;
+    return ye;
   }
   static get baseUnit() {
-    return LANG_UNIT_WORD;
+    return J;
   }
   /**
    * @deprecated
    */
   get contextForward() {
-    Logger.getInstance().warn('Please use static "contextForward" instead');
-    return this.constructor.contextForward;
+    return S.getInstance().warn('Please use static "contextForward" instead'), this.constructor.contextForward;
   }
   /**
    * @deprecated
    */
   get contextBackward() {
-    Logger.getInstance().warn('Please use static "contextBackward" instead');
-    return this.constructor.contextBackward;
+    return S.getInstance().warn('Please use static "contextBackward" instead'), this.constructor.contextBackward;
   }
   /**
    * @deprecated
    */
   get direction() {
-    Logger.getInstance().warn('Please use static "direction" instead');
-    return this.constructor.direction;
+    return S.getInstance().warn('Please use static "direction" instead'), this.constructor.direction;
   }
   /**
    * @deprecated
    */
   get baseUnit() {
-    Logger.getInstance().warn('Please use static "baseUnit" instead');
-    return this.constructor.baseUnit;
+    return S.getInstance().warn('Please use static "baseUnit" instead'), this.constructor.baseUnit;
   }
   /**
    * @deprecated
    */
   get features() {
-    Logger.getInstance().warn('Please use individual "getFeatureType" or static "features" instead');
-    return this.constructor.features;
+    return S.getInstance().warn('Please use individual "getFeatureType" or static "features" instead'), this.constructor.features;
   }
   /**
    * Returns a list of names of feature types that are defined in a language model.
@@ -1541,12 +1207,10 @@ class LanguageModel {
    * @param {string} featureType - A feature type name.
    * @returns {Feature} A feature object of requested type.
    */
-  static typeFeature(featureType) {
-    if (this.typeFeatures.has(featureType)) {
-      return this.typeFeatures.get(featureType);
-    } else {
-      throw new Error(`Type feature "${featureType}" is not defined within "${this}"`);
-    }
+  static typeFeature(e) {
+    if (this.typeFeatures.has(e))
+      return this.typeFeatures.get(e);
+    throw new Error(`Type feature "${e}" is not defined within "${this}"`);
   }
   /**
    * Returns a map with Feature objects of all features defined in a language. Use this method to get all
@@ -1556,20 +1220,19 @@ class LanguageModel {
    * a feature type (a string), and the value is a Feature object.
    */
   static get typeFeatures() {
-    Logger.getInstance().warn("This getter must be defined in a descendant class");
+    S.getInstance().warn("This getter must be defined in a descendant class");
   }
   static get features() {
-    let features = {};
-    for (const featureName of this.featureNames) {
-      features[featureName] = this.getFeature(featureName);
-    }
-    return features;
+    let e = {};
+    for (const t of this.featureNames)
+      e[t] = this.getFeature(t);
+    return e;
   }
   static get languageID() {
-    return LANG_UNDEFINED;
+    return us;
   }
   static get languageCode() {
-    return STR_LANG_CODE_UNDEFINED;
+    return fs;
   }
   /**
    * Returns an array of language codes that represents the language.
@@ -1580,32 +1243,28 @@ class LanguageModel {
     return [];
   }
   static get codes() {
-    Logger.getInstance().warn('Use static "languageCodes" instead');
-    return this.languageCodes;
+    return S.getInstance().warn('Use static "languageCodes" instead'), this.languageCodes;
   }
   /**
    * @deprecated
    * @returns {string[]}
    */
   get codes() {
-    Logger.getInstance().warn('Please use a static version of "codes" instead');
-    return this.constructor.languageCodes;
+    return S.getInstance().warn('Please use a static version of "codes" instead'), this.constructor.languageCodes;
   }
   /**
    * @deprecated
    * @returns {string}
    */
   toCode() {
-    Logger.getInstance().warn('Please use a static "languageCode" instead');
-    return this.constructor.languageCode;
+    return S.getInstance().warn('Please use a static "languageCode" instead'), this.constructor.languageCode;
   }
   /**
    * @deprecated
    * @returns {string}
    */
   static toCode() {
-    Logger.getInstance().warn('Please use a static "languageCode" instead');
-    return this.languageCode;
+    return S.getInstance().warn('Please use a static "languageCode" instead'), this.languageCode;
   }
   /**
    * Return a list of feature values that are allowed for each feature type
@@ -1615,99 +1274,99 @@ class LanguageModel {
   static get featureValues() {
     return /* @__PURE__ */ new Map([
       [
-        Feature.types.part,
+        l$1.types.part,
         [
-          POFS_ADVERB,
-          POFS_ADVERBIAL,
-          POFS_ADJECTIVE,
-          POFS_ARTICLE,
-          POFS_CONJUNCTION,
-          POFS_EXCLAMATION,
-          POFS_INTERJECTION,
-          POFS_NOUN,
-          POFS_NUMERAL,
-          POFS_PARTICLE,
-          POFS_PREFIX,
-          POFS_PREPOSITION,
-          POFS_PRONOUN,
-          POFS_SUFFIX,
-          POFS_SUPINE,
-          POFS_VERB,
-          POFS_VERB_PARTICIPLE
+          ne$1,
+          ys,
+          Oe,
+          St,
+          Es,
+          ae,
+          ie$1,
+          ve$1,
+          At,
+          _e,
+          ws,
+          Is,
+          de$1,
+          bs$1,
+          Ft,
+          pe,
+          Ct
         ]
       ],
       [
-        Feature.types.gender,
+        l$1.types.gender,
         [
-          GEND_MASCULINE,
-          GEND_FEMININE,
-          GEND_NEUTER
+          Dn,
+          Tn,
+          On
         ]
       ],
       [
-        Feature.types.type,
+        l$1.types.type,
         [
-          TYPE_REGULAR,
-          TYPE_IRREGULAR
+          kn$1,
+          Mn
         ]
       ],
       [
-        Feature.types.person,
+        l$1.types.person,
         [
-          ORD_1ST,
-          ORD_2ND,
-          ORD_3RD
+          Ne,
+          xe,
+          Re
         ]
       ],
       [
-        Feature.types.number,
+        l$1.types.number,
         [
-          NUM_SINGULAR,
-          NUM_PLURAL
+          Dt,
+          Tt
         ]
       ],
       [
-        Feature.types.age,
+        l$1.types.age,
         []
       ],
       [
-        Feature.types.area,
+        l$1.types.area,
         []
       ],
       [
-        Feature.types.source,
+        l$1.types.source,
         []
       ],
       [
-        Feature.types.frequency,
+        l$1.types.frequency,
         []
       ],
       [
-        Feature.types.geo,
+        l$1.types.geo,
         []
       ],
       [
-        Feature.types.pronunciation,
+        l$1.types.pronunciation,
         []
       ],
       [
-        Feature.types.kind,
+        l$1.types.kind,
         []
       ],
       [
-        Feature.types.comparison,
+        l$1.types.comparison,
         []
       ],
       [
-        Feature.types.morph,
+        l$1.types.morph,
         []
       ],
       [
-        Feature.types.stemtype,
+        l$1.types.stemtype,
         []
       ],
       [
-        Feature.types.derivtype,
+        l$1.types.derivtype,
         []
       ]
     ]);
@@ -1717,30 +1376,26 @@ class LanguageModel {
    * @returns {symbol} Returns a language ID
    */
   static get sourceLanguage() {
-    Logger.getInstance().warn("Please use languageID directly");
-    return this.languageID;
+    return S.getInstance().warn("Please use languageID directly"), this.languageID;
   }
   /**
    * @deprecated
    * @returns {symbol} Returns a language ID
    */
   get sourceLanguage() {
-    Logger.getInstance().warn("Please use languageID directly");
-    return this.constructor.languageID;
+    return S.getInstance().warn("Please use languageID directly"), this.constructor.languageID;
   }
   /**
    * @deprecated
    * @param name
    * @returns {FeatureType}
    */
-  static getFeatureType(name) {
-    Logger.getInstance().warn("Please use getFeature instead");
-    const featureValues = this.featureValues;
-    if (featureValues.has(name)) {
-      return new FeatureType(name, featureValues.get(name), this.languageID);
-    } else {
-      throw new Error(`Feature "${name}" is not defined`);
-    }
+  static getFeatureType(e) {
+    S.getInstance().warn("Please use getFeature instead");
+    const t = this.featureValues;
+    if (t.has(e))
+      return new et$1(e, t.get(e), this.languageID);
+    throw new Error(`Feature "${e}" is not defined`);
   }
   /**
    * Returns a new instance of a feature with `featureType`. It uses a feature defined in a language model
@@ -1749,28 +1404,25 @@ class LanguageModel {
    * @param {string} featureType - A name of a feature type.
    * @returns {Feature} - A newly created Feature object.
    */
-  static getFeature(featureType) {
-    const featureValues = this.featureValues;
-    if (featureValues.has(featureType)) {
-      const allowedValues = featureValues.get(featureType);
-      return new Feature(featureType, allowedValues, this.languageID, 1, allowedValues);
-    } else {
-      throw new Error(`Feature "${featureType}" is not defined`);
-    }
+  static getFeature(e) {
+    const t = this.featureValues;
+    if (t.has(e)) {
+      const s = t.get(e);
+      return new l$1(e, s, this.languageID, 1, s);
+    } else
+      throw new Error(`Feature "${e}" is not defined`);
   }
   _initializeFeatures() {
-    const features = {};
-    for (const featureName of this.constructor.featureValues.keys()) {
-      features[featureName] = this.constructor.getFeature(featureName);
-    }
-    return features;
+    const e = {};
+    for (const t of this.constructor.featureValues.keys())
+      e[t] = this.constructor.getFeature(t);
+    return e;
   }
   /**
    * @deprecated
    */
   grammarFeatures() {
-    Logger.getInstance().warn('Please use a static version of "grammarFeatures" instead');
-    return this.constructor.grammarFeatures();
+    return S.getInstance().warn('Please use a static version of "grammarFeatures" instead'), this.constructor.grammarFeatures();
   }
   /**
    * Identify the morphological features which should be linked to a grammar.
@@ -1786,7 +1438,7 @@ class LanguageModel {
    * @param node
    * @returns {boolean}
    */
-  static canInflect(node) {
+  static canInflect(e) {
     return false;
   }
   /**
@@ -1795,8 +1447,8 @@ class LanguageModel {
    * @param {string} code - The language code
    * @returns {boolean} - True if supported, false if not
    */
-  static supportsLanguage(code) {
-    return this.languageCodes.includes[code];
+  static supportsLanguage(e) {
+    return this.languageCodes.includes[e];
   }
   /**
    * Checks if the word provided has a trailing digit (e.g. αἴγυπτος1 in Greek).
@@ -1804,8 +1456,8 @@ class LanguageModel {
    * @param {string} word - A word to be checked.
    * @returns {boolean} - True if the word has a trailing digit, false otherwise.
    */
-  static hasTrailingDigit(word) {
-    return /^.+\d$/.test(word);
+  static hasTrailingDigit(e) {
+    return /^.+\d$/.test(e);
   }
   /**
    * Morphological parsers and dictionary indexes may add a trailing digit to disambiguate homonyms.
@@ -1814,8 +1466,8 @@ class LanguageModel {
    * @param {string} word - A word to normalize.
    * @returns {string} A normalized word.
    */
-  static normalizeTrailingDigit(word) {
-    return /^.+\d$/.test(word) ? word.substring(0, word.length - 1) : word;
+  static normalizeTrailingDigit(e) {
+    return /^.+\d$/.test(e) ? e.substring(0, e.length - 1) : e;
   }
   /**
    * Checks if the word provided is in a normalized form.
@@ -1826,8 +1478,8 @@ class LanguageModel {
    * @returns {boolean} - True if at least one character of the word
    * is NOT in an Unicode Normalization Form, false otherwise.
    */
-  static needsNormalization(text) {
-    return Boolean(text.localeCompare(this.normalizeText(text)));
+  static needsNormalization(e) {
+    return !!e.localeCompare(this.normalizeText(e));
   }
   /**
    * Checks if the word provided has any letters in an upper case.
@@ -1835,8 +1487,8 @@ class LanguageModel {
    * @param {string} word - A word to be checked.
    * @returns {boolean} - True if the word at least one letter in upper case, false if all letters are lower case.
    */
-  static hasUpperCase(word) {
-    return Boolean(word.localeCompare(word.toLocaleLowerCase()));
+  static hasUpperCase(e) {
+    return !!e.localeCompare(e.toLocaleLowerCase());
   }
   /**
    * Return a normalized version of a text string which can be used to compare the word for equality
@@ -1845,8 +1497,8 @@ class LanguageModel {
    * @returns {string} Normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
    */
-  static normalizeText(word) {
-    return word;
+  static normalizeText(e) {
+    return e;
   }
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
@@ -1854,8 +1506,8 @@ class LanguageModel {
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    */
-  static normalizePartOfSpeechValue(lexeme) {
-    return lexeme.lemma.features[Feature.types.part] ? lexeme.lemma.features[Feature.types.part].value : null;
+  static normalizePartOfSpeechValue(e) {
+    return e.lemma.features[l$1.types.part] ? e.lemma.features[l$1.types.part].value : null;
   }
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
@@ -1864,8 +1516,8 @@ class LanguageModel {
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue(featureType, featureValue) {
-    return featureValue;
+  static normalizeFeatureValue(e, t) {
+    return t;
   }
   /**
    * Returns alternate encodings for a word
@@ -1880,14 +1532,14 @@ class LanguageModel {
    * @returns {Array} an array of alternate encodings if they differ from the original
    */
   static alternateWordEncodings({
-    word = null,
-    preceding = null,
-    following = null,
-    encoding = null,
-    preserveCase = false,
-    includeOriginal = false
+    word: e = null,
+    preceding: t = null,
+    following: s = null,
+    encoding: n = null,
+    preserveCase: a = false,
+    includeOriginal: i2 = false
   } = {}) {
-    return includeOriginal ? [word] : [];
+    return i2 ? [e] : [];
   }
   /**
    * Compare two words with language specific logic
@@ -1897,14 +1549,8 @@ class LanguageModel {
    * @param {boolean} normalize - whether or not to apply normalization algorithms
    * @param {object} options - Additional comparison criteria.
    */
-  static compareWords(wordA, wordB, normalize = true, options = {}) {
-    if (normalize) {
-      wordA = this.normalizeTrailingDigit(wordA);
-      wordB = this.normalizeTrailingDigit(wordB);
-      return this.normalizeText(wordA) === this.normalizeText(wordB);
-    } else {
-      return wordA === wordB;
-    }
+  static compareWords(e, t, s = true, n = {}) {
+    return s ? (e = this.normalizeTrailingDigit(e), t = this.normalizeTrailingDigit(t), this.normalizeText(e) === this.normalizeText(t)) : e === t;
   }
   /**
    * Compare two feature values with language specific logic
@@ -1915,12 +1561,8 @@ class LanguageModel {
    * @param {object} options
    * @param {boolean} options.normalize - whether or not to apply normalization
    */
-  static compareFeatureValue(featureType, valueA, valueB, { normalize = true } = {}) {
-    if (normalize) {
-      valueA = this.normalizeFeatureValue(featureType, valueA);
-      valueB = this.normalizeFeatureValue(featureType, valueB);
-    }
-    return valueA === valueB;
+  static compareFeatureValue(e, t, s, { normalize: n = true } = {}) {
+    return n && (t = this.normalizeFeatureValue(e, t), s = this.normalizeFeatureValue(e, s)), t === s;
   }
   /**
    * Get a list of valid punctuation for this language
@@ -1936,14 +1578,13 @@ class LanguageModel {
    * @returns {string}
    */
   getPunctuation() {
-    Logger.getInstance().warn('Please use a static version of "getPunctuation"');
-    return this.constructor.getPunctuation();
+    return S.getInstance().warn('Please use a static version of "getPunctuation"'), this.constructor.getPunctuation();
   }
   toString() {
     return String(this.constructor.languageCode);
   }
-  isEqual(model) {
-    return LanguageModelFactory.compareLanguages(this.languageID, model.languageID);
+  isEqual(e) {
+    return A.compareLanguages(this.languageID, e.languageID);
   }
   /*
   There are two types of language identificators: language IDs and language code. Language ID is a symbol constant
@@ -1957,12 +1598,10 @@ class LanguageModel {
    * @param {string} languageCode - A language code to check
    * @returns {boolean} Whether this language code exists in a language code list
    */
-  static hasCode(languageCode) {
-    if (this.isLanguageCode(languageCode)) {
-      return this.languageCodes.includes(languageCode);
-    } else {
-      throw new Error(`Format of a "${languageCode}" is incorrect`);
-    }
+  static hasCode(e) {
+    if (this.isLanguageCode(e))
+      return this.languageCodes.includes(e);
+    throw new Error(`Format of a "${e}" is incorrect`);
   }
   /**
    * Tests wither a provided language identificator is a language ID.
@@ -1970,8 +1609,8 @@ class LanguageModel {
    * @param {symbol|string} language - A language identificator, either a Symbol or a string language code.
    * @returns {boolean} True if language identificator provided is a language ID.
    */
-  static isLanguageID(language) {
-    return typeof language === "symbol";
+  static isLanguageID(e) {
+    return typeof e == "symbol";
   }
   /**
    * Tests wither a provided language identificator is a language code.
@@ -1979,16 +1618,15 @@ class LanguageModel {
    * @param {symbol|string} language - A language identificator, either a Symbol or a string language code.
    * @returns {boolean} - True if language identificator provided is a language code.
    */
-  static isLanguageCode(language) {
-    return !LanguageModel.isLanguageID(language);
+  static isLanguageCode(e) {
+    return !Ae2.isLanguageID(e);
   }
   /**
    * @deprecated
    * @param node
    */
-  canInflect(node) {
-    Logger.getInstance().warn('Please use a static version of "canInflect" instead');
-    return this.constructor.canInflect(node);
+  canInflect(e) {
+    return S.getInstance().warn('Please use a static version of "canInflect" instead'), this.constructor.canInflect(e);
   }
   /**
    * Groups a set of inflections according to a language-specific display paradigm
@@ -2005,108 +1643,71 @@ class LanguageModel {
    *
    * @param inflections
    */
-  static groupInflectionsForDisplay(inflections) {
-    let grouped = /* @__PURE__ */ new Map();
-    const aggregated = this.aggregateInflectionsForDisplay(inflections);
-    for (const infl of aggregated) {
-      const groupingKey = new InflectionGroupingKey(
-        infl,
-        [Feature.types.part, Feature.types.declension, Feature.types.dialect, Feature.types.comparison],
+  static groupInflectionsForDisplay(e) {
+    let t = /* @__PURE__ */ new Map();
+    const s = this.aggregateInflectionsForDisplay(e);
+    for (const n of s) {
+      const a = new k(
+        n,
+        [l$1.types.part, l$1.types.declension, l$1.types.dialect, l$1.types.comparison],
         {
-          prefix: infl.prefix,
-          suffix: infl.suffix,
-          stem: infl.stem
+          prefix: n.prefix,
+          suffix: n.suffix,
+          stem: n.stem
         }
-      );
-      const groupingKeyStr = groupingKey.toString();
-      if (grouped.has(groupingKeyStr)) {
-        grouped.get(groupingKeyStr).append(infl);
-      } else {
-        grouped.set(groupingKeyStr, new InflectionGroup(groupingKey, [infl]));
-      }
+      ), i2 = a.toString();
+      t.has(i2) ? t.get(i2).append(n) : t.set(i2, new $(a, [n]));
     }
-    for (const kv of grouped) {
-      const inflgrp = /* @__PURE__ */ new Map();
-      for (const infl of kv[1].inflections) {
-        let keyprop;
-        let isCaseInflectionSet = false;
-        if (infl[Feature.types.grmCase]) {
-          keyprop = Feature.types.number;
-          isCaseInflectionSet = true;
-        } else if (infl[Feature.types.tense]) {
-          keyprop = Feature.types.tense;
-        } else if (infl[Feature.types.part] === POFS_VERB) {
-          keyprop = Feature.types.part;
-        } else if (infl[Feature.types.part] === POFS_ADVERB) {
-          keyprop = Feature.types.part;
-        } else {
-          keyprop = "misc";
-        }
-        const groupingKey = new InflectionGroupingKey(infl, [keyprop], { isCaseInflectionSet });
-        const groupingKeyStr = groupingKey.toString();
-        if (inflgrp.has(groupingKeyStr)) {
-          inflgrp.get(groupingKeyStr).append(infl);
-        } else {
-          inflgrp.set(groupingKeyStr, new InflectionGroup(groupingKey, [infl]));
-        }
+    for (const n of t) {
+      const a = /* @__PURE__ */ new Map();
+      for (const i2 of n[1].inflections) {
+        let u2, d2 = false;
+        i2[l$1.types.grmCase] ? (u2 = l$1.types.number, d2 = true) : i2[l$1.types.tense] ? u2 = l$1.types.tense : i2[l$1.types.part] === pe || i2[l$1.types.part] === ne$1 ? u2 = l$1.types.part : u2 = "misc";
+        const h2 = new k(i2, [u2], { isCaseInflectionSet: d2 }), c2 = h2.toString();
+        a.has(c2) ? a.get(c2).append(i2) : a.set(c2, new $(h2, [i2]));
       }
-      for (const kv2 of inflgrp) {
-        const nextGroup = /* @__PURE__ */ new Map();
-        const sortOrder = /* @__PURE__ */ new Map();
-        for (const infl of kv2[1].inflections) {
-          const sortkey = infl[Feature.types.grmCase] ? Math.max(infl[Feature.types.grmCase].items.map((f2) => f2.sortOrder)) : 1;
-          const groupingKey = new InflectionGroupingKey(infl, [Feature.types.tense, Feature.types.voice]);
-          const groupingKeyStr = groupingKey.toString();
-          if (nextGroup.has(groupingKeyStr)) {
-            nextGroup.get(groupingKeyStr).append(infl);
-          } else {
-            nextGroup.set(groupingKeyStr, new InflectionGroup(groupingKey, [infl], sortkey));
-            sortOrder.set(groupingKeyStr, sortkey);
-          }
+      for (const i2 of a) {
+        const u2 = /* @__PURE__ */ new Map(), d2 = /* @__PURE__ */ new Map();
+        for (const c2 of i2[1].inflections) {
+          const p2 = c2[l$1.types.grmCase] ? Math.max(c2[l$1.types.grmCase].items.map((m2) => m2.sortOrder)) : 1, g2 = new k(c2, [l$1.types.tense, l$1.types.voice]), y = g2.toString();
+          u2.has(y) ? u2.get(y).append(c2) : (u2.set(y, new $(g2, [c2], p2)), d2.set(y, p2));
         }
-        kv2[1].inflections = [];
-        const sortedKeys = Array.from(nextGroup.keys()).sort(
-          (a, b) => {
-            const orderA = sortOrder.get(a);
-            const orderB = sortOrder.get(b);
-            return orderA > orderB ? -1 : orderB > orderA ? 1 : 0;
+        i2[1].inflections = [];
+        const h2 = Array.from(u2.keys()).sort(
+          (c2, p2) => {
+            const g2 = d2.get(c2), y = d2.get(p2);
+            return g2 > y ? -1 : y > g2 ? 1 : 0;
           }
         );
-        for (const groupkey of sortedKeys) {
-          kv2[1].inflections.push(nextGroup.get(groupkey));
-        }
+        for (const c2 of h2)
+          i2[1].inflections.push(u2.get(c2));
       }
-      for (const kv2 of inflgrp) {
-        const groups = kv2[1];
-        for (const group of groups.inflections) {
-          let nextGroup = /* @__PURE__ */ new Map();
-          for (const infl of group.inflections) {
-            const groupingKey = new InflectionGroupingKey(
-              infl,
+      for (const i2 of a) {
+        const u2 = i2[1];
+        for (const d2 of u2.inflections) {
+          let h2 = /* @__PURE__ */ new Map();
+          for (const c2 of d2.inflections) {
+            const p2 = new k(
+              c2,
               [
-                Feature.types.grmCase,
-                Feature.types.comparison,
-                Feature.types.gender,
-                Feature.types.number,
-                Feature.types.person,
-                Feature.types.tense,
-                Feature.types.mood,
-                Feature.types.voice
+                l$1.types.grmCase,
+                l$1.types.comparison,
+                l$1.types.gender,
+                l$1.types.number,
+                l$1.types.person,
+                l$1.types.tense,
+                l$1.types.mood,
+                l$1.types.voice
               ]
-            );
-            const groupingKeyStr = groupingKey.toString();
-            if (nextGroup.has(groupingKeyStr)) {
-              nextGroup.get(groupingKeyStr).append(infl);
-            } else {
-              nextGroup.set(groupingKeyStr, new InflectionGroup(groupingKey, [infl]));
-            }
+            ), g2 = p2.toString();
+            h2.has(g2) ? h2.get(g2).append(c2) : h2.set(g2, new $(p2, [c2]));
           }
-          group.inflections = Array.from(nextGroup.values());
+          d2.inflections = Array.from(h2.values());
         }
       }
-      kv[1].inflections = Array.from(inflgrp.values());
+      n[1].inflections = Array.from(a.values());
     }
-    return Array.from(grouped.values());
+    return Array.from(t.values());
   }
   /**
    * Aggregate inflections for display according to language model characteristics
@@ -2114,30 +1715,29 @@ class LanguageModel {
    * @param {Inflection[]} inflections an array of inflections
    * @returns Inflection[] the aggregated inflections
    */
-  static aggregateInflectionsForDisplay(inflections) {
-    return inflections;
+  static aggregateInflectionsForDisplay(e) {
+    return e;
   }
   /**
    * @deprecated
    * @param inflections
    * @returns {*}
    */
-  groupInflectionsForDisplay(inflections) {
-    Logger.getInstance().warn('Please use a static version of "groupInflectionsForDisplay" instead');
-    return this.constructor.groupInflectionsForDisplay(inflections);
+  groupInflectionsForDisplay(e) {
+    return S.getInstance().warn('Please use a static version of "groupInflectionsForDisplay" instead'), this.constructor.groupInflectionsForDisplay(e);
   }
-}
-let typeFeatures$6 = /* @__PURE__ */ new Map();
-let typeFeaturesInitialized$6 = false;
-class LatinLanguageModel extends LanguageModel {
+};
+o$1(Ae, "LanguageModel");
+let _$1 = Ae, Cr = /* @__PURE__ */ new Map(), Dr = false;
+const Xs = class Xs2 extends _$1 {
   static get languageID() {
-    return LANG_LATIN;
+    return pn;
   }
   static get languageCode() {
-    return STR_LANG_CODE_LAT;
+    return He;
   }
   static get languageCodes() {
-    return [STR_LANG_CODE_LA, STR_LANG_CODE_LAT];
+    return [ds, He];
   }
   static get contextForward() {
     return 0;
@@ -2146,120 +1746,116 @@ class LatinLanguageModel extends LanguageModel {
     return 0;
   }
   static get direction() {
-    return LANG_DIR_LTR;
+    return ye;
   }
   static get baseUnit() {
-    return LANG_UNIT_WORD;
+    return J;
   }
   static get featureValues() {
     return new Map([
-      ...LanguageModel.featureValues,
+      ..._$1.featureValues,
       [
-        Feature.types.grmClass,
+        l$1.types.grmClass,
         [
-          CLASS_PERSONAL,
-          CLASS_REFLEXIVE,
-          CLASS_POSSESSIVE,
-          CLASS_DEMONSTRATIVE,
-          CLASS_RELATIVE,
-          CLASS_INTERROGATIVE
+          Bs,
+          Ms,
+          ks$1,
+          $s,
+          zs,
+          qs
         ]
       ],
       [
-        Feature.types.number,
+        l$1.types.number,
         [
-          NUM_SINGULAR,
-          NUM_PLURAL
+          Dt,
+          Tt
         ]
       ],
       [
-        Feature.types.grmCase,
+        l$1.types.grmCase,
         [
-          CASE_NOMINATIVE,
-          CASE_GENITIVE,
-          CASE_DATIVE,
-          CASE_ACCUSATIVE,
-          CASE_ABLATIVE,
-          CASE_LOCATIVE,
-          CASE_VOCATIVE
+          Cs,
+          Fs,
+          As,
+          Ss,
+          vn,
+          _n,
+          Ds
         ]
       ],
       [
-        Feature.types.declension,
+        l$1.types.declension,
         [
-          ORD_1ST,
-          ORD_2ND,
-          ORD_3RD,
-          ORD_4TH,
-          ORD_5TH
+          Ne,
+          xe,
+          Re,
+          qt,
+          Pn
         ]
       ],
       [
-        Feature.types.tense,
+        l$1.types.tense,
         [
-          TENSE_PRESENT,
-          TENSE_IMPERFECT,
-          TENSE_FUTURE,
-          TENSE_PERFECT,
-          TENSE_PLUPERFECT,
-          TENSE_FUTURE_PERFECT
+          Ps,
+          xs,
+          _s,
+          Rs,
+          Ls,
+          Ns
         ]
       ],
       [
-        Feature.types.voice,
+        l$1.types.voice,
         [
-          VOICE_ACTIVE,
-          VOICE_PASSIVE
+          Vs,
+          Us
         ]
       ],
       [
-        Feature.types.mood,
+        l$1.types.mood,
         [
-          MOOD_INDICATIVE,
-          MOOD_SUBJUNCTIVE,
-          MOOD_IMPERATIVE,
-          MOOD_PARTICIPLE,
-          MOOD_SUPINE,
-          MOOD_GERUNDIVE,
-          MOOD_PARTICIPLE,
-          MOOD_INFINITIVE
+          Os,
+          vs,
+          Ts,
+          $e,
+          Rn,
+          zt,
+          $e,
+          Nn
         ]
       ],
       [
-        Feature.types.conjugation,
+        l$1.types.conjugation,
         [
-          ORD_1ST,
-          ORD_2ND,
-          ORD_3RD,
-          ORD_4TH
+          Ne,
+          xe,
+          Re,
+          qt
         ]
       ]
     ]);
   }
   static get typeFeatures() {
-    if (!typeFeaturesInitialized$6) {
-      this.initTypeFeatures();
-    }
-    return typeFeatures$6;
+    return Dr || this.initTypeFeatures(), Cr;
   }
   static initTypeFeatures() {
-    for (const featureName of this.featureNames) {
-      typeFeatures$6.set(featureName, this.getFeature(featureName));
-    }
-    typeFeaturesInitialized$6 = true;
+    for (const e of this.featureNames)
+      Cr.set(e, this.getFeature(e));
+    Dr = true;
   }
   /**
    * @override
    */
   static grammarFeatures() {
-    return [Feature.types.part, Feature.types.grmCase, Feature.types.mood, Feature.types.declension, Feature.types.tense, Feature.types.conjugation];
+    return [l$1.types.part, l$1.types.grmCase, l$1.types.mood, l$1.types.declension, l$1.types.tense, l$1.types.conjugation];
   }
   /**
    * Check to see if this language tool can produce an inflection table display for the current node
    *
    * @param node
    */
-  static canInflect(node) {
+  static canInflect(e) {
     return true;
   }
   /**
@@ -2269,24 +1865,8 @@ class LatinLanguageModel extends LanguageModel {
    * @returns the normalized form of the word (Latin replaces accents and special chars)
    * @type String
    */
-  static normalizeText(text) {
-    if (text) {
-      text = text.replace(/[\u00c0\u00c1\u00c2\u00c3\u00c4\u0100\u0102]/g, "A");
-      text = text.replace(/[\u00c8\u00c9\u00ca\u00cb\u0112\u0114]/g, "E");
-      text = text.replace(/[\u00cc\u00cd\u00ce\u00cf\u012a\u012c]/g, "I");
-      text = text.replace(/[\u00d2\u00d3\u00d4\u00df\u00d6\u014c\u014e]/g, "O");
-      text = text.replace(/[\u00d9\u00da\u00db\u00dc\u016a\u016c]/g, "U");
-      text = text.replace(/[\u00c6\u01e2]/g, "AE");
-      text = text.replace(/[\u0152]/g, "OE");
-      text = text.replace(/[\u00e0\u00e1\u00e2\u00e3\u00e4\u0101\u0103]/g, "a");
-      text = text.replace(/[\u00e8\u00e9\u00ea\u00eb\u0113\u0115]/g, "e");
-      text = text.replace(/[\u00ec\u00ed\u00ee\u00ef\u012b\u012d\u0129]/g, "i");
-      text = text.replace(/[\u00f2\u00f3\u00f4\u00f5\u00f6\u014d\u014f]/g, "o");
-      text = text.replace(/[\u00f9\u00fa\u00fb\u00fc\u016b\u016d]/g, "u");
-      text = text.replace(/[\u00e6\u01e3]/g, "ae");
-      text = text.replace(/[\u0153]/g, "oe");
-    }
-    return text;
+  static normalizeText(e) {
+    return e && (e = e.replace(/[\u00c0\u00c1\u00c2\u00c3\u00c4\u0100\u0102]/g, "A"), e = e.replace(/[\u00c8\u00c9\u00ca\u00cb\u0112\u0114]/g, "E"), e = e.replace(/[\u00cc\u00cd\u00ce\u00cf\u012a\u012c]/g, "I"), e = e.replace(/[\u00d2\u00d3\u00d4\u00df\u00d6\u014c\u014e]/g, "O"), e = e.replace(/[\u00d9\u00da\u00db\u00dc\u016a\u016c]/g, "U"), e = e.replace(/[\u00c6\u01e2]/g, "AE"), e = e.replace(/[\u0152]/g, "OE"), e = e.replace(/[\u00e0\u00e1\u00e2\u00e3\u00e4\u0101\u0103]/g, "a"), e = e.replace(/[\u00e8\u00e9\u00ea\u00eb\u0113\u0115]/g, "e"), e = e.replace(/[\u00ec\u00ed\u00ee\u00ef\u012b\u012d\u0129]/g, "i"), e = e.replace(/[\u00f2\u00f3\u00f4\u00f5\u00f6\u014d\u014f]/g, "o"), e = e.replace(/[\u00f9\u00fa\u00fb\u00fc\u016b\u016d]/g, "u"), e = e.replace(/[\u00e6\u01e3]/g, "ae"), e = e.replace(/[\u0153]/g, "oe")), e;
   }
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
@@ -2295,14 +1875,8 @@ class LatinLanguageModel extends LanguageModel {
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue(featureType, featureValue) {
-    if (featureType === Feature.types.mood && featureValue === MOOD_GERUNDIVE) {
-      return MOOD_PARTICIPLE;
-    } else if (featureType === Feature.types.part && featureValue === POFS_EXCLAMATION) {
-      return POFS_INTERJECTION;
-    } else {
-      return featureValue;
-    }
+  static normalizeFeatureValue(e, t) {
+    return e === l$1.types.mood && t === zt ? $e : e === l$1.types.part && t === ae ? ie$1 : t;
   }
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
@@ -2310,16 +1884,8 @@ class LatinLanguageModel extends LanguageModel {
    * @param {Lexeme} lexeme the lexeme to normalize
    * @returns {string} the alpheios-normalized part of speech value
    */
-  static normalizePartOfSpeechValue(lexeme) {
-    if (lexeme.lemma.features[Feature.types.part]) {
-      if (lexeme.lemma.features[Feature.types.part].value === POFS_EXCLAMATION) {
-        return POFS_INTERJECTION;
-      } else {
-        return lexeme.lemma.features[Feature.types.part].value;
-      }
-    } else {
-      return null;
-    }
+  static normalizePartOfSpeechValue(e) {
+    return e.lemma.features[l$1.types.part] ? e.lemma.features[l$1.types.part].value === ae ? ie$1 : e.lemma.features[l$1.types.part].value : null;
   }
   /**
    * Get a list of valid punctuation for this language
@@ -2336,28 +1902,18 @@ class LatinLanguageModel extends LanguageModel {
    * @param {Inflection} inflection - An inflection object
    * @returns {object} Inflection properties
    */
-  static getInflectionConstraints(inflection) {
-    let grammar = {
+  static getInflectionConstraints(e) {
+    let t = {
       fullFormBased: false,
       suffixBased: false,
       pronounClassRequired: false
     };
-    if (inflection.hasOwnProperty(Feature.types.part)) {
-      if ([POFS_VERB, POFS_VERB_PARTICIPLE, POFS_SUPINE, POFS_GERUNDIVE].includes(inflection[Feature.types.part].value)) {
-        grammar.fullFormBased = true;
-        grammar.suffixBased = true;
-      } else if (inflection[Feature.types.part].value === POFS_PRONOUN) {
-        grammar.fullFormBased = true;
-      } else {
-        grammar.suffixBased = true;
-      }
-    } else {
-      Logger.getInstance().warn("Unable to set grammar: part of speech data is missing or is incorrect", inflection[Feature.types.part]);
-    }
-    return grammar;
+    return e.hasOwnProperty(l$1.types.part) ? [pe, Ct, Ft, Fn].includes(e[l$1.types.part].value) ? (t.fullFormBased = true, t.suffixBased = true) : e[l$1.types.part].value === de$1 ? t.fullFormBased = true : t.suffixBased = true : S.getInstance().warn("Unable to set grammar: part of speech data is missing or is incorrect", e[l$1.types.part]), t;
   }
-}
-class GreekChars {
+};
+o$1(Xs, "LatinLanguageModel");
+let tt$1 = Xs;
+const Ys = class Ys2 {
   static get chars() {
     return [
       "`",
@@ -2670,18 +2226,18 @@ class GreekChars {
       "ῼ"
     ];
   }
-}
-let typeFeatures$5 = /* @__PURE__ */ new Map();
-let typeFeaturesInitialized$5 = false;
-class GreekLanguageModel extends LanguageModel {
+};
+o$1(Ys, "GreekChars");
+let Wt = Ys, Tr = /* @__PURE__ */ new Map(), Or = false;
+const V = class V2 extends _$1 {
   static get languageID() {
-    return LANG_GREEK;
+    return gn$1;
   }
   static get languageCode() {
-    return STR_LANG_CODE_GRC;
+    return Ge;
   }
   static get languageCodes() {
-    return [STR_LANG_CODE_GRC];
+    return [Ge];
   }
   static get contextForward() {
     return 0;
@@ -2690,88 +2246,88 @@ class GreekLanguageModel extends LanguageModel {
     return 0;
   }
   static get direction() {
-    return LANG_DIR_LTR;
+    return ye;
   }
   static get baseUnit() {
-    return LANG_UNIT_WORD;
+    return J;
   }
   static get featureValues() {
     return new Map([
-      ...LanguageModel.featureValues,
+      ..._$1.featureValues,
       [
-        Feature.types.grmClass,
+        l$1.types.grmClass,
         [
-          CLASS_DEMONSTRATIVE,
-          CLASS_GENERAL_RELATIVE,
-          CLASS_INDEFINITE,
-          CLASS_INTENSIVE,
-          CLASS_INTERROGATIVE,
-          CLASS_PERSONAL,
-          CLASS_POSSESSIVE,
-          CLASS_RECIPROCAL,
-          CLASS_REFLEXIVE,
-          CLASS_RELATIVE
+          $s,
+          $n,
+          zn,
+          qn,
+          qs,
+          Bs,
+          ks$1,
+          Wn,
+          Ms,
+          zs
         ]
       ],
       [
-        Feature.types.number,
+        l$1.types.number,
         [
-          NUM_SINGULAR,
-          NUM_PLURAL,
-          NUM_DUAL
+          Dt,
+          Tt,
+          Ln
         ]
       ],
       [
-        Feature.types.grmCase,
+        l$1.types.grmCase,
         [
-          CASE_NOMINATIVE,
-          CASE_GENITIVE,
-          CASE_DATIVE,
-          CASE_ACCUSATIVE,
-          CASE_VOCATIVE
+          Cs,
+          Fs,
+          As,
+          Ss,
+          Ds
         ]
       ],
       [
-        Feature.types.declension,
+        l$1.types.declension,
         [
-          ORD_1ST,
-          ORD_2ND,
-          ORD_3RD
+          Ne,
+          xe,
+          Re
         ]
       ],
       [
-        Feature.types.tense,
+        l$1.types.tense,
         [
-          TENSE_PRESENT,
-          TENSE_IMPERFECT,
-          TENSE_FUTURE,
-          TENSE_PERFECT,
-          TENSE_PLUPERFECT,
-          TENSE_FUTURE_PERFECT,
-          TENSE_AORIST
+          Ps,
+          xs,
+          _s,
+          Rs,
+          Ls,
+          Ns,
+          Vn
         ]
       ],
       [
-        Feature.types.voice,
+        l$1.types.voice,
         [
-          VOICE_PASSIVE,
-          VOICE_ACTIVE,
-          VOICE_MEDIOPASSIVE,
-          VOICE_MIDDLE
+          Us,
+          Vs,
+          Un,
+          Bn
         ]
       ],
       [
-        Feature.types.mood,
+        l$1.types.mood,
         [
-          MOOD_INDICATIVE,
-          MOOD_SUBJUNCTIVE,
-          MOOD_OPTATIVE,
-          MOOD_IMPERATIVE
+          Os,
+          vs,
+          xn,
+          Ts
         ]
       ],
       [
         // TODO full list of greek dialects
-        Feature.types.dialect,
+        l$1.types.dialect,
         [
           "attic",
           "epic",
@@ -2781,16 +2337,12 @@ class GreekLanguageModel extends LanguageModel {
     ]);
   }
   static get typeFeatures() {
-    if (!typeFeaturesInitialized$5) {
-      this.initTypeFeatures();
-    }
-    return typeFeatures$5;
+    return Or || this.initTypeFeatures(), Tr;
   }
   static initTypeFeatures() {
-    for (const featureName of this.featureNames) {
-      typeFeatures$5.set(featureName, this.getFeature(featureName));
-    }
-    typeFeaturesInitialized$5 = true;
+    for (const e of this.featureNames)
+      Tr.set(e, this.getFeature(e));
+    Or = true;
   }
   /**
      * Check to see if this language tool can produce an inflection table display
@@ -2798,14 +2350,14 @@ class GreekLanguageModel extends LanguageModel {
      *
      * @param node
      */
-  static canInflect(node) {
+  static canInflect(e) {
     return true;
   }
   /**
    * @override
    */
   static grammarFeatures() {
-    return [Feature.types.part, Feature.types.grmCase, Feature.types.mood, Feature.types.declension, Feature.types.tense, Feature.types.voice];
+    return [l$1.types.part, l$1.types.grmCase, l$1.types.mood, l$1.types.declension, l$1.types.tense, l$1.types.voice];
   }
   /**
    * Return a normalized version of a text string which can be used to compare the word for equality
@@ -2815,12 +2367,8 @@ class GreekLanguageModel extends LanguageModel {
    *          override in language-specific subclass)
    * @type string
    */
-  static normalizeText(text) {
-    if (text) {
-      text = text.normalize("NFC");
-      text = text.replace(/\u2019$/, "᾽");
-    }
-    return text;
+  static normalizeText(e) {
+    return e && (e = e.normalize("NFC"), e = e.replace(/\u2019$/, "᾽")), e;
   }
   /**
    * Return a normalized part of speech for a lexeme based upon the lemma and inflection data
@@ -2829,18 +2377,8 @@ class GreekLanguageModel extends LanguageModel {
    * @returns {string} the alpheios-normalized part of speech value
    *                   or null if no part of speech data is present on the lexeme
    */
-  static normalizePartOfSpeechValue(lexeme) {
-    if (lexeme.lemma.features[Feature.types.part]) {
-      if (lexeme.lemma.features[Feature.types.part].value === POFS_PARTICLE) {
-        return POFS_ADVERB;
-      } else if (lexeme.lemma.features[Feature.types.part].value === POFS_EXCLAMATION) {
-        return POFS_INTERJECTION;
-      } else {
-        return lexeme.lemma.features[Feature.types.part].value;
-      }
-    } else {
-      return null;
-    }
+  static normalizePartOfSpeechValue(e) {
+    return e.lemma.features[l$1.types.part] ? e.lemma.features[l$1.types.part].value === _e ? ne$1 : e.lemma.features[l$1.types.part].value === ae ? ie$1 : e.lemma.features[l$1.types.part].value : null;
   }
   /**
    * Return a normalized feature value, based upon the feature type  and supplied value
@@ -2849,17 +2387,11 @@ class GreekLanguageModel extends LanguageModel {
    * @param {string} featureValue the feature value
    * @returns {string} the alpheios-normalized feature value
    */
-  static normalizeFeatureValue(featureType, featureValue) {
-    if (featureType === Feature.types.part && featureValue === POFS_PARTICLE) {
-      return POFS_ADVERB;
-    } else if (featureType === Feature.types.part && featureValue === POFS_EXCLAMATION) {
-      return POFS_INTERJECTION;
-    } else {
-      return featureValue;
-    }
+  static normalizeFeatureValue(e, t) {
+    return e === l$1.types.part && t === _e ? ne$1 : e === l$1.types.part && t === ae ? ie$1 : t;
   }
-  static _tonosToOxia(word) {
-    return word.replace(
+  static _tonosToOxia(e) {
+    return e.replace(
       /\u{03AC}/ug,
       "ά"
     ).replace(
@@ -2900,21 +2432,18 @@ class GreekLanguageModel extends LanguageModel {
    * @override
    */
   static alternateWordEncodings({
-    word = null,
-    preceding = null,
-    following = null,
-    encoding = null,
-    preserveCase = false,
-    includeOriginal = false
+    word: e = null,
+    preceding: t = null,
+    following: s = null,
+    encoding: n = null,
+    preserveCase: a = false,
+    includeOriginal: i2 = false
   } = {}) {
-    if (!word) {
+    if (!e)
       return [];
-    }
-    let normalized = GreekLanguageModel.normalizeText(word);
-    if (!preserveCase) {
-      normalized = normalized.toLocaleLowerCase();
-    }
-    const strippedVowelLength = normalized.replace(
+    let u2 = V2.normalizeText(e);
+    a || (u2 = u2.toLocaleLowerCase());
+    const d2 = u2.replace(
       /[\u{1FB0}\u{1FB1}]/ug,
       "α"
     ).replace(
@@ -2935,9 +2464,7 @@ class GreekLanguageModel extends LanguageModel {
     ).replace(
       /[\u{00AF}\u{0304}\u{0306}]/ug,
       ""
-    );
-    const tonosToOxia = GreekLanguageModel._tonosToOxia(normalized);
-    const strippedDiaeresis = normalized.replace(
+    ), h2 = V2._tonosToOxia(u2), c2 = u2.replace(
       /\u{0390}/ug,
       "ί"
     ).replace(
@@ -2985,31 +2512,15 @@ class GreekLanguageModel extends LanguageModel {
     ).replace(
       /[\u{00A8}\u{0308}]/ug,
       ""
-    );
-    const strippedDiacritics = normalized.normalize("NFD").replace(
+    ), p2 = u2.normalize("NFD").replace(
       /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}]/ug,
       ""
     ).normalize("NFC");
-    let alternates = [];
-    if (encoding === "strippedDiaeresis") {
-      alternates.push(strippedDiaeresis);
-    } else if (encoding === "strippedDiacritics") {
-      alternates.push(strippedDiacritics);
-    } else if (encoding === "strippedAll") {
-      alternates.push(strippedDiaeresis.normalize("NFD").replace(
-        /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}\u{314}\u{313}\u{345}]/ug,
-        ""
-      ).normalize("NFC"));
-    } else {
-      alternates.push(strippedVowelLength);
-      if (tonosToOxia !== strippedVowelLength) {
-        alternates.push(tonosToOxia);
-      }
-    }
-    if (!includeOriginal) {
-      alternates = alternates.filter((w2) => w2 !== word);
-    }
-    return alternates;
+    let g2 = [];
+    return n === "strippedDiaeresis" ? g2.push(c2) : n === "strippedDiacritics" ? g2.push(p2) : n === "strippedAll" ? g2.push(c2.normalize("NFD").replace(
+      /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}\u{314}\u{313}\u{345}]/ug,
+      ""
+    ).normalize("NFC")) : (g2.push(d2), h2 !== d2 && g2.push(h2)), i2 || (g2 = g2.filter((y) => y !== e)), g2;
   }
   /**
    * Get a list of valid punctuation for this language
@@ -3017,7 +2528,8 @@ class GreekLanguageModel extends LanguageModel {
    * @returns {string} a string containing valid punctuation symbols
    */
   static getPunctuation() {
-    return '.,;:!?"(){}\\[\\]<>\\ ‐‑‒–—―‘†‡“”··\n\r‌‍';
+    return `.,;:!?"(){}\\[\\]<>\\ ‐‑‒–—―‘†‡“”··
+\r‌‍`;
   }
   /**
    * Sets inflection grammar properties based on its characteristics
@@ -3025,25 +2537,14 @@ class GreekLanguageModel extends LanguageModel {
    * @param {Inflection} inflection - An inflection object
    * @returns {object} Inflection properties
    */
-  static getInflectionConstraints(inflection) {
-    const constraints = {
+  static getInflectionConstraints(e) {
+    const t = {
       fullFormBased: false,
       suffixBased: false,
       pronounClassRequired: false
-    };
-    const formBasedList = [POFS_PRONOUN, POFS_NUMERAL, POFS_ARTICLE];
-    if (inflection.hasOwnProperty(Feature.types.part)) {
-      if (formBasedList.includes(inflection[Feature.types.part].value)) {
-        constraints.fullFormBased = true;
-      } else {
-        constraints.suffixBased = true;
-      }
-    } else {
-      Logger.getInstance().warn("Unable to set grammar: part of speech data is missing or is incorrect", inflection[Feature.types.part]);
-    }
-    constraints.pronounClassRequired = LanguageModelFactory.compareLanguages(GreekLanguageModel.languageID, inflection.languageID) && inflection.hasOwnProperty(Feature.types.part) && // eslint-disable-line no-prototype-builtins
-    inflection[Feature.types.part].value === POFS_PRONOUN;
-    return constraints;
+    }, s = [de$1, At, St];
+    return e.hasOwnProperty(l$1.types.part) ? s.includes(e[l$1.types.part].value) ? t.fullFormBased = true : t.suffixBased = true : S.getInstance().warn("Unable to set grammar: part of speech data is missing or is incorrect", e[l$1.types.part]), t.pronounClassRequired = A.compareLanguages(V2.languageID, e.languageID) && e.hasOwnProperty(l$1.types.part) && // eslint-disable-line no-prototype-builtins
+    e[l$1.types.part].value === de$1, t;
   }
   /**
    * Determines a class of a given word (pronoun) by finding a matching word entry(ies)
@@ -3060,27 +2561,20 @@ class GreekLanguageModel extends LanguageModel {
    * @returns {Feature} Matching classes found within a Feature objects. If no matching classes found,
    * returns undefined.
    */
-  static getPronounClasses(forms, word, hdwd, normalize = true) {
-    let matchingValues = /* @__PURE__ */ new Set();
-    const matchingForms = forms.filter(
-      (form) => {
-        let match = false;
-        if (form.value && (!form.features[Feature.types.hdwd] || form.features[Feature.types.hdwd].value === hdwd)) {
-          match = GreekLanguageModel.compareWords(form.value, word, normalize);
-        }
-        return match;
+  static getPronounClasses(e, t, s, n = true) {
+    let a = /* @__PURE__ */ new Set();
+    const i2 = e.filter(
+      (u2) => {
+        let d2 = false;
+        return u2.value && (!u2.features[l$1.types.hdwd] || u2.features[l$1.types.hdwd].value === s) && (d2 = V2.compareWords(u2.value, t, n)), d2;
       }
     );
-    for (const matchingForm of matchingForms) {
-      if (matchingForm.features.hasOwnProperty(Feature.types.grmClass)) {
-        for (const value of matchingForm.features[Feature.types.grmClass].values) {
-          matchingValues.add(value);
-        }
-      }
-    }
-    if (matchingValues.size > 0) {
-      return new Feature(Feature.types.grmClass, Array.from(matchingValues), GreekLanguageModel.languageID);
-    }
+    for (const u2 of i2)
+      if (u2.features.hasOwnProperty(l$1.types.grmClass))
+        for (const d2 of u2.features[l$1.types.grmClass].values)
+          a.add(d2);
+    if (a.size > 0)
+      return new l$1(l$1.types.grmClass, Array.from(a), V2.languageID);
   }
   /**
    * Checks if two words are equivalent.
@@ -3094,52 +2588,43 @@ class GreekLanguageModel extends LanguageModel {
    * @param {boolean} options.normalizeTrailingDigit - whether to consider the form
    * of a trailing digit during comparison.
    */
-  static compareWords(wordA, wordB, normalize = true, { normalizeTrailingDigit = false } = {}) {
-    let matched = false;
-    if (normalize) {
-      if (normalizeTrailingDigit) {
-        wordA = this.normalizeTrailingDigit(wordA);
-        wordB = this.normalizeTrailingDigit(wordB);
-      }
-      const altWordA = GreekLanguageModel.alternateWordEncodings({
-        word: wordA,
+  static compareWords(e, t, s = true, { normalizeTrailingDigit: n = false } = {}) {
+    let a = false;
+    if (s) {
+      n && (e = this.normalizeTrailingDigit(e), t = this.normalizeTrailingDigit(t));
+      const i2 = V2.alternateWordEncodings({
+        word: e,
+        encoding: "strippedDiacritics",
+        includeOriginal: true
+      }), u2 = V2.alternateWordEncodings({
+        word: t,
         encoding: "strippedDiacritics",
         includeOriginal: true
       });
-      const altWordB = GreekLanguageModel.alternateWordEncodings({
-        word: wordB,
-        encoding: "strippedDiacritics",
-        includeOriginal: true
-      });
-      for (let i2 = 0; i2 < altWordA.length; i2++) {
-        matched = altWordA[i2] === altWordB[i2];
-        if (matched) {
-          break;
-        }
-      }
-      if (!matched) {
-        matched = GreekLanguageModel.normalizeText(wordA) === GreekLanguageModel.normalizeText(wordB);
-      }
-    } else {
-      matched = wordA === wordB;
-    }
-    return matched;
+      for (let d2 = 0; d2 < i2.length && (a = i2[d2] === u2[d2], !a); d2++)
+        ;
+      a || (a = V2.normalizeText(e) === V2.normalizeText(t));
+    } else
+      a = e === t;
+    return a;
   }
-  static isValidUnicode(word) {
-    return GreekChars.chars.some((char) => word.includes(char));
+  static isValidUnicode(e) {
+    return Wt.chars.some((t) => e.includes(t));
   }
-}
-const typeFeatures$4 = /* @__PURE__ */ new Map();
-let typeFeaturesInitialized$4 = false;
-class ArabicLanguageModel extends LanguageModel {
+};
+o$1(V, "GreekLanguageModel");
+let Ht = V;
+const vr = /* @__PURE__ */ new Map();
+let _r = false;
+const Zs = class Zs2 extends _$1 {
   static get languageID() {
-    return LANG_ARABIC;
+    return mn$1;
   }
   static get languageCode() {
-    return STR_LANG_CODE_ARA;
+    return Je;
   }
   static get languageCodes() {
-    return [STR_LANG_CODE_ARA, STR_LANG_CODE_AR];
+    return [Je, ps$1];
   }
   static get contextForward() {
     return 0;
@@ -3148,22 +2633,18 @@ class ArabicLanguageModel extends LanguageModel {
     return 0;
   }
   static get direction() {
-    return LANG_DIR_RTL;
+    return Pe;
   }
   static get baseUnit() {
-    return LANG_UNIT_WORD;
+    return J;
   }
   static get typeFeatures() {
-    if (!typeFeaturesInitialized$4) {
-      this.initTypeFeatures();
-    }
-    return typeFeatures$4;
+    return _r || this.initTypeFeatures(), vr;
   }
   static initTypeFeatures() {
-    for (const featureName of this.featureNames) {
-      typeFeatures$4.set(featureName, this.getFeature(featureName));
-    }
-    typeFeaturesInitialized$4 = true;
+    for (const e of this.featureNames)
+      vr.set(e, this.getFeature(e));
+    _r = true;
   }
   /**
      * Check to see if this language tool can produce an inflection table display
@@ -3171,44 +2652,30 @@ class ArabicLanguageModel extends LanguageModel {
      *
      * @param node
      */
-  static canInflect(node) {
+  static canInflect(e) {
     return false;
   }
   /**
    * @override
    */
   static alternateWordEncodings({
-    word = null,
-    preceding = null,
-    following = null,
-    encoding = null,
-    preserveCase = false,
-    includeOriginal = false
+    word: e = null,
+    preceding: t = null,
+    following: s = null,
+    encoding: n = null,
+    preserveCase: a = false,
+    includeOriginal: i2 = false
   } = {}) {
-    const tanwin = word.replace(/[\u{064B}\u{064C}\u{064D}\u{0640}]/ug, "");
-    const hamza = tanwin.replace(/[\u{0622}\u{0623}\u{0625}]/ug, "ا");
-    const harakat = hamza.replace(/[\u{064E}\u{064F}\u{0650}\u{0670}\u{0671}]/ug, "");
-    const shadda = harakat.replace(/\u{0651}/ug, "");
-    const sukun = shadda.replace(/\u{0652}/ug, "");
-    const alef = sukun.replace(/\u{0627}/ug, "");
-    const alternates = /* @__PURE__ */ new Map([
-      ["tanwin", tanwin],
-      ["hamza", hamza],
-      ["harakat", harakat],
-      ["shadda", shadda],
-      ["sukun", sukun],
-      ["alef", alef]
+    const u2 = e.replace(/[\u{064B}\u{064C}\u{064D}\u{0640}]/ug, ""), d2 = u2.replace(/[\u{0622}\u{0623}\u{0625}]/ug, "ا"), h2 = d2.replace(/[\u{064E}\u{064F}\u{0650}\u{0670}\u{0671}]/ug, ""), c2 = h2.replace(/\u{0651}/ug, ""), p2 = c2.replace(/\u{0652}/ug, ""), g2 = p2.replace(/\u{0627}/ug, ""), y = /* @__PURE__ */ new Map([
+      ["tanwin", u2],
+      ["hamza", d2],
+      ["harakat", h2],
+      ["shadda", c2],
+      ["sukun", p2],
+      ["alef", g2]
     ]);
-    let fullList = [];
-    if (encoding !== null && alternates.has(encoding)) {
-      fullList = [alternates.get(encoding)];
-    } else {
-      fullList = Array.from(alternates.values());
-    }
-    if (!includeOriginal) {
-      fullList = fullList.filter((w2) => w2 !== word);
-    }
-    return fullList;
+    let m2 = [];
+    return n !== null && y.has(n) ? m2 = [y.get(n)] : m2 = Array.from(y.values()), i2 || (m2 = m2.filter((I2) => I2 !== e)), m2;
   }
   /**
    * Get a list of valid punctuation for this language
@@ -3224,41 +2691,26 @@ class ArabicLanguageModel extends LanguageModel {
    *
    * @param inflections
    */
-  static aggregateInflectionsForDisplay(inflections) {
-    let aggregated = [];
-    let aggregates = { [POFS_NOUN]: [], [POFS_ADJECTIVE]: [], [POFS_NOUN_PROPER]: [] };
-    for (const infl of inflections) {
-      if (infl[Feature.types.morph] && infl[Feature.types.morph].value.match(/ADJ[uaiNK]/)) {
-        aggregates[POFS_ADJECTIVE].push(infl);
-      } else if (infl[Feature.types.morph] && infl[Feature.types.morph].value.match(/NOUN[uaiNK]/)) {
-        aggregates[POFS_NOUN].push(infl);
-      } else if (infl[Feature.types.morph] && infl[Feature.types.morph].value.match(/NOUN_PROP[uaiNK]/)) {
-        aggregates[POFS_NOUN_PROPER].push(infl);
-      } else {
-        infl.example = null;
-        aggregated.push(infl);
-      }
-    }
-    for (const type of Object.keys(aggregates)) {
-      const base = aggregated.filter((i2) => i2[Feature.types.part].value === type);
-      if (base.length !== 1) {
-        aggregated.push(...aggregates[type]);
-      }
-    }
-    return aggregated;
+  static aggregateInflectionsForDisplay(e) {
+    let t = [], s = { [ve$1]: [], [Oe]: [], [$t]: [] };
+    for (const n of e)
+      n[l$1.types.morph] && n[l$1.types.morph].value.match(/ADJ[uaiNK]/) ? s[Oe].push(n) : n[l$1.types.morph] && n[l$1.types.morph].value.match(/NOUN[uaiNK]/) ? s[ve$1].push(n) : n[l$1.types.morph] && n[l$1.types.morph].value.match(/NOUN_PROP[uaiNK]/) ? s[$t].push(n) : (n.example = null, t.push(n));
+    for (const n of Object.keys(s))
+      t.filter((i2) => i2[l$1.types.part].value === n).length !== 1 && t.push(...s[n]);
+    return t;
   }
-}
-let typeFeatures$3 = /* @__PURE__ */ new Map();
-let typeFeaturesInitialized$3 = false;
-class PersianLanguageModel extends LanguageModel {
+};
+o$1(Zs, "ArabicLanguageModel");
+let st$1 = Zs, Nr = /* @__PURE__ */ new Map(), xr = false;
+const Qs = class Qs2 extends _$1 {
   static get languageID() {
-    return LANG_PERSIAN;
+    return yn;
   }
   static get languageCode() {
-    return STR_LANG_CODE_PER;
+    return Ke;
   }
   static get languageCodes() {
-    return [STR_LANG_CODE_PER, STR_LANG_CODE_FAS, STR_LANG_CODE_FA, STR_LANG_CODE_FA_IR];
+    return [Ke, En, In, wn];
   }
   static get contextForward() {
     return 0;
@@ -3267,29 +2719,25 @@ class PersianLanguageModel extends LanguageModel {
     return 0;
   }
   static get direction() {
-    return LANG_DIR_RTL;
+    return Pe;
   }
   static get baseUnit() {
-    return LANG_UNIT_WORD;
+    return J;
   }
   static get typeFeatures() {
-    if (!typeFeaturesInitialized$3) {
-      this.initTypeFeatures();
-    }
-    return typeFeatures$3;
+    return xr || this.initTypeFeatures(), Nr;
   }
   static initTypeFeatures() {
-    for (const featureName of this.featureNames) {
-      typeFeatures$3.set(featureName, this.getFeature(featureName));
-    }
-    typeFeaturesInitialized$3 = true;
+    for (const e of this.featureNames)
+      Nr.set(e, this.getFeature(e));
+    xr = true;
   }
   /**
    * Check to see if this language tool can produce an inflection table display for the current node
    *
    * @param node
    */
-  static canInflect(node) {
+  static canInflect(e) {
     return false;
   }
   /**
@@ -3301,18 +2749,20 @@ class PersianLanguageModel extends LanguageModel {
     return `\\-\\.,;:!?'"(){}\\[\\]<>\\ ‐‑‒–—―‘’†‡“”··
 \r‌‍`;
   }
-}
-const typeFeatures$2 = /* @__PURE__ */ new Map();
-let typeFeaturesInitialized$2 = false;
-class GeezLanguageModel extends LanguageModel {
+};
+o$1(Qs, "PersianLanguageModel");
+let Gt = Qs;
+const Rr = /* @__PURE__ */ new Map();
+let Lr = false;
+const er = class er2 extends _$1 {
   static get languageID() {
-    return LANG_GEEZ;
+    return ls;
   }
   static get languageCode() {
-    return STR_LANG_CODE_GEZ;
+    return je;
   }
   static get languageCodes() {
-    return [STR_LANG_CODE_GEZ];
+    return [je];
   }
   static get contextForward() {
     return 0;
@@ -3321,34 +2771,34 @@ class GeezLanguageModel extends LanguageModel {
     return 0;
   }
   static get direction() {
-    return LANG_DIR_LTR;
+    return ye;
   }
   static get baseUnit() {
-    return LANG_UNIT_WORD;
+    return J;
   }
   static get featureValues() {
     return new Map([
-      ...LanguageModel.featureValues,
+      ..._$1.featureValues,
       [
-        Feature.types.grmCase,
+        l$1.types.grmCase,
         [
           // TODO Valid Values for case for gez
         ]
       ],
       [
-        Feature.types.number,
+        l$1.types.number,
         [
           // TODO Valid Values for number for gez
         ]
       ],
       [
-        Feature.types.gender,
+        l$1.types.gender,
         [
           // TODO Valid Values for gender for gez
         ]
       ],
       [
-        Feature.types.mood,
+        l$1.types.mood,
         [
           // TODO Valid Values for mood for gez
         ]
@@ -3356,16 +2806,12 @@ class GeezLanguageModel extends LanguageModel {
     ]);
   }
   static get typeFeatures() {
-    if (!typeFeaturesInitialized$2) {
-      this.initTypeFeatures();
-    }
-    return typeFeatures$2;
+    return Lr || this.initTypeFeatures(), Rr;
   }
   static initTypeFeatures() {
-    for (const featureName of this.featureNames) {
-      typeFeatures$2.set(featureName, this.getFeature(featureName));
-    }
-    typeFeaturesInitialized$2 = true;
+    for (const e of this.featureNames)
+      Rr.set(e, this.getFeature(e));
+    Lr = true;
   }
   /**
      * Check to see if this language tool can produce an inflection table display
@@ -3373,7 +2819,7 @@ class GeezLanguageModel extends LanguageModel {
      *
      * @param node
      */
-  static canInflect(node) {
+  static canInflect(e) {
     return false;
   }
   /**
@@ -3385,22 +2831,22 @@ class GeezLanguageModel extends LanguageModel {
     return `፡፨።፣፤፥፦፧፠,;:!?'"(){}\\[\\]<>\\ ‐‑‒–—―‘’†‡“”··
 \r‌‍`;
   }
-}
-let typeFeatures$1 = /* @__PURE__ */ new Map();
-let typeFeaturesInitialized$1 = false;
-class ChineseLanguageModel extends LanguageModel {
+};
+o$1(er, "GeezLanguageModel");
+let Jt = er, Pr = /* @__PURE__ */ new Map(), Vr = false;
+const tr$1 = class tr extends _$1 {
   static get languageID() {
-    return LANG_CHINESE;
+    return cs$1;
   }
   static get languageCode() {
-    return STR_LANG_CODE_ZHO;
+    return Xe;
   }
   static get languageCodes() {
     return [
-      STR_LANG_CODE_ZH,
-      STR_LANG_CODE_ZHO,
-      STR_LANG_CODE_ZH_HANT,
-      STR_LANG_CODE_ZH_HANS
+      bn$1,
+      Xe,
+      Sn,
+      An
     ];
   }
   static get contextForward() {
@@ -3410,116 +2856,102 @@ class ChineseLanguageModel extends LanguageModel {
     return 0;
   }
   static get direction() {
-    return LANG_DIR_LTR;
+    return ye;
   }
   static get baseUnit() {
-    return LANG_UNIT_CHAR;
+    return dn;
   }
   static get featureValues() {
     return /* @__PURE__ */ new Map([
       [
-        Feature.types.fullForm,
+        l$1.types.fullForm,
         []
       ],
       [
-        Feature.types.frequency,
+        l$1.types.frequency,
         []
       ],
       [
-        Feature.types.pronunciation,
+        l$1.types.pronunciation,
         []
       ],
       [
-        Feature.types.radical,
+        l$1.types.radical,
         []
       ]
     ]);
   }
   static get typeFeatures() {
-    if (!typeFeaturesInitialized$1) {
-      this.initTypeFeatures();
-    }
-    return typeFeatures$1;
+    return Vr || this.initTypeFeatures(), Pr;
   }
   static initTypeFeatures() {
-    for (const featureName of this.featureNames) {
-      typeFeatures$1.set(featureName, this.getFeature(featureName));
-    }
-    typeFeaturesInitialized$1 = true;
+    for (const e of this.featureNames)
+      Pr.set(e, this.getFeature(e));
+    Vr = true;
   }
   static getPunctuation() {
     return `.,;:!?'"(){}\\[\\]<>\\
 \r，、。「」《》‌‍†‡`;
   }
-  static _isVowel(aLetter) {
-    return ["a", "e", "i", "o", "u"].includes(aLetter);
+  static _isVowel(e) {
+    return ["a", "e", "i", "o", "u"].includes(e);
   }
-  static formatPinyin(aPinyin) {
-    const _a2 = ["ā", "á", "ǎ", "à", "a"];
-    const _e = ["ē", "é", "ě", "è", "e"];
-    const _i = ["ī", "í", "ǐ", "ì", "i"];
-    const _o = ["ō", "ó", "ǒ", "ò", "o"];
-    const _u = ["ū", "ú", "ǔ", "ù", "u"];
-    const _v = ["ǖ", "ǘ", "ǚ", "ǜ", "ü"];
-    aPinyin = aPinyin.split(/(\d)/).map((el2) => el2.trim()).filter((el2) => Boolean(el2));
-    let formatedPinyin = [];
-    const toneFormat = {
+  static formatPinyin(e) {
+    const t = ["ā", "á", "ǎ", "à", "a"], s = ["ē", "é", "ě", "è", "e"], n = ["ī", "í", "ǐ", "ì", "i"], a = ["ō", "ó", "ǒ", "ò", "o"], i2 = ["ū", "ú", "ǔ", "ù", "u"], u2 = ["ǖ", "ǘ", "ǚ", "ǜ", "ü"];
+    e = e.split(/(\d)/).map((c2) => c2.trim()).filter((c2) => !!c2);
+    let d2 = [];
+    const h2 = {
       1: 0,
       2: 1,
       3: 2,
       4: 3
     };
-    for (let j = 0; j < aPinyin.length; j++) {
-      if (j % 2 === 0) {
-        let pin = aPinyin[j];
-        const tone = toneFormat[aPinyin[j + 1]] !== void 0 ? toneFormat[aPinyin[j + 1]] : 4;
-        if (pin.indexOf("a") !== -1) {
-          pin = pin.replace("a", _a2[tone]);
-        } else if (pin.indexOf("e") !== -1) {
-          pin = pin.replace("e", _e[tone]);
-        } else if (pin.indexOf("ou") !== -1) {
-          pin = pin.replace("o", _o[tone]);
-        } else {
-          for (let k = pin.length - 1; k >= 0; k--) {
-            if (this._isVowel(pin[k])) {
-              switch (pin[k]) {
+    for (let c2 = 0; c2 < e.length; c2++)
+      if (c2 % 2 === 0) {
+        let p2 = e[c2];
+        const g2 = h2[e[c2 + 1]] !== void 0 ? h2[e[c2 + 1]] : 4;
+        if (p2.indexOf("a") !== -1)
+          p2 = p2.replace("a", t[g2]);
+        else if (p2.indexOf("e") !== -1)
+          p2 = p2.replace("e", s[g2]);
+        else if (p2.indexOf("ou") !== -1)
+          p2 = p2.replace("o", a[g2]);
+        else
+          for (let y = p2.length - 1; y >= 0; y--)
+            if (this._isVowel(p2[y])) {
+              switch (p2[y]) {
                 case "i":
-                  pin = pin.replace("i", _i[tone]);
+                  p2 = p2.replace("i", n[g2]);
                   break;
                 case "o":
-                  pin = pin.replace("o", _o[tone]);
+                  p2 = p2.replace("o", a[g2]);
                   break;
                 case "u":
-                  if (k + 1 < pin.length - 1 && pin[k + 1] === ":") {
-                    pin = pin.replace("u:", _v[tone]);
-                  } else {
-                    pin = pin.replace("u", _u[tone]);
-                  }
+                  y + 1 < p2.length - 1 && p2[y + 1] === ":" ? p2 = p2.replace("u:", u2[g2]) : p2 = p2.replace("u", i2[g2]);
                   break;
                 default:
-                  Logger.getInstance().warn("some kind of weird vowel", pin[k]);
+                  S.getInstance().warn("some kind of weird vowel", p2[y]);
               }
               break;
             }
-          }
-        }
-        formatedPinyin.push(pin);
+        d2.push(p2);
       }
-    }
-    return formatedPinyin.join(" ").trim();
+    return d2.join(" ").trim();
   }
-}
-const typeFeatures = /* @__PURE__ */ new Map();
-let typeFeaturesInitialized = false;
-class SyriacLanguageModel extends LanguageModel {
+};
+o$1(tr$1, "ChineseLanguageModel");
+let Kt = tr$1;
+const Ur = /* @__PURE__ */ new Map();
+let Br = false;
+const sr$1 = class sr extends _$1 {
   static get languageID() {
-    return LANG_SYRIAC;
+    return hs;
   }
   static get languageCode() {
-    return STR_LANG_CODE_SYR;
+    return Ye;
   }
   static get languageCodes() {
-    return [STR_LANG_CODE_SYR, STR_LANG_CODE_SYC, STR_LANG_CODE_SYR_SYRJ];
+    return [Ye, gs, ms$1];
   }
   static get contextForward() {
     return 0;
@@ -3528,58 +2960,54 @@ class SyriacLanguageModel extends LanguageModel {
     return 0;
   }
   static get direction() {
-    return LANG_DIR_RTL;
+    return Pe;
   }
   static get baseUnit() {
-    return LANG_UNIT_WORD;
+    return J;
   }
   static get featureValues() {
     return new Map([
-      ...LanguageModel.featureValues,
+      ..._$1.featureValues,
       [
-        Feature.types.part,
+        l$1.types.part,
         [
-          POFS_ADVERB,
-          POFS_ADVERBIAL,
-          POFS_ADJECTIVE,
-          POFS_ARTICLE,
-          POFS_CONJUNCTION,
-          POFS_EXCLAMATION,
-          POFS_INTERJECTION,
-          POFS_NOUN,
-          POFS_NUMERAL,
-          POFS_PARTICLE,
-          POFS_PREFIX,
-          POFS_PREPOSITION,
-          POFS_PRONOUN,
-          POFS_SUFFIX,
-          POFS_SUPINE,
-          POFS_VERB,
-          POFS_VERB_PARTICIPLE,
-          POFS_DENOMINATIVE
+          ne$1,
+          ys,
+          Oe,
+          St,
+          Es,
+          ae,
+          ie$1,
+          ve$1,
+          At,
+          _e,
+          ws,
+          Is,
+          de$1,
+          bs$1,
+          Ft,
+          pe,
+          Ct,
+          Cn
         ]
       ],
       [
-        Feature.types.kaylo,
+        l$1.types.kaylo,
         []
       ],
       [
-        Feature.types.state,
+        l$1.types.state,
         []
       ]
     ]);
   }
   static get typeFeatures() {
-    if (!typeFeaturesInitialized) {
-      this.initTypeFeatures();
-    }
-    return typeFeatures;
+    return Br || this.initTypeFeatures(), Ur;
   }
   static initTypeFeatures() {
-    for (const featureName of this.featureNames) {
-      typeFeatures.set(featureName, this.getFeature(featureName));
-    }
-    typeFeaturesInitialized = true;
+    for (const e of this.featureNames)
+      Ur.set(e, this.getFeature(e));
+    Br = true;
   }
   /**
      * Check to see if this language tool can produce an inflection table display
@@ -3587,7 +3015,7 @@ class SyriacLanguageModel extends LanguageModel {
      *
      * @param node
      */
-  static canInflect(node) {
+  static canInflect(e) {
     return false;
   }
   /**
@@ -3615,140 +3043,101 @@ class SyriacLanguageModel extends LanguageModel {
    *
    * @param inflections
    */
-  static groupInflectionsForDisplay(inflections) {
-    const grouped = /* @__PURE__ */ new Map();
-    const aggregated = this.aggregateInflectionsForDisplay(inflections);
-    for (const infl of aggregated) {
-      const groupingKey = new InflectionGroupingKey(
-        infl,
-        [Feature.types.part, Feature.types.declension, Feature.types.kaylo, Feature.types.state, Feature.types.comparison],
+  static groupInflectionsForDisplay(e) {
+    const t = /* @__PURE__ */ new Map(), s = this.aggregateInflectionsForDisplay(e);
+    for (const n of s) {
+      const a = new k(
+        n,
+        [l$1.types.part, l$1.types.declension, l$1.types.kaylo, l$1.types.state, l$1.types.comparison],
         {
-          prefix: infl.prefix,
-          suffix: infl.suffix,
-          stem: infl.stem
+          prefix: n.prefix,
+          suffix: n.suffix,
+          stem: n.stem
         }
-      );
-      const groupingKeyStr = groupingKey.toString();
-      if (grouped.has(groupingKeyStr)) {
-        grouped.get(groupingKeyStr).append(infl);
-      } else {
-        grouped.set(groupingKeyStr, new InflectionGroup(groupingKey, [infl]));
-      }
+      ), i2 = a.toString();
+      t.has(i2) ? t.get(i2).append(n) : t.set(i2, new $(a, [n]));
     }
-    for (const kv of grouped) {
-      const inflgrp = /* @__PURE__ */ new Map();
-      for (const infl of kv[1].inflections) {
-        let keyprop;
-        let isCaseInflectionSet = false;
-        if (infl[Feature.types.grmCase]) {
-          keyprop = Feature.types.number;
-          isCaseInflectionSet = true;
-        } else if (infl[Feature.types.tense]) {
-          keyprop = Feature.types.tense;
-        } else if (infl[Feature.types.part] === POFS_VERB) {
-          keyprop = Feature.types.part;
-        } else if (infl[Feature.types.part] === POFS_ADVERB) {
-          keyprop = Feature.types.part;
-        } else {
-          keyprop = "misc";
-        }
-        const groupingKey = new InflectionGroupingKey(infl, [keyprop], { isCaseInflectionSet });
-        const groupingKeyStr = groupingKey.toString();
-        if (inflgrp.has(groupingKeyStr)) {
-          inflgrp.get(groupingKeyStr).append(infl);
-        } else {
-          inflgrp.set(groupingKeyStr, new InflectionGroup(groupingKey, [infl]));
-        }
+    for (const n of t) {
+      const a = /* @__PURE__ */ new Map();
+      for (const i2 of n[1].inflections) {
+        let u2, d2 = false;
+        i2[l$1.types.grmCase] ? (u2 = l$1.types.number, d2 = true) : i2[l$1.types.tense] ? u2 = l$1.types.tense : i2[l$1.types.part] === pe || i2[l$1.types.part] === ne$1 ? u2 = l$1.types.part : u2 = "misc";
+        const h2 = new k(i2, [u2], { isCaseInflectionSet: d2 }), c2 = h2.toString();
+        a.has(c2) ? a.get(c2).append(i2) : a.set(c2, new $(h2, [i2]));
       }
-      for (const kv2 of inflgrp) {
-        const nextGroup = /* @__PURE__ */ new Map();
-        const sortOrder = /* @__PURE__ */ new Map();
-        for (const infl of kv2[1].inflections) {
-          const sortkey = infl[Feature.types.grmCase] ? Math.max(infl[Feature.types.grmCase].items.map((f2) => f2.sortOrder)) : 1;
-          const groupingKey = new InflectionGroupingKey(infl, [Feature.types.tense, Feature.types.voice]);
-          const groupingKeyStr = groupingKey.toString();
-          if (nextGroup.has(groupingKeyStr)) {
-            nextGroup.get(groupingKeyStr).append(infl);
-          } else {
-            nextGroup.set(groupingKeyStr, new InflectionGroup(groupingKey, [infl], sortkey));
-            sortOrder.set(groupingKeyStr, sortkey);
-          }
+      for (const i2 of a) {
+        const u2 = /* @__PURE__ */ new Map(), d2 = /* @__PURE__ */ new Map();
+        for (const c2 of i2[1].inflections) {
+          const p2 = c2[l$1.types.grmCase] ? Math.max(c2[l$1.types.grmCase].items.map((m2) => m2.sortOrder)) : 1, g2 = new k(c2, [l$1.types.tense, l$1.types.voice]), y = g2.toString();
+          u2.has(y) ? u2.get(y).append(c2) : (u2.set(y, new $(g2, [c2], p2)), d2.set(y, p2));
         }
-        kv2[1].inflections = [];
-        const sortedKeys = Array.from(nextGroup.keys()).sort(
-          (a, b) => {
-            const orderA = sortOrder.get(a);
-            const orderB = sortOrder.get(b);
-            return orderA > orderB ? -1 : orderB > orderA ? 1 : 0;
+        i2[1].inflections = [];
+        const h2 = Array.from(u2.keys()).sort(
+          (c2, p2) => {
+            const g2 = d2.get(c2), y = d2.get(p2);
+            return g2 > y ? -1 : y > g2 ? 1 : 0;
           }
         );
-        for (const groupkey of sortedKeys) {
-          kv2[1].inflections.push(nextGroup.get(groupkey));
-        }
+        for (const c2 of h2)
+          i2[1].inflections.push(u2.get(c2));
       }
-      for (const kv2 of inflgrp) {
-        const groups = kv2[1];
-        for (const group of groups.inflections) {
-          const nextGroup = /* @__PURE__ */ new Map();
-          for (const infl of group.inflections) {
-            const groupingKey = new InflectionGroupingKey(
-              infl,
+      for (const i2 of a) {
+        const u2 = i2[1];
+        for (const d2 of u2.inflections) {
+          const h2 = /* @__PURE__ */ new Map();
+          for (const c2 of d2.inflections) {
+            const p2 = new k(
+              c2,
               [
-                Feature.types.grmCase,
-                Feature.types.comparison,
-                Feature.types.gender,
-                Feature.types.number,
-                Feature.types.person,
-                Feature.types.tense,
-                Feature.types.mood,
-                Feature.types.voice
+                l$1.types.grmCase,
+                l$1.types.comparison,
+                l$1.types.gender,
+                l$1.types.number,
+                l$1.types.person,
+                l$1.types.tense,
+                l$1.types.mood,
+                l$1.types.voice
               ]
-            );
-            const groupingKeyStr = groupingKey.toString();
-            if (nextGroup.has(groupingKeyStr)) {
-              nextGroup.get(groupingKeyStr).append(infl);
-            } else {
-              nextGroup.set(groupingKeyStr, new InflectionGroup(groupingKey, [infl]));
-            }
+            ), g2 = p2.toString();
+            h2.has(g2) ? h2.get(g2).append(c2) : h2.set(g2, new $(p2, [c2]));
           }
-          group.inflections = Array.from(nextGroup.values());
+          d2.inflections = Array.from(h2.values());
         }
       }
-      kv[1].inflections = Array.from(inflgrp.values());
+      n[1].inflections = Array.from(a.values());
     }
-    return Array.from(grouped.values());
+    return Array.from(t.values());
   }
-}
-const MODELS = /* @__PURE__ */ new Map([
-  [STR_LANG_CODE_LA, LatinLanguageModel],
-  [STR_LANG_CODE_LAT, LatinLanguageModel],
-  [STR_LANG_CODE_GRC, GreekLanguageModel],
-  [STR_LANG_CODE_ARA, ArabicLanguageModel],
-  [STR_LANG_CODE_AR, ArabicLanguageModel],
-  [STR_LANG_CODE_PER, PersianLanguageModel],
-  [STR_LANG_CODE_GEZ, GeezLanguageModel],
-  [STR_LANG_CODE_ZHO, ChineseLanguageModel],
-  [STR_LANG_CODE_SYR, SyriacLanguageModel],
-  [STR_LANG_CODE_SYC, SyriacLanguageModel],
-  [STR_LANG_CODE_SYR_SYRJ, SyriacLanguageModel]
-]);
-class LanguageModelFactory {
+};
+o$1(sr$1, "SyriacLanguageModel");
+let be$1 = sr$1;
+const X = /* @__PURE__ */ new Map([
+  [ds, tt$1],
+  [He, tt$1],
+  [Ge, Ht],
+  [Je, st$1],
+  [ps$1, st$1],
+  [Ke, Gt],
+  [je, Jt],
+  [Xe, Kt],
+  [Ye, be$1],
+  [gs, be$1],
+  [ms$1, be$1]
+]), M = class M2 {
   /**
    * Checks whether a language is supported
    *
    * @param {string | symbol} language - Language as a language ID (symbol) or a language code (string)
    * @returns {boolean} True if language is supported, false otherwise
    */
-  static supportsLanguage(language) {
-    language = typeof language === "symbol" ? LanguageModelFactory.getLanguageCodeFromId(language) : language;
-    return MODELS.has(language);
+  static supportsLanguage(e) {
+    return e = typeof e == "symbol" ? M2.getLanguageCodeFromId(e) : e, X.has(e);
   }
   static availableLanguages() {
-    let avail = /* @__PURE__ */ new Set();
-    for (const model of MODELS.values()) {
-      avail.add(model.languageCode);
-    }
-    return Array.from(avail);
+    let e = /* @__PURE__ */ new Set();
+    for (const t of X.values())
+      e.add(t.languageCode);
+    return Array.from(e);
   }
   /**
    * Returns a constructor of language model for a specific language ID.
@@ -3756,23 +3145,16 @@ class LanguageModelFactory {
    * @param {symbol} languageID - A language ID of a desired language model.
    * @returns {LanguageModel} A language model for a given language ID.
    */
-  static getLanguageModel(languageID) {
-    const languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID);
-    return LanguageModelFactory.getLanguageModelFromCode(languageCode);
+  static getLanguageModel(e) {
+    const t = M2.getLanguageCodeFromId(e);
+    return M2.getLanguageModelFromCode(t);
   }
-  static getLanguageModelFromCode(languageCode) {
-    if (MODELS.has(languageCode)) {
-      return MODELS.get(languageCode);
-    } else {
-      return LanguageModel;
-    }
+  static getLanguageModelFromCode(e) {
+    return X.has(e) ? X.get(e) : _$1;
   }
-  static getLanguageForCode(code = null) {
-    const Model = MODELS.get(code);
-    if (Model) {
-      return new Model();
-    }
-    return new LanguageModel();
+  static getLanguageForCode(e = null) {
+    const t = X.get(e);
+    return t ? new t() : new _$1();
   }
   /**
    * Converts an ISO 639-3 language code to a language ID
@@ -3780,13 +3162,11 @@ class LanguageModelFactory {
    * @param {string} languageCode - An ISO 639-3 language code
    * @returns {symbol | undefined} A language ID or undefined if language ID is not found
    */
-  static getLanguageIdFromCode(languageCode) {
-    for (const languageModel of MODELS.values()) {
-      if (languageModel.hasCode(languageCode)) {
-        return languageModel.languageID;
-      }
-    }
-    return LANG_UNDEFINED;
+  static getLanguageIdFromCode(e) {
+    for (const t of X.values())
+      if (t.hasCode(e))
+        return t.languageID;
+    return us;
   }
   /**
    * Converts a language ID to an default ISO 639-3 language code for that language
@@ -3794,13 +3174,11 @@ class LanguageModelFactory {
    * @param {symbol} languageID - A language ID
    * @returns {string | undefined} An ISO 639-3 language code or undefined if language code is not found
    */
-  static getLanguageCodeFromId(languageID) {
-    for (const languageModel of MODELS.values()) {
-      if (languageModel.languageID.toString() === languageID.toString()) {
-        return languageModel.languageCode;
-      }
-    }
-    return STR_LANG_CODE_UNDEFINED;
+  static getLanguageCodeFromId(e) {
+    for (const t of X.values())
+      if (t.languageID.toString() === e.toString())
+        return t.languageCode;
+    return fs;
   }
   /**
    * Takes either a language ID or a language code and returns an object with both an ID and a code.
@@ -3810,18 +3188,14 @@ class LanguageModelFactory {
    *    {symbol} languageID
    *    {string} languageCode
    */
-  static getLanguageAttrs(language) {
-    if (typeof language === "symbol") {
-      return {
-        languageID: language,
-        languageCode: LanguageModelFactory.getLanguageCodeFromId(language)
-      };
-    } else {
-      return {
-        languageID: LanguageModelFactory.getLanguageIdFromCode(language),
-        languageCode: language
-      };
-    }
+  static getLanguageAttrs(e) {
+    return typeof e == "symbol" ? {
+      languageID: e,
+      languageCode: M2.getLanguageCodeFromId(e)
+    } : {
+      languageID: M2.getLanguageIdFromCode(e),
+      languageCode: e
+    };
   }
   /**
    * Compares two languages in either a language ID or a language code format. For this, does conversion of
@@ -3832,10 +3206,8 @@ class LanguageModelFactory {
    * @param {string | symbol} languageB - Either a language ID (a symbol) or a language code (a string).
    * @returns {boolean} True if languages are the same, false otherwise.
    */
-  static compareLanguages(languageA, languageB) {
-    languageA = typeof languageA === "symbol" ? LanguageModelFactory.getLanguageCodeFromId(languageA) : languageA;
-    languageB = typeof languageB === "symbol" ? LanguageModelFactory.getLanguageCodeFromId(languageB) : languageB;
-    return languageA === languageB;
+  static compareLanguages(e, t) {
+    return e = typeof e == "symbol" ? M2.getLanguageCodeFromId(e) : e, t = typeof t == "symbol" ? M2.getLanguageCodeFromId(t) : t, e === t;
   }
   /**
    * returns true if support for the requested language id is in an experimental state
@@ -3843,16 +3215,15 @@ class LanguageModelFactory {
    * @param {symbol} languageID - Language as a language ID (symbol)
    * @returns {boolean}
    */
-  static isExperimentalLanguage(languageID) {
-    return [LANG_GEEZ, LANG_SYRIAC, LANG_CHINESE].includes(languageID);
+  static isExperimentalLanguage(e) {
+    return [ls, hs, cs$1].includes(e);
   }
-}
-class DefinitionSet {
-  constructor(lemmaWord, languageID) {
-    this.lemmaWord = lemmaWord;
-    this.languageID = languageID;
-    this.shortDefs = [];
-    this.fullDefs = [];
+};
+o$1(M, "LanguageModelFactory");
+let A = M;
+const gt = class gt2 {
+  constructor(e, t) {
+    this.lemmaWord = e, this.languageID = t, this.shortDefs = [], this.fullDefs = [];
   }
   /**
    * A function that is used to instantiate a DefinitionSet object from a JSON object.
@@ -3860,16 +3231,14 @@ class DefinitionSet {
    * @param {object} jsonObject - A JSON object representing DefinitionSet data.
    * @returns {DefinitionSet} A DefinitionSet object populated with data from JSON object.
    */
-  static readObject(jsonObject) {
-    const languageID = LanguageModelFactory.getLanguageIdFromCode(jsonObject.languageCode);
-    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, languageID);
-    for (const shortDef of jsonObject.shortDefs) {
-      definitionSet.shortDefs.push(Definition.readObject(shortDef));
-    }
-    for (const fullDef of jsonObject.fullDefs) {
-      definitionSet.fullDefs.push(Definition.readObject(fullDef));
-    }
-    return definitionSet;
+  static readObject(e) {
+    const t = A.getLanguageIdFromCode(e.languageCode);
+    let s = new gt2(e.lemmaWord, t);
+    for (const n of e.shortDefs)
+      s.shortDefs.push(Ze.readObject(n));
+    for (const n of e.fullDefs)
+      s.fullDefs.push(Ze.readObject(n));
+    return s;
   }
   /**
    * Checks if any short definitions are stored within this object.
@@ -3901,14 +3270,8 @@ class DefinitionSet {
    * @param {Definition | Definition[]} definitions - One or more definition objects to add.
    * @returns {Definition[]} A list of short definitions this object has.
    */
-  appendShortDefs(definitions) {
-    if (definitions) {
-      if (!Array.isArray(definitions)) {
-        definitions = [definitions];
-      }
-      this.shortDefs = this.shortDefs.concat(definitions);
-    }
-    return this.shortDefs;
+  appendShortDefs(e) {
+    return e && (Array.isArray(e) || (e = [e]), this.shortDefs = this.shortDefs.concat(e)), this.shortDefs;
   }
   /**
    * clear accumulated short definitions
@@ -3922,14 +3285,8 @@ class DefinitionSet {
    * @param {Definition | Definition[]} definitions - One or more definition objects to add.
    * @returns {Definition[]} A list of full definitions this object has.
    */
-  appendFullDefs(definitions) {
-    if (definitions) {
-      if (!Array.isArray(definitions)) {
-        definitions = [definitions];
-      }
-      this.fullDefs = this.fullDefs.concat(definitions);
-    }
-    return this.fullDefs;
+  appendFullDefs(e) {
+    return e && (Array.isArray(e) || (e = [e]), this.fullDefs = this.fullDefs.concat(e)), this.fullDefs;
   }
   /**
    * clear accumulated full definitions
@@ -3938,16 +3295,195 @@ class DefinitionSet {
     this.fullDefs = [];
   }
   convertToJSONObject() {
-    const languageCode = LanguageModelFactory.getLanguageCodeFromId(this.languageID);
+    const e = A.getLanguageCodeFromId(this.languageID);
     return {
       lemmaWord: this.lemmaWord,
-      languageCode,
-      shortDefs: this.shortDefs.map((def) => def.convertToJSONObject()),
-      fullDefs: this.fullDefs.map((def) => def.convertToJSONObject())
+      languageCode: e,
+      shortDefs: this.shortDefs.map((t) => t.convertToJSONObject()),
+      fullDefs: this.fullDefs.map((t) => t.convertToJSONObject())
     };
   }
-}
-class Translation {
+};
+o$1(gt, "DefinitionSet");
+let Se = gt;
+const mt$1 = class mt {
+  /**
+   * @deprecated Use Feature instead
+   * Initializes a Feature object
+   * @param {string | string[]} value - A single feature value or, if this feature could have multiple
+   * values, an array of values.
+   * Multiple values do not allow to use a sort order. Because of this, it's better to use
+   * array of multiple Feature objects with single value each instead of a single Feature object
+   * with multiple values.
+   * Multiple values are left for backward compatibility only. Please do not use them as they
+   * will be removed in the future.
+   * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
+   * @param {string | symbol} language - A language of a feature, allowed values are specified in 'languages' object.
+   * @param {int} sortOrder - an integer used for sorting
+   */
+  constructor(e, t, s, n = 1) {
+    if (!mt.types.isAllowed(t))
+      throw new Error('Features of "' + t + '" type are not supported.');
+    if (!e)
+      throw new Error("Feature should have a non-empty value.");
+    if (!t)
+      throw new Error("Feature should have a non-empty type.");
+    if (!s)
+      throw new Error("Feature constructor requires a language");
+    this.value = e, this.type = t, this.languageID = void 0, this.languageCode = void 0, { languageID: this.languageID, languageCode: this.languageCode } = A.getLanguageAttrs(s), this.sortOrder = n;
+  }
+  /**
+   * This is a compatibility function for legacy code.
+   *
+   * @returns {string} A language code.
+   */
+  get language() {
+    return S.getInstance().warn('Please use a "languageID" instead of a "language"'), this.languageCode;
+  }
+  isEqual(e) {
+    if (Array.isArray(e.value)) {
+      if (!Array.isArray(this.value) || this.value.length !== e.value.length)
+        return false;
+      let t = this.type === e.type && A.compareLanguages(this.languageID, e.languageID);
+      return t = t && this.value.every(function(s, n) {
+        return s === e.value[n];
+      }), t;
+    } else
+      return A.compareLanguages(this.languageID, e.languageID) && this.type === e.type && this.value === e.value;
+  }
+  isSubsetof(e) {
+    Array.isArray(e) || (e = [e]);
+    const t = e[0].languageID, s = e[0].type, n = e.map((a) => a.value);
+    return !!(A.compareLanguages(this.languageID, t) && this.type === s && n.includes(this.value));
+  }
+  /**
+   * examine the feature for a specific value
+   *
+   * @param {string} value
+   * @returns {boolean} true if the value is included in the feature's values
+   */
+  hasValue(e) {
+    return Array.isArray(this.value) ? this.value.includes(e) : this.value === e;
+  }
+  /**
+   * string representation of a feature
+   *
+   * @returns {string}
+   */
+  toString() {
+    return Array.isArray(this.value) ? this.value.join(",") : this.value;
+  }
+  static toFeature(e) {
+    if (Array.isArray(e)) {
+      if (!(e[0] instanceof l$1)) {
+        const t = e[0].type, s = e[0].languageID, n = e.map((a) => a.value);
+        return new l$1(t, n, s);
+      }
+    } else if (!(e instanceof l$1))
+      return new l$1(e.type, e.value, e.languageID);
+    return e;
+  }
+};
+o$1(mt$1, "GrmFeature");
+let jt = mt$1;
+jt.types = {
+  word: "word",
+  part: "part of speech",
+  // Part of speech
+  number: "number",
+  case: "case",
+  grmCase: "case",
+  // A synonym of `case`
+  declension: "declension",
+  gender: "gender",
+  type: "type",
+  class: "class",
+  grmClass: "class",
+  // A synonym of `class`
+  conjugation: "conjugation",
+  comparison: "comparison",
+  tense: "tense",
+  voice: "voice",
+  mood: "mood",
+  person: "person",
+  frequency: "frequency",
+  // How frequent this word is
+  meaning: "meaning",
+  // Meaning of a word
+  source: "source",
+  // Source of word definition
+  footnote: "footnote",
+  // A footnote for a word's ending
+  dialect: "dialect",
+  // a dialect identifier
+  note: "note",
+  // a general note
+  pronunciation: "pronunciation",
+  age: "age",
+  area: "area",
+  geo: "geo",
+  // geographical data
+  kind: "kind",
+  // verb kind information
+  derivtype: "derivtype",
+  stemtype: "stemtype",
+  morph: "morph",
+  // general morphological information
+  var: "var",
+  // variance?
+  isAllowed(r) {
+    const e = `${r}`;
+    return Object.values(this).includes(e);
+  }
+};
+const rr = class rr2 {
+  /**
+   * Initializes a feature list.
+   *
+   * @param {Feature[]} features - Features that build the list (optional, can be set later).
+   */
+  constructor(e = []) {
+    this._features = [], this._types = {}, this.add(e);
+  }
+  add(e) {
+    if (!e || !Array.isArray(e))
+      throw new Error("Features must be defined and must come in an array.");
+    for (const t of e)
+      this._features.push(t), this._types[t.type] = t;
+  }
+  /**
+   * Returns an array of grouping features.
+   *
+   * @returns {FeatureType[]} - An array of grouping features.
+   */
+  get items() {
+    return this._features;
+  }
+  forEach(e) {
+    this._features.forEach(e);
+  }
+  /**
+   * Returns a feature of a particular type. If such feature does not exist in a list, returns undefined.
+   *
+   * @param {string} type - Feature type as defined in `types` object.
+   * @returns {FeatureType | undefined} A feature if a particular type if contains it. Undefined otherwise.
+   */
+  ofType(e) {
+    if (this.hasType(e))
+      return this._types[e];
+  }
+  /**
+   * Checks whether a feature list has a feature of a specific type.
+   *
+   * @param {string} type - Feature type as defined in `types` object.
+   * @returns {boolean} Whether a feature list has a feature of a particular type.
+   */
+  hasType(e) {
+    return this._types.hasOwnProperty(e);
+  }
+};
+o$1(rr, "FeatureList");
+const Fe = class Fe2 {
   /**
    * Initializes a Translation object.
    *
@@ -3955,52 +3491,41 @@ class Translation {
    * @param languageCode
    * @param translations
    */
-  constructor(lemma, languageCode, translations = []) {
-    if (!lemma) {
+  constructor(e, t, s = []) {
+    if (!e)
       throw new Error("Lemma should not be empty.");
-    }
-    this.lemmaWord = lemma.word;
-    this.languageCode = languageCode;
-    this.glosses = translations;
+    this.lemmaWord = e.word, this.languageCode = t, this.glosses = s;
   }
-  static readTranslationFromJSONList(lemma, languageCode, translationsList, provider) {
-    if (!translationsList || !Array.isArray(translationsList)) {
-      throw new Error("Recieved not proper translation list", translationsList);
-    }
-    const curTranslations = translationsList.find(function(element) {
-      return element.in === lemma.word;
-    });
-    const translation = new Translation(lemma, languageCode, curTranslations.translations);
-    if (provider) {
-      return ResourceProvider.getProxy(provider, translation);
-    } else {
-      return translation;
-    }
+  static readTranslationFromJSONList(e, t, s, n) {
+    if (!s || !Array.isArray(s))
+      throw new Error("Recieved not proper translation list", s);
+    const a = s.find(function(u2) {
+      return u2.in === e.word;
+    }), i2 = new Fe2(e, t, a.translations);
+    return n ? W.getProxy(n, i2) : i2;
   }
-  static loadTranslations(lemma, languageCode, translationsList, provider) {
-    lemma.addTranslation(this.readTranslationFromJSONList(lemma, languageCode, translationsList, provider));
+  static loadTranslations(e, t, s, n) {
+    e.addTranslation(this.readTranslationFromJSONList(e, t, s, n));
   }
   convertToJSONObject() {
-    let result = {
+    let e = {
       languageCode: this.languageCode,
       translations: this.glosses
     };
-    if (this.provider) {
-      result.provider = this.provider.convertToJSONObject();
-    }
-    return result;
+    return this.provider && (e.provider = this.provider.convertToJSONObject()), e;
   }
-  static readObject(jsonObject, lemma) {
-    const translation = new Translation(lemma, jsonObject.languageCode, jsonObject.translations);
-    if (jsonObject.provider) {
-      const provider = ResourceProvider.readObject(jsonObject.provider);
-      return ResourceProvider.getProxy(provider, translation);
-    } else {
-      return translation;
-    }
+  static readObject(e, t) {
+    const s = new Fe2(t, e.languageCode, e.translations);
+    if (e.provider) {
+      const n = W.readObject(e.provider);
+      return W.getProxy(n, s);
+    } else
+      return s;
   }
-}
-class Lemma {
+};
+o$1(Fe, "Translation");
+let Xt = Fe;
+const yt = class yt2 {
   /**
    * Initializes a Lemma object.
    *
@@ -4010,56 +3535,37 @@ class Lemma {
    * @param {object} features - the grammatical features of a lemma.
    * @param {Translation} transaltions - translations from python service
    */
-  constructor(word, languageID, principalParts = [], features = {}) {
-    if (!word) {
+  constructor(e, t, s = [], n = {}) {
+    if (!e)
       throw new Error("Word should not be empty.");
-    }
-    if (!languageID) {
+    if (!t)
       throw new Error("Language should not be empty.");
-    }
-    this.languageID = void 0;
-    this.languageCode = void 0;
-    ({ languageID: this.languageID, languageCode: this.languageCode } = LanguageModelFactory.getLanguageAttrs(languageID));
-    this.word = word;
-    this.principalParts = principalParts;
-    this.features = {};
-    this.ID = v4();
+    this.languageID = void 0, this.languageCode = void 0, { languageID: this.languageID, languageCode: this.languageCode } = A.getLanguageAttrs(t), this.word = e, this.principalParts = s, this.features = {}, this.ID = Ot();
   }
   get language() {
-    Logger.getInstance().warn('Please use "languageID" instead of "language"');
-    return this.languageCode;
+    return S.getInstance().warn('Please use "languageID" instead of "language"'), this.languageCode;
   }
   get displayWord() {
     return this.word.replace(/\d+$/, "");
   }
-  static readObject(jsonObject) {
-    const language = jsonObject.language ? jsonObject.language : jsonObject.languageCode;
-    let resLemma = new Lemma(jsonObject.word, language, jsonObject.principalParts, jsonObject.pronunciation);
-    if (jsonObject.features && jsonObject.features.length > 0) {
-      jsonObject.features.forEach((featureSource) => {
-        resLemma.addFeature(Feature.readObject(featureSource));
-      });
-    }
-    if (jsonObject.translation) {
-      resLemma.translation = Translation.readObject(jsonObject.translation, resLemma);
-    }
-    return resLemma;
+  static readObject(e) {
+    const t = e.language ? e.language : e.languageCode;
+    let s = new yt2(e.word, t, e.principalParts, e.pronunciation);
+    return e.features && e.features.length > 0 && e.features.forEach((n) => {
+      s.addFeature(l$1.readObject(n));
+    }), e.translation && (s.translation = Xt.readObject(e.translation, s)), s;
   }
   convertToJSONObject() {
-    let resultFeatures = [];
-    for (const feature of Object.values(this.features)) {
-      resultFeatures.push(feature.convertToJSONObject());
-    }
-    let resultLemma = {
+    let e = [];
+    for (const s of Object.values(this.features))
+      e.push(s.convertToJSONObject());
+    let t = {
       word: this.word,
       language: this.languageCode,
       principalParts: this.principalParts,
-      features: resultFeatures
+      features: e
     };
-    if (this.translation) {
-      resultLemma.translation = this.translation.convertToJSONObject();
-    }
-    return resultLemma;
+    return this.translation && (t.translation = this.translation.convertToJSONObject()), t;
   }
   /**
    * @deprecated Please use `addFeature` instead.
@@ -4068,24 +3574,18 @@ class Lemma {
    * Values are taken from features and stored in a 'feature.type' property as an array of values.
    * @param {Feature | Feature[]} data
    */
-  set feature(data2) {
-    Logger.getInstance().warn('Please use "addFeature" instead');
-    if (!data2) {
+  set feature(e) {
+    if (S.getInstance().warn('Please use "addFeature" instead'), !e)
       throw new Error("feature data cannot be empty.");
-    }
-    if (!Array.isArray(data2)) {
-      data2 = [data2];
-    }
-    const type = data2[0].type;
-    this.features[type] = [];
-    for (const element of data2) {
-      if (!(element instanceof Feature)) {
+    Array.isArray(e) || (e = [e]);
+    const t = e[0].type;
+    this.features[t] = [];
+    for (const s of e) {
+      if (!(s instanceof l$1))
         throw new Error("feature data must be a Feature object.");
-      }
-      if (!LanguageModelFactory.compareLanguages(element.languageID, this.languageID)) {
-        throw new Error('Language "' + element.languageID.toString() + '" of a feature does not match a language "' + this.languageID.toString() + '" of a Lemma object.');
-      }
-      this.features[type].push(element);
+      if (!A.compareLanguages(s.languageID, this.languageID))
+        throw new Error('Language "' + s.languageID.toString() + '" of a feature does not match a language "' + this.languageID.toString() + '" of a Lemma object.');
+      this.features[t].push(s);
     }
   }
   /**
@@ -4093,44 +3593,37 @@ class Lemma {
    *
    * @param {Feature} feature - A feature object with one or multiple values.
    */
-  addFeature(feature) {
-    if (!feature) {
+  addFeature(e) {
+    if (!e)
       throw new Error("feature data cannot be empty.");
-    }
-    if (!(feature instanceof Feature) && feature.constructor.name !== "Feature") {
+    if (!(e instanceof l$1) && e.constructor.name !== "Feature")
       throw new Error("feature data must be a Feature object.");
-    }
-    if (!LanguageModelFactory.compareLanguages(feature.languageID, this.languageID)) {
-      throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' + this.languageID.toString() + '" of a Lemma object.');
-    }
-    this.features[feature.type] = feature;
+    if (!A.compareLanguages(e.languageID, this.languageID))
+      throw new Error('Language "' + e.languageID.toString() + '" of a feature does not match a language "' + this.languageID.toString() + '" of a Lemma object.');
+    this.features[e.type] = e;
   }
   /**
    * Sets multiple grammatical features of a lemma.
    *
    * @param {Feature[]} features - Features to be added.
    */
-  addFeatures(features) {
-    if (!Array.isArray(features)) {
+  addFeatures(e) {
+    if (!Array.isArray(e))
       throw new Error("Features must be in an array");
-    }
-    for (const feature of features) {
-      this.addFeature(feature);
-    }
+    for (const t of e)
+      this.addFeature(t);
   }
   /**
    * Sets a translation from python service.
    *
    * @param {Translation} translation - A translation object
    */
-  addTranslation(translation) {
-    if (!translation) {
+  addTranslation(e) {
+    if (!e)
       throw new Error("translation data cannot be empty.");
-    }
-    if (translation.constructor.name.indexOf("Translation") === -1) {
+    if (e.constructor.name.indexOf("Translation") === -1)
       throw new Error("translation data must be a Translation object.");
-    }
-    this.translation = translation;
+    this.translation = e;
   }
   /**
    * Test to see if two lemmas are full homonyms.
@@ -4143,27 +3636,21 @@ class Lemma {
    *                                        for a part of speech comparison)
    * @returns {boolean} true or false.
    */
-  isFullHomonym(lemma, { normalize = false, ignorePofs = false } = {}) {
-    if (!ignorePofs && (!this.features[Feature.types.part] || !lemma.features[Feature.types.part] || !this.features[Feature.types.part].isEqual(lemma.features[Feature.types.part]))) {
+  isFullHomonym(e, { normalize: t = false, ignorePofs: s = false } = {}) {
+    if (!s && (!this.features[l$1.types.part] || !e.features[l$1.types.part] || !this.features[l$1.types.part].isEqual(e.features[l$1.types.part])))
       return false;
-    }
-    const lm = LanguageModelFactory.getLanguageModel(this.languageID);
-    const areSameWords = normalize ? lm.compareWords(
+    const n = A.getLanguageModel(this.languageID), a = t ? n.compareWords(
       this.word,
-      lemma.word,
+      e.word,
       true,
       { normalizeTrailingDigit: true }
-    ) : this.word === lemma.word;
-    const thisHasTrailingDigit = lm.hasTrailingDigit(this.word);
-    const otherHasTrailingDigit = lm.hasTrailingDigit(lemma.word);
-    if (thisHasTrailingDigit && otherHasTrailingDigit) {
-      const thisTrailingDigit = this.word.match(/\d+$/)[0];
-      const otherTrailingDigit = lemma.word.match(/\d+$/)[0];
-      if (thisTrailingDigit !== otherTrailingDigit) {
+    ) : this.word === e.word, i2 = n.hasTrailingDigit(this.word), u2 = n.hasTrailingDigit(e.word);
+    if (i2 && u2) {
+      const d2 = this.word.match(/\d+$/)[0], h2 = e.word.match(/\d+$/)[0];
+      if (d2 !== h2)
         return false;
-      }
     }
-    return areSameWords;
+    return a;
   }
   /**
    * Disambiguate between this and the other lemma.
@@ -4171,51 +3658,35 @@ class Lemma {
    * @param {string} otherLemma - The other lemma for disambiguation.
    * @returns {string} - A disambiguated word.
    */
-  disambiguate(otherLemma) {
-    const langModel = LanguageModelFactory.getLanguageModel(this.languageID);
-    const areSameWords = langModel.compareWords(this.word, otherLemma.word, true, { normalizeTrailingDigit: true });
-    if (!areSameWords) {
+  disambiguate(e) {
+    const t = A.getLanguageModel(this.languageID);
+    if (!t.compareWords(this.word, e.word, true, { normalizeTrailingDigit: true }))
       throw new Error("Words that differ cannot be disambiguated");
-    }
-    const thisHasMixedCase = langModel.hasUpperCase(this.word);
-    const otherHasMixedCase = langModel.hasUpperCase(otherLemma.word);
-    if (otherHasMixedCase) {
-      return otherLemma.word;
-    }
-    if (thisHasMixedCase) {
+    const n = t.hasUpperCase(this.word);
+    if (t.hasUpperCase(e.word))
+      return e.word;
+    if (n)
       return this.word;
-    }
-    const thisNeesNormalization = langModel.needsNormalization(this.word);
-    const otherNeesNormalization = langModel.needsNormalization(otherLemma.word);
-    if (otherNeesNormalization) {
-      return langModel.normalizeText(otherLemma.word);
-    }
-    if (thisNeesNormalization) {
-      return langModel.normalizeText(this.word);
-    }
-    const thisHasTrailingDigit = langModel.hasTrailingDigit(this.word);
-    const otherHasTrailingDigit = langModel.hasTrailingDigit(otherLemma.word);
-    if (otherHasTrailingDigit) {
-      return otherLemma.word;
-    }
-    if (thisHasTrailingDigit) {
-      return this.word;
-    }
-    return this.word;
+    const i2 = t.needsNormalization(this.word);
+    if (t.needsNormalization(e.word))
+      return t.normalizeText(e.word);
+    if (i2)
+      return t.normalizeText(this.word);
+    const d2 = t.hasTrailingDigit(this.word);
+    return t.hasTrailingDigit(e.word) ? e.word : d2 ? this.word : this.word;
   }
   /**
    * extracts lemma.word and all principal parts for flashcards export
    *
    */
   get wordPrincipalParts() {
-    const allParts = [...this.principalParts];
-    if (!this.principalParts.includes(this.word)) {
-      allParts.push(this.word);
-    }
-    return allParts.join(", ");
+    const e = [...this.principalParts];
+    return this.principalParts.includes(this.word) || e.push(this.word), e.join(", ");
   }
-}
-class Inflection {
+};
+o$1(yt, "Lemma");
+let ge = yt;
+const Ce = class Ce2 {
   /**
    * Initializes an Inflection object.
    *
@@ -4225,23 +3696,14 @@ class Inflection {
    * @param {prefix} prefix - a prefix of a word
    * @param {example} example - example
    */
-  constructor(stem = null, language, suffix = null, prefix = null, example = null) {
-    if (!stem && !suffix) {
+  constructor(e = null, t, s = null, n = null, a = null) {
+    if (!e && !s)
       throw new Error("At least stem or suffix must be defined");
-    }
-    if (!language) {
+    if (!t)
       throw new Error("Language should not be empty.");
-    }
-    if (!LanguageModelFactory.supportsLanguage(language)) {
-      throw new Error(`language ${language} not supported.`);
-    }
-    this.stem = stem;
-    this.languageID = void 0;
-    this.languageCode = void 0;
-    ({ languageID: this.languageID, languageCode: this.languageCode } = LanguageModelFactory.getLanguageAttrs(language));
-    this.model = LanguageModelFactory.getLanguageModel(this.languageID);
-    this.features = /* @__PURE__ */ new Set();
-    this.constraints = {
+    if (!A.supportsLanguage(t))
+      throw new Error(`language ${t} not supported.`);
+    this.stem = e, this.languageID = void 0, this.languageCode = void 0, { languageID: this.languageID, languageCode: this.languageCode } = A.getLanguageAttrs(t), this.model = A.getLanguageModel(this.languageID), this.features = /* @__PURE__ */ new Set(), this.constraints = {
       fullFormBased: false,
       // True this inflection stores and requires to use a full form of a word
       suffixBased: false,
@@ -4254,25 +3716,18 @@ class Inflection {
       // {string[]} Names of features that will be recorded but are not important for inclusion of a form or suffix to an inflection table
       morphologyMatches: []
       // {string[]} These features should match for a morphology match
-    };
-    this.suffix = suffix;
-    this.prefix = prefix;
-    this.example = example;
-    this.lemma = null;
+    }, this.suffix = s, this.prefix = n, this.example = a, this.lemma = null;
   }
   clone() {
-    let clone = new Inflection(this.stem, this.languageID, this.suffix, this.prefix, this.example);
-    clone.addFeatures(Array.from(this.features).map((f2) => this[f2]));
-    clone.constraints = {
+    let e = new Ce2(this.stem, this.languageID, this.suffix, this.prefix, this.example);
+    return e.addFeatures(Array.from(this.features).map((t) => this[t])), e.constraints = {
       fullFormBased: this.constraints.fullFormBased,
       suffixBased: this.constraints.suffixBased,
       irregular: this.constraints.irregular,
       obligatoryMatches: this.constraints.obligatoryMatches ? Array.from(this.constraints.obligatoryMatches) : [],
       optionalMatches: this.constraints.obligatoryMatches ? Array.from(this.constraints.obligatoryMatches) : [],
       morphologyMatches: this.constraints.morphologyMatches ? Array.from(this.constraints.morphologyMatches) : []
-    };
-    clone.lemma = this.lemma;
-    return clone;
+    }, e.lemma = this.lemma, e;
   }
   /**
    * Returns a full form of a word using ' - ' as a divider for suffix-based inflections.
@@ -4280,8 +3735,8 @@ class Inflection {
    * @returns {string} A word form.
    */
   get form() {
-    const divider = this.stem ? " - " : "";
-    return this.getForm(divider);
+    const e = this.stem ? " - " : "";
+    return this.getForm(e);
   }
   /**
    * Returns a full form of a word using user specified divider for suffix-based inflections.
@@ -4289,19 +3744,10 @@ class Inflection {
    * @param {string} divider - A divider to use between stem and suffix.
    * @returns {string} A word form.
    */
-  getForm(divider = "") {
-    let form, prefix, suffix;
-    const stem = this.stem ? this.stem : "";
-    if (this.model.direction === LANG_DIR_RTL) {
-      prefix = this.prefix ? divider + this.prefix : "";
-      suffix = this.suffix ? this.suffix + divider : "";
-      form = suffix + stem + prefix;
-    } else {
-      prefix = this.prefix ? this.prefix + divider : "";
-      suffix = this.suffix ? divider + this.suffix : "";
-      form = prefix + stem + suffix;
-    }
-    return form;
+  getForm(e = "") {
+    let t, s, n;
+    const a = this.stem ? this.stem : "";
+    return this.model.direction === Pe ? (s = this.prefix ? e + this.prefix : "", n = this.suffix ? this.suffix + e : "", t = n + a + s) : (s = this.prefix ? this.prefix + e : "", n = this.suffix ? e + this.suffix : "", t = s + a + n), t;
   }
   /**
    * This is a compatibility function for legacy code.
@@ -4309,16 +3755,15 @@ class Inflection {
    * @returns {string} A language code.
    */
   get language() {
-    Logger.getInstance().warn('Please use a "languageID" instead of a "language"');
-    return this.languageCode;
+    return S.getInstance().warn('Please use a "languageID" instead of a "language"'), this.languageCode;
   }
   /**
    * Sets grammar properties based on inflection info
    */
   setConstraints() {
     if (this.model.hasOwnProperty("getInflectionConstraints")) {
-      const constraintData = this.model.getInflectionConstraints(this);
-      this.constraints = Object.assign(this.constraints, constraintData);
+      const e = this.model.getInflectionConstraints(this);
+      this.constraints = Object.assign(this.constraints, e);
     }
   }
   /**
@@ -4334,36 +3779,23 @@ class Inflection {
    *                        ends with this suffix.
    * @returns {boolean} True for match, false otherwise.
    */
-  smartWordCompare(word, className, options = {}) {
-    if (!options.hasOwnProperty("normalize")) {
-      options.normalize = true;
-    }
-    if (!options.hasOwnProperty("fuzzySuffix")) {
-      options.fuzzySuffix = false;
-    }
-    let value;
-    if (!this.constraints.irregular) {
-      value = this.constraints.suffixBased ? this.suffix : this.form;
-    } else {
-      if (className === "Suffix") {
-        value = this.suffix;
-      } else {
-        value = this[Feature.types.fullForm] ? this[Feature.types.fullForm].value : this.form;
+  smartWordCompare(e, t, s = {}) {
+    s.hasOwnProperty("normalize") || (s.normalize = true), s.hasOwnProperty("fuzzySuffix") || (s.fuzzySuffix = false);
+    let n;
+    this.constraints.irregular ? t === "Suffix" ? n = this.suffix : n = this[l$1.types.fullForm] ? this[l$1.types.fullForm].value : this.form : n = this.constraints.suffixBased ? this.suffix : this.form;
+    let a = this.modelCompareWords(e, n, s.normalize);
+    if (!a && t === "Suffix" && s.fuzzySuffix) {
+      const i2 = this.getForm();
+      if (i2 && e && i2.length >= e.length) {
+        const u2 = i2.substring(i2.length - e.length);
+        a = this.modelCompareWords(e, u2, s.normalize);
       }
     }
-    let matchResult = this.modelCompareWords(word, value, options.normalize);
-    if (!matchResult && className === "Suffix" && options.fuzzySuffix) {
-      const form = this.getForm();
-      if (form && word && form.length >= word.length) {
-        const altSuffix = form.substring(form.length - word.length);
-        matchResult = this.modelCompareWords(word, altSuffix, options.normalize);
-      }
-    }
-    return matchResult;
+    return a;
   }
-  compareWithWord(word, normalize = true) {
-    const value = this.constraints.suffixBased ? this.suffix : this.form;
-    return this.modelCompareWords(word, value, normalize);
+  compareWithWord(e, t = true) {
+    const s = this.constraints.suffixBased ? this.suffix : this.form;
+    return this.modelCompareWords(e, s, t);
   }
   /**
    * Compare to words (or partial words) delegating to the language model
@@ -4373,9 +3805,8 @@ class Inflection {
    * @param {string} wordB the second word
    * @param {boolean} normalize whether or not to apply normalization
    */
-  modelCompareWords(wordA, wordB, normalize = true) {
-    const model = LanguageModelFactory.getLanguageModel(this.languageID);
-    return model.compareWords(wordA, wordB, normalize);
+  modelCompareWords(e, t, s = true) {
+    return A.getLanguageModel(this.languageID).compareWords(e, t, s);
   }
   /**
    * Compare single feature values delegating to the language model
@@ -4386,9 +3817,8 @@ class Inflection {
    * @param {string} valueB the secon value
    * @param {boolean} normalize whether or not to apply normalization
    */
-  modelCompareFeatureValue(featureType, valueA, valueB, normalize = true) {
-    const model = LanguageModelFactory.getLanguageModel(this.languageID);
-    return model.compareFeatureValue(featureType, valueA, valueB, { normalize });
+  modelCompareFeatureValue(e, t, s, n = true) {
+    return A.getLanguageModel(this.languageID).compareFeatureValue(e, t, s, { normalize: n });
   }
   /**
    * Check to see if the supplied inflection can disambiguate this one
@@ -4402,30 +3832,19 @@ class Inflection {
    *                   an exactMatch means the disamibugator matched all
    *                   values of all features
    */
-  disambiguatedBy(infl, { ignorePofs = false } = {}) {
-    let matched = true;
-    let exactMatch = true;
-    if (this.features.size === 0 || infl.features.size === 0) {
-      matched = false;
-    }
-    if (infl.features.size > this.features.size) {
-      matched = false;
-    }
-    for (const feature of infl.features) {
-      if (ignorePofs && feature === Feature.types.part) {
-        continue;
-      }
-      for (const value of infl[feature].values) {
-        if (!this.hasFeatureValue(feature, value, { normalize: true })) {
-          matched = false;
-          break;
+  disambiguatedBy(e, { ignorePofs: t = false } = {}) {
+    let s = true, n = true;
+    (this.features.size === 0 || e.features.size === 0) && (s = false), e.features.size > this.features.size && (s = false);
+    for (const a of e.features)
+      if (!(t && a === l$1.types.part))
+        for (const i2 of e[a].values) {
+          if (!this.hasFeatureValue(a, i2, { normalize: true })) {
+            s = false;
+            break;
+          }
+          this[a].values.length !== e[a].values.length && (n = false);
         }
-        if (this[feature].values.length !== infl[feature].values.length) {
-          exactMatch = false;
-        }
-      }
-    }
-    return { match: matched, exactMatch };
+    return { match: s, exactMatch: n };
   }
   /**
    * @deprecated Use `addFeature` instead
@@ -4434,26 +3853,19 @@ class Inflection {
    * Values are taken from features and stored in a 'feature.type' property as an array of values.
    * @param {Feature | Feature[]} data
    */
-  set feature(data2) {
-    Logger.getInstance().warn('Please use "addFeature" instead.');
-    if (!data2) {
+  set feature(e) {
+    if (S.getInstance().warn('Please use "addFeature" instead.'), !e)
       throw new Error("Inflection feature data cannot be empty.");
-    }
-    if (!Array.isArray(data2)) {
-      data2 = [data2];
-    }
-    const type = data2[0].type;
-    this[type] = [];
-    for (const element of data2) {
-      if (!(element instanceof Feature)) {
+    Array.isArray(e) || (e = [e]);
+    const t = e[0].type;
+    this[t] = [];
+    for (const s of e) {
+      if (!(s instanceof l$1))
         throw new Error("Inflection feature data must be a Feature object.");
-      }
-      if (!LanguageModelFactory.compareLanguages(element.languageID, this.languageID)) {
-        throw new Error(`Language "${element.languageID.toString()}" of a feature does not match
+      if (!A.compareLanguages(s.languageID, this.languageID))
+        throw new Error(`Language "${s.languageID.toString()}" of a feature does not match
           a language "${this.languageID.toString()}" of an Inflection object.`);
-      }
-      this[type].push(element);
-      this.features.add(type);
+      this[t].push(s), this.features.add(t);
     }
   }
   /**
@@ -4461,31 +3873,25 @@ class Inflection {
    *
    * @param {Feature} feature - A feature object with one or multiple values.
    */
-  addFeature(feature) {
-    if (!feature) {
+  addFeature(e) {
+    if (!e)
       throw new Error("feature data cannot be empty.");
-    }
-    if (!(feature instanceof Feature) && feature.constructor.name !== "Feature") {
+    if (!(e instanceof l$1) && e.constructor.name !== "Feature")
       throw new Error("feature data must be a Feature object.");
-    }
-    if (!LanguageModelFactory.compareLanguages(feature.languageID, this.languageID)) {
-      throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' + this.languageID.toString() + '" of a Lemma object.');
-    }
-    this[feature.type] = feature;
-    this.features.add(feature.type);
+    if (!A.compareLanguages(e.languageID, this.languageID))
+      throw new Error('Language "' + e.languageID.toString() + '" of a feature does not match a language "' + this.languageID.toString() + '" of a Lemma object.');
+    this[e.type] = e, this.features.add(e.type);
   }
   /**
    * Sets multiple grammatical features of an inflection.
    *
    * @param {Feature[]} features - Features to be added.
    */
-  addFeatures(features) {
-    if (!Array.isArray(features)) {
+  addFeatures(e) {
+    if (!Array.isArray(e))
       throw new Error("Features must be in an array");
-    }
-    for (const feature of features) {
-      this.addFeature(feature);
-    }
+    for (const t of e)
+      this.addFeature(t);
   }
   /**
    * Checks whether an inflection has a feature with `featureName` name and `featureValue` value
@@ -4496,66 +3902,51 @@ class Inflection {
    * @param {boolean} options.normalize - whether or not to normalize the feature values
    * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
-  hasFeatureValue(featureName, featureValue, { normalize = false } = {}) {
-    if (this.hasOwnProperty(featureName)) {
-      return this[featureName].values.some((v) => this.modelCompareFeatureValue(featureName, v, featureValue));
-    }
-    return false;
+  hasFeatureValue(e, t, { normalize: s = false } = {}) {
+    return this.hasOwnProperty(e) ? this[e].values.some((n) => this.modelCompareFeatureValue(e, n, t)) : false;
   }
   toString() {
-    let string = `Inflection stem: ${this.stem}, prefix: ${this.prefix}, suffix: ${this.suffix}, langID: ${this.languageID.toString()}
+    let e = `Inflection stem: ${this.stem}, prefix: ${this.prefix}, suffix: ${this.suffix}, langID: ${this.languageID.toString()}
   features:  `;
-    for (const feature of this.features.values()) {
-      string += `${feature}: ${this[feature].value}, `;
-    }
-    string += "\n  constraints:  ";
-    for (const [key, value] of Object.entries(this.constraints)) {
-      if (Array.isArray(value)) {
-        string += `${key}: [${value}], `;
-      } else {
-        string += `${key}: ${value}, `;
-      }
-    }
-    string += `
-  example: ${this.example}`;
-    return string;
+    for (const t of this.features.values())
+      e += `${t}: ${this[t].value}, `;
+    e += `
+  constraints:  `;
+    for (const [t, s] of Object.entries(this.constraints))
+      Array.isArray(s) ? e += `${t}: [${s}], ` : e += `${t}: ${s}, `;
+    return e += `
+  example: ${this.example}`, e;
   }
-  static readObject(jsonObject, lemma) {
-    let inflection = new Inflection(
-      jsonObject.stem,
-      jsonObject.languageCode,
-      jsonObject.suffix,
-      jsonObject.prefix,
-      jsonObject.example
+  static readObject(e, t) {
+    let s = new Ce2(
+      e.stem,
+      e.languageCode,
+      e.suffix,
+      e.prefix,
+      e.example
     );
-    inflection.languageID = LanguageModelFactory.getLanguageIdFromCode(inflection.languageCode);
-    if (jsonObject.features && jsonObject.features.length > 0) {
-      jsonObject.features.forEach((featureSource) => {
-        inflection.addFeature(Feature.readObject(featureSource));
-      });
-    }
-    if (lemma) {
-      inflection.lemma = lemma;
-    }
-    return inflection;
+    return s.languageID = A.getLanguageIdFromCode(s.languageCode), e.features && e.features.length > 0 && e.features.forEach((n) => {
+      s.addFeature(l$1.readObject(n));
+    }), t && (s.lemma = t), s;
   }
   convertToJSONObject() {
-    let resultFeatures = [];
-    for (const key of this.features.keys()) {
-      resultFeatures.push(this[key].convertToJSONObject());
-    }
-    const languageCode = LanguageModelFactory.getLanguageCodeFromId(this.languageID);
+    let e = [];
+    for (const s of this.features.keys())
+      e.push(this[s].convertToJSONObject());
+    const t = A.getLanguageCodeFromId(this.languageID);
     return {
       stem: this.stem,
-      languageCode,
+      languageCode: t,
       suffix: this.suffix,
       prefix: this.prefix,
       example: this.example,
-      features: resultFeatures
+      features: e
     };
   }
-}
-class Lexeme {
+};
+o$1(Ce, "Inflection");
+let rt = Ce;
+const De = class De2 {
   /**
    * Initializes a Lexeme object.
    *
@@ -4563,34 +3954,21 @@ class Lexeme {
    * @param {Inflection[]} inflections - An array of inflections.
    * @param {DefinitionSet} meaning - A set of definitions.
    */
-  constructor(lemma, inflections, meaning = null) {
-    if (!lemma) {
+  constructor(e, t, s = null) {
+    if (!e)
       throw new Error("Lemma should not be empty.");
-    }
-    if (!(lemma instanceof Lemma)) {
+    if (!(e instanceof ge))
       throw new Error("Lemma should be of Lemma object type.");
-    }
-    if (!inflections) {
+    if (!t)
       throw new Error("Inflections data should not be empty.");
-    }
-    if (!Array.isArray(inflections)) {
+    if (!Array.isArray(t))
       throw new Error("Inflection data should be provided in an array.");
-    }
-    for (const inflection of inflections) {
-      if (!(inflection instanceof Inflection)) {
+    for (const n of t)
+      if (!(n instanceof rt))
         throw new Error("All inflection data should be of Inflection object type.");
-      }
-    }
-    if (meaning !== null && !(meaning instanceof DefinitionSet)) {
+    if (s !== null && !(s instanceof Se))
       throw new Error("Meaning should be of DefinitionSet object type.");
-    }
-    this.lemma = lemma;
-    this.altLemmas = [];
-    this.inflections = [];
-    this.addInflections(inflections);
-    this.meaning = meaning || new DefinitionSet(this.lemma.word, this.lemma.languageID);
-    this.disambiguated = false;
-    this.selectedInflection = null;
+    this.lemma = e, this.altLemmas = [], this.inflections = [], this.addInflections(t), this.meaning = s || new Se(this.lemma.word, this.lemma.languageID), this.disambiguated = false, this.selectedInflection = null;
   }
   /**
    * Set the selected inflection for a lexeme which has had its
@@ -4598,8 +3976,8 @@ class Lexeme {
    *
    * @param {Inflection} inflection the selected inflection
    */
-  setSelectedInflection(inflection) {
-    this.selectedInflection = inflection;
+  setSelectedInflection(e) {
+    this.selectedInflection = e;
   }
   /**
    * Get the selected inflection for a lexeme which has had its
@@ -4618,22 +3996,15 @@ class Lexeme {
    * @returns {Array} if no selected inflection the array will be empty
    */
   getGroupedSelectedInflection() {
-    if (this.selectedInflection) {
-      const lm = LanguageModelFactory.getLanguageModel(this.lemma.languageID);
-      return lm.groupInflectionsForDisplay([this.selectedInflection]);
-    } else {
-      return [];
-    }
+    return this.selectedInflection ? A.getLanguageModel(this.lemma.languageID).groupInflectionsForDisplay([this.selectedInflection]) : [];
   }
   /**
    * add an inflection to the lexeme
    *
    * @param {Inflection} inflection
    */
-  addInflection(inflection) {
-    inflection.lemma = this.lemma;
-    inflection.lexeme = this;
-    this.inflections.push(inflection);
+  addInflection(e) {
+    e.lemma = this.lemma, e.lexeme = this, this.inflections.push(e);
   }
   /**
    * Adds one or several inflections to a Lexeme object.
@@ -4641,19 +4012,16 @@ class Lexeme {
    * @param {Inflection | Inflection[]} inflections - a single Inflection object or an array of Inflection
    *        objects to add to a lexeme.
    */
-  addInflections(inflections) {
-    if (!Array.isArray(inflections)) {
-      inflections = [inflections];
-    }
-    inflections.forEach((i2) => this.addInflection(i2));
+  addInflections(e) {
+    Array.isArray(e) || (e = [e]), e.forEach((t) => this.addInflection(t));
   }
   /**
    * add an alternative lemma to the lexeme
    *
    * @param {Lemma} lemma
    */
-  addAltLemma(lemma) {
-    this.altLemmas.push(lemma);
+  addAltLemma(e) {
+    this.altLemmas.push(e);
   }
   /**
    * test to see if a lexeme is populated with meaningful data
@@ -4673,7 +4041,7 @@ class Lexeme {
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasShortDefs() {
-    return Boolean(this.meaning && this.meaning.hasShortDefs);
+    return !!(this.meaning && this.meaning.hasShortDefs);
   }
   /**
    * Checks if any full definitions are stored within this lexeme.
@@ -4681,7 +4049,7 @@ class Lexeme {
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasFullDefs() {
-    return Boolean(this.meaning && this.meaning.hasFullDefs);
+    return !!(this.meaning && this.meaning.hasFullDefs);
   }
   /**
    * Checks whether a lemma of a current lexeme is a full homonym of the lemma of the other lexeme.
@@ -4690,15 +4058,13 @@ class Lexeme {
    * @param {boolean} normalize - whether to use normalization for word comparison.
    * @returns {boolean} - true if two aforementioned lemmas are full homonyms, false otherwise.
    */
-  isFullHomonym(otherLexeme, { normalize = false } = {}) {
-    const lm = LanguageModelFactory.getLanguageModel(this.lemma.languageID);
-    const normalizedPofs = lm.normalizePartOfSpeechValue(this);
-    if (normalizedPofs === lm.normalizePartOfSpeechValue(otherLexeme)) {
-      const ignorePofs = Boolean(normalizedPofs !== this.lemma.features[Feature.types.part]);
-      return this.lemma.isFullHomonym(otherLexeme.lemma, { normalize, ignorePofs });
-    } else {
+  isFullHomonym(e, { normalize: t = false } = {}) {
+    const s = A.getLanguageModel(this.lemma.languageID), n = s.normalizePartOfSpeechValue(this);
+    if (n === s.normalizePartOfSpeechValue(e)) {
+      const a = n !== this.lemma.features[l$1.types.part];
+      return this.lemma.isFullHomonym(e.lemma, { normalize: t, ignorePofs: a });
+    } else
       return false;
-    }
   }
   /**
    * Determines whether a lexeme can be disambiguated with the other disambiguator lexeme.
@@ -4707,9 +4073,9 @@ class Lexeme {
    *         whether it can disambiguate a current lexeme.
    * @returns {boolean} - True if a current lexeme can be disambiguated with a disambiguator, false otherwise.
    */
-  canBeDisambiguatedWith(disambiguator) {
-    const hasExtraFeatures = disambiguator.inflections.length || LanguageModel.hasTrailingDigit(disambiguator.lemma.word);
-    return this.isFullHomonym(disambiguator, { normalize: true }) && hasExtraFeatures;
+  canBeDisambiguatedWith(e) {
+    const t = e.inflections.length || _$1.hasTrailingDigit(e.lemma.word);
+    return this.isFullHomonym(e, { normalize: true }) && t;
   }
   /**
    * disambiguate the inflections in this lexeme with those in another lexeme
@@ -4719,26 +4085,16 @@ class Lexeme {
    * @returns {Lexeme} a new lexeme, if disambiguation was successful the
    * disambiguated inflection will be selected
    */
-  static disambiguateInflections(lexeme, disambiguator) {
-    let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning);
-    const lm = LanguageModelFactory.getLanguageModel(lexeme.lemma.languageID);
-    if (lexeme.canBeDisambiguatedWith(disambiguator)) {
-      for (const inflection of newLexeme.inflections) {
-        for (const disambiguatorInflection of disambiguator.inflections) {
-          const normalizedPofs = lm.normalizePartOfSpeechValue(disambiguator);
-          const ignorePofs = Boolean(normalizedPofs !== disambiguator.lemma.features[Feature.types.part]);
-          const inflMatch = inflection.disambiguatedBy(disambiguatorInflection, { ignorePofs });
-          if (inflMatch.match) {
-            if (inflMatch.exactMatch) {
-              newLexeme.setSelectedInflection(inflection);
-            } else {
-              newLexeme.setSelectedInflection(disambiguatorInflection);
-            }
-          }
+  static disambiguateInflections(e, t) {
+    let s = new De2(e.lemma, e.inflections, e.meaning);
+    const n = A.getLanguageModel(e.lemma.languageID);
+    if (e.canBeDisambiguatedWith(t))
+      for (const a of s.inflections)
+        for (const i2 of t.inflections) {
+          const d2 = n.normalizePartOfSpeechValue(t) !== t.lemma.features[l$1.types.part], h2 = a.disambiguatedBy(i2, { ignorePofs: d2 });
+          h2.match && (h2.exactMatch ? s.setSelectedInflection(a) : s.setSelectedInflection(i2));
         }
-      }
-    }
-    return newLexeme;
+    return s;
   }
   /**
    * Set the disambiguation flag of this lexeme
@@ -4747,49 +4103,34 @@ class Lexeme {
    *
    * @param {Lexeme} disambiguator
    */
-  setDisambiguation(disambiguator = null) {
-    this.disambiguated = true;
-    if (disambiguator) {
-      this.lemma.word = this.lemma.disambiguate(disambiguator.lemma);
-    }
+  setDisambiguation(e = null) {
+    this.disambiguated = true, e && (this.lemma.word = this.lemma.disambiguate(e.lemma));
   }
   getGroupedInflections() {
-    const lm = LanguageModelFactory.getLanguageModel(this.lemma.languageID);
-    return lm.groupInflectionsForDisplay(this.inflections);
+    return A.getLanguageModel(this.lemma.languageID).groupInflectionsForDisplay(this.inflections);
   }
-  static readObject(jsonObject) {
-    const lemma = Lemma.readObject(jsonObject.lemma);
-    let inflections = [];
-    for (const inflection of jsonObject.inflections) {
-      inflections.push(Inflection.readObject(inflection));
-    }
-    const lexeme = new Lexeme(lemma, inflections);
-    if (jsonObject.meaning) {
-      lexeme.meaning = DefinitionSet.readObject(jsonObject.meaning);
-    }
-    if (jsonObject.provider) {
-      const provider = ResourceProvider.readObject(jsonObject.provider);
-      return ResourceProvider.getProxy(provider, lexeme);
-    } else {
-      return lexeme;
-    }
+  static readObject(e) {
+    const t = ge.readObject(e.lemma);
+    let s = [];
+    for (const a of e.inflections)
+      s.push(rt.readObject(a));
+    const n = new De2(t, s);
+    if (e.meaning && (n.meaning = Se.readObject(e.meaning)), e.provider) {
+      const a = W.readObject(e.provider);
+      return W.getProxy(a, n);
+    } else
+      return n;
   }
-  convertToJSONObject(addMeaning = false) {
-    let resInflections = [];
-    this.inflections.forEach((inflection) => {
-      resInflections.push(inflection.convertToJSONObject());
+  convertToJSONObject(e = false) {
+    let t = [];
+    this.inflections.forEach((n) => {
+      t.push(n.convertToJSONObject());
     });
-    const resLexeme = {
+    const s = {
       lemma: this.lemma.convertToJSONObject(),
-      inflections: resInflections
+      inflections: t
     };
-    if (addMeaning) {
-      resLexeme.meaning = this.meaning.convertToJSONObject();
-    }
-    if (this.provider) {
-      resLexeme.provider = this.provider.convertToJSONObject();
-    }
-    return resLexeme;
+    return e && (s.meaning = this.meaning.convertToJSONObject()), this.provider && (s.provider = this.provider.convertToJSONObject()), s;
   }
   /**
    * Get a sort function for an array of lexemes which applies a primary and secondary
@@ -4800,57 +4141,33 @@ class Lexeme {
    * @param {string} secondary feature name to use as secondary sort key
    * @returns {Function} function which can be passed to Array.sort
    */
-  static getSortByTwoLemmaFeatures(primary, secondary) {
-    return (a, b) => {
-      if (a.lemma.features[primary] && b.lemma.features[primary] || !a.lemma.features[primary] && !b.lemma.features[[primary]]) {
-        let primarySort;
-        if (a.lemma.features[primary] && b.lemma.features[primary]) {
-          primarySort = a.lemma.features[primary].compareTo(b.lemma.features[primary]);
-        } else {
-          primarySort = 0;
-        }
-        if (primarySort !== 0) {
-          return primarySort;
-        } else if (a.lemma.features[secondary] && b.lemma.features[secondary]) {
-          return a.lemma.features[secondary].compareTo(b.lemma.features[secondary]);
-        } else if (a.lemma.features[secondary] && !b.lemma.features[secondary]) {
-          return -1;
-        } else if (!a.lemma.features[secondary] && b.lemma.features[secondary]) {
-          return 1;
-        } else {
-          return 0;
-        }
-      } else if (a.lemma.features[primary] && !b.lemma.features[primary]) {
-        return -1;
-      } else if (!a.lemma.features[primary] && b.lemma.features[primary]) {
-        return 1;
-      } else {
-        return 0;
-      }
+  static getSortByTwoLemmaFeatures(e, t) {
+    return (s, n) => {
+      if (s.lemma.features[e] && n.lemma.features[e] || !s.lemma.features[e] && !n.lemma.features[[e]]) {
+        let a;
+        return s.lemma.features[e] && n.lemma.features[e] ? a = s.lemma.features[e].compareTo(n.lemma.features[e]) : a = 0, a !== 0 ? a : s.lemma.features[t] && n.lemma.features[t] ? s.lemma.features[t].compareTo(n.lemma.features[t]) : s.lemma.features[t] && !n.lemma.features[t] ? -1 : !s.lemma.features[t] && n.lemma.features[t] ? 1 : 0;
+      } else return s.lemma.features[e] && !n.lemma.features[e] ? -1 : !s.lemma.features[e] && n.lemma.features[e] ? 1 : 0;
     };
   }
-}
-class Homonym {
+};
+o$1(De, "Lexeme");
+let Y = De;
+const Z = class Z2 {
   /**
    * Initializes a Homonym object.
    *
    * @param {Lexeme[]} lexemes - An array of Lexeme objects.
    * @param {string} form - the form which produces the homonyms
    */
-  constructor(lexemes, form) {
-    if (!lexemes || Array.isArray(lexemes) && lexemes.length === 0) {
+  constructor(e, t) {
+    if (!e || Array.isArray(e) && e.length === 0)
       throw new Error("Lexemes data should not be empty.");
-    }
-    if (!Array.isArray(lexemes)) {
+    if (!Array.isArray(e))
       throw new Error("Lexeme data should be provided in an array.");
-    }
-    for (const lexeme of lexemes) {
-      if (!(lexeme instanceof Lexeme)) {
+    for (const s of e)
+      if (!(s instanceof Y))
         throw new Error("All lexeme data should be of Lexeme object type.");
-      }
-    }
-    this.lexemes = lexemes;
-    this.targetWord = form;
+    this.lexemes = e, this.targetWord = t;
   }
   /**
    * Creates a simple form of inflection with one lexeme and zero or more inflections
@@ -4862,10 +4179,9 @@ class Homonym {
    * @param {Inflection[]} inflections - Zero or more inflection objects that will be attached to the lexeme
    * @returns {Homonym} A newly created homonym object.
    */
-  static createSimpleForm(word, languageID, inflections = []) {
-    const lemma = new Lemma(word, languageID);
-    const lexeme = new Lexeme(lemma, inflections);
-    return new Homonym([lexeme], word);
+  static createSimpleForm(e, t, s = []) {
+    const n = new ge(e, t), a = new Y(n, s);
+    return new Z2([a], e);
   }
   /**
    * Checks if any of the lexemes of this homonym has short definitions stored.
@@ -4873,7 +4189,7 @@ class Homonym {
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasShortDefs() {
-    return Boolean(this.lexemes && this.lexemes.some((l2) => l2.hasShortDefs));
+    return !!(this.lexemes && this.lexemes.some((e) => e.hasShortDefs));
   }
   /**
    * Checks if any of the lexemes of this homonym has full definitions stored.
@@ -4881,28 +4197,25 @@ class Homonym {
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasFullDefs() {
-    return Boolean(this.lexemes && this.lexemes.some((l2) => l2.hasFullDefs));
+    return !!(this.lexemes && this.lexemes.some((e) => e.hasFullDefs));
   }
-  static readObject(jsonObject) {
-    let lexemes = [];
-    if (jsonObject.lexemes) {
-      for (const lexeme of jsonObject.lexemes) {
-        lexemes.push(Lexeme.readObject(lexeme));
-      }
-    } else {
-      const languageID = LanguageModelFactory.getLanguageIdFromCode(jsonObject.languageCode);
-      lexemes = [new Lexeme(new Lemma(jsonObject.targetWord, languageID), [])];
+  static readObject(e) {
+    let t = [];
+    if (e.lexemes)
+      for (const n of e.lexemes)
+        t.push(Y.readObject(n));
+    else {
+      const n = A.getLanguageIdFromCode(e.languageCode);
+      t = [new Y(new ge(e.targetWord, n), [])];
     }
-    const homonym = new Homonym(lexemes, jsonObject.form || jsonObject.targetWord);
-    homonym.lemmasList = jsonObject.lemmasList;
-    return homonym;
+    const s = new Z2(t, e.form || e.targetWord);
+    return s.lemmasList = e.lemmasList, s;
   }
-  convertToJSONObject(addMeaning = false) {
-    let resultHomonym = { lexemes: [], form: this.targetWord };
-    for (const lexeme of this.lexemes) {
-      resultHomonym.lexemes.push(lexeme.convertToJSONObject(addMeaning));
-    }
-    return resultHomonym;
+  convertToJSONObject(e = false) {
+    let t = { lexemes: [], form: this.targetWord };
+    for (const s of this.lexemes)
+      t.lexemes.push(s.convertToJSONObject(e));
+    return t;
   }
   /**
    * Returns a language code of a homonym (ISO 639-3).
@@ -4913,8 +4226,7 @@ class Homonym {
    * @returns {string} A language code, as defined in the `languages` object.
    */
   get language() {
-    Logger.getInstance().warn("Please use languageID instead");
-    return LanguageModelFactory.getLanguageCodeFromId(this.languageID);
+    return S.getInstance().warn("Please use languageID instead"), A.getLanguageCodeFromId(this.languageID);
   }
   /**
    * Returns a language ID of a homonym.
@@ -4925,11 +4237,9 @@ class Homonym {
    * @returns {symbol} A language ID, as defined in the `LANG_` constants.
    */
   get languageID() {
-    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.languageID) {
+    if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.languageID)
       return this.lexemes[0].lemma.languageID;
-    } else {
-      throw new Error("Homonym has not been initialized properly. Unable to obtain language ID information.");
-    }
+    throw new Error("Homonym has not been initialized properly. Unable to obtain language ID information.");
   }
   /**
    * Returns a list of all inflections within all lexemes of a homonym
@@ -4937,14 +4247,13 @@ class Homonym {
    * @returns {Inflection[]} An array of inflections
    */
   get inflections() {
-    let inflections = [];
-    for (const lexeme of this.lexemes) {
-      inflections = inflections.concat(lexeme.inflections);
-    }
-    return inflections;
+    let e = [];
+    for (const t of this.lexemes)
+      e = e.concat(t.inflections);
+    return e;
   }
   isDisambiguated() {
-    return this.lexemes.filter((l2) => l2.disambiguated).length > 0;
+    return this.lexemes.filter((e) => e.disambiguated).length > 0;
   }
   /**
    * Disambiguate homymyn objects with another
@@ -4952,99 +4261,175 @@ class Homonym {
    * @param {Homonym} base the homonym to use to disambiguate
    * @param {Homonym[]} disambiguators the homonyms to use to disambiguate
    */
-  static disambiguate(base, disambiguators) {
-    if (disambiguators.length === 0) {
-      return base;
-    }
-    const disambiguator = disambiguators.shift();
-    let matchedLexemes = [];
-    let missedLexemes = [];
-    let possibleLexemes = [];
-    let unmatchedLexemes = [];
-    for (const otherLexeme of disambiguator.lexemes) {
-      for (const lexeme of base.lexemes) {
-        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? Lexeme.disambiguateInflections(lexeme, otherLexeme) : lexeme;
-        if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
-          if (newLex.getSelectedInflection() !== null) {
-            newLex.setDisambiguation(otherLexeme);
-            matchedLexemes.push(newLex);
-          } else {
-            possibleLexemes.push(newLex);
-          }
-        } else {
-          unmatchedLexemes.push(newLex);
-        }
+  static disambiguate(e, t) {
+    if (t.length === 0)
+      return e;
+    const s = t.shift();
+    let n = [], a = [], i2 = [], u2 = [];
+    for (const h2 of s.lexemes) {
+      for (const c2 of e.lexemes) {
+        const p2 = c2.canBeDisambiguatedWith(h2) ? Y.disambiguateInflections(c2, h2) : c2;
+        c2.isFullHomonym(h2, { normalize: true }) ? p2.getSelectedInflection() !== null ? (p2.setDisambiguation(h2), n.push(p2)) : i2.push(p2) : u2.push(p2);
       }
-      if (matchedLexemes.length === 0) {
-        if (possibleLexemes.length > 0) {
-          for (const lexeme of possibleLexemes) {
-            lexeme.setDisambiguation(otherLexeme);
-            for (const infl of disambiguator.inflections) {
-              lexeme.addInflection(infl);
-              lexeme.setSelectedInflection(infl);
-            }
+      if (n.length === 0)
+        if (i2.length > 0)
+          for (const c2 of i2) {
+            c2.setDisambiguation(h2);
+            for (const p2 of s.inflections)
+              c2.addInflection(p2), c2.setSelectedInflection(p2);
           }
-        } else {
-          otherLexeme.setDisambiguation();
-          for (const infl of otherLexeme.inflections) {
-            otherLexeme.setSelectedInflection(infl);
-          }
-          missedLexemes.push(otherLexeme);
+        else {
+          h2.setDisambiguation();
+          for (const c2 of h2.inflections)
+            h2.setSelectedInflection(c2);
+          a.push(h2);
         }
-      }
     }
-    const newHom = new Homonym([...missedLexemes, ...matchedLexemes, ...possibleLexemes, ...unmatchedLexemes], base.targetWord);
-    return Homonym.disambiguate(newHom, disambiguators);
+    const d2 = new Z2([...a, ...n, ...i2, ...u2], e.targetWord);
+    return Z2.disambiguate(d2, t);
   }
-}
-class TextQuoteSelector {
-  constructor(languageCode, normalizedText, prefix = null, suffix = null, source = null) {
-    this.languageCode = languageCode;
-    this.normalizedText = normalizedText;
-    this.contextForward = 6;
-    this.contextBackward = 6;
-    this.text = this.normalizedText;
-    this.prefix = prefix;
-    this.suffix = suffix;
-    this.source = source;
-    this.ID = v4();
+};
+o$1(Z, "Homonym");
+let nt = Z;
+const Et = class Et2 {
+  constructor(e = []) {
+    this._homonyms = e;
+  }
+  get homonyms() {
+    return this._homonyms;
+  }
+  get hasHomonyms() {
+    return this._homonyms.length > 0;
+  }
+  /**
+   * Converts a homonyms form a HomonymGroup into a single Homonym.
+   * This function was created to provide backward compatibility with the code that
+   * does not work with homonym groups.
+   *
+   * @param {string} targetWord - A target word that will be set for all lemmas within a resulting homonym.
+   * @param {boolean} disambiguated - Whether lemmas in a resulting homonyms should be disambiguated.
+   * @returns {Homonym} - A resulting homonym.
+   */
+  toHomonym(e, { disambiguated: t = false } = {}) {
+    if (!e)
+      throw new Error(Et2.errors.NO_TARGET_WORD);
+    const s = this._homonyms.map((n) => n.lexemes).flat();
+    return t && s.forEach((n) => {
+      n.disambiguated = true;
+    }), new nt(s, e);
+  }
+};
+o$1(Et, "HomonymGroup");
+let Yt = Et;
+Yt.errors = {
+  NO_TARGET_WORD: "Target word is not provided"
+};
+const nr$1 = class nr {
+  /**
+   * @param {PsEvent} event - An event that is being published.
+   * @param {string} [caller=''] - The name of the function from where an event was published.
+   */
+  constructor(e, t = "") {
+    this.name = e.name, this.publisher = e.publisher, this.caller = t;
+  }
+  /**
+   * Returns a description of an event data in a printable form. Example:
+   *     LexicalQuery.finalize -> [Lexical Query Complete]
+   * If caller function is not specified during a `pub()` call, description will be:
+   *     LexicalQuery -> [Lexical Query Complete]
+   *
+   * @returns {string} - An event data description.
+   */
+  get description() {
+    return this.caller ? `${this.publisher}.${this.caller} -> [${this.name}]` : `${this.publisher} -> [${this.name}]`;
+  }
+};
+o$1(nr$1, "PsEventData");
+let Zt = nr$1;
+const ar$1 = class ar {
+  /**
+   * @param {string} name - A name of the event.
+   * @param {Function} publisher - A constructor function of a publisher.
+   *        PsEvent uses its `name` property to set its publisher name field.
+   */
+  constructor(e, t) {
+    this.name = e, this.publisher = t.name, this._subscribers = /* @__PURE__ */ new Map();
+  }
+  /**
+   * This function is called when an event is published.
+   *
+   * @callback EventSubscriber
+   * @param {object} data - An event-specific data associated with the event.
+   * @param {PsEventData} eventData - A data about the event being published.
+   *        PsEvent data allows generic subscribers (i.e. functions that are subscribed to
+   *        more than one event) to distinguish between an event being published.
+   */
+  /**
+   * Return a list of subscribers for the current event.
+   *
+   * @returns {EventSubscriber[]} An array of event subscriber functions.
+   */
+  get subscribers() {
+    return Array.from(this._subscribers.values());
+  }
+  /**
+   * Subscribes a function to the published event.
+   * When event is published, a @type {Event~subscriber} function is called.
+   *
+   * @param {EventSubscriber} subscriber - A subscriber function.
+   * @returns {Function} - An function that, when called, will unsubscribe the current subscriber from an event.
+   */
+  sub(e) {
+    const t = Ot();
+    return this._subscribers.set(t, e), () => {
+      this._subscribers.delete(t);
+    };
+  }
+  /**
+   * Publishes an event with data related to it. All subscribers will receive an
+   * event notification along with event data.
+   *
+   * @param {object} [data={}] - An event-specific data associated with the event.
+   * @param {string} [caller=''] - The name of the function that called `pub`.
+   */
+  pub(e = {}, t = "") {
+    this._subscribers.forEach((s) => s(e, new Zt(this, t)));
+  }
+  /**
+   * Unsubscribes all subscribers from an event.
+   */
+  unsubAll() {
+    this._subscribers.clear();
+  }
+};
+o$1(ar$1, "PsEvent");
+const wt = class wt2 {
+  constructor(e, t, s = null, n = null, a = null) {
+    this.languageCode = e, this.normalizedText = t, this.contextForward = 6, this.contextBackward = 6, this.text = this.normalizedText, this.prefix = s, this.suffix = n, this.source = a, this.ID = Ot();
   }
   get contextHTML() {
-    const templateWord = `<span class="alpheios_worditem_incontext_add">${this.text}</span>`;
-    const checkPrefix = this.prefix.replace(this.text, templateWord);
-    const checkSuffix = this.suffix.replace(this.text, templateWord);
-    const fullText = `${checkPrefix} <span class="alpheios_worditem_incontext">${this.text}</span> ${checkSuffix}`;
-    return fullText;
+    const e = `<span class="alpheios_worditem_incontext_add">${this.text}</span>`, t = this.prefix.replace(this.text, e), s = this.suffix.replace(this.text, e);
+    return `${t} <span class="alpheios_worditem_incontext">${this.text}</span> ${s}`;
   }
-  static readObject(jsonObject) {
-    let tq = new TextQuoteSelector(jsonObject.languageCode, jsonObject.target.selector.exact);
-    tq.prefix = jsonObject.target.selector.prefix;
-    tq.suffix = jsonObject.target.selector.suffix;
-    tq.text = jsonObject.targetWord;
-    tq.source = jsonObject.target.source;
-    return tq;
+  static readObject(e) {
+    let t = new wt2(e.languageCode, e.target.selector.exact);
+    return t.prefix = e.target.selector.prefix, t.suffix = e.target.selector.suffix, t.text = e.targetWord, t.source = e.target.source, t;
   }
-  isEqual(otherTqs) {
-    let checkContextThis = `${this.prefix}${this.text}${this.suffix}`;
-    checkContextThis = checkContextThis.trim();
-    let checkContextOther = `${otherTqs.prefix}${otherTqs.text}${otherTqs.suffix}`;
-    checkContextOther = checkContextOther.trim();
-    return this.text === otherTqs.text && this.source === otherTqs.source && this.languageCode === otherTqs.languageCode && checkContextThis === checkContextOther;
+  isEqual(e) {
+    let t = `${this.prefix}${this.text}${this.suffix}`;
+    t = t.trim();
+    let s = `${e.prefix}${e.text}${e.suffix}`;
+    return s = s.trim(), this.text === e.text && this.source === e.source && this.languageCode === e.languageCode && t === s;
   }
-  updateLanguage(langCode) {
-    this.languageCode = langCode;
+  updateLanguage(e) {
+    this.languageCode = e;
   }
-}
-class WordUsageExample extends TextQuoteSelector {
-  constructor(language, targetWord, prefix, suffix, source, cit) {
-    super(language, targetWord);
-    this.prefix = prefix;
-    this.suffix = suffix;
-    this.source = source;
-    this.cit = cit;
-    this.author = null;
-    this.textWork = null;
-    this.passage = null;
+};
+o$1(wt, "TextQuoteSelector");
+let at = wt;
+const ir = class ir2 extends at {
+  constructor(e, t, s, n, a, i2) {
+    super(e, t), this.prefix = s, this.suffix = n, this.source = a, this.cit = i2, this.author = null, this.textWork = null, this.passage = null;
   }
   createContext() {
     return null;
@@ -5063,19 +4448,11 @@ class WordUsageExample extends TextQuoteSelector {
    * @param {string} lang - language for getting text
    * @returns {string}
    */
-  fullCit(lang) {
-    if (!this.author && !this.textWork && !this.passage) {
+  fullCit(e) {
+    if (!this.author && !this.textWork && !this.passage)
       return this.cit;
-    }
-    let finalFullCit = "";
-    if (!lang) {
-      finalFullCit = this.formattedAuthor + " " + this.formattedTextWork + " " + this.formattedPassage;
-    } else {
-      finalFullCit = this.author ? this.author.title(lang) : ".";
-      finalFullCit = finalFullCit + " " + (this.textWork ? this.textWork.title(lang) : ".");
-      finalFullCit = finalFullCit + " " + this.formattedPassage;
-    }
-    return finalFullCit.trim();
+    let t = "";
+    return e ? (t = this.author ? this.author.title(e) : ".", t = t + " " + (this.textWork ? this.textWork.title(e) : "."), t = t + " " + this.formattedPassage) : t = this.formattedAuthor + " " + this.formattedTextWork + " " + this.formattedPassage, t.trim();
   }
   get formattedAuthor() {
     return this.author ? this.author.title() : "";
@@ -5086,31 +4463,24 @@ class WordUsageExample extends TextQuoteSelector {
   get formattedPassage() {
     return this.passage;
   }
-  authorForSort(lang) {
-    if (this.author) {
-      return this.author.title(lang).toUpperCase();
-    } else {
-      return this.fullCit(lang).toUpperCase();
-    }
+  authorForSort(e) {
+    return this.author ? this.author.title(e).toUpperCase() : this.fullCit(e).toUpperCase();
   }
-  textWorkForSort(lang) {
-    if (this.textWork) {
-      return this.textWork.title(lang).toUpperCase();
-    } else {
-      return this.fullCit(lang).toUpperCase();
-    }
+  textWorkForSort(e) {
+    return this.textWork ? this.textWork.title(e).toUpperCase() : this.fullCit(e).toUpperCase();
   }
   get prefixForSort() {
-    const model = LanguageModelFactory.getLanguageModelFromCode(this.languageCode);
-    const clearPrefix = this.prefix.replace(new RegExp("[" + model.getPunctuation() + " ]", "g"), " ").toUpperCase().split(" ").filter((item) => item.length > 0);
-    return clearPrefix[clearPrefix.length - 1];
+    const e = A.getLanguageModelFromCode(this.languageCode), t = this.prefix.replace(new RegExp("[" + e.getPunctuation() + " ]", "g"), " ").toUpperCase().split(" ").filter((s) => s.length > 0);
+    return t[t.length - 1];
   }
   get suffixForSort() {
-    const model = LanguageModelFactory.getLanguageModelFromCode(this.languageCode);
-    return this.suffix.replace(new RegExp("[" + model.getPunctuation() + " ]", "g"), "").toUpperCase();
+    const e = A.getLanguageModelFromCode(this.languageCode);
+    return this.suffix.replace(new RegExp("[" + e.getPunctuation() + " ]", "g"), "").toUpperCase();
   }
-}
-class Author {
+};
+o$1(ir, "WordUsageExample");
+let $r = ir;
+const Q = class Q2 {
   /**
    * Constructor, extracts ID from urn
    *
@@ -5119,10 +4489,8 @@ class Author {
    * @param {object} abbreviations - has the following format { languageCode: abbreviation }
    * @returns {Author}
    */
-  constructor(urn, titles, abbreviations) {
-    this.urn = urn;
-    this.titles = titles;
-    this.abbreviations = abbreviations;
+  constructor(e, t, s) {
+    this.urn = e, this.titles = t, this.abbreviations = s;
   }
   /**
    * This property is used to define title for panel
@@ -5138,15 +4506,8 @@ class Author {
    * @param {string} lang - language for getting title
    * @returns {string}
    */
-  title(lang) {
-    if (this.titles[lang]) {
-      return this.titles[lang];
-    } else if (this.titles[Author.defaultLang]) {
-      return this.titles[Author.defaultLang];
-    } else if (Object.values(this.titles).length > 0) {
-      return Object.values(this.titles)[0];
-    }
-    return null;
+  title(e) {
+    return this.titles[e] ? this.titles[e] : this.titles[Q2.defaultLang] ? this.titles[Q2.defaultLang] : Object.values(this.titles).length > 0 ? Object.values(this.titles)[0] : null;
   }
   /**
    * Method returns abbreviation in the lang from arguments, otherwise in default language or (if not exists) it returns first available abbreviation
@@ -5154,18 +4515,13 @@ class Author {
    * @param {string} lang - language for getting abbreviation
    * @returns {string}
    */
-  abbreviation(lang) {
-    if (this.abbreviations[lang]) {
-      return this.abbreviations[lang];
-    } else if (this.abbreviations[Author.defaultLang]) {
-      return this.abbreviations[Author.defaultLang];
-    } else if (Object.values(this.abbreviations).length > 0) {
-      return Object.values(this.abbreviations)[0];
-    }
-    return null;
+  abbreviation(e) {
+    return this.abbreviations[e] ? this.abbreviations[e] : this.abbreviations[Q2.defaultLang] ? this.abbreviations[Q2.defaultLang] : Object.values(this.abbreviations).length > 0 ? Object.values(this.abbreviations)[0] : null;
   }
-}
-class TextWork {
+};
+o$1(Q, "Author");
+let zr = Q;
+const ee = class ee2 {
   /**
    * Constructor, extracts ID from urn
    *
@@ -5175,11 +4531,8 @@ class TextWork {
    * @param {object} abbreviations - has the following format { languageCode: abbreviation }
    * @returns {TextWork}
    */
-  constructor(author, urn, titles, abbreviations) {
-    this.urn = urn;
-    this.titles = titles;
-    this.author = author;
-    this.abbreviations = abbreviations;
+  constructor(e, t, s, n) {
+    this.urn = t, this.titles = s, this.author = e, this.abbreviations = n;
   }
   /**
    * This property is used to define title for panel
@@ -5203,15 +4556,8 @@ class TextWork {
    * @param {string} lang - language for getting title
    * @returns {string}
    */
-  title(lang) {
-    if (this.titles[lang]) {
-      return this.titles[lang];
-    } else if (this.titles[TextWork.defaultLang]) {
-      return this.titles[TextWork.defaultLang];
-    } else if (Object.values(this.titles).length > 0) {
-      return Object.values(this.titles)[0];
-    }
-    return null;
+  title(e) {
+    return this.titles[e] ? this.titles[e] : this.titles[ee2.defaultLang] ? this.titles[ee2.defaultLang] : Object.values(this.titles).length > 0 ? Object.values(this.titles)[0] : null;
   }
   /**
    * Method returns abbreviation in the lang from arguments, otherwise in default language or (if not exists) it returns first available abbreviation
@@ -5219,37 +4565,303 @@ class TextWork {
    * @param {string} lang - language for getting abbreviation
    * @returns {string}
    */
-  abbreviation(lang) {
-    if (this.abbreviations[lang]) {
-      return this.abbreviations[lang];
-    } else if (this.abbreviations[TextWork.defaultLang]) {
-      return this.abbreviations[TextWork.defaultLang];
-    } else if (Object.values(this.abbreviations).length > 0) {
-      return Object.values(this.abbreviations)[0];
-    }
-    return null;
+  abbreviation(e) {
+    return this.abbreviations[e] ? this.abbreviations[e] : this.abbreviations[ee2.defaultLang] ? this.abbreviations[ee2.defaultLang] : Object.values(this.abbreviations).length > 0 ? Object.values(this.abbreviations)[0] : null;
   }
-}
-class OptionItem {
-  constructor(item, key, storageAdapter) {
-    if (!item) {
+};
+o$1(ee, "TextWork");
+let qr = ee;
+const ce = class ce2 {
+  /**
+   * @class
+   * @param data
+   * {String} targetWord
+   * {String} languageCode
+   * {Boolean} important
+   * {Boolean} currentSession
+   * {TextQuoteSelector[]} context
+   * {Homonym} homonym
+   */
+  constructor(e = { targetWord: null, languageCode: null, important: false, currentSession: true, context: [], homonym: {}, createdDT: null, updatedDT: null, frequency: null }) {
+    if (this.version = 1, this.targetWord = e.targetWord, this.languageCode = e.languageCode, !this.targetWord || !this.languageCode)
+      throw new Error("Unable to construct a worditem without at least a targetWord and a languageCode");
+    this.important = e.important === void 0 ? false : e.important, this.currentSession = e.currentSession === void 0 ? true : e.currentSession, this.context = e.context || [], this.homonym = e.homonym || {}, this.createdDT = e.createdDT, this.updatedDT = e.updatedDT, this.frequency = e.frequency;
+  }
+  /**
+   * Construct a WordItem from JSON
+   *
+   * @param jsonObject
+   */
+  static readObject(e) {
+    let t = {}, s = [];
+    return e.homonym && (t = ce2.readHomonym(e)), e.context && (s = ce2.readContext(e)), new ce2({
+      targetWord: e.targetWord,
+      languageCode: e.languageCode,
+      important: e.important,
+      currentSession: e.currentSession,
+      context: s,
+      homonym: t
+    });
+  }
+  /**
+   * Construct the homonym portion of a WordItem from JSON
+   *
+   * @param jsonObject
+   */
+  static readHomonym(e) {
+    return nt.readObject(e.homonym);
+  }
+  get hasTextQuoteSelectors() {
+    return this.context.length > 0;
+  }
+  /**
+   * Construct the context portion of a WordItem from JSON
+   *
+   * @param jsonObject
+   */
+  static readContext(e) {
+    let t = [];
+    for (const s of e) {
+      const n = at.readObject(s);
+      t.push(n);
+    }
+    return t;
+  }
+  /**
+   * add one or more context selectors
+   *
+   * @param {TextQuoteSelector[]} selectors
+   */
+  addContext(e) {
+    for (const t of e)
+      this.context.filter((n) => n.isEqual(t)).length === 0 && this.context.push(t);
+  }
+  /**
+   * getter for the lemmas in this WordItem
+   */
+  get lemmasList() {
+    return this.homonym && this.homonym.lexemes ? this.homonym.lexemes.map((e) => e.lemma.word).filter((e, t, s) => s.indexOf(e) === t).join(", ") : "";
+  }
+  /**
+   * updates empty properties of this wordItem with those of the supplied worditem if also non-empty
+   *
+   * @param prevWordItem
+   */
+  merge(e) {
+    const t = ["homonym", "important", "currentSession"];
+    for (const s of t)
+      this._emptyProp(s) && !e._emptyProp(s) && (this[s] = e[s]);
+  }
+  /**
+   * private method to detect an empty property
+   *
+   * @param propName
+   */
+  _emptyProp(e) {
+    return !this[e] || typeof this[e] == "object" && Object.keys(this[e]).length === 0;
+  }
+  get formattedContext() {
+    let e = {};
+    for (const t of this.context)
+      e[t.source] || (e[t.source] = []), e[t.source].push(t);
+    return e;
+  }
+};
+o$1(ce, "WordItem");
+let Qt = ce;
+const or$1 = class or {
+  /**
+   * @class
+   * @param {string} languageCode the language code of the list
+   * @param {WordItem[]} worditems an optional array of WordItems with which to initialize the list
+   */
+  constructor(e, t = []) {
+    if (!e)
+      throw new Error("Unable to construct a wordlist without a languagecode");
+    this.languageCode = e, this.items = {}, t.forEach((s) => {
+      this.addWordItem(s);
+    });
+  }
+  get size() {
+    return Object.keys(this.items).length;
+  }
+  /**
+   * get the items of the list
+   */
+  get values() {
+    return Object.values(this.items);
+  }
+  /**
+   * checks to see if the list is empty
+   *
+   * @returns {boolean}
+   */
+  get isEmpty() {
+    return Object.values(this.items).length === 0;
+  }
+  addWordItem(e) {
+    if (e.languageCode !== this.languageCode)
+      throw new Error(`Language Code mismatch ${e.languageCode} !=== ${this.languageCode}`);
+    const t = this.getWordItem(e.targetWord, false);
+    t && e.merge(t);
+    const s = this._makeItemKey(this.languageCode, e.targetWord);
+    this.items[s] = e;
+  }
+  /**
+   * delete an individual word item from the list
+   *
+   * @param {string} targetWord the word to delete
+   * @returns {WordItem} the deleted item
+   */
+  deleteWordItem(e) {
+    const t = this._makeItemKey(this.languageCode, e), s = this.items[t];
+    return s && delete this.items[t], s;
+  }
+  /**
+   * delete all items from a list
+   */
+  removeAllWordItems() {
+    this.items = {};
+  }
+  /**
+   * get an item from a list
+   *
+   * @param targetWord the word to get
+   * @param {boolean} create true to create the item if it doesn't exist
+   * @param eventWordItemUpdated
+   * @returns {WordItem} the retrieved item
+   */
+  getWordItem(e, t = true, s = null) {
+    const n = this._makeItemKey(this.languageCode, e);
+    if (t && !this.items[n]) {
+      const a = new Qt({ targetWord: e, languageCode: this.languageCode });
+      s && s.pub({ dataObj: a, params: { segment: "common" } }), this.items[n] = a;
+    }
+    return this.items[n];
+  }
+  /**
+   * make a key for a word item
+   *
+   * @param {string} languageCode
+   * @param {string} targetWord
+   */
+  _makeItemKey(e, t) {
+    return `${e}:${t.toLowerCase()}`;
+  }
+};
+o$1(or$1, "WordList");
+const Te = class Te2 {
+  /**
+   * Creates a treebank item. It can be created for either a specific text element (i.e. a selected word)
+   * or for the document (a web page) that has treebank data.
+   * If it is created for a text element, an 'elem' parameter will be provided and it will contain
+   * a selected text element.
+   * If a treebank item is created for a document (as when a web page with treebank data in it is loaded
+   * but a specific word is not selected) an 'elem' parameter will be skipped. In that case constructor
+   * will scan document in a search of any document ID and sentence ID that are required to be in a URL
+   * to load a treebank diagram.
+   *
+   * @param {node} [elem=null] - An HTML node that contains a selected word (optional).
+   */
+  constructor(e = null) {
+    this.version = 0, this.app = null, this.sourceUrl = null, this.wordIds = [], this.sentenceId = null, this.doc = null, this.suppressTree = false;
+    const t = e ? e.closest("[data-alpheios_tb_app]") : document.querySelector("[data-alpheios_tb_app]");
+    if (t) {
+      if (this.app = t.dataset.alpheios_tb_app, this.app !== "perseids-treebank-template")
+        throw new Error("Unsupported treebank application. This version of Alpheios only supports the perseids-treebank-template viewer app.");
+      if (t.dataset.alpheios_tb_app_version && (this.version = Number.parseInt(t.dataset.alpheios_tb_app_version, 10), !Number.isInteger(this.version)))
+        throw new Error(`Treebank version is incorrect in: ${t.outerHTML}`);
+      if (!t.dataset.alpheios_tb_app_url)
+        throw new Error(`Missing treebank source URL in: ${t.outerHTML}`);
+      this.sourceUrl = t.dataset.alpheios_tb_app_url, t.dataset.alpheios_tb_morph_only && (this.suppressTree = t.dataset.alpheios_tb_morph_only !== "false");
+      const s = e ? e.closest("[data-alpheios_tb_ref]") : document.querySelector("[data-alpheios_tb_ref]");
+      let n = null, a;
+      if (e ? (n = e.closest("[data-alpheios_tb_word]"), a = n ? n.closest("[data-alpheios_tb_sent]") : e.closest("[data-alpheios_tb_sent]")) : a = document.querySelector("[data-alpheios_tb_sent]"), !s && !(n || a))
+        throw new Error("An element does not have data-alpheios_tb_ref, data-alpheios_tb_word or data-alpheios_tb_sent attributes");
+      if (n || a) {
+        if (!a)
+          throw new Error("Sentence ID is undefined: there is no parent element with data-alpheios_tb_sent attribute");
+        const i2 = n ? n.closest("[data-alpheios_tb_doc]") : a.closest("[data-alpheios_tb_doc]");
+        if (!i2)
+          throw new Error("Document ID is undefined: there is no parent element with data-alpheios_tb_doc attribute");
+        n && (this.wordIds = n.dataset.alpheios_tb_word.split(" ")), this.sentenceId = a.dataset.alpheios_tb_sent, this.doc = i2.dataset.alpheios_tb_doc;
+      } else {
+        const i2 = s.dataset.alpheios_tb_ref;
+        let u2;
+        try {
+          u2 = i2.split(" ").map((d2) => Te2.parseReference(d2));
+        } catch (d2) {
+          throw new Error(`${d2.message} in: ${t.outerHTML}`);
+        }
+        u2 = u2.filter((d2) => d2.doc === u2[0].doc && d2.sent === u2[0].sent), this.doc = u2[0].doc, this.sentenceId = u2[0].sent, this.wordIds = u2.map((d2) => d2.word);
+      }
+    }
+    if (!this.doc)
+      throw new Error("Document data is missing");
+    if (!this.sentenceId)
+      throw new Error("Sentence data is missing");
+  }
+  static getTreebankData(e = null) {
+    try {
+      return new Te2(e);
+    } catch (t) {
+      return null;
+    }
+  }
+  /**
+   * Parse a reference in a "phi0959.phi006.alpheios-text-lat1#2-13" format to document, sentence ID, and word ID.
+   *
+   * @param {string} reference - A reference value to parse.
+   * @returns {{doc: string, sent: string, word: string}} - An object containing parsed values.
+   */
+  static parseReference(e) {
+    const [t, s] = e.split(/#/);
+    if (!t || !s)
+      throw new Error("Invalid treebank reference");
+    const [n, a] = s.split(/-/);
+    if (!n)
+      throw new Error("Invalid treebank sent ID");
+    if (!a)
+      throw new Error("Invalid treebank word ID");
+    return { doc: t, sent: n, word: a };
+  }
+  setWordData(e) {
+    this.wordIds = e;
+  }
+  removeWordData() {
+    this.wordIds = [];
+  }
+  get fullUrl() {
+    return this.sourceUrl.replace("DOC", this.doc).replace("SENTENCE", this.sentenceId);
+  }
+  get docUrl() {
+    return this.sourceUrl.replace("DOC", this.doc);
+  }
+  get provider() {
+    return new URL(this.fullUrl).origin;
+  }
+  get hasWordData() {
+    return this.wordIds.length > 0;
+  }
+  get hasSentenceData() {
+    return !!this.sentenceId;
+  }
+};
+o$1(Te, "TreebankDataItem");
+const ur$1 = class ur {
+  constructor(e, t, s) {
+    if (!e)
       throw new Error("Item cannot be empty");
-    }
-    if (!key) {
+    if (!t)
       throw new Error("Key cannot be empty");
-    }
-    if (!storageAdapter) {
+    if (!s)
       throw new Error("Storage adapter object should be provided");
-    }
-    for (const key2 of Object.keys(item)) {
-      this[key2] = item[key2];
-    }
-    this.currentValue = this.defaultValue;
-    this.name = key;
-    this.storageAdapter = storageAdapter;
+    for (const n of Object.keys(e))
+      this[n] = e[n];
+    this.currentValue = this.defaultValue, this.name = t, this.storageAdapter = s;
   }
   textValues() {
-    return this.values.map((value) => value.text);
+    return this.values.map((e) => e.text);
   }
   /**
    * If `prop` is not specified, returns a value object of a current item.
@@ -5260,59 +4872,43 @@ class OptionItem {
    * @returns {* | Array<*>} - A single item or an array of items. Item type depends
    * on the value of the `prop` or the lack of it.
    */
-  currentItem(prop = void 0) {
-    let item = [];
-    for (const value of this.values) {
+  currentItem(e = void 0) {
+    let t = [];
+    for (const s of this.values)
       if (this.multiValue) {
-        if (this.currentValue.includes(value.value)) {
-          const itemValue = prop ? value[prop] : value;
-          item.push(itemValue);
+        if (this.currentValue.includes(s.value)) {
+          const n = e ? s[e] : s;
+          t.push(n);
         }
-      } else {
-        if (value.value === this.currentValue) {
-          item = prop ? value[prop] : value;
-        }
-      }
-    }
-    return item;
+      } else
+        s.value === this.currentValue && (t = e ? s[e] : s);
+    return t;
   }
   currentTextValue() {
     return this.currentItem("text");
   }
-  addValue(value, text) {
-    this.values.push({ value, text });
-    return this;
+  addValue(e, t) {
+    return this.values.push({ value: e, text: t }), this;
   }
-  setValue(value) {
-    this.currentValue = value;
-    this.save();
-    return this;
+  setValue(e) {
+    return this.currentValue = e, this.save(), this;
   }
-  setTextValue(textValue) {
+  setTextValue(e) {
     this.currentValue = this.multiValue ? [] : "";
-    for (const value of this.values) {
-      if (this.multiValue) {
-        for (const tv of textValue) {
-          if (value.text === tv) {
-            this.currentValue.push(value.value);
-          }
-        }
-      } else {
-        if (value.text === textValue) {
-          this.currentValue = value.value;
-        }
-      }
-    }
-    this.save();
-    return this;
+    for (const t of this.values)
+      if (this.multiValue)
+        for (const s of e)
+          t.text === s && this.currentValue.push(t.value);
+      else
+        t.text === e && (this.currentValue = t.value);
+    return this.save(), this;
   }
   removeItem() {
-    this.currentValue = null;
-    this.storageAdapter.remove(this.name).then(
+    this.currentValue = null, this.storageAdapter.remove(this.name).then(
       () => {
       },
-      (errorMessage) => {
-        Logger.getInstance().error(`Unexpected error resetting Alpheios option ${this.name}: ${errorMessage}`);
+      (e) => {
+        S.getInstance().error(`Unexpected error resetting Alpheios option ${this.name}: ${e}`);
       }
     );
   }
@@ -5320,13 +4916,12 @@ class OptionItem {
    * Saves an option value to the local storage.
    */
   save() {
-    let option = {};
-    option[this.name] = JSON.stringify(this.currentValue);
-    this.storageAdapter.set(option).then(
+    let e = {};
+    e[this.name] = JSON.stringify(this.currentValue), this.storageAdapter.set(e).then(
       () => {
       },
-      (errorMessage) => {
-        Logger.getInstance().error(`Unexpected error storing Alpheios option ${this.name}: ${errorMessage}`);
+      (t) => {
+        S.getInstance().error(`Unexpected error storing Alpheios option ${this.name}: ${t}`);
       }
     );
   }
@@ -5334,12 +4929,13 @@ class OptionItem {
    *
    * @param {Array[Object]} valuesArr - Array[option's values]
    */
-  uploadValuesFromArray(valuesArr) {
-    this.values = [...valuesArr];
-    this.defaultValue = this.values[0].value;
+  uploadValuesFromArray(e) {
+    this.values = [...e], this.defaultValue = this.values[0].value;
   }
-}
-class Options {
+};
+o$1(ur$1, "OptionItem");
+let it$1 = ur$1;
+const q = class q2 {
   /**
    * Options is a class which encapsulates defaults and user preferences
    *
@@ -5350,41 +4946,35 @@ class Options {
    *    {Object} items - An object that represents options that are exposed to the user. Each property is an option name.
    * @param {StorageAdapter} storageAdapter - A storage adapter implementation
    */
-  constructor(defaults2, storageAdapter) {
-    if (!defaults2 || !defaults2.domain || !defaults2.items || !defaults2.version) {
+  constructor(e, t) {
+    if (!e || !e.domain || !e.items || !e.version)
       throw new Error('Defaults have no obligatory "domain", "version" and "items" properties');
-    }
-    if (!storageAdapter) {
+    if (!t)
       throw new Error("No storage adapter implementation provided");
-    }
-    this.defaults = defaults2;
-    this.domain = defaults2.domain;
-    this.version = defaults2.version.toString();
-    this.storageAdapter = storageAdapter;
-    this.items = Options.initItems(this.defaults.items, this.storageAdapter, this.domain, this.version);
+    this.defaults = e, this.domain = e.domain, this.version = e.version.toString(), this.storageAdapter = t, this.items = q2.initItems(this.defaults.items, this.storageAdapter, this.domain, this.version);
   }
-  static initItems(defaults2, storageAdapter, domain, version) {
-    let items = {};
-    for (const [option, value] of Object.entries(defaults2)) {
-      if (value.group) {
-        items[option] = [];
-        for (const [group, item] of Object.entries(value.group)) {
-          const key = Options.constructKey(domain, version, option, group);
-          items[option].push(new OptionItem(item, key, storageAdapter));
+  static initItems(e, t, s, n) {
+    let a = {};
+    for (const [i2, u2] of Object.entries(e))
+      if (u2.group) {
+        a[i2] = [];
+        for (const [d2, h2] of Object.entries(u2.group)) {
+          const c2 = q2.constructKey(s, n, i2, d2);
+          a[i2].push(new it$1(h2, c2, t));
         }
       } else {
-        const key = Options.constructKey(domain, version, option);
-        items[option] = new OptionItem(value, key, storageAdapter);
+        const d2 = q2.constructKey(s, n, i2);
+        a[i2] = new it$1(u2, d2, t);
       }
-    }
-    return items;
+    return a;
   }
   /**
    * Reset all options to default values
    */
-  async reset() {
-    await this.storageAdapter.clearAll();
-    this.items = Options.initItems(this.defaults.items, this.storageAdapter, this.domain, this.version);
+  reset() {
+    return L(this, null, function* () {
+      yield this.storageAdapter.clearAll(), this.items = q2.initItems(this.defaults.items, this.storageAdapter, this.domain, this.version);
+    });
   }
   get names() {
     return Object.keys(this.items);
@@ -5395,36 +4985,35 @@ class Options {
    *
    * @returns {Promise<Options>}
    */
-  async load() {
-    try {
-      const values = await this.storageAdapter.get();
-      for (const key in values) {
-        const parsedKey = Options.parseKey(key);
-        if (this.items.hasOwnProperty(parsedKey.name) && this.version === parsedKey.version) {
-          if (parsedKey.group) {
-            this.items[parsedKey.name].forEach((f2) => {
-              if (f2.name === key) {
-                try {
-                  f2.currentValue = JSON.parse(values[key]);
-                } catch (e) {
-                  Logger.getInstance().warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e);
-                }
+  load() {
+    return L(this, null, function* () {
+      try {
+        const e = yield this.storageAdapter.get();
+        for (const t in e) {
+          const s = q2.parseKey(t);
+          if (this.items.hasOwnProperty(s.name) && this.version === s.version)
+            if (s.group)
+              this.items[s.name].forEach((n) => {
+                if (n.name === t)
+                  try {
+                    n.currentValue = JSON.parse(e[t]);
+                  } catch (a) {
+                    S.getInstance().warn(`Unable to parse Alpheios option value for  ${s.name} from ${e[s.name]}`, a);
+                  }
+              });
+            else
+              try {
+                this.items[s.name].currentValue = JSON.parse(e[t]);
+              } catch (n) {
+                S.getInstance().warn(`Unable to parse Alpheios option value for  ${s.name} from ${e[s.name]}`, n);
               }
-            });
-          } else {
-            try {
-              this.items[parsedKey.name].currentValue = JSON.parse(values[key]);
-            } catch (e) {
-              Logger.getInstance().warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e);
-            }
-          }
         }
+        return this;
+      } catch (e) {
+        const t = `Unexpected error retrieving options for Alpheios from local storage: ${e}. Default values will be used instead`;
+        S.getInstance().error(t);
       }
-      return this;
-    } catch (error) {
-      const message = `Unexpected error retrieving options for Alpheios from local storage: ${error}. Default values will be used instead`;
-      Logger.getInstance().error(message);
-    }
+    });
   }
   /**
    * Construct a key for a stored setting
@@ -5436,32 +5025,29 @@ class Options {
    * @param {string} name - the setting name
    * @param {string} group - optional setting group
    */
-  static constructKey(domain, version, name, group = null) {
-    let key = `${domain}__${version}__${name}`;
-    if (group) {
-      key = `${key}__${group}`;
-    }
-    return key;
+  static constructKey(e, t, s, n = null) {
+    let a = `${e}__${t}__${s}`;
+    return n && (a = `${a}__${n}`), a;
   }
   /**
    * Parse a stored setting name into a semantically meaningful object
    *
    * @param key
    */
-  static parseKey(key) {
-    const [domain, version, name, group] = key.split("__", 4);
-    let parsed;
+  static parseKey(e) {
+    const [t, s, n, a] = e.split("__", 4);
+    let i2;
     try {
-      parsed = {
-        domain,
-        version,
-        name,
-        group
+      i2 = {
+        domain: t,
+        version: s,
+        name: n,
+        group: a
       };
-    } catch (e) {
-      Logger.getInstance().warn(`Failed to parse stored Alpheios options key ${key}`);
+    } catch (u2) {
+      S.getInstance().warn(`Failed to parse stored Alpheios options key ${e}`);
     }
-    return parsed;
+    return i2;
   }
   /**
    * Converts optionItems to the object: { name of the option: currentValue }
@@ -5469,24 +5055,19 @@ class Options {
    * @returns {object}
    */
   get formatLabelValueList() {
-    let result = {};
-    Object.keys(this.items).forEach((nameItem) => {
-      if (this.items[nameItem].currentValue !== void 0) {
-        result[nameItem] = this.items[nameItem].currentValue;
-      }
-    });
-    return result;
+    let e = {};
+    return Object.keys(this.items).forEach((t) => {
+      this.items[t].currentValue !== void 0 && (e[t] = this.items[t].currentValue);
+    }), e;
   }
   /**
    * Uploads values list from array if an option has valuesArray feature
    *
    * @param {object} valuesArrayList - with format nameValuesArray: Array[option's values]
    */
-  checkAndUploadValuesFromArray(valuesArrayList) {
-    Object.values(this.items).forEach((optionItem) => {
-      if (optionItem.valuesArray && !optionItem.values && valuesArrayList[optionItem.valuesArray]) {
-        optionItem.uploadValuesFromArray(valuesArrayList[optionItem.valuesArray]);
-      }
+  checkAndUploadValuesFromArray(e) {
+    Object.values(this.items).forEach((t) => {
+      t.valuesArray && !t.values && e[t.valuesArray] && t.uploadValuesFromArray(e[t.valuesArray]);
     });
   }
   /**
@@ -5494,426 +5075,454 @@ class Options {
    * @param {string} domainPostfix - additional string for creating unique domain name
    * @param {StorageAdapter} storageAdapter - class of the storage adapter
    */
-  clone(domainPostfix, storageAdapter) {
-    let defaults2 = Object.assign({}, this.defaults);
-    defaults2.domain = `${defaults2.domain}-${domainPostfix}`;
-    const newOptions = new Options(defaults2, new storageAdapter(defaults2.domain));
-    Object.keys(newOptions.items).forEach((optionKey) => {
-      let newOptionItem = newOptions.items[optionKey];
-      if (this.items[optionKey].values) {
-        newOptionItem.uploadValuesFromArray(this.items[optionKey].values);
+  clone(e, t) {
+    let s = Object.assign({}, this.defaults);
+    s.domain = `${s.domain}-${e}`;
+    const n = new q2(s, new t(s.domain));
+    return Object.keys(n.items).forEach((a) => {
+      let i2 = n.items[a];
+      this.items[a].values && i2.uploadValuesFromArray(this.items[a].values);
+    }), n;
+  }
+};
+o$1(q, "Options");
+let Gr = q;
+const lr = class lr2 {
+  static fromJSON(e) {
+    try {
+      return JSON.parse(e);
+    } catch (t) {
+      return S.getInstance().error("Unable to parse Alpheios JSON options string:", t), {};
+    }
+  }
+};
+o$1(lr, "DefaultsLoader");
+const cr = class cr2 {
+  constructor(e = "alpheios-storage-domain") {
+    this.domain = e;
+  }
+  /**
+   * Stores one or several key-value pairs to local storage.
+   *
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  set(e) {
+    return new Promise((t, s) => s(new Error("Set method should be implemented in a subclass")));
+  }
+  /**
+   * Retrieves one or several values from local storage.
+   *
+   * @param {string | Array | object | null | undefined } keys - A key (string)
+   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
+   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
+   * or an undefined value, the entire storage contents will be retrieved.
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  get(e) {
+    return new Promise((t, s) => s(new Error("Get method should be implemented in a subclass")));
+  }
+  /**
+   * A wrapper around a local storage `removeItem()` function.
+   * It allows to remove one key-value pair from local storage.
+   *
+   * @param {string} key - key of the item to be removed.
+   * If a particular item exists, it will be removed.
+   * @returns {Promise} - A promise that is resolved with with true if a key was removed
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  remove(e) {
+    return new Promise((t, s) => s(new Error("Remove method should be implemented in a subclass")));
+  }
+  /**
+   * clear all items in the storage
+   */
+  clearAll() {
+    return new Promise((e, t) => t(new Error("clearAll method should be implemented in a subclass")));
+  }
+};
+o$1(cr, "StorageAdapter");
+let me = cr;
+const hr$1 = class hr extends me {
+  /**
+   * A wrapper around a `browser.storage.sync.set()` of webextension.
+   * It allows to store one or several key-value pairs to local storage.
+   *
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  set(e) {
+    return browser.storage.sync.set(e);
+  }
+  /**
+   * A wrapper around a `browser.storage.sync.get()` of webextension. It retrieves one or several values from
+   * local storage.
+   *
+   * @param {string | Array | object | null | undefined } keys - A key (string)
+   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
+   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
+   * or an undefined value, the entire storage contents will be retrieved.
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  get(e = void 0) {
+    return browser.storage.sync.get(e);
+  }
+  clearAll() {
+    return browser.storage.sync.clear();
+  }
+};
+o$1(hr$1, "ExtensionSyncStorage");
+const fr$1 = class fr extends me {
+  /**
+   * A wrapper around a local storage `setItem()` function.
+   * It allows to store one or several key-value pairs to local storage.
+   *
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  set(e) {
+    return new Promise((t, s) => {
+      try {
+        let n = window.localStorage.getItem(`${this.domain}-keys`);
+        n ? n = JSON.parse(n) : n = [];
+        for (const [a, i2] of Object.entries(e))
+          window.localStorage.setItem(a, i2), n.includes(a) || n.push(a);
+        window.localStorage.setItem(`${this.domain}-keys`, JSON.stringify(n));
+      } catch (n) {
+        s(n);
+      }
+      t();
+    });
+  }
+  /**
+   * A wrapper around a local storage `removeItem()` function.
+   * It allows to remove one key-value pair from the local storage.
+   *
+   * @param {string} key - a key of the item to be removed.
+   * If a pair with the key specified exists, it will be removed.
+   * @returns {Promise} - A promise that is resolved with with `true` if a key-value pair was removed
+   * successfully. If the pair for removal is not in the storage, a promise is resolved with the `null` value.
+   * If a removal operation fails for any reason, a promise is rejected with the error.
+   */
+  remove(e) {
+    return new Promise((t, s) => {
+      try {
+        if (e) {
+          let n = window.localStorage.getItem(`${this.domain}-keys`);
+          if (n) {
+            n = JSON.parse(n);
+            const a = n.indexOf(e);
+            a !== -1 && n.splice(a, 1), window.localStorage.setItem(`${this.domain}-keys`, JSON.stringify(n)), window.localStorage.removeItem(e), t(true);
+          } else
+            t(null);
+        }
+      } catch (n) {
+        s(n);
       }
     });
-    return newOptions;
   }
-}
-function bind$1(fn, thisArg) {
-  return function wrap() {
-    return fn.apply(thisArg, arguments);
-  };
-}
-const { toString: toString$1 } = Object.prototype;
-const { getPrototypeOf: getPrototypeOf$1 } = Object;
-const { iterator: iterator$1, toStringTag: toStringTag$1 } = Symbol;
-const kindOf$1 = /* @__PURE__ */ ((cache) => (thing) => {
-  const str = toString$1.call(thing);
-  return cache[str] || (cache[str] = str.slice(8, -1).toLowerCase());
-})(/* @__PURE__ */ Object.create(null));
-const kindOfTest$1 = (type) => {
-  type = type.toLowerCase();
-  return (thing) => kindOf$1(thing) === type;
+  /**
+   * A wrapper around a local storage `getItem()` function. It retrieves one or several values from
+   * local storage.
+   *
+   * @param {string | Array | object | null | undefined } keys - A key (string)
+   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
+   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
+   * or an undefined value, the entire storage contents will be retrieved.
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  get(e = void 0) {
+    return new Promise((t, s) => {
+      try {
+        e ? Array.isArray(e) && e.length === 0 ? e = [] : typeof e == "string" ? e = [e] : typeof e == "object" ? e = Object.keys(e) : e = [] : e = [];
+        let n = {};
+        e.length === 0 && (e = window.localStorage.getItem(`${this.domain}-keys`), e ? e = JSON.parse(e) : t(n));
+        for (const a of e)
+          n[a] = window.localStorage.getItem(a);
+        t(n);
+      } catch (n) {
+        s(n);
+      }
+    });
+  }
+  clearAll() {
+    return new Promise((e, t) => {
+      try {
+        let s = null, n = window.localStorage.getItem(`${this.domain}-keys`);
+        if (n) {
+          n = JSON.parse(n);
+          for (const a of n)
+            window.localStorage.removeItem(a);
+          window.localStorage.setItem(`${this.domain}-keys`, JSON.stringify([])), e(true);
+        } else
+          e(s);
+      } catch (s) {
+        t(s);
+      }
+    });
+  }
 };
-const typeOfTest$1 = (type) => (thing) => typeof thing === type;
-const { isArray: isArray$1 } = Array;
-const isUndefined$1 = typeOfTest$1("undefined");
-function isBuffer$1(val) {
-  return val !== null && !isUndefined$1(val) && val.constructor !== null && !isUndefined$1(val.constructor) && isFunction$1(val.constructor.isBuffer) && val.constructor.isBuffer(val);
+o$1(fr$1, "LocalStorageArea");
+function Hn(r, e) {
+  return /* @__PURE__ */ o$1(function() {
+    return r.apply(e, arguments);
+  }, "wrap");
 }
-const isArrayBuffer$1 = kindOfTest$1("ArrayBuffer");
-function isArrayBufferView$1(val) {
-  let result;
-  if (typeof ArrayBuffer !== "undefined" && ArrayBuffer.isView) {
-    result = ArrayBuffer.isView(val);
-  } else {
-    result = val && val.buffer && isArrayBuffer$1(val.buffer);
-  }
-  return result;
+o$1(Hn, "bind");
+const { toString: Wo } = Object.prototype, { getPrototypeOf: Ws } = Object, { iterator: vt, toStringTag: Gn } = Symbol, _t = /* @__PURE__ */ ((r) => (e) => {
+  const t = Wo.call(e);
+  return r[t] || (r[t] = t.slice(8, -1).toLowerCase());
+})(/* @__PURE__ */ Object.create(null)), U = /* @__PURE__ */ o$1((r) => (r = r.toLowerCase(), (e) => _t(e) === r), "kindOfTest"), Nt = /* @__PURE__ */ o$1((r) => (e) => typeof e === r, "typeOfTest"), { isArray: Ee } = Array, Le = Nt("undefined");
+function Ve(r) {
+  return r !== null && !Le(r) && r.constructor !== null && !Le(r.constructor) && x(r.constructor.isBuffer) && r.constructor.isBuffer(r);
 }
-const isString$1 = typeOfTest$1("string");
-const isFunction$1 = typeOfTest$1("function");
-const isNumber$1 = typeOfTest$1("number");
-const isObject$1 = (thing) => thing !== null && typeof thing === "object";
-const isBoolean$1 = (thing) => thing === true || thing === false;
-const isPlainObject$1 = (val) => {
-  if (kindOf$1(val) !== "object") {
+o$1(Ve, "isBuffer");
+const Jn = U("ArrayBuffer");
+function Ho(r) {
+  let e;
+  return typeof ArrayBuffer != "undefined" && ArrayBuffer.isView ? e = ArrayBuffer.isView(r) : e = r && r.buffer && Jn(r.buffer), e;
+}
+o$1(Ho, "isArrayBufferView");
+const Go = Nt("string"), x = Nt("function"), Kn = Nt("number"), Ue = /* @__PURE__ */ o$1((r) => r !== null && typeof r == "object", "isObject"), Jo = /* @__PURE__ */ o$1((r) => r === true || r === false, "isBoolean"), ze = /* @__PURE__ */ o$1((r) => {
+  if (_t(r) !== "object")
     return false;
-  }
-  const prototype2 = getPrototypeOf$1(val);
-  return (prototype2 === null || prototype2 === Object.prototype || Object.getPrototypeOf(prototype2) === null) && !(toStringTag$1 in val) && !(iterator$1 in val);
-};
-const isEmptyObject$1 = (val) => {
-  if (!isObject$1(val) || isBuffer$1(val)) {
+  const e = Ws(r);
+  return (e === null || e === Object.prototype || Object.getPrototypeOf(e) === null) && !(Gn in r) && !(vt in r);
+}, "isPlainObject"), Ko = /* @__PURE__ */ o$1((r) => {
+  if (!Ue(r) || Ve(r))
     return false;
-  }
   try {
-    return Object.keys(val).length === 0 && Object.getPrototypeOf(val) === Object.prototype;
+    return Object.keys(r).length === 0 && Object.getPrototypeOf(r) === Object.prototype;
   } catch (e) {
     return false;
   }
-};
-const isDate$1 = kindOfTest$1("Date");
-const isFile$1 = kindOfTest$1("File");
-const isBlob$1 = kindOfTest$1("Blob");
-const isFileList$1 = kindOfTest$1("FileList");
-const isStream$1 = (val) => isObject$1(val) && isFunction$1(val.pipe);
-const isFormData$1 = (thing) => {
-  let kind;
-  return thing && (typeof FormData === "function" && thing instanceof FormData || isFunction$1(thing.append) && ((kind = kindOf$1(thing)) === "formdata" || // detect form-data instance
-  kind === "object" && isFunction$1(thing.toString) && thing.toString() === "[object FormData]"));
-};
-const isURLSearchParams$1 = kindOfTest$1("URLSearchParams");
-const [isReadableStream$1, isRequest$1, isResponse$1, isHeaders$1] = ["ReadableStream", "Request", "Response", "Headers"].map(kindOfTest$1);
-const trim$1 = (str) => str.trim ? str.trim() : str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
-function forEach$1(obj, fn, { allOwnKeys = false } = {}) {
-  if (obj === null || typeof obj === "undefined") {
+}, "isEmptyObject"), jo = U("Date"), Xo = U("File"), Yo = U("Blob"), Zo = U("FileList"), Qo = /* @__PURE__ */ o$1((r) => Ue(r) && x(r.pipe), "isStream"), eu$1 = /* @__PURE__ */ o$1((r) => {
+  let e;
+  return r && (typeof FormData == "function" && r instanceof FormData || x(r.append) && ((e = _t(r)) === "formdata" || // detect form-data instance
+  e === "object" && x(r.toString) && r.toString() === "[object FormData]"));
+}, "isFormData"), tu = U("URLSearchParams"), [su$1, ru$1, nu, au] = ["ReadableStream", "Request", "Response", "Headers"].map(U), iu$1 = /* @__PURE__ */ o$1((r) => r.trim ? r.trim() : r.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ""), "trim");
+function Be(r, e, { allOwnKeys: t = false } = {}) {
+  if (r === null || typeof r == "undefined")
     return;
-  }
-  let i2;
-  let l2;
-  if (typeof obj !== "object") {
-    obj = [obj];
-  }
-  if (isArray$1(obj)) {
-    for (i2 = 0, l2 = obj.length; i2 < l2; i2++) {
-      fn.call(null, obj[i2], i2, obj);
-    }
-  } else {
-    if (isBuffer$1(obj)) {
+  let s, n;
+  if (typeof r != "object" && (r = [r]), Ee(r))
+    for (s = 0, n = r.length; s < n; s++)
+      e.call(null, r[s], s, r);
+  else {
+    if (Ve(r))
       return;
-    }
-    const keys = allOwnKeys ? Object.getOwnPropertyNames(obj) : Object.keys(obj);
-    const len = keys.length;
-    let key;
-    for (i2 = 0; i2 < len; i2++) {
-      key = keys[i2];
-      fn.call(null, obj[key], key, obj);
-    }
+    const a = t ? Object.getOwnPropertyNames(r) : Object.keys(r), i2 = a.length;
+    let u2;
+    for (s = 0; s < i2; s++)
+      u2 = a[s], e.call(null, r[u2], u2, r);
   }
 }
-function findKey$1(obj, key) {
-  if (isBuffer$1(obj)) {
+o$1(Be, "forEach");
+function jn(r, e) {
+  if (Ve(r))
     return null;
-  }
-  key = key.toLowerCase();
-  const keys = Object.keys(obj);
-  let i2 = keys.length;
-  let _key;
-  while (i2-- > 0) {
-    _key = keys[i2];
-    if (key === _key.toLowerCase()) {
-      return _key;
-    }
-  }
+  e = e.toLowerCase();
+  const t = Object.keys(r);
+  let s = t.length, n;
+  for (; s-- > 0; )
+    if (n = t[s], e === n.toLowerCase())
+      return n;
   return null;
 }
-const _global$1 = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  return typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : global;
-})();
-const isContextDefined$1 = (context) => !isUndefined$1(context) && context !== _global$1;
-function merge$1() {
-  const { caseless } = isContextDefined$1(this) && this || {};
-  const result = {};
-  const assignValue = (val, key) => {
-    const targetKey = caseless && findKey$1(result, key) || key;
-    if (isPlainObject$1(result[targetKey]) && isPlainObject$1(val)) {
-      result[targetKey] = merge$1(result[targetKey], val);
-    } else if (isPlainObject$1(val)) {
-      result[targetKey] = merge$1({}, val);
-    } else if (isArray$1(val)) {
-      result[targetKey] = val.slice();
-    } else {
-      result[targetKey] = val;
-    }
-  };
-  for (let i2 = 0, l2 = arguments.length; i2 < l2; i2++) {
-    arguments[i2] && forEach$1(arguments[i2], assignValue);
-  }
-  return result;
+o$1(jn, "findKey");
+const te$1 = typeof globalThis != "undefined" ? globalThis : typeof self != "undefined" ? self : typeof window != "undefined" ? window : global, Xn = /* @__PURE__ */ o$1((r) => !Le(r) && r !== te$1, "isContextDefined");
+function es$1() {
+  const { caseless: r } = Xn(this) && this || {}, e = {}, t = /* @__PURE__ */ o$1((s, n) => {
+    const a = r && jn(e, n) || n;
+    ze(e[a]) && ze(s) ? e[a] = es$1(e[a], s) : ze(s) ? e[a] = es$1({}, s) : Ee(s) ? e[a] = s.slice() : e[a] = s;
+  }, "assignValue");
+  for (let s = 0, n = arguments.length; s < n; s++)
+    arguments[s] && Be(arguments[s], t);
+  return e;
 }
-const extend$1 = (a, b, thisArg, { allOwnKeys } = {}) => {
-  forEach$1(b, (val, key) => {
-    if (thisArg && isFunction$1(val)) {
-      a[key] = bind$1(val, thisArg);
-    } else {
-      a[key] = val;
-    }
-  }, { allOwnKeys });
-  return a;
-};
-const stripBOM$1 = (content) => {
-  if (content.charCodeAt(0) === 65279) {
-    content = content.slice(1);
-  }
-  return content;
-};
-const inherits$1 = (constructor, superConstructor, props, descriptors2) => {
-  constructor.prototype = Object.create(superConstructor.prototype, descriptors2);
-  constructor.prototype.constructor = constructor;
-  Object.defineProperty(constructor, "super", {
-    value: superConstructor.prototype
-  });
-  props && Object.assign(constructor.prototype, props);
-};
-const toFlatObject$1 = (sourceObj, destObj, filter22, propFilter) => {
-  let props;
-  let i2;
-  let prop;
-  const merged = {};
-  destObj = destObj || {};
-  if (sourceObj == null) return destObj;
+o$1(es$1, "merge");
+const ou = /* @__PURE__ */ o$1((r, e, t, { allOwnKeys: s } = {}) => (Be(e, (n, a) => {
+  t && x(n) ? r[a] = Hn(n, t) : r[a] = n;
+}, { allOwnKeys: s }), r), "extend"), uu = /* @__PURE__ */ o$1((r) => (r.charCodeAt(0) === 65279 && (r = r.slice(1)), r), "stripBOM"), lu = /* @__PURE__ */ o$1((r, e, t, s) => {
+  r.prototype = Object.create(e.prototype, s), r.prototype.constructor = r, Object.defineProperty(r, "super", {
+    value: e.prototype
+  }), t && Object.assign(r.prototype, t);
+}, "inherits"), cu = /* @__PURE__ */ o$1((r, e, t, s) => {
+  let n, a, i2;
+  const u2 = {};
+  if (e = e || {}, r == null) return e;
   do {
-    props = Object.getOwnPropertyNames(sourceObj);
-    i2 = props.length;
-    while (i2-- > 0) {
-      prop = props[i2];
-      if ((!propFilter || propFilter(prop, sourceObj, destObj)) && !merged[prop]) {
-        destObj[prop] = sourceObj[prop];
-        merged[prop] = true;
-      }
-    }
-    sourceObj = filter22 !== false && getPrototypeOf$1(sourceObj);
-  } while (sourceObj && (!filter22 || filter22(sourceObj, destObj)) && sourceObj !== Object.prototype);
-  return destObj;
-};
-const endsWith$1 = (str, searchString, position) => {
-  str = String(str);
-  if (position === void 0 || position > str.length) {
-    position = str.length;
+    for (n = Object.getOwnPropertyNames(r), a = n.length; a-- > 0; )
+      i2 = n[a], (!s || s(i2, r, e)) && !u2[i2] && (e[i2] = r[i2], u2[i2] = true);
+    r = t !== false && Ws(r);
+  } while (r && (!t || t(r, e)) && r !== Object.prototype);
+  return e;
+}, "toFlatObject"), hu$1 = /* @__PURE__ */ o$1((r, e, t) => {
+  r = String(r), (t === void 0 || t > r.length) && (t = r.length), t -= e.length;
+  const s = r.indexOf(e, t);
+  return s !== -1 && s === t;
+}, "endsWith"), fu = /* @__PURE__ */ o$1((r) => {
+  if (!r) return null;
+  if (Ee(r)) return r;
+  let e = r.length;
+  if (!Kn(e)) return null;
+  const t = new Array(e);
+  for (; e-- > 0; )
+    t[e] = r[e];
+  return t;
+}, "toArray"), du = /* @__PURE__ */ ((r) => (e) => r && e instanceof r)(typeof Uint8Array != "undefined" && Ws(Uint8Array)), pu = /* @__PURE__ */ o$1((r, e) => {
+  const s = (r && r[vt]).call(r);
+  let n;
+  for (; (n = s.next()) && !n.done; ) {
+    const a = n.value;
+    e.call(r, a[0], a[1]);
   }
-  position -= searchString.length;
-  const lastIndex = str.indexOf(searchString, position);
-  return lastIndex !== -1 && lastIndex === position;
-};
-const toArray$1 = (thing) => {
-  if (!thing) return null;
-  if (isArray$1(thing)) return thing;
-  let i2 = thing.length;
-  if (!isNumber$1(i2)) return null;
-  const arr = new Array(i2);
-  while (i2-- > 0) {
-    arr[i2] = thing[i2];
-  }
-  return arr;
-};
-const isTypedArray$1 = /* @__PURE__ */ ((TypedArray) => {
-  return (thing) => {
-    return TypedArray && thing instanceof TypedArray;
-  };
-})(typeof Uint8Array !== "undefined" && getPrototypeOf$1(Uint8Array));
-const forEachEntry$1 = (obj, fn) => {
-  const generator = obj && obj[iterator$1];
-  const _iterator = generator.call(obj);
-  let result;
-  while ((result = _iterator.next()) && !result.done) {
-    const pair = result.value;
-    fn.call(obj, pair[0], pair[1]);
-  }
-};
-const matchAll$1 = (regExp, str) => {
-  let matches;
-  const arr = [];
-  while ((matches = regExp.exec(str)) !== null) {
-    arr.push(matches);
-  }
-  return arr;
-};
-const isHTMLForm$1 = kindOfTest$1("HTMLFormElement");
-const toCamelCase$1 = (str) => {
-  return str.toLowerCase().replace(
-    /[-_\s]([a-z\d])(\w*)/g,
-    function replacer(m2, p1, p2) {
-      return p1.toUpperCase() + p2;
-    }
-  );
-};
-const hasOwnProperty$1 = (({ hasOwnProperty: hasOwnProperty2 }) => (obj, prop) => hasOwnProperty2.call(obj, prop))(Object.prototype);
-const isRegExp$1 = kindOfTest$1("RegExp");
-const reduceDescriptors$1 = (obj, reducer) => {
-  const descriptors2 = Object.getOwnPropertyDescriptors(obj);
-  const reducedDescriptors = {};
-  forEach$1(descriptors2, (descriptor, name) => {
-    let ret;
-    if ((ret = reducer(descriptor, name, obj)) !== false) {
-      reducedDescriptors[name] = ret || descriptor;
-    }
-  });
-  Object.defineProperties(obj, reducedDescriptors);
-};
-const freezeMethods$1 = (obj) => {
-  reduceDescriptors$1(obj, (descriptor, name) => {
-    if (isFunction$1(obj) && ["arguments", "caller", "callee"].indexOf(name) !== -1) {
+}, "forEachEntry"), gu$1 = /* @__PURE__ */ o$1((r, e) => {
+  let t;
+  const s = [];
+  for (; (t = r.exec(e)) !== null; )
+    s.push(t);
+  return s;
+}, "matchAll"), mu = U("HTMLFormElement"), yu = /* @__PURE__ */ o$1((r) => r.toLowerCase().replace(
+  /[-_\s]([a-z\d])(\w*)/g,
+  /* @__PURE__ */ o$1(function(t, s, n) {
+    return s.toUpperCase() + n;
+  }, "replacer")
+), "toCamelCase"), Xr = (({ hasOwnProperty: r }) => (e, t) => r.call(e, t))(Object.prototype), Eu = U("RegExp"), Yn = /* @__PURE__ */ o$1((r, e) => {
+  const t = Object.getOwnPropertyDescriptors(r), s = {};
+  Be(t, (n, a) => {
+    let i2;
+    (i2 = e(n, a, r)) !== false && (s[a] = i2 || n);
+  }), Object.defineProperties(r, s);
+}, "reduceDescriptors"), wu = /* @__PURE__ */ o$1((r) => {
+  Yn(r, (e, t) => {
+    if (x(r) && ["arguments", "caller", "callee"].indexOf(t) !== -1)
       return false;
-    }
-    const value = obj[name];
-    if (!isFunction$1(value)) return;
-    descriptor.enumerable = false;
-    if ("writable" in descriptor) {
-      descriptor.writable = false;
-      return;
-    }
-    if (!descriptor.set) {
-      descriptor.set = () => {
-        throw Error("Can not rewrite read-only method '" + name + "'");
-      };
-    }
-  });
-};
-const toObjectSet$1 = (arrayOrString, delimiter) => {
-  const obj = {};
-  const define = (arr) => {
-    arr.forEach((value) => {
-      obj[value] = true;
-    });
-  };
-  isArray$1(arrayOrString) ? define(arrayOrString) : define(String(arrayOrString).split(delimiter));
-  return obj;
-};
-const noop$1 = () => {
-};
-const toFiniteNumber$1 = (value, defaultValue) => {
-  return value != null && Number.isFinite(value = +value) ? value : defaultValue;
-};
-function isSpecCompliantForm$1(thing) {
-  return !!(thing && isFunction$1(thing.append) && thing[toStringTag$1] === "FormData" && thing[iterator$1]);
-}
-const toJSONObject$1 = (obj) => {
-  const stack = new Array(10);
-  const visit = (source, i2) => {
-    if (isObject$1(source)) {
-      if (stack.indexOf(source) >= 0) {
+    const s = r[t];
+    if (x(s)) {
+      if (e.enumerable = false, "writable" in e) {
+        e.writable = false;
         return;
       }
-      if (isBuffer$1(source)) {
-        return source;
-      }
-      if (!("toJSON" in source)) {
-        stack[i2] = source;
-        const target = isArray$1(source) ? [] : {};
-        forEach$1(source, (value, key) => {
-          const reducedValue = visit(value, i2 + 1);
-          !isUndefined$1(reducedValue) && (target[key] = reducedValue);
-        });
-        stack[i2] = void 0;
-        return target;
+      e.set || (e.set = () => {
+        throw Error("Can not rewrite read-only method '" + t + "'");
+      });
+    }
+  });
+}, "freezeMethods"), Iu = /* @__PURE__ */ o$1((r, e) => {
+  const t = {}, s = /* @__PURE__ */ o$1((n) => {
+    n.forEach((a) => {
+      t[a] = true;
+    });
+  }, "define");
+  return Ee(r) ? s(r) : s(String(r).split(e)), t;
+}, "toObjectSet"), bu = /* @__PURE__ */ o$1(() => {
+}, "noop"), Su = /* @__PURE__ */ o$1((r, e) => r != null && Number.isFinite(r = +r) ? r : e, "toFiniteNumber");
+function Au(r) {
+  return !!(r && x(r.append) && r[Gn] === "FormData" && r[vt]);
+}
+o$1(Au, "isSpecCompliantForm");
+const Fu = /* @__PURE__ */ o$1((r) => {
+  const e = new Array(10), t = /* @__PURE__ */ o$1((s, n) => {
+    if (Ue(s)) {
+      if (e.indexOf(s) >= 0)
+        return;
+      if (Ve(s))
+        return s;
+      if (!("toJSON" in s)) {
+        e[n] = s;
+        const a = Ee(s) ? [] : {};
+        return Be(s, (i2, u2) => {
+          const d2 = t(i2, n + 1);
+          !Le(d2) && (a[u2] = d2);
+        }), e[n] = void 0, a;
       }
     }
-    return source;
-  };
-  return visit(obj, 0);
-};
-const isAsyncFn$1 = kindOfTest$1("AsyncFunction");
-const isThenable$1 = (thing) => thing && (isObject$1(thing) || isFunction$1(thing)) && isFunction$1(thing.then) && isFunction$1(thing.catch);
-const _setImmediate$1 = ((setImmediateSupported, postMessageSupported) => {
-  if (setImmediateSupported) {
-    return setImmediate;
-  }
-  return postMessageSupported ? ((token, callbacks) => {
-    _global$1.addEventListener("message", ({ source, data: data2 }) => {
-      if (source === _global$1 && data2 === token) {
-        callbacks.length && callbacks.shift()();
-      }
-    }, false);
-    return (cb) => {
-      callbacks.push(cb);
-      _global$1.postMessage(token, "*");
-    };
-  })(`axios@${Math.random()}`, []) : (cb) => setTimeout(cb);
-})(
-  typeof setImmediate === "function",
-  isFunction$1(_global$1.postMessage)
-);
-const asap$1 = typeof queueMicrotask !== "undefined" ? queueMicrotask.bind(_global$1) : typeof process !== "undefined" && process.nextTick || _setImmediate$1;
-const isIterable$1 = (thing) => thing != null && isFunction$1(thing[iterator$1]);
-const utils$1$1 = {
-  isArray: isArray$1,
-  isArrayBuffer: isArrayBuffer$1,
-  isBuffer: isBuffer$1,
-  isFormData: isFormData$1,
-  isArrayBufferView: isArrayBufferView$1,
-  isString: isString$1,
-  isNumber: isNumber$1,
-  isBoolean: isBoolean$1,
-  isObject: isObject$1,
-  isPlainObject: isPlainObject$1,
-  isEmptyObject: isEmptyObject$1,
-  isReadableStream: isReadableStream$1,
-  isRequest: isRequest$1,
-  isResponse: isResponse$1,
-  isHeaders: isHeaders$1,
-  isUndefined: isUndefined$1,
-  isDate: isDate$1,
-  isFile: isFile$1,
-  isBlob: isBlob$1,
-  isRegExp: isRegExp$1,
-  isFunction: isFunction$1,
-  isStream: isStream$1,
-  isURLSearchParams: isURLSearchParams$1,
-  isTypedArray: isTypedArray$1,
-  isFileList: isFileList$1,
-  forEach: forEach$1,
-  merge: merge$1,
-  extend: extend$1,
-  trim: trim$1,
-  stripBOM: stripBOM$1,
-  inherits: inherits$1,
-  toFlatObject: toFlatObject$1,
-  kindOf: kindOf$1,
-  kindOfTest: kindOfTest$1,
-  endsWith: endsWith$1,
-  toArray: toArray$1,
-  forEachEntry: forEachEntry$1,
-  matchAll: matchAll$1,
-  isHTMLForm: isHTMLForm$1,
-  hasOwnProperty: hasOwnProperty$1,
-  hasOwnProp: hasOwnProperty$1,
+    return s;
+  }, "visit");
+  return t(r, 0);
+}, "toJSONObject"), Cu = U("AsyncFunction"), Du = /* @__PURE__ */ o$1((r) => r && (Ue(r) || x(r)) && x(r.then) && x(r.catch), "isThenable"), Zn = ((r, e) => r ? setImmediate : e ? ((t, s) => (te$1.addEventListener("message", ({ source: n, data: a }) => {
+  n === te$1 && a === t && s.length && s.shift()();
+}, false), (n) => {
+  s.push(n), te$1.postMessage(t, "*");
+}))(`axios@${Math.random()}`, []) : (t) => setTimeout(t))(
+  typeof setImmediate == "function",
+  x(te$1.postMessage)
+), Tu = typeof queueMicrotask != "undefined" ? queueMicrotask.bind(te$1) : typeof process != "undefined" && process.nextTick || Zn, Ou = /* @__PURE__ */ o$1((r) => r != null && x(r[vt]), "isIterable"), f$1 = {
+  isArray: Ee,
+  isArrayBuffer: Jn,
+  isBuffer: Ve,
+  isFormData: eu$1,
+  isArrayBufferView: Ho,
+  isString: Go,
+  isNumber: Kn,
+  isBoolean: Jo,
+  isObject: Ue,
+  isPlainObject: ze,
+  isEmptyObject: Ko,
+  isReadableStream: su$1,
+  isRequest: ru$1,
+  isResponse: nu,
+  isHeaders: au,
+  isUndefined: Le,
+  isDate: jo,
+  isFile: Xo,
+  isBlob: Yo,
+  isRegExp: Eu,
+  isFunction: x,
+  isStream: Qo,
+  isURLSearchParams: tu,
+  isTypedArray: du,
+  isFileList: Zo,
+  forEach: Be,
+  merge: es$1,
+  extend: ou,
+  trim: iu$1,
+  stripBOM: uu,
+  inherits: lu,
+  toFlatObject: cu,
+  kindOf: _t,
+  kindOfTest: U,
+  endsWith: hu$1,
+  toArray: fu,
+  forEachEntry: pu,
+  matchAll: gu$1,
+  isHTMLForm: mu,
+  hasOwnProperty: Xr,
+  hasOwnProp: Xr,
   // an alias to avoid ESLint no-prototype-builtins detection
-  reduceDescriptors: reduceDescriptors$1,
-  freezeMethods: freezeMethods$1,
-  toObjectSet: toObjectSet$1,
-  toCamelCase: toCamelCase$1,
-  noop: noop$1,
-  toFiniteNumber: toFiniteNumber$1,
-  findKey: findKey$1,
-  global: _global$1,
-  isContextDefined: isContextDefined$1,
-  isSpecCompliantForm: isSpecCompliantForm$1,
-  toJSONObject: toJSONObject$1,
-  isAsyncFn: isAsyncFn$1,
-  isThenable: isThenable$1,
-  setImmediate: _setImmediate$1,
-  asap: asap$1,
-  isIterable: isIterable$1
+  reduceDescriptors: Yn,
+  freezeMethods: wu,
+  toObjectSet: Iu,
+  toCamelCase: yu,
+  noop: bu,
+  toFiniteNumber: Su,
+  findKey: jn,
+  global: te$1,
+  isContextDefined: Xn,
+  isSpecCompliantForm: Au,
+  toJSONObject: Fu,
+  isAsyncFn: Cu,
+  isThenable: Du,
+  setImmediate: Zn,
+  asap: Tu,
+  isIterable: Ou
 };
-function AxiosError$1$1(message, code, config, request, response) {
-  Error.call(this);
-  if (Error.captureStackTrace) {
-    Error.captureStackTrace(this, this.constructor);
-  } else {
-    this.stack = new Error().stack;
-  }
-  this.message = message;
-  this.name = "AxiosError";
-  code && (this.code = code);
-  config && (this.config = config);
-  request && (this.request = request);
-  if (response) {
-    this.response = response;
-    this.status = response.status ? response.status : null;
-  }
+function b(r, e, t, s, n) {
+  Error.call(this), Error.captureStackTrace ? Error.captureStackTrace(this, this.constructor) : this.stack = new Error().stack, this.message = r, this.name = "AxiosError", e && (this.code = e), t && (this.config = t), s && (this.request = s), n && (this.response = n, this.status = n.status ? n.status : null);
 }
-utils$1$1.inherits(AxiosError$1$1, Error, {
-  toJSON: function toJSON() {
+o$1(b, "AxiosError$1");
+f$1.inherits(b, Error, {
+  toJSON: /* @__PURE__ */ o$1(function() {
     return {
       // Standard
       message: this.message,
@@ -5927,14 +5536,13 @@ utils$1$1.inherits(AxiosError$1$1, Error, {
       columnNumber: this.columnNumber,
       stack: this.stack,
       // Axios
-      config: utils$1$1.toJSONObject(this.config),
+      config: f$1.toJSONObject(this.config),
       code: this.code,
       status: this.status
     };
-  }
+  }, "toJSON")
 });
-const prototype$1$1 = AxiosError$1$1.prototype;
-const descriptors$1 = {};
+const Qn = b.prototype, ea = {};
 [
   "ERR_BAD_OPTION_VALUE",
   "ERR_BAD_OPTION",
@@ -5949,139 +5557,107 @@ const descriptors$1 = {};
   "ERR_NOT_SUPPORT",
   "ERR_INVALID_URL"
   // eslint-disable-next-line func-names
-].forEach((code) => {
-  descriptors$1[code] = { value: code };
+].forEach((r) => {
+  ea[r] = { value: r };
 });
-Object.defineProperties(AxiosError$1$1, descriptors$1);
-Object.defineProperty(prototype$1$1, "isAxiosError", { value: true });
-AxiosError$1$1.from = (error, code, config, request, response, customProps) => {
-  const axiosError = Object.create(prototype$1$1);
-  utils$1$1.toFlatObject(error, axiosError, function filter22(obj) {
-    return obj !== Error.prototype;
-  }, (prop) => {
-    return prop !== "isAxiosError";
-  });
-  AxiosError$1$1.call(axiosError, error.message, code, config, request, response);
-  axiosError.cause = error;
-  axiosError.name = error.name;
-  customProps && Object.assign(axiosError, customProps);
-  return axiosError;
+Object.defineProperties(b, ea);
+Object.defineProperty(Qn, "isAxiosError", { value: true });
+b.from = (r, e, t, s, n, a) => {
+  const i2 = Object.create(Qn);
+  return f$1.toFlatObject(r, i2, /* @__PURE__ */ o$1(function(d2) {
+    return d2 !== Error.prototype;
+  }, "filter"), (u2) => u2 !== "isAxiosError"), b.call(i2, r.message, e, t, s, n), i2.cause = r, i2.name = r.name, a && Object.assign(i2, a), i2;
 };
-const httpAdapter$1 = null;
-function isVisitable$1(thing) {
-  return utils$1$1.isPlainObject(thing) || utils$1$1.isArray(thing);
+const vu = null;
+function ts$1(r) {
+  return f$1.isPlainObject(r) || f$1.isArray(r);
 }
-function removeBrackets$1(key) {
-  return utils$1$1.endsWith(key, "[]") ? key.slice(0, -2) : key;
+o$1(ts$1, "isVisitable");
+function ta$1(r) {
+  return f$1.endsWith(r, "[]") ? r.slice(0, -2) : r;
 }
-function renderKey$1(path, key, dots) {
-  if (!path) return key;
-  return path.concat(key).map(function each(token, i2) {
-    token = removeBrackets$1(token);
-    return !dots && i2 ? "[" + token + "]" : token;
-  }).join(dots ? "." : "");
+o$1(ta$1, "removeBrackets");
+function Yr(r, e, t) {
+  return r ? r.concat(e).map(/* @__PURE__ */ o$1(function(n, a) {
+    return n = ta$1(n), !t && a ? "[" + n + "]" : n;
+  }, "each")).join(t ? "." : "") : e;
 }
-function isFlatArray$1(arr) {
-  return utils$1$1.isArray(arr) && !arr.some(isVisitable$1);
+o$1(Yr, "renderKey");
+function _u(r) {
+  return f$1.isArray(r) && !r.some(ts$1);
 }
-const predicates$1 = utils$1$1.toFlatObject(utils$1$1, {}, null, function filter(prop) {
-  return /^is[A-Z]/.test(prop);
-});
-function toFormData$1$1(obj, formData, options) {
-  if (!utils$1$1.isObject(obj)) {
+o$1(_u, "isFlatArray");
+const Nu = f$1.toFlatObject(f$1, {}, null, /* @__PURE__ */ o$1(function(e) {
+  return /^is[A-Z]/.test(e);
+}, "filter"));
+function xt(r, e, t) {
+  if (!f$1.isObject(r))
     throw new TypeError("target must be an object");
-  }
-  formData = formData || new FormData();
-  options = utils$1$1.toFlatObject(options, {
+  e = e || new FormData(), t = f$1.toFlatObject(t, {
     metaTokens: true,
     dots: false,
     indexes: false
-  }, false, function defined(option, source) {
-    return !utils$1$1.isUndefined(source[option]);
-  });
-  const metaTokens = options.metaTokens;
-  const visitor = options.visitor || defaultVisitor;
-  const dots = options.dots;
-  const indexes = options.indexes;
-  const _Blob = options.Blob || typeof Blob !== "undefined" && Blob;
-  const useBlob = _Blob && utils$1$1.isSpecCompliantForm(formData);
-  if (!utils$1$1.isFunction(visitor)) {
+  }, false, /* @__PURE__ */ o$1(function(I2, E2) {
+    return !f$1.isUndefined(E2[I2]);
+  }, "defined"));
+  const s = t.metaTokens, n = t.visitor || c2, a = t.dots, i2 = t.indexes, d2 = (t.Blob || typeof Blob != "undefined" && Blob) && f$1.isSpecCompliantForm(e);
+  if (!f$1.isFunction(n))
     throw new TypeError("visitor must be a function");
+  function h2(m2) {
+    if (m2 === null) return "";
+    if (f$1.isDate(m2))
+      return m2.toISOString();
+    if (f$1.isBoolean(m2))
+      return m2.toString();
+    if (!d2 && f$1.isBlob(m2))
+      throw new b("Blob is not supported. Use a Buffer instead.");
+    return f$1.isArrayBuffer(m2) || f$1.isTypedArray(m2) ? d2 && typeof Blob == "function" ? new Blob([m2]) : Buffer.from(m2) : m2;
   }
-  function convertValue(value) {
-    if (value === null) return "";
-    if (utils$1$1.isDate(value)) {
-      return value.toISOString();
-    }
-    if (utils$1$1.isBoolean(value)) {
-      return value.toString();
-    }
-    if (!useBlob && utils$1$1.isBlob(value)) {
-      throw new AxiosError$1$1("Blob is not supported. Use a Buffer instead.");
-    }
-    if (utils$1$1.isArrayBuffer(value) || utils$1$1.isTypedArray(value)) {
-      return useBlob && typeof Blob === "function" ? new Blob([value]) : Buffer.from(value);
-    }
-    return value;
-  }
-  function defaultVisitor(value, key, path) {
-    let arr = value;
-    if (value && !path && typeof value === "object") {
-      if (utils$1$1.endsWith(key, "{}")) {
-        key = metaTokens ? key : key.slice(0, -2);
-        value = JSON.stringify(value);
-      } else if (utils$1$1.isArray(value) && isFlatArray$1(value) || (utils$1$1.isFileList(value) || utils$1$1.endsWith(key, "[]")) && (arr = utils$1$1.toArray(value))) {
-        key = removeBrackets$1(key);
-        arr.forEach(function each(el2, index) {
-          !(utils$1$1.isUndefined(el2) || el2 === null) && formData.append(
+  o$1(h2, "convertValue");
+  function c2(m2, I2, E2) {
+    let C = m2;
+    if (m2 && !E2 && typeof m2 == "object") {
+      if (f$1.endsWith(I2, "{}"))
+        I2 = s ? I2 : I2.slice(0, -2), m2 = JSON.stringify(m2);
+      else if (f$1.isArray(m2) && _u(m2) || (f$1.isFileList(m2) || f$1.endsWith(I2, "[]")) && (C = f$1.toArray(m2)))
+        return I2 = ta$1(I2), C.forEach(/* @__PURE__ */ o$1(function(T, z) {
+          !(f$1.isUndefined(T) || T === null) && e.append(
             // eslint-disable-next-line no-nested-ternary
-            indexes === true ? renderKey$1([key], index, dots) : indexes === null ? key : key + "[]",
-            convertValue(el2)
+            i2 === true ? Yr([I2], z, a) : i2 === null ? I2 : I2 + "[]",
+            h2(T)
           );
-        });
-        return false;
-      }
+        }, "each")), false;
     }
-    if (isVisitable$1(value)) {
-      return true;
-    }
-    formData.append(renderKey$1(path, key, dots), convertValue(value));
-    return false;
+    return ts$1(m2) ? true : (e.append(Yr(E2, I2, a), h2(m2)), false);
   }
-  const stack = [];
-  const exposedHelpers = Object.assign(predicates$1, {
-    defaultVisitor,
-    convertValue,
-    isVisitable: isVisitable$1
+  o$1(c2, "defaultVisitor");
+  const p2 = [], g2 = Object.assign(Nu, {
+    defaultVisitor: c2,
+    convertValue: h2,
+    isVisitable: ts$1
   });
-  function build(value, path) {
-    if (utils$1$1.isUndefined(value)) return;
-    if (stack.indexOf(value) !== -1) {
-      throw Error("Circular reference detected in " + path.join("."));
+  function y(m2, I2) {
+    if (!f$1.isUndefined(m2)) {
+      if (p2.indexOf(m2) !== -1)
+        throw Error("Circular reference detected in " + I2.join("."));
+      p2.push(m2), f$1.forEach(m2, /* @__PURE__ */ o$1(function(C, D2) {
+        (!(f$1.isUndefined(C) || C === null) && n.call(
+          e,
+          C,
+          f$1.isString(D2) ? D2.trim() : D2,
+          I2,
+          g2
+        )) === true && y(C, I2 ? I2.concat(D2) : [D2]);
+      }, "each")), p2.pop();
     }
-    stack.push(value);
-    utils$1$1.forEach(value, function each(el2, key) {
-      const result = !(utils$1$1.isUndefined(el2) || el2 === null) && visitor.call(
-        formData,
-        el2,
-        utils$1$1.isString(key) ? key.trim() : key,
-        path,
-        exposedHelpers
-      );
-      if (result === true) {
-        build(el2, path ? path.concat(key) : [key]);
-      }
-    });
-    stack.pop();
   }
-  if (!utils$1$1.isObject(obj)) {
+  if (o$1(y, "build"), !f$1.isObject(r))
     throw new TypeError("data must be an object");
-  }
-  build(obj);
-  return formData;
+  return y(r), e;
 }
-function encode$1$1(str) {
-  const charMap = {
+o$1(xt, "toFormData$1");
+function Zr(r) {
+  const e = {
     "!": "%21",
     "'": "%27",
     "(": "%28",
@@ -6090,56 +5666,48 @@ function encode$1$1(str) {
     "%20": "+",
     "%00": "\0"
   };
-  return encodeURIComponent(str).replace(/[!'()~]|%20|%00/g, function replacer(match) {
-    return charMap[match];
+  return encodeURIComponent(r).replace(/[!'()~]|%20|%00/g, /* @__PURE__ */ o$1(function(s) {
+    return e[s];
+  }, "replacer"));
+}
+o$1(Zr, "encode$1");
+function Hs(r, e) {
+  this._pairs = [], r && xt(r, this, e);
+}
+o$1(Hs, "AxiosURLSearchParams");
+const sa$1 = Hs.prototype;
+sa$1.append = /* @__PURE__ */ o$1(function(e, t) {
+  this._pairs.push([e, t]);
+}, "append");
+sa$1.toString = /* @__PURE__ */ o$1(function(e) {
+  const t = e ? function(s) {
+    return e.call(this, s, Zr);
+  } : Zr;
+  return this._pairs.map(/* @__PURE__ */ o$1(function(n) {
+    return t(n[0]) + "=" + t(n[1]);
+  }, "each"), "").join("&");
+}, "toString");
+function xu(r) {
+  return encodeURIComponent(r).replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
+}
+o$1(xu, "encode");
+function ra(r, e, t) {
+  if (!e)
+    return r;
+  const s = t && t.encode || xu;
+  f$1.isFunction(t) && (t = {
+    serialize: t
   });
-}
-function AxiosURLSearchParams$1(params, options) {
-  this._pairs = [];
-  params && toFormData$1$1(params, this, options);
-}
-const prototype$2 = AxiosURLSearchParams$1.prototype;
-prototype$2.append = function append(name, value) {
-  this._pairs.push([name, value]);
-};
-prototype$2.toString = function toString2(encoder) {
-  const _encode = encoder ? function(value) {
-    return encoder.call(this, value, encode$1$1);
-  } : encode$1$1;
-  return this._pairs.map(function each(pair) {
-    return _encode(pair[0]) + "=" + _encode(pair[1]);
-  }, "").join("&");
-};
-function encode$2(val) {
-  return encodeURIComponent(val).replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
-}
-function buildURL$1(url2, params, options) {
-  if (!params) {
-    return url2;
+  const n = t && t.serialize;
+  let a;
+  if (n ? a = n(e, t) : a = f$1.isURLSearchParams(e) ? e.toString() : new Hs(e, t).toString(s), a) {
+    const i2 = r.indexOf("#");
+    i2 !== -1 && (r = r.slice(0, i2)), r += (r.indexOf("?") === -1 ? "?" : "&") + a;
   }
-  const _encode = options && options.encode || encode$2;
-  if (utils$1$1.isFunction(options)) {
-    options = {
-      serialize: options
-    };
-  }
-  const serializeFn = options && options.serialize;
-  let serializedParams;
-  if (serializeFn) {
-    serializedParams = serializeFn(params, options);
-  } else {
-    serializedParams = utils$1$1.isURLSearchParams(params) ? params.toString() : new AxiosURLSearchParams$1(params, options).toString(_encode);
-  }
-  if (serializedParams) {
-    const hashmarkIndex = url2.indexOf("#");
-    if (hashmarkIndex !== -1) {
-      url2 = url2.slice(0, hashmarkIndex);
-    }
-    url2 += (url2.indexOf("?") === -1 ? "?" : "&") + serializedParams;
-  }
-  return url2;
+  return r;
 }
-let InterceptorManager$1 = class InterceptorManager {
+o$1(ra, "buildURL");
+const dr = class dr2 {
   constructor() {
     this.handlers = [];
   }
@@ -6151,14 +5719,13 @@ let InterceptorManager$1 = class InterceptorManager {
    *
    * @return {Number} An ID used to remove interceptor later
    */
-  use(fulfilled, rejected, options) {
-    this.handlers.push({
-      fulfilled,
-      rejected,
-      synchronous: options ? options.synchronous : false,
-      runWhen: options ? options.runWhen : null
-    });
-    return this.handlers.length - 1;
+  use(e, t, s) {
+    return this.handlers.push({
+      fulfilled: e,
+      rejected: t,
+      synchronous: s ? s.synchronous : false,
+      runWhen: s ? s.runWhen : null
+    }), this.handlers.length - 1;
   }
   /**
    * Remove an interceptor from the stack
@@ -6167,10 +5734,8 @@ let InterceptorManager$1 = class InterceptorManager {
    *
    * @returns {Boolean} `true` if the interceptor was removed, `false` otherwise
    */
-  eject(id2) {
-    if (this.handlers[id2]) {
-      this.handlers[id2] = null;
-    }
+  eject(e) {
+    this.handlers[e] && (this.handlers[e] = null);
   }
   /**
    * Clear all interceptors from the stack
@@ -6178,9 +5743,7 @@ let InterceptorManager$1 = class InterceptorManager {
    * @returns {void}
    */
   clear() {
-    if (this.handlers) {
-      this.handlers = [];
-    }
+    this.handlers && (this.handlers = []);
   }
   /**
    * Iterate over all the registered interceptors
@@ -6192,193 +5755,127 @@ let InterceptorManager$1 = class InterceptorManager {
    *
    * @returns {void}
    */
-  forEach(fn) {
-    utils$1$1.forEach(this.handlers, function forEachHandler(h2) {
-      if (h2 !== null) {
-        fn(h2);
-      }
-    });
+  forEach(e) {
+    f$1.forEach(this.handlers, /* @__PURE__ */ o$1(function(s) {
+      s !== null && e(s);
+    }, "forEachHandler"));
   }
 };
-const transitionalDefaults$1 = {
+o$1(dr, "InterceptorManager");
+let ot = dr;
+const na$1 = {
   silentJSONParsing: true,
   forcedJSONParsing: true,
   clarifyTimeoutError: false
-};
-const URLSearchParams$1$1 = typeof URLSearchParams !== "undefined" ? URLSearchParams : AxiosURLSearchParams$1;
-const FormData$1$1 = typeof FormData !== "undefined" ? FormData : null;
-const Blob$1$1 = typeof Blob !== "undefined" ? Blob : null;
-const platform$1$1 = {
+}, Ru = typeof URLSearchParams != "undefined" ? URLSearchParams : Hs, Lu = typeof FormData != "undefined" ? FormData : null, Pu = typeof Blob != "undefined" ? Blob : null, Vu = {
   isBrowser: true,
   classes: {
-    URLSearchParams: URLSearchParams$1$1,
-    FormData: FormData$1$1,
-    Blob: Blob$1$1
+    URLSearchParams: Ru,
+    FormData: Lu,
+    Blob: Pu
   },
   protocols: ["http", "https", "file", "blob", "url", "data"]
-};
-const hasBrowserEnv$1 = typeof window !== "undefined" && typeof document !== "undefined";
-const _navigator$1 = typeof navigator === "object" && navigator || void 0;
-const hasStandardBrowserEnv$1 = hasBrowserEnv$1 && (!_navigator$1 || ["ReactNative", "NativeScript", "NS"].indexOf(_navigator$1.product) < 0);
-const hasStandardBrowserWebWorkerEnv$1 = (() => {
-  return typeof WorkerGlobalScope !== "undefined" && // eslint-disable-next-line no-undef
-  self instanceof WorkerGlobalScope && typeof self.importScripts === "function";
-})();
-const origin$1 = hasBrowserEnv$1 && window.location.href || "http://localhost";
-const utils$2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}, Gs = typeof window != "undefined" && typeof document != "undefined", ss$1 = typeof navigator == "object" && navigator || void 0, Uu = Gs && (!ss$1 || ["ReactNative", "NativeScript", "NS"].indexOf(ss$1.product) < 0), Bu = typeof WorkerGlobalScope != "undefined" && // eslint-disable-next-line no-undef
+self instanceof WorkerGlobalScope && typeof self.importScripts == "function", Mu = Gs && window.location.href || "http://localhost", ku$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  hasBrowserEnv: hasBrowserEnv$1,
-  hasStandardBrowserEnv: hasStandardBrowserEnv$1,
-  hasStandardBrowserWebWorkerEnv: hasStandardBrowserWebWorkerEnv$1,
-  navigator: _navigator$1,
-  origin: origin$1
-}, Symbol.toStringTag, { value: "Module" }));
-const platform$2 = {
-  ...utils$2,
-  ...platform$1$1
-};
-function toURLEncodedForm$1(data2, options) {
-  return toFormData$1$1(data2, new platform$2.classes.URLSearchParams(), {
-    visitor: function(value, key, path, helpers) {
-      if (platform$2.isNode && utils$1$1.isBuffer(value)) {
-        this.append(key, value.toString("base64"));
-        return false;
-      }
-      return helpers.defaultVisitor.apply(this, arguments);
-    },
-    ...options
-  });
+  hasBrowserEnv: Gs,
+  hasStandardBrowserEnv: Uu,
+  hasStandardBrowserWebWorkerEnv: Bu,
+  navigator: ss$1,
+  origin: Mu
+}, Symbol.toStringTag, { value: "Module" })), v = G(G({}, ku$1), Vu);
+function $u(r, e) {
+  return xt(r, new v.classes.URLSearchParams(), G({
+    visitor: /* @__PURE__ */ o$1(function(t, s, n, a) {
+      return v.isNode && f$1.isBuffer(t) ? (this.append(s, t.toString("base64")), false) : a.defaultVisitor.apply(this, arguments);
+    }, "visitor")
+  }, e));
 }
-function parsePropPath$1(name) {
-  return utils$1$1.matchAll(/\w+|\[(\w*)]/g, name).map((match) => {
-    return match[0] === "[]" ? "" : match[1] || match[0];
-  });
+o$1($u, "toURLEncodedForm");
+function zu$1(r) {
+  return f$1.matchAll(/\w+|\[(\w*)]/g, r).map((e) => e[0] === "[]" ? "" : e[1] || e[0]);
 }
-function arrayToObject$1(arr) {
-  const obj = {};
-  const keys = Object.keys(arr);
-  let i2;
-  const len = keys.length;
-  let key;
-  for (i2 = 0; i2 < len; i2++) {
-    key = keys[i2];
-    obj[key] = arr[key];
+o$1(zu$1, "parsePropPath");
+function qu$1(r) {
+  const e = {}, t = Object.keys(r);
+  let s;
+  const n = t.length;
+  let a;
+  for (s = 0; s < n; s++)
+    a = t[s], e[a] = r[a];
+  return e;
+}
+o$1(qu$1, "arrayToObject");
+function aa$1(r) {
+  function e(t, s, n, a) {
+    let i2 = t[a++];
+    if (i2 === "__proto__") return true;
+    const u2 = Number.isFinite(+i2), d2 = a >= t.length;
+    return i2 = !i2 && f$1.isArray(n) ? n.length : i2, d2 ? (f$1.hasOwnProp(n, i2) ? n[i2] = [n[i2], s] : n[i2] = s, !u2) : ((!n[i2] || !f$1.isObject(n[i2])) && (n[i2] = []), e(t, s, n[i2], a) && f$1.isArray(n[i2]) && (n[i2] = qu$1(n[i2])), !u2);
   }
-  return obj;
-}
-function formDataToJSON$1(formData) {
-  function buildPath(path, value, target, index) {
-    let name = path[index++];
-    if (name === "__proto__") return true;
-    const isNumericKey = Number.isFinite(+name);
-    const isLast = index >= path.length;
-    name = !name && utils$1$1.isArray(target) ? target.length : name;
-    if (isLast) {
-      if (utils$1$1.hasOwnProp(target, name)) {
-        target[name] = [target[name], value];
-      } else {
-        target[name] = value;
-      }
-      return !isNumericKey;
-    }
-    if (!target[name] || !utils$1$1.isObject(target[name])) {
-      target[name] = [];
-    }
-    const result = buildPath(path, value, target[name], index);
-    if (result && utils$1$1.isArray(target[name])) {
-      target[name] = arrayToObject$1(target[name]);
-    }
-    return !isNumericKey;
-  }
-  if (utils$1$1.isFormData(formData) && utils$1$1.isFunction(formData.entries)) {
-    const obj = {};
-    utils$1$1.forEachEntry(formData, (name, value) => {
-      buildPath(parsePropPath$1(name), value, obj, 0);
-    });
-    return obj;
+  if (o$1(e, "buildPath"), f$1.isFormData(r) && f$1.isFunction(r.entries)) {
+    const t = {};
+    return f$1.forEachEntry(r, (s, n) => {
+      e(zu$1(s), n, t, 0);
+    }), t;
   }
   return null;
 }
-function stringifySafely$1(rawValue, parser, encoder) {
-  if (utils$1$1.isString(rawValue)) {
+o$1(aa$1, "formDataToJSON");
+function Wu(r, e, t) {
+  if (f$1.isString(r))
     try {
-      (parser || JSON.parse)(rawValue);
-      return utils$1$1.trim(rawValue);
-    } catch (e) {
-      if (e.name !== "SyntaxError") {
-        throw e;
-      }
+      return (e || JSON.parse)(r), f$1.trim(r);
+    } catch (s) {
+      if (s.name !== "SyntaxError")
+        throw s;
     }
-  }
-  return (encoder || JSON.stringify)(rawValue);
+  return (t || JSON.stringify)(r);
 }
-const defaults$1 = {
-  transitional: transitionalDefaults$1,
+o$1(Wu, "stringifySafely");
+const Me = {
+  transitional: na$1,
   adapter: ["xhr", "http", "fetch"],
-  transformRequest: [function transformRequest(data2, headers) {
-    const contentType = headers.getContentType() || "";
-    const hasJSONContentType = contentType.indexOf("application/json") > -1;
-    const isObjectPayload = utils$1$1.isObject(data2);
-    if (isObjectPayload && utils$1$1.isHTMLForm(data2)) {
-      data2 = new FormData(data2);
-    }
-    const isFormData2 = utils$1$1.isFormData(data2);
-    if (isFormData2) {
-      return hasJSONContentType ? JSON.stringify(formDataToJSON$1(data2)) : data2;
-    }
-    if (utils$1$1.isArrayBuffer(data2) || utils$1$1.isBuffer(data2) || utils$1$1.isStream(data2) || utils$1$1.isFile(data2) || utils$1$1.isBlob(data2) || utils$1$1.isReadableStream(data2)) {
-      return data2;
-    }
-    if (utils$1$1.isArrayBufferView(data2)) {
-      return data2.buffer;
-    }
-    if (utils$1$1.isURLSearchParams(data2)) {
-      headers.setContentType("application/x-www-form-urlencoded;charset=utf-8", false);
-      return data2.toString();
-    }
-    let isFileList2;
-    if (isObjectPayload) {
-      if (contentType.indexOf("application/x-www-form-urlencoded") > -1) {
-        return toURLEncodedForm$1(data2, this.formSerializer).toString();
-      }
-      if ((isFileList2 = utils$1$1.isFileList(data2)) || contentType.indexOf("multipart/form-data") > -1) {
-        const _FormData = this.env && this.env.FormData;
-        return toFormData$1$1(
-          isFileList2 ? { "files[]": data2 } : data2,
-          _FormData && new _FormData(),
+  transformRequest: [/* @__PURE__ */ o$1(function(e, t) {
+    const s = t.getContentType() || "", n = s.indexOf("application/json") > -1, a = f$1.isObject(e);
+    if (a && f$1.isHTMLForm(e) && (e = new FormData(e)), f$1.isFormData(e))
+      return n ? JSON.stringify(aa$1(e)) : e;
+    if (f$1.isArrayBuffer(e) || f$1.isBuffer(e) || f$1.isStream(e) || f$1.isFile(e) || f$1.isBlob(e) || f$1.isReadableStream(e))
+      return e;
+    if (f$1.isArrayBufferView(e))
+      return e.buffer;
+    if (f$1.isURLSearchParams(e))
+      return t.setContentType("application/x-www-form-urlencoded;charset=utf-8", false), e.toString();
+    let u2;
+    if (a) {
+      if (s.indexOf("application/x-www-form-urlencoded") > -1)
+        return $u(e, this.formSerializer).toString();
+      if ((u2 = f$1.isFileList(e)) || s.indexOf("multipart/form-data") > -1) {
+        const d2 = this.env && this.env.FormData;
+        return xt(
+          u2 ? { "files[]": e } : e,
+          d2 && new d2(),
           this.formSerializer
         );
       }
     }
-    if (isObjectPayload || hasJSONContentType) {
-      headers.setContentType("application/json", false);
-      return stringifySafely$1(data2);
-    }
-    return data2;
-  }],
-  transformResponse: [function transformResponse(data2) {
-    const transitional22 = this.transitional || defaults$1.transitional;
-    const forcedJSONParsing = transitional22 && transitional22.forcedJSONParsing;
-    const JSONRequested = this.responseType === "json";
-    if (utils$1$1.isResponse(data2) || utils$1$1.isReadableStream(data2)) {
-      return data2;
-    }
-    if (data2 && utils$1$1.isString(data2) && (forcedJSONParsing && !this.responseType || JSONRequested)) {
-      const silentJSONParsing = transitional22 && transitional22.silentJSONParsing;
-      const strictJSONParsing = !silentJSONParsing && JSONRequested;
+    return a || n ? (t.setContentType("application/json", false), Wu(e)) : e;
+  }, "transformRequest")],
+  transformResponse: [/* @__PURE__ */ o$1(function(e) {
+    const t = this.transitional || Me.transitional, s = t && t.forcedJSONParsing, n = this.responseType === "json";
+    if (f$1.isResponse(e) || f$1.isReadableStream(e))
+      return e;
+    if (e && f$1.isString(e) && (s && !this.responseType || n)) {
+      const i2 = !(t && t.silentJSONParsing) && n;
       try {
-        return JSON.parse(data2);
-      } catch (e) {
-        if (strictJSONParsing) {
-          if (e.name === "SyntaxError") {
-            throw AxiosError$1$1.from(e, AxiosError$1$1.ERR_BAD_RESPONSE, this, null, this.response);
-          }
-          throw e;
-        }
+        return JSON.parse(e);
+      } catch (u2) {
+        if (i2)
+          throw u2.name === "SyntaxError" ? b.from(u2, b.ERR_BAD_RESPONSE, this, null, this.response) : u2;
       }
     }
-    return data2;
-  }],
+    return e;
+  }, "transformResponse")],
   /**
    * A timeout in milliseconds to abort a request. If set to 0 (default) a
    * timeout is not created.
@@ -6389,23 +5886,23 @@ const defaults$1 = {
   maxContentLength: -1,
   maxBodyLength: -1,
   env: {
-    FormData: platform$2.classes.FormData,
-    Blob: platform$2.classes.Blob
+    FormData: v.classes.FormData,
+    Blob: v.classes.Blob
   },
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  },
+  validateStatus: /* @__PURE__ */ o$1(function(e) {
+    return e >= 200 && e < 300;
+  }, "validateStatus"),
   headers: {
     common: {
-      "Accept": "application/json, text/plain, */*",
+      Accept: "application/json, text/plain, */*",
       "Content-Type": void 0
     }
   }
 };
-utils$1$1.forEach(["delete", "get", "head", "post", "put", "patch"], (method) => {
-  defaults$1.headers[method] = {};
+f$1.forEach(["delete", "get", "head", "post", "put", "patch"], (r) => {
+  Me.headers[r] = {};
 });
-const ignoreDuplicateOf$1 = utils$1$1.toObjectSet([
+const Hu = f$1.toObjectSet([
   "age",
   "authorization",
   "content-length",
@@ -6423,214 +5920,161 @@ const ignoreDuplicateOf$1 = utils$1$1.toObjectSet([
   "referer",
   "retry-after",
   "user-agent"
-]);
-const parseHeaders$1 = (rawHeaders) => {
-  const parsed = {};
-  let key;
-  let val;
-  let i2;
-  rawHeaders && rawHeaders.split("\n").forEach(function parser(line) {
-    i2 = line.indexOf(":");
-    key = line.substring(0, i2).trim().toLowerCase();
-    val = line.substring(i2 + 1).trim();
-    if (!key || parsed[key] && ignoreDuplicateOf$1[key]) {
-      return;
-    }
-    if (key === "set-cookie") {
-      if (parsed[key]) {
-        parsed[key].push(val);
-      } else {
-        parsed[key] = [val];
-      }
-    } else {
-      parsed[key] = parsed[key] ? parsed[key] + ", " + val : val;
-    }
-  });
-  return parsed;
-};
-const $internals$1 = Symbol("internals");
-function normalizeHeader$1(header) {
-  return header && String(header).trim().toLowerCase();
+]), Gu = /* @__PURE__ */ o$1((r) => {
+  const e = {};
+  let t, s, n;
+  return r && r.split(`
+`).forEach(/* @__PURE__ */ o$1(function(i2) {
+    n = i2.indexOf(":"), t = i2.substring(0, n).trim().toLowerCase(), s = i2.substring(n + 1).trim(), !(!t || e[t] && Hu[t]) && (t === "set-cookie" ? e[t] ? e[t].push(s) : e[t] = [s] : e[t] = e[t] ? e[t] + ", " + s : s);
+  }, "parser")), e;
+}, "parseHeaders"), Qr = Symbol("internals");
+function Ie(r) {
+  return r && String(r).trim().toLowerCase();
 }
-function normalizeValue$1(value) {
-  if (value === false || value == null) {
-    return value;
-  }
-  return utils$1$1.isArray(value) ? value.map(normalizeValue$1) : String(value);
+o$1(Ie, "normalizeHeader");
+function qe(r) {
+  return r === false || r == null ? r : f$1.isArray(r) ? r.map(qe) : String(r);
 }
-function parseTokens$1(str) {
-  const tokens = /* @__PURE__ */ Object.create(null);
-  const tokensRE = /([^\s,;=]+)\s*(?:=\s*([^,;]+))?/g;
-  let match;
-  while (match = tokensRE.exec(str)) {
-    tokens[match[1]] = match[2];
-  }
-  return tokens;
+o$1(qe, "normalizeValue");
+function Ju(r) {
+  const e = /* @__PURE__ */ Object.create(null), t = /([^\s,;=]+)\s*(?:=\s*([^,;]+))?/g;
+  let s;
+  for (; s = t.exec(r); )
+    e[s[1]] = s[2];
+  return e;
 }
-const isValidHeaderName$1 = (str) => /^[-_a-zA-Z0-9^`|~,!#$%&'*+.]+$/.test(str.trim());
-function matchHeaderValue$1(context, value, header, filter22, isHeaderNameFilter) {
-  if (utils$1$1.isFunction(filter22)) {
-    return filter22.call(this, value, header);
-  }
-  if (isHeaderNameFilter) {
-    value = header;
-  }
-  if (!utils$1$1.isString(value)) return;
-  if (utils$1$1.isString(filter22)) {
-    return value.indexOf(filter22) !== -1;
-  }
-  if (utils$1$1.isRegExp(filter22)) {
-    return filter22.test(value);
+o$1(Ju, "parseTokens");
+const Ku = /* @__PURE__ */ o$1((r) => /^[-_a-zA-Z0-9^`|~,!#$%&'*+.]+$/.test(r.trim()), "isValidHeaderName");
+function Bt(r, e, t, s, n) {
+  if (f$1.isFunction(s))
+    return s.call(this, e, t);
+  if (n && (e = t), !!f$1.isString(e)) {
+    if (f$1.isString(s))
+      return e.indexOf(s) !== -1;
+    if (f$1.isRegExp(s))
+      return s.test(e);
   }
 }
-function formatHeader$1(header) {
-  return header.trim().toLowerCase().replace(/([a-z\d])(\w*)/g, (w2, char, str) => {
-    return char.toUpperCase() + str;
-  });
+o$1(Bt, "matchHeaderValue");
+function ju(r) {
+  return r.trim().toLowerCase().replace(/([a-z\d])(\w*)/g, (e, t, s) => t.toUpperCase() + s);
 }
-function buildAccessors$1(obj, header) {
-  const accessorName = utils$1$1.toCamelCase(" " + header);
-  ["get", "set", "has"].forEach((methodName) => {
-    Object.defineProperty(obj, methodName + accessorName, {
-      value: function(arg1, arg2, arg3) {
-        return this[methodName].call(this, header, arg1, arg2, arg3);
-      },
+o$1(ju, "formatHeader");
+function Xu(r, e) {
+  const t = f$1.toCamelCase(" " + e);
+  ["get", "set", "has"].forEach((s) => {
+    Object.defineProperty(r, s + t, {
+      value: /* @__PURE__ */ o$1(function(n, a, i2) {
+        return this[s].call(this, e, n, a, i2);
+      }, "value"),
       configurable: true
     });
   });
 }
-let AxiosHeaders$1$1 = class AxiosHeaders {
-  constructor(headers) {
-    headers && this.set(headers);
+o$1(Xu, "buildAccessors");
+var he;
+let R$1 = (he = class {
+  constructor(e) {
+    e && this.set(e);
   }
-  set(header, valueOrRewrite, rewrite) {
-    const self2 = this;
-    function setHeader(_value, _header, _rewrite) {
-      const lHeader = normalizeHeader$1(_header);
-      if (!lHeader) {
+  set(e, t, s) {
+    const n = this;
+    function a(u2, d2, h2) {
+      const c2 = Ie(d2);
+      if (!c2)
         throw new Error("header name must be a non-empty string");
-      }
-      const key = utils$1$1.findKey(self2, lHeader);
-      if (!key || self2[key] === void 0 || _rewrite === true || _rewrite === void 0 && self2[key] !== false) {
-        self2[key || _header] = normalizeValue$1(_value);
-      }
+      const p2 = f$1.findKey(n, c2);
+      (!p2 || n[p2] === void 0 || h2 === true || h2 === void 0 && n[p2] !== false) && (n[p2 || d2] = qe(u2));
     }
-    const setHeaders = (headers, _rewrite) => utils$1$1.forEach(headers, (_value, _header) => setHeader(_value, _header, _rewrite));
-    if (utils$1$1.isPlainObject(header) || header instanceof this.constructor) {
-      setHeaders(header, valueOrRewrite);
-    } else if (utils$1$1.isString(header) && (header = header.trim()) && !isValidHeaderName$1(header)) {
-      setHeaders(parseHeaders$1(header), valueOrRewrite);
-    } else if (utils$1$1.isObject(header) && utils$1$1.isIterable(header)) {
-      let obj = {}, dest, key;
-      for (const entry of header) {
-        if (!utils$1$1.isArray(entry)) {
+    o$1(a, "setHeader");
+    const i2 = /* @__PURE__ */ o$1((u2, d2) => f$1.forEach(u2, (h2, c2) => a(h2, c2, d2)), "setHeaders");
+    if (f$1.isPlainObject(e) || e instanceof this.constructor)
+      i2(e, t);
+    else if (f$1.isString(e) && (e = e.trim()) && !Ku(e))
+      i2(Gu(e), t);
+    else if (f$1.isObject(e) && f$1.isIterable(e)) {
+      let u2 = {}, d2, h2;
+      for (const c2 of e) {
+        if (!f$1.isArray(c2))
           throw TypeError("Object iterator must return a key-value pair");
-        }
-        obj[key = entry[0]] = (dest = obj[key]) ? utils$1$1.isArray(dest) ? [...dest, entry[1]] : [dest, entry[1]] : entry[1];
+        u2[h2 = c2[0]] = (d2 = u2[h2]) ? f$1.isArray(d2) ? [...d2, c2[1]] : [d2, c2[1]] : c2[1];
       }
-      setHeaders(obj, valueOrRewrite);
-    } else {
-      header != null && setHeader(valueOrRewrite, header, rewrite);
-    }
+      i2(u2, t);
+    } else
+      e != null && a(t, e, s);
     return this;
   }
-  get(header, parser) {
-    header = normalizeHeader$1(header);
-    if (header) {
-      const key = utils$1$1.findKey(this, header);
-      if (key) {
-        const value = this[key];
-        if (!parser) {
-          return value;
-        }
-        if (parser === true) {
-          return parseTokens$1(value);
-        }
-        if (utils$1$1.isFunction(parser)) {
-          return parser.call(this, value, key);
-        }
-        if (utils$1$1.isRegExp(parser)) {
-          return parser.exec(value);
-        }
+  get(e, t) {
+    if (e = Ie(e), e) {
+      const s = f$1.findKey(this, e);
+      if (s) {
+        const n = this[s];
+        if (!t)
+          return n;
+        if (t === true)
+          return Ju(n);
+        if (f$1.isFunction(t))
+          return t.call(this, n, s);
+        if (f$1.isRegExp(t))
+          return t.exec(n);
         throw new TypeError("parser must be boolean|regexp|function");
       }
     }
   }
-  has(header, matcher) {
-    header = normalizeHeader$1(header);
-    if (header) {
-      const key = utils$1$1.findKey(this, header);
-      return !!(key && this[key] !== void 0 && (!matcher || matchHeaderValue$1(this, this[key], key, matcher)));
+  has(e, t) {
+    if (e = Ie(e), e) {
+      const s = f$1.findKey(this, e);
+      return !!(s && this[s] !== void 0 && (!t || Bt(this, this[s], s, t)));
     }
     return false;
   }
-  delete(header, matcher) {
-    const self2 = this;
-    let deleted = false;
-    function deleteHeader(_header) {
-      _header = normalizeHeader$1(_header);
-      if (_header) {
-        const key = utils$1$1.findKey(self2, _header);
-        if (key && (!matcher || matchHeaderValue$1(self2, self2[key], key, matcher))) {
-          delete self2[key];
-          deleted = true;
-        }
+  delete(e, t) {
+    const s = this;
+    let n = false;
+    function a(i2) {
+      if (i2 = Ie(i2), i2) {
+        const u2 = f$1.findKey(s, i2);
+        u2 && (!t || Bt(s, s[u2], u2, t)) && (delete s[u2], n = true);
       }
     }
-    if (utils$1$1.isArray(header)) {
-      header.forEach(deleteHeader);
-    } else {
-      deleteHeader(header);
-    }
-    return deleted;
+    return o$1(a, "deleteHeader"), f$1.isArray(e) ? e.forEach(a) : a(e), n;
   }
-  clear(matcher) {
-    const keys = Object.keys(this);
-    let i2 = keys.length;
-    let deleted = false;
-    while (i2--) {
-      const key = keys[i2];
-      if (!matcher || matchHeaderValue$1(this, this[key], key, matcher, true)) {
-        delete this[key];
-        deleted = true;
-      }
+  clear(e) {
+    const t = Object.keys(this);
+    let s = t.length, n = false;
+    for (; s--; ) {
+      const a = t[s];
+      (!e || Bt(this, this[a], a, e, true)) && (delete this[a], n = true);
     }
-    return deleted;
+    return n;
   }
-  normalize(format) {
-    const self2 = this;
-    const headers = {};
-    utils$1$1.forEach(this, (value, header) => {
-      const key = utils$1$1.findKey(headers, header);
-      if (key) {
-        self2[key] = normalizeValue$1(value);
-        delete self2[header];
+  normalize(e) {
+    const t = this, s = {};
+    return f$1.forEach(this, (n, a) => {
+      const i2 = f$1.findKey(s, a);
+      if (i2) {
+        t[i2] = qe(n), delete t[a];
         return;
       }
-      const normalized = format ? formatHeader$1(header) : String(header).trim();
-      if (normalized !== header) {
-        delete self2[header];
-      }
-      self2[normalized] = normalizeValue$1(value);
-      headers[normalized] = true;
-    });
-    return this;
+      const u2 = e ? ju(a) : String(a).trim();
+      u2 !== a && delete t[a], t[u2] = qe(n), s[u2] = true;
+    }), this;
   }
-  concat(...targets) {
-    return this.constructor.concat(this, ...targets);
+  concat(...e) {
+    return this.constructor.concat(this, ...e);
   }
-  toJSON(asStrings) {
-    const obj = /* @__PURE__ */ Object.create(null);
-    utils$1$1.forEach(this, (value, header) => {
-      value != null && value !== false && (obj[header] = asStrings && utils$1$1.isArray(value) ? value.join(", ") : value);
-    });
-    return obj;
+  toJSON(e) {
+    const t = /* @__PURE__ */ Object.create(null);
+    return f$1.forEach(this, (s, n) => {
+      s != null && s !== false && (t[n] = e && f$1.isArray(s) ? s.join(", ") : s);
+    }), t;
   }
   [Symbol.iterator]() {
     return Object.entries(this.toJSON())[Symbol.iterator]();
   }
   toString() {
-    return Object.entries(this.toJSON()).map(([header, value]) => header + ": " + value).join("\n");
+    return Object.entries(this.toJSON()).map(([e, t]) => e + ": " + t).join(`
+`);
   }
   getSetCookie() {
     return this.get("set-cookie") || [];
@@ -6638,203 +6082,142 @@ let AxiosHeaders$1$1 = class AxiosHeaders {
   get [Symbol.toStringTag]() {
     return "AxiosHeaders";
   }
-  static from(thing) {
-    return thing instanceof this ? thing : new this(thing);
+  static from(e) {
+    return e instanceof this ? e : new this(e);
   }
-  static concat(first, ...targets) {
-    const computed = new this(first);
-    targets.forEach((target) => computed.set(target));
-    return computed;
+  static concat(e, ...t) {
+    const s = new this(e);
+    return t.forEach((n) => s.set(n)), s;
   }
-  static accessor(header) {
-    const internals = this[$internals$1] = this[$internals$1] = {
+  static accessor(e) {
+    const s = (this[Qr] = this[Qr] = {
       accessors: {}
-    };
-    const accessors = internals.accessors;
-    const prototype2 = this.prototype;
-    function defineAccessor(_header) {
-      const lHeader = normalizeHeader$1(_header);
-      if (!accessors[lHeader]) {
-        buildAccessors$1(prototype2, _header);
-        accessors[lHeader] = true;
-      }
+    }).accessors, n = this.prototype;
+    function a(i2) {
+      const u2 = Ie(i2);
+      s[u2] || (Xu(n, i2), s[u2] = true);
     }
-    utils$1$1.isArray(header) ? header.forEach(defineAccessor) : defineAccessor(header);
-    return this;
+    return o$1(a, "defineAccessor"), f$1.isArray(e) ? e.forEach(a) : a(e), this;
   }
-};
-AxiosHeaders$1$1.accessor(["Content-Type", "Content-Length", "Accept", "Accept-Encoding", "User-Agent", "Authorization"]);
-utils$1$1.reduceDescriptors(AxiosHeaders$1$1.prototype, ({ value }, key) => {
-  let mapped = key[0].toUpperCase() + key.slice(1);
+}, o$1(he, "AxiosHeaders"), he);
+R$1.accessor(["Content-Type", "Content-Length", "Accept", "Accept-Encoding", "User-Agent", "Authorization"]);
+f$1.reduceDescriptors(R$1.prototype, ({ value: r }, e) => {
+  let t = e[0].toUpperCase() + e.slice(1);
   return {
-    get: () => value,
-    set(headerValue) {
-      this[mapped] = headerValue;
+    get: /* @__PURE__ */ o$1(() => r, "get"),
+    set(s) {
+      this[t] = s;
     }
   };
 });
-utils$1$1.freezeMethods(AxiosHeaders$1$1);
-function transformData$1(fns, response) {
-  const config = this || defaults$1;
-  const context = response || config;
-  const headers = AxiosHeaders$1$1.from(context.headers);
-  let data2 = context.data;
-  utils$1$1.forEach(fns, function transform(fn) {
-    data2 = fn.call(config, data2, headers.normalize(), response ? response.status : void 0);
-  });
-  headers.normalize();
-  return data2;
+f$1.freezeMethods(R$1);
+function Mt(r, e) {
+  const t = this || Me, s = e || t, n = R$1.from(s.headers);
+  let a = s.data;
+  return f$1.forEach(r, /* @__PURE__ */ o$1(function(u2) {
+    a = u2.call(t, a, n.normalize(), e ? e.status : void 0);
+  }, "transform")), n.normalize(), a;
 }
-function isCancel$1$1(value) {
-  return !!(value && value.__CANCEL__);
+o$1(Mt, "transformData");
+function ia$1(r) {
+  return !!(r && r.__CANCEL__);
 }
-function CanceledError$1$1(message, config, request) {
-  AxiosError$1$1.call(this, message == null ? "canceled" : message, AxiosError$1$1.ERR_CANCELED, config, request);
-  this.name = "CanceledError";
+o$1(ia$1, "isCancel$1");
+function we(r, e, t) {
+  b.call(this, r == null ? "canceled" : r, b.ERR_CANCELED, e, t), this.name = "CanceledError";
 }
-utils$1$1.inherits(CanceledError$1$1, AxiosError$1$1, {
+o$1(we, "CanceledError$1");
+f$1.inherits(we, b, {
   __CANCEL__: true
 });
-function settle$1(resolve, reject, response) {
-  const validateStatus22 = response.config.validateStatus;
-  if (!response.status || !validateStatus22 || validateStatus22(response.status)) {
-    resolve(response);
-  } else {
-    reject(new AxiosError$1$1(
-      "Request failed with status code " + response.status,
-      [AxiosError$1$1.ERR_BAD_REQUEST, AxiosError$1$1.ERR_BAD_RESPONSE][Math.floor(response.status / 100) - 4],
-      response.config,
-      response.request,
-      response
-    ));
-  }
+function oa(r, e, t) {
+  const s = t.config.validateStatus;
+  !t.status || !s || s(t.status) ? r(t) : e(new b(
+    "Request failed with status code " + t.status,
+    [b.ERR_BAD_REQUEST, b.ERR_BAD_RESPONSE][Math.floor(t.status / 100) - 4],
+    t.config,
+    t.request,
+    t
+  ));
 }
-function parseProtocol$1(url2) {
-  const match = /^([-+\w]{1,25})(:?\/\/|:)/.exec(url2);
-  return match && match[1] || "";
+o$1(oa, "settle");
+function Yu(r) {
+  const e = /^([-+\w]{1,25})(:?\/\/|:)/.exec(r);
+  return e && e[1] || "";
 }
-function speedometer$1(samplesCount, min) {
-  samplesCount = samplesCount || 10;
-  const bytes = new Array(samplesCount);
-  const timestamps = new Array(samplesCount);
-  let head = 0;
-  let tail = 0;
-  let firstSampleTS;
-  min = min !== void 0 ? min : 1e3;
-  return function push(chunkLength) {
-    const now = Date.now();
-    const startedAt = timestamps[tail];
-    if (!firstSampleTS) {
-      firstSampleTS = now;
-    }
-    bytes[head] = chunkLength;
-    timestamps[head] = now;
-    let i2 = tail;
-    let bytesCount = 0;
-    while (i2 !== head) {
-      bytesCount += bytes[i2++];
-      i2 = i2 % samplesCount;
-    }
-    head = (head + 1) % samplesCount;
-    if (head === tail) {
-      tail = (tail + 1) % samplesCount;
-    }
-    if (now - firstSampleTS < min) {
+o$1(Yu, "parseProtocol");
+function Zu(r, e) {
+  r = r || 10;
+  const t = new Array(r), s = new Array(r);
+  let n = 0, a = 0, i2;
+  return e = e !== void 0 ? e : 1e3, /* @__PURE__ */ o$1(function(d2) {
+    const h2 = Date.now(), c2 = s[a];
+    i2 || (i2 = h2), t[n] = d2, s[n] = h2;
+    let p2 = a, g2 = 0;
+    for (; p2 !== n; )
+      g2 += t[p2++], p2 = p2 % r;
+    if (n = (n + 1) % r, n === a && (a = (a + 1) % r), h2 - i2 < e)
       return;
-    }
-    const passed = startedAt && now - startedAt;
-    return passed ? Math.round(bytesCount * 1e3 / passed) : void 0;
-  };
+    const y = c2 && h2 - c2;
+    return y ? Math.round(g2 * 1e3 / y) : void 0;
+  }, "push");
 }
-function throttle$1(fn, freq) {
-  let timestamp = 0;
-  let threshold = 1e3 / freq;
-  let lastArgs;
-  let timer;
-  const invoke = (args, now = Date.now()) => {
-    timestamp = now;
-    lastArgs = null;
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
-    }
-    fn(...args);
-  };
-  const throttled = (...args) => {
-    const now = Date.now();
-    const passed = now - timestamp;
-    if (passed >= threshold) {
-      invoke(args, now);
-    } else {
-      lastArgs = args;
-      if (!timer) {
-        timer = setTimeout(() => {
-          timer = null;
-          invoke(lastArgs);
-        }, threshold - passed);
-      }
-    }
-  };
-  const flush = () => lastArgs && invoke(lastArgs);
-  return [throttled, flush];
+o$1(Zu, "speedometer");
+function Qu(r, e) {
+  let t = 0, s = 1e3 / e, n, a;
+  const i2 = /* @__PURE__ */ o$1((h2, c2 = Date.now()) => {
+    t = c2, n = null, a && (clearTimeout(a), a = null), r(...h2);
+  }, "invoke");
+  return [/* @__PURE__ */ o$1((...h2) => {
+    const c2 = Date.now(), p2 = c2 - t;
+    p2 >= s ? i2(h2, c2) : (n = h2, a || (a = setTimeout(() => {
+      a = null, i2(n);
+    }, s - p2)));
+  }, "throttled"), /* @__PURE__ */ o$1(() => n && i2(n), "flush")];
 }
-const progressEventReducer$1 = (listener, isDownloadStream, freq = 3) => {
-  let bytesNotified = 0;
-  const _speedometer = speedometer$1(50, 250);
-  return throttle$1((e) => {
-    const loaded = e.loaded;
-    const total = e.lengthComputable ? e.total : void 0;
-    const progressBytes = loaded - bytesNotified;
-    const rate = _speedometer(progressBytes);
-    const inRange = loaded <= total;
-    bytesNotified = loaded;
-    const data2 = {
-      loaded,
-      total,
-      progress: total ? loaded / total : void 0,
-      bytes: progressBytes,
-      rate: rate ? rate : void 0,
-      estimated: rate && total && inRange ? (total - loaded) / rate : void 0,
-      event: e,
-      lengthComputable: total != null,
-      [isDownloadStream ? "download" : "upload"]: true
+o$1(Qu, "throttle");
+const ut = /* @__PURE__ */ o$1((r, e, t = 3) => {
+  let s = 0;
+  const n = Zu(50, 250);
+  return Qu((a) => {
+    const i2 = a.loaded, u2 = a.lengthComputable ? a.total : void 0, d2 = i2 - s, h2 = n(d2), c2 = i2 <= u2;
+    s = i2;
+    const p2 = {
+      loaded: i2,
+      total: u2,
+      progress: u2 ? i2 / u2 : void 0,
+      bytes: d2,
+      rate: h2 || void 0,
+      estimated: h2 && u2 && c2 ? (u2 - i2) / h2 : void 0,
+      event: a,
+      lengthComputable: u2 != null,
+      [e ? "download" : "upload"]: true
     };
-    listener(data2);
-  }, freq);
-};
-const progressEventDecorator$1 = (total, throttled) => {
-  const lengthComputable = total != null;
-  return [(loaded) => throttled[0]({
-    lengthComputable,
-    total,
-    loaded
-  }), throttled[1]];
-};
-const asyncDecorator$1 = (fn) => (...args) => utils$1$1.asap(() => fn(...args));
-const isURLSameOrigin$1 = platform$2.hasStandardBrowserEnv ? /* @__PURE__ */ ((origin2, isMSIE) => (url2) => {
-  url2 = new URL(url2, platform$2.origin);
-  return origin2.protocol === url2.protocol && origin2.host === url2.host && (isMSIE || origin2.port === url2.port);
-})(
-  new URL(platform$2.origin),
-  platform$2.navigator && /(msie|trident)/i.test(platform$2.navigator.userAgent)
-) : () => true;
-const cookies$1 = platform$2.hasStandardBrowserEnv ? (
+    r(p2);
+  }, t);
+}, "progressEventReducer"), en$1 = /* @__PURE__ */ o$1((r, e) => {
+  const t = r != null;
+  return [(s) => e[0]({
+    lengthComputable: t,
+    total: r,
+    loaded: s
+  }), e[1]];
+}, "progressEventDecorator"), tn$1 = /* @__PURE__ */ o$1((r) => (...e) => f$1.asap(() => r(...e)), "asyncDecorator"), el$1 = v.hasStandardBrowserEnv ? /* @__PURE__ */ ((r, e) => (t) => (t = new URL(t, v.origin), r.protocol === t.protocol && r.host === t.host && (e || r.port === t.port)))(
+  new URL(v.origin),
+  v.navigator && /(msie|trident)/i.test(v.navigator.userAgent)
+) : () => true, tl$1 = v.hasStandardBrowserEnv ? (
   // Standard browser envs support document.cookie
   {
-    write(name, value, expires, path, domain, secure) {
-      const cookie = [name + "=" + encodeURIComponent(value)];
-      utils$1$1.isNumber(expires) && cookie.push("expires=" + new Date(expires).toGMTString());
-      utils$1$1.isString(path) && cookie.push("path=" + path);
-      utils$1$1.isString(domain) && cookie.push("domain=" + domain);
-      secure === true && cookie.push("secure");
-      document.cookie = cookie.join("; ");
+    write(r, e, t, s, n, a) {
+      const i2 = [r + "=" + encodeURIComponent(e)];
+      f$1.isNumber(t) && i2.push("expires=" + new Date(t).toGMTString()), f$1.isString(s) && i2.push("path=" + s), f$1.isString(n) && i2.push("domain=" + n), a === true && i2.push("secure"), document.cookie = i2.join("; ");
     },
-    read(name) {
-      const match = document.cookie.match(new RegExp("(^|;\\s*)(" + name + ")=([^;]*)"));
-      return match ? decodeURIComponent(match[3]) : null;
+    read(r) {
+      const e = document.cookie.match(new RegExp("(^|;\\s*)(" + r + ")=([^;]*)"));
+      return e ? decodeURIComponent(e[3]) : null;
     },
-    remove(name) {
-      this.write(name, "", Date.now() - 864e5);
+    remove(r) {
+      this.write(r, "", Date.now() - 864e5);
     }
   }
 ) : (
@@ -6849,688 +6232,522 @@ const cookies$1 = platform$2.hasStandardBrowserEnv ? (
     }
   }
 );
-function isAbsoluteURL$1(url2) {
-  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url2);
+function sl$1(r) {
+  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(r);
 }
-function combineURLs$1(baseURL, relativeURL) {
-  return relativeURL ? baseURL.replace(/\/?\/$/, "") + "/" + relativeURL.replace(/^\/+/, "") : baseURL;
+o$1(sl$1, "isAbsoluteURL");
+function rl(r, e) {
+  return e ? r.replace(/\/?\/$/, "") + "/" + e.replace(/^\/+/, "") : r;
 }
-function buildFullPath$1(baseURL, requestedURL, allowAbsoluteUrls) {
-  let isRelativeUrl = !isAbsoluteURL$1(requestedURL);
-  if (baseURL && (isRelativeUrl || allowAbsoluteUrls == false)) {
-    return combineURLs$1(baseURL, requestedURL);
-  }
-  return requestedURL;
+o$1(rl, "combineURLs");
+function ua(r, e, t) {
+  let s = !sl$1(e);
+  return r && (s || t == false) ? rl(r, e) : e;
 }
-const headersToObject$1 = (thing) => thing instanceof AxiosHeaders$1$1 ? { ...thing } : thing;
-function mergeConfig$1$1(config1, config2) {
-  config2 = config2 || {};
-  const config = {};
-  function getMergedValue(target, source, prop, caseless) {
-    if (utils$1$1.isPlainObject(target) && utils$1$1.isPlainObject(source)) {
-      return utils$1$1.merge.call({ caseless }, target, source);
-    } else if (utils$1$1.isPlainObject(source)) {
-      return utils$1$1.merge({}, source);
-    } else if (utils$1$1.isArray(source)) {
-      return source.slice();
-    }
-    return source;
+o$1(ua, "buildFullPath");
+const sn$1 = /* @__PURE__ */ o$1((r) => r instanceof R$1 ? G({}, r) : r, "headersToObject");
+function oe(r, e) {
+  e = e || {};
+  const t = {};
+  function s(h2, c2, p2, g2) {
+    return f$1.isPlainObject(h2) && f$1.isPlainObject(c2) ? f$1.merge.call({ caseless: g2 }, h2, c2) : f$1.isPlainObject(c2) ? f$1.merge({}, c2) : f$1.isArray(c2) ? c2.slice() : c2;
   }
-  function mergeDeepProperties(a, b, prop, caseless) {
-    if (!utils$1$1.isUndefined(b)) {
-      return getMergedValue(a, b, prop, caseless);
-    } else if (!utils$1$1.isUndefined(a)) {
-      return getMergedValue(void 0, a, prop, caseless);
-    }
+  o$1(s, "getMergedValue");
+  function n(h2, c2, p2, g2) {
+    if (f$1.isUndefined(c2)) {
+      if (!f$1.isUndefined(h2))
+        return s(void 0, h2, p2, g2);
+    } else return s(h2, c2, p2, g2);
   }
-  function valueFromConfig2(a, b) {
-    if (!utils$1$1.isUndefined(b)) {
-      return getMergedValue(void 0, b);
-    }
+  o$1(n, "mergeDeepProperties");
+  function a(h2, c2) {
+    if (!f$1.isUndefined(c2))
+      return s(void 0, c2);
   }
-  function defaultToConfig2(a, b) {
-    if (!utils$1$1.isUndefined(b)) {
-      return getMergedValue(void 0, b);
-    } else if (!utils$1$1.isUndefined(a)) {
-      return getMergedValue(void 0, a);
-    }
+  o$1(a, "valueFromConfig2");
+  function i2(h2, c2) {
+    if (f$1.isUndefined(c2)) {
+      if (!f$1.isUndefined(h2))
+        return s(void 0, h2);
+    } else return s(void 0, c2);
   }
-  function mergeDirectKeys(a, b, prop) {
-    if (prop in config2) {
-      return getMergedValue(a, b);
-    } else if (prop in config1) {
-      return getMergedValue(void 0, a);
-    }
+  o$1(i2, "defaultToConfig2");
+  function u2(h2, c2, p2) {
+    if (p2 in e)
+      return s(h2, c2);
+    if (p2 in r)
+      return s(void 0, h2);
   }
-  const mergeMap = {
-    url: valueFromConfig2,
-    method: valueFromConfig2,
-    data: valueFromConfig2,
-    baseURL: defaultToConfig2,
-    transformRequest: defaultToConfig2,
-    transformResponse: defaultToConfig2,
-    paramsSerializer: defaultToConfig2,
-    timeout: defaultToConfig2,
-    timeoutMessage: defaultToConfig2,
-    withCredentials: defaultToConfig2,
-    withXSRFToken: defaultToConfig2,
-    adapter: defaultToConfig2,
-    responseType: defaultToConfig2,
-    xsrfCookieName: defaultToConfig2,
-    xsrfHeaderName: defaultToConfig2,
-    onUploadProgress: defaultToConfig2,
-    onDownloadProgress: defaultToConfig2,
-    decompress: defaultToConfig2,
-    maxContentLength: defaultToConfig2,
-    maxBodyLength: defaultToConfig2,
-    beforeRedirect: defaultToConfig2,
-    transport: defaultToConfig2,
-    httpAgent: defaultToConfig2,
-    httpsAgent: defaultToConfig2,
-    cancelToken: defaultToConfig2,
-    socketPath: defaultToConfig2,
-    responseEncoding: defaultToConfig2,
-    validateStatus: mergeDirectKeys,
-    headers: (a, b, prop) => mergeDeepProperties(headersToObject$1(a), headersToObject$1(b), prop, true)
+  o$1(u2, "mergeDirectKeys");
+  const d2 = {
+    url: a,
+    method: a,
+    data: a,
+    baseURL: i2,
+    transformRequest: i2,
+    transformResponse: i2,
+    paramsSerializer: i2,
+    timeout: i2,
+    timeoutMessage: i2,
+    withCredentials: i2,
+    withXSRFToken: i2,
+    adapter: i2,
+    responseType: i2,
+    xsrfCookieName: i2,
+    xsrfHeaderName: i2,
+    onUploadProgress: i2,
+    onDownloadProgress: i2,
+    decompress: i2,
+    maxContentLength: i2,
+    maxBodyLength: i2,
+    beforeRedirect: i2,
+    transport: i2,
+    httpAgent: i2,
+    httpsAgent: i2,
+    cancelToken: i2,
+    socketPath: i2,
+    responseEncoding: i2,
+    validateStatus: u2,
+    headers: /* @__PURE__ */ o$1((h2, c2, p2) => n(sn$1(h2), sn$1(c2), p2, true), "headers")
   };
-  utils$1$1.forEach(Object.keys({ ...config1, ...config2 }), function computeConfigValue(prop) {
-    const merge2 = mergeMap[prop] || mergeDeepProperties;
-    const configValue = merge2(config1[prop], config2[prop], prop);
-    utils$1$1.isUndefined(configValue) && merge2 !== mergeDirectKeys || (config[prop] = configValue);
-  });
-  return config;
+  return f$1.forEach(Object.keys(G(G({}, r), e)), /* @__PURE__ */ o$1(function(c2) {
+    const p2 = d2[c2] || n, g2 = p2(r[c2], e[c2], c2);
+    f$1.isUndefined(g2) && p2 !== u2 || (t[c2] = g2);
+  }, "computeConfigValue")), t;
 }
-const resolveConfig$1 = (config) => {
-  const newConfig = mergeConfig$1$1({}, config);
-  let { data: data2, withXSRFToken, xsrfHeaderName, xsrfCookieName, headers, auth } = newConfig;
-  newConfig.headers = headers = AxiosHeaders$1$1.from(headers);
-  newConfig.url = buildURL$1(buildFullPath$1(newConfig.baseURL, newConfig.url, newConfig.allowAbsoluteUrls), config.params, config.paramsSerializer);
-  if (auth) {
-    headers.set(
-      "Authorization",
-      "Basic " + btoa((auth.username || "") + ":" + (auth.password ? unescape(encodeURIComponent(auth.password)) : ""))
-    );
-  }
-  let contentType;
-  if (utils$1$1.isFormData(data2)) {
-    if (platform$2.hasStandardBrowserEnv || platform$2.hasStandardBrowserWebWorkerEnv) {
-      headers.setContentType(void 0);
-    } else if ((contentType = headers.getContentType()) !== false) {
-      const [type, ...tokens] = contentType ? contentType.split(";").map((token) => token.trim()).filter(Boolean) : [];
-      headers.setContentType([type || "multipart/form-data", ...tokens].join("; "));
+o$1(oe, "mergeConfig$1");
+const la$1 = /* @__PURE__ */ o$1((r) => {
+  const e = oe({}, r);
+  let { data: t, withXSRFToken: s, xsrfHeaderName: n, xsrfCookieName: a, headers: i2, auth: u2 } = e;
+  e.headers = i2 = R$1.from(i2), e.url = ra(ua(e.baseURL, e.url, e.allowAbsoluteUrls), r.params, r.paramsSerializer), u2 && i2.set(
+    "Authorization",
+    "Basic " + btoa((u2.username || "") + ":" + (u2.password ? unescape(encodeURIComponent(u2.password)) : ""))
+  );
+  let d2;
+  if (f$1.isFormData(t)) {
+    if (v.hasStandardBrowserEnv || v.hasStandardBrowserWebWorkerEnv)
+      i2.setContentType(void 0);
+    else if ((d2 = i2.getContentType()) !== false) {
+      const [h2, ...c2] = d2 ? d2.split(";").map((p2) => p2.trim()).filter(Boolean) : [];
+      i2.setContentType([h2 || "multipart/form-data", ...c2].join("; "));
     }
   }
-  if (platform$2.hasStandardBrowserEnv) {
-    withXSRFToken && utils$1$1.isFunction(withXSRFToken) && (withXSRFToken = withXSRFToken(newConfig));
-    if (withXSRFToken || withXSRFToken !== false && isURLSameOrigin$1(newConfig.url)) {
-      const xsrfValue = xsrfHeaderName && xsrfCookieName && cookies$1.read(xsrfCookieName);
-      if (xsrfValue) {
-        headers.set(xsrfHeaderName, xsrfValue);
-      }
-    }
+  if (v.hasStandardBrowserEnv && (s && f$1.isFunction(s) && (s = s(e)), s || s !== false && el$1(e.url))) {
+    const h2 = n && a && tl$1.read(a);
+    h2 && i2.set(n, h2);
   }
-  return newConfig;
-};
-const isXHRAdapterSupported$1 = typeof XMLHttpRequest !== "undefined";
-const xhrAdapter$1 = isXHRAdapterSupported$1 && function(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    const _config = resolveConfig$1(config);
-    let requestData = _config.data;
-    const requestHeaders = AxiosHeaders$1$1.from(_config.headers).normalize();
-    let { responseType, onUploadProgress, onDownloadProgress } = _config;
-    let onCanceled;
-    let uploadThrottled, downloadThrottled;
-    let flushUpload, flushDownload;
-    function done() {
-      flushUpload && flushUpload();
-      flushDownload && flushDownload();
-      _config.cancelToken && _config.cancelToken.unsubscribe(onCanceled);
-      _config.signal && _config.signal.removeEventListener("abort", onCanceled);
+  return e;
+}, "resolveConfig"), nl$1 = typeof XMLHttpRequest != "undefined", al = nl$1 && function(r) {
+  return new Promise(/* @__PURE__ */ o$1(function(t, s) {
+    const n = la$1(r);
+    let a = n.data;
+    const i2 = R$1.from(n.headers).normalize();
+    let { responseType: u2, onUploadProgress: d2, onDownloadProgress: h2 } = n, c2, p2, g2, y, m2;
+    function I2() {
+      y && y(), m2 && m2(), n.cancelToken && n.cancelToken.unsubscribe(c2), n.signal && n.signal.removeEventListener("abort", c2);
     }
-    let request = new XMLHttpRequest();
-    request.open(_config.method.toUpperCase(), _config.url, true);
-    request.timeout = _config.timeout;
-    function onloadend() {
-      if (!request) {
+    o$1(I2, "done");
+    let E2 = new XMLHttpRequest();
+    E2.open(n.method.toUpperCase(), n.url, true), E2.timeout = n.timeout;
+    function C() {
+      if (!E2)
         return;
-      }
-      const responseHeaders = AxiosHeaders$1$1.from(
-        "getAllResponseHeaders" in request && request.getAllResponseHeaders()
-      );
-      const responseData = !responseType || responseType === "text" || responseType === "json" ? request.responseText : request.response;
-      const response = {
-        data: responseData,
-        status: request.status,
-        statusText: request.statusText,
-        headers: responseHeaders,
-        config,
-        request
+      const T = R$1.from(
+        "getAllResponseHeaders" in E2 && E2.getAllResponseHeaders()
+      ), N = {
+        data: !u2 || u2 === "text" || u2 === "json" ? E2.responseText : E2.response,
+        status: E2.status,
+        statusText: E2.statusText,
+        headers: T,
+        config: r,
+        request: E2
       };
-      settle$1(function _resolve(value) {
-        resolve(value);
-        done();
-      }, function _reject(err) {
-        reject(err);
-        done();
-      }, response);
-      request = null;
+      oa(/* @__PURE__ */ o$1(function(K) {
+        t(K), I2();
+      }, "_resolve"), /* @__PURE__ */ o$1(function(K) {
+        s(K), I2();
+      }, "_reject"), N), E2 = null;
     }
-    if ("onloadend" in request) {
-      request.onloadend = onloadend;
-    } else {
-      request.onreadystatechange = function handleLoad() {
-        if (!request || request.readyState !== 4) {
-          return;
-        }
-        if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf("file:") === 0)) {
-          return;
-        }
-        setTimeout(onloadend);
-      };
-    }
-    request.onabort = function handleAbort() {
-      if (!request) {
-        return;
-      }
-      reject(new AxiosError$1$1("Request aborted", AxiosError$1$1.ECONNABORTED, config, request));
-      request = null;
-    };
-    request.onerror = function handleError() {
-      reject(new AxiosError$1$1("Network Error", AxiosError$1$1.ERR_NETWORK, config, request));
-      request = null;
-    };
-    request.ontimeout = function handleTimeout() {
-      let timeoutErrorMessage = _config.timeout ? "timeout of " + _config.timeout + "ms exceeded" : "timeout exceeded";
-      const transitional22 = _config.transitional || transitionalDefaults$1;
-      if (_config.timeoutErrorMessage) {
-        timeoutErrorMessage = _config.timeoutErrorMessage;
-      }
-      reject(new AxiosError$1$1(
-        timeoutErrorMessage,
-        transitional22.clarifyTimeoutError ? AxiosError$1$1.ETIMEDOUT : AxiosError$1$1.ECONNABORTED,
-        config,
-        request
-      ));
-      request = null;
-    };
-    requestData === void 0 && requestHeaders.setContentType(null);
-    if ("setRequestHeader" in request) {
-      utils$1$1.forEach(requestHeaders.toJSON(), function setRequestHeader(val, key) {
-        request.setRequestHeader(key, val);
-      });
-    }
-    if (!utils$1$1.isUndefined(_config.withCredentials)) {
-      request.withCredentials = !!_config.withCredentials;
-    }
-    if (responseType && responseType !== "json") {
-      request.responseType = _config.responseType;
-    }
-    if (onDownloadProgress) {
-      [downloadThrottled, flushDownload] = progressEventReducer$1(onDownloadProgress, true);
-      request.addEventListener("progress", downloadThrottled);
-    }
-    if (onUploadProgress && request.upload) {
-      [uploadThrottled, flushUpload] = progressEventReducer$1(onUploadProgress);
-      request.upload.addEventListener("progress", uploadThrottled);
-      request.upload.addEventListener("loadend", flushUpload);
-    }
-    if (_config.cancelToken || _config.signal) {
-      onCanceled = (cancel) => {
-        if (!request) {
-          return;
-        }
-        reject(!cancel || cancel.type ? new CanceledError$1$1(null, config, request) : cancel);
-        request.abort();
-        request = null;
-      };
-      _config.cancelToken && _config.cancelToken.subscribe(onCanceled);
-      if (_config.signal) {
-        _config.signal.aborted ? onCanceled() : _config.signal.addEventListener("abort", onCanceled);
-      }
-    }
-    const protocol = parseProtocol$1(_config.url);
-    if (protocol && platform$2.protocols.indexOf(protocol) === -1) {
-      reject(new AxiosError$1$1("Unsupported protocol " + protocol + ":", AxiosError$1$1.ERR_BAD_REQUEST, config));
+    o$1(C, "onloadend"), "onloadend" in E2 ? E2.onloadend = C : E2.onreadystatechange = /* @__PURE__ */ o$1(function() {
+      !E2 || E2.readyState !== 4 || E2.status === 0 && !(E2.responseURL && E2.responseURL.indexOf("file:") === 0) || setTimeout(C);
+    }, "handleLoad"), E2.onabort = /* @__PURE__ */ o$1(function() {
+      E2 && (s(new b("Request aborted", b.ECONNABORTED, r, E2)), E2 = null);
+    }, "handleAbort"), E2.onerror = /* @__PURE__ */ o$1(function() {
+      s(new b("Network Error", b.ERR_NETWORK, r, E2)), E2 = null;
+    }, "handleError"), E2.ontimeout = /* @__PURE__ */ o$1(function() {
+      let z = n.timeout ? "timeout of " + n.timeout + "ms exceeded" : "timeout exceeded";
+      const N = n.transitional || na$1;
+      n.timeoutErrorMessage && (z = n.timeoutErrorMessage), s(new b(
+        z,
+        N.clarifyTimeoutError ? b.ETIMEDOUT : b.ECONNABORTED,
+        r,
+        E2
+      )), E2 = null;
+    }, "handleTimeout"), a === void 0 && i2.setContentType(null), "setRequestHeader" in E2 && f$1.forEach(i2.toJSON(), /* @__PURE__ */ o$1(function(z, N) {
+      E2.setRequestHeader(N, z);
+    }, "setRequestHeader")), f$1.isUndefined(n.withCredentials) || (E2.withCredentials = !!n.withCredentials), u2 && u2 !== "json" && (E2.responseType = n.responseType), h2 && ([g2, m2] = ut(h2, true), E2.addEventListener("progress", g2)), d2 && E2.upload && ([p2, y] = ut(d2), E2.upload.addEventListener("progress", p2), E2.upload.addEventListener("loadend", y)), (n.cancelToken || n.signal) && (c2 = /* @__PURE__ */ o$1((T) => {
+      E2 && (s(!T || T.type ? new we(null, r, E2) : T), E2.abort(), E2 = null);
+    }, "onCanceled"), n.cancelToken && n.cancelToken.subscribe(c2), n.signal && (n.signal.aborted ? c2() : n.signal.addEventListener("abort", c2)));
+    const D2 = Yu(n.url);
+    if (D2 && v.protocols.indexOf(D2) === -1) {
+      s(new b("Unsupported protocol " + D2 + ":", b.ERR_BAD_REQUEST, r));
       return;
     }
-    request.send(requestData || null);
-  });
-};
-const composeSignals$1 = (signals, timeout) => {
-  const { length } = signals = signals ? signals.filter(Boolean) : [];
-  if (timeout || length) {
-    let controller = new AbortController();
-    let aborted;
-    const onabort = function(reason) {
-      if (!aborted) {
-        aborted = true;
-        unsubscribe();
-        const err = reason instanceof Error ? reason : this.reason;
-        controller.abort(err instanceof AxiosError$1$1 ? err : new CanceledError$1$1(err instanceof Error ? err.message : err));
+    E2.send(a || null);
+  }, "dispatchXhrRequest"));
+}, il = /* @__PURE__ */ o$1((r, e) => {
+  const { length: t } = r = r ? r.filter(Boolean) : [];
+  if (e || t) {
+    let s = new AbortController(), n;
+    const a = /* @__PURE__ */ o$1(function(h2) {
+      if (!n) {
+        n = true, u2();
+        const c2 = h2 instanceof Error ? h2 : this.reason;
+        s.abort(c2 instanceof b ? c2 : new we(c2 instanceof Error ? c2.message : c2));
       }
-    };
-    let timer = timeout && setTimeout(() => {
-      timer = null;
-      onabort(new AxiosError$1$1(`timeout ${timeout} of ms exceeded`, AxiosError$1$1.ETIMEDOUT));
-    }, timeout);
-    const unsubscribe = () => {
-      if (signals) {
-        timer && clearTimeout(timer);
-        timer = null;
-        signals.forEach((signal2) => {
-          signal2.unsubscribe ? signal2.unsubscribe(onabort) : signal2.removeEventListener("abort", onabort);
-        });
-        signals = null;
-      }
-    };
-    signals.forEach((signal2) => signal2.addEventListener("abort", onabort));
-    const { signal } = controller;
-    signal.unsubscribe = () => utils$1$1.asap(unsubscribe);
-    return signal;
+    }, "onabort");
+    let i2 = e && setTimeout(() => {
+      i2 = null, a(new b(`timeout ${e} of ms exceeded`, b.ETIMEDOUT));
+    }, e);
+    const u2 = /* @__PURE__ */ o$1(() => {
+      r && (i2 && clearTimeout(i2), i2 = null, r.forEach((h2) => {
+        h2.unsubscribe ? h2.unsubscribe(a) : h2.removeEventListener("abort", a);
+      }), r = null);
+    }, "unsubscribe");
+    r.forEach((h2) => h2.addEventListener("abort", a));
+    const { signal: d2 } = s;
+    return d2.unsubscribe = () => f$1.asap(u2), d2;
   }
-};
-const streamChunk$1 = function* (chunk, chunkSize) {
-  let len = chunk.byteLength;
-  if (len < chunkSize) {
-    yield chunk;
+}, "composeSignals"), ol = /* @__PURE__ */ o$1(function* (r, e) {
+  let t = r.byteLength;
+  if (t < e) {
+    yield r;
     return;
   }
-  let pos = 0;
-  let end;
-  while (pos < len) {
-    end = pos + chunkSize;
-    yield chunk.slice(pos, end);
-    pos = end;
-  }
-};
-const readBytes$1 = async function* (iterable, chunkSize) {
-  for await (const chunk of readStream$1(iterable)) {
-    yield* streamChunk$1(chunk, chunkSize);
-  }
-};
-const readStream$1 = async function* (stream) {
-  if (stream[Symbol.asyncIterator]) {
-    yield* stream;
-    return;
-  }
-  const reader = stream.getReader();
-  try {
-    for (; ; ) {
-      const { done, value } = await reader.read();
-      if (done) {
-        break;
+  let s = 0, n;
+  for (; s < t; )
+    n = s + e, yield r.slice(s, n), s = n;
+}, "streamChunk"), ul = /* @__PURE__ */ o$1(function(r, e) {
+  return Pt(this, null, function* () {
+    try {
+      for (var t = Ar(ll(r)), s, n, a; s = !(n = yield new j(t.next())).done; s = false) {
+        const i2 = n.value;
+        yield* Vt(ol(i2, e));
       }
-      yield value;
-    }
-  } finally {
-    await reader.cancel();
-  }
-};
-const trackStream$1 = (stream, chunkSize, onProgress, onFinish) => {
-  const iterator2 = readBytes$1(stream, chunkSize);
-  let bytes = 0;
-  let done;
-  let _onFinish = (e) => {
-    if (!done) {
-      done = true;
-      onFinish && onFinish(e);
-    }
-  };
-  return new ReadableStream({
-    async pull(controller) {
+    } catch (n2) {
+      a = [n2];
+    } finally {
       try {
-        const { done: done2, value } = await iterator2.next();
-        if (done2) {
-          _onFinish();
-          controller.close();
-          return;
-        }
-        let len = value.byteLength;
-        if (onProgress) {
-          let loadedBytes = bytes += len;
-          onProgress(loadedBytes);
-        }
-        controller.enqueue(new Uint8Array(value));
-      } catch (err) {
-        _onFinish(err);
-        throw err;
+        s && (n = t.return) && (yield new j(n.call(t)));
+      } finally {
+        if (a)
+          throw a[0];
       }
+    }
+  });
+}, "readBytes"), ll = /* @__PURE__ */ o$1(function(r) {
+  return Pt(this, null, function* () {
+    if (r[Symbol.asyncIterator]) {
+      yield* Vt(r);
+      return;
+    }
+    const e = r.getReader();
+    try {
+      for (; ; ) {
+        const { done: t, value: s } = yield new j(e.read());
+        if (t)
+          break;
+        yield s;
+      }
+    } finally {
+      yield new j(e.cancel());
+    }
+  });
+}, "readStream"), rn$1 = /* @__PURE__ */ o$1((r, e, t, s) => {
+  const n = ul(r, e);
+  let a = 0, i2, u2 = /* @__PURE__ */ o$1((h2) => {
+    i2 || (i2 = true, s && s(h2));
+  }, "_onFinish");
+  return new ReadableStream({
+    pull(h2) {
+      return L(this, null, function* () {
+        try {
+          const { done: c2, value: p2 } = yield n.next();
+          if (c2) {
+            u2(), h2.close();
+            return;
+          }
+          let g2 = p2.byteLength;
+          if (t) {
+            let y = a += g2;
+            t(y);
+          }
+          h2.enqueue(new Uint8Array(p2));
+        } catch (c2) {
+          throw u2(c2), c2;
+        }
+      });
     },
-    cancel(reason) {
-      _onFinish(reason);
-      return iterator2.return();
+    cancel(h2) {
+      return u2(h2), n.return();
     }
   }, {
     highWaterMark: 2
   });
-};
-const isFetchSupported$1 = typeof fetch === "function" && typeof Request === "function" && typeof Response === "function";
-const isReadableStreamSupported$1 = isFetchSupported$1 && typeof ReadableStream === "function";
-const encodeText$1 = isFetchSupported$1 && (typeof TextEncoder === "function" ? /* @__PURE__ */ ((encoder) => (str) => encoder.encode(str))(new TextEncoder()) : async (str) => new Uint8Array(await new Response(str).arrayBuffer()));
-const test$1 = (fn, ...args) => {
+}, "trackStream"), Rt = typeof fetch == "function" && typeof Request == "function" && typeof Response == "function", ca$1 = Rt && typeof ReadableStream == "function", cl = Rt && (typeof TextEncoder == "function" ? /* @__PURE__ */ ((r) => (e) => r.encode(e))(new TextEncoder()) : (r) => L(null, null, function* () {
+  return new Uint8Array(yield new Response(r).arrayBuffer());
+})), ha$1 = /* @__PURE__ */ o$1((r, ...e) => {
   try {
-    return !!fn(...args);
-  } catch (e) {
+    return !!r(...e);
+  } catch (t) {
     return false;
   }
-};
-const supportsRequestStream$1 = isReadableStreamSupported$1 && test$1(() => {
-  let duplexAccessed = false;
-  const hasContentType = new Request(platform$2.origin, {
+}, "test"), hl = ca$1 && ha$1(() => {
+  let r = false;
+  const e = new Request(v.origin, {
     body: new ReadableStream(),
     method: "POST",
     get duplex() {
-      duplexAccessed = true;
-      return "half";
+      return r = true, "half";
     }
   }).headers.has("Content-Type");
-  return duplexAccessed && !hasContentType;
-});
-const DEFAULT_CHUNK_SIZE$1 = 64 * 1024;
-const supportsResponseStream$1 = isReadableStreamSupported$1 && test$1(() => utils$1$1.isReadableStream(new Response("").body));
-const resolvers$1 = {
-  stream: supportsResponseStream$1 && ((res) => res.body)
+  return r && !e;
+}), nn = 64 * 1024, rs = ca$1 && ha$1(() => f$1.isReadableStream(new Response("").body)), lt$1 = {
+  stream: rs && ((r) => r.body)
 };
-isFetchSupported$1 && ((res) => {
-  ["text", "arrayBuffer", "blob", "formData", "stream"].forEach((type) => {
-    !resolvers$1[type] && (resolvers$1[type] = utils$1$1.isFunction(res[type]) ? (res2) => res2[type]() : (_2, config) => {
-      throw new AxiosError$1$1(`Response type '${type}' is not supported`, AxiosError$1$1.ERR_NOT_SUPPORT, config);
+Rt && ((r) => {
+  ["text", "arrayBuffer", "blob", "formData", "stream"].forEach((e) => {
+    !lt$1[e] && (lt$1[e] = f$1.isFunction(r[e]) ? (t) => t[e]() : (t, s) => {
+      throw new b(`Response type '${e}' is not supported`, b.ERR_NOT_SUPPORT, s);
     });
   });
 })(new Response());
-const getBodyLength$1 = async (body) => {
-  if (body == null) {
+const fl = /* @__PURE__ */ o$1((r) => L(null, null, function* () {
+  if (r == null)
     return 0;
-  }
-  if (utils$1$1.isBlob(body)) {
-    return body.size;
-  }
-  if (utils$1$1.isSpecCompliantForm(body)) {
-    const _request = new Request(platform$2.origin, {
+  if (f$1.isBlob(r))
+    return r.size;
+  if (f$1.isSpecCompliantForm(r))
+    return (yield new Request(v.origin, {
       method: "POST",
-      body
-    });
-    return (await _request.arrayBuffer()).byteLength;
-  }
-  if (utils$1$1.isArrayBufferView(body) || utils$1$1.isArrayBuffer(body)) {
-    return body.byteLength;
-  }
-  if (utils$1$1.isURLSearchParams(body)) {
-    body = body + "";
-  }
-  if (utils$1$1.isString(body)) {
-    return (await encodeText$1(body)).byteLength;
-  }
-};
-const resolveBodyLength$1 = async (headers, body) => {
-  const length = utils$1$1.toFiniteNumber(headers.getContentLength());
-  return length == null ? getBodyLength$1(body) : length;
-};
-const fetchAdapter$1 = isFetchSupported$1 && (async (config) => {
+      body: r
+    }).arrayBuffer()).byteLength;
+  if (f$1.isArrayBufferView(r) || f$1.isArrayBuffer(r))
+    return r.byteLength;
+  if (f$1.isURLSearchParams(r) && (r = r + ""), f$1.isString(r))
+    return (yield cl(r)).byteLength;
+}), "getBodyLength"), dl = /* @__PURE__ */ o$1((r, e) => L(null, null, function* () {
+  const t = f$1.toFiniteNumber(r.getContentLength());
+  return t == null ? fl(e) : t;
+}), "resolveBodyLength"), pl$1 = Rt && ((r) => L(null, null, function* () {
   let {
-    url: url2,
-    method,
-    data: data2,
-    signal,
-    cancelToken,
-    timeout,
-    onDownloadProgress,
-    onUploadProgress,
-    responseType,
-    headers,
-    withCredentials = "same-origin",
-    fetchOptions: fetchOptions2
-  } = resolveConfig$1(config);
-  responseType = responseType ? (responseType + "").toLowerCase() : "text";
-  let composedSignal = composeSignals$1([signal, cancelToken && cancelToken.toAbortSignal()], timeout);
-  let request;
-  const unsubscribe = composedSignal && composedSignal.unsubscribe && (() => {
-    composedSignal.unsubscribe();
+    url: e,
+    method: t,
+    data: s,
+    signal: n,
+    cancelToken: a,
+    timeout: i2,
+    onDownloadProgress: u2,
+    onUploadProgress: d2,
+    responseType: h2,
+    headers: c2,
+    withCredentials: p2 = "same-origin",
+    fetchOptions: g2
+  } = la$1(r);
+  h2 = h2 ? (h2 + "").toLowerCase() : "text";
+  let y = il([n, a && a.toAbortSignal()], i2), m2;
+  const I2 = y && y.unsubscribe && (() => {
+    y.unsubscribe();
   });
-  let requestContentLength;
+  let E2;
   try {
-    if (onUploadProgress && supportsRequestStream$1 && method !== "get" && method !== "head" && (requestContentLength = await resolveBodyLength$1(headers, data2)) !== 0) {
-      let _request = new Request(url2, {
+    if (d2 && hl && t !== "get" && t !== "head" && (E2 = yield dl(c2, s)) !== 0) {
+      let N = new Request(e, {
         method: "POST",
-        body: data2,
+        body: s,
         duplex: "half"
-      });
-      let contentTypeHeader;
-      if (utils$1$1.isFormData(data2) && (contentTypeHeader = _request.headers.get("content-type"))) {
-        headers.setContentType(contentTypeHeader);
-      }
-      if (_request.body) {
-        const [onProgress, flush] = progressEventDecorator$1(
-          requestContentLength,
-          progressEventReducer$1(asyncDecorator$1(onUploadProgress))
+      }), H;
+      if (f$1.isFormData(s) && (H = N.headers.get("content-type")) && c2.setContentType(H), N.body) {
+        const [K, ke] = en$1(
+          E2,
+          ut(tn$1(d2))
         );
-        data2 = trackStream$1(_request.body, DEFAULT_CHUNK_SIZE$1, onProgress, flush);
+        s = rn$1(N.body, nn, K, ke);
       }
     }
-    if (!utils$1$1.isString(withCredentials)) {
-      withCredentials = withCredentials ? "include" : "omit";
-    }
-    const isCredentialsSupported = "credentials" in Request.prototype;
-    request = new Request(url2, {
-      ...fetchOptions2,
-      signal: composedSignal,
-      method: method.toUpperCase(),
-      headers: headers.normalize().toJSON(),
-      body: data2,
+    f$1.isString(p2) || (p2 = p2 ? "include" : "omit");
+    const C = "credentials" in Request.prototype;
+    m2 = new Request(e, Sr(G({}, g2), {
+      signal: y,
+      method: t.toUpperCase(),
+      headers: c2.normalize().toJSON(),
+      body: s,
       duplex: "half",
-      credentials: isCredentialsSupported ? withCredentials : void 0
-    });
-    let response = await fetch(request, fetchOptions2);
-    const isStreamResponse = supportsResponseStream$1 && (responseType === "stream" || responseType === "response");
-    if (supportsResponseStream$1 && (onDownloadProgress || isStreamResponse && unsubscribe)) {
-      const options = {};
-      ["status", "statusText", "headers"].forEach((prop) => {
-        options[prop] = response[prop];
+      credentials: C ? p2 : void 0
+    }));
+    let D2 = yield fetch(m2, g2);
+    const T = rs && (h2 === "stream" || h2 === "response");
+    if (rs && (u2 || T && I2)) {
+      const N = {};
+      ["status", "statusText", "headers"].forEach((Er) => {
+        N[Er] = D2[Er];
       });
-      const responseContentLength = utils$1$1.toFiniteNumber(response.headers.get("content-length"));
-      const [onProgress, flush] = onDownloadProgress && progressEventDecorator$1(
-        responseContentLength,
-        progressEventReducer$1(asyncDecorator$1(onDownloadProgress), true)
+      const H = f$1.toFiniteNumber(D2.headers.get("content-length")), [K, ke] = u2 && en$1(
+        H,
+        ut(tn$1(u2), true)
       ) || [];
-      response = new Response(
-        trackStream$1(response.body, DEFAULT_CHUNK_SIZE$1, onProgress, () => {
-          flush && flush();
-          unsubscribe && unsubscribe();
+      D2 = new Response(
+        rn$1(D2.body, nn, K, () => {
+          ke && ke(), I2 && I2();
         }),
-        options
+        N
       );
     }
-    responseType = responseType || "text";
-    let responseData = await resolvers$1[utils$1$1.findKey(resolvers$1, responseType) || "text"](response, config);
-    !isStreamResponse && unsubscribe && unsubscribe();
-    return await new Promise((resolve, reject) => {
-      settle$1(resolve, reject, {
-        data: responseData,
-        headers: AxiosHeaders$1$1.from(response.headers),
-        status: response.status,
-        statusText: response.statusText,
-        config,
-        request
+    h2 = h2 || "text";
+    let z = yield lt$1[f$1.findKey(lt$1, h2) || "text"](D2, r);
+    return !T && I2 && I2(), yield new Promise((N, H) => {
+      oa(N, H, {
+        data: z,
+        headers: R$1.from(D2.headers),
+        status: D2.status,
+        statusText: D2.statusText,
+        config: r,
+        request: m2
       });
     });
-  } catch (err) {
-    unsubscribe && unsubscribe();
-    if (err && err.name === "TypeError" && /Load failed|fetch/i.test(err.message)) {
-      throw Object.assign(
-        new AxiosError$1$1("Network Error", AxiosError$1$1.ERR_NETWORK, config, request),
-        {
-          cause: err.cause || err
-        }
-      );
-    }
-    throw AxiosError$1$1.from(err, err && err.code, config, request);
+  } catch (C) {
+    throw I2 && I2(), C && C.name === "TypeError" && /Load failed|fetch/i.test(C.message) ? Object.assign(
+      new b("Network Error", b.ERR_NETWORK, r, m2),
+      {
+        cause: C.cause || C
+      }
+    ) : b.from(C, C && C.code, r, m2);
   }
-});
-const knownAdapters$1 = {
-  http: httpAdapter$1,
-  xhr: xhrAdapter$1,
-  fetch: fetchAdapter$1
+})), ns = {
+  http: vu,
+  xhr: al,
+  fetch: pl$1
 };
-utils$1$1.forEach(knownAdapters$1, (fn, value) => {
-  if (fn) {
+f$1.forEach(ns, (r, e) => {
+  if (r) {
     try {
-      Object.defineProperty(fn, "name", { value });
-    } catch (e) {
+      Object.defineProperty(r, "name", { value: e });
+    } catch (t) {
     }
-    Object.defineProperty(fn, "adapterName", { value });
+    Object.defineProperty(r, "adapterName", { value: e });
   }
 });
-const renderReason$1 = (reason) => `- ${reason}`;
-const isResolvedHandle$1 = (adapter) => utils$1$1.isFunction(adapter) || adapter === null || adapter === false;
-const adapters$1 = {
-  getAdapter: (adapters2) => {
-    adapters2 = utils$1$1.isArray(adapters2) ? adapters2 : [adapters2];
-    const { length } = adapters2;
-    let nameOrAdapter;
-    let adapter;
-    const rejectedReasons = {};
-    for (let i2 = 0; i2 < length; i2++) {
-      nameOrAdapter = adapters2[i2];
-      let id2;
-      adapter = nameOrAdapter;
-      if (!isResolvedHandle$1(nameOrAdapter)) {
-        adapter = knownAdapters$1[(id2 = String(nameOrAdapter)).toLowerCase()];
-        if (adapter === void 0) {
-          throw new AxiosError$1$1(`Unknown adapter '${id2}'`);
-        }
-      }
-      if (adapter) {
+const an = /* @__PURE__ */ o$1((r) => `- ${r}`, "renderReason"), gl$1 = /* @__PURE__ */ o$1((r) => f$1.isFunction(r) || r === null || r === false, "isResolvedHandle"), fa$1 = {
+  getAdapter: /* @__PURE__ */ o$1((r) => {
+    r = f$1.isArray(r) ? r : [r];
+    const { length: e } = r;
+    let t, s;
+    const n = {};
+    for (let a = 0; a < e; a++) {
+      t = r[a];
+      let i2;
+      if (s = t, !gl$1(t) && (s = ns[(i2 = String(t)).toLowerCase()], s === void 0))
+        throw new b(`Unknown adapter '${i2}'`);
+      if (s)
         break;
-      }
-      rejectedReasons[id2 || "#" + i2] = adapter;
+      n[i2 || "#" + a] = s;
     }
-    if (!adapter) {
-      const reasons = Object.entries(rejectedReasons).map(
-        ([id2, state]) => `adapter ${id2} ` + (state === false ? "is not supported by the environment" : "is not available in the build")
+    if (!s) {
+      const a = Object.entries(n).map(
+        ([u2, d2]) => `adapter ${u2} ` + (d2 === false ? "is not supported by the environment" : "is not available in the build")
       );
-      let s = length ? reasons.length > 1 ? "since :\n" + reasons.map(renderReason$1).join("\n") : " " + renderReason$1(reasons[0]) : "as no adapter specified";
-      throw new AxiosError$1$1(
-        `There is no suitable adapter to dispatch the request ` + s,
+      let i2 = e ? a.length > 1 ? `since :
+` + a.map(an).join(`
+`) : " " + an(a[0]) : "as no adapter specified";
+      throw new b(
+        "There is no suitable adapter to dispatch the request " + i2,
         "ERR_NOT_SUPPORT"
       );
     }
-    return adapter;
-  },
-  adapters: knownAdapters$1
+    return s;
+  }, "getAdapter"),
+  adapters: ns
 };
-function throwIfCancellationRequested$1(config) {
-  if (config.cancelToken) {
-    config.cancelToken.throwIfRequested();
-  }
-  if (config.signal && config.signal.aborted) {
-    throw new CanceledError$1$1(null, config);
-  }
+function kt(r) {
+  if (r.cancelToken && r.cancelToken.throwIfRequested(), r.signal && r.signal.aborted)
+    throw new we(null, r);
 }
-function dispatchRequest$1(config) {
-  throwIfCancellationRequested$1(config);
-  config.headers = AxiosHeaders$1$1.from(config.headers);
-  config.data = transformData$1.call(
-    config,
-    config.transformRequest
-  );
-  if (["post", "put", "patch"].indexOf(config.method) !== -1) {
-    config.headers.setContentType("application/x-www-form-urlencoded", false);
-  }
-  const adapter = adapters$1.getAdapter(config.adapter || defaults$1.adapter);
-  return adapter(config).then(function onAdapterResolution(response) {
-    throwIfCancellationRequested$1(config);
-    response.data = transformData$1.call(
-      config,
-      config.transformResponse,
-      response
-    );
-    response.headers = AxiosHeaders$1$1.from(response.headers);
-    return response;
-  }, function onAdapterRejection(reason) {
-    if (!isCancel$1$1(reason)) {
-      throwIfCancellationRequested$1(config);
-      if (reason && reason.response) {
-        reason.response.data = transformData$1.call(
-          config,
-          config.transformResponse,
-          reason.response
-        );
-        reason.response.headers = AxiosHeaders$1$1.from(reason.response.headers);
-      }
-    }
-    return Promise.reject(reason);
-  });
+o$1(kt, "throwIfCancellationRequested");
+function on(r) {
+  return kt(r), r.headers = R$1.from(r.headers), r.data = Mt.call(
+    r,
+    r.transformRequest
+  ), ["post", "put", "patch"].indexOf(r.method) !== -1 && r.headers.setContentType("application/x-www-form-urlencoded", false), fa$1.getAdapter(r.adapter || Me.adapter)(r).then(/* @__PURE__ */ o$1(function(s) {
+    return kt(r), s.data = Mt.call(
+      r,
+      r.transformResponse,
+      s
+    ), s.headers = R$1.from(s.headers), s;
+  }, "onAdapterResolution"), /* @__PURE__ */ o$1(function(s) {
+    return ia$1(s) || (kt(r), s && s.response && (s.response.data = Mt.call(
+      r,
+      r.transformResponse,
+      s.response
+    ), s.response.headers = R$1.from(s.response.headers))), Promise.reject(s);
+  }, "onAdapterRejection"));
 }
-const VERSION$1$1 = "1.11.0";
-const validators$1$1 = {};
-["object", "boolean", "number", "function", "string", "symbol"].forEach((type, i2) => {
-  validators$1$1[type] = function validator2(thing) {
-    return typeof thing === type || "a" + (i2 < 1 ? "n " : " ") + type;
-  };
+o$1(on, "dispatchRequest");
+const da$1 = "1.11.0", Lt = {};
+["object", "boolean", "number", "function", "string", "symbol"].forEach((r, e) => {
+  Lt[r] = /* @__PURE__ */ o$1(function(s) {
+    return typeof s === r || "a" + (e < 1 ? "n " : " ") + r;
+  }, "validator");
 });
-const deprecatedWarnings$1 = {};
-validators$1$1.transitional = function transitional(validator2, version, message) {
-  function formatMessage(opt, desc) {
-    return "[Axios v" + VERSION$1$1 + "] Transitional option '" + opt + "'" + desc + (message ? ". " + message : "");
+const un = {};
+Lt.transitional = /* @__PURE__ */ o$1(function(e, t, s) {
+  function n(a, i2) {
+    return "[Axios v" + da$1 + "] Transitional option '" + a + "'" + i2 + (s ? ". " + s : "");
   }
-  return (value, opt, opts) => {
-    if (validator2 === false) {
-      throw new AxiosError$1$1(
-        formatMessage(opt, " has been removed" + (version ? " in " + version : "")),
-        AxiosError$1$1.ERR_DEPRECATED
+  return o$1(n, "formatMessage"), (a, i2, u2) => {
+    if (e === false)
+      throw new b(
+        n(i2, " has been removed" + (t ? " in " + t : "")),
+        b.ERR_DEPRECATED
       );
-    }
-    if (version && !deprecatedWarnings$1[opt]) {
-      deprecatedWarnings$1[opt] = true;
-      console.warn(
-        formatMessage(
-          opt,
-          " has been deprecated since v" + version + " and will be removed in the near future"
-        )
-      );
-    }
-    return validator2 ? validator2(value, opt, opts) : true;
+    return t && !un[i2] && (un[i2] = true, console.warn(
+      n(
+        i2,
+        " has been deprecated since v" + t + " and will be removed in the near future"
+      )
+    )), e ? e(a, i2, u2) : true;
   };
-};
-validators$1$1.spelling = function spelling(correctSpelling) {
-  return (value, opt) => {
-    console.warn(`${opt} is likely a misspelling of ${correctSpelling}`);
-    return true;
-  };
-};
-function assertOptions$1(options, schema, allowUnknown) {
-  if (typeof options !== "object") {
-    throw new AxiosError$1$1("options must be an object", AxiosError$1$1.ERR_BAD_OPTION_VALUE);
-  }
-  const keys = Object.keys(options);
-  let i2 = keys.length;
-  while (i2-- > 0) {
-    const opt = keys[i2];
-    const validator2 = schema[opt];
-    if (validator2) {
-      const value = options[opt];
-      const result = value === void 0 || validator2(value, opt, options);
-      if (result !== true) {
-        throw new AxiosError$1$1("option " + opt + " must be " + result, AxiosError$1$1.ERR_BAD_OPTION_VALUE);
-      }
+}, "transitional");
+Lt.spelling = /* @__PURE__ */ o$1(function(e) {
+  return (t, s) => (console.warn(`${s} is likely a misspelling of ${e}`), true);
+}, "spelling");
+function ml$1(r, e, t) {
+  if (typeof r != "object")
+    throw new b("options must be an object", b.ERR_BAD_OPTION_VALUE);
+  const s = Object.keys(r);
+  let n = s.length;
+  for (; n-- > 0; ) {
+    const a = s[n], i2 = e[a];
+    if (i2) {
+      const u2 = r[a], d2 = u2 === void 0 || i2(u2, a, r);
+      if (d2 !== true)
+        throw new b("option " + a + " must be " + d2, b.ERR_BAD_OPTION_VALUE);
       continue;
     }
-    if (allowUnknown !== true) {
-      throw new AxiosError$1$1("Unknown option " + opt, AxiosError$1$1.ERR_BAD_OPTION);
-    }
+    if (t !== true)
+      throw new b("Unknown option " + a, b.ERR_BAD_OPTION);
   }
 }
-const validator$1 = {
-  assertOptions: assertOptions$1,
-  validators: validators$1$1
-};
-const validators$2 = validator$1.validators;
-let Axios$1$1 = class Axios {
-  constructor(instanceConfig) {
-    this.defaults = instanceConfig || {};
-    this.interceptors = {
-      request: new InterceptorManager$1(),
-      response: new InterceptorManager$1()
+o$1(ml$1, "assertOptions");
+const We = {
+  assertOptions: ml$1,
+  validators: Lt
+}, B = We.validators;
+var fe;
+let se = (fe = class {
+  constructor(e) {
+    this.defaults = e || {}, this.interceptors = {
+      request: new ot(),
+      response: new ot()
     };
   }
   /**
@@ -7541,263 +6758,202 @@ let Axios$1$1 = class Axios {
    *
    * @returns {Promise} The Promise to be fulfilled
    */
-  async request(configOrUrl, config) {
-    try {
-      return await this._request(configOrUrl, config);
-    } catch (err) {
-      if (err instanceof Error) {
-        let dummy = {};
-        Error.captureStackTrace ? Error.captureStackTrace(dummy) : dummy = new Error();
-        const stack = dummy.stack ? dummy.stack.replace(/^.+\n/, "") : "";
-        try {
-          if (!err.stack) {
-            err.stack = stack;
-          } else if (stack && !String(err.stack).endsWith(stack.replace(/^.+\n.+\n/, ""))) {
-            err.stack += "\n" + stack;
-          }
-        } catch (e) {
-        }
-      }
-      throw err;
-    }
-  }
-  _request(configOrUrl, config) {
-    if (typeof configOrUrl === "string") {
-      config = config || {};
-      config.url = configOrUrl;
-    } else {
-      config = configOrUrl || {};
-    }
-    config = mergeConfig$1$1(this.defaults, config);
-    const { transitional: transitional22, paramsSerializer, headers } = config;
-    if (transitional22 !== void 0) {
-      validator$1.assertOptions(transitional22, {
-        silentJSONParsing: validators$2.transitional(validators$2.boolean),
-        forcedJSONParsing: validators$2.transitional(validators$2.boolean),
-        clarifyTimeoutError: validators$2.transitional(validators$2.boolean)
-      }, false);
-    }
-    if (paramsSerializer != null) {
-      if (utils$1$1.isFunction(paramsSerializer)) {
-        config.paramsSerializer = {
-          serialize: paramsSerializer
-        };
-      } else {
-        validator$1.assertOptions(paramsSerializer, {
-          encode: validators$2.function,
-          serialize: validators$2.function
-        }, true);
-      }
-    }
-    if (config.allowAbsoluteUrls !== void 0) ;
-    else if (this.defaults.allowAbsoluteUrls !== void 0) {
-      config.allowAbsoluteUrls = this.defaults.allowAbsoluteUrls;
-    } else {
-      config.allowAbsoluteUrls = true;
-    }
-    validator$1.assertOptions(config, {
-      baseUrl: validators$2.spelling("baseURL"),
-      withXsrfToken: validators$2.spelling("withXSRFToken")
-    }, true);
-    config.method = (config.method || this.defaults.method || "get").toLowerCase();
-    let contextHeaders = headers && utils$1$1.merge(
-      headers.common,
-      headers[config.method]
-    );
-    headers && utils$1$1.forEach(
-      ["delete", "get", "head", "post", "put", "patch", "common"],
-      (method) => {
-        delete headers[method];
-      }
-    );
-    config.headers = AxiosHeaders$1$1.concat(contextHeaders, headers);
-    const requestInterceptorChain = [];
-    let synchronousRequestInterceptors = true;
-    this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
-      if (typeof interceptor.runWhen === "function" && interceptor.runWhen(config) === false) {
-        return;
-      }
-      synchronousRequestInterceptors = synchronousRequestInterceptors && interceptor.synchronous;
-      requestInterceptorChain.unshift(interceptor.fulfilled, interceptor.rejected);
-    });
-    const responseInterceptorChain = [];
-    this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
-      responseInterceptorChain.push(interceptor.fulfilled, interceptor.rejected);
-    });
-    let promise;
-    let i2 = 0;
-    let len;
-    if (!synchronousRequestInterceptors) {
-      const chain = [dispatchRequest$1.bind(this), void 0];
-      chain.unshift(...requestInterceptorChain);
-      chain.push(...responseInterceptorChain);
-      len = chain.length;
-      promise = Promise.resolve(config);
-      while (i2 < len) {
-        promise = promise.then(chain[i2++], chain[i2++]);
-      }
-      return promise;
-    }
-    len = requestInterceptorChain.length;
-    let newConfig = config;
-    i2 = 0;
-    while (i2 < len) {
-      const onFulfilled = requestInterceptorChain[i2++];
-      const onRejected = requestInterceptorChain[i2++];
+  request(e, t) {
+    return L(this, null, function* () {
       try {
-        newConfig = onFulfilled(newConfig);
-      } catch (error) {
-        onRejected.call(this, error);
+        return yield this._request(e, t);
+      } catch (s) {
+        if (s instanceof Error) {
+          let n = {};
+          Error.captureStackTrace ? Error.captureStackTrace(n) : n = new Error();
+          const a = n.stack ? n.stack.replace(/^.+\n/, "") : "";
+          try {
+            s.stack ? a && !String(s.stack).endsWith(a.replace(/^.+\n.+\n/, "")) && (s.stack += `
+` + a) : s.stack = a;
+          } catch (i2) {
+          }
+        }
+        throw s;
+      }
+    });
+  }
+  _request(e, t) {
+    typeof e == "string" ? (t = t || {}, t.url = e) : t = e || {}, t = oe(this.defaults, t);
+    const { transitional: s, paramsSerializer: n, headers: a } = t;
+    s !== void 0 && We.assertOptions(s, {
+      silentJSONParsing: B.transitional(B.boolean),
+      forcedJSONParsing: B.transitional(B.boolean),
+      clarifyTimeoutError: B.transitional(B.boolean)
+    }, false), n != null && (f$1.isFunction(n) ? t.paramsSerializer = {
+      serialize: n
+    } : We.assertOptions(n, {
+      encode: B.function,
+      serialize: B.function
+    }, true)), t.allowAbsoluteUrls !== void 0 || (this.defaults.allowAbsoluteUrls !== void 0 ? t.allowAbsoluteUrls = this.defaults.allowAbsoluteUrls : t.allowAbsoluteUrls = true), We.assertOptions(t, {
+      baseUrl: B.spelling("baseURL"),
+      withXsrfToken: B.spelling("withXSRFToken")
+    }, true), t.method = (t.method || this.defaults.method || "get").toLowerCase();
+    let i2 = a && f$1.merge(
+      a.common,
+      a[t.method]
+    );
+    a && f$1.forEach(
+      ["delete", "get", "head", "post", "put", "patch", "common"],
+      (m2) => {
+        delete a[m2];
+      }
+    ), t.headers = R$1.concat(i2, a);
+    const u2 = [];
+    let d2 = true;
+    this.interceptors.request.forEach(/* @__PURE__ */ o$1(function(I2) {
+      typeof I2.runWhen == "function" && I2.runWhen(t) === false || (d2 = d2 && I2.synchronous, u2.unshift(I2.fulfilled, I2.rejected));
+    }, "unshiftRequestInterceptors"));
+    const h2 = [];
+    this.interceptors.response.forEach(/* @__PURE__ */ o$1(function(I2) {
+      h2.push(I2.fulfilled, I2.rejected);
+    }, "pushResponseInterceptors"));
+    let c2, p2 = 0, g2;
+    if (!d2) {
+      const m2 = [on.bind(this), void 0];
+      for (m2.unshift(...u2), m2.push(...h2), g2 = m2.length, c2 = Promise.resolve(t); p2 < g2; )
+        c2 = c2.then(m2[p2++], m2[p2++]);
+      return c2;
+    }
+    g2 = u2.length;
+    let y = t;
+    for (p2 = 0; p2 < g2; ) {
+      const m2 = u2[p2++], I2 = u2[p2++];
+      try {
+        y = m2(y);
+      } catch (E2) {
+        I2.call(this, E2);
         break;
       }
     }
     try {
-      promise = dispatchRequest$1.call(this, newConfig);
-    } catch (error) {
-      return Promise.reject(error);
+      c2 = on.call(this, y);
+    } catch (m2) {
+      return Promise.reject(m2);
     }
-    i2 = 0;
-    len = responseInterceptorChain.length;
-    while (i2 < len) {
-      promise = promise.then(responseInterceptorChain[i2++], responseInterceptorChain[i2++]);
-    }
-    return promise;
+    for (p2 = 0, g2 = h2.length; p2 < g2; )
+      c2 = c2.then(h2[p2++], h2[p2++]);
+    return c2;
   }
-  getUri(config) {
-    config = mergeConfig$1$1(this.defaults, config);
-    const fullPath = buildFullPath$1(config.baseURL, config.url, config.allowAbsoluteUrls);
-    return buildURL$1(fullPath, config.params, config.paramsSerializer);
+  getUri(e) {
+    e = oe(this.defaults, e);
+    const t = ua(e.baseURL, e.url, e.allowAbsoluteUrls);
+    return ra(t, e.params, e.paramsSerializer);
   }
-};
-utils$1$1.forEach(["delete", "get", "head", "options"], function forEachMethodNoData(method) {
-  Axios$1$1.prototype[method] = function(url2, config) {
-    return this.request(mergeConfig$1$1(config || {}, {
-      method,
-      url: url2,
-      data: (config || {}).data
+}, o$1(fe, "Axios"), fe);
+f$1.forEach(["delete", "get", "head", "options"], /* @__PURE__ */ o$1(function(e) {
+  se.prototype[e] = function(t, s) {
+    return this.request(oe(s || {}, {
+      method: e,
+      url: t,
+      data: (s || {}).data
     }));
   };
-});
-utils$1$1.forEach(["post", "put", "patch"], function forEachMethodWithData(method) {
-  function generateHTTPMethod(isForm) {
-    return function httpMethod(url2, data2, config) {
-      return this.request(mergeConfig$1$1(config || {}, {
-        method,
-        headers: isForm ? {
+}, "forEachMethodNoData"));
+f$1.forEach(["post", "put", "patch"], /* @__PURE__ */ o$1(function(e) {
+  function t(s) {
+    return /* @__PURE__ */ o$1(function(a, i2, u2) {
+      return this.request(oe(u2 || {}, {
+        method: e,
+        headers: s ? {
           "Content-Type": "multipart/form-data"
         } : {},
-        url: url2,
-        data: data2
+        url: a,
+        data: i2
       }));
-    };
+    }, "httpMethod");
   }
-  Axios$1$1.prototype[method] = generateHTTPMethod();
-  Axios$1$1.prototype[method + "Form"] = generateHTTPMethod(true);
-});
-let CancelToken$1$1 = class CancelToken {
-  constructor(executor) {
-    if (typeof executor !== "function") {
+  o$1(t, "generateHTTPMethod"), se.prototype[e] = t(), se.prototype[e + "Form"] = t(true);
+}, "forEachMethodWithData"));
+var re$1;
+let yl = (re$1 = class {
+  constructor(e) {
+    if (typeof e != "function")
       throw new TypeError("executor must be a function.");
-    }
-    let resolvePromise;
-    this.promise = new Promise(function promiseExecutor(resolve) {
-      resolvePromise = resolve;
-    });
-    const token = this;
-    this.promise.then((cancel) => {
-      if (!token._listeners) return;
-      let i2 = token._listeners.length;
-      while (i2-- > 0) {
-        token._listeners[i2](cancel);
-      }
-      token._listeners = null;
-    });
-    this.promise.then = (onfulfilled) => {
-      let _resolve;
-      const promise = new Promise((resolve) => {
-        token.subscribe(resolve);
-        _resolve = resolve;
-      }).then(onfulfilled);
-      promise.cancel = function reject() {
-        token.unsubscribe(_resolve);
-      };
-      return promise;
-    };
-    executor(function cancel(message, config, request) {
-      if (token.reason) {
-        return;
-      }
-      token.reason = new CanceledError$1$1(message, config, request);
-      resolvePromise(token.reason);
-    });
+    let t;
+    this.promise = new Promise(/* @__PURE__ */ o$1(function(a) {
+      t = a;
+    }, "promiseExecutor"));
+    const s = this;
+    this.promise.then((n) => {
+      if (!s._listeners) return;
+      let a = s._listeners.length;
+      for (; a-- > 0; )
+        s._listeners[a](n);
+      s._listeners = null;
+    }), this.promise.then = (n) => {
+      let a;
+      const i2 = new Promise((u2) => {
+        s.subscribe(u2), a = u2;
+      }).then(n);
+      return i2.cancel = /* @__PURE__ */ o$1(function() {
+        s.unsubscribe(a);
+      }, "reject"), i2;
+    }, e(/* @__PURE__ */ o$1(function(a, i2, u2) {
+      s.reason || (s.reason = new we(a, i2, u2), t(s.reason));
+    }, "cancel"));
   }
   /**
    * Throws a `CanceledError` if cancellation has been requested.
    */
   throwIfRequested() {
-    if (this.reason) {
+    if (this.reason)
       throw this.reason;
-    }
   }
   /**
    * Subscribe to the cancel signal
    */
-  subscribe(listener) {
+  subscribe(e) {
     if (this.reason) {
-      listener(this.reason);
+      e(this.reason);
       return;
     }
-    if (this._listeners) {
-      this._listeners.push(listener);
-    } else {
-      this._listeners = [listener];
-    }
+    this._listeners ? this._listeners.push(e) : this._listeners = [e];
   }
   /**
    * Unsubscribe from the cancel signal
    */
-  unsubscribe(listener) {
-    if (!this._listeners) {
+  unsubscribe(e) {
+    if (!this._listeners)
       return;
-    }
-    const index = this._listeners.indexOf(listener);
-    if (index !== -1) {
-      this._listeners.splice(index, 1);
-    }
+    const t = this._listeners.indexOf(e);
+    t !== -1 && this._listeners.splice(t, 1);
   }
   toAbortSignal() {
-    const controller = new AbortController();
-    const abort = (err) => {
-      controller.abort(err);
-    };
-    this.subscribe(abort);
-    controller.signal.unsubscribe = () => this.unsubscribe(abort);
-    return controller.signal;
+    const e = new AbortController(), t = /* @__PURE__ */ o$1((s) => {
+      e.abort(s);
+    }, "abort");
+    return this.subscribe(t), e.signal.unsubscribe = () => this.unsubscribe(t), e.signal;
   }
   /**
    * Returns an object that contains a new `CancelToken` and a function that, when called,
    * cancels the `CancelToken`.
    */
   static source() {
-    let cancel;
-    const token = new CancelToken(function executor(c2) {
-      cancel = c2;
-    });
+    let e;
     return {
-      token,
-      cancel
+      token: new re$1(/* @__PURE__ */ o$1(function(n) {
+        e = n;
+      }, "executor")),
+      cancel: e
     };
   }
-};
-function spread$1$1(callback) {
-  return function wrap(arr) {
-    return callback.apply(null, arr);
-  };
+}, o$1(re$1, "CancelToken"), re$1);
+function El(r) {
+  return /* @__PURE__ */ o$1(function(t) {
+    return r.apply(null, t);
+  }, "wrap");
 }
-function isAxiosError$1$1(payload) {
-  return utils$1$1.isObject(payload) && payload.isAxiosError === true;
+o$1(El, "spread$1");
+function wl(r) {
+  return f$1.isObject(r) && r.isAxiosError === true;
 }
-const HttpStatusCode$1$1 = {
+o$1(wl, "isAxiosError$1");
+const as$1 = {
   Continue: 100,
   SwitchingProtocols: 101,
   Processing: 102,
@@ -7862,78 +7018,164 @@ const HttpStatusCode$1$1 = {
   NotExtended: 510,
   NetworkAuthenticationRequired: 511
 };
-Object.entries(HttpStatusCode$1$1).forEach(([key, value]) => {
-  HttpStatusCode$1$1[value] = key;
+Object.entries(as$1).forEach(([r, e]) => {
+  as$1[e] = r;
 });
-function createInstance$1(defaultConfig) {
-  const context = new Axios$1$1(defaultConfig);
-  const instance = bind$1(Axios$1$1.prototype.request, context);
-  utils$1$1.extend(instance, Axios$1$1.prototype, context, { allOwnKeys: true });
-  utils$1$1.extend(instance, context, null, { allOwnKeys: true });
-  instance.create = function create2(instanceConfig) {
-    return createInstance$1(mergeConfig$1$1(defaultConfig, instanceConfig));
-  };
-  return instance;
+function pa$1(r) {
+  const e = new se(r), t = Hn(se.prototype.request, e);
+  return f$1.extend(t, se.prototype, e, { allOwnKeys: true }), f$1.extend(t, e, null, { allOwnKeys: true }), t.create = /* @__PURE__ */ o$1(function(n) {
+    return pa$1(oe(r, n));
+  }, "create"), t;
 }
-const axios$1 = createInstance$1(defaults$1);
-axios$1.Axios = Axios$1$1;
-axios$1.CanceledError = CanceledError$1$1;
-axios$1.CancelToken = CancelToken$1$1;
-axios$1.isCancel = isCancel$1$1;
-axios$1.VERSION = VERSION$1$1;
-axios$1.toFormData = toFormData$1$1;
-axios$1.AxiosError = AxiosError$1$1;
-axios$1.Cancel = axios$1.CanceledError;
-axios$1.all = function all(promises) {
-  return Promise.all(promises);
-};
-axios$1.spread = spread$1$1;
-axios$1.isAxiosError = isAxiosError$1$1;
-axios$1.mergeConfig = mergeConfig$1$1;
-axios$1.AxiosHeaders = AxiosHeaders$1$1;
-axios$1.formToJSON = (thing) => formDataToJSON$1(utils$1$1.isHTMLForm(thing) ? new FormData(thing) : thing);
-axios$1.getAdapter = adapters$1.getAdapter;
-axios$1.HttpStatusCode = HttpStatusCode$1$1;
-axios$1.default = axios$1;
+o$1(pa$1, "createInstance");
+const F = pa$1(Me);
+F.Axios = se;
+F.CanceledError = we;
+F.CancelToken = yl;
+F.isCancel = ia$1;
+F.VERSION = da$1;
+F.toFormData = xt;
+F.AxiosError = b;
+F.Cancel = F.CanceledError;
+F.all = /* @__PURE__ */ o$1(function(e) {
+  return Promise.all(e);
+}, "all");
+F.spread = El;
+F.isAxiosError = wl;
+F.mergeConfig = oe;
+F.AxiosHeaders = R$1;
+F.formToJSON = (r) => aa$1(f$1.isHTMLForm(r) ? new FormData(r) : r);
+F.getAdapter = fa$1.getAdapter;
+F.HttpStatusCode = as$1;
+F.default = F;
 const {
-  Axios: Axios2,
-  AxiosError: AxiosError$2,
-  CanceledError: CanceledError$2,
-  isCancel: isCancel$2,
-  CancelToken: CancelToken2,
-  VERSION: VERSION$2,
-  all: all2,
-  Cancel: Cancel$1,
-  isAxiosError: isAxiosError$2,
-  spread: spread$2,
-  toFormData: toFormData$2,
-  AxiosHeaders: AxiosHeaders2,
-  HttpStatusCode: HttpStatusCode$2,
-  formToJSON: formToJSON$1,
-  getAdapter: getAdapter$1,
-  mergeConfig: mergeConfig$3
-} = axios$1;
-class Resource {
+  Axios: Sl,
+  AxiosError: Al,
+  CanceledError: Fl,
+  isCancel: Cl,
+  CancelToken: Dl,
+  VERSION: Tl,
+  all: Ol,
+  Cancel: vl,
+  isAxiosError: _l,
+  spread: Nl,
+  toFormData: xl,
+  AxiosHeaders: Rl,
+  HttpStatusCode: Ll,
+  formToJSON: Pl,
+  getAdapter: Vl,
+  mergeConfig: Ul
+} = F, pr = class pr2 extends me {
+  constructor(e = "alpheios-storage-domain", t = null) {
+    if (super(e), !t || !t.endpoints || !t.endpoints.settings.match(/^https:\/\//) || !t.accessToken)
+      throw new Error("Authentication details missing or invalid");
+    this.baseURL = t.endpoints.settings, this.requestContext = {
+      headers: {
+        common: {
+          Authorization: "bearer " + t.accessToken,
+          "Content-Type": "application/json"
+        }
+      }
+    };
+  }
+  /**
+   * A proxy for the Alpheios user-settings-api
+   * It allows for storing key/value pairs to the api with an authorized user account
+   *
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  set(e) {
+    return L(this, null, function* () {
+      for (const [t, s] of Object.entries(e)) {
+        const n = `${this.baseURL}/${t}`, a = yield F.post(n, s, this.requestContext);
+        if (a.status !== 201)
+          throw new Error(`Unexpected result status from settings api: ${a.status}`);
+      }
+    });
+  }
+  /**
+   * proxy for the Alpheios user-settings-api LIST operation
+   * Retrieves all data for the storage domain.
+   *
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  get() {
+    return L(this, null, function* () {
+      const e = `${this.baseURL}?domain=${this.domain}`, t = yield F.get(e, this.requestContext);
+      if (t.status === 200)
+        return t.data;
+      throw new Error(`Unexpected result status from settings api: ${t.status}`);
+    });
+  }
+  /**
+   * proxy for the Alpheios user-settings DELETE LIST operation
+   * deletes all settings for the domain from storage
+   *
+   * @returns {Promise} A Promise that executes the operation.
+   */
+  clearAll() {
+    return L(this, null, function* () {
+      const e = `${this.baseURL}?domain=${this.domain}`, t = yield F.delete(e, this.requestContext);
+      if (t.status !== 200)
+        throw new Error(`Unexpected result status from settings api: ${t.status}`);
+    });
+  }
+};
+o$1(pr, "RemoteAuthStorageArea");
+const gr = class gr2 extends me {
+  /**
+   * A wrapper around a local storage `setItem()` function.
+   * It allows to store one or several key-value pairs to local storage.
+   *
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  set(e) {
+    return new Promise((t) => {
+      t("TempStorageArea does not store any values permanently");
+    });
+  }
+  /**
+   * A wrapper around a local storage `getItem()` function. It retrieves one or several values from
+   * local storage.
+   *
+   * @param {string | Array | object | null | undefined } keys - A key (string)
+   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
+   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
+   * or an undefined value, the entire storage contents will be retrieved.
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  get(e = void 0) {
+    return new Promise((t) => {
+      t("TempStorageArea does not have any stored values");
+    });
+  }
+};
+o$1(gr, "TempStorageArea");
+const mr$1 = class mr {
   /**
    * @param {string} title
    * @param {string} id
    * @param {string} baseUrl - baseURL for DTS API
    * @param {string} description
    */
-  constructor({ title, id: id2, baseUrl, description } = {}) {
-    this.title = title;
-    this.id = id2;
-    this.baseUrl = baseUrl;
-    this.description = description;
+  constructor({ title: e, id: t, baseUrl: s, description: n } = {}) {
+    this.title = e, this.id = t, this.baseUrl = s, this.description = n;
   }
   /**
    *
    * @param {Array[String]} refs - a list of refs to passages
    * @param {string} passage - a url template for getting XML document
    */
-  uploadRefs({ refs, passage } = {}) {
-    this.passage = passage;
-    this.refs = refs;
+  uploadRefs({ refs: e, passage: t } = {}) {
+    this.passage = t, this.refs = e;
   }
   /**
    * @returns {object} - data for creating link for next step retrieval (descendant)
@@ -7949,17 +7191,17 @@ class Resource {
     };
   }
   get refsLinks() {
-    return this.refs.map((ref) => {
-      return {
-        baseUrl: this.baseUrl,
-        id: this.id,
-        ref,
-        type: "document"
-      };
-    });
+    return this.refs.map((e) => ({
+      baseUrl: this.baseUrl,
+      id: this.id,
+      ref: e,
+      type: "document"
+    }));
   }
-}
-class Collection {
+};
+o$1(mr$1, "Resource");
+let is$1 = mr$1;
+const It = class It2 {
   /**
    * Created from DTS API Json
    *
@@ -7969,37 +7211,23 @@ class Collection {
    * @param {string} baseUrl - baseURL for DTS API
    * @param {string} description
    */
-  constructor({ totalItems, title, id: id2, baseUrl, description, pagination } = {}) {
-    this.totalItems = totalItems;
-    this.title = title;
-    this.id = id2;
-    this.baseUrl = baseUrl;
-    this.description = description;
-    this.members = [];
-    this.resources = [];
-    if (pagination) {
-      this.pagination = this.definePagination(pagination);
-    }
+  constructor({ totalItems: e, title: t, id: s, baseUrl: n, description: a, pagination: i2 } = {}) {
+    this.totalItems = e, this.title = t, this.id = s, this.baseUrl = n, this.description = a, this.members = [], this.resources = [], i2 && (this.pagination = this.definePagination(i2));
   }
   /**
    * Adds level - membered collection or resource
    *
    * @param {JSON Object} jsonObj  - described in Collection/Resource constructors
    */
-  addMember(jsonObj) {
-    if (jsonObj.type === "Collection") {
-      this.members.push(new Collection(jsonObj));
-    }
-    if (jsonObj.type === "Resource") {
-      this.resources.push(new Resource(jsonObj));
-    }
+  addMember(e) {
+    e.type === "Collection" && this.members.push(new It2(e)), e.type === "Resource" && this.resources.push(new is$1(e));
   }
   /**
    * @returns {string} - title with totalItems in brackets
    */
   get formattedTitle() {
-    const totalItems = this.totalItems ? ` (${this.totalItems})` : "";
-    return `${this.title}${totalItems}`;
+    const e = this.totalItems ? ` (${this.totalItems})` : "";
+    return `${this.title}${e}`;
   }
   /**
    * @returns {object} - data for creating link for next step retrieval (descendant)
@@ -8018,43 +7246,465 @@ class Collection {
    * @returns {Array[Object]} - array of links from membered collections
    */
   get membersLinks() {
-    return this.members.map((memberCollection) => memberCollection.linkData);
+    return this.members.map((e) => e.linkData);
   }
   /**
    * @returns {Array[Object]} - array of links from membered resources
    */
   get resourcesLinks() {
-    return this.resources.map((resource) => resource.linkData);
+    return this.resources.map((e) => e.linkData);
   }
   /**
    * @returns {Array[Object]} - array of links - collections or resources
    */
   get links() {
-    if (this.members.length > 0) {
-      return this.membersLinks;
-    } else if (this.resources.length > 0) {
-      return this.resourcesLinks;
-    }
-    return [];
+    return this.members.length > 0 ? this.membersLinks : this.resources.length > 0 ? this.resourcesLinks : [];
   }
-  extractPageNum(link) {
-    if (link) {
-      const pageData = link.match(/page=(\d+)$/);
-      return pageData ? parseInt(pageData[1]) : null;
+  extractPageNum(e) {
+    if (e) {
+      const t = e.match(/page=(\d+)$/);
+      return t ? parseInt(t[1]) : null;
     }
     return null;
   }
-  definePagination(pagination) {
-    const pagintaionFinal = {
-      first: this.extractPageNum(pagination.first),
-      next: this.extractPageNum(pagination.next),
-      last: this.extractPageNum(pagination.last),
-      previous: this.extractPageNum(pagination.previous)
+  definePagination(e) {
+    const t = {
+      first: this.extractPageNum(e.first),
+      next: this.extractPageNum(e.next),
+      last: this.extractPageNum(e.last),
+      previous: this.extractPageNum(e.previous)
     };
-    pagintaionFinal.current = pagintaionFinal.next ? pagintaionFinal.next - 1 : pagintaionFinal.previous ? pagintaionFinal.previous + 1 : 1;
-    return pagintaionFinal;
+    return t.current = t.next ? t.next - 1 : t.previous ? t.previous + 1 : 1, t;
   }
-}
+};
+o$1(It, "Collection");
+let hn = It;
+const bt = class bt2 {
+  constructor(e, t, s) {
+    this.tabId = e, this.windowId = t, this.status = "attached";
+  }
+  get uniqueId() {
+    return this.constructor.createUniqueId(this.tabId, this.windowId);
+  }
+  get uniqueIdNew() {
+    return this.constructor.createUniqueIdNew(this.tabId, this.windowId);
+  }
+  get isDeattached() {
+    return this.status === "deattached";
+  }
+  deattach() {
+    this.status = "deattached";
+  }
+  attach(e) {
+    this.windowId = e, this.status = "attached";
+  }
+  clone() {
+    return new bt2(this.tabId, this.windowId);
+  }
+  compareWithTab(e) {
+    return this.tabId === e.tabId && this.windowId === e.windowId;
+  }
+  static createUniqueId(e, t) {
+    return Symbol.for(`Alpheios_tabId:${e.toString()},windowId:${t.toString()}`);
+  }
+  static createUniqueIdNew(e, t) {
+    return `Alpheios_tabId:${e.toString()},windowId:${t.toString()}`;
+  }
+};
+o$1(bt, "Tab");
+let ct = bt;
+const yr = class yr2 {
+  constructor() {
+    this.selectionLang = void 0, this.watchers = /* @__PURE__ */ new Map();
+  }
+  static get statuses() {
+    return {
+      script: {
+        PENDING: Symbol.for("Alpheios_Status_Pending"),
+        // Script has not been fully initialized yet
+        ACTIVE: Symbol.for("Alpheios_Status_Active"),
+        // Script is loaded and active
+        DEACTIVATED: Symbol.for("Alpheios_Status_Deactivated"),
+        // Script has been loaded, but is deactivated
+        DISABLED: Symbol.for("Alpheios_Status_Disabled")
+        // Content script has been disabled on a page and cannot be activated (due to incompatibility with a page content)
+      },
+      panel: {
+        OPEN: Symbol.for("Alpheios_Status_PanelOpen"),
+        // Panel is open
+        CLOSED: Symbol.for("Alpheios_Status_PanelClosed")
+        // Panel is closed
+      }
+    };
+  }
+  /**
+   * SetItem provides a monitored way to change a TabScript state. If value is assigned to a data property directly
+   * there is no way to know if a property was changed. However, if a property was changed using setItem() method,
+   * and if there is a watcher function registered for a changed property name,
+   * this function will be called on every property change, passing a changed property name as an argument.
+   * @param key
+   * @param value
+   * @return {UIStateAPI}
+   */
+  setItem(e, t) {
+    return this[e] = t, this.watchers && this.watchers.has(e) && this.watchers.get(e)(e, this), this;
+  }
+  /**
+   * Sets a watcher function that is called every time a property is changed using a setItem() method.
+   * @param {String} property - A name of a property that should be monitored
+   * @param {Function} watchFunc - A function that will be called every time a property changes
+   * @return {UIStateAPI} Reference to self for chaining
+   */
+  setWatcher(e, t) {
+    return this.watchers.set(e, t), this;
+  }
+  /**
+   * Check if the state of the panel is open
+   * @return {boolean} true if open false if closed
+   */
+  isPanelOpen() {
+    return false;
+  }
+  /**
+   * Check if the state of the panel is closed
+   * @return {boolean} true if closed false if open
+   */
+  isPanelClosed() {
+    return false;
+  }
+  /**
+   * Set the state of the panel to open
+   * @return {UIStateAPI} the updated state object
+   */
+  setPanelOpen() {
+    return this;
+  }
+  /**
+   * Set the state of the panel to closed
+   * @return {UIStateAPI} the updated state object
+   */
+  setPanelClosed() {
+    return this;
+  }
+  /**
+   * Check if the state of the UI is active (i.e. fully loaded and ready to use)
+   * @return {boolean} true if active false if not
+   */
+  uiIsActive() {
+    return false;
+  }
+  /**
+   * Set the state of the UI to active (i.e. fully loaded and ready to use)
+   * @return {IState} the updated state object
+   */
+  activateUI() {
+    return this;
+  }
+  /**
+   * Set the currently active panel tab
+   * @param {String} tabName name of the tab
+   * @return {UIStateAPI} the updated state object
+   */
+  changeTab(e) {
+    return this;
+  }
+};
+o$1(yr, "UIStateAPI");
+let os = yr;
+const w$1 = class w extends os {
+  constructor(e) {
+    super(), this.tabID = e ? e.uniqueId : void 0, this.tabObj = e, this.status = void 0, this.panelStatus = void 0, this.tab = void 0, this.embedLibStatus = void 0, this.uiActive = false, this.watchers = /* @__PURE__ */ new Map();
+  }
+  updateTabObject(e, t) {
+    return this.tabObj = new ct(e, t), this.tabID = this.tabObj.uniqueId, this;
+  }
+  deattach() {
+    this.tabObj.deattach();
+  }
+  attach(e) {
+    this.tabObj.attach(e);
+  }
+  get isDeattached() {
+    return this.tabObj.isDeattached;
+  }
+  static get propTypes() {
+    return {
+      NUMERIC: Symbol("Numeric"),
+      STRING: Symbol("String"),
+      SYMBOL: Symbol("Symbol")
+    };
+  }
+  static get props() {
+    return {
+      status: {
+        name: "status",
+        valueType: w.propTypes.SYMBOL,
+        values: {
+          PENDING: Symbol.for("Alpheios_Status_Pending"),
+          // Content script has not been fully initialized yet
+          ACTIVE: Symbol.for("Alpheios_Status_Active"),
+          // Content script is loaded and active
+          DEACTIVATED: Symbol.for("Alpheios_Status_Deactivated"),
+          // Content script has been loaded, but is deactivated
+          DISABLED: Symbol.for("Alpheios_Status_Disabled")
+          // Content script has been loaded, but it is disabled
+        },
+        defaultValueIndex: 0
+      },
+      embedLibStatus: {
+        name: "embedLibStatus",
+        valueType: w.propTypes.SYMBOL,
+        values: this.statuses.embedLib,
+        defaultValueIndex: 1
+      },
+      panelStatus: {
+        name: "panelStatus",
+        valueType: w.propTypes.SYMBOL,
+        values: {
+          OPEN: Symbol.for("Alpheios_Status_PanelOpen"),
+          // Panel is open
+          CLOSED: Symbol.for("Alpheios_Status_PanelClosed"),
+          // Panel is closed
+          DEFAULT: Symbol.for("Alpheios_Status_PanelDefault")
+          // Panel should set its state according to default values
+        },
+        defaultValueIndex: 1
+      },
+      tab: {
+        name: "tab",
+        valueType: w.propTypes.STRING,
+        values: {
+          INFO: "info",
+          DEFAULT: "default"
+          // A tab should be set according to default values
+        },
+        defaultValueIndex: 0
+      },
+      uiActive: {
+        name: "uiActive",
+        valueType: Boolean
+      }
+    };
+  }
+  static get symbolProps() {
+    return [w.props.status.name, w.props.embedLibStatus.name, w.props.panelStatus.name];
+  }
+  static get stringProps() {
+    return [w.props.tab.name];
+  }
+  static get booleanProps() {
+    return [];
+  }
+  /**
+   * Only certain features will be stored within a serialized version of a TabScript. This is done
+   * to prevent context-specific features (such as local event handlers) to be passed over the network
+   * to a different context where they would make no sense. This getter returns a list of such fields.
+   * @return {String[]}
+   */
+  static get dataProps() {
+    return w.symbolProps.concat(w.stringProps).concat(w.booleanProps);
+  }
+  /**
+   * A copy constructor.
+   * @param {TabScript} source - An instance of TabScript object we need to copy.
+   * @return {TabScript} A copy of a source object.
+   */
+  static create(e) {
+    let t = new w();
+    for (const s of Object.keys(e))
+      t[s] = e[s];
+    return t;
+  }
+  static get defaults() {
+    return {
+      status: w.statuses.script.ACTIVE,
+      panelStatus: w.statuses.panel.OPEN
+    };
+  }
+  static get statuses() {
+    return {
+      script: {
+        PENDING: Symbol.for("Alpheios_Status_Pending"),
+        // Content script has not been fully initialized yet
+        ACTIVE: Symbol.for("Alpheios_Status_Active"),
+        // Content script is loaded and active
+        DEACTIVATED: Symbol.for("Alpheios_Status_Deactivated"),
+        // Content script has been loaded, but is deactivated
+        DISABLED: Symbol.for("Alpheios_Status_Disabled")
+        // Content script has been disabled on a page and cannot be activated (due to incompatibility with a page content)
+      },
+      embedLib: {
+        ACTIVE: Symbol.for("Embedded_Lib_Status_Active"),
+        // Embedded Lib is present on a page and is activated
+        INACTIVE: Symbol.for("Embedded_Lib_Status_Inactive")
+        // Embedded Lib not loaded or is inactive
+      },
+      panel: {
+        OPEN: Symbol.for("Alpheios_Status_PanelOpen"),
+        // Panel is open
+        CLOSED: Symbol.for("Alpheios_Status_PanelClosed"),
+        // Panel is closed
+        DEFAULT: Symbol.for("Alpheios_Status_PanelDefault")
+        // Panel should set its state according to default values
+      }
+    };
+  }
+  /**
+   * Sets a watcher function that is called every time a property is changed using a setItem() method.
+   * @param {String} property - A name of a property that should be monitored
+   * @param {Function} watchFunc - A function that will be called every time a property changes
+   * @return {TabScript} Reference to self for chaining
+   */
+  setWatcher(e, t) {
+    return this.watchers.set(e, t), this;
+  }
+  /**
+   * SetItem provides a monitored way to change a TabScript state. If value is assigned to a data property directly
+   * there is no way to know if a property was changed. However, if a property was changed using setItem() method,
+   * and if there is a watcher function registered for a changed property name,
+   * this function will be called on every property change, passing a changed property name as an argument.
+   * @param key
+   * @param value
+   * @return {TabScript}
+   */
+  setItem(e, t) {
+    return this[e] = t, this.watchers && this.watchers.has(e) && this.watchers.get(e)(e, this), this;
+  }
+  isEmbedLibActive() {
+    return this.embedLibStatus === w.statuses.embedLib.ACTIVE;
+  }
+  setEmbedLibActiveStatus() {
+    return this.setItem("embedLibStatus", w.statuses.embedLib.ACTIVE), this;
+  }
+  setEmbedLibInactiveStatus() {
+    return this.setItem("embedLibStatus", w.statuses.embedLib.INACTIVE), this;
+  }
+  setEmbedLibStatus(e) {
+    e ? this.setItem("embedLibStatus", w.statuses.embedLib.ACTIVE) : this.setItem("embedLibStatus", w.statuses.embedLib.INACTIVE);
+  }
+  isPanelOpen() {
+    return this.panelStatus === w.statuses.panel.OPEN;
+  }
+  isPanelClosed() {
+    return this.panelStatus === w.statuses.panel.CLOSED;
+  }
+  setPanelOpen() {
+    return this.setItem("panelStatus", w.statuses.panel.OPEN), this;
+  }
+  setPanelClosed() {
+    return this.setItem("panelStatus", w.statuses.panel.CLOSED), this;
+  }
+  setPanelDefault() {
+    return this.setItem("panelStatus", w.statuses.panel.DEFAULT), this;
+  }
+  isPanelStateDefault() {
+    return this.panelStatus === w.statuses.panel.DEFAULT;
+  }
+  isPanelStateValid() {
+    return this.panelStatus === w.statuses.panel.OPEN || this.panelStatus === w.statuses.panel.CLOSED;
+  }
+  setTabDefault() {
+    return this.setItem("tab", w.props.tab.values.DEFAULT), this;
+  }
+  isTabStateDefault() {
+    return this.tab === w.props.tab.values.DEFAULT;
+  }
+  hasSameID(e) {
+    return Symbol.keyFor(this.tabID) === Symbol.keyFor(e);
+  }
+  isActive() {
+    return this.status === w.statuses.script.ACTIVE;
+  }
+  isDeactivated() {
+    return this.status === w.statuses.script.DEACTIVATED;
+  }
+  isDisabled() {
+    return this.status === w.statuses.script.DISABLED;
+  }
+  isPending() {
+    return this.status === w.statuses.script.PENDING;
+  }
+  uiIsActive() {
+    return this[w.props.uiActive.name];
+  }
+  activate() {
+    return this.status = w.statuses.script.ACTIVE, this;
+  }
+  deactivate() {
+    return this.status = w.statuses.script.DEACTIVATED, this;
+  }
+  disable() {
+    return this.status = w.statuses.script.DISABLED, this;
+  }
+  activateUI() {
+    return this.setItem(w.props.uiActive.name, true), this;
+  }
+  changeTab(e) {
+    return this.setItem(w.props.tab.name, e), this;
+  }
+  update(e) {
+    for (const t of Object.keys(e))
+      e[t] && (this[t] = e[t]);
+    return this;
+  }
+  /**
+   * Compares the current state with a targetState. A targetState is a state to where the current state should transform.
+   * If any field value in the state is undefined, it means that there is no transformation goal for this field
+   * (i.e we don't care about it value). Because of this, we will not include such fields into a diff result.
+   * @param targetState
+   * @return {{_changedKeys: Array, _changedEntries: Array}}
+   */
+  diff(e) {
+    let t = {
+      // eslint-disable-line prefer-const
+      _changedKeys: [],
+      _changedEntries: []
+    };
+    this.tabID !== e.tabID && (t.tabID = e.tabID, t._changedKeys.push("tabID"), t._changedEntries.push(["tabID", e.tabID]));
+    for (const s of Object.keys(e))
+      w.dataProps.includes(s) && this.hasOwnProperty(s) && this[s] && e[s] && this[s] !== e[s] && (t[s] = e[s], t._changedKeys.push(s), t._changedEntries.push([s, e[s]]));
+    return t.keys = function() {
+      return t._changedKeys;
+    }, t.entries = function() {
+      return t._changedEntries;
+    }, t.has = function(s) {
+      return t._changedKeys.includes(s);
+    }, t.isEmpty = function() {
+      return !t._changedKeys.length;
+    }, t;
+  }
+  /**
+   * Creates a serializable copy of a source object. Firefox uses the structured clone algorithm
+   * (https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm) to serialize objects.
+   * Requirements of this algorithm are that a serializable object to have no Function or Error properties,
+   * neither any DOM Nodes. That's why an empty serializable object is created and only
+   * selected properties are copied into it.
+   * @param {TabScript} source - An object to be serialized.
+   * @return {Object} A serializable copy of a source.
+   */
+  static serializable(e) {
+    let t = {};
+    t.tabID = typeof e.tabID == "symbol" ? Symbol.keyFor(e.tabID) : e.tabID, t.tabObj = e.tabObj ? e.tabObj.clone() : void 0;
+    for (const s of Object.keys(e))
+      if (w.dataProps.includes(s)) {
+        const n = e[s];
+        t[s] = typeof n == "symbol" ? Symbol.keyFor(n) : n;
+      }
+    return t;
+  }
+  static readObject(e) {
+    const t = e.tabObj && e.tabObj.tabId && e.tabObj.windowId ? new ct(e.tabObj.tabId, e.tabObj.windowId, e.tabObj.status) : void 0;
+    let s = new w(t);
+    for (const n of w.symbolProps)
+      e[n] && (s[n] = Symbol.for(e[n]));
+    for (const n of w.stringProps)
+      e[n] && (s[n] = e[n]);
+    for (const n of w.booleanProps)
+      e.hasOwnProperty(n) && (s[n] = e[n]);
+    return s;
+  }
+};
+o$1(w$1, "TabScript");
 function bind(fn, thisArg) {
   return function wrap() {
     return fn.apply(thisArg, arguments);
@@ -8189,8 +7839,8 @@ function merge() {
   }
   return result;
 }
-const extend = (a, b, thisArg, { allOwnKeys } = {}) => {
-  forEach(b, (val, key) => {
+const extend = (a, b2, thisArg, { allOwnKeys } = {}) => {
+  forEach(b2, (val, key) => {
     if (thisArg && isFunction(val)) {
       a[key] = bind(val, thisArg);
     } else {
@@ -8213,7 +7863,7 @@ const inherits = (constructor, superConstructor, props, descriptors2) => {
   });
   props && Object.assign(constructor.prototype, props);
 };
-const toFlatObject = (sourceObj, destObj, filter3, propFilter) => {
+const toFlatObject = (sourceObj, destObj, filter2, propFilter) => {
   let props;
   let i2;
   let prop;
@@ -8230,8 +7880,8 @@ const toFlatObject = (sourceObj, destObj, filter3, propFilter) => {
         merged[prop] = true;
       }
     }
-    sourceObj = filter3 !== false && getPrototypeOf(sourceObj);
-  } while (sourceObj && (!filter3 || filter3(sourceObj, destObj)) && sourceObj !== Object.prototype);
+    sourceObj = filter2 !== false && getPrototypeOf(sourceObj);
+  } while (sourceObj && (!filter2 || filter2(sourceObj, destObj)) && sourceObj !== Object.prototype);
   return destObj;
 };
 const endsWith = (str, searchString, position) => {
@@ -8461,7 +8111,7 @@ function AxiosError$1(message, code, config, request, response) {
   }
 }
 utils$1.inherits(AxiosError$1, Error, {
-  toJSON: function toJSON2() {
+  toJSON: function toJSON() {
     return {
       // Standard
       message: this.message,
@@ -8504,7 +8154,7 @@ Object.defineProperties(AxiosError$1, descriptors);
 Object.defineProperty(prototype$1, "isAxiosError", { value: true });
 AxiosError$1.from = (error, code, config, request, response, customProps) => {
   const axiosError = Object.create(prototype$1);
-  utils$1.toFlatObject(error, axiosError, function filter3(obj) {
+  utils$1.toFlatObject(error, axiosError, function filter2(obj) {
     return obj !== Error.prototype;
   }, (prop) => {
     return prop !== "isAxiosError";
@@ -8532,7 +8182,7 @@ function renderKey(path, key, dots) {
 function isFlatArray(arr) {
   return utils$1.isArray(arr) && !arr.some(isVisitable);
 }
-const predicates = utils$1.toFlatObject(utils$1, {}, null, function filter2(prop) {
+const predicates = utils$1.toFlatObject(utils$1, {}, null, function filter(prop) {
   return /^is[A-Z]/.test(prop);
 });
 function toFormData$1(obj, formData, options) {
@@ -8647,10 +8297,10 @@ function AxiosURLSearchParams(params, options) {
   params && toFormData$1(params, this, options);
 }
 const prototype = AxiosURLSearchParams.prototype;
-prototype.append = function append2(name, value) {
+prototype.append = function append(name, value) {
   this._pairs.push([name, value]);
 };
-prototype.toString = function toString3(encoder) {
+prototype.toString = function toString2(encoder) {
   const _encode = encoder ? function(value) {
     return encoder.call(this, value, encode$1);
   } : encode$1;
@@ -8687,7 +8337,7 @@ function buildURL(url2, params, options) {
   }
   return url2;
 }
-class InterceptorManager2 {
+class InterceptorManager {
   constructor() {
     this.handlers = [];
   }
@@ -8863,7 +8513,7 @@ function stringifySafely(rawValue, parser, encoder) {
 const defaults = {
   transitional: transitionalDefaults,
   adapter: ["xhr", "http", "fetch"],
-  transformRequest: [function transformRequest2(data2, headers) {
+  transformRequest: [function transformRequest(data2, headers) {
     const contentType = headers.getContentType() || "";
     const hasJSONContentType = contentType.indexOf("application/json") > -1;
     const isObjectPayload = utils$1.isObject(data2);
@@ -8904,15 +8554,15 @@ const defaults = {
     }
     return data2;
   }],
-  transformResponse: [function transformResponse2(data2) {
-    const transitional3 = this.transitional || defaults.transitional;
-    const forcedJSONParsing = transitional3 && transitional3.forcedJSONParsing;
+  transformResponse: [function transformResponse(data2) {
+    const transitional2 = this.transitional || defaults.transitional;
+    const forcedJSONParsing = transitional2 && transitional2.forcedJSONParsing;
     const JSONRequested = this.responseType === "json";
     if (utils$1.isResponse(data2) || utils$1.isReadableStream(data2)) {
       return data2;
     }
     if (data2 && utils$1.isString(data2) && (forcedJSONParsing && !this.responseType || JSONRequested)) {
-      const silentJSONParsing = transitional3 && transitional3.silentJSONParsing;
+      const silentJSONParsing = transitional2 && transitional2.silentJSONParsing;
       const strictJSONParsing = !silentJSONParsing && JSONRequested;
       try {
         return JSON.parse(data2);
@@ -8940,7 +8590,7 @@ const defaults = {
     FormData: platform.classes.FormData,
     Blob: platform.classes.Blob
   },
-  validateStatus: function validateStatus2(status) {
+  validateStatus: function validateStatus(status) {
     return status >= 200 && status < 300;
   },
   headers: {
@@ -9016,23 +8666,23 @@ function parseTokens(str) {
   return tokens;
 }
 const isValidHeaderName = (str) => /^[-_a-zA-Z0-9^`|~,!#$%&'*+.]+$/.test(str.trim());
-function matchHeaderValue(context, value, header, filter3, isHeaderNameFilter) {
-  if (utils$1.isFunction(filter3)) {
-    return filter3.call(this, value, header);
+function matchHeaderValue(context, value, header, filter2, isHeaderNameFilter) {
+  if (utils$1.isFunction(filter2)) {
+    return filter2.call(this, value, header);
   }
   if (isHeaderNameFilter) {
     value = header;
   }
   if (!utils$1.isString(value)) return;
-  if (utils$1.isString(filter3)) {
-    return value.indexOf(filter3) !== -1;
+  if (utils$1.isString(filter2)) {
+    return value.indexOf(filter2) !== -1;
   }
-  if (utils$1.isRegExp(filter3)) {
-    return filter3.test(value);
+  if (utils$1.isRegExp(filter2)) {
+    return filter2.test(value);
   }
 }
 function formatHeader(header) {
-  return header.trim().toLowerCase().replace(/([a-z\d])(\w*)/g, (w2, char, str) => {
+  return header.trim().toLowerCase().replace(/([a-z\d])(\w*)/g, (w3, char, str) => {
     return char.toUpperCase() + str;
   });
 }
@@ -9047,7 +8697,7 @@ function buildAccessors(obj, header) {
     });
   });
 }
-let AxiosHeaders$1 = class AxiosHeaders3 {
+let AxiosHeaders$1 = class AxiosHeaders {
   constructor(headers) {
     headers && this.set(headers);
   }
@@ -9244,8 +8894,8 @@ utils$1.inherits(CanceledError$1, AxiosError$1, {
   __CANCEL__: true
 });
 function settle(resolve, reject, response) {
-  const validateStatus3 = response.config.validateStatus;
-  if (!response.status || !validateStatus3 || validateStatus3(response.status)) {
+  const validateStatus2 = response.config.validateStatus;
+  if (!response.status || !validateStatus2 || validateStatus2(response.status)) {
     resolve(response);
   } else {
     reject(new AxiosError$1(
@@ -9424,28 +9074,28 @@ function mergeConfig$2(config1, config2) {
     }
     return source;
   }
-  function mergeDeepProperties(a, b, prop, caseless) {
-    if (!utils$1.isUndefined(b)) {
-      return getMergedValue(a, b, prop, caseless);
+  function mergeDeepProperties(a, b2, prop, caseless) {
+    if (!utils$1.isUndefined(b2)) {
+      return getMergedValue(a, b2, prop, caseless);
     } else if (!utils$1.isUndefined(a)) {
       return getMergedValue(void 0, a, prop, caseless);
     }
   }
-  function valueFromConfig2(a, b) {
-    if (!utils$1.isUndefined(b)) {
-      return getMergedValue(void 0, b);
+  function valueFromConfig2(a, b2) {
+    if (!utils$1.isUndefined(b2)) {
+      return getMergedValue(void 0, b2);
     }
   }
-  function defaultToConfig2(a, b) {
-    if (!utils$1.isUndefined(b)) {
-      return getMergedValue(void 0, b);
+  function defaultToConfig2(a, b2) {
+    if (!utils$1.isUndefined(b2)) {
+      return getMergedValue(void 0, b2);
     } else if (!utils$1.isUndefined(a)) {
       return getMergedValue(void 0, a);
     }
   }
-  function mergeDirectKeys(a, b, prop) {
+  function mergeDirectKeys(a, b2, prop) {
     if (prop in config2) {
-      return getMergedValue(a, b);
+      return getMergedValue(a, b2);
     } else if (prop in config1) {
       return getMergedValue(void 0, a);
     }
@@ -9479,7 +9129,7 @@ function mergeConfig$2(config1, config2) {
     socketPath: defaultToConfig2,
     responseEncoding: defaultToConfig2,
     validateStatus: mergeDirectKeys,
-    headers: (a, b, prop) => mergeDeepProperties(headersToObject(a), headersToObject(b), prop, true)
+    headers: (a, b2, prop) => mergeDeepProperties(headersToObject(a), headersToObject(b2), prop, true)
   };
   utils$1.forEach(Object.keys({ ...config1, ...config2 }), function computeConfigValue(prop) {
     const merge2 = mergeMap[prop] || mergeDeepProperties;
@@ -9589,13 +9239,13 @@ const xhrAdapter = isXHRAdapterSupported && function(config) {
     };
     request.ontimeout = function handleTimeout() {
       let timeoutErrorMessage = _config.timeout ? "timeout of " + _config.timeout + "ms exceeded" : "timeout exceeded";
-      const transitional3 = _config.transitional || transitionalDefaults;
+      const transitional2 = _config.transitional || transitionalDefaults;
       if (_config.timeoutErrorMessage) {
         timeoutErrorMessage = _config.timeoutErrorMessage;
       }
       reject(new AxiosError$1(
         timeoutErrorMessage,
-        transitional3.clarifyTimeoutError ? AxiosError$1.ETIMEDOUT : AxiosError$1.ECONNABORTED,
+        transitional2.clarifyTimeoutError ? AxiosError$1.ETIMEDOUT : AxiosError$1.ECONNABORTED,
         config,
         request
       ));
@@ -10017,7 +9667,7 @@ const validators$1 = {};
   };
 });
 const deprecatedWarnings = {};
-validators$1.transitional = function transitional2(validator2, version, message) {
+validators$1.transitional = function transitional(validator2, version, message) {
   function formatMessage(opt, desc) {
     return "[Axios v" + VERSION$1 + "] Transitional option '" + opt + "'" + desc + (message ? ". " + message : "");
   }
@@ -10040,7 +9690,7 @@ validators$1.transitional = function transitional2(validator2, version, message)
     return validator2 ? validator2(value, opt, opts) : true;
   };
 };
-validators$1.spelling = function spelling2(correctSpelling) {
+validators$1.spelling = function spelling(correctSpelling) {
   return (value, opt) => {
     console.warn(`${opt} is likely a misspelling of ${correctSpelling}`);
     return true;
@@ -10073,12 +9723,12 @@ const validator = {
   validators: validators$1
 };
 const validators = validator.validators;
-let Axios$1 = class Axios3 {
+let Axios$1 = class Axios {
   constructor(instanceConfig) {
     this.defaults = instanceConfig || {};
     this.interceptors = {
-      request: new InterceptorManager2(),
-      response: new InterceptorManager2()
+      request: new InterceptorManager(),
+      response: new InterceptorManager()
     };
   }
   /**
@@ -10117,9 +9767,9 @@ let Axios$1 = class Axios3 {
       config = configOrUrl || {};
     }
     config = mergeConfig$2(this.defaults, config);
-    const { transitional: transitional3, paramsSerializer, headers } = config;
-    if (transitional3 !== void 0) {
-      validator.assertOptions(transitional3, {
+    const { transitional: transitional2, paramsSerializer, headers } = config;
+    if (transitional2 !== void 0) {
+      validator.assertOptions(transitional2, {
         silentJSONParsing: validators.transitional(validators.boolean),
         forcedJSONParsing: validators.transitional(validators.boolean),
         clarifyTimeoutError: validators.transitional(validators.boolean)
@@ -10217,7 +9867,7 @@ let Axios$1 = class Axios3 {
     return buildURL(fullPath, config.params, config.paramsSerializer);
   }
 };
-utils$1.forEach(["delete", "get", "head", "options"], function forEachMethodNoData2(method) {
+utils$1.forEach(["delete", "get", "head", "options"], function forEachMethodNoData(method) {
   Axios$1.prototype[method] = function(url2, config) {
     return this.request(mergeConfig$2(config || {}, {
       method,
@@ -10226,7 +9876,7 @@ utils$1.forEach(["delete", "get", "head", "options"], function forEachMethodNoDa
     }));
   };
 });
-utils$1.forEach(["post", "put", "patch"], function forEachMethodWithData2(method) {
+utils$1.forEach(["post", "put", "patch"], function forEachMethodWithData(method) {
   function generateHTTPMethod(isForm) {
     return function httpMethod(url2, data2, config) {
       return this.request(mergeConfig$2(config || {}, {
@@ -10242,7 +9892,7 @@ utils$1.forEach(["post", "put", "patch"], function forEachMethodWithData2(method
   Axios$1.prototype[method] = generateHTTPMethod();
   Axios$1.prototype[method + "Form"] = generateHTTPMethod(true);
 });
-let CancelToken$1 = class CancelToken3 {
+let CancelToken$1 = class CancelToken {
   constructor(executor) {
     if (typeof executor !== "function") {
       throw new TypeError("executor must be a function.");
@@ -10328,7 +9978,7 @@ let CancelToken$1 = class CancelToken3 {
    */
   static source() {
     let cancel;
-    const token = new CancelToken3(function executor(c2) {
+    const token = new CancelToken(function executor(c2) {
       cancel = c2;
     });
     return {
@@ -10432,7 +10082,7 @@ axios.VERSION = VERSION$1;
 axios.toFormData = toFormData$1;
 axios.AxiosError = AxiosError$1;
 axios.Cancel = axios.CanceledError;
-axios.all = function all3(promises) {
+axios.all = function all(promises) {
   return Promise.all(promises);
 };
 axios.spread = spread$1;
@@ -10444,39 +10094,39 @@ axios.getAdapter = adapters.getAdapter;
 axios.HttpStatusCode = HttpStatusCode$1;
 axios.default = axios;
 const {
-  Axios: Axios4,
+  Axios: Axios2,
   AxiosError,
   CanceledError,
   isCancel,
-  CancelToken: CancelToken4,
+  CancelToken: CancelToken2,
   VERSION,
-  all: all4,
+  all: all2,
   Cancel,
   isAxiosError,
   spread,
   toFormData,
-  AxiosHeaders: AxiosHeaders4,
+  AxiosHeaders: AxiosHeaders2,
   HttpStatusCode,
   formToJSON,
   getAdapter,
   mergeConfig: mergeConfig$1
 } = axios;
-var extendStatics = function(d2, b) {
-  extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d22, b2) {
-    d22.__proto__ = b2;
-  } || function(d22, b2) {
-    for (var p2 in b2) if (Object.prototype.hasOwnProperty.call(b2, p2)) d22[p2] = b2[p2];
+var extendStatics = function(d2, b2) {
+  extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d22, b22) {
+    d22.__proto__ = b22;
+  } || function(d22, b22) {
+    for (var p2 in b22) if (Object.prototype.hasOwnProperty.call(b22, p2)) d22[p2] = b22[p2];
   };
-  return extendStatics(d2, b);
+  return extendStatics(d2, b2);
 };
-function __extends(d2, b) {
-  if (typeof b !== "function" && b !== null)
-    throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-  extendStatics(d2, b);
+function __extends(d2, b2) {
+  if (typeof b2 !== "function" && b2 !== null)
+    throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
+  extendStatics(d2, b2);
   function __() {
     this.constructor = d2;
   }
-  d2.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  d2.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
 }
 var __assign = function() {
   __assign = Object.assign || function __assign2(t) {
@@ -10500,13 +10150,13 @@ function __rest(s, e) {
   return t;
 }
 function __spreadArray(to2, from, pack) {
-  if (arguments.length === 2) for (var i2 = 0, l2 = from.length, ar2; i2 < l2; i2++) {
-    if (ar2 || !(i2 in from)) {
-      if (!ar2) ar2 = Array.prototype.slice.call(from, 0, i2);
-      ar2[i2] = from[i2];
+  if (arguments.length === 2) for (var i2 = 0, l2 = from.length, ar3; i2 < l2; i2++) {
+    if (ar3 || !(i2 in from)) {
+      if (!ar3) ar3 = Array.prototype.slice.call(from, 0, i2);
+      ar3[i2] = from[i2];
     }
   }
-  return to2.concat(ar2 || Array.prototype.slice.call(from));
+  return to2.concat(ar3 || Array.prototype.slice.call(from));
 }
 typeof SuppressedError === "function" ? SuppressedError : function(error, suppressed, message) {
   var e = new Error(message);
@@ -10780,12 +10430,12 @@ function parseNumberSkeletonFromString(skeleton) {
   if (skeleton.length === 0) {
     throw new Error("Number skeleton cannot be empty");
   }
-  var stringTokens = skeleton.split(WHITE_SPACE_REGEX).filter(function(x) {
-    return x.length > 0;
+  var stringTokens = skeleton.split(WHITE_SPACE_REGEX).filter(function(x2) {
+    return x2.length > 0;
   });
   var tokens = [];
-  for (var _i = 0, stringTokens_1 = stringTokens; _i < stringTokens_1.length; _i++) {
-    var stringToken = stringTokens_1[_i];
+  for (var _i2 = 0, stringTokens_1 = stringTokens; _i2 < stringTokens_1.length; _i2++) {
+    var stringToken = stringTokens_1[_i2];
     var stemAndOptions = stringToken.split("/");
     if (stemAndOptions.length === 0) {
       throw new Error("Invalid number skeleton");
@@ -10910,8 +10560,8 @@ function parseNotationOptions(opt) {
 }
 function parseNumberSkeleton(tokens) {
   var result = {};
-  for (var _i = 0, tokens_1 = tokens; _i < tokens_1.length; _i++) {
-    var token = tokens_1[_i];
+  for (var _i2 = 0, tokens_1 = tokens; _i2 < tokens_1.length; _i2++) {
+    var token = tokens_1[_i2];
     switch (token.stem) {
       case "percent":
       case "%":
@@ -10949,13 +10599,13 @@ function parseNumberSkeleton(tokens) {
         result.compactDisplay = "long";
         continue;
       case "scientific":
-        result = __assign(__assign(__assign({}, result), { notation: "scientific" }), token.options.reduce(function(all5, opt2) {
-          return __assign(__assign({}, all5), parseNotationOptions(opt2));
+        result = __assign(__assign(__assign({}, result), { notation: "scientific" }), token.options.reduce(function(all3, opt2) {
+          return __assign(__assign({}, all3), parseNotationOptions(opt2));
         }, {}));
         continue;
       case "engineering":
-        result = __assign(__assign(__assign({}, result), { notation: "engineering" }), token.options.reduce(function(all5, opt2) {
-          return __assign(__assign({}, all5), parseNotationOptions(opt2));
+        result = __assign(__assign(__assign({}, result), { notation: "engineering" }), token.options.reduce(function(all3, opt2) {
+          return __assign(__assign({}, all3), parseNotationOptions(opt2));
         }, {}));
         continue;
       case "notation-simple":
@@ -12576,8 +12226,8 @@ var fromCodePoint = hasNativeFromCodePoint ? String.fromCodePoint : (
   // IE11
   (function fromCodePoint2() {
     var codePoints = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-      codePoints[_i] = arguments[_i];
+    for (var _i2 = 0; _i2 < arguments.length; _i2++) {
+      codePoints[_i2] = arguments[_i2];
     }
     var elements = "";
     var length = codePoints.length;
@@ -12598,9 +12248,9 @@ var fromEntries = (
     // Ponyfill
     (function fromEntries2(entries) {
       var obj = {};
-      for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
-        var _a2 = entries_1[_i], k = _a2[0], v = _a2[1];
-        obj[k] = v;
+      for (var _i2 = 0, entries_1 = entries; _i2 < entries_1.length; _i2++) {
+        var _a2 = entries_1[_i2], k2 = _a2[0], v2 = _a2[1];
+        obj[k2] = v2;
       }
       return obj;
     })
@@ -13346,9 +12996,9 @@ function pruneLocation(els) {
   els.forEach(function(el2) {
     delete el2.location;
     if (isSelectElement(el2) || isPluralElement(el2)) {
-      for (var k in el2.options) {
-        delete el2.options[k].location;
-        pruneLocation(el2.options[k].value);
+      for (var k2 in el2.options) {
+        delete el2.options[k2].location;
+        pruneLocation(el2.options[k2].value);
       }
     } else if (isNumberElement(el2) && isNumberSkeleton(el2.style)) {
       delete el2.style.location;
@@ -13437,14 +13087,14 @@ function mergeLiteral(parts) {
   if (parts.length < 2) {
     return parts;
   }
-  return parts.reduce(function(all5, part) {
-    var lastPart = all5[all5.length - 1];
+  return parts.reduce(function(all3, part) {
+    var lastPart = all3[all3.length - 1];
     if (!lastPart || lastPart.type !== PART_TYPE.literal || part.type !== PART_TYPE.literal) {
-      all5.push(part);
+      all3.push(part);
     } else {
       lastPart.value += part.value;
     }
-    return all5;
+    return all3;
   }, []);
 }
 function isFormatXMLElementFn(el2) {
@@ -13460,8 +13110,8 @@ function formatToParts(els, locales, formatters, formats, values, currentPluralV
     ];
   }
   var result = [];
-  for (var _i = 0, els_1 = els; _i < els_1.length; _i++) {
-    var el2 = els_1[_i];
+  for (var _i2 = 0, els_1 = els; _i2 < els_1.length; _i2++) {
+    var el2 = els_1[_i2];
     if (isLiteralElement(el2)) {
       result.push({
         type: PART_TYPE.literal,
@@ -13570,18 +13220,18 @@ function mergeConfig(c1, c2) {
   if (!c2) {
     return c1;
   }
-  return __assign(__assign(__assign({}, c1 || {}), c2 || {}), Object.keys(c1).reduce(function(all5, k) {
-    all5[k] = __assign(__assign({}, c1[k]), c2[k] || {});
-    return all5;
+  return __assign(__assign(__assign({}, c1 || {}), c2 || {}), Object.keys(c1).reduce(function(all3, k2) {
+    all3[k2] = __assign(__assign({}, c1[k2]), c2[k2] || {});
+    return all3;
   }, {}));
 }
 function mergeConfigs(defaultConfig, configs) {
   if (!configs) {
     return defaultConfig;
   }
-  return Object.keys(defaultConfig).reduce(function(all5, k) {
-    all5[k] = mergeConfig(defaultConfig[k], configs[k]);
-    return all5;
+  return Object.keys(defaultConfig).reduce(function(all3, k2) {
+    all3[k2] = mergeConfig(defaultConfig[k2], configs[k2]);
+    return all3;
   }, __assign({}, defaultConfig));
 }
 function createFastMemoizeCache(store) {
@@ -13610,8 +13260,8 @@ function createDefaultFormatters(cache) {
     getNumberFormat: memoize(function() {
       var _a2;
       var args = [];
-      for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
+      for (var _i2 = 0; _i2 < arguments.length; _i2++) {
+        args[_i2] = arguments[_i2];
       }
       return new ((_a2 = Intl.NumberFormat).bind.apply(_a2, __spreadArray([void 0], args, false)))();
     }, {
@@ -13621,8 +13271,8 @@ function createDefaultFormatters(cache) {
     getDateTimeFormat: memoize(function() {
       var _a2;
       var args = [];
-      for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
+      for (var _i2 = 0; _i2 < arguments.length; _i2++) {
+        args[_i2] = arguments[_i2];
       }
       return new ((_a2 = Intl.DateTimeFormat).bind.apply(_a2, __spreadArray([void 0], args, false)))();
     }, {
@@ -13632,8 +13282,8 @@ function createDefaultFormatters(cache) {
     getPluralRules: memoize(function() {
       var _a2;
       var args = [];
-      for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
+      for (var _i2 = 0; _i2 < arguments.length; _i2++) {
+        args[_i2] = arguments[_i2];
       }
       return new ((_a2 = Intl.PluralRules).bind.apply(_a2, __spreadArray([void 0], args, false)))();
     }, {
@@ -13660,13 +13310,13 @@ var IntlMessageFormat = (
         if (parts.length === 1) {
           return parts[0].value;
         }
-        var result = parts.reduce(function(all5, part) {
-          if (!all5.length || part.type !== PART_TYPE.literal || typeof all5[all5.length - 1] !== "string") {
-            all5.push(part.value);
+        var result = parts.reduce(function(all3, part) {
+          if (!all3.length || part.type !== PART_TYPE.literal || typeof all3[all3.length - 1] !== "string") {
+            all3.push(part.value);
           } else {
-            all5[all5.length - 1] += part.value;
+            all3[all3.length - 1] += part.value;
           }
-          return all5;
+          return all3;
         }, []);
         if (result.length <= 1) {
           return result[0] || "";
@@ -14379,11 +14029,11 @@ class BaseAdapter {
   }
   printError(error) {
     if (error.response) {
-      Logger.getInstance().error("Alpheios error: unexpected response retrieving data from service", error);
+      S.getInstance().error("Alpheios error: unexpected response retrieving data from service", error);
     } else if (error.request) {
-      Logger.getInstance().error("Alpheios error: no response from service", error);
+      S.getInstance().error("Alpheios error: no response from service", error);
     } else {
-      Logger.getInstance().error("Alpheios error: unexpected error requesting data from service", error.message);
+      S.getInstance().error("Alpheios error: unexpected error requesting data from service", error.message);
     }
   }
   /**
@@ -14517,7 +14167,7 @@ class AlpheiosLexiconTransformer {
       hdwd.push(term.prefix ? term.prefix.$ : "");
       hdwd.push(term.stem ? term.stem.$ : "");
       hdwd.push(term.suff ? term.suff.$ : "");
-      if (direction === constants.LANG_DIR_RTL) {
+      if (direction === bl.LANG_DIR_RTL) {
         hdwd.reverse();
       }
     }
@@ -14550,7 +14200,7 @@ class AlpheiosLexiconTransformer {
     const annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body);
     const providerUri = this.extractData(jsonObj, "providerUri");
     const providerRights = this.extractData(jsonObj, "providerRights");
-    const provider = new ResourceProvider(providerUri, providerRights);
+    const provider = new W(providerUri, providerRights);
     for (const lexeme of annotationBody) {
       const inflectionsJSON = this.checkToBeArray(this.extractData(lexeme, "inflections"));
       const inflectionsJSONTerm = inflectionsJSON.length > 0 ? inflectionsJSON[0].term : void 0;
@@ -14590,23 +14240,23 @@ class AlpheiosLexiconTransformer {
         if (lemmaElements.length > 1) {
           if (meanings && meanings[index] && meanings[index].$) {
             const meaning = meanings[index];
-            shortdefs.push(ResourceProvider.getProxy(
+            shortdefs.push(W.getProxy(
               provider,
               this.mappingData.parseMeaning(meaning, lemmas[index].word)
             ));
           }
         } else {
           const sDefs = meanings.filter((m2) => m2.$).map((meaning) => {
-            return ResourceProvider.getProxy(
+            return W.getProxy(
               provider,
               this.mappingData.parseMeaning(meaning, lemma.word)
             );
           });
           shortdefs.push(...sDefs);
         }
-        let lexmodel = new Lexeme(lemma, []);
+        let lexmodel = new Y(lemma, []);
         lexmodel.meaning.appendShortDefs(shortdefs);
-        lexemeSet.push(ResourceProvider.getProxy(provider, lexmodel));
+        lexemeSet.push(W.getProxy(provider, lexmodel));
       }
       if (lemmas.length === 0) {
         continue;
@@ -14621,45 +14271,45 @@ class AlpheiosLexiconTransformer {
         const inflWord = stem || form;
         let inflection;
         try {
-          inflection = new Inflection(inflWord, this.mappingData.model.languageID, suffix, prefix, xmpl);
+          inflection = new rt(inflWord, this.mappingData.model.languageID, suffix, prefix, xmpl);
         } catch (e) {
           this.adapter.addError(this.adapter.l10n.getMsg("MORPH_TRANSFORM_INFLECTION_ERROR", { error: e.message }));
           continue;
         }
         if (targetWord) {
-          inflection.addFeature(new Feature(Feature.types.fullForm, targetWord, this.mappingData.model.languageID));
+          inflection.addFeature(new l$1(l$1.types.fullForm, targetWord, this.mappingData.model.languageID));
         }
         for (const f2 of featuresArrayAll$1) {
           try {
             this.mappingData.mapFeature(inflection, inflectionJSON, ...f2, this.allowUnknownValues);
-            this.mappingData.overrideInflectionFeatureIfRequired(Feature.types[f2[1]], inflection, lemmas);
+            this.mappingData.overrideInflectionFeatureIfRequired(l$1.types[f2[1]], inflection, lemmas);
           } catch (e) {
           }
         }
         for (const f2 of attributeBasedFeatures$1) {
           try {
             this.mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f2, this.allowUnknownValues);
-            this.mappingData.overrideInflectionFeatureIfRequired(Feature.types[f2[1]], inflection, lemmas);
+            this.mappingData.overrideInflectionFeatureIfRequired(l$1.types[f2[1]], inflection, lemmas);
           } catch (e) {
           }
         }
-        if (inflection[Feature.types.grmCase] || inflection[Feature.types.tense] || inflection[Feature.types.mood] || inflection[Feature.types.voice] || inflection[Feature.types.person] || inflection[Feature.types.comparison] || inflection[Feature.types.stemtype] || /** greek - morpheus **/
-        inflection[Feature.types.derivtype] || /** greek - morpheus **/
-        inflection[Feature.types.dialect] || /** greek **/
-        inflection[Feature.types.morph] || /** arabic - aramorph **/
-        inflection[Feature.types.kaylo] || /** syriac - sedra **/
-        inflection[Feature.types.state] || /** syriac - sedra **/
-        inflection[Feature.types.example]) {
+        if (inflection[l$1.types.grmCase] || inflection[l$1.types.tense] || inflection[l$1.types.mood] || inflection[l$1.types.voice] || inflection[l$1.types.person] || inflection[l$1.types.comparison] || inflection[l$1.types.stemtype] || /** greek - morpheus **/
+        inflection[l$1.types.derivtype] || /** greek - morpheus **/
+        inflection[l$1.types.dialect] || /** greek **/
+        inflection[l$1.types.morph] || /** arabic - aramorph **/
+        inflection[l$1.types.kaylo] || /** syriac - sedra **/
+        inflection[l$1.types.state] || /** syriac - sedra **/
+        inflection[l$1.types.example]) {
           inflections.push(inflection);
         }
         for (const lemma of lemmas) {
-          if (!lemma.features[Feature.types.part]) {
+          if (!lemma.features[l$1.types.part]) {
             this.mappingData.mapFeature(lemma, inflectionJSON, "pofs", "part", this.allowUnknownValues);
           }
-          if (!lemma.features[Feature.types.declension] && (!lemma.features[Feature.types.part] || lemma.features[Feature.types.part].isEqual(inflection[Feature.types.part]))) {
+          if (!lemma.features[l$1.types.declension] && (!lemma.features[l$1.types.part] || lemma.features[l$1.types.part].isEqual(inflection[l$1.types.part]))) {
             this.mappingData.mapFeature(lemma, inflectionJSON, "decl", "declension", this.allowUnknownValues);
           }
-          if (!lemma.features[Feature.types.conjugation] && (!lemma.features[Feature.types.part] || lemma.features[Feature.types.part].isEqual(inflection[Feature.types.part]))) {
+          if (!lemma.features[l$1.types.conjugation] && (!lemma.features[l$1.types.part] || lemma.features[l$1.types.part].isEqual(inflection[l$1.types.part]))) {
             this.mappingData.mapFeature(lemma, inflectionJSON, "conj", "conjugation", this.allowUnknownValues);
           }
         }
@@ -14668,7 +14318,7 @@ class AlpheiosLexiconTransformer {
       lexemes.push(...aggregated);
     }
     if (lexemes.length > 0) {
-      return new Homonym(lexemes, targetWord);
+      return new nt(lexemes, targetWord);
     } else {
       return void 0;
     }
@@ -14711,11 +14361,11 @@ class ImportMorphData {
       return lexemes;
     };
     this.parseLemma = function(lemma) {
-      return new Lemma(lemma, this.model.languageID);
+      return new ge(lemma, this.model.languageID);
     };
     this.parseMeaning = function(meaning, targetWord) {
-      const lang = meaning.lang ? meaning.lang : constants.STR_LANG_CODE_ENG;
-      return new Definition(meaning.$, lang, "text/plain", targetWord);
+      const lang = meaning.lang ? meaning.lang : bl.STR_LANG_CODE_ENG;
+      return new Ze(meaning.$, lang, "text/plain", targetWord);
     };
     this.parseProperty = function(propertyName, propertyValue, inputElem) {
       let propertyValues = [];
@@ -14729,7 +14379,7 @@ class ImportMorphData {
       return propertyValues;
     };
     this.reportLexeme = function(lexeme) {
-      return lexeme.lemma.features[Feature.types.part];
+      return lexeme.lemma.features[l$1.types.part];
     };
     this.inflectionOverrides = {};
   }
@@ -14791,7 +14441,7 @@ class ImportMorphData {
       }
       return model.typeFeature(featureName).createFeatures(values);
     };
-    this[featureName].importer = new FeatureImporter();
+    this[featureName].importer = new Qe();
     return this[featureName];
   }
   /**
@@ -14843,10 +14493,10 @@ class ImportMorphData {
         values = this.parseProperty(inputName, inputItem.$, inputElem);
       }
       if (values.length > 0) {
-        values = values.map((v) => {
-          return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 };
+        values = values.map((v2) => {
+          return { providerValue: v2, sortOrder: inputItem.order ? inputItem.order : 1 };
         });
-        const feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues2);
+        const feature = this[l$1.types[featureName]].getMultiple(values, allowUnknownValues2);
         model.addFeature(feature);
       }
     }
@@ -14870,7 +14520,7 @@ class ImportMorphData {
       if (Array.isArray(inputItem)) {
         for (const e of inputItem) {
           if (featureName && featureName !== e[attributeName]) {
-            Logger.getInstance().warn("Mutiple feature values with mismatching attribute value", inputElem);
+            S.getInstance().warn("Mutiple feature values with mismatching attribute value", inputElem);
           }
           featureName = e[attributeName];
           values.push(...this.parseProperty(inputName, e.$, inputElem));
@@ -14880,10 +14530,10 @@ class ImportMorphData {
         values = this.parseProperty(inputName, inputItem.$, inputElem);
       }
       if (values.length > 0) {
-        values = values.map((v) => {
-          return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 };
+        values = values.map((v2) => {
+          return { providerValue: v2, sortOrder: inputItem.order ? inputItem.order : 1 };
         });
-        const feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues2, inputItem.cat);
+        const feature = this[l$1.types[featureName]].getMultiple(values, allowUnknownValues2, inputItem.cat);
         model.addFeature(feature);
       }
     }
@@ -14909,17 +14559,17 @@ class ImportMorphData {
     }
   }
 }
-const data$5 = new ImportMorphData(LatinLanguageModel, "whitakerLat");
+const data$5 = new ImportMorphData(tt$1, "whitakerLat");
 data$5.inflectionOverrides = {
-  [Feature.types.conjugation]: (i2, ls) => {
+  [l$1.types.conjugation]: (i2, ls2) => {
     return {
       withLemma: true,
       withFeature: null
     };
   }
 };
-data$5.addFeature(Feature.types.gender).importer.map("common", [[constants.GEND_MASCULINE, 1], [constants.GEND_FEMININE, 2]]).map("all", [[constants.GEND_MASCULINE, 1], [constants.GEND_FEMININE, 2], [constants.GEND_NEUTER, 3]]);
-data$5.addFeature(Feature.types.tense).importer.map("future_perfect", constants.TENSE_FUTURE_PERFECT);
+data$5.addFeature(l$1.types.gender).importer.map("common", [[bl.GEND_MASCULINE, 1], [bl.GEND_FEMININE, 2]]).map("all", [[bl.GEND_MASCULINE, 1], [bl.GEND_FEMININE, 2], [bl.GEND_NEUTER, 3]]);
+data$5.addFeature(l$1.types.tense).importer.map("future_perfect", bl.TENSE_FUTURE_PERFECT);
 data$5.setPropertyParser(function(propertyName, propertyValue, inputElem) {
   let propertyValues = [];
   if (propertyName === "decl") {
@@ -14927,7 +14577,7 @@ data$5.setPropertyParser(function(propertyName, propertyValue, inputElem) {
   } else if (propertyName === "comp" && propertyValue === "positive") {
     propertyValues = [];
   } else if (propertyName === "conj" && propertyValue.match(/5th|6th|7th|8th/)) {
-    propertyValues = [constants.TYPE_IRREGULAR];
+    propertyValues = [bl.TYPE_IRREGULAR];
   } else {
     propertyValues = [propertyValue];
   }
@@ -14943,13 +14593,13 @@ data$5.setLexemeAggregator(
             if (otherLex.meaning.shortDefs.length > 0 && otherLex.lemma.isFullHomonym(lex.lemma)) {
               let featuresMatch = true;
               for (const feature of Object.entries(lex.lemma.features)) {
-                if (feature[0] !== Feature.types.frequency && feature[0] !== Feature.types.source && feature[0] !== Feature.types.age && !feature[1].isEqual(otherLex.lemma.features[feature[0]])) {
+                if (feature[0] !== l$1.types.frequency && feature[0] !== l$1.types.source && feature[0] !== l$1.types.age && !feature[1].isEqual(otherLex.lemma.features[feature[0]])) {
                   featuresMatch = false;
                   break;
                 }
               }
               if (featuresMatch) {
-                if (lex.lemma.features[Feature.types.frequency].compareTo(otherLex.lemma.features[Feature.types.frequency]) < 1) {
+                if (lex.lemma.features[l$1.types.frequency].compareTo(otherLex.lemma.features[l$1.types.frequency]) < 1) {
                   otherLex.addAltLemma(otherLex.lemma);
                   otherLex.lemma = lex.lemma;
                 } else {
@@ -14982,36 +14632,36 @@ data$5.setLemmaParser(function(lemma) {
     parts.push(normalized);
   }
   if (primary) {
-    parsed = new Lemma(primary, this.model.languageCode, parts);
+    parsed = new ge(primary, this.model.languageCode, parts);
   }
   return parsed;
 });
-let data$4 = new ImportMorphData(GreekLanguageModel, "morpheusgrc");
+let data$4 = new ImportMorphData(Ht, "morpheusgrc");
 data$4.inflectionOverrides = {
   // Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
   // the dictionary entry's conjugation if it's available
-  [Feature.types.part]: (i2, ls) => {
+  [l$1.types.part]: (i2, ls2) => {
     return {
-      withLemma: i2[Feature.types.part].value === constants.TYPE_IRREGULAR && ls.some((l2) => l2.features[Feature.types.part].value === constants.POFS_PRONOUN),
+      withLemma: i2[l$1.types.part].value === bl.TYPE_IRREGULAR && ls2.some((l2) => l2.features[l$1.types.part].value === bl.POFS_PRONOUN),
       withFeature: null
     };
   },
   // for some irregular adjectives, the compartive is only specified in the morph flags
-  [Feature.types.comparison]: (i2, ls) => {
+  [l$1.types.comparison]: (i2, ls2) => {
     const retVal = {
       withLemma: false,
       withFeature: null
     };
-    if (i2[Feature.types.morph].value === "irreg_comp" && ls.some((l2) => l2.features[Feature.types.part].value === constants.POFS_ADJECTIVE)) {
-      retVal.withFeature = new Feature(Feature.types.comparison, constants.COMP_COMPARITIVE, GreekLanguageModel.languageID);
-    } else if (i2[Feature.types.morph].value === "irreg_superl" && ls.some((l2) => l2.features[Feature.types.part].value === constants.POFS_ADJECTIVE)) {
-      retVal.withFeature = new Feature(Feature.types.comparison, constants.COMP_SUPERLATIVE, GreekLanguageModel.languageID);
+    if (i2[l$1.types.morph].value === "irreg_comp" && ls2.some((l2) => l2.features[l$1.types.part].value === bl.POFS_ADJECTIVE)) {
+      retVal.withFeature = new l$1(l$1.types.comparison, bl.COMP_COMPARITIVE, Ht.languageID);
+    } else if (i2[l$1.types.morph].value === "irreg_superl" && ls2.some((l2) => l2.features[l$1.types.part].value === bl.POFS_ADJECTIVE)) {
+      retVal.withFeature = new l$1(l$1.types.comparison, bl.COMP_SUPERLATIVE, Ht.languageID);
     }
     return retVal;
   }
 };
-data$4.addFeature(Feature.types.gender).importer.map("masculine feminine", [[constants.GEND_MASCULINE, 1], [constants.GEND_FEMININE, 2]]);
-data$4.addFeature(Feature.types.declension).importer.map("1st & 2nd", [[constants.ORD_1ST, 1], [constants.ORD_2ND, 2]]);
+data$4.addFeature(l$1.types.gender).importer.map("masculine feminine", [[bl.GEND_MASCULINE, 1], [bl.GEND_FEMININE, 2]]);
+data$4.addFeature(l$1.types.declension).importer.map("1st & 2nd", [[bl.ORD_1ST, 1], [bl.ORD_2ND, 2]]);
 data$4.setPropertyParser(function(propertyName, propertyValue, inputElem) {
   let propertyValues = [];
   if (propertyName === "decl") {
@@ -15019,26 +14669,26 @@ data$4.setPropertyParser(function(propertyName, propertyValue, inputElem) {
   } else if (propertyName === "comp" && propertyValue === "positive") {
     propertyValues = [];
   } else if (propertyName === "pofs" && propertyValue === "irregular" && inputElem.hdwd && inputElem.hdwd.$ === "τίς") {
-    propertyValues = [constants.POFS_PRONOUN];
+    propertyValues = [bl.POFS_PRONOUN];
   } else {
     propertyValues = [propertyValue];
   }
   return propertyValues;
 });
-const data$3 = new ImportMorphData(ArabicLanguageModel, "aramorph");
-let data$2 = new ImportMorphData(PersianLanguageModel, "hazm");
+const data$3 = new ImportMorphData(st$1, "aramorph");
+let data$2 = new ImportMorphData(Gt, "hazm");
 data$2.setLexemeFilter(function(lexeme) {
   return Boolean(lexeme.lemma.word);
 });
-const data$1 = new ImportMorphData(GeezLanguageModel, "traces");
-const data = new ImportMorphData(SyriacLanguageModel, "sedra");
+const data$1 = new ImportMorphData(Jt, "traces");
+const data = new ImportMorphData(be$1, "sedra");
 data.setLexemeFilter(function(lexeme) {
-  return Boolean(lexeme.meaning.shortDefs.length > 0 || lexeme.lemma.features[Feature.types.part]);
+  return Boolean(lexeme.meaning.shortDefs.length > 0 || lexeme.lemma.features[l$1.types.part]);
 });
 data.setMeaningParser(function(meaning, targetWord) {
-  const lang = meaning.lang ? meaning.lang : constants.STR_LANG_CODE_ENG;
+  const lang = meaning.lang ? meaning.lang : bl.STR_LANG_CODE_ENG;
   const meaningText = meaning.$ || "";
-  return new Definition(meaningText, lang, "text/html", targetWord);
+  return new Ze(meaningText, lang, "text/html", targetWord);
 });
 data.setPropertyParser(function(propertyName, propertyValue, inputElem) {
   let propertyValues = [];
@@ -15064,7 +14714,7 @@ class EnginesSet {
    * @return {Engine Class}
   */
   getEngineByCode(languageID) {
-    const langCode = LanguageModelFactory.getLanguageCodeFromId(languageID);
+    const langCode = A.getLanguageCodeFromId(languageID);
     if (this.engine[languageID] || this.engine[langCode]) {
       const engineCode = (this.engine[languageID] ?? this.engine[langCode])[0];
       const allEngines = new Map([data$5, data$4, data$3, data$2, data$1, data].map((e) => {
@@ -15079,7 +14729,7 @@ class EnginesSet {
    * @return {Engine Class}
   */
   getEngineByCodeFromLangCode(languageCode) {
-    const languageID = LanguageModelFactory.getLanguageIdFromCode(languageCode);
+    const languageID = A.getLanguageIdFromCode(languageCode);
     return this.getEngineByCode(languageID);
   }
 }
@@ -15105,8 +14755,8 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
       this.engines = {};
     }
     Object.keys(engineConfig).forEach((langCode) => {
-      const langID = LanguageModelFactory.getLanguageIdFromCode(langCode);
-      if (langID !== constants.LANG_UNDEFINED && this.engines[langID] === void 0) {
+      const langID = A.getLanguageIdFromCode(langCode);
+      if (langID !== bl.LANG_UNDEFINED && this.engines[langID] === void 0) {
         this.engines[langID] = engineConfig[langCode];
       }
       this.engines[langCode] = engineConfig[langCode];
@@ -15149,7 +14799,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
           return;
         }
         if (homonym && homonym.lexemes) {
-          homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part));
+          homonym.lexemes.sort(Y.getSortByTwoLemmaFeatures(l$1.types.frequency, l$1.types.part));
         }
         return homonym;
       }
@@ -15166,7 +14816,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
    *     - {null} - if engine is not correct
   */
   prepareRequestUrl(languageID, word) {
-    const langCode = LanguageModelFactory.getLanguageCodeFromId(languageID);
+    const langCode = A.getLanguageCodeFromId(languageID);
     const engine2 = this.engineSet.getEngineByCode(languageID);
     if (engine2) {
       const code = engine2.engine;
@@ -15184,7 +14834,7 @@ function p(s, e = 0) {
 }
 let E;
 const g = new Uint8Array(16);
-function w() {
+function w2() {
   if (!E) {
     if (typeof crypto > "u" || !crypto.getRandomValues)
       throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
@@ -15197,7 +14847,7 @@ function I(s, e, t) {
   if (R.randomUUID && !s)
     return R.randomUUID();
   s = s || {};
-  const r = s.random ?? s.rng?.() ?? w();
+  const r = s.random ?? s.rng?.() ?? w2();
   if (r.length < 16)
     throw new Error("Random bytes length must be >= 16");
   return r[6] = r[6] & 15 | 64, r[8] = r[8] & 63 | 128, p(r);
@@ -15663,7 +15313,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
     this._messagingService = u.getService(msgServiceName);
   }
   get languageID() {
-    return ChineseLanguageModel.languageID;
+    return Kt.languageID;
   }
   /**
    * Creates a list of words that will be requested from a CEDICT service.
@@ -15735,22 +15385,22 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
     wordEntries.forEach((entry) => {
       const cfData = entry[characterForm];
       const headword = cfData.headword;
-      let lemma = new Lemma(headword, this.languageID, []);
-      let pronunciationValues = entry.pinyin ? [ChineseLanguageModel.formatPinyin(entry.pinyin)] : [];
+      let lemma = new ge(headword, this.languageID, []);
+      let pronunciationValues = entry.pinyin ? [Kt.formatPinyin(entry.pinyin)] : [];
       pronunciationValues = ["mandarin", "cantonese", "tang"].reduce((arr, i2) => {
         if (cfData[i2]) arr.push(`${i2} - ${cfData[i2]}`);
         return arr;
       }, pronunciationValues);
-      lemma.addFeature(this._createFeature(Feature.types.pronunciation, pronunciationValues));
-      lemma.addFeature(this._createFeature(Feature.types.note, characterForm));
-      if (cfData.radical && cfData.radical.character) lemma.addFeature(this._createFeature(Feature.types.radical, cfData.radical.character));
-      if (cfData.frequency) lemma.addFeature(this._createFeature(Feature.types.frequency, cfData.frequency, 10));
-      let lexModel = new Lexeme(lemma, []);
-      const shortDefs = entry.definitions.map((entry2) => new Definition(entry2, "eng", "text/plain", headword));
+      lemma.addFeature(this._createFeature(l$1.types.pronunciation, pronunciationValues));
+      lemma.addFeature(this._createFeature(l$1.types.note, characterForm));
+      if (cfData.radical && cfData.radical.character) lemma.addFeature(this._createFeature(l$1.types.radical, cfData.radical.character));
+      if (cfData.frequency) lemma.addFeature(this._createFeature(l$1.types.frequency, cfData.frequency, 10));
+      let lexModel = new Y(lemma, []);
+      const shortDefs = entry.definitions.map((entry2) => new Ze(entry2, "eng", "text/plain", headword));
       lexModel.meaning.appendShortDefs(shortDefs);
       lexemes.push(lexModel);
     });
-    let homonym = new Homonym(lexemes, targetWord);
+    let homonym = new nt(lexemes, targetWord);
     homonym.isMultiHomonym = AlpheiosChineseLocAdapter._wordsFound(cedictEntries[characterForm]) > 1;
     return homonym;
   }
@@ -15766,15 +15416,15 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
     return Object.keys(result).filter((key) => result[key].length > 0).length;
   }
   _createFeature(featureType, values) {
-    return new Feature(featureType, values, this.languageID);
+    return new l$1(featureType, values, this.languageID);
   }
 }
 const servers = [{ "texts": [], "isDefault": true, "url": "https://tools.alpheios.net/exist/rest/db/xq/treebank-getmorph.xq?f=r_TEXT&w=r_WORD&clientId=r_CLIENT", "providerUri": "https://alpheios.net", "providerRights": "The Alpheios Treebank data is licenced under the Creative Commons 3.0 Share-Alike license.", "allowUnknownValues": true, "featuresArray": [["pofs", "part", true], ["case", "grmCase", false], ["num", "number", false], ["gend", "gender", false], ["voice", "voice", false], ["mood", "mood", false], ["pers", "person", false], ["comp", "comparison", false]] }];
 const DefaultConfig$6 = {
   servers
 };
-function getDefaultExportFromCjs(x) {
-  return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
+function getDefaultExportFromCjs(x2) {
+  return x2 && x2.__esModule && Object.prototype.hasOwnProperty.call(x2, "default") ? x2["default"] : x2;
 }
 var xmlToJSON$1 = { exports: {} };
 var hasRequiredXmlToJSON;
@@ -15981,7 +15631,7 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
   constructor(config = {}) {
     super();
     this.config = this.uploadConfig(config, DefaultConfig$6);
-    this.models = { lat: LatinLanguageModel, grc: GreekLanguageModel };
+    this.models = { lat: tt$1, grc: Ht };
   }
   /**
    * This method gets data from adapter's engine. All errors are added to adapter.errors
@@ -16003,7 +15653,7 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
         return;
       }
       if (res) {
-        const langCode = LanguageModelFactory.getLanguageCodeFromId(languageID);
+        const langCode = A.getLanguageCodeFromId(languageID);
         const jsonObj = xmlToJSON.parseString(res);
         jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } };
         const homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text, server.config);
@@ -16045,23 +15695,23 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
   transform(jsonObj, targetWord, config) {
     const providerUri = config.providerUri;
     const providerRights = config.providerRights;
-    const provider = new ResourceProvider(providerUri, providerRights);
+    const provider = new W(providerUri, providerRights);
     const hdwd = jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0];
     let lemmaText = hdwd._text;
     lemmaText = lemmaText.replace(/\d+$/, "");
     const model = this.models[hdwd._attr.lang._value];
-    let lemma = new Lemma(lemmaText, model.languageCode);
-    const lexmodel = new Lexeme(lemma, []);
-    let inflection = new Inflection(lemmaText, model.languageID, null, null, null);
+    let lemma = new ge(lemmaText, model.languageCode);
+    const lexmodel = new Y(lemma, []);
+    let inflection = new rt(lemmaText, model.languageID, null, null, null);
     const infl = jsonObj.words[0].word[0].entry[0].infl[0];
-    inflection.addFeature(new Feature(Feature.types.fullForm, targetWord, model.languageID));
+    inflection.addFeature(new l$1(l$1.types.fullForm, targetWord, model.languageID));
     const features = config.featuresArray;
     for (const feature of features) {
       const localName = feature[0];
       const featureType = feature[1];
       const addToLemma = feature[2];
       if (infl[localName]) {
-        const obj = model.typeFeature(Feature.types[featureType]).createFeatures(infl[localName][0]._text, 1);
+        const obj = model.typeFeature(l$1.types[featureType]).createFeatures(infl[localName][0]._text, 1);
         inflection.addFeature(obj);
         if (addToLemma) {
           lemma.addFeature(obj);
@@ -16069,7 +15719,7 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
       }
     }
     lexmodel.inflections = [inflection];
-    return new Homonym([ResourceProvider.getProxy(provider, lexmodel)], targetWord);
+    return new nt([W.getProxy(provider, lexmodel)], targetWord);
   }
 }
 const url$2 = "https://ats.alpheios.net";
@@ -16093,7 +15743,7 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
     super();
     this.config = this.uploadConfig(config, DefaultConfig$5);
     this.mapLangUri = {};
-    this.provider = new ResourceProvider(this.config.url, this.config.rights);
+    this.provider = new W(this.config.url, this.config.rights);
     this.sourceData = config.sourceData;
   }
   /**
@@ -16110,7 +15760,7 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
     for (const lexeme of homonym.lexemes) {
       lemmaList.push(lexeme.lemma);
     }
-    const inLang = LanguageModelFactory.getLanguageCodeFromId(homonym.lexemes[0].lemma.languageID);
+    const inLang = A.getLanguageCodeFromId(homonym.lexemes[0].lemma.languageID);
     const outLang = this.config.langMap[browserLang] || this.config.defaultLang;
     const input = this.prepareInput(lemmaList);
     if (!input) {
@@ -16135,7 +15785,7 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
             return;
           }
           for (const lemma of lemmaList) {
-            Translation.loadTranslations(lemma, outLang, translationsList, this.provider);
+            Xt.loadTranslations(lemma, outLang, translationsList, this.provider);
           }
         } catch (error) {
           this.addError(this.l10n.getMsg("TRANSLATION_UNKNOWN_ERROR", { message: error.message }));
@@ -16198,10 +15848,10 @@ function requirePapaparse_min() {
       module.exports = t();
     })(papaparse_min, function r() {
       var n = "undefined" != typeof self ? self : "undefined" != typeof window ? window : void 0 !== n ? n : {};
-      var d2, s = !n.document && !!n.postMessage, a = n.IS_PAPA_WORKER || false, o2 = {}, h2 = 0, v = {};
+      var d2, s = !n.document && !!n.postMessage, a = n.IS_PAPA_WORKER || false, o2 = {}, h2 = 0, v2 = {};
       function u2(e) {
         this._handle = null, this._finished = false, this._completed = false, this._halted = false, this._input = null, this._baseIndex = 0, this._partialLine = "", this._rowCount = 0, this._start = 0, this._nextChunk = null, this.isFirstChunk = true, this._completeResults = { data: [], errors: [], meta: {} }, (function(e2) {
-          var t = b(e2);
+          var t = b2(e2);
           t.chunkSize = parseInt(t.chunkSize), e2.step || e2.chunk || (t.chunkSize = null);
           this._handle = new i2(t), (this._handle.streamer = this)._config = t;
         }).call(this, e), this.parseChunk = function(t, e2) {
@@ -16210,25 +15860,25 @@ function requirePapaparse_min() {
             let e3 = this._config.newline;
             e3 || (r2 = this._config.quoteChar || '"', e3 = this._handle.guessLineEndings(t, r2)), t = [...t.split(e3).slice(i3)].join(e3);
           }
-          this.isFirstChunk && U(this._config.beforeFirstChunk) && void 0 !== (r2 = this._config.beforeFirstChunk(t)) && (t = r2), this.isFirstChunk = false, this._halted = false;
+          this.isFirstChunk && U2(this._config.beforeFirstChunk) && void 0 !== (r2 = this._config.beforeFirstChunk(t)) && (t = r2), this.isFirstChunk = false, this._halted = false;
           var i3 = this._partialLine + t, r2 = (this._partialLine = "", this._handle.parse(i3, this._baseIndex, !this._finished));
           if (!this._handle.paused() && !this._handle.aborted()) {
             t = r2.meta.cursor, i3 = (this._finished || (this._partialLine = i3.substring(t - this._baseIndex), this._baseIndex = t), r2 && r2.data && (this._rowCount += r2.data.length), this._finished || this._config.preview && this._rowCount >= this._config.preview);
-            if (a) n.postMessage({ results: r2, workerId: v.WORKER_ID, finished: i3 });
-            else if (U(this._config.chunk) && !e2) {
+            if (a) n.postMessage({ results: r2, workerId: v2.WORKER_ID, finished: i3 });
+            else if (U2(this._config.chunk) && !e2) {
               if (this._config.chunk(r2, this._handle), this._handle.paused() || this._handle.aborted()) return void (this._halted = true);
               this._completeResults = r2 = void 0;
             }
-            return this._config.step || this._config.chunk || (this._completeResults.data = this._completeResults.data.concat(r2.data), this._completeResults.errors = this._completeResults.errors.concat(r2.errors), this._completeResults.meta = r2.meta), this._completed || !i3 || !U(this._config.complete) || r2 && r2.meta.aborted || (this._config.complete(this._completeResults, this._input), this._completed = true), i3 || r2 && r2.meta.paused || this._nextChunk(), r2;
+            return this._config.step || this._config.chunk || (this._completeResults.data = this._completeResults.data.concat(r2.data), this._completeResults.errors = this._completeResults.errors.concat(r2.errors), this._completeResults.meta = r2.meta), this._completed || !i3 || !U2(this._config.complete) || r2 && r2.meta.aborted || (this._config.complete(this._completeResults, this._input), this._completed = true), i3 || r2 && r2.meta.paused || this._nextChunk(), r2;
           }
           this._halted = true;
         }, this._sendError = function(e2) {
-          U(this._config.error) ? this._config.error(e2) : a && this._config.error && n.postMessage({ workerId: v.WORKER_ID, error: e2, finished: false });
+          U2(this._config.error) ? this._config.error(e2) : a && this._config.error && n.postMessage({ workerId: v2.WORKER_ID, error: e2, finished: false });
         };
       }
       function f2(e) {
         var r2;
-        (e = e || {}).chunkSize || (e.chunkSize = v.RemoteChunkSize), u2.call(this, e), this._nextChunk = s ? function() {
+        (e = e || {}).chunkSize || (e.chunkSize = v2.RemoteChunkSize), u2.call(this, e), this._nextChunk = s ? function() {
           this._readChunk(), this._chunkLoaded();
         } : function() {
           this._readChunk();
@@ -16258,7 +15908,7 @@ function requirePapaparse_min() {
         };
       }
       function l2(e) {
-        (e = e || {}).chunkSize || (e.chunkSize = v.LocalChunkSize), u2.call(this, e);
+        (e = e || {}).chunkSize || (e.chunkSize = v2.LocalChunkSize), u2.call(this, e);
         var i3, r2, n2 = "undefined" != typeof FileReader;
         this.stream = function(e2) {
           this._input = e2, r2 = e2.slice || e2.webkitSlice || e2.mozSlice, n2 ? ((i3 = new FileReader()).onload = y(this._chunkLoaded, this), i3.onerror = y(this._chunkError, this)) : i3 = new FileReaderSync(), this._nextChunk();
@@ -16315,11 +15965,11 @@ function requirePapaparse_min() {
           return "greedy" === m3.skipEmptyLines ? "" === e2.join("").trim() : 1 === e2.length && 0 === e2[0].length;
         }
         function g3() {
-          if (p3 && a2 && (k("Delimiter", "UndetectableDelimiter", "Unable to auto-detect delimiting character; defaulted to '" + v.DefaultDelimiter + "'"), a2 = false), m3.skipEmptyLines && (p3.data = p3.data.filter(function(e3) {
+          if (p3 && a2 && (k2("Delimiter", "UndetectableDelimiter", "Unable to auto-detect delimiting character; defaulted to '" + v2.DefaultDelimiter + "'"), a2 = false), m3.skipEmptyLines && (p3.data = p3.data.filter(function(e3) {
             return !y2(e3);
           })), _3()) {
             let t2 = function(e3, t3) {
-              U(m3.transformHeader) && (e3 = m3.transformHeader(e3, t3)), c3.push(e3);
+              U2(m3.transformHeader) && (e3 = m3.transformHeader(e3, t3)), c3.push(e3);
             };
             if (p3) if (Array.isArray(p3.data[0])) {
               for (var e2 = 0; _3() && e2 < p3.data.length; e2++) p3.data[e2].forEach(t2);
@@ -16336,7 +15986,7 @@ function requirePapaparse_min() {
               })(t3) ? parseFloat(t3) : d3.test(t3) ? new Date(t3) : "" === t3 ? null : t3) : t3)(n3 = m3.header ? r4 >= c3.length ? "__parsed_extra" : c3[r4] : n3, s3 = m3.transform ? m3.transform(s3, n3) : s3);
               "__parsed_extra" === n3 ? (i5[n3] = i5[n3] || [], i5[n3].push(s3)) : i5[n3] = s3;
             }
-            return m3.header && (r4 > c3.length ? k("FieldMismatch", "TooManyFields", "Too many fields: expected " + c3.length + " fields but parsed " + r4, f3 + t2) : r4 < c3.length && k("FieldMismatch", "TooFewFields", "Too few fields: expected " + c3.length + " fields but parsed " + r4, f3 + t2)), i5;
+            return m3.header && (r4 > c3.length ? k2("FieldMismatch", "TooManyFields", "Too many fields: expected " + c3.length + " fields but parsed " + r4, f3 + t2) : r4 < c3.length && k2("FieldMismatch", "TooFewFields", "Too few fields: expected " + c3.length + " fields but parsed " + r4, f3 + t2)), i5;
           }
           var r3;
           p3 && (m3.header || m3.dynamicTyping || m3.transform) && (r3 = 1, !p3.data.length || Array.isArray(p3.data[0]) ? (p3.data = p3.data.map(i4), r3 = p3.data.length) : p3.data = i4(p3.data, 0), m3.header && p3.meta && (p3.meta.fields = c3), f3 += r3);
@@ -16344,131 +15994,131 @@ function requirePapaparse_min() {
         function _3() {
           return m3.header && 0 === c3.length;
         }
-        function k(e2, t2, i4, r3) {
+        function k2(e2, t2, i4, r3) {
           e2 = { type: e2, code: t2, message: i4 };
           void 0 !== r3 && (e2.row = r3), p3.errors.push(e2);
         }
-        U(m3.step) && (t = m3.step, m3.step = function(e2) {
+        U2(m3.step) && (t = m3.step, m3.step = function(e2) {
           p3 = e2, _3() ? g3() : (g3(), 0 !== p3.data.length && (r2 += e2.data.length, m3.preview && r2 > m3.preview ? s2.abort() : (p3.data = p3.data[0], t(p3, i3))));
         }), this.parse = function(e2, t2, i4) {
-          var r3 = m3.quoteChar || '"', r3 = (m3.newline || (m3.newline = this.guessLineEndings(e2, r3)), a2 = false, m3.delimiter ? U(m3.delimiter) && (m3.delimiter = m3.delimiter(e2), p3.meta.delimiter = m3.delimiter) : ((r3 = ((e3, t3, i5, r4, n3) => {
+          var r3 = m3.quoteChar || '"', r3 = (m3.newline || (m3.newline = this.guessLineEndings(e2, r3)), a2 = false, m3.delimiter ? U2(m3.delimiter) && (m3.delimiter = m3.delimiter(e2), p3.meta.delimiter = m3.delimiter) : ((r3 = ((e3, t3, i5, r4, n3) => {
             var s3, a3, o4, h4;
-            n3 = n3 || [",", "	", "|", ";", v.RECORD_SEP, v.UNIT_SEP];
+            n3 = n3 || [",", "	", "|", ";", v2.RECORD_SEP, v2.UNIT_SEP];
             for (var u4 = 0; u4 < n3.length; u4++) {
               for (var d4, f4 = n3[u4], l4 = 0, c4 = 0, p4 = 0, g4 = (o4 = void 0, new E2({ comments: r4, delimiter: f4, newline: t3, preview: 10 }).parse(e3)), _4 = 0; _4 < g4.data.length; _4++) i5 && y2(g4.data[_4]) ? p4++ : (d4 = g4.data[_4].length, c4 += d4, void 0 === o4 ? o4 = d4 : 0 < d4 && (l4 += Math.abs(d4 - o4), o4 = d4));
               0 < g4.data.length && (c4 /= g4.data.length - p4), (void 0 === a3 || l4 <= a3) && (void 0 === h4 || h4 < c4) && 1.99 < c4 && (a3 = l4, s3 = f4, h4 = c4);
             }
             return { successful: !!(m3.delimiter = s3), bestDelimiter: s3 };
-          })(e2, m3.newline, m3.skipEmptyLines, m3.comments, m3.delimitersToGuess)).successful ? m3.delimiter = r3.bestDelimiter : (a2 = true, m3.delimiter = v.DefaultDelimiter), p3.meta.delimiter = m3.delimiter), b(m3));
+          })(e2, m3.newline, m3.skipEmptyLines, m3.comments, m3.delimitersToGuess)).successful ? m3.delimiter = r3.bestDelimiter : (a2 = true, m3.delimiter = v2.DefaultDelimiter), p3.meta.delimiter = m3.delimiter), b2(m3));
           return m3.preview && m3.header && r3.preview++, n2 = e2, s2 = new E2(r3), p3 = s2.parse(n2, t2, i4), g3(), l3 ? { meta: { paused: true } } : p3 || { meta: { paused: false } };
         }, this.paused = function() {
           return l3;
         }, this.pause = function() {
-          l3 = true, s2.abort(), n2 = U(m3.chunk) ? "" : n2.substring(s2.getCharIndex());
+          l3 = true, s2.abort(), n2 = U2(m3.chunk) ? "" : n2.substring(s2.getCharIndex());
         }, this.resume = function() {
           i3.streamer._halted ? (l3 = false, i3.streamer.parseChunk(n2, true)) : setTimeout(i3.resume, 3);
         }, this.aborted = function() {
           return e;
         }, this.abort = function() {
-          e = true, s2.abort(), p3.meta.aborted = true, U(m3.complete) && m3.complete(p3), n2 = "";
+          e = true, s2.abort(), p3.meta.aborted = true, U2(m3.complete) && m3.complete(p3), n2 = "";
         }, this.guessLineEndings = function(e2, t2) {
           e2 = e2.substring(0, 1048576);
-          var t2 = new RegExp(P(t2) + "([^]*?)" + P(t2), "gm"), i4 = (e2 = e2.replace(t2, "")).split("\r"), t2 = e2.split("\n"), e2 = 1 < t2.length && t2[0].length < i4[0].length;
+          var t2 = new RegExp(P3(t2) + "([^]*?)" + P3(t2), "gm"), i4 = (e2 = e2.replace(t2, "")).split("\r"), t2 = e2.split("\n"), e2 = 1 < t2.length && t2[0].length < i4[0].length;
           if (1 === i4.length || e2) return "\n";
           for (var r3 = 0, n3 = 0; n3 < i4.length; n3++) "\n" === i4[n3][0] && r3++;
           return r3 >= i4.length / 2 ? "\r\n" : "\r";
         };
       }
-      function P(e) {
+      function P3(e) {
         return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       }
       function E2(C) {
-        var S = (C = C || {}).delimiter, O = C.newline, x = C.comments, I2 = C.step, A = C.preview, T = C.fastMode, D2 = null, L = false, F = null == C.quoteChar ? '"' : C.quoteChar, j = F;
-        if (void 0 !== C.escapeChar && (j = C.escapeChar), ("string" != typeof S || -1 < v.BAD_DELIMITERS.indexOf(S)) && (S = ","), x === S) throw new Error("Comment character same as delimiter");
-        true === x ? x = "#" : ("string" != typeof x || -1 < v.BAD_DELIMITERS.indexOf(x)) && (x = false), "\n" !== O && "\r" !== O && "\r\n" !== O && (O = "\n");
-        var z = 0, M = false;
+        var S2 = (C = C || {}).delimiter, O2 = C.newline, x2 = C.comments, I2 = C.step, A2 = C.preview, T = C.fastMode, D2 = null, L2 = false, F2 = null == C.quoteChar ? '"' : C.quoteChar, j2 = F2;
+        if (void 0 !== C.escapeChar && (j2 = C.escapeChar), ("string" != typeof S2 || -1 < v2.BAD_DELIMITERS.indexOf(S2)) && (S2 = ","), x2 === S2) throw new Error("Comment character same as delimiter");
+        true === x2 ? x2 = "#" : ("string" != typeof x2 || -1 < v2.BAD_DELIMITERS.indexOf(x2)) && (x2 = false), "\n" !== O2 && "\r" !== O2 && "\r\n" !== O2 && (O2 = "\n");
+        var z = 0, M3 = false;
         this.parse = function(i3, t, r2) {
           if ("string" != typeof i3) throw new Error("Input must be a string");
-          var n2 = i3.length, e = S.length, s2 = O.length, a2 = x.length, o3 = U(I2), h3 = [], u3 = [], d3 = [], f3 = z = 0;
-          if (!i3) return w2();
-          if (T || false !== T && -1 === i3.indexOf(F)) {
-            for (var l3 = i3.split(O), c3 = 0; c3 < l3.length; c3++) {
-              if (d3 = l3[c3], z += d3.length, c3 !== l3.length - 1) z += O.length;
-              else if (r2) return w2();
-              if (!x || d3.substring(0, a2) !== x) {
+          var n2 = i3.length, e = S2.length, s2 = O2.length, a2 = x2.length, o3 = U2(I2), h3 = [], u3 = [], d3 = [], f3 = z = 0;
+          if (!i3) return w3();
+          if (T || false !== T && -1 === i3.indexOf(F2)) {
+            for (var l3 = i3.split(O2), c3 = 0; c3 < l3.length; c3++) {
+              if (d3 = l3[c3], z += d3.length, c3 !== l3.length - 1) z += O2.length;
+              else if (r2) return w3();
+              if (!x2 || d3.substring(0, a2) !== x2) {
                 if (o3) {
-                  if (h3 = [], k(d3.split(S)), R2(), M) return w2();
-                } else k(d3.split(S));
-                if (A && A <= c3) return h3 = h3.slice(0, A), w2(true);
+                  if (h3 = [], k2(d3.split(S2)), R2(), M3) return w3();
+                } else k2(d3.split(S2));
+                if (A2 && A2 <= c3) return h3 = h3.slice(0, A2), w3(true);
               }
             }
-            return w2();
+            return w3();
           }
-          for (var p3 = i3.indexOf(S, z), g3 = i3.indexOf(O, z), _3 = new RegExp(P(j) + P(F), "g"), m3 = i3.indexOf(F, z); ; ) if (i3[z] === F) for (m3 = z, z++; ; ) {
-            if (-1 === (m3 = i3.indexOf(F, m3 + 1))) return r2 || u3.push({ type: "Quotes", code: "MissingQuotes", message: "Quoted field unterminated", row: h3.length, index: z }), E3();
-            if (m3 === n2 - 1) return E3(i3.substring(z, m3).replace(_3, F));
-            if (F === j && i3[m3 + 1] === j) m3++;
-            else if (F === j || 0 === m3 || i3[m3 - 1] !== j) {
-              -1 !== p3 && p3 < m3 + 1 && (p3 = i3.indexOf(S, m3 + 1));
-              var y2 = v2(-1 === (g3 = -1 !== g3 && g3 < m3 + 1 ? i3.indexOf(O, m3 + 1) : g3) ? p3 : Math.min(p3, g3));
-              if (i3.substr(m3 + 1 + y2, e) === S) {
-                d3.push(i3.substring(z, m3).replace(_3, F)), i3[z = m3 + 1 + y2 + e] !== F && (m3 = i3.indexOf(F, z)), p3 = i3.indexOf(S, z), g3 = i3.indexOf(O, z);
+          for (var p3 = i3.indexOf(S2, z), g3 = i3.indexOf(O2, z), _3 = new RegExp(P3(j2) + P3(F2), "g"), m3 = i3.indexOf(F2, z); ; ) if (i3[z] === F2) for (m3 = z, z++; ; ) {
+            if (-1 === (m3 = i3.indexOf(F2, m3 + 1))) return r2 || u3.push({ type: "Quotes", code: "MissingQuotes", message: "Quoted field unterminated", row: h3.length, index: z }), E3();
+            if (m3 === n2 - 1) return E3(i3.substring(z, m3).replace(_3, F2));
+            if (F2 === j2 && i3[m3 + 1] === j2) m3++;
+            else if (F2 === j2 || 0 === m3 || i3[m3 - 1] !== j2) {
+              -1 !== p3 && p3 < m3 + 1 && (p3 = i3.indexOf(S2, m3 + 1));
+              var y2 = v3(-1 === (g3 = -1 !== g3 && g3 < m3 + 1 ? i3.indexOf(O2, m3 + 1) : g3) ? p3 : Math.min(p3, g3));
+              if (i3.substr(m3 + 1 + y2, e) === S2) {
+                d3.push(i3.substring(z, m3).replace(_3, F2)), i3[z = m3 + 1 + y2 + e] !== F2 && (m3 = i3.indexOf(F2, z)), p3 = i3.indexOf(S2, z), g3 = i3.indexOf(O2, z);
                 break;
               }
-              y2 = v2(g3);
-              if (i3.substring(m3 + 1 + y2, m3 + 1 + y2 + s2) === O) {
-                if (d3.push(i3.substring(z, m3).replace(_3, F)), b2(m3 + 1 + y2 + s2), p3 = i3.indexOf(S, z), m3 = i3.indexOf(F, z), o3 && (R2(), M)) return w2();
-                if (A && h3.length >= A) return w2(true);
+              y2 = v3(g3);
+              if (i3.substring(m3 + 1 + y2, m3 + 1 + y2 + s2) === O2) {
+                if (d3.push(i3.substring(z, m3).replace(_3, F2)), b3(m3 + 1 + y2 + s2), p3 = i3.indexOf(S2, z), m3 = i3.indexOf(F2, z), o3 && (R2(), M3)) return w3();
+                if (A2 && h3.length >= A2) return w3(true);
                 break;
               }
               u3.push({ type: "Quotes", code: "InvalidQuotes", message: "Trailing quote on quoted field is malformed", row: h3.length, index: z }), m3++;
             }
           }
-          else if (x && 0 === d3.length && i3.substring(z, z + a2) === x) {
-            if (-1 === g3) return w2();
-            z = g3 + s2, g3 = i3.indexOf(O, z), p3 = i3.indexOf(S, z);
-          } else if (-1 !== p3 && (p3 < g3 || -1 === g3)) d3.push(i3.substring(z, p3)), z = p3 + e, p3 = i3.indexOf(S, z);
+          else if (x2 && 0 === d3.length && i3.substring(z, z + a2) === x2) {
+            if (-1 === g3) return w3();
+            z = g3 + s2, g3 = i3.indexOf(O2, z), p3 = i3.indexOf(S2, z);
+          } else if (-1 !== p3 && (p3 < g3 || -1 === g3)) d3.push(i3.substring(z, p3)), z = p3 + e, p3 = i3.indexOf(S2, z);
           else {
             if (-1 === g3) break;
-            if (d3.push(i3.substring(z, g3)), b2(g3 + s2), o3 && (R2(), M)) return w2();
-            if (A && h3.length >= A) return w2(true);
+            if (d3.push(i3.substring(z, g3)), b3(g3 + s2), o3 && (R2(), M3)) return w3();
+            if (A2 && h3.length >= A2) return w3(true);
           }
           return E3();
-          function k(e2) {
+          function k2(e2) {
             h3.push(e2), f3 = z;
           }
-          function v2(e2) {
+          function v3(e2) {
             var t2 = 0;
             return t2 = -1 !== e2 && (e2 = i3.substring(m3 + 1, e2)) && "" === e2.trim() ? e2.length : t2;
           }
           function E3(e2) {
-            return r2 || (void 0 === e2 && (e2 = i3.substring(z)), d3.push(e2), z = n2, k(d3), o3 && R2()), w2();
+            return r2 || (void 0 === e2 && (e2 = i3.substring(z)), d3.push(e2), z = n2, k2(d3), o3 && R2()), w3();
           }
-          function b2(e2) {
-            z = e2, k(d3), d3 = [], g3 = i3.indexOf(O, z);
+          function b3(e2) {
+            z = e2, k2(d3), d3 = [], g3 = i3.indexOf(O2, z);
           }
-          function w2(e2) {
-            if (C.header && !t && h3.length && !L) {
+          function w3(e2) {
+            if (C.header && !t && h3.length && !L2) {
               var s3 = h3[0], a3 = /* @__PURE__ */ Object.create(null), o4 = new Set(s3);
               let n3 = false;
               for (let r3 = 0; r3 < s3.length; r3++) {
                 let i4 = s3[r3];
-                if (a3[i4 = U(C.transformHeader) ? C.transformHeader(i4, r3) : i4]) {
+                if (a3[i4 = U2(C.transformHeader) ? C.transformHeader(i4, r3) : i4]) {
                   let e3, t2 = a3[i4];
                   for (; e3 = i4 + "_" + t2, t2++, o4.has(e3); ) ;
                   o4.add(e3), s3[r3] = e3, a3[i4]++, n3 = true, (D2 = null === D2 ? {} : D2)[e3] = i4;
                 } else a3[i4] = 1, s3[r3] = i4;
                 o4.add(i4);
               }
-              n3 && console.warn("Duplicate headers found and renamed."), L = true;
+              n3 && console.warn("Duplicate headers found and renamed."), L2 = true;
             }
-            return { data: h3, errors: u3, meta: { delimiter: S, linebreak: O, aborted: M, truncated: !!e2, cursor: f3 + (t || 0), renamedHeaders: D2 } };
+            return { data: h3, errors: u3, meta: { delimiter: S2, linebreak: O2, aborted: M3, truncated: !!e2, cursor: f3 + (t || 0), renamedHeaders: D2 } };
           }
           function R2() {
-            I2(w2()), h3 = [], u3 = [];
+            I2(w3()), h3 = [], u3 = [];
           }
         }, this.abort = function() {
-          M = true;
+          M3 = true;
         }, this.getCharIndex = function() {
           return z;
         };
@@ -16480,24 +16130,24 @@ function requirePapaparse_min() {
           var n2 = { abort: function() {
             r2 = true, _2(t.workerId, { data: [], errors: [], meta: { aborted: true } });
           }, pause: m2, resume: m2 };
-          if (U(i3.userStep)) {
+          if (U2(i3.userStep)) {
             for (var s2 = 0; s2 < t.results.data.length && (i3.userStep({ data: t.results.data[s2], errors: t.results.errors, meta: t.results.meta }, n2), !r2); s2++) ;
             delete t.results;
-          } else U(i3.userChunk) && (i3.userChunk(t.results, n2, t.file), delete t.results);
+          } else U2(i3.userChunk) && (i3.userChunk(t.results, n2, t.file), delete t.results);
         }
         t.finished && !r2 && _2(t.workerId, t.results);
       }
       function _2(e, t) {
         var i3 = o2[e];
-        U(i3.userComplete) && i3.userComplete(t), i3.terminate(), delete o2[e];
+        U2(i3.userComplete) && i3.userComplete(t), i3.terminate(), delete o2[e];
       }
       function m2() {
         throw new Error("Not implemented.");
       }
-      function b(e) {
+      function b2(e) {
         if ("object" != typeof e || null === e) return e;
         var t, i3 = Array.isArray(e) ? [] : {};
-        for (t in e) i3[t] = b(e[t]);
+        for (t in e) i3[t] = b2(e[t]);
         return i3;
       }
       function y(e, t) {
@@ -16505,24 +16155,24 @@ function requirePapaparse_min() {
           e.apply(t, arguments);
         };
       }
-      function U(e) {
+      function U2(e) {
         return "function" == typeof e;
       }
-      return v.parse = function(e, t) {
+      return v2.parse = function(e, t) {
         var i3 = (t = t || {}).dynamicTyping || false;
-        U(i3) && (t.dynamicTypingFunction = i3, i3 = {});
-        if (t.dynamicTyping = i3, t.transform = !!U(t.transform) && t.transform, !t.worker || !v.WORKERS_SUPPORTED) return i3 = null, v.NODE_STREAM_INPUT, "string" == typeof e ? (e = ((e2) => 65279 !== e2.charCodeAt(0) ? e2 : e2.slice(1))(e), i3 = new (t.download ? f2 : c2)(t)) : true === e.readable && U(e.read) && U(e.on) ? i3 = new p2(t) : (n.File && e instanceof File || e instanceof Object) && (i3 = new l2(t)), i3.stream(e);
+        U2(i3) && (t.dynamicTypingFunction = i3, i3 = {});
+        if (t.dynamicTyping = i3, t.transform = !!U2(t.transform) && t.transform, !t.worker || !v2.WORKERS_SUPPORTED) return i3 = null, v2.NODE_STREAM_INPUT, "string" == typeof e ? (e = ((e2) => 65279 !== e2.charCodeAt(0) ? e2 : e2.slice(1))(e), i3 = new (t.download ? f2 : c2)(t)) : true === e.readable && U2(e.read) && U2(e.on) ? i3 = new p2(t) : (n.File && e instanceof File || e instanceof Object) && (i3 = new l2(t)), i3.stream(e);
         (i3 = (() => {
           var e2;
-          return !!v.WORKERS_SUPPORTED && (e2 = (() => {
+          return !!v2.WORKERS_SUPPORTED && (e2 = (() => {
             var e3 = n.URL || n.webkitURL || null, t2 = r.toString();
-            return v.BLOB_URL || (v.BLOB_URL = e3.createObjectURL(new Blob(["var global = (function() { if (typeof self !== 'undefined') { return self; } if (typeof window !== 'undefined') { return window; } if (typeof global !== 'undefined') { return global; } return {}; })(); global.IS_PAPA_WORKER=true; ", "(", t2, ")();"], { type: "text/javascript" })));
+            return v2.BLOB_URL || (v2.BLOB_URL = e3.createObjectURL(new Blob(["var global = (function() { if (typeof self !== 'undefined') { return self; } if (typeof window !== 'undefined') { return window; } if (typeof global !== 'undefined') { return global; } return {}; })(); global.IS_PAPA_WORKER=true; ", "(", t2, ")();"], { type: "text/javascript" })));
           })(), (e2 = new n.Worker(e2)).onmessage = g2, e2.id = h2++, o2[e2.id] = e2);
-        })()).userStep = t.step, i3.userChunk = t.chunk, i3.userComplete = t.complete, i3.userError = t.error, t.step = U(t.step), t.chunk = U(t.chunk), t.complete = U(t.complete), t.error = U(t.error), delete t.worker, i3.postMessage({ input: e, config: t, workerId: i3.id });
-      }, v.unparse = function(e, t) {
+        })()).userStep = t.step, i3.userChunk = t.chunk, i3.userComplete = t.complete, i3.userError = t.error, t.step = U2(t.step), t.chunk = U2(t.chunk), t.complete = U2(t.complete), t.error = U2(t.error), delete t.worker, i3.postMessage({ input: e, config: t, workerId: i3.id });
+      }, v2.unparse = function(e, t) {
         var n2 = false, _3 = true, m3 = ",", y2 = "\r\n", s2 = '"', a2 = s2 + s2, i3 = false, r2 = null, o3 = false, h3 = ((() => {
           if ("object" == typeof t) {
-            if ("string" != typeof t.delimiter || v.BAD_DELIMITERS.filter(function(e2) {
+            if ("string" != typeof t.delimiter || v2.BAD_DELIMITERS.filter(function(e2) {
               return -1 !== t.delimiter.indexOf(e2);
             }).length || (m3 = t.delimiter), "boolean" != typeof t.quotes && "function" != typeof t.quotes && !Array.isArray(t.quotes) || (n2 = t.quotes), "boolean" != typeof t.skipEmptyLines && "string" != typeof t.skipEmptyLines || (i3 = t.skipEmptyLines), "string" == typeof t.newline && (y2 = t.newline), "string" == typeof t.quoteChar && (s2 = t.quoteChar), "boolean" == typeof t.header && (_3 = t.header), Array.isArray(t.columns)) {
               if (0 === t.columns.length) throw new Error("Option columns is empty");
@@ -16530,7 +16180,7 @@ function requirePapaparse_min() {
             }
             void 0 !== t.escapeChar && (a2 = t.escapeChar + s2), t.escapeFormulae instanceof RegExp ? o3 = t.escapeFormulae : "boolean" == typeof t.escapeFormulae && t.escapeFormulae && (o3 = /^[=+\-@\t\r].*$/);
           }
-        })(), new RegExp(P(s2), "g"));
+        })(), new RegExp(P3(s2), "g"));
         "string" == typeof e && (e = JSON.parse(e));
         if (Array.isArray(e)) {
           if (!e.length || Array.isArray(e[0])) return u3(null, e, i3);
@@ -16540,7 +16190,7 @@ function requirePapaparse_min() {
         function u3(e2, t2, i4) {
           var r3 = "", n3 = ("string" == typeof e2 && (e2 = JSON.parse(e2)), "string" == typeof t2 && (t2 = JSON.parse(t2)), Array.isArray(e2) && 0 < e2.length), s3 = !Array.isArray(t2[0]);
           if (n3 && _3) {
-            for (var a3 = 0; a3 < e2.length; a3++) 0 < a3 && (r3 += m3), r3 += k(e2[a3], a3);
+            for (var a3 = 0; a3 < e2.length; a3++) 0 < a3 && (r3 += m3), r3 += k2(e2[a3], a3);
             0 < t2.length && (r3 += y2);
           }
           for (var o4 = 0; o4 < t2.length; o4++) {
@@ -16556,42 +16206,42 @@ function requirePapaparse_min() {
               for (var p3 = 0; p3 < h4; p3++) {
                 0 < p3 && !d3 && (r3 += m3);
                 var g3 = n3 && s3 ? e2[p3] : p3;
-                r3 += k(t2[o4][g3], p3);
+                r3 += k2(t2[o4][g3], p3);
               }
               o4 < t2.length - 1 && (!i4 || 0 < h4 && !d3) && (r3 += y2);
             }
           }
           return r3;
         }
-        function k(e2, t2) {
+        function k2(e2, t2) {
           var i4, r3;
           return null == e2 ? "" : e2.constructor === Date ? JSON.stringify(e2).slice(1, 25) : (r3 = false, o3 && "string" == typeof e2 && o3.test(e2) && (e2 = "'" + e2, r3 = true), i4 = e2.toString().replace(h3, a2), (r3 = r3 || true === n2 || "function" == typeof n2 && n2(e2, t2) || Array.isArray(n2) && n2[t2] || ((e3, t3) => {
             for (var i5 = 0; i5 < t3.length; i5++) if (-1 < e3.indexOf(t3[i5])) return true;
             return false;
-          })(i4, v.BAD_DELIMITERS) || -1 < i4.indexOf(m3) || " " === i4.charAt(0) || " " === i4.charAt(i4.length - 1)) ? s2 + i4 + s2 : i4);
+          })(i4, v2.BAD_DELIMITERS) || -1 < i4.indexOf(m3) || " " === i4.charAt(0) || " " === i4.charAt(i4.length - 1)) ? s2 + i4 + s2 : i4);
         }
-      }, v.RECORD_SEP = String.fromCharCode(30), v.UNIT_SEP = String.fromCharCode(31), v.BYTE_ORDER_MARK = "\uFEFF", v.BAD_DELIMITERS = ["\r", "\n", '"', v.BYTE_ORDER_MARK], v.WORKERS_SUPPORTED = !s && !!n.Worker, v.NODE_STREAM_INPUT = 1, v.LocalChunkSize = 10485760, v.RemoteChunkSize = 5242880, v.DefaultDelimiter = ",", v.Parser = E2, v.ParserHandle = i2, v.NetworkStreamer = f2, v.FileStreamer = l2, v.StringStreamer = c2, v.ReadableStreamStreamer = p2, n.jQuery && ((d2 = n.jQuery).fn.parse = function(o3) {
+      }, v2.RECORD_SEP = String.fromCharCode(30), v2.UNIT_SEP = String.fromCharCode(31), v2.BYTE_ORDER_MARK = "\uFEFF", v2.BAD_DELIMITERS = ["\r", "\n", '"', v2.BYTE_ORDER_MARK], v2.WORKERS_SUPPORTED = !s && !!n.Worker, v2.NODE_STREAM_INPUT = 1, v2.LocalChunkSize = 10485760, v2.RemoteChunkSize = 5242880, v2.DefaultDelimiter = ",", v2.Parser = E2, v2.ParserHandle = i2, v2.NetworkStreamer = f2, v2.FileStreamer = l2, v2.StringStreamer = c2, v2.ReadableStreamStreamer = p2, n.jQuery && ((d2 = n.jQuery).fn.parse = function(o3) {
         var i3 = o3.config || {}, h3 = [];
         return this.each(function(e2) {
           if (!("INPUT" === d2(this).prop("tagName").toUpperCase() && "file" === d2(this).attr("type").toLowerCase() && n.FileReader) || !this.files || 0 === this.files.length) return true;
           for (var t = 0; t < this.files.length; t++) h3.push({ file: this.files[t], inputElem: this, instanceConfig: d2.extend({}, i3) });
         }), e(), this;
         function e() {
-          if (0 === h3.length) U(o3.complete) && o3.complete();
+          if (0 === h3.length) U2(o3.complete) && o3.complete();
           else {
             var e2, t, i4, r2, n2 = h3[0];
-            if (U(o3.before)) {
+            if (U2(o3.before)) {
               var s2 = o3.before(n2.file, n2.inputElem);
               if ("object" == typeof s2) {
-                if ("abort" === s2.action) return e2 = "AbortError", t = n2.file, i4 = n2.inputElem, r2 = s2.reason, void (U(o3.error) && o3.error({ name: e2 }, t, i4, r2));
+                if ("abort" === s2.action) return e2 = "AbortError", t = n2.file, i4 = n2.inputElem, r2 = s2.reason, void (U2(o3.error) && o3.error({ name: e2 }, t, i4, r2));
                 if ("skip" === s2.action) return void u3();
                 "object" == typeof s2.config && (n2.instanceConfig = d2.extend(n2.instanceConfig, s2.config));
               } else if ("skip" === s2) return void u3();
             }
             var a2 = n2.instanceConfig.complete;
             n2.instanceConfig.complete = function(e3) {
-              U(a2) && a2(e3, n2.file, n2.inputElem), u3();
-            }, v.parse(n2.file, n2.instanceConfig);
+              U2(a2) && a2(e3, n2.file, n2.inputElem), u3();
+            }, v2.parse(n2.file, n2.instanceConfig);
           }
         }
         function u3() {
@@ -16599,9 +16249,9 @@ function requirePapaparse_min() {
         }
       }), a && (n.onmessage = function(e) {
         e = e.data;
-        void 0 === v.WORKER_ID && e && (v.WORKER_ID = e.workerId);
-        "string" == typeof e.input ? n.postMessage({ workerId: v.WORKER_ID, results: v.parse(e.input, e.config), finished: true }) : (n.File && e.input instanceof File || e.input instanceof Object) && (e = v.parse(e.input, e.config)) && n.postMessage({ workerId: v.WORKER_ID, results: e, finished: true });
-      }), (f2.prototype = Object.create(u2.prototype)).constructor = f2, (l2.prototype = Object.create(u2.prototype)).constructor = l2, (c2.prototype = Object.create(c2.prototype)).constructor = c2, (p2.prototype = Object.create(u2.prototype)).constructor = p2, v;
+        void 0 === v2.WORKER_ID && e && (v2.WORKER_ID = e.workerId);
+        "string" == typeof e.input ? n.postMessage({ workerId: v2.WORKER_ID, results: v2.parse(e.input, e.config), finished: true }) : (n.File && e.input instanceof File || e.input instanceof Object) && (e = v2.parse(e.input, e.config)) && n.postMessage({ workerId: v2.WORKER_ID, results: e, finished: true });
+      }), (f2.prototype = Object.create(u2.prototype)).constructor = f2, (l2.prototype = Object.create(u2.prototype)).constructor = l2, (c2.prototype = Object.create(c2.prototype)).constructor = c2, (p2.prototype = Object.create(u2.prototype)).constructor = p2, v2;
     });
   })(papaparse_min$1);
   return papaparse_min$1.exports;
@@ -16851,7 +16501,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   */
   async updateShortDefs(data2, homonym, config) {
     const languageID = homonym.lexemes[0].lemma.languageID;
-    const model = LanguageModelFactory.getLanguageModel(languageID);
+    const model = A.getLanguageModel(languageID);
     for (let lexeme of homonym.lexemes) {
       const deftexts = this.lookupInDataIndex(data2, lexeme.lemma, model);
       if (deftexts) {
@@ -16866,9 +16516,9 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
               rightsUri = rightsUri + `#${providerCode}`;
               rightsText = config.rights_keys[providerCode];
             }
-            const provider = new ResourceProvider(rightsUri, rightsText);
-            const def = new Definition(text, config.langs.target, format, lexeme.lemma.word);
-            const definition = ResourceProvider.getProxy(provider, def);
+            const provider = new W(rightsUri, rightsText);
+            const def = new Ze(text, config.langs.target, format, lexeme.lemma.word);
+            const definition = W.getProxy(provider, def);
             lexeme.meaning.appendShortDefs(definition);
           } catch (error) {
             this.addError(this.l10n.getMsg("LEXICONS_FAILED_APPEND_DEFS", { message: error.message }));
@@ -16891,7 +16541,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   */
   collectFullDefURLs(data2, homonym, config) {
     const languageID = homonym.lexemes[0].lemma.languageID;
-    const model = LanguageModelFactory.getLanguageModel(languageID);
+    const model = A.getLanguageModel(languageID);
     const urlFull = config.urls.full;
     if (!urlFull) {
       this.addError(this.l10n.getMsg("LEXICONS_NO_FULL_URL"));
@@ -16931,9 +16581,9 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
             this.addError(this.l10n.getMsg("LEXICONS_FAILED_CACHED_DATA", { message: error }));
             this.prepareFailedCallback("fullDefs", homonym);
           } else {
-            const provider = new ResourceProvider(config.urls.full, config.rights);
-            const def = new Definition(fullDefData, config.langs.target, "text/plain", request.lexeme.lemma.word);
-            const definition = ResourceProvider.getProxy(provider, def);
+            const provider = new W(config.urls.full, config.rights);
+            const def = new Ze(fullDefData, config.langs.target, "text/plain", request.lexeme.lemma.word);
+            const definition = W.getProxy(provider, def);
             request.lexeme.meaning.appendFullDefs(definition);
             this.prepareSuccessCallback("fullDefs", homonym);
           }
@@ -16963,9 +16613,9 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
           const error = fullDefData.match(/no entries found/i) ? "No entries found." : fullDefData;
           this.addError(this.l10n.getMsg("LEXICONS_FAILED_CACHED_DATA", { message: error }));
         } else {
-          const provider = new ResourceProvider(config.urls.full, config.rights);
-          const def = new Definition(fullDefData, config.langs.target, "text/plain", request.lexeme.lemma.word);
-          const definition = ResourceProvider.getProxy(provider, def);
+          const provider = new W(config.urls.full, config.rights);
+          const def = new Ze(fullDefData, config.langs.target, "text/plain", request.lexeme.lemma.word);
+          const definition = W.getProxy(provider, def);
           request.lexeme.meaning.appendFullDefs(definition);
         }
       } catch (error) {
@@ -16978,7 +16628,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Symbol} languageID
   */
   getRequests(languageID) {
-    const languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID);
+    const languageCode = A.getLanguageCodeFromId(languageID);
     return Object.keys(this.config.lexicons).filter((url2) => this.config.lexicons[url2] && this.config.lexicons[url2].langs && this.config.lexicons[url2].langs.source === languageCode);
   }
   /**
@@ -17119,7 +16769,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   constructor(config = {}) {
     super();
     this.config = this.uploadConfig(config, DefaultConfig$3);
-    this.provider = new ResourceProvider(this.config.url, this.config.rights);
+    this.provider = new W(this.config.url, this.config.rights);
     this.authors = [];
   }
   /**
@@ -17167,7 +16817,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
         return {
           wordUsageExamples: parsedWordUsageList,
           targetWord: homonym.targetWord,
-          language: LanguageModelFactory.getLanguageCodeFromId(homonym.languageID),
+          language: A.getLanguageCodeFromId(homonym.languageID),
           provider: this.provider
         };
       } else {
@@ -17296,7 +16946,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
     jsonObj.abbreviations.forEach((abbrItem) => {
       abbreviations[abbrItem["@lang"]] = abbrItem["@value"].replace(".", "");
     });
-    let author = new Author(jsonObj.urn, titles, abbreviations);
+    let author = new zr(jsonObj.urn, titles, abbreviations);
     author.ID = this.extractIDFromURNAuthor(author.urn);
     let works = [];
     jsonObj.works.forEach((workItem) => {
@@ -17332,7 +16982,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
     jsonObj.abbreviations.forEach((abbrItem) => {
       abbreviations[abbrItem["@lang"]] = abbrItem["@value"].replace(".", "");
     });
-    let textWork = new TextWork(author, jsonObj.urn, titles, abbreviations);
+    let textWork = new qr(author, jsonObj.urn, titles, abbreviations);
     textWork.ID = this.extractIDFromURNTextWork(textWork.urn);
     return textWork;
   }
@@ -17359,9 +17009,9 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   */
   createWordUsageExample(jsonObj, homonym, author, textWork, passage) {
     const source = this.config.sourceTextUrl + jsonObj.link;
-    let wordUsageExample = new WordUsageExample(
+    let wordUsageExample = new $r(
       // eslint-disable-line prefer-const
-      LanguageModelFactory.getLanguageCodeFromId(homonym.languageID),
+      A.getLanguageCodeFromId(homonym.languageID),
       jsonObj.target,
       jsonObj.left,
       jsonObj.right,
@@ -17455,7 +17105,7 @@ class ArethusaTreebankAdapter extends BaseAdapter {
           this.addError(this.l10n.getMsg("MORPH_TREEBANK_NO_ANSWER_FOR_WORD", { word }));
           return;
         }
-        const languageModel = LanguageModelFactory.getLanguageModel(languageID);
+        const languageModel = A.getLanguageModel(languageID);
         if (!languageModel) {
           this.addError(this.l10n.getMsg("MORPH_TREEBANK_UNSUPPORTED_LANGUAGE", { languageId: languageID.toString() }));
           return;
@@ -17463,16 +17113,16 @@ class ArethusaTreebankAdapter extends BaseAdapter {
         let mapper = new ImportMorphData(languageModel, "arethusa");
         mapper.setPropertyParser(function(propertyName, propertyValue, inputElem) {
           if (propertyName === "pers") {
-            propertyValue = propertyValue.replace("first person", constants.ORD_1ST);
-            propertyValue = propertyValue.replace("second person", constants.ORD_2ND);
-            propertyValue = propertyValue.replace("third person", constants.ORD_3RD);
+            propertyValue = propertyValue.replace("first person", bl.ORD_1ST);
+            propertyValue = propertyValue.replace("second person", bl.ORD_2ND);
+            propertyValue = propertyValue.replace("third person", bl.ORD_3RD);
           }
           return [propertyValue];
         });
         const transformAdapter = new AlpheiosLexiconTransformer(this, mapper, "arethusa");
         const homonym = transformAdapter.transformData(tbRes, word);
-        if (homonym && homonym.lexemes && homonym.lexemes.length === 1 && homonym.lexemes[0].lemma.features[Feature.types.part].value === constants.POFS_VERB && homonym.lexemes[0].inflections.length === 1 && languageModel.normalizeFeatureValue(Feature.types.mood, homonym.lexemes[0].inflections[0][Feature.types.mood].value) === constants.MOOD_PARTICIPLE) {
-          homonym.lexemes[0].inflections[0].addFeature(new Feature(Feature.types.part, constants.POFS_VERB_PARTICIPLE, languageModel.languageID));
+        if (homonym && homonym.lexemes && homonym.lexemes.length === 1 && homonym.lexemes[0].lemma.features[l$1.types.part].value === bl.POFS_VERB && homonym.lexemes[0].inflections.length === 1 && languageModel.normalizeFeatureValue(l$1.types.mood, homonym.lexemes[0].inflections[0][l$1.types.mood].value) === bl.MOOD_PARTICIPLE) {
+          homonym.lexemes[0].inflections[0].addFeature(new l$1(l$1.types.part, bl.POFS_VERB_PARTICIPLE, languageModel.languageID));
         }
         return homonym;
       } else {
@@ -17577,9 +17227,9 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
     }
   }
   get logeionLangCode() {
-    if (this.config.lang === constants.STR_LANG_CODE_GRC) {
+    if (this.config.lang === bl.STR_LANG_CODE_GRC) {
       return "greek";
-    } else if ([constants.STR_LANG_CODE_LAT, constants.STR_LANG_CODE_LA].includes(this.config.lang)) {
+    } else if ([bl.STR_LANG_CODE_LAT, bl.STR_LANG_CODE_LA].includes(this.config.lang)) {
       return "latin";
     }
   }
@@ -17590,10 +17240,10 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
   */
   filterAndLimitWords(words) {
     const finalWords = [];
-    const model = LanguageModelFactory.getLanguageModelFromCode(this.config.lang);
+    const model = A.getLanguageModelFromCode(this.config.lang);
     const otherModels = [];
     this.config.availableLangs.forEach((lang) => {
-      const modelLang = LanguageModelFactory.getLanguageModelFromCode(lang);
+      const modelLang = A.getLanguageModelFromCode(lang);
       if (lang !== this.config.lang && modelLang.isValidUnicode) {
         otherModels.push(modelLang);
       }
@@ -17713,7 +17363,7 @@ class AlpheiosTokenizationAdapter extends BaseAdapter {
       }
       dataFormatted.items[param.name] = result;
     });
-    return new Options(dataFormatted, new this.storage(dataFormatted.domain));
+    return new Gr(dataFormatted, new this.storage(dataFormatted.domain));
   }
   /**
   * This method constructs full url for getting tokenize data
@@ -17884,7 +17534,7 @@ class DTSAPIAdapter extends BaseAdapter {
    * @returns {Collection}
    */
   convertToCollections(collectionsJSON) {
-    const rootCollection = new Collection({
+    const rootCollection = new hn({
       totalItems: collectionsJSON.totalItems,
       title: collectionsJSON.title !== "None" ? collectionsJSON.title : "Alpheios",
       id: collectionsJSON["@id"] !== "default" ? collectionsJSON["@id"] : null,
@@ -17937,7 +17587,7 @@ const ab = { "label": "Abkhazian", "langCode": "abk" };
 const af = { "label": "Afrikaans", "langCode": "afr" };
 const ak = { "label": "Akan", "langCode": "aka" };
 const am = { "label": "Amharic", "langCode": "amh" };
-const ar = { "label": "Arabic", "langCode": "ara" };
+const ar2 = { "label": "Arabic", "langCode": "ara" };
 const as = { "label": "Assamese", "langCode": "asm" };
 const ay = { "label": "Aymara", "langCode": "aym" };
 const az = { "label": "Azerbaijani", "langCode": "aze" };
@@ -17973,7 +17623,7 @@ const fa = { "label": "Persian", "langCode": "per" };
 const fi = { "label": "Finnish", "langCode": "fin" };
 const fj = { "label": "Fijian", "langCode": "fij" };
 const fo = { "label": "Faroese", "langCode": "fao" };
-const fr = { "label": "French", "langCode": "fra" };
+const fr2 = { "label": "French", "langCode": "fra" };
 const fy = { "label": "Frisian", "langCode": "frr" };
 const ga = { "label": "Irish", "langCode": "gle" };
 const gd = { "label": "Scots Gaelic", "langCode": "gla" };
@@ -17986,8 +17636,8 @@ const ha = { "label": "Hausa", "langCode": "hau" };
 const haw = { "label": "Hawaiian", "langCode": "haw" };
 const hi = { "label": "Hindi", "langCode": "hin" };
 const hmn = { "label": "Hmong", "langCode": "hmn" };
-const hr = { "label": "Croatian", "langCode": "hrv" };
-const ht = { "label": "Haitian Creole", "langCode": "hat" };
+const hr2 = { "label": "Croatian", "langCode": "hrv" };
+const ht2 = { "label": "Haitian Creole", "langCode": "hat" };
 const hu = { "label": "Hungarian", "langCode": "hun" };
 const hy = { "label": "Armenian", "langCode": "hye" };
 const ia = { "label": "Interlingua", "langCode": "ina" };
@@ -18025,24 +17675,24 @@ const mi = { "label": "Maori", "langCode": "mao" };
 const mk = { "label": "Macedonian", "langCode": "mac" };
 const ml = { "label": "Malayalam", "langCode": "mal" };
 const mn = { "label": "Mongolian", "langCode": "mon" };
-const mr = { "label": "Marathi", "langCode": "mar" };
+const mr2 = { "label": "Marathi", "langCode": "mar" };
 const ms = { "label": "Malay", "langCode": "msa" };
-const mt = { "label": "Maltese", "langCode": "mlt" };
+const mt2 = { "label": "Maltese", "langCode": "mlt" };
 const my = { "label": "Burmese", "langCode": "mya" };
 const na = { "label": "Nauru", "langCode": "nau" };
 const ne = { "label": "Nepali", "langCode": "nep" };
 const nl = { "label": "Dutch", "langCode": "nld" };
 const no = { "label": "Norwegian", "langCode": "nor" };
-const nr = { "label": "Ndebele", "langCode": "nbl" };
+const nr2 = { "label": "Ndebele", "langCode": "nbl" };
 const nso = { "label": "Pedi", "langCode": "nso" };
 const ny = { "label": "Nyanja", "langCode": "nya" };
 const oc = { "label": "Occitan", "langCode": "oci" };
 const om = { "label": "Oromo", "langCode": "orm" };
-const or = { "label": "Oriya", "langCode": "ori" };
+const or2 = { "label": "Oriya", "langCode": "ori" };
 const pa = { "label": "Punjabi", "langCode": "pan" };
 const pl = { "label": "Polish", "langCode": "pol" };
 const ps = { "label": "Pashto", "langCode": "pus" };
-const pt = { "label": "Portuguese", "langCode": "por" };
+const pt2 = { "label": "Portuguese", "langCode": "por" };
 const qu = { "label": "Quechua", "langCode": "que" };
 const rm = { "label": "Rhaeto Romance", "langCode": "roh" };
 const rn = { "label": "Rundi", "langCode": "run" };
@@ -18060,7 +17710,7 @@ const sm = { "label": "Samoan", "langCode": "smo" };
 const sn = { "label": "Shona", "langCode": "sna" };
 const so = { "label": "Somali", "langCode": "som" };
 const sq = { "label": "Albanian", "langCode": "sqi" };
-const sr = { "label": "Serbian", "langCode": "srp" };
+const sr2 = { "label": "Serbian", "langCode": "srp" };
 const ss = { "label": "Siswant", "langCode": "ssw" };
 const st = { "label": "Sesotho", "langCode": "sot" };
 const su = { "label": "Sundanese", "langCode": "sun" };
@@ -18077,12 +17727,12 @@ const tl = { "label": "Tagalog", "langCode": "tgl" };
 const tlh = { "label": "Klingon", "langCode": "tlh" };
 const tn = { "label": "Tswana", "langCode": "tsn" };
 const to = { "label": "Tonga", "langCode": "tog" };
-const tr = { "label": "Turkish", "langCode": "tur" };
+const tr2 = { "label": "Turkish", "langCode": "tur" };
 const ts = { "label": "Tsonga", "langCode": "tso" };
 const tt = { "label": "Tatar", "langCode": "tat" };
 const ug = { "label": "Uighur", "langCode": "uig" };
 const uk = { "label": "Ukrainian", "langCode": "ukr" };
-const ur = { "label": "Urdu", "langCode": "urd" };
+const ur2 = { "label": "Urdu", "langCode": "urd" };
 const uz = { "label": "Uzbek", "langCode": "uzb" };
 const ve = { "label": "Venda", "langCode": "ven" };
 const vi = { "label": "Vietnamese", "langCode": "vie" };
@@ -18101,7 +17751,7 @@ const LangsList = {
   af,
   ak,
   am,
-  ar,
+  ar: ar2,
   as,
   ay,
   az,
@@ -18137,7 +17787,7 @@ const LangsList = {
   fi,
   fj,
   fo,
-  fr,
+  fr: fr2,
   fy,
   ga,
   gd,
@@ -18150,8 +17800,8 @@ const LangsList = {
   haw,
   hi,
   hmn,
-  hr,
-  ht,
+  hr: hr2,
+  ht: ht2,
   hu,
   hy,
   ia,
@@ -18189,24 +17839,24 @@ const LangsList = {
   mk,
   ml,
   mn,
-  mr,
+  mr: mr2,
   ms,
-  mt,
+  mt: mt2,
   my,
   na,
   ne,
   nl,
   no,
-  nr,
+  nr: nr2,
   nso,
   ny,
   oc,
   om,
-  or,
+  or: or2,
   pa,
   pl,
   ps,
-  pt,
+  pt: pt2,
   qu,
   rm,
   rn,
@@ -18224,7 +17874,7 @@ const LangsList = {
   sn,
   so,
   sq,
-  sr,
+  sr: sr2,
   ss,
   st,
   su,
@@ -18241,12 +17891,12 @@ const LangsList = {
   tlh,
   tn,
   to,
-  tr,
+  tr: tr2,
   ts,
   tt,
   ug,
   uk,
-  ur,
+  ur: ur2,
   uz,
   ve,
   vi,
@@ -18329,7 +17979,7 @@ class DetectLangAdapter extends BaseAdapter {
         finalLangs = langsData.data.detections;
       }
       if (finalLangs && finalLangs.length > 0) {
-        const lang = finalLangs.sort((a, b) => a.confidence - b.confidence).reverse()[0].language;
+        const lang = finalLangs.sort((a, b2) => a.confidence - b2.confidence).reverse()[0].language;
         return LangsList[lang] ? LangsList[lang].langCode : lang;
       }
     }
