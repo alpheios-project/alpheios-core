@@ -4,7 +4,7 @@
 import HTMLSelector from '@/lib/selection/media/html-selector'
 import TextSelector from '@/lib/selection/text-selector'
 import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
-import { Constants, TextQuoteSelector, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, TextQuoteSelector, LanguageModelFactory } from '@alpheios-core/data-models'
 
 import BaseTestHelp from '@tests/helpclasses/base-test-help'
 

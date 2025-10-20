@@ -1,5 +1,5 @@
 /** @module module */
-import Vue from '@vue-runtime'
+import Vue from 'vue'
 import Platform from '@comp/lib/utility/platform.js'
 // This is a root Vue instance that is a common parent for all modules, and correspondingly, all UI components.
 // It is used to share information across all Vue instances created.
@@ -22,9 +22,17 @@ export default class Module {
     if (!rootVi) {
       // Create a root Vue instance if not has been done already.
       // All properties registered here will be shared across all Vue instances (i.e. components).
+      Vue.mixin({
+        computed: {
+          $api() {
+            return api
+          }
+        }
+      })
+
       rootVi = new Vue({
-        store: store, // Install store into the instance
-        provide: api // Public API of the modules for child components
+        store: store//, // Install store into the instance
+        // provide: api // Public API of the modules for child components
       })
     }
 

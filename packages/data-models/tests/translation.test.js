@@ -14,7 +14,7 @@ describe('Translation object', () => {
   })
 
   test('Should not allow empty arguments', () => {
-    expect(() => new Translation()).toThrowError(/empty/)
+    expect(() => new Translation()).toThrow(/empty/)
   })
 
   test('Should be initialized properly', () => {
@@ -26,7 +26,7 @@ describe('Translation object', () => {
   })
 
   test('readTranslationFromJSONList - if json is empty - throw error', () => {
-    expect(() => Translation.readTranslationFromJSONList(lemma)).toThrowError(/not proper/)
+    expect(() => Translation.readTranslationFromJSONList(lemma)).toThrow(/not proper/)
   })
 
   test('readTranslationFromJSONList - if json is proper created new Translation object', () => {

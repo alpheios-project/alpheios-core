@@ -38,32 +38,32 @@ describe('lexeme.test.js', () => {
     expect(function () {
       const l = new Lexeme()
       console.log(l)
-    }).toThrowError(/empty/)
+    }).toThrow(/empty/)
 
     expect(function () {
       const l = new Lexeme('foolemma')
       console.log(l)
-    }).toThrowError(/Lemma object type/)
+    }).toThrow(/Lemma object type/)
 
     expect(function () {
       const l = new Lexeme(lemma)
       console.log(l)
-    }).toThrowError(/empty/)
+    }).toThrow(/empty/)
 
     expect(function () {
       const l = new Lexeme(lemma, 'fooinflection')
       console.log(l)
-    }).toThrowError(/array/)
+    }).toThrow(/array/)
 
     expect(function () {
       const l = new Lexeme(lemma, ['fooinflection'])
       console.log(l)
-    }).toThrowError(/Inflection object type/)
+    }).toThrow(/Inflection object type/)
 
     expect(function () {
       const l = new Lexeme(lemma, [inflection1], 'foomeaning')
       console.log(l)
-    }).toThrowError(/DefinitionSet object type/)
+    }).toThrow(/DefinitionSet object type/)
   })
 
   it('2 Lexeme - create with min arguments', () => {

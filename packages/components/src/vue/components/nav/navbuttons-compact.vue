@@ -47,22 +47,15 @@
 // Vue components
 import Tooltip from '@/vue/components/tooltip.vue'
 // Embeddable SVG icons
-import MorphologyIcon from '@/images/inline-icons/language.svg'
-import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
-import InflectionsIcon from '@/images/inline-icons/inflections.svg'
+import MorphologyIcon from '@/vue/icons/languageIcon.vue'
+import DefinitionsIcon from '@/vue/icons/definitionsIcon.vue'
+import InflectionsIcon from '@/vue/icons/inflectionsIcon.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'NavbuttonsCompact',
   // API modules that are required for this component
-  inject: {
-    app: 'app',
-    ui: 'ui',
-    l10n: 'l10n',
-    settings: 'settings',
-    auth: { from: 'auth', default: null } // This module is options
-  },
   storeModules: ['app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
@@ -75,12 +68,27 @@ export default {
   computed: {
     hasMorphologyData: function () {
       return this.$store.state.app.morphDataReady && this.app.hasMorphData()
+    },
+    app () {
+      return this.$api.app
+    },
+    ui () {
+      return this.$api.ui
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
+    },
+    auth () {
+      return this.$api.auth
     }
   }
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-navbuttons {
     display: flex;

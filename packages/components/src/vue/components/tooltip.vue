@@ -14,7 +14,6 @@
 <script>
 export default {
   name: 'tooltip',
-  inject: ['app'],
   props: {
     tooltipDirection: {
       type: String,
@@ -63,12 +62,15 @@ export default {
         default:
           return { 'alph_tooltip-bottom': true }
       }
+    },
+    app () {
+      return this.$api.app
     }
   }
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alph_tooltip {
     position: relative;

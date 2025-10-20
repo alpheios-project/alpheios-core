@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import Message from '@l10n/message.js'
+import Message from '@/message.js'
 
 describe('message.test.js', () => {
   const localeEnUs = 'en-US'
@@ -50,12 +50,12 @@ describe('message.test.js', () => {
     expect(function () {
       const l = new Message(testMsgsEnUs[existingMsgId], null)
       console.log(l)
-    }).toThrowError('Locale data is missing')
+    }).toThrow('Locale data is missing')
 
     expect(function () {
       const l = new Message(null, localeEnUs)
       console.log(l)
-    }).toThrowError('Message data is missing')
+    }).toThrow('Message data is missing')
   })
 
   it('2 Message - getMsg() should retrieve a message text', () => {

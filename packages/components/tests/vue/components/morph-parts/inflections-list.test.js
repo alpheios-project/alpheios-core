@@ -10,7 +10,7 @@ import Vue from 'vue/dist/vue'
 import InflectionsList from '@/vue/components/morph-parts/inflections-list.vue'
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 describe('inflections-list.test.js', () => {
   const localVue = createLocalVue()

@@ -1,4 +1,4 @@
-import { LanguageModelFactory, Logger } from 'alpheios-data-models'
+import { LanguageModelFactory, Logger } from '@alpheios-core/data-models'
 import GrammarResAdapter from './grammar/grammar_adapter'
 
 

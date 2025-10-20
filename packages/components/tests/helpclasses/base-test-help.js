@@ -17,13 +17,13 @@ import TempStorageArea from '@/lib/options/temp-storage-area.js'
 import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 
 import Platform from '@/lib/utility/platform.js'
-import { ClientAdapters } from 'alpheios-client-adapters'
-import { Lexeme, Lemma, Homonym, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { ClientAdapters } from '@alpheios-core/client-adapters'
+import { Lexeme, Lemma, Homonym, LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import UIController from '@/lib/controllers/app-controller.js'
 
 import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
-import { Fixture } from 'alpheios-fixtures'
+import { Fixture } from '@alpheios-core/fixtures'
 
 export default class BaseTestHelp {
   static get defaultFeatureOptions () {

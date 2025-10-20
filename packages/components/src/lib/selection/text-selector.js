@@ -1,4 +1,4 @@
-import { LanguageModelFactory, TextQuoteSelector } from 'alpheios-data-models'
+import { LanguageModelFactory, TextQuoteSelector } from '@alpheios-core/data-models'
 
 /**
  * This is a general-purpose, media abstract selector.

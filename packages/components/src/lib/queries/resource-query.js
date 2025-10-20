@@ -1,6 +1,6 @@
 import Query from './query.js'
 import Options from '@/lib/options/options.js'
-import { PsEvent, LanguageModelFactory, Logger } from 'alpheios-data-models'
+import { PsEvent, LanguageModelFactory, Logger } from '@alpheios-core/data-models'
 
 export default class ResourceQuery extends Query {
   constructor (name, feature, options) {

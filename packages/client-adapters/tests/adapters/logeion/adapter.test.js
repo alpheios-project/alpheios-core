@@ -4,7 +4,7 @@ import 'whatwg-fetch'
 
 import AlpheiosLogeionAdapter from '@clAdapters/adapters/logeion/adapter'
 
-// import { LogeionFixture } from 'alpheios-fixtures'
+// import { LogeionFixture } from '@alpheios-core/fixtures'
 
 describe('logeion/adapter.test.js', () => {
   console.error = function () {}

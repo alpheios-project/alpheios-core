@@ -1,4 +1,4 @@
-import { LanguageModelFactory as LMF, Definition, ResourceProvider } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Definition, ResourceProvider } from '@alpheios-core/data-models'
 import papaparse from 'papaparse'
 
 import BaseAdapter from '@clAdapters/adapters/base-adapter'

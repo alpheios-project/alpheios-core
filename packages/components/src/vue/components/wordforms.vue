@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import { Feature } from 'alpheios-data-models'
+import { Feature } from '@alpheios-core/data-models'
 
 export default {
   name: 'WordForms',
@@ -53,7 +53,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-inflections__form-parts {
     display: inline-block;

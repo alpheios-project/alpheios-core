@@ -1,5 +1,5 @@
 import Module from '@/vue/vuex-modules/module.js'
-import { L10n } from 'alpheios-l10n'
+import { L10n } from '@alpheios-core/l10n'
 import Locales from '@/locales/locales.js'
 import Platform from '@/lib/utility/platform.js'
 

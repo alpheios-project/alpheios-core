@@ -1,4 +1,4 @@
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 
 /**
  * A single option item with access methods.

@@ -11,7 +11,7 @@ import Vue from 'vue/dist/vue'
 import PrincipalParts from '@/vue/components/morph-parts/principal-parts.vue'
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 describe('morph-data.test.js', () => {
   const localVue = createLocalVue()

@@ -5,8 +5,8 @@ import papaparse from 'papaparse'
 
 import AlpheiosLexiconsAdapter from '@clAdapters/adapters/lexicons/adapter'
 import ClientAdapters from '@clAdapters/client-adapters.js'
-import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma } from 'alpheios-data-models'
-import { Fixture, LexiconsFixture } from 'alpheios-fixtures'
+import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma } from '@alpheios-core/data-models'
+import { Fixture, LexiconsFixture } from '@alpheios-core/fixtures'
 
 import BaseTestHelp from '@tests/base-test-help.js'
 
@@ -392,7 +392,7 @@ describe('lexicons/adapter.test.js', () => {
     await timeout(300)
 
     expect(fullDefsRequests.length).toEqual(testSuccessHomonym.lexemes.length)
-    expect(adapter.prepareSuccessCallback).toBeCalledTimes(2)
+    expect(adapter.prepareSuccessCallback).toHaveBeenCalledTimes(2)
 
   }, 50000)
 

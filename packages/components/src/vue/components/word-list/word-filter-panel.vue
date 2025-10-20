@@ -66,7 +66,6 @@
 
 export default {
   name: 'WordFilterPanel',
-  inject: ['app', 'l10n', 'settings'],
   props: {
     clickedLemma: {
       type: String,
@@ -190,7 +189,16 @@ export default {
         }
       }
       return []
-    }
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
+    },
   },
   watch: {
     clearFilters (value) {
@@ -296,7 +304,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-wordlist-filters {
       padding: 10px;

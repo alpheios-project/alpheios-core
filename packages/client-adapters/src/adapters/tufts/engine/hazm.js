@@ -1,5 +1,5 @@
 import ImportData from '@clAdapters/transformers/import-morph-data.js'
-import * as Models from 'alpheios-data-models'
+import * as Models from '@alpheios-core/data-models'
 
 let data = new ImportData(Models.PersianLanguageModel, 'hazm') // eslint-disable-line prefer-const
 

@@ -60,17 +60,16 @@
     </div>
 </template>
 <script>
-import CheckIcon from '@/images/inline-icons/check.svg'
-import DeleteIcon from '@/images/inline-icons/delete.svg'
-import TextQuoteIcon from '@/images/inline-icons/text-quote.svg'
-import CurrentSessionIcon from '@/images/inline-icons/current-session.svg'
+import CheckIcon from '@/vue/icons/checkIcon.vue'
+import DeleteIcon from '@/vue/icons/deleteIcon.vue'
+import TextQuoteIcon from '@/vue/icons/text-quoteIcon.vue'
+import CurrentSessionIcon from '@/vue/icons/current-sessionIcon.vue'
 import Tooltip from '@/vue/components/tooltip.vue'
 
-import { Lemma } from 'alpheios-data-models'
+import { Lemma } from '@alpheios-core/data-models'
 
 export default {
   name: 'WordItemBlock',
-  inject: ['l10n', 'app'],
   components: {
     checkIcon: CheckIcon,
     deleteIcon: DeleteIcon,
@@ -104,6 +103,12 @@ export default {
     },
     updatedDT () {
       return this.$store.state.app.wordListUpdateTime && this.worditem.updatedDT ? this.worditem.updatedDT.substr(0, this.worditem.updatedDT.indexOf('@')) : null
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
     }
   },
   methods: {
@@ -144,7 +149,7 @@ export default {
 </script>
 
 <style lang="scss">
- @import "../../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-wordlist-language__worditem {
       border-bottom: 1px solid var(--alpheios-border-color);

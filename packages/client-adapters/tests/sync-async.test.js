@@ -3,7 +3,7 @@
 import 'whatwg-fetch'
 import ClientAdapters from '@clAdapters/client-adapters.js'
 
-import { Constants, Homonym } from 'alpheios-data-models'
+import { Constants, Homonym } from '@alpheios-core/data-models'
 
 // For the time now
 

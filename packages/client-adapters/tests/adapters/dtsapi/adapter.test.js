@@ -4,8 +4,8 @@ import 'whatwg-fetch'
 
 import DTSAPIAdapter from '@clAdapters/adapters/dtsapi/adapter'
 
-import { Collection, Resource, Author } from 'alpheios-data-models'
-import { Fixture, TokenizationFixture } from 'alpheios-fixtures'
+import { Collection, Resource, Author } from '@alpheios-core/data-models'
+import { Fixture, TokenizationFixture } from '@alpheios-core/fixtures'
 
 describe('dtsapi/adapter.test.js', () => {
   console.error = function () {}

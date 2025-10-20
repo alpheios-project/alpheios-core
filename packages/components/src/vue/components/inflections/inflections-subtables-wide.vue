@@ -50,7 +50,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .infl-prdgm-tbl {
     display: table;

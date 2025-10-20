@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import AlpheiosLexiconTransformer from '@clAdapters/transformers/alpheios-lexicon-transformer'
 import AlpheiosTuftsAdapter from '@clAdapters/adapters/tufts/adapter'
-import { Constants, Homonym, Feature } from 'alpheios-data-models'
+import { Constants, Homonym, Feature } from '@alpheios-core/data-models'
 import Traces from '@clAdapters/adapters/tufts/engine/traces'
 import Morpheus from '@clAdapters/adapters/tufts/engine/morpheusgrc'
 

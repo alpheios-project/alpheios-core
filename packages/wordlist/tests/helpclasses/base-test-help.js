@@ -1,8 +1,8 @@
 /* eslint-env jest */
 import 'whatwg-fetch'
-import { ClientAdapters } from 'alpheios-client-adapters'
-import { Fixture, LexiconsFixture } from 'alpheios-fixtures'
-import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { ClientAdapters } from '@alpheios-core/client-adapters'
+import { Fixture, LexiconsFixture } from '@alpheios-core/fixtures'
+import { LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 
 export default class BaseTestHelp {
   static async getHomonym(targetWord, languageID) {

@@ -84,15 +84,14 @@
     </div><!-- alpheios-morph__inflections -->
 </template>
 <script>
-  import { Feature, LanguageModelFactory } from 'alpheios-data-models'
+  import { Feature, LanguageModelFactory } from '@alpheios-core/data-models'
   import InflectionAttribute from '@/vue/components/infl-attribute.vue'
-  import TreebankIcon from '@/images/inline-icons/sitemap.svg'
-  import DisambiguatedIcon from '@/images/inline-icons/caret-left.svg'
+  import TreebankIcon from '@/vue/icons/sitemapIcon.vue'
+  import DisambiguatedIcon from '@/vue/icons/caret-leftIcon.vue'
   import Tooltip from '@/vue/components/tooltip.vue'
 
   export default {
     name: 'InflectionsList',
-    inject: ['app', 'l10n'],
     storeModules: ['app'],
     components: {
       inflectionattribute: InflectionAttribute,
@@ -197,6 +196,12 @@
 
       languageCode () {
         return LanguageModelFactory.getLanguageCodeFromId(this.lexeme.lemma.languageID)
+      },
+      app () {
+        return this.$api.app
+      },
+      l10n () {
+        return this.$api.l10n
       }
     },
     methods: {
@@ -217,7 +222,7 @@
   }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-inflections-list__formtext {
     font-weight: 700;

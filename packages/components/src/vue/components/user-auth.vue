@@ -43,18 +43,24 @@ import Login from './login.vue'
 export default {
   name: 'UserAuth',
   userAccountTutorialLink: 'https://alpheios.net/pages/tutorials/#safari-user-account',
-  inject: {
-    app: 'app',
-    l10n: 'l10n',
-    auth: { from: 'auth', default: null } // This module is options
-  },
   components: {
     login: Login
+  },
+  computed: {
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    auth () {
+      return this.$api.auth
+    }
   }
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
    .alpheios-user-auth {
      display: flex;

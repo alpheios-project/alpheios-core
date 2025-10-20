@@ -3,9 +3,9 @@
 import 'whatwg-fetch'
 
 import AlpheiosTokenizationAdapter from '@clAdapters/adapters/tokenization/adapter'
-import { Options, LocalStorageArea } from 'alpheios-data-models'
+import { Options, LocalStorageArea } from '@alpheios-core/data-models'
 
-import { Fixture, TokenizationFixture } from 'alpheios-fixtures'
+import { Fixture, TokenizationFixture } from '@alpheios-core/fixtures'
 
 describe('tokenization/adapter.test.js', () => {
   console.error = function () {}

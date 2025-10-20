@@ -1,0 +1,24 @@
+{
+  "name": "@alpheios-core/language-detect",
+  "version": "1.0.0",
+  "libName": "Alpheios Language Detect Library",
+  "description": "The Alpheios Language Detect Library allows to detect language of the word/text by unicode codes.",
+  "main": "dist/alpheios-language-detect.js",
+  "scripts": {
+    "build": "vite build",
+    "test": "jest tests --detectOpenHandles --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpheios-project/language-detect.git"
+  },
+  "author": "The Alpheios Project, Ltd.",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.28.0",
+    "babel-jest": "^30.0.5",
+    "vite": "^7.1.2"
+  }
+}

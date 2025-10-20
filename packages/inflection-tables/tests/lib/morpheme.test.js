@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Constants, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from '@alpheios-core/data-models'
 import Morpheme from '@lib/morpheme.js'
 
 describe('morpheme.test.js', () => {

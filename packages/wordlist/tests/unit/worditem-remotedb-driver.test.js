@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import WordItemRemoteDbDriver from '@wordlist/storage/worditem-remotedb-driver'
-import { WordItem, Constants, TextQuoteSelector } from 'alpheios-data-models'
+import { WordItem, Constants, TextQuoteSelector } from '@alpheios-core/data-models'
 import BaseTestHelp from '@wordlist-tests/helpclasses/base-test-help'
 
 describe('worditem-remotedb-driver.test.js', () => {

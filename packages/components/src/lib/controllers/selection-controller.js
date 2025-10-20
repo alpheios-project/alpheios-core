@@ -1,6 +1,6 @@
 import UIEventController from '@comp/lib/controllers/ui-event-controller.js'
 import HTMLSelector from '@comp/lib/selection/media/html-selector.js'
-import { PsEvent } from 'alpheios-data-models'
+import { PsEvent } from '@alpheios-core/data-models'
 
 /**
  * `SelectionController` manages all aspects of text selection.

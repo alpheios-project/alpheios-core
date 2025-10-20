@@ -19,7 +19,7 @@
     </div>
 </template>
 <script>
-  import { Definition } from 'alpheios-data-models'
+  import { Definition } from '@alpheios-core/data-models'
   import ProgressBar from '@/vue/components/progress-bar.vue'
   import ShortDef from '@/vue/components/shortdef.vue'
 
@@ -29,7 +29,6 @@
         progressBar: ProgressBar,
         shortdef: ShortDef
     },
-    inject: ['app', 'l10n'],
     storeModules: ['app'],
     props: {
 
@@ -47,6 +46,12 @@
           definitionsLocal = [new Definition(this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', this.lexeme.lemma.word)]
         }
         return definitionsLocal
+      },
+      app () {
+        return this.$api.app
+      },
+      l10n () {
+        return this.$api.l10n
       }
     },
     methods: {
@@ -58,7 +63,7 @@
   }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-morph__lexemes .alpheios-definition__lemma {
     display: none;

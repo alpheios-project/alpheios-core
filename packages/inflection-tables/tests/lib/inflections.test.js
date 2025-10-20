@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Feature } from 'alpheios-data-models'
+import { Feature } from '@alpheios-core/data-models'
 
 import Inflections from '@lib/inflection-list.js'
 import Form from '@lib/form.js'

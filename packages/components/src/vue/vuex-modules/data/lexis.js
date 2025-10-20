@@ -2,13 +2,13 @@
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
-import { ClientAdapters } from 'alpheios-client-adapters'
-import { Constants, TreebankDataItem, HomonymGroup, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
+import { ClientAdapters } from '@alpheios-core/client-adapters'
+import { Constants, TreebankDataItem, HomonymGroup, LanguageModelFactory as LMF, Logger } from '@alpheios-core/data-models'
 import {
   CedictDestinationConfig as CedictProdConfig,
   CedictDestinationDevConfig as CedictDevConfig
-} from 'alpheios-messaging'
-import Vue from '@vue-runtime'
+} from '@alpheios-core/messaging'
+import Vue from 'vue'
 const clientId = 'alpheios-components'
 let cedictConfig = CedictProdConfig
 if (DEVELOPMENT_MODE_BUILD) { cedictConfig = CedictDevConfig }

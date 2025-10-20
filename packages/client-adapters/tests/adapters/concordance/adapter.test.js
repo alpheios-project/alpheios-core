@@ -4,7 +4,7 @@ import 'whatwg-fetch'
 import ClientAdapters from '@clAdapters/client-adapters.js'
 import AlpheiosConcordanceAdapter from '@clAdapters/adapters/concordance/adapter'
 
-import { Constants, Author, TextWork, WordUsageExample } from 'alpheios-data-models'
+import { Constants, Author, TextWork, WordUsageExample } from '@alpheios-core/data-models'
 import BaseTestHelp from '@tests/base-test-help.js'
 
 describe('concordance.test.js', () => {

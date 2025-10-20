@@ -87,24 +87,24 @@ describe('remote-auth-storage-area.test.js', () => {
   it('throws error if constructed without auth',() => {
     expect(() => {
       let stAdapter = new RemoteAuthStorageArea('alpheios-feature-settings')
-    }).toThrowError(/Authentication details missing or invalid/)
+    }).toThrow(/Authentication details missing or invalid/)
   })
 
   it('throws error if constructed with auth missing endpoint',() => {
     expect(() => {
       let stAdapter = new RemoteAuthStorageArea('alpheios-feature-settings',{accessToken:'abc'})
-    }).toThrowError(/Authentication details missing or invalid/)
+    }).toThrow(/Authentication details missing or invalid/)
   })
 
   it('throws error if constructed with auth invalid endpoint',() => {
     expect(() => {
       let stAdapter = new RemoteAuthStorageArea('alpheios-feature-settings',{accessToken:'abc', endpoint: {settings: 'abc'}})
-    }).toThrowError(/Authentication details missing or invalid/)
+    }).toThrow(/Authentication details missing or invalid/)
   })
 
   it('throws error if constructed with auth missing access token',() => {
     expect(() => {
       let stAdapter = new RemoteAuthStorageArea('alpheios-feature-settings',{endpoint: {settings: 'https://example.com'}})
-    }).toThrowError(/Authentication details missing or invalid/)
+    }).toThrow(/Authentication details missing or invalid/)
   })
 })

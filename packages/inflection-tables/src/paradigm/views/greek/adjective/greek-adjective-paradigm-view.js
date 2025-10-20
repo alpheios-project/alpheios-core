@@ -1,4 +1,4 @@
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 import GreekParadigmView from '@/paradigm/views/greek/greek-paradigm-view.js'
 
 export default class GreekAdjectiveParadigmView extends GreekParadigmView {

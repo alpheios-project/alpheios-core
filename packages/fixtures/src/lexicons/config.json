@@ -1,0 +1,50 @@
+{
+  "https://github.com/alpheios-project/majorplus": {
+    "short": "https://repos1.alpheios.net/lexdata/majorplus/dat/grc-mjp-defs.dat"
+  },
+  "https://github.com/alpheios-project/lsj": {
+      "short": "https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lsj&lg=grc&out=html"
+  },
+  "https://github.com/alpheios-project/aut": {
+      "short": "https://repos1.alpheios.net/lexdata/aut/dat/grc-aut-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/aut//dat/grc-aut-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=aut&lg=grc&out=html"
+  },
+  "https://github.com/alpheios-project/ml": {
+      "short": "https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ml&lg=grc&out=html"
+  },
+  "https://github.com/alpheios-project/as": {
+      "short": "https://repos1.alpheios.net/lexdata/as/dat/grc-as-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/as/dat/grc-as-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=as&lg=grc&out=html"
+  },
+  "https://github.com/alpheios-project/dod": {
+      "short": "https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-ids.dat",
+      "full": null
+  },
+  "https://github.com/alpheios-project/ls": {
+      "short": null,
+      "index": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html"
+  },
+  "https://github.com/alpheios-project/lan": {
+      "short": null,
+      "index": "https://repos1.alpheios.net/lexdata/lan/dat/ara-lan-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lan&lg=ara&out=html"
+  },
+  "https://github.com/alpheios-project/sal": {
+      "short": null,
+      "index": "https://repos1.alpheios.net/lexdata/sal/dat/ara-sal-ids.dat",
+      "full": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=sal&lg=ara&out=html"
+  },
+  "https://github.com/alpheios-project/stg": {
+      "short": "https://repos1.alpheios.net/lexdata/stg/dat/per-stg-defs.dat",
+      "index": "https://repos1.alpheios.net/lexdata/stg/dat/per-stg-ids.dat",
+      "full": null
+  }
+}

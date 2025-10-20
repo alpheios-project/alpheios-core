@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import IndexedDBLoadProcess from '@wordlist/storage/indexeddbDriver/indexed-db-load-process'
-import { WordItem, Constants, Homonym } from 'alpheios-data-models'
+import { WordItem, Constants, Homonym } from '@alpheios-core/data-models'
 import BaseTestHelp from '@wordlist-tests/helpclasses/base-test-help'
 
 

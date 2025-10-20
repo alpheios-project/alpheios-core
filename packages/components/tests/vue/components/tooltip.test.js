@@ -174,7 +174,7 @@ describe('tooltip.test.js', () => {
   it('3 Tooltip - check required props', () => {
     let cmp = mount(Tooltip)
 
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "tooltipText"'))
+    expect(console.error).toHaveBeenCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "tooltipText"'))
   })
 
   it('4 Tooltip - if is not mobile, renderTooltip = true', () => {

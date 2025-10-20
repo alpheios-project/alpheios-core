@@ -2,9 +2,9 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import AlpheiosTuftsAdapter from '@clAdapters/adapters/tufts/adapter'
-import { Constants, Homonym, Feature } from 'alpheios-data-models'
+import { Constants, Homonym, Feature } from '@alpheios-core/data-models'
 
-import { Fixture } from 'alpheios-fixtures'
+import { Fixture } from '@alpheios-core/fixtures'
 
 describe('tufts-example.test.js', () => {
   console.error = function () {}
@@ -78,7 +78,7 @@ describe('tufts-example.test.js', () => {
     expect(() => {
       let engine = adapter.engineSet.getEngineByCode(Constants.LANG_GREEK)
       engine[Feature.types.person].get('1') // eslint-disable-line no-unused-vars
-    }).toThrowError(/unknown value/i)
+    }).toThrow(/unknown value/i)
   }, 10000)
 
   it('5 TuftsExample - unmapped values with no defaults still works if unknown values allowed', () => {

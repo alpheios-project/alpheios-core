@@ -8,7 +8,7 @@ import WordUsageExamplesFilters from '@/vue/components/word-usage-examples/word-
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 
-import { Constants, Author, TextWork } from 'alpheios-data-models'
+import { Constants, Author, TextWork } from '@alpheios-core/data-models'
 
 describe('word-usage-examples-filters.test.js', () => {
   const localVue = createLocalVue()

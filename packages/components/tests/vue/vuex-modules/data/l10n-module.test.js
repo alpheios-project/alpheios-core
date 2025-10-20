@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import { createLocalVue } from '@vue/test-utils'
-import { L10n } from 'alpheios-l10n'
+import { L10n } from '@alpheios-core/l10n'
 import Vuex from 'vuex'
 
 import L10nModule from '@comp/vue/vuex-modules/data/l10n-module.js'

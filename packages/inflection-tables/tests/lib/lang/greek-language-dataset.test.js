@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Constants, GreekLanguageModel, Feature, Inflection } from 'alpheios-data-models'
+import { Constants, GreekLanguageModel, Feature, Inflection } from '@alpheios-core/data-models'
 import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
 import ExtendedGreekData from '@lib/extended-greek-data'
 

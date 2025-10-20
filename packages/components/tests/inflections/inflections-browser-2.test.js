@@ -11,7 +11,7 @@ import WidePrerenderedTable from '@/vue/components/inflections/inflections-table
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 describe('inflections.test.js', () => {
   const localVue = createLocalVue()

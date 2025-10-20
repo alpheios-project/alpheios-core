@@ -1,24 +1,20 @@
 {
-  "name": "alpheios-data-models",
-  "version": "3.4.4-incr-3.4.x.20220504345",
+  "name": "@alpheios-core/data-models",
+  "version": "1.0.0",
   "description": "Alpheios Data Models",
   "private": true,
-  "main": "dist/alpheios-data-models.min.js",
-  "directories": {
-    "doc": "doc"
-  },
+  "main": "dist/alpheios-data-models.js",
+  "type": "module",
   "scripts": {
-    "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
-    "test-no-coverage": "jest",
-    "test-c": "jest tests/chinese/chinese.test.js --coverage && shx cat ./coverage/lcov.info | coveralls",
-    "test-l": "jest tests/latin_language_model.test --coverage && shx cat ./coverage/lcov.info | coveralls",
-    "test-i": "jest tests/inflection.test --coverage && shx cat ./coverage/lcov.info | coveralls",
-    "build-lib": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M all -p lib -c config.mjs",
-    "build-node": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M all -p node-lib -c config-node.mjs",
-    "build": "npm run build-lib && npm run build-node",
-    "build-prod": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M production -p lib -c config.mjs",
-    "build-dev": "npm run lint && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M development -p lib -c config.mjs",
-    "lint": "npx eslint --fix src/**/*.js"
+    "build": "vite build",
+    "test": "jest tests --detectOpenHandles --coverage"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "vite": "^7.1.2",
+    "@babel/preset-env": "^7.28.0",
+    "babel-jest": "^30.0.5"
   },
   "repository": {
     "type": "git",
@@ -29,45 +25,5 @@
   "bugs": {
     "url": "https://github.com/alpheios-project/data-models/issues"
   },
-  "homepage": "https://github.com/alpheios-project/data-models#readme",
-  "devDependencies": {
-    "@babel/runtime": "^7.12.5",
-    "alpheios-node-build": "https://github.com/alpheios-project/node-build#v5",
-    "coveralls": "^3.1.0",
-    "jest": "^26.6.3",
-    "uuid": "^3.4.0"
-  },
-  "jest": {
-    "verbose": true,
-    "moduleNameMapper": {
-      "^@[/](.+)": "<rootDir>/src/$1"
-    }
-  },
-  "eslintConfig": {
-    "extends": [
-      "eslint:recommended"
-    ],
-    "env": {
-      "es6": true,
-      "browser": true,
-      "node": true
-    },
-    "parserOptions": {
-      "parser": "@babel/eslint-parser",
-      "ecmaVersion": 2019,
-      "sourceType": "module",
-      "allowImportExportEverywhere": true
-    },
-    "rules": {
-      "no-prototype-builtins": "warn",
-      "dot-notation": "warn",
-      "accessor-pairs": "warn",
-      "no-unused-vars": "warn",
-      "getter-return": "warn",
-      "no-setter-return": "warn"
-    }
-  },
-  "eslintIgnore": [
-    "**/dist"
-  ]
+  "homepage": "https://github.com/alpheios-project/data-models#readme"
 }

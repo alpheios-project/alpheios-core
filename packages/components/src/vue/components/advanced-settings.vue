@@ -48,11 +48,6 @@ import Options from '@/lib/options/options.js'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'AdvancedSettings',
-  // API modules that are required for this component
-  inject: {
-    l10n: 'l10n',
-    settings: 'settings'
-  },
   mixins: [DependencyCheck],
   components: {
     setting: Setting
@@ -64,6 +59,12 @@ export default {
   computed: {
     uiOptions: function () {
       return this.settings.getUiOptions()
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -75,7 +76,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
   .alpheios-adv-options__cont {
     display: flex;
     flex-direction: column;

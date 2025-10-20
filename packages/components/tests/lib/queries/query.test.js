@@ -40,6 +40,6 @@ describe('query.test.js', () => {
   it('6 Query - Trying to execute finalize throws an Error and a warn in console', () => {
     const query = new Query('foo')
     jest.spyOn(console, 'warn')
-    expect(query.finalize).toThrowError(Error)
+    expect(query.finalize).toThrow(Error)
   })
 })

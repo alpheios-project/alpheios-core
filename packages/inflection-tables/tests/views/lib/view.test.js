@@ -4,7 +4,7 @@ import 'whatwg-fetch'
 import View from '@views/lib/view.js'
 
 import BaseTestHelp from '@tests/data/base-test-help.js'
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 import GreekView from '@views/lang/greek/greek-view.js'
 

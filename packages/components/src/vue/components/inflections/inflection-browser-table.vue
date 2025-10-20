@@ -16,9 +16,9 @@
             <prerendered-table-wide :collapsed="collapsed" :view="view"></prerendered-table-wide>
         </div>
     </div>
-</template>>
+</template>
 <script>
-  import { ViewSetFactory } from 'alpheios-inflection-tables'
+  import { ViewSetFactory } from '@alpheios-core/inflection-tables'
   import WideTable from '@/vue/components/inflections/inflections-table-wide.vue'
   import WidePrerenderedTable from '@/vue/components/inflections/inflections-table-prerendered.vue'
 

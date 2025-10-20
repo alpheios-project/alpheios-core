@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import SortIcon from '@/images/inline-icons/sort-arrow.svg'
+  import SortIcon from '@/vue/icons/sort-arrowIcon.vue'
 
   export default {
     name: 'WordSortingPanel',
@@ -89,7 +89,7 @@
 </script>
 
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
   
   $iconsize: 22px;
 

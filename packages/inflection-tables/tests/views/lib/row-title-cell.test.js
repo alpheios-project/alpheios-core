@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import RowTitleCell from '@views/lib/row-title-cell.js'
 
-import { Constants, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from '@alpheios-core/data-models'
 import GroupFeatureType from '@views/lib/group-feature-type.js'
 import GroupFeatureList from '@views/lib/group-feature-list.js'
 

@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Constants, Feature, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, Feature, LanguageModelFactory } from '@alpheios-core/data-models'
 import BaseTestHelp from '@tests/data/base-test-help.js'
 // import LanguageDatasetFactory from '@views/lib/language-dataset-factory.js'
 

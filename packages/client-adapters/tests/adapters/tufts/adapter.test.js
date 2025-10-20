@@ -2,9 +2,9 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import AlpheiosTuftsAdapter from '@clAdapters/adapters/tufts/adapter'
-import { Constants, Homonym } from 'alpheios-data-models'
+import { Constants, Homonym } from '@alpheios-core/data-models'
 
-import { Fixture } from 'alpheios-fixtures'
+import { Fixture } from '@alpheios-core/fixtures'
 
 describe('tufts/adapter.test.js', () => {
   console.error = function () {}

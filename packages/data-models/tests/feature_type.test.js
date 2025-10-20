@@ -35,7 +35,7 @@ describe('FeatureType', () => {
   test('Constructor should throw an exception if arguments are provided in wrong order', () => {
     expect(() => {
       new new FeatureType(Feature.types.declension, 'lat', ['first', 'second', 'third'])() // eslint-disable-line
-    }).toThrowError(/should be an array/)
+    }).toThrow(/should be an array/)
   })
 
   test('Get method should return a new Feature object that is initialized properly', () => {
@@ -48,7 +48,7 @@ describe('FeatureType', () => {
   })
 
   test('Get method with no value should throw an exception', () => {
-    expect(() => featureType.get()).toThrowError(/non-empty/)
+    expect(() => featureType.get()).toThrow(/non-empty/)
   })
 
   test('addImporter method should return a new Importer object', () => {
@@ -73,7 +73,7 @@ describe('FeatureType', () => {
   })
 
   test('addImporter method with no value should throw an exception', () => {
-    expect(() => featureType.addImporter()).toThrowError(/non-empty/)
+    expect(() => featureType.addImporter()).toThrow(/non-empty/)
   })
 
   test('orderedValues() method should return a new properly initialized Importer object', () => {
@@ -109,26 +109,26 @@ describe('FeatureType', () => {
   })
 
   test('order setter with no argument should throw an exception', () => {
-    expect(() => featureType.order = undefined).toThrowError(/non-empty/) // eslint-disable-line
+    expect(() => featureType.order = undefined).toThrow(/non-empty/) // eslint-disable-line
   })
 
   test('order setter with an empty array argument should throw an exception', () => {
-    expect(() => featureType.order = []).toThrowError(/non-empty/) //eslint-disable-line
+    expect(() => featureType.order = []).toThrow(/non-empty/) //eslint-disable-line
   })
 
   test('order setter with an argument(s) of mismatching type should throw an exception', () => {
     let f1 = new Feature(Feature.types.gender, 'first', Constants.LANG_LATIN)
-    expect(() => featureType.order = [f1]).toThrowError(/is different/) //eslint-disable-line
+    expect(() => featureType.order = [f1]).toThrow(/is different/) //eslint-disable-line
   })
 
   test('order setter with an argument(s) of mismatching language should throw an exception', () => {
     let f1 = new Feature(Feature.types.declension, 'first', Constants.LANG_GREEK)
-    expect(() => featureType.order = [f1]).toThrowError(/is different/) // eslint-disable-line
+    expect(() => featureType.order = [f1]).toThrow(/is different/) // eslint-disable-line
   })
 
   test('order setter with an argument(s) of values that are not stored should throw an exception', () => {
     let f1 = new Feature(Feature.types.declension, 'fifth', 'lat')
-    expect(() => featureType.order = [f1]).toThrowError(/not stored/) //eslint-disable-line
+    expect(() => featureType.order = [f1]).toThrow(/not stored/) //eslint-disable-line
   })
 
   test('hasUnrestrictedValue', () => {

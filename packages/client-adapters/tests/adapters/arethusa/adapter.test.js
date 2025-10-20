@@ -2,8 +2,8 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import ArethusaTreebankAdapter from '@clAdapters/adapters/arethusa/adapter'
-import { Constants, Homonym } from 'alpheios-data-models'
-import { ArethusaFixture } from 'alpheios-fixtures'
+import { Constants, Homonym } from '@alpheios-core/data-models'
+import { ArethusaFixture } from '@alpheios-core/fixtures'
 
 describe('arethusa/adapter.test.js', () => {
   beforeEach(() => {

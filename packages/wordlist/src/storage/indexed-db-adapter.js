@@ -1,4 +1,4 @@
-import { WordItem, Logger } from 'alpheios-data-models'
+import { WordItem, Logger } from '@alpheios-core/data-models'
 
 /**
  * An interface to IndexedDB Storage

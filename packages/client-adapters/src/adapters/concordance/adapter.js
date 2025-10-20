@@ -1,7 +1,7 @@
 import DefaultConfig from '@clAdapters/adapters/concordance/config.json'
 import AuthorWorkConfigConfig from '@clAdapters/adapters/concordance/author-work.json'
 
-import { ResourceProvider, Author, TextWork, WordUsageExample, LanguageModelFactory } from 'alpheios-data-models'
+import { ResourceProvider, Author, TextWork, WordUsageExample, LanguageModelFactory } from '@alpheios-core/data-models'
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
 class AlpheiosConcordanceAdapter extends BaseAdapter {
@@ -112,7 +112,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   */
   formatPagination (pagination) {
     // the PHI service supports two pagination parameters: authmax and max
-    // authmax sets the max hits to return per author and max sets the max hits to return over alpheios-data-models
+    // authmax sets the max hits to return per author and max sets the max hits to return over @alpheios-core/data-models
     // max trumps authmax - i.e. only the max number of hits will be returned, and authmax applies after that
     // given that there a finite number of authors, we want to set the values for these differently depending upon whether
     // the request is filtered by author or not - and allowing user specification of the max across all authors probably

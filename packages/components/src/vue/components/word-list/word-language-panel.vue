@@ -87,10 +87,10 @@
 </template>
 <script>
 import Tooltip from '@/vue/components/tooltip.vue'
-import CheckIcon from '@/images/inline-icons/check.svg'
-import DeleteIcon from '@/images/inline-icons/delete.svg'
-import CloseIcon from '@/images/inline-icons/x-close.svg'
-import DownloadIcon from '@/images/inline-icons/download.svg'
+import CheckIcon from '@/vue/icons/checkIcon.vue'
+import DeleteIcon from '@/vue/icons/deleteIcon.vue'
+import CloseIcon from '@/vue/icons/x-closeIcon.vue'
+import DownloadIcon from '@/vue/icons/downloadIcon.vue'
 import WordItemPanel from '@/vue/components/word-list/word-item-panel.vue'
 import WordFilterPanel from '@/vue/components/word-list/word-filter-panel.vue'
 import WordSortingPanel from '@/vue/components/word-list/word-sorting-panel.vue'
@@ -110,7 +110,6 @@ export default {
     downloadConfirmation: DownloadConfirmation,
     alphTooltip: Tooltip
   },
-  inject: ['l10n', 'app', 'settings'],
   props: {
     languageCode: {
       type: String,
@@ -221,6 +220,15 @@ export default {
     },
     maxItems () {
       return this.settings.getFeatureOptions().items.wordlistMaxDownload
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -319,7 +327,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../../styles/variables";
+    @use "@/styles/_variables.scss" as *;
 
     .alpheios-wordlist-commands {
       border-bottom: 1px solid var(--alpheios-border-color);

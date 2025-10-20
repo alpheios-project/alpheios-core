@@ -74,14 +74,13 @@ import WideTableVue from '@/vue/components/inflections/inflections-table-wide.vu
 
 import WideSuppTable from '@/vue/components/inflections/inflections-supp-table-wide.vue'
 import WordForms from '@/vue/components/wordforms.vue'
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Inflections',
-  inject: ['app', 'l10n', 'settings'],
   storeModules: ['app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
@@ -152,6 +151,15 @@ export default {
     },
     showExplanatoryHint: function () {
       return this.selectedView && this.selectedView.constructor && this.selectedView.constructor.name === 'GreekParadigmView'
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
 
@@ -228,7 +236,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   h4.alpheios-inflections__additional_title {
     line-height: 1.6;

@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import { Homonym, Constants } from 'alpheios-data-models'
+import { Homonym, Constants } from '@alpheios-core/data-models'
 import BaseTestHelp from '@tests/data/base-test-help.js'
 
 import InflectionData from '@lib/inflection-data.js'
@@ -36,7 +36,7 @@ describe('inflection-data.test.js', () => {
   it('1 InflectionData - constructor creates attributes with default values', () => {
     let infldata = new InflectionData(testHomonym)
 
-    expect(infldata.homonym).toBeInstanceOf(Homonym)
+    expect(infldata.homonym.constructor.name).toEqual('Homonym')
     expect(infldata.pos.size).toEqual(0)
   })
 

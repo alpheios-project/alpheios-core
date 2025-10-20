@@ -1,4 +1,4 @@
-import { ResourceProvider, Lexeme, Constants, Feature, Inflection, Homonym } from 'alpheios-data-models'
+import { ResourceProvider, Lexeme, Constants, Feature, Inflection, Homonym } from '@alpheios-core/data-models'
 
 /**
  Transforms morphological output adhering to the Alpheios lexicon

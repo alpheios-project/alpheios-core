@@ -35,7 +35,7 @@ describe('word-list.test.js', () => {
   it('1 WordList - throws error on missing arguments', () => {
     expect(function () {
       let wI = new WordList()
-    }).toThrowError(/Unable to construct/)
+    }).toThrow(/Unable to construct/)
   })
 
   it('2 WordList - constructor sets languageCode and items from arguments', () => {
@@ -60,7 +60,7 @@ describe('word-list.test.js', () => {
 
     expect(function () {
       wL.addWordItem(mockWIGreek)
-    }).toThrowError(/mismatch/)
+    }).toThrow(/mismatch/)
   })
 
   it('4 WordList - size returns number of items', () => {

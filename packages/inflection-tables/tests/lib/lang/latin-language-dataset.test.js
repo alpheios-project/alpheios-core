@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Constants, LatinLanguageModel, Feature, Inflection, Lemma } from 'alpheios-data-models'
+import { Constants, LatinLanguageModel, Feature, Inflection, Lemma } from '@alpheios-core/data-models'
 import LatinLanguageDataset from '@lib/lang/latin/latin-language-dataset.js'
 
 import Suffix from '@lib/suffix.js'

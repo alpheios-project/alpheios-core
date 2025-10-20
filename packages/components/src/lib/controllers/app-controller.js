@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME, DEVELOPMENT_MODE_BUILD */
 import { version as packageVersion, description as packageDescription } from '../../../package'
-import { Constants, Feature, LanguageModelFactory, Lexeme, Logger } from 'alpheios-data-models'
-import { Grammars } from 'alpheios-res-client'
-import { ViewSetFactory } from 'alpheios-inflection-tables'
-import { WordlistController, UserDataManager } from 'alpheios-wordlist'
-import Vue from '@vue-runtime'
+import { Constants, Feature, LanguageModelFactory, Lexeme, Logger } from '@alpheios-core/data-models'
+import { Grammars } from '@alpheios-core/res-client'
+import { ViewSetFactory } from '@alpheios-core/inflection-tables'
+import { WordlistController, UserDataManager } from '@alpheios-core/wordlist'
+import Vue from 'vue'
 import Vuex from 'vuex'
 import interact from 'interactjs'
 // Modules and their support dependencies

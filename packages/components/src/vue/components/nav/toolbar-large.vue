@@ -188,22 +188,22 @@
 </template>
 <script>
 import interact from 'interactjs'
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 
 import Tooltip from '@/vue/components/tooltip.vue'
 // Embeddable SVG icons
-import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
-import StatusIcon from '@/images/inline-icons/status.svg'
-import UserIcon from '@/images/inline-icons/user.svg'
-import OptionsIcon from '@/images/inline-icons/options.svg'
-import GrammarIcon from '@/images/inline-icons/resources.svg'
-// import InfoIcon from '@/images/inline-icons/info.svg'
-import HelpIcon from '@/images/inline-icons/help-icon.svg'
-import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import CollapsedIcon from '@/images/inline-icons/collapsed.svg'
-import ExpandedIcon from '@/images/inline-icons/expanded.svg'
-import ReadingToolsIcon from '@/images/inline-icons/reading-tools.svg'
-import LookupIcon from '@/images/inline-icons/lookup.svg'
+import InflectionsBrowserIcon from '@/vue/icons/inflections-browserIcon.vue'
+import StatusIcon from '@/vue/icons/statusIcon.vue'
+import UserIcon from '@/vue/icons/userIcon.vue'
+import OptionsIcon from '@/vue/icons/optionsIcon.vue'
+import GrammarIcon from '@/vue/icons/resourcesIcon.vue'
+// import InfoIcon from '@/vue/icons/infoIcon.vue'
+import HelpIcon from '@/vue/icons/help-iconIcon.vue'
+import WordlistIcon from '@/vue/icons/wordlist-Icon.vue'
+import CollapsedIcon from '@/vue/icons/collapsedIcon.vue'
+import ExpandedIcon from '@/vue/icons/expandedIcon.vue'
+import ReadingToolsIcon from '@/vue/icons/reading-toolsIcon.vue'
+import LookupIcon from '@/vue/icons/lookupIcon.vue'
 // Vue components
 import ToolbarCompact from '@/vue/components/nav/toolbar-compact.vue'
 import Lookup from '@/vue/components/lookup.vue'
@@ -213,13 +213,6 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'Toolbar',
   extends: ToolbarCompact,
-  // API modules that are required for this component
-  inject: {
-    app: 'app',
-    ui: 'ui',
-    l10n: 'l10n',
-    settings: 'settings'
-  },
   storeModules: ['toolbar', 'app', 'ui', 'panel'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
@@ -331,6 +324,18 @@ export default {
 
     isPanelOpen () {
       return this.$store.state.panel ? this.$store.state.panel.visible : false
+    },
+    app () {
+      return this.$api.app
+    },
+    ui () {
+      return this.$api.ui
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
 
@@ -471,7 +476,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-toolbar {
     &.alpheios-toolbar--large {

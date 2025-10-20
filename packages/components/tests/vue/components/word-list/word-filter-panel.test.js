@@ -8,7 +8,7 @@ import WordFilterPanel from '@/vue/components/word-list/word-filter-panel.vue'
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 
-import { Constants, WordItem, WordList } from 'alpheios-data-models'
+import { Constants, WordItem, WordList } from '@alpheios-core/data-models'
 
 describe('word-filter-panel.test.js', () => {
   const localVue = createLocalVue()

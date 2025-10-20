@@ -6,7 +6,7 @@ import GroupFeatureType from '@views/lib/group-feature-type.js'
 import ViewSetFactory from '@views/lib/view-set-factory.js'
 import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
 import BaseTestHelp from '@tests/data/base-test-help.js'
-import { Constants, Feature, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, Feature, LanguageModelFactory } from '@alpheios-core/data-models'
 
 import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
 import GreekLanguageDatasetJSON from '@tests/lib/lang/greek-language-dataset-json.js'

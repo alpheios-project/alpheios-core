@@ -5,8 +5,8 @@ import { shallowMount, mount } from '@vue/test-utils'
 import WideInflectionsSubTables from '@/vue/components/inflections/inflections-subtables-wide.vue'
 
 import { ViewSetFactory, LanguageDatasetFactory } from 'alpheios-inflection-tables'
-import { ClientAdapters } from 'alpheios-client-adapters'
-import { Constants, Feature } from 'alpheios-data-models'
+import { ClientAdapters } from '@alpheios-core/client-adapters'
+import { Constants, Feature } from '@alpheios-core/data-models'
 
 import VerbTestInflectionTable from './inflectionsTables/verbTestInflectionTable.js'
 

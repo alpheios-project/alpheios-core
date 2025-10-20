@@ -1,4 +1,4 @@
-import Message from '@l10n/message.js'
+import Message from '@/message.js'
 // TODO: Deal with situations when message is not available, but is requested
 
 /**

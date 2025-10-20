@@ -27,10 +27,20 @@
 
 export default {
   name: 'ReskinFontColor',
-  inject: ['l10n', 'settings'],
   data () {
     return {
-      activeButton: this.settings.getUiOptions().items.fontSize.currentValue
+      activeButton: 0
+    }
+  },
+  mounted () {
+    this.activeButton = this.settings?.getUiOptions().items.fontSize.currentValue
+  },
+  computed: {
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -42,7 +52,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-setting__button-group {
     color: var(--alpheios-settings-font-size-dark-color);

@@ -39,7 +39,6 @@ export default {
     inflectionsList: InflectionsList,
     lemmatranslation: LemmaTranslation
   },
-  inject: ['app', 'l10n'],
   storeModules: ['app'],
   mixins: [DependencyCheck],
   computed: {
@@ -59,6 +58,12 @@ export default {
         }
       }
       return translations
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
     }
   },
   methods: {
@@ -91,7 +96,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
 
   $lemma_index_size: 20px;

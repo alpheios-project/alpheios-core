@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 import Morpheus from '@clAdapters/adapters/tufts/engine/morpheusgrc'
 
 describe('morpheusgrc.test.js', () => {

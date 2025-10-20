@@ -1,4 +1,4 @@
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 import AuthData from './auth-data.js'
 
 /* global Auth0Lock */

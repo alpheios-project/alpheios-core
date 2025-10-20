@@ -2,8 +2,8 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import ClientAdapters from '@clAdapters/client-adapters.js'
-import { Fixture, TranslationsFixture } from 'alpheios-fixtures'
-import { Constants, Homonym, Author, WordUsageExample, LocalStorageArea, Options, Collection, Resource } from 'alpheios-data-models'
+import { Fixture, TranslationsFixture } from '@alpheios-core/fixtures'
+import { Constants, Homonym, Author, WordUsageExample, LocalStorageArea, Options, Collection, Resource } from '@alpheios-core/data-models'
 
 describe('client-adapters.test.js', () => {
   console.error = function () {}
@@ -62,22 +62,22 @@ describe('client-adapters.test.js', () => {
     ClientAdapters.init()
     expect(() => {
       let l = ClientAdapters.checkMethod('morphology', 'tufts', 'getHomonym')
-    }).not.toThrowError()
+    }).not.toThrow()
 
     expect(() => {
       let l = ClientAdapters.checkMethod('morphology', 'tufts', 'fooMethod')
-    }).toThrowError()
+    }).toThrow()
   })
 
   it('5 ClientAdapters - checkParam checks if all registered parameters are given', () => {
     ClientAdapters.init()
     expect(() => {
       let l = ClientAdapters.checkParam({ word: 'cepit', languageID: Constants.LANG_LATIN }, 'morphology', 'tufts', 'getHomonym')
-    }).not.toThrowError()
+    }).not.toThrow()
 
     expect(() => {
       let l = ClientAdapters.checkParam({ word: 'cepit' }, 'morphology', 'tufts', 'getHomonym')
-    }).toThrowError()
+    }).toThrow()
   })
 
   it('6 ClientAdapters - checkMethodParam executes checkMethod and checkParam', () => {

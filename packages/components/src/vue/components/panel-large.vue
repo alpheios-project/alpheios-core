@@ -102,7 +102,7 @@
            v-show="$store.getters['ui/isActiveTab']('status')"
            data-alpheios-ignore="all">
          <!-- Messages to be displayed in a status panel -->
-        <div v-for="message in $store.state.ui.messages">
+        <div v-for="message in $store.state.ui.messages" v-bind:key="message">
           <div class="alpheios-panel__message">{{message}}</div>
         </div>
       </div>
@@ -158,8 +158,8 @@ import interact from 'interactjs'
 // UI components
 import NavbuttonsLarge from '@/vue/components/nav/navbuttons-large.vue'
 // SVG icons
-import LogoIcon from '@/images/alpheios/logo.svg'
-import SwapPosition from '@/images/inline-icons/swap-horizontally.svg'
+import LogoIcon from '@/vue/icons/alpheios/logoIcon.vue'
+import SwapPosition from '@/vue/icons/swap-horizontallyIcon.vue'
 // Vue components
 import CompactPanel from '@/vue/components/panel-compact.vue'
 import Tooltip from '@/vue/components/tooltip.vue'
@@ -235,7 +235,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-panel--large {
     height: 100vh;

@@ -26,12 +26,12 @@ describe('lemma.test.js', () => {
     expect(function () {
       let l = new Lemma()
       console.log(l)
-    }).toThrowError(/empty/)
+    }).toThrow(/empty/)
 
     expect(function () {
       let l = new Lemma('fooword')
       console.log(l)
-    }).toThrowError(/empty/)
+    }).toThrow(/empty/)
   })
 
   it('2 Lemma - create with min arguments', () => {
@@ -81,15 +81,15 @@ describe('lemma.test.js', () => {
 
     expect(function () {
       lemma.feature = null
-    }).toThrowError(/empty/)
+    }).toThrow(/empty/)
 
     expect(function () {
       lemma.feature = 'foofeature'
-    }).toThrowError(/Feature object/)
+    }).toThrow(/Feature object/)
 
     expect(function () {
       lemma.feature = testFeatureGreek
-    }).toThrowError(/does not match a language/)
+    }).toThrow(/does not match a language/)
 
     lemma.feature = testFeatureLatin
     expect(Array.isArray(lemma.features.note)).toBeTruthy()
@@ -107,15 +107,15 @@ describe('lemma.test.js', () => {
 
     expect(function () {
       lemma.addFeature()
-    }).toThrowError(/empty/)
+    }).toThrow(/empty/)
 
     expect(function () {
       lemma.addFeature('foofeature')
-    }).toThrowError(/Feature object/)
+    }).toThrow(/Feature object/)
 
     expect(function () {
       lemma.addFeature(testFeatureGreek)
-    }).toThrowError(/does not match a language/)
+    }).toThrow(/does not match a language/)
 
     lemma.addFeature(testFeatureLatin)
     expect(Array.isArray(lemma.features.note)).toBeFalsy()
@@ -130,7 +130,7 @@ describe('lemma.test.js', () => {
 
     expect(function () {
       lemma.addFeatures(testFeature1)
-    }).toThrowError(/array/)
+    }).toThrow(/array/)
 
     lemma.addFeatures([testFeature1, testFeature2])
     expect(lemma.features.note).toEqual(testFeature1)
@@ -143,11 +143,11 @@ describe('lemma.test.js', () => {
 
     expect(function () {
       lemma.addTranslation()
-    }).toThrowError(/empty/)
+    }).toThrow(/empty/)
 
     expect(function () {
       lemma.addTranslation('footranslation')
-    }).toThrowError(/Translation object/)
+    }).toThrow(/Translation object/)
 
     lemma.addTranslation(translation)
     expect(lemma.translation).toEqual(translation)

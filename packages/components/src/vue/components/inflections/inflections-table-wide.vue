@@ -88,16 +88,15 @@
   </div>
 </template>
 <script>
-import { ViewSetFactory } from 'alpheios-inflection-tables'
+import { ViewSetFactory } from '@alpheios-core/inflection-tables'
 
 import InflFootnote from '@/vue/components/inflections/infl-footnote.vue'
 import Tooltip from '@/vue/components/tooltip.vue'
 
-import Vue from '@vue-runtime'
+import Vue from 'vue'
 
 export default {
   name: 'WideInflectionsTable',
-  inject: ['l10n', 'app'],
   components: {
     inflFootnote: InflFootnote,
     alphTooltip: Tooltip
@@ -172,6 +171,12 @@ export default {
         this.state.view.wideView &&
         this.state.view.wideView.rows.length > 0)
       )
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
     }
   },
 
@@ -371,7 +376,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-inflections__title {
     color: var(--alpheios-inflect-title-color);

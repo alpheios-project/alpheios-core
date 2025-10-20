@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { Logger } from 'alpheios-data-models'
-import { L10n } from 'alpheios-l10n'
+import { Logger } from '@alpheios-core/data-models'
+import { L10n } from '@alpheios-core/l10n'
 import AdapterError from '@clAdapters/errors/adapter-error'
 import AdapterWarning from '@clAdapters/errors/adapter-warning.js'
 import RemoteError from '@clAdapters/errors/remote-error.js'

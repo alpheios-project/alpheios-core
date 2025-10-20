@@ -17,7 +17,7 @@
     </div>
 </template>
 <script>
-import { Feature } from 'alpheios-data-models'
+import { Feature } from '@alpheios-core/data-models'
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 import PrincipalParts from '@/vue/components/morph-parts/principal-parts.vue'
 
@@ -104,7 +104,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   #{$alpheios-namespace} {
       // We have to use namespace to override increased specificity of content styles, that, in turn, had

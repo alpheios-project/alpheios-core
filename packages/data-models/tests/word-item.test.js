@@ -33,7 +33,7 @@ describe('word-item.test.js', () => {
   it('1 WordItem - constructor throws error on missing props', () => {
     expect(function () {
       let wI = new WordItem({})
-    }).toThrowError(/Unable to construct/)
+    }).toThrow(/Unable to construct/)
   })
 
   it('2 WordItem - constructor sets proper defaults', () => {

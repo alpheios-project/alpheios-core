@@ -225,7 +225,7 @@ describe('feature.test.js', () => {
 
   it('12 Feature singleValue should throw an error if there is more than one value', () => {
     let feature = new Feature(Feature.types.note, ['one', 'two'], latID)
-    expect(() => feature.singleValue).toThrowError(Feature.errMsgs.NO_SINGLE_VALUE)
+    expect(() => feature.singleValue).toThrow(Feature.errMsgs.NO_SINGLE_VALUE)
   })
 
   it('13 Feature - check addValue, addValues, removeValue', () => {

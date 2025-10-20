@@ -102,11 +102,10 @@
 import WordUsageExamplesFilters from '@/vue/components/word-usage-examples/word-usage-examples-filters.vue'
 import WordUsageExamplesSorting from '@/vue/components/word-usage-examples/word-usage-examples-sorting.vue'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 
 export default {
   name: 'WordUsageExamples',
-  inject: ['app', 'l10n', 'settings'],
   mixins: [DependencyCheck],
   components: {
     wordUsageExamplesFilters: WordUsageExamplesFilters,
@@ -180,6 +179,15 @@ export default {
     },
     collapsedHeaderTitle () {
       return this.collapsedHeader ? this.l10n.getText('WORDUSAGE_SHOW_FILTERS_TEXT') : this.l10n.getText('WORDUSAGE_HIDE_FILTERS_TEXT')
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -258,7 +266,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-word-usage {
     display: flex;

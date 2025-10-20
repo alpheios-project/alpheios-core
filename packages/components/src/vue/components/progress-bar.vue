@@ -26,7 +26,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-popup-lexdataloading__progress-wrapper {
     box-sizing: border-box;

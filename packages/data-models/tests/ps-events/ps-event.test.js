@@ -58,8 +58,8 @@ describe('event.test.js', () => {
     const anotherSubscriber = jest.fn()
     event.sub(anotherSubscriber)
     event.pub()
-    expect(subscriber).toBeCalledTimes(1)
-    expect(anotherSubscriber).toBeCalledTimes(1)
+    expect(subscriber).toHaveBeenCalledTimes(1)
+    expect(anotherSubscriber).toHaveBeenCalledTimes(1)
   })
 
   it('Event.pub with a caller name: should pass data object and event data to all subscriber functions', () => {
@@ -71,8 +71,8 @@ describe('event.test.js', () => {
     const anotherSubscriber = jest.fn()
     event.sub(anotherSubscriber)
     event.pub(data, callerName)
-    expect(subscriber).toBeCalledWith(data, eventData)
-    expect(anotherSubscriber).toBeCalledWith(data, eventData)
+    expect(subscriber).toHaveBeenCalledWith(data, eventData)
+    expect(anotherSubscriber).toHaveBeenCalledWith(data, eventData)
   })
 
   it('Event.pub without a caller name: should pass data object and event data to all subscriber functions', () => {
@@ -83,8 +83,8 @@ describe('event.test.js', () => {
     const anotherSubscriber = jest.fn()
     event.sub(anotherSubscriber)
     event.pub(data)
-    expect(subscriber).toBeCalledWith(data, eventData)
-    expect(anotherSubscriber).toBeCalledWith(data, eventData)
+    expect(subscriber).toHaveBeenCalledWith(data, eventData)
+    expect(anotherSubscriber).toHaveBeenCalledWith(data, eventData)
   })
 
   it('Event.pub: if called without parameters it should pass an empty data object to the subscribers', () => {
@@ -92,8 +92,8 @@ describe('event.test.js', () => {
     const anotherSubscriber = jest.fn()
     event.sub(anotherSubscriber)
     event.pub()
-    expect(subscriber).toBeCalledWith({}, eventData)
-    expect(anotherSubscriber).toBeCalledWith({}, eventData)
+    expect(subscriber).toHaveBeenCalledWith({}, eventData)
+    expect(anotherSubscriber).toHaveBeenCalledWith({}, eventData)
   })
 
   it('Event.unsub: should unsubscribe all subscribers listening to an event', () => {

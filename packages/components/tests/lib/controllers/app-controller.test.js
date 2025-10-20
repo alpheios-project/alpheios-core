@@ -11,9 +11,9 @@ import Vue from '@vue-runtime'
 import MouseDblClick from '@comp/lib/custom-pointer-events/mouse-dbl-click.js'
 import LongTap from '@comp/lib/custom-pointer-events/long-tap.js'
 import GenericEvt from '@comp/lib/custom-pointer-events/generic-evt.js'
-import { Constants, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory } from '@alpheios-core/data-models'
 import SelectionController from '@comp/lib/controllers/selection-controller.js'
-import { WordlistController } from 'alpheios-wordlist'
+import { WordlistController } from '@alpheios-core/wordlist'
 import LexicalQuery from '@comp/lib/queries/lexical-query.js'
 import ResourceQuery from '@comp/lib/queries/resource-query.js'
 
@@ -186,7 +186,7 @@ describe('AppController', () => {
 
   it('14 AppController - getModule: throws an error if module does not exist', () => {
     appC = AppController.jestCreate(uiState)
-    expect(() => appC.getModule('Unknown module')).toThrowError()
+    expect(() => appC.getModule('Unknown module')).toThrow()
   })
 
   it('15 AppController - init: should create the App API', async () => {
@@ -433,7 +433,7 @@ describe('AppController', () => {
     await appC.init()
     const registerSelectorSpy = jest.spyOn(appC._selc, 'registerSelector')
     appC.registerTextSelector()
-    expect(registerSelectorSpy).toBeCalledTimes(1)
+    expect(registerSelectorSpy).toHaveBeenCalledTimes(1)
   })
 
   it('31 AppController - activateTextSelector: should call activateSelector on the selection controller', async () => {
@@ -441,7 +441,7 @@ describe('AppController', () => {
     await appC.init()
     const activateSelectorSpy = jest.spyOn(appC._selc, 'activateSelector')
     appC.activateTextSelector()
-    expect(activateSelectorSpy).toBeCalledTimes(1)
+    expect(activateSelectorSpy).toHaveBeenCalledTimes(1)
   })
 
   it('32 AppController - activateTextSelector: should call activateSelector on the selection controller', async () => {
@@ -449,7 +449,7 @@ describe('AppController', () => {
     await appC.init()
     const activateSelectorSpy = jest.spyOn(appC._selc, 'activateSelector')
     appC.activateTextSelector()
-    expect(activateSelectorSpy).toBeCalledTimes(1)
+    expect(activateSelectorSpy).toHaveBeenCalledTimes(1)
   })
 
   // TODO: Add tests for initUserDataManager() after it will be updated
@@ -467,7 +467,7 @@ describe('AppController', () => {
     appC = AppController.jestCreate(uiState)
     const initSpy = jest.spyOn(appC, 'init')
     await appC.activate()
-    expect(initSpy).toBeCalledTimes(1)
+    expect(initSpy).toHaveBeenCalledTimes(1)
   })
 
   it('35 AppController - activate: should activate modules', async () => {
@@ -484,7 +484,7 @@ describe('AppController', () => {
     await appC.init()
     const uicActivateSpy = jest.spyOn(appC._uic, 'activate')
     await appC.activate()
-    expect(uicActivateSpy).toBeCalledTimes(1)
+    expect(uicActivateSpy).toHaveBeenCalledTimes(1)
   })
 
   it('37 AppController - activate: should activate listeners of the event controller', async () => {
@@ -492,7 +492,7 @@ describe('AppController', () => {
     await appC.init()
     const evcActivateSpy = jest.spyOn(appC._evc, 'activateListeners')
     await appC.activate()
-    expect(evcActivateSpy).toBeCalledTimes(1)
+    expect(evcActivateSpy).toHaveBeenCalledTimes(1)
   })
 
   it('38 AppController - activate: should activate the selection controller', async () => {
@@ -500,7 +500,7 @@ describe('AppController', () => {
     await appC.init()
     const selcActivateSpy = jest.spyOn(appC._selc, 'activate')
     await appC.activate()
-    expect(selcActivateSpy).toBeCalledTimes(1)
+    expect(selcActivateSpy).toHaveBeenCalledTimes(1)
   })
 
   it('39 AppController - getDefaultLangCode: should return a valid value of the language code', async () => {
@@ -545,7 +545,7 @@ describe('AppController', () => {
     await appC.activate()
     const deactivateSpy = jest.spyOn(uiState, 'deactivate')
     await appC.deactivate()
-    expect(deactivateSpy).toBeCalledTimes(1)
+    expect(deactivateSpy).toHaveBeenCalledTimes(1)
   })
 
   it('45 AppController - deactivate: should deactivate modules', async () => {
@@ -564,7 +564,7 @@ describe('AppController', () => {
     await appC.activate()
     const uicDeactivateSpy = jest.spyOn(appC._uic, 'deactivate')
     await appC.deactivate()
-    expect(uicDeactivateSpy).toBeCalledTimes(1)
+    expect(uicDeactivateSpy).toHaveBeenCalledTimes(1)
   })
 
   it('47 AppController - deactivate: should deactivate listeners of the event controller', async () => {
@@ -573,7 +573,7 @@ describe('AppController', () => {
     await appC.activate()
     const evcDeactivateSpy = jest.spyOn(appC._evc, 'deactivateListeners')
     await appC.deactivate()
-    expect(evcDeactivateSpy).toBeCalledTimes(1)
+    expect(evcDeactivateSpy).toHaveBeenCalledTimes(1)
   })
 
   it('48 AppController - deactivate: should deactivate the selection controller', async () => {
@@ -582,7 +582,7 @@ describe('AppController', () => {
     await appC.activate()
     const selcDeactivateSpy = jest.spyOn(appC._selc, 'deactivate')
     await appC.deactivate()
-    expect(selcDeactivateSpy).toBeCalledTimes(1)
+    expect(selcDeactivateSpy).toHaveBeenCalledTimes(1)
   })
 
   it('49 AppController - getEmbedLibWarning: should return an instance of an EmbedLibWarning component', () => {
@@ -654,8 +654,8 @@ describe('AppController', () => {
     const startResourceQuerySpy = jest.fn(() => {})
     appC.startResourceQuery = startResourceQuerySpy
     appC.sendFeature(feature)
-    expect(startResourceQuerySpy).toBeCalledTimes(1)
-    expect(startResourceQuerySpy).toBeCalledWith(feature)
+    expect(startResourceQuerySpy).toHaveBeenCalledTimes(1)
+    expect(startResourceQuerySpy).toHaveBeenCalledWith(feature)
   })
 
   // TODO: Add tests for the newLexicalRequest() after its refactoring is complete
@@ -784,8 +784,8 @@ describe('AppController', () => {
     expect(appC._store.state.app.translationsDataReady).toBeFalsy()
     appC.updateTranslations(homonym)
     expect(appC._store.state.app.translationsDataReady).toBeTruthy()
-    expect(updateProvidersSpy).toBeCalledTimes(1)
-    expect(updateProvidersSpy).toBeCalledWith(homonym)
+    expect(updateProvidersSpy).toHaveBeenCalledTimes(1)
+    expect(updateProvidersSpy).toHaveBeenCalledWith(homonym)
   })
 
   it('61 AppController - notifyExperimental: should set a notification if the language is experimental', async () => {
@@ -838,10 +838,10 @@ describe('AppController', () => {
     expect(appC._store.state.app.currentLanguageID).toBe(Constants.LANG_GREEK)
     expect(appC._store.state.app.currentLanguageName).toBe('Greek')
     expect(appC._store.state.app.currentLanguageCode).toBe('grc')
-    expect(notifyExperimentalSpy).toBeCalledTimes(1)
-    expect(setItemSpy).toBeCalledTimes(1)
-    expect(setItemSpy).toBeCalledWith('currentLanguage', 'grc')
-    expect(resetInflData).toBeCalledTimes(1)
+    expect(notifyExperimentalSpy).toHaveBeenCalledTimes(1)
+    expect(setItemSpy).toHaveBeenCalledTimes(1)
+    expect(setItemSpy).toHaveBeenCalledWith('currentLanguage', 'grc')
+    expect(resetInflData).toHaveBeenCalledTimes(1)
   })
 
   it('65 AppController - restoreGrammarIndex: should start a resource query', async () => {
@@ -851,8 +851,8 @@ describe('AppController', () => {
     await appC.activate()
     const startResourceQuerySpy = jest.spyOn(appC, 'startResourceQuery')
     appC.restoreGrammarIndex(langID)
-    expect(startResourceQuerySpy).toBeCalledTimes(1)
-    expect(startResourceQuerySpy).toBeCalledWith({ type: 'table-of-contents', value: '', languageID: langID })
+    expect(startResourceQuerySpy).toHaveBeenCalledTimes(1)
+    expect(startResourceQuerySpy).toHaveBeenCalledWith({ type: 'table-of-contents', value: '', languageID: langID })
   })
 
   it('66 AppController - updateLemmaTranslations: should set a lemma translation language', async () => {
@@ -861,7 +861,7 @@ describe('AppController', () => {
     await appC.activate()
     const setLemmaTranslationLangSpy = jest.spyOn(appC.api.lexis, 'setLemmaTranslationLang')
     appC.updateLemmaTranslations()
-    expect(setLemmaTranslationLangSpy).toBeCalledTimes(1)
+    expect(setLemmaTranslationLangSpy).toHaveBeenCalledTimes(1)
   })
 
   it('67 AppController - updateWordUsageExamples: should update the usage examples data', async () => {
@@ -893,10 +893,10 @@ describe('AppController', () => {
     const getWordUsageDataSpy = jest.spyOn(LexicalQuery, 'getWordUsageData')
     await appC.getWordUsageData(homonym, params)
     expect(appC._store.state.app.wordUsageExamplesReady).toBeFalsy()
-    expect(enableWordUsageExamplesSpy).toBeCalledTimes(1)
-    expect(enableWordUsageExamplesSpy).toBeCalledWith({ languageID: homonym.languageID }, 'onDemand')
-    expect(getWordUsageDataSpy).toBeCalledTimes(1)
-    expect(getWordUsageDataSpy).toBeCalledWith(homonym, null, params)
+    expect(enableWordUsageExamplesSpy).toHaveBeenCalledTimes(1)
+    expect(enableWordUsageExamplesSpy).toHaveBeenCalledWith({ languageID: homonym.languageID }, 'onDemand')
+    expect(getWordUsageDataSpy).toHaveBeenCalledTimes(1)
+    expect(getWordUsageDataSpy).toHaveBeenCalledWith(homonym, null, params)
   })
 
   it('69 AppController - enableWordUsageExamples: should return a truthy value when all conditions are met', async () => {
@@ -996,7 +996,7 @@ describe('AppController', () => {
     await appC.activate()
     const closeUISpy = jest.spyOn(appC.api.ui, 'closeUI')
     appC.handleEscapeKey(event, nativeEvent)
-    expect(closeUISpy).toBeCalledTimes(1)
+    expect(closeUISpy).toHaveBeenCalledTimes(1)
   })
 
   it('77 AppController - handleEscapeKey: should do nothing if the UI is inactive', async () => {
@@ -1012,7 +1012,7 @@ describe('AppController', () => {
     await appC.activate()
     const closeUISpy = jest.spyOn(appC.api.ui, 'closeUI')
     appC.handleEscapeKey(event, nativeEvent)
-    expect(closeUISpy).toBeCalledTimes(0)
+    expect(closeUISpy).toHaveBeenCalledTimes(0)
   })
 
   it('78 AppController - handleEscapeKey: should do nothing if not the ESC key is pressed', async () => {
@@ -1026,7 +1026,7 @@ describe('AppController', () => {
     await appC.activate()
     const closeUISpy = jest.spyOn(appC.api.ui, 'closeUI')
     appC.handleEscapeKey(event, nativeEvent)
-    expect(closeUISpy).toBeCalledTimes(0)
+    expect(closeUISpy).toHaveBeenCalledTimes(0)
   })
 
   it('79 AppController - startResourceQuery: should start a resource query', async () => {
@@ -1039,8 +1039,8 @@ describe('AppController', () => {
     await appC.activate()
     const resourceQuerySpy = jest.spyOn(ResourceQuery, 'create')
     appC.startResourceQuery(feature)
-    expect(resourceQuerySpy).toBeCalledTimes(1)
-    expect(resourceQuerySpy).toBeCalledWith(feature, { grammars: expect.anything(), resourceOptions: expect.anything() })
+    expect(resourceQuerySpy).toHaveBeenCalledTimes(1)
+    expect(resourceQuerySpy).toHaveBeenCalledWith(feature, { grammars: expect.anything(), resourceOptions: expect.anything() })
   })
 
   it('80 AppController - startResourceQuery: should produce a message', async () => {
@@ -1070,8 +1070,8 @@ describe('AppController', () => {
     expect(appC._store.state.app.lexicalRequest.endTime).toBe(0)
     expect(appC._store.state.ui.messages).toEqual([])
     appC.onLexicalQueryComplete(data)
-    expect(showLanguageInfoSpy).toBeCalledTimes(1)
-    expect(showLanguageInfoSpy).toBeCalledWith(data.homonym)
+    expect(showLanguageInfoSpy).toHaveBeenCalledTimes(1)
+    expect(showLanguageInfoSpy).toHaveBeenCalledWith(data.homonym)
     expect(appC._store.state.ui.messages).toEqual(['All lexical queries complete.'])
     expect(appC._store.state.app.inflectionsWaitState).toBeFalsy()
     expect(appC._store.state.app.morphDataReady).toBeTruthy()
@@ -1092,8 +1092,8 @@ describe('AppController', () => {
     expect(appC._store.state.app.lexicalRequest.endTime).toBe(0)
     expect(appC._store.state.ui.messages).toEqual([])
     appC.onLexicalQueryComplete(data)
-    expect(showLanguageInfoSpy).toBeCalledTimes(1)
-    expect(showLanguageInfoSpy).toBeCalledWith(data.homonym)
+    expect(showLanguageInfoSpy).toHaveBeenCalledTimes(1)
+    expect(showLanguageInfoSpy).toHaveBeenCalledWith(data.homonym)
     expect(appC._store.state.ui.messages).toEqual(['All lexical queries complete.'])
     expect(appC._store.state.app.inflectionsWaitState).toBeFalsy()
     expect(appC._store.state.app.morphDataReady).toBeTruthy()
@@ -1149,19 +1149,19 @@ describe('AppController', () => {
     const updateProvidersSpy = jest.spyOn(appC, 'updateProviders')
     expect(appC._store.state.app.shortDefUpdateTime).toBe(0)
     appC.onHomonymReady(homonym)
-    expect(sortSpy).toBeCalledTimes(1)
+    expect(sortSpy).toHaveBeenCalledTimes(1)
     expect(appC._store.state.app.languageName).toBe('Greek')
     expect(appC._store.state.app.languageCode).toBe('grc')
     expect(appC._store.state.app.selectedText).toBe(targetWord)
     expect(appC.api.app.homonym).toBe(homonym)
-    expect(enableWordUsageExamplesSpy).toBeCalledTimes(1)
-    expect(enableWordUsageExamplesSpy).toBeCalledWith({ languageID: languageID })
+    expect(enableWordUsageExamplesSpy).toHaveBeenCalledTimes(1)
+    expect(enableWordUsageExamplesSpy).toHaveBeenCalledWith({ languageID: languageID })
     expect(appC._store.state.app.homonymDataReady).toBeTruthy()
     expect(appC._store.state.app.linkedFeatures).toEqual(['part of speech', 'case', 'mood', 'declension', 'tense', 'voice'])
     expect(appC._store.state.app.wordUsageExampleEnabled).toBeFalsy()
     expect(appC._store.state.app.morphDataReady).toBeTruthy()
-    expect(updateProvidersSpy).toBeCalledTimes(1)
-    expect(updateProvidersSpy).toBeCalledWith(homonym)
+    expect(updateProvidersSpy).toHaveBeenCalledTimes(1)
+    expect(updateProvidersSpy).toHaveBeenCalledWith(homonym)
     expect(appC._store.state.app.shortDefUpdateTime).toBeGreaterThan(0)
   })
 
@@ -1188,8 +1188,8 @@ describe('AppController', () => {
     await appC.activate()
     const updateTranslationsSpy = jest.spyOn(appC, 'updateTranslations')
     appC.onLemmaTranslationsReady(homonym)
-    expect(updateTranslationsSpy).toBeCalledTimes(1)
-    expect(updateTranslationsSpy).toBeCalledWith(homonym)
+    expect(updateTranslationsSpy).toHaveBeenCalledTimes(1)
+    expect(updateTranslationsSpy).toHaveBeenCalledWith(homonym)
   })
 
   it('88 AppController - onShortDefinitionsReady: should update the short definitions data', async () => {
@@ -1205,11 +1205,11 @@ describe('AppController', () => {
     expect(appC._store.state.app.shortDefUpdateTime).toBe(0)
     appC.onShortDefinitionsReady({ homonym, requestType: 'foo' })
     expect(appC.api.app.homonym).toBe(homonym)
-    expect(updateProvidersSpy).toBeCalledTimes(1)
-    expect(updateProvidersSpy).toBeCalledWith(homonym)
+    expect(updateProvidersSpy).toHaveBeenCalledTimes(1)
+    expect(updateProvidersSpy).toHaveBeenCalledWith(homonym)
     expect(appC._store.state.app.queryStillActive).toBeFalsy()
-    expect(showLanguageInfoSpy).toBeCalledTimes(1)
-    expect(showLanguageInfoSpy).toBeCalledWith(homonym)
+    expect(showLanguageInfoSpy).toHaveBeenCalledTimes(1)
+    expect(showLanguageInfoSpy).toHaveBeenCalledWith(homonym)
     expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('request is completed successfully. Lemma')])
     expect(appC._store.state.app.shortDefUpdateTime).toBeGreaterThan(0)
   })
@@ -1225,8 +1225,8 @@ describe('AppController', () => {
     expect(appC._store.state.ui.messages).toEqual([])
     expect(appC._store.state.app.fullDefUpdateTime).toBe(0)
     appC.onFullDefinitionsReady({ homonym, requestType: 'foo' })
-    expect(updateProvidersSpy).toBeCalledTimes(1)
-    expect(updateProvidersSpy).toBeCalledWith(homonym)
+    expect(updateProvidersSpy).toHaveBeenCalledTimes(1)
+    expect(updateProvidersSpy).toHaveBeenCalledWith(homonym)
     expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('request is completed successfully. Lemma')])
     expect(appC._store.state.app.fullDefUpdateTime).toBeGreaterThan(0)
   })
@@ -1272,8 +1272,8 @@ describe('AppController', () => {
     const updateGrammarSpy = jest.spyOn(appC, 'updateGrammar')
     expect(appC._store.state.ui.messages).toEqual([])
     appC.onGrammarAvailable(data)
-    expect(updateGrammarSpy).toBeCalledTimes(1)
-    expect(updateGrammarSpy).toBeCalledWith(data)
+    expect(updateGrammarSpy).toHaveBeenCalledTimes(1)
+    expect(updateGrammarSpy).toHaveBeenCalledWith(data)
     expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('Grammar resource retrieved')])
   })
 
@@ -1285,8 +1285,8 @@ describe('AppController', () => {
     expect(appC._store.state.ui.messages).toEqual([])
     appC.onGrammarNotFound()
     expect(appC._store.state.ui.messages).toEqual([expect.stringContaining('No grammar resources have been found')])
-    expect(updateGrammarSpy).toBeCalledTimes(1)
-    expect(updateGrammarSpy).toBeCalledWith()
+    expect(updateGrammarSpy).toHaveBeenCalledTimes(1)
+    expect(updateGrammarSpy).toHaveBeenCalledWith()
   })
 
   it('94 AppController - onWordItemSelected: should update homonym data if the homonym data is present', async () => {
@@ -1318,18 +1318,18 @@ describe('AppController', () => {
     expect(appC._store.state.app.shortDefUpdateTime).toBe(0)
     expect(appC._store.state.app.fullDefUpdateTime).toBe(0)
     await appC.onWordItemSelected(wordItem)
-    expect(newLexicalRequestSpy).toBeCalledTimes(1)
-    expect(newLexicalRequestSpy).toBeCalledWith(wordItem.targetWord, languageID, 'lat', null, 'wordlist')
-    expect(onHomonymReadySpy).toBeCalledTimes(1)
-    expect(onHomonymReadySpy).toBeCalledWith(wordItem.homonym)
-    expect(wlHomonymReadySpy).toBeCalledTimes(1)
-    expect(wlHomonymReadySpy).toBeCalledWith(wordItem.homonym)
+    expect(newLexicalRequestSpy).toHaveBeenCalledTimes(1)
+    expect(newLexicalRequestSpy).toHaveBeenCalledWith(wordItem.targetWord, languageID, 'lat', null, 'wordlist')
+    expect(onHomonymReadySpy).toHaveBeenCalledTimes(1)
+    expect(onHomonymReadySpy).toHaveBeenCalledWith(wordItem.homonym)
+    expect(wlHomonymReadySpy).toHaveBeenCalledTimes(1)
+    expect(wlHomonymReadySpy).toHaveBeenCalledWith(wordItem.homonym)
     expect(updateProvidersSpy).toBeCalled()
-    expect(updateProvidersSpy).toBeCalledWith(wordItem.homonym)
+    expect(updateProvidersSpy).toHaveBeenCalledWith(wordItem.homonym)
     expect(appC._store.state.app.shortDefUpdateTime).toBeGreaterThan(0)
     expect(appC._store.state.app.fullDefUpdateTime).toBeGreaterThan(0)
     expect(updateTranslationsSpy).toBeCalled()
-    expect(updateTranslationsSpy).toBeCalledWith(wordItem.homonym)
+    expect(updateTranslationsSpy).toHaveBeenCalledWith(wordItem.homonym)
     expect(appC._store.state.app.inflectionsWaitState).toBeFalsy()
     expect(appC._store.state.app.morphDataReady).toBeTruthy()
     expect(appC._store.state.app.lexicalRequest.endTime).toBeGreaterThan(0)
@@ -1353,7 +1353,7 @@ describe('AppController', () => {
     await appC.activate()
     const lookupTextSpy = jest.spyOn(appC.api.lexis, 'lookupText')
     await appC.onWordItemSelected(wordItem)
-    expect(lookupTextSpy).toBeCalledTimes(1)
+    expect(lookupTextSpy).toHaveBeenCalledTimes(1)
   })
 
   it('96 AppController - applyAllOptions: should update all feature options', async () => {
@@ -1363,7 +1363,7 @@ describe('AppController', () => {
     const applyFeatureOptionSpy = jest.spyOn(appC, 'applyFeatureOption')
     expect(appC._store.state.settings.featureResetCounter).toBe(0)
     appC.applyAllOptions()
-    expect(applyFeatureOptionSpy).toBeCalledTimes(14)
+    expect(applyFeatureOptionSpy).toHaveBeenCalledTimes(14)
     expect(appC._store.state.settings.featureResetCounter).toBeGreaterThan(0)
   })
 
@@ -1383,7 +1383,7 @@ describe('AppController', () => {
     const applyFeatureOptionSpy = jest.spyOn(appC, 'applyFeatureOption')
     expect(appC._store.state.settings.uiResetCounter).toBe(0)
     appC.applyAllOptions()
-    expect(applyFeatureOptionSpy).toBeCalledTimes(14)
+    expect(applyFeatureOptionSpy).toHaveBeenCalledTimes(14)
     expect(appC._store.state.settings.uiResetCounter).toBeGreaterThan(0)
   })
 

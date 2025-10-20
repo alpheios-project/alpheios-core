@@ -4,7 +4,7 @@ import 'whatwg-fetch'
 import WordItemRemoteDbDriver from '@wordlist/storage/worditem-remotedb-driver'
 import RemoteDBAdapter from '@wordlist/storage/remote-db-adapter'
 import axios from 'axios';
-import { WordItem } from 'alpheios-data-models'
+import { WordItem } from '@alpheios-core/data-models'
 
 describe('remote-db-adapter.test.js', () => {
   console.error = function () {}

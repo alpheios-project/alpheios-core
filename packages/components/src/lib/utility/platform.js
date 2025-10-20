@@ -1,5 +1,5 @@
 /** @module platform */
-import { PsEvent, Logger } from 'alpheios-data-models'
+import { PsEvent, Logger } from '@alpheios-core/data-models'
 
 /**
  * A class representing a platform the app is running upon.

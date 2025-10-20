@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Constants, Feature, Inflection, Lemma } from 'alpheios-data-models'
+import { Constants, Feature, Inflection, Lemma } from '@alpheios-core/data-models'
 import Paradigm from '@/paradigm/lib/paradigm.js'
 
 import paradigm01 from '@/paradigm/data/greek/verb/tables/paradigm-01.json'

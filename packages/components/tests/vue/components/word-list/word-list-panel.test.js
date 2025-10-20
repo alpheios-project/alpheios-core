@@ -8,7 +8,7 @@ import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 
-import { Constants, WordItem } from 'alpheios-data-models'
+import { Constants, WordItem } from '@alpheios-core/data-models'
 
 describe('word-list-panel.test.js', () => {
   const localVue = createLocalVue()

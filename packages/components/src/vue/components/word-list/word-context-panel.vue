@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-import BackIcon from '@/images/inline-icons/back.svg'
+import BackIcon from '@/vue/icons/backIcon.vue'
 import Tooltip from '@/vue/components/tooltip.vue'
 import WordTqSourceBlock from '@/vue/components/word-list/word-tq-source-block.vue'
 
@@ -31,7 +31,6 @@ export default {
     alphTooltip: Tooltip,
     wordTqSource: WordTqSourceBlock
   },
-  inject: ['l10n'],
   props: {
     worditem: {
       type: Object,
@@ -44,6 +43,9 @@ export default {
     },
     sourcesList () {
       return Object.keys(this.formattedContext)
+    },
+    l10n () {
+      return this.$api.l10n
     }
   },
   methods: {

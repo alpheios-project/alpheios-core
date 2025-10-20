@@ -101,15 +101,15 @@
 // Vue components
 import NavbuttonsCompact from '@/vue/components/nav/navbuttons-compact.vue'
 // Embeddable SVG icons
-import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
-import StatusIcon from '@/images/inline-icons/status.svg'
-import UserIcon from '@/images/inline-icons/user.svg'
-import OptionsIcon from '@/images/inline-icons/options.svg'
-import GrammarIcon from '@/images/inline-icons/resources.svg'
-import TreebankIcon from '@/images/inline-icons/sitemap.svg'
-import HelpIcon from '@/images/inline-icons/help-icon.svg'
-import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
+import InflectionsBrowserIcon from '@/vue/icons/inflections-browserIcon.vue'
+import StatusIcon from '@/vue/icons/statusIcon.vue'
+import UserIcon from '@/vue/icons/userIcon.vue'
+import OptionsIcon from '@/vue/icons/optionsIcon.vue'
+import GrammarIcon from '@/vue/icons/resourcesIcon.vue'
+import TreebankIcon from '@/vue/icons/sitemapIcon.vue'
+import HelpIcon from '@/vue/icons/help-iconIcon.vue'
+import WordlistIcon from '@/vue/icons/wordlist-Icon.vue'
+import WordUsageIcon from '@/vue/icons/usage-examples-Icon.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
@@ -117,12 +117,6 @@ export default {
   name: 'NavbuttonsLarge',
   extends: NavbuttonsCompact,
   // API modules that are required for this component
-  inject: {
-    app: 'app',
-    ui: 'ui',
-    l10n: 'l10n',
-    settings: 'settings'
-  },
   storeModules: ['app', 'ui', 'lexis'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {

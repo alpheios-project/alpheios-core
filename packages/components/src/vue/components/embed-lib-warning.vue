@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import CloseIcon from '@/images/inline-icons/x-close.svg'
+import CloseIcon from '@/vue/icons/x-closeIcon.vue'
 
 export default {
   name: 'EmbedLibWarning',
@@ -28,7 +28,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-embed-lib-warning {
     background: var(--alpheios-color-muted);

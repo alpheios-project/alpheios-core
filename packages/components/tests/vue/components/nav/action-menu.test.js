@@ -8,7 +8,7 @@ import ActionMenu from '@/vue/components/nav/action-menu.vue'
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 describe('action-menu.test.js', () => {
   const localVue = createLocalVue()

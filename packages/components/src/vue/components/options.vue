@@ -57,7 +57,6 @@ export default {
     advancedSettings: AdvancedSettings,
     alphTooltip: Tooltip
   },
-  inject: ['l10n', 'app', 'settings'],
   data: function () {
     return {
       currentTab: 1
@@ -98,6 +97,15 @@ export default {
       } else {
         return ''
       }
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -109,7 +117,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../styles/variables";
+   @use "@/styles/_variables.scss" as *;
 
     .alpheios-tab-options {
       display: flex;

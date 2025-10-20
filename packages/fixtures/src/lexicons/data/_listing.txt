@@ -1,0 +1,17 @@
+curl -o grc-lsj-defs.dat "https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat"
+
+curl -o grc-lsj-ids.dat "https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat"
+
+curl -o lat-ls-ids.dat "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat"
+
+curl -o grc-mjp-defs.dat "https://repos1.alpheios.net/lexdata/majorplus/dat/grc-mjp-defs.dat"
+
+curl -o grc-lsj-full-n69419.xml "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lsj&lg=grc&out=html&n=n69419"
+
+curl -o grc-lsj-full-n69531.xml "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lsj&lg=grc&out=html&n=n69531"
+
+curl -o lat-ls-full-n28019.xml "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n28019"
+
+curl -o lat-ls-full-n28116.xml "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n28116"
+
+curl -o lat-ls-full-n6614.xml "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n6614"

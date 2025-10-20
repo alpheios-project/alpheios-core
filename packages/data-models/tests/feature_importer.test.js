@@ -35,7 +35,7 @@ describe('FeatureImporter object', () => {
 
   test('map method should not allow empty arguments', () => {
     let importer = new FeatureImporter()
-    expect(() => importer.map('value')).toThrowError(/empty/)
+    expect(() => importer.map('value')).toThrow(/empty/)
   })
 
   test('has method should check if value is in a map properly', () => {
@@ -54,7 +54,7 @@ describe('FeatureImporter object', () => {
 
   test('get method should throw an error if mapping is not found', () => {
     let importer = new FeatureImporter()
-    expect(() => importer.get('incorrect value')).toThrowError(/not found/)
+    expect(() => importer.get('incorrect value')).toThrow(/not found/)
   })
 
   afterAll(() => {

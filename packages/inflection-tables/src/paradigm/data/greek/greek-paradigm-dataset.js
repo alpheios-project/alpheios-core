@@ -1,4 +1,4 @@
-import { Constants, Feature, FeatureImporter, Lemma, Logger } from 'alpheios-data-models'
+import { Constants, Feature, FeatureImporter, Lemma, Logger } from '@alpheios-core/data-models'
 import Paradigm from '@/paradigm/lib/paradigm.js'
 import GreekParadigmData from '@/paradigm/data/greek/greek-paradigm-data.js'
 
@@ -26,6 +26,10 @@ export default class GreekParadigmDataset extends LanguageDataset {
 
   static get languageID () {
     return Constants.LANG_GREEK
+  }
+
+  static get langCode () {
+    return Constants.STR_LANG_CODE_GRC
   }
 
   setVerbParadigmData (partOfSpeech, paradigms, rulesData, suppParadigmTables) {

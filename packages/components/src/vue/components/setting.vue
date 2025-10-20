@@ -60,9 +60,6 @@ export default {
   components: {
     Multiselect
   },
-  inject: {
-    l10n: 'l10n'
-  },
   props: {
     data: {
       type: Object,
@@ -139,6 +136,9 @@ export default {
         return this.l10n.getText(this.dataModel.labelL10n)
       }
       return this.dataModel.labelText
+    },
+    l10n () {
+      return this.$api.l10n
     }
   },
   methods: {
@@ -162,7 +162,7 @@ export default {
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-setting__label {
     width: 50%;

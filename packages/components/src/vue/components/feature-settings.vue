@@ -102,12 +102,6 @@ import Options from '@/lib/options/options.js'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'FeatureSettings',
-  // API modules that are required for this component
-  inject: {
-    app: 'app',
-    l10n: 'l10n',
-    settings: 'settings'
-  },
   storeModules: ['app'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
@@ -119,6 +113,15 @@ export default {
     },
     featureOptions () {
       return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -134,7 +137,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
   .alpheios-feature-options__cont {
     display: flex;
     flex-direction: column;

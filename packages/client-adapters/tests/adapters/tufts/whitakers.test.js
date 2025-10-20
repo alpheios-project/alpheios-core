@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 import Whitakers from '@clAdapters/adapters/tufts/engine/whitakers'
 
 describe('whitakers.test.js', () => {

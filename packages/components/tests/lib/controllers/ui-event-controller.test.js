@@ -57,7 +57,7 @@ describe('ui-event-controller.test.js', () => {
     const testEvent = jest.fn()
     const evtHanlder = () => {}
     evc.registerListener(listenerName, document, evtHanlder, testEvent, 'param A', 'param B')
-    expect(testEvent).toBeCalledWith(document, evtHanlder, 'param A', 'param B')
+    expect(testEvent).toHaveBeenCalledWith(document, evtHanlder, 'param A', 'param B')
   })
 
   it('UIEventController.registerListener: if called for a CSS selector should add two listener objects', () => {
@@ -97,7 +97,7 @@ describe('ui-event-controller.test.js', () => {
     evc.activateListener(listenerName)
     expect(evc.listenerNames).toEqual([listenerName]) // To verify that the listener is registered
     evc.unregisterListener(listenerName)
-    expect(removeFn).toBeCalledTimes(1)
+    expect(removeFn).toHaveBeenCalledTimes(1)
   })
 
   it('UIEventController.updateEvent: should replace all events of the listener with the other events', () => {
@@ -178,7 +178,7 @@ describe('ui-event-controller.test.js', () => {
     })
     evc.registerListener(listenerName, `.${className}`, () => {}, testEventOne, ...initialParams)
     evc.updateEventParams(listenerName, ...replacementParams)
-    expect(updateParamsFn).toBeCalledTimes(2)
+    expect(updateParamsFn).toHaveBeenCalledTimes(2)
     expect(updateParamsFn).toHaveBeenNthCalledWith(1, ...replacementParams)
     expect(updateParamsFn).toHaveBeenNthCalledWith(2, ...replacementParams)
   })
@@ -192,7 +192,7 @@ describe('ui-event-controller.test.js', () => {
     })
     evc.registerListener(listenerName, `.${className}`, () => {}, testEvent)
     evc.activateListener(listenerName)
-    expect(setlFn).toBeCalledTimes(2)
+    expect(setlFn).toHaveBeenCalledTimes(2)
   })
 
   it('UIEventController.activateListeners: should call a set() method on all event objects of all listeners', () => {
@@ -205,7 +205,7 @@ describe('ui-event-controller.test.js', () => {
     evc.registerListener(listenerName, `.${className}`, () => {}, testEvent)
     evc.registerListener('Document Listener', document, () => {}, testEvent)
     evc.activateListeners()
-    expect(setlFn).toBeCalledTimes(3)
+    expect(setlFn).toHaveBeenCalledTimes(3)
   })
 
   it('UIEventController.deactivateListener: should call a remove() method on all activated event objects', () => {
@@ -219,7 +219,7 @@ describe('ui-event-controller.test.js', () => {
     evc.registerListener(listenerName, `.${className}`, () => {}, testEvent)
     evc.activateListener(listenerName)
     evc.deactivateListener(listenerName)
-    expect(removeFn).toBeCalledTimes(2)
+    expect(removeFn).toHaveBeenCalledTimes(2)
   })
 
   it('UIEventController.deactivateListener: should never call a remove() method if a registered listener was not activated', () => {
@@ -231,7 +231,7 @@ describe('ui-event-controller.test.js', () => {
     })
     evc.registerListener(listenerName, `.${className}`, () => {}, testEvent)
     evc.deactivateListener(listenerName)
-    expect(removeFn).toBeCalledTimes(0)
+    expect(removeFn).toHaveBeenCalledTimes(0)
   })
 
   it('UIEventController.deactivateListeners: should call a remove() method on all event objects of all activated listeners', () => {
@@ -248,7 +248,7 @@ describe('ui-event-controller.test.js', () => {
     evc.registerListener(docListenerName, document, () => {}, testEvent)
     evc.activateListener(docListenerName)
     evc.deactivateListeners()
-    expect(removeFn).toBeCalledTimes(3)
+    expect(removeFn).toHaveBeenCalledTimes(3)
   })
 
   it('UIEventController.deactivateListeners: should call a remove() method on all event objects of activated listeners only', () => {
@@ -264,6 +264,6 @@ describe('ui-event-controller.test.js', () => {
     evc.registerListener(docListenerName, document, () => {}, testEvent)
     evc.activateListener(docListenerName)
     evc.deactivateListeners()
-    expect(removeFn).toBeCalledTimes(1)
+    expect(removeFn).toHaveBeenCalledTimes(1)
   })
 })

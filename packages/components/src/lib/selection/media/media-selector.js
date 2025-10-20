@@ -1,4 +1,4 @@
-import { LanguageModelFactory, Constants } from 'alpheios-data-models'
+import { LanguageModelFactory, Constants } from '@alpheios-core/data-models'
 
 export default class MediaSelector {
   /**

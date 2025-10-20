@@ -25,22 +25,22 @@ describe('inflection.test.js', () => {
     expect(function () {
       let l = new Inflection()
       console.log(l)
-    }).toThrowError(/stem or suffix must be defined/)
+    }).toThrow(/stem or suffix must be defined/)
 
     expect(function () {
       let l = new Inflection('foo')
       console.log(l)
-    }).toThrowError(/Language should not be empty/)
+    }).toThrow(/Language should not be empty/)
 
     expect(function () {
       let l = new Inflection('foo', 'foolang')
       console.log(l)
-    }).toThrowError(/language foolang not supported/)
+    }).toThrow(/language foolang not supported/)
 
     expect(function () {
       let l = new Inflection(null, 'grc', 'foo')
       console.log(l)
-    }).not.toThrowError()
+    }).not.toThrow()
   })
 
   it('2 Inflection - form should work with a stem only', () => {
@@ -84,19 +84,19 @@ describe('inflection.test.js', () => {
   it('8 Inflection - feature method should throw an error if no arguments are provided', () => {
     let inflection = new Inflection('foo', 'grc')
 
-    expect(() => inflection.addFeature('')).toThrowError('feature data cannot be empty')
+    expect(() => inflection.addFeature('')).toThrow('feature data cannot be empty')
   })
 
   it('9 Inflection - feature method should throw an error if argument(s) are of the wrong type', () => {
     let inflection = new Inflection('foo', 'grc')
 
-    expect(() => inflection.addFeature('some value')).toThrowError('feature data must be a Feature object')
+    expect(() => inflection.addFeature('some value')).toThrow('feature data must be a Feature object')
   })
 
   it('10 Inflection - feature method should not allow a feature language to be different from a language of an inflection', () => {
     let inflection = new Inflection('foo', 'grc')
 
-    expect(() => inflection.addFeature(new Feature(Feature.types.gender, 'masculine', Constants.LANG_LATIN))).toThrowError('does not match a language')
+    expect(() => inflection.addFeature(new Feature(Feature.types.gender, 'masculine', Constants.LANG_LATIN))).toThrow('does not match a language')
   })
 
   it('11 Inflection - setConstraints method adds constraints to inflection based on features and language', () => {
@@ -193,7 +193,7 @@ describe('inflection.test.js', () => {
   it('19 Inflection - addFeatures', () => {
     let inflection = new Inflection('stem', 'lat', 'suffix')
 
-    expect(() => { inflection.addFeatures('foo') }).toThrowError(/must be in an array/)
+    expect(() => { inflection.addFeatures('foo') }).toThrow(/must be in an array/)
 
     inflection.addFeatures([new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_LATIN), new Feature(Feature.types.fullForm, 'foo', Constants.LANG_LATIN)])
 

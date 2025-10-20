@@ -1,7 +1,7 @@
 /** @module uiController */
 import Platform from '@/lib/utility/platform.js'
 import HTMLPage from '@/lib/utility/html-page.js'
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 
 /**
  * A UI controller class is responsible for coordination between all UI components,

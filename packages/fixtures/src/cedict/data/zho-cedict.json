@@ -1,0 +1,330 @@
+{
+  "metadata": {
+    "version": 20191029,
+    "revision": 1,
+    "frequency": [
+      {
+        "value": 1,
+        "name": "least frequent",
+        "order": 5
+      },
+      {
+        "value": 2,
+        "name": "less frequent",
+        "order": 4
+      },
+      {
+        "value": 3,
+        "name": "moderatelyfrequent",
+        "order": 3
+      },
+      {
+        "value": 4,
+        "name": "more frequent",
+        "order": 2
+      },
+      {
+        "value": 5,
+        "name": "most frequent",
+        "order": 1
+      }
+    ]
+  },
+  "cedictMeta": {
+    "name": "CC-CEDICT",
+    "description": "Community maintained free Chinese-English dictionary.",
+    "licenseName": "Creative Commons Attribution-ShareAlike 4.0 International License",
+    "licenseURI": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "referencedWorks": [
+      "CEDICT - Copyright (C) 1997, 1998 Paul Andrew Denisowski"
+    ],
+    "downloadURI": "https://www.mdbg.net/chinese/dictionary?page=cc-cedict",
+    "editorURI": "https://cc-cedict.org/editor/editor.php",
+    "referenceURI": "https://cc-cedict.org/wiki/",
+    "originalVersion": "1",
+    "originalSubversion": "0",
+    "originalFormat": "ts",
+    "originalCharset": "UTF-8",
+    "publisher": "MDBG",
+    "dateTime": "2019-10-29T06:16:52.000Z"
+  },
+  "entries": [
+    {
+      "index": 2,
+      "type": "not specified",
+      "traditional": {
+        "headword": "21三體綜合症"
+      },
+      "simplified": {
+        "headword": "21三体综合症"
+      },
+      "pinyin": "er4 shi2 yi1 san1 ti3 zong1 he2 zheng4",
+      "definitions": [
+        "trisomy",
+        "Down's syndrome"
+      ]
+    },
+    {
+      "index": 35909,
+      "type": "not specified",
+      "traditional": {
+        "headword": "幻滅"
+      },
+      "simplified": {
+        "headword": "幻灭"
+      },
+      "pinyin": "huan4 mie4",
+      "definitions": [
+        "(of dreams, hopes etc) to vanish",
+        "to evaporate",
+        "(of a person) to become disillusioned",
+        "disillusionment"
+      ]
+    },
+    {
+      "index": 49467,
+      "type": "not specified",
+      "traditional": {
+        "headword": "日",
+        "cantonese": "jat6",
+        "mandarin": "rì",
+        "tang": "*njit",
+        "codePoint": "U+65E5",
+        "radical": {
+          "index": 72,
+          "additionalStrokes": 0,
+          "character": "日"
+        },
+        "frequency": 2,
+        "totalStrokes": 4
+      },
+      "simplified": {
+        "headword": "日",
+        "cantonese": "jat6",
+        "mandarin": "rì",
+        "tang": "*njit",
+        "codePoint": "U+65E5",
+        "radical": {
+          "index": 72,
+          "additionalStrokes": 0,
+          "character": "日"
+        },
+        "frequency": 2,
+        "totalStrokes": 4
+      },
+      "pinyin": "Ri4",
+      "definitions": [
+        "abbr. for 日本[Ri4 ben3], Japan"
+      ]
+    },
+    {
+      "index": 49468,
+      "type": "not specified",
+      "traditional": {
+        "headword": "日",
+        "cantonese": "jat6",
+        "mandarin": "rì",
+        "tang": "*njit",
+        "codePoint": "U+65E5",
+        "radical": {
+          "index": 72,
+          "additionalStrokes": 0,
+          "character": "日"
+        },
+        "frequency": 2,
+        "totalStrokes": 4
+      },
+      "simplified": {
+        "headword": "日",
+        "cantonese": "jat6",
+        "mandarin": "rì",
+        "tang": "*njit",
+        "codePoint": "U+65E5",
+        "radical": {
+          "index": 72,
+          "additionalStrokes": 0,
+          "character": "日"
+        },
+        "frequency": 2,
+        "totalStrokes": 4
+      },
+      "pinyin": "ri4",
+      "definitions": [
+        "sun",
+        "day",
+        "date, day of the month"
+      ]
+    },
+    {
+      "index": 49533,
+      "type": "not specified",
+      "traditional": {
+        "headword": "日月"
+      },
+      "simplified": {
+        "headword": "日月"
+      },
+      "pinyin": "ri4 yue4",
+      "definitions": [
+        "the sun and moon",
+        "day and month",
+        "every day and every month",
+        "season",
+        "life and livelihood"
+      ]
+    },
+    {
+      "index": 55562,
+      "type": "not specified",
+      "traditional": {
+        "headword": "槓",
+        "cantonese": "gong3 gung3 lung5",
+        "mandarin": "gàng",
+        "codePoint": "U+69D3",
+        "radical": {
+          "index": 75,
+          "additionalStrokes": 10,
+          "character": "木"
+        },
+        "frequency": 5,
+        "totalStrokes": 14
+      },
+      "simplified": {
+        "headword": "杠",
+        "cantonese": "gong1 gong3",
+        "mandarin": "gāng",
+        "codePoint": "U+6760",
+        "radical": {
+          "index": 75,
+          "additionalStrokes": 3,
+          "character": "木"
+        },
+        "totalStrokes": 7
+      },
+      "pinyin": "gang4",
+      "definitions": [
+        "thick pole",
+        "bar",
+        "rod",
+        "thick line",
+        "to mark with a thick line",
+        "to sharpen (knife)",
+        "(old) coffin-bearing pole"
+      ]
+    },
+    {
+      "index": 72267,
+      "type": "not specified",
+      "traditional": {
+        "headword": "白眉鶇"
+      },
+      "simplified": {
+        "headword": "白眉鸫"
+      },
+      "pinyin": "bai2 mei2 dong1",
+      "definitions": [
+        "(bird species of China) eyebrowed thrush (Turdus obscurus)"
+      ]
+    },
+    {
+      "index": 73893,
+      "type": "not specified",
+      "traditional": {
+        "headword": "眠",
+        "cantonese": "min4",
+        "mandarin": "mián",
+        "tang": "*men",
+        "codePoint": "U+7720",
+        "radical": {
+          "index": 109,
+          "additionalStrokes": 5,
+          "character": "目"
+        },
+        "frequency": 4,
+        "totalStrokes": 10
+      },
+      "simplified": {
+        "headword": "眠",
+        "cantonese": "min4",
+        "mandarin": "mián",
+        "tang": "*men",
+        "codePoint": "U+7720",
+        "radical": {
+          "index": 109,
+          "additionalStrokes": 5,
+          "character": "目"
+        },
+        "frequency": 4,
+        "totalStrokes": 10
+      },
+      "pinyin": "mian2",
+      "definitions": [
+        "to sleep",
+        "to hibernate"
+      ]
+    },
+    {
+      "index": 83686,
+      "type": "not specified",
+      "traditional": {
+        "headword": "而今"
+      },
+      "simplified": {
+        "headword": "而今"
+      },
+      "pinyin": "er2 jin1",
+      "definitions": [
+        "now",
+        "at the present (time)"
+      ]
+    },
+    {
+      "index": 108832,
+      "type": "not specified",
+      "traditional": {
+        "headword": "隱飾"
+      },
+      "simplified": {
+        "headword": "隐饰"
+      },
+      "pinyin": "yin3 shi4",
+      "definitions": [
+        "a cover-up"
+      ]
+    },
+    {
+      "index": 108835,
+      "type": "not specified",
+      "traditional": {
+        "headword": "隴",
+        "cantonese": "lung5",
+        "mandarin": "lǒng",
+        "tang": "*liǒng",
+        "codePoint": "U+96B4",
+        "radical": {
+          "index": 170,
+          "additionalStrokes": 16,
+          "character": "阜"
+        },
+        "totalStrokes": 18
+      },
+      "simplified": {
+        "headword": "陇",
+        "cantonese": "lung5",
+        "mandarin": "lǒng",
+        "codePoint": "U+9647",
+        "radical": {
+          "index": 170,
+          "additionalStrokes": 5,
+          "simplified": false,
+          "character": "阜"
+        },
+        "totalStrokes": 7
+      },
+      "pinyin": "Long3",
+      "definitions": [
+        "short name for Gansu province 甘肅省|甘肃省[Gan1 su4 Sheng3]"
+      ]
+    }
+  ]
+}

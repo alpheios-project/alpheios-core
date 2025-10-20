@@ -1,4 +1,4 @@
-import { Constants, Feature } from 'alpheios-data-models'
+import { Constants, Feature, LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 import Paradigm from '@/paradigm/lib/paradigm.js'
 import View from '@views/lib/view.js'
 import GreekView from '@views/lang/greek/greek-view.js'
@@ -103,7 +103,10 @@ export default class GreekParadigmView extends GreekView {
    * @return {boolean}
    */
   static matchFilter (languageID, inflections, inflectionData) {
-    return (this.languageID === languageID &&
+    const langCode = LMF.getLanguageCodeFromId(languageID)
+    const checkLang = (this.languageID === languageID) || (langCode === this.langCode)
+
+    return (checkLang &&
       inflections.some(i => i[Feature.types.part] && i[Feature.types.part].value === this.mainPartOfSpeech)) &&
       inflectionData.types.has(this.inflectionType)
   }

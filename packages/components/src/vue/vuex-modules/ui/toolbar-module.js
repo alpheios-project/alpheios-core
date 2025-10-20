@@ -1,4 +1,4 @@
-import Vue from '@vue-runtime'
+import Vue from 'vue'
 import Module from '@/vue/vuex-modules/module.js'
 import ToolbarCompact from '@/vue/components/nav/toolbar-compact.vue'
 import ToolbarLarge from '@/vue/components/nav/toolbar-large.vue'

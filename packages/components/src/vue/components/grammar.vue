@@ -51,20 +51,19 @@
       if no language is opened or if tab is not visible
 */
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-import { Constants, LanguageModelFactory as LMF } from 'alpheios-data-models'
-import { Grammars } from 'alpheios-res-client'
+import { Constants, LanguageModelFactory as LMF } from '@alpheios-core/data-models'
+import { Grammars } from '@alpheios-core/res-client'
 import Options from '@/lib/options/options.js'
 
-import Vue from '@vue-runtime'
+import Vue from 'vue'
 
-import BackIcon from '@/images/inline-icons/back.svg'
-import GrammarIcon from '@/images/inline-icons/resources.svg'
+import BackIcon from '@/vue/icons/backIcon.vue'
+import GrammarIcon from '@/vue/icons/resourcesIcon.vue'
 import Tooltip from './tooltip.vue'
 import ProgressBar from './progress-bar.vue'
 
 export default {
   name: 'Grammar',
-  inject: ['l10n', 'app', 'settings'],
   storeModules: ['app'],
   mixins: [DependencyCheck],
   components: {
@@ -143,6 +142,15 @@ export default {
     mustShowTitles () {
       // if all the grammars are collapsed then we should always show the titles
       return this.showTitles || Object.values(this.languageList).filter((langData) => ! langData.collapsed).length === 0
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -233,7 +241,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-grammar__titles {
     padding: 10px 30px 5px;

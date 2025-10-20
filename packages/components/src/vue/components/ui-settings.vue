@@ -52,12 +52,6 @@ import Options from '@/lib/options/options.js'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'UISettings',
-  // API modules that are required for this component
-  inject: {
-    app: 'app',
-    l10n: 'l10n',
-    settings: 'settings'
-  },
   storeModules: ['app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
@@ -66,8 +60,11 @@ export default {
   },
   data: function () {
     return {
-      maxPopupWidth: this.settings.getUiOptions().items.maxPopupWidth.currentValue
+      maxPopupWidth: 0
     }
+  },
+  mounted () {
+    this.maxPopupWidth = this.settings?.getUiOptions().items.maxPopupWidth.currentValue
   },
   computed: {
     isMobile: function () {
@@ -76,7 +73,16 @@ export default {
 
     uiOptions: function () {
       return this.settings.getUiOptions()
-    }
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
+    },
   },
   watch: {
     maxPopupWidth: function (value) {
@@ -93,7 +99,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
   .alpheios-ui-options__cont {
     display: flex;
     flex-direction: column;

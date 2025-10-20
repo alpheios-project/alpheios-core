@@ -1,4 +1,4 @@
-import { TextQuoteSelector } from 'alpheios-data-models'
+import { TextQuoteSelector } from '@alpheios-core/data-models'
 import Utility from '@wordlist/common/utility.js'
 
 export default class WordItemRemoteDbDriver {

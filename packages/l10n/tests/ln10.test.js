@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import L10n from '@l10n/l10n.js'
-import MessageBundle from '@l10n/message-bundle.js'
+import L10n from '@/l10n.js'
+import MessageBundle from '@/message-bundle.js'
 
 describe('l10n.test.js', () => {
   const localeEnUs = 'en-US'

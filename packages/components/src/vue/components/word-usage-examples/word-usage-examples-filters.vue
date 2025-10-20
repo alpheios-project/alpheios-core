@@ -35,12 +35,11 @@
 </template>
 <script>
 import Tooltip from '@/vue/components/tooltip.vue'
-import { LanguageModelFactory } from 'alpheios-data-models'
+import { LanguageModelFactory } from '@alpheios-core/data-models'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'WordUsageExamplesFilters',
-  inject: ['app', 'l10n', 'settings'],
   components: {
     alphTooltip: Tooltip
   },
@@ -121,6 +120,15 @@ export default {
         return resArray
       }
       return null
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -190,7 +198,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-word-usage-filters-select .alpheios-select {
     option.alpheios-select-disabled-option {

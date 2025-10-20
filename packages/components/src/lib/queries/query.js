@@ -1,4 +1,4 @@
-import uuidv4 from 'uuid/v4'
+import { v4 as uuidv4 } from 'uuid'
 
 /**
  * A global object that holds queues of queries of different types. The object structure is:

@@ -9,7 +9,7 @@ import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 import Download from '@/lib/utility/download.js'
 
-import { Constants, WordItem, WordList } from 'alpheios-data-models'
+import { Constants, WordItem, WordList } from '@alpheios-core/data-models'
 
 describe('word-sorting-panel.test.js', () => {
   const localVue = createLocalVue()

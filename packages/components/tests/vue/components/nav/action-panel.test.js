@@ -8,7 +8,7 @@ import ActionPanel from '@/vue/components/nav/action-panel.vue'
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 describe('action-panel.test.js', () => {
   const localVue = createLocalVue()

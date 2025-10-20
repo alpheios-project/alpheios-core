@@ -1,0 +1,565 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for lib/custom-pointer-events/pointer-evt.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">lib/custom-pointer-events</a> pointer-evt.js</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">6.66% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>4/60</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/34</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">6.89% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>2/29</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">7.14% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>4/56</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import EventElement from './event-element.js'
+import { Logger } from '@alpheios-core/data-models'
+&nbsp;
+export default class PointerEvt {
+  constructor () {
+    this.tracking = false
+    this.start = new EventElement()
+    this.end = new EventElement()
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  up</span>dateParams () {
+<span class="cstat-no" title="statement not covered" >    Logger.getInstance().warn(`updateParams() is not implemented in ${this.constructor.name}`)</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic alpheiosIgnoreAllTest (dataset) {
+    const attrName = <span class="cstat-no" title="statement not covered" >'alpheiosIgnore'</span>
+    const attrValue = <span class="cstat-no" title="statement not covered" >'all'</span>
+<span class="cstat-no" title="statement not covered" >    return dataset.hasOwnProperty(attrName) &amp;&amp; dataset[attrName] === attrValue </span>// eslint-disable-line no-prototype-builtins
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic alpheiosEnableAllTest (dataset) {
+    const attrName = <span class="cstat-no" title="statement not covered" >'alpheiosEnable'</span>
+    const attrValue = <span class="cstat-no" title="statement not covered" >'all'</span>
+<span class="cstat-no" title="statement not covered" >    return dataset.hasOwnProperty(attrName) &amp;&amp; dataset[attrName] === attrValue </span>// eslint-disable-line no-prototype-builtins
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic excludeAllCpeTest (dataset) {
+<span class="cstat-no" title="statement not covered" >    return dataset.hasOwnProperty('alphExcludeAllCpe') </span>// eslint-disable-line no-prototype-builtins
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic excludeCpeTest (dataset) {
+<span class="cstat-no" title="statement not covered" >    return false</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ha</span>sLimitedById (element) {
+<span class="cstat-no" title="statement not covered" >    return this.limitedById &amp;&amp; element.id === this.limitedById </span>// eslint-disable-line no-prototype-builtins
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic get pointerEventSupported () {
+<span class="cstat-no" title="statement not covered" >    return window.PointerEvent</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  al</span>pheiosIgnoreThis (path) {
+    const ignoredAll = <span class="cstat-no" title="statement not covered" >path.some(<span class="fstat-no" title="function not covered" >el</span>ement =&gt;</span>
+<span class="cstat-no" title="statement not covered" >      this.constructor.alpheiosIgnoreAllTest(element.dataset || {}))</span>
+    const enableAll = <span class="cstat-no" title="statement not covered" >path.some(<span class="fstat-no" title="function not covered" >el</span>ement =&gt;</span>
+<span class="cstat-no" title="statement not covered" >      this.constructor.alpheiosEnableAllTest(element.dataset || {}))</span>
+<span class="cstat-no" title="statement not covered" >    return ignoredAll &amp;&amp; !enableAll</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>tPoint (type, clientX, clientY, target, path) {
+<span class="cstat-no" title="statement not covered" >    this[type].time = new Date().getTime()</span>
+<span class="cstat-no" title="statement not covered" >    this[type].client.x = clientX</span>
+<span class="cstat-no" title="statement not covered" >    this[type].client.y = clientY</span>
+<span class="cstat-no" title="statement not covered" >    this[type].target = target</span>
+    // TODO: Can also use composedPath() as probably a more standard approach
+<span class="cstat-no" title="statement not covered" >    if (!path) {</span>
+      /*
+      This is probably an iOS where `event.path` does not exist.
+      We'll build path manually then.
+       */
+<span class="cstat-no" title="statement not covered" >      path = this.constructor.buildPath(target)</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (!Array.isArray(path)) { <span class="cstat-no" title="statement not covered" >path = [path] </span>}</span>
+<span class="cstat-no" title="statement not covered" >    this[type].path = path</span>
+<span class="cstat-no" title="statement not covered" >    this[type].excluded = this.alpheiosIgnoreThis(this[type].path) ||</span>
+      this[type].path.some(<span class="fstat-no" title="function not covered" >el</span>ement =&gt;
+<span class="cstat-no" title="statement not covered" >        element.dataset &amp;&amp; (</span>
+          this.constructor.excludeAllCpeTest(element.dataset) ||
+          this.constructor.excludeCpeTest(element.dataset)
+        ))
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!this[type].excluded &amp;&amp; this.limitedById) {</span>
+<span class="cstat-no" title="statement not covered" >      this[type].excluded = this[type].path.every(<span class="fstat-no" title="function not covered" >el</span>ement =&gt; <span class="cstat-no" title="statement not covered" >!this.hasLimitedById(element))</span></span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return this</span>
+  }
+&nbsp;
+  /**
+   * Recursive function that builds a `path` array for an element. The first element in path is
+   * an element itself, the second element is its parent and so on up until the root element
+   * (the one that has no `parentElement` property).
+   * @param {Element} element - an HTML element we want to path for
+   * @param {Element[]} path - an array of elements in a path
+   * @return {Element[]} A path array
+   */
+<span class="fstat-no" title="function not covered" >  st</span>atic buildPath (element, path = <span class="branch-0 cbranch-no" title="branch not covered" >[])</span> {
+<span class="cstat-no" title="statement not covered" >    path.push(element)</span>
+<span class="cstat-no" title="statement not covered" >    if (element.parentElement) {</span>
+<span class="cstat-no" title="statement not covered" >      path = this.buildPath(element.parentElement, path)</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return path</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>tStartPoint (clientX, clientY, target, path) {
+<span class="cstat-no" title="statement not covered" >    return this.setPoint('start', clientX, clientY, target, path)</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>tEndPoint (clientX, clientY, target, path) {
+<span class="cstat-no" title="statement not covered" >    this.setPoint('end', clientX, clientY, target, path)</span>
+  }
+&nbsp;
+  get type () {
+    return this.constructor.name
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>t duration () {
+<span class="cstat-no" title="statement not covered" >    return this.end.time - this.start.time</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>t mvmntX () {
+<span class="cstat-no" title="statement not covered" >    return this.end.client.x - this.start.client.x</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>t mvmntY () {
+<span class="cstat-no" title="statement not covered" >    return this.end.client.y - this.start.client.y</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>t mvmntXAbs () {
+<span class="cstat-no" title="statement not covered" >    return Math.abs(this.mvmntX)</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>t mvmntYAbs () {
+<span class="cstat-no" title="statement not covered" >    return Math.abs(this.mvmntY)</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>t mvmntDist () {
+<span class="cstat-no" title="statement not covered" >    return Math.sqrt(Math.pow(this.mvmntX, 2) + Math.pow(this.mvmntY, 2))</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic pointerDownListener (event, domEvt) {
+<span class="cstat-no" title="statement not covered" >    event.setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic pointerUpListener (event, domEvt) {
+    const valid = <span class="cstat-no" title="statement not covered" >event.setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)</span>
+<span class="cstat-no" title="statement not covered" >    if (valid) { <span class="cstat-no" title="statement not covered" >event.evtHandler(event, domEvt) </span>}</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic touchStartListener (event, domEvt) {
+<span class="cstat-no" title="statement not covered" >    event.setStartPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic touchEndListener (event, domEvt) {
+    const valid = <span class="cstat-no" title="statement not covered" >event.setEndPoint(domEvt.changedTouches[0].clientX, domEvt.changedTouches[0].clientY, domEvt.target, domEvt.path)</span>
+<span class="cstat-no" title="statement not covered" >    if (valid) { <span class="cstat-no" title="statement not covered" >event.evtHandler(event, domEvt) </span>}</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic addUpDownListeners (element, event) {
+<span class="cstat-no" title="statement not covered" >    if (this.pointerEventSupported) {</span>
+      // Will use pointer events
+<span class="cstat-no" title="statement not covered" >      element.addEventListener('pointerdown', this.pointerDownListener.bind(this, event), { passive: true })</span>
+<span class="cstat-no" title="statement not covered" >      element.addEventListener('pointerup', this.pointerUpListener.bind(this, event), { passive: true })</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      element.addEventListener('touchstart', this.touchStartListener.bind(this, event), { passive: true })</span>
+<span class="cstat-no" title="statement not covered" >      element.addEventListener('touchend', this.touchEndListener.bind(this, event), { passive: true })</span>
+    }
+  }
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-08-20T08:11:11.275Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    

@@ -5,6 +5,11 @@ const fs = require('fs')
 module.exports = {
   process (src, filename, config, options) {
     let testCSV = fs.readFileSync(filename, 'UTF-8')
-    return 'module.exports = ' + JSON.stringify(testCSV)
+    const transformedCode = 'module.exports = ' + JSON.stringify(testCSV)
+
+    return {
+      code: transformedCode,
+      map: null
+    }
   }
 }

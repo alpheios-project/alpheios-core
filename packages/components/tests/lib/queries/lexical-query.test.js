@@ -11,10 +11,10 @@ import LanguageOptionDefaults from '@comp/settings/language-options-defaults.jso
 import LocalStorageArea from '@comp/lib/options/local-storage-area.js'
 import SiteOptions from './fixtures/site-options-shortlex.json'
 
-import { Constants, LanguageModelFactory as LMF, Homonym } from 'alpheios-data-models'
-import { L10n } from 'alpheios-l10n'
+import { Constants, LanguageModelFactory as LMF, Homonym } from '@alpheios-core/data-models'
+import { L10n } from '@alpheios-core/l10n'
 
-import { ClientAdapters } from 'alpheios-client-adapters'
+import { ClientAdapters } from '@alpheios-core/client-adapters'
 
 describe('lexical-query.test.js', () => {
   console.error = function () {}

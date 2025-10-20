@@ -1,17 +1,25 @@
 {
-  "name": "alpheios-wordlist",
-  "version": "3.4.4-incr-3.4.x.20220504345",
+  "name": "@alpheios-core/wordlist",
+  "version": "1.0.0",
   "description": "Word-In-Context List library for an Alpheios project",
   "private": true,
-  "main": "dist/alpheios-wordlist.min.js",
+  "main": "dist/alpheios-wordlist.js",
   "scripts": {
-    "test": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-no-coverage": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest",
-    "test-d": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest tests/functional/user-data-manager.test.js",
-    "build": "npm run lint &&  node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M all -p vue",
-    "build-prod": "npm run lint &&  node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M production -p vue",
-    "build-dev": "npm run lint &&  node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs -m webpack -M development -p vue",
-    "lint": "npx eslint --fix src/**/*.js"
+    "build": "vite build",
+    "test": "jest tests --detectOpenHandles --coverage",
+    "test-c": "jest tests/unit/indexed-db-adapter.test.js"
+  },
+  "dependencies": {
+    "@alpheios-core/data-models": "*"
+  },
+  "devDependencies": {
+    "@alpheios-core/client-adapters": "*",
+    "@alpheios-core/fixtures": "*",
+    "@babel/preset-env": "^7.28.0",
+    "@rollup/plugin-dsv": "^3.0.5",
+    "babel-jest": "^30.0.5",
+    "fake-indexeddb": "^6.1.0",
+    "vite": "^7.1.2"
   },
   "repository": {
     "type": "git",
@@ -23,55 +31,8 @@
     "url": "https://github.com/alpheios-project/wordlist/issues"
   },
   "homepage": "https://github.com/alpheios-project/wordlist#readme",
-  "devDependencies": {
-    "alpheios-node-build": "https://github.com/alpheios-project/node-build#v5",
-    "coveralls": "^3.1.0",
-    "cross-env": "^7.0.3",
-    "fake-indexeddb": "^3.0.2",
-    "jest": "^26.6.3"
+  "directories": {
+    "test": "tests"
   },
-  "peerDependencies": {
-    "intl-messageformat": "^9.0.2"
-  },
-  "jest": {
-    "verbose": true,
-    "moduleNameMapper": {
-      "^@wordlist[/](.+)": "<rootDir>/src/$1",
-      "^@wordlist-tests[/](.+)": "<rootDir>/tests/$1",
-      "alpheios-data-models": "<rootDir>/../data-models/dist/alpheios-data-models.js",
-      "alpheios-client-adapters": "<rootDir>/../client-adapters/dist/alpheios-client-adapters.js"
-    },
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    }
-  },
-  "eslintConfig": {
-    "extends": [
-      "eslint:recommended"
-    ],
-    "env": {
-      "es6": true,
-      "browser": true,
-      "node": true,
-      "jest": true
-    },
-    "parserOptions": {
-      "ecmaVersion": 2019,
-      "sourceType": "module"
-    },
-    "rules": {
-      "no-prototype-builtins": "warn",
-      "dot-notation": "warn",
-      "accessor-pairs": "warn",
-      "no-unused-vars": "warn",
-      "getter-return": "warn",
-      "no-setter-return": "warn"
-    }
-  },
-  "standard": {
-    "ignore": [
-      "**/dist",
-      "**/tests/test-bundle.js"
-    ]
-  }
+  "keywords": []
 }

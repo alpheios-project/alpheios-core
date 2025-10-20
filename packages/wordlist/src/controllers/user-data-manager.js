@@ -1,4 +1,4 @@
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver.js'
 import WordItemRemoteDbDriver from '@wordlist/storage/worditem-remotedb-driver.js'
 import IndexedDBAdapter from '@wordlist/storage/indexed-db-adapter.js'

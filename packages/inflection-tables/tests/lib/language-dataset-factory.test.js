@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 import BaseTestHelp from '@tests/data/base-test-help.js'
 
@@ -41,7 +41,7 @@ describe('language-dataset-factory.test.js', () => {
     let LDF = new LanguageDatasetFactory()
 
     expect(LDF.sets.size).toEqual(2)
-    expect(Array.from(LDF.sets.keys())).toEqual([Constants.LANG_LATIN, Constants.LANG_GREEK])
+    expect(Array.from(LDF.sets.keys())).toEqual([Constants.STR_LANG_CODE_LAT, Constants.STR_LANG_CODE_GRC])
   })
 
   it('2 LanguageDatasetFactory - instance creates a new LanguageDatasetFactory and do it only once', () => {

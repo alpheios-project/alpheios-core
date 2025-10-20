@@ -39,15 +39,14 @@
 </template>
 <script>
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-import ReadingToolsIcon from '@/images/inline-icons/reading-tools.svg'
-import LookupIcon from '@/images/inline-icons/lookup.svg'
-import LogoIcon from '@/images/alpheios/logo.svg'
-import SwapPosition from '@/images/inline-icons/swap-horizontally.svg'
-import TapGestureIcon from '@/images/inline-icons/tap-gesture-icon.svg'
+import ReadingToolsIcon from '@/vue/icons/reading-toolsIcon.vue'
+import LookupIcon from '@/vue/icons/lookupIcon.vue'
+import LogoIcon from '@/vue/icons/alpheios/logoIcon.vue'
+import SwapPosition from '@/vue/icons/swap-horizontallyIcon.vue'
+import TapGestureIcon from '@/vue/icons/tap-gesture-Icon.vue'
 
 export default {
   name: 'Info',
-  inject: ['app', 'l10n', 'lexis'],
   storeModules: ['app'],
   components: {
     readingToolsIcon: ReadingToolsIcon,
@@ -68,13 +67,21 @@ export default {
       } else {
         return 'https://alpheios.net/pages/v3/faq-extension'
       }
-    }
-
+    },
+    app () {
+      return this.$api.app
+    },
+    lexis () {
+      return this.$api.lexis
+    },
+    l10n () {
+      return this.$api.l10n
+    },
   }
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-info {
     color: var(--alpheios-text-color);

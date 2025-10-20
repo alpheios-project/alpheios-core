@@ -126,7 +126,7 @@
 </template>
 <script>
 // Embeddable SVG icons
-import CloseIcon from '@/images/inline-icons/x-close.svg'
+import CloseIcon from '@/vue/icons/x-closeIcon.vue'
 // UI modules
 import Setting from '@/vue/components/setting.vue'
 import Login from '@/vue/components/login.vue'
@@ -136,7 +136,6 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'NotificationArea',
-  inject: ['app', 'l10n', 'settings', 'ui', 'lexis'],
   storeModules: ['ui', 'auth', 'lexis'],
   mixins: [DependencyCheck],
   components: {
@@ -205,6 +204,21 @@ export default {
         classes.push('alpheios-notification-area__notification--cedict-loaded')
       }
       return classes
+    },
+    app () {
+      return this.$api.app
+    },
+    ui () {
+      return this.$api.ui
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
+    },
+    lexis () {
+      return this.$api.lexis
     }
   },
 
@@ -243,7 +257,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-notification-area {
     display: flex;

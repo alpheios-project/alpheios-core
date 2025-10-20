@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import { Constants, Feature, Inflection, LanguageModelFactory as LMF, Logger } from 'alpheios-data-models'
+import { Constants, Feature, Inflection, LanguageModelFactory as LMF, Logger } from '@alpheios-core/data-models'
 
 import BaseTestHelp from '@tests/data/base-test-help.js'
 

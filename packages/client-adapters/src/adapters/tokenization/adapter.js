@@ -1,7 +1,7 @@
 import DefaultConfig from '@clAdapters/adapters/tokenization/config.json'
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
-import { Options } from 'alpheios-data-models'
+import { Options } from '@alpheios-core/data-models'
 
 class AlpheiosTokenizationAdapter extends BaseAdapter {
   /**

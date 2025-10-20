@@ -19,7 +19,6 @@ import Tooltip from '@/vue/components/tooltip.vue'
 
 export default {
   name: 'WordUsageExamplesSorting',
-  inject: ['app', 'l10n'],
   components: {
     alphTooltip: Tooltip
   },
@@ -53,16 +52,18 @@ export default {
   data () {
     return {
       selectedSortBy: null,
-      typeSortingList: [
-        { value: null, title: this.l10n.getText('WORDUSAGE_SORT_BY_PLACEHOLDER') },
-        { value: 'byTextWork', title: this.l10n.getText('WORDUSAGE_SORT_BY_TEXTWORK') },
-        { value: 'byPrefix', title: this.l10n.getText('WORDUSAGE_SORT_BY_PREFIX') },
-        { value: 'bySuffix', title: this.l10n.getText('WORDUSAGE_SORT_BY_SUFFIX') }
-      ],
+      typeSortingList: [],
       calctypeSortingList: null
     }
   },
-
+  mounted () {
+    this.typeSortingList = [
+      { value: null, title: this.l10n?.getText('WORDUSAGE_SORT_BY_PLACEHOLDER') },
+      { value: 'byTextWork', title: this.l10n?.getText('WORDUSAGE_SORT_BY_TEXTWORK') },
+      { value: 'byPrefix', title: this.l10n?.getText('WORDUSAGE_SORT_BY_PREFIX') },
+      { value: 'bySuffix', title: this.l10n?.getText('WORDUSAGE_SORT_BY_SUFFIX') }
+    ]
+  },
   watch: {
     reloadSorting (value) {
       if (this.availableSortBy) {
@@ -91,6 +92,12 @@ export default {
     },
     finalTypeSortingList () {
       return this.reloadSorting ? this.calctypeSortingList : null
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
     }
   },
   methods: {
@@ -105,7 +112,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-word-usage-sorting-select .alpheios-select {
     option.alpheios-select-disabled-option {

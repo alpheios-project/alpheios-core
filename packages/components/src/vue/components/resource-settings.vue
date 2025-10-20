@@ -19,12 +19,6 @@ import Setting from './setting.vue'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'FeatureSettings',
-  // API modules that are required for this component
-  inject: {
-    l10n: 'l10n',
-    app: 'app',
-    settings: 'settings'
-  },
   mixins: [DependencyCheck],
   components: {
     setting: Setting
@@ -45,6 +39,17 @@ export default {
           titleDefault: 'Grammars'
         }
       ]
+    }
+  },
+  computed: {
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -80,7 +85,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
   .alpheios-resource-options__cont {
     display: flex;
     flex-direction: column;

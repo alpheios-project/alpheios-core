@@ -8,7 +8,7 @@ import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 
-import { Constants, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from '@alpheios-core/data-models'
 
 describe('popup.test.js', () => {
   const localVue = createLocalVue()

@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import MessageBundle from '@l10n/message-bundle.js'
+import MessageBundle from '@/message-bundle.js'
 
 describe('message-bundle.test.js', () => {
   const localeEnUs = 'en-US'
@@ -29,12 +29,12 @@ describe('message-bundle.test.js', () => {
     expect(function () {
       const l = new MessageBundle(enUSData, null)
       console.log(l)
-    }).toThrowError('Locale data is missing')
+    }).toThrow('Locale data is missing')
 
     expect(function () {
       const l = new MessageBundle(null, localeEnUs)
       console.log(l)
-    }).toThrowError('Message data is missing')
+    }).toThrow('Message data is missing')
   })
 
   it('2 MessageBundle - get method returns message by id', () => {

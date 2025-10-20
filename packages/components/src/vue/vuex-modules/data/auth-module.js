@@ -1,7 +1,7 @@
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
 import AuthData from '@/lib/auth/auth-data.js'
-import { PsEvent, Logger } from 'alpheios-data-models'
+import { PsEvent, Logger } from '@alpheios-core/data-models'
 
 export default class AuthModule extends Module {
   /**

@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import HeaderCell from '@views/lib/header-cell.js'
-import { Constants, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from '@alpheios-core/data-models'
 
 import GroupFeatureType from '@views/lib/group-feature-type.js'
 import Column from '@views/lib/column.js'

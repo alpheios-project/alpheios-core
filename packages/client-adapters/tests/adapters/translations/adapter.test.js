@@ -4,9 +4,9 @@ import 'whatwg-fetch'
 
 import AlpheiosLemmaTranslationsAdapter from '@clAdapters/adapters/translations/adapter'
 import ClientAdapters from '@clAdapters/client-adapters.js'
-import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma } from '@alpheios-core/data-models'
 
-import { Fixture, TranslationsFixture } from 'alpheios-fixtures'
+import { Fixture, TranslationsFixture } from '@alpheios-core/fixtures'
 
 describe('lexicons/adapter.test.js', () => {
   console.error = function () {}

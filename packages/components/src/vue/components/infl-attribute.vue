@@ -10,7 +10,6 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'InflectionAttribute',
-  inject: ['app', 'l10n'],
   storeModules: ['app'],
   mixins: [DependencyCheck],
   props: {
@@ -35,6 +34,14 @@ export default {
     lang: {
       type: String,
       required: false
+    }
+  },
+  computed: {
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
     }
   },
   methods: {
@@ -114,7 +121,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
   #{$alpheios-namespace} {
     // These rules intentionally use an increased specificity to fight the style leakage
     .alpheios-inflections-list__inflgroup,

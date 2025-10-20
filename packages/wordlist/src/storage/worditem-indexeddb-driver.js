@@ -1,4 +1,4 @@
-import { Homonym, WordItem, TextQuoteSelector, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Homonym, WordItem, TextQuoteSelector, LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 
 import IndexedDBObjectStoresStructure from '@wordlist/storage/indexeddbDriver/indexed-db-object-stores-structure'
 import IndexedDBLoadProcess from '@wordlist/storage/indexeddbDriver/indexed-db-load-process'
@@ -360,7 +360,8 @@ export default class WordItemIndexedDbDriver {
    * @return {Object[]}
    */
   _serializeHomonym (wordItem, addMeaning = false) {
-    let resultHomonym = wordItem.homonym && (wordItem.homonym instanceof Homonym) ? wordItem.homonym.convertToJSONObject(addMeaning) : null
+    const instanceCheck = (wordItem.homonym instanceof Homonym) || (wordItem.homonym.constructor.name === 'Homonym')
+    let resultHomonym = wordItem.homonym && instanceCheck ? wordItem.homonym.convertToJSONObject(addMeaning) : null
     if (resultHomonym) {
       return [{
         ID: this._makeStorageID(wordItem),

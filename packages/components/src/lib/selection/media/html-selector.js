@@ -1,6 +1,6 @@
 import 'element-closest' // To polyfill Element.closest() if required
-import { Constants, LanguageModelFactory, Logger } from 'alpheios-data-models'
-import { LanguageDetect } from 'alpheios-language-detect'
+import { Constants, LanguageModelFactory, Logger } from '@alpheios-core/data-models'
+import { LanguageDetect } from '@alpheios-core/language-detect'
 import TextSelector from '../text-selector'
 import MediaSelector from './media-selector'
 

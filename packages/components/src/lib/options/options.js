@@ -1,4 +1,4 @@
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 import OptionItem from './options-item.js'
 /**
  * A set of options grouped by domain. Domain name should be passed in `defaults.domain`.

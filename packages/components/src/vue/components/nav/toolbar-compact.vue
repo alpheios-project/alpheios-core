@@ -12,19 +12,13 @@
 </template>
 <script>
 // Embeddable SVG icons
-import ToolbarIcon from '@/images/inline-icons/reading-tools.svg'
+import ToolbarIcon from '@/vue/icons/reading-toolsIcon.vue'
 
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Toolbar',
-  // API modules that are required for this component
-  inject: {
-    app: 'app',
-    l10n: 'l10n',
-    ui: 'ui'
-  },
   storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
@@ -36,12 +30,27 @@ export default {
       return {
         zIndex: this.$store.state.ui.zIndexMax
       }
+    },
+    app () {
+      return this.$api.app
+    },
+    ui () {
+      return this.$api.ui
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
+    },
+    auth () {
+      return this.$api.auth
     }
   }
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-toolbar {
     position: fixed;

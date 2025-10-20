@@ -115,12 +115,12 @@
 import Tooltip from '@/vue/components/tooltip.vue'
 import ProgressBar from '@/vue/components/progress-bar.vue'
 // Embeddable SVG icons
-import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
-import UserIcon from '@/images/inline-icons/user.svg'
-import OptionsIcon from '@/images/inline-icons/options.svg'
-import GrammarIcon from '@/images/inline-icons/resources.svg'
-import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import CloseIcon from '@/images/inline-icons/x-close.svg'
+import InflectionsBrowserIcon from '@/vue/icons/inflections-browserIcon.vue'
+import UserIcon from '@/vue/icons/userIcon.vue'
+import OptionsIcon from '@/vue/icons/optionsIcon.vue'
+import GrammarIcon from '@/vue/icons/resourcesIcon.vue'
+import WordlistIcon from '@/vue/icons/wordlist-Icon.vue'
+import CloseIcon from '@/vue/icons/x-closeIcon.vue'
 // Vue components
 import Lookup from '@/vue/components/lookup.vue'
 // Modules support
@@ -128,11 +128,6 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'ActionPanel',
-  // API modules that are required for this component
-  inject: {
-    ui: 'ui',
-    l10n: 'l10n'
-  },
   storeModules: ['actionPanel', 'app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
@@ -205,6 +200,12 @@ export default {
     // Need this to return an object to Vue template when moduleConfig data is not available yet.
     config () {
       return this.moduleConfig || { initialShift: {} }
+    },
+    ui () {
+      return this.$api.ui
+    },
+    l10n () {
+      return this.$api.l10n
     }
   },
 
@@ -239,7 +240,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-action-panel {
     width: auto;

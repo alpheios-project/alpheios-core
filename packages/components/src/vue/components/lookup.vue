@@ -44,8 +44,8 @@
 <script>
 import TextSelector from '@/lib/selection/text-selector'
 
-import { LanguageModelFactory, Logger } from 'alpheios-data-models'
-import LookupIcon from '@/images/inline-icons/lookup.svg'
+import { LanguageModelFactory, Logger } from '@alpheios-core/data-models'
+import LookupIcon from '@/vue/icons/lookupIcon.vue'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 import Setting from './setting.vue'
@@ -55,7 +55,6 @@ import GreekInput from '@/lib/utility/greek-input.js'
 
 export default {
   name: 'Lookup',
-  inject: ['app', 'ui', 'l10n', 'settings', 'lexis'],
   mixins: [DependencyCheck],
   storeModules: ['app'],
   components: {
@@ -125,6 +124,21 @@ export default {
       const value = this.lookupLanguage === GreekInput.langCode
       this.$emit('updateAvailableUseBetaCodes', value)
       return value
+    },
+    app () {
+      return this.$api.app
+    },
+    ui () {
+      return this.$api.ui
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
+    },
+    lexis () {
+      return this.$api.lexis
     }
   },
   watch: {
@@ -187,7 +201,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-lookup__form {
     text-align: left;

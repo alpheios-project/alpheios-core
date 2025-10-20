@@ -2,7 +2,7 @@
 'use strict'
 
 import Grammars from '@resclient/grammars.js'
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 describe('BaseAdapter object', () => {
   beforeAll(() => {

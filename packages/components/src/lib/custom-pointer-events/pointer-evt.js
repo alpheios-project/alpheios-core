@@ -1,5 +1,5 @@
 import EventElement from './event-element.js'
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 
 export default class PointerEvt {
   constructor () {

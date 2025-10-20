@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import GroupFeatureList from '@views/lib/group-feature-list.js'
 
-import { Feature, Constants } from 'alpheios-data-models'
+import { Feature, Constants } from '@alpheios-core/data-models'
 import GroupFeatureType from '@views/lib/group-feature-type.js'
 
 describe('group-feature-list.test.js', () => {

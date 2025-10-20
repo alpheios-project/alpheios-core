@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
-import { ChineseLanguageModel, Lemma, Lexeme, Homonym, Feature, Definition } from 'alpheios-data-models'
+import { ChineseLanguageModel, Lemma, Lexeme, Homonym, Feature, Definition } from '@alpheios-core/data-models'
 import {
   MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictConfig, RequestMessage
-} from 'alpheios-messaging'
+} from '@alpheios-core/messaging'
 
 export const CedictCharacterForms = {
   SIMPLIFIED: 'simplified',

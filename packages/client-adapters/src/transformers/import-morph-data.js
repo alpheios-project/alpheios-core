@@ -1,7 +1,7 @@
 /*
 Objects of a morphology analyzer's library
  */
-import { Feature, Lemma, FeatureImporter, Definition, Constants, Logger } from 'alpheios-data-models'
+import { Feature, Lemma, FeatureImporter, Definition, Constants, Logger } from '@alpheios-core/data-models'
 
 /**
  * Holds all information required to transform from morphological analyzer's grammatical feature values to the

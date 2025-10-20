@@ -1,6 +1,6 @@
 import BaseResourceAdapter from '../base_adapter.js'
 import papaparse from 'papaparse'
-import { ResourceProvider } from 'alpheios-data-models'
+import { ResourceProvider } from '@alpheios-core/data-models'
 import DefaultConfig from './config.json'
 
 class GrammarResAdapter extends BaseResourceAdapter {

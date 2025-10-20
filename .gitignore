@@ -1,10 +1,5 @@
 node_modules/
 drivers/profiles/
-lerna-debug.log
 npm-debug.log
 .idea
 log
-package-lock.json
-
-
-

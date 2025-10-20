@@ -7,16 +7,18 @@
   </div>
 </template>
 <script>
-import { LanguageModelFactory, Logger } from 'alpheios-data-models'
+import { LanguageModelFactory, Logger } from '@alpheios-core/data-models'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'ShortDef',
-  inject: ['app'],
   mixins: [DependencyCheck],
   props: ['definition', 'languageCode'],
   computed: {
     alpheiosEnabled () {
       return LanguageModelFactory.supportsLanguage(this.definition.language)
+    },
+    app () {
+      return this.$api.app
     }
   },
   mounted () {
@@ -33,7 +35,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   #{$alpheios-namespace} {
     // These rules intentionally use an increased specificity to fight the style leakage

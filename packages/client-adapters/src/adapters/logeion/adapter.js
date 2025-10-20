@@ -1,7 +1,7 @@
 import DefaultConfig from '@clAdapters/adapters/logeion/config.json'
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
-import { LanguageModelFactory as LMF, Constants } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Constants } from '@alpheios-core/data-models'
 
 class AlpheiosLogeionAdapter extends BaseAdapter {
   /**

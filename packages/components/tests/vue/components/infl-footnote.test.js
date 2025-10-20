@@ -8,7 +8,7 @@ import InflFootnote from '@/vue/components/inflections/infl-footnote.vue'
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 describe('infl-footnote.test.js', () => {
   const localVue = createLocalVue()

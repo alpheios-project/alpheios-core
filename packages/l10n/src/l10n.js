@@ -1,4 +1,4 @@
-import MessageBundle from '@l10n/message-bundle'
+import MessageBundle from '@/message-bundle'
 
 /**
  * Combines several message bundles of different locales.

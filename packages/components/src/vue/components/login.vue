@@ -32,10 +32,6 @@
 
 export default {
   name: 'UserAuth',
-  inject: {
-    l10n: 'l10n',
-    auth: { from: 'auth', default: null } // This module is options
-  },
   props: {
     btnClass: {
       type: String,
@@ -57,6 +53,12 @@ export default {
       if (this.$store.state.auth.externalLoginUrl) {
         return this.$store.state.auth.externalLogoutUrl.replace('{FROM_URL}',window.location.href)
       }
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    auth () {
+      return this.$api.auth
     }
   },
   methods: {

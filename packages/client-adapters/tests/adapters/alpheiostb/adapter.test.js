@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import AlpheiosTreebankAdapter from '@clAdapters/adapters/alpheiostb/adapter'
-import { Constants, Homonym } from 'alpheios-data-models'
+import { Constants, Homonym } from '@alpheios-core/data-models'
 
 describe('alpheiostb/adapter.test.js', () => {
   console.error = function () {}

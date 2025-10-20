@@ -1,0 +1,7 @@
+curl -o lat-fre-male.json "https://ats.alpheios.net/lat/fre?input=malus,male"
+
+curl -o lat-spa-mare.json "https://ats.alpheios.net/lat/spa?input=mare,mas"
+
+curl -o lat-all-langs.json "https://ats.alpheios.net/lat/"
+
+curl -o lat-spa-cepit.json "https://ats.alpheios.net/lat/spa?input=capio"

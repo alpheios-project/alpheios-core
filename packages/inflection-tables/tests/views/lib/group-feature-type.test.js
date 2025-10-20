@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import GroupFeatureType from '@views/lib/group-feature-type.js'
-import { Constants, Feature, FeatureType } from 'alpheios-data-models'
+import { Constants, Feature, FeatureType } from '@alpheios-core/data-models'
 
 describe('group-feature-type.test.js', () => {
   console.error = function () {}

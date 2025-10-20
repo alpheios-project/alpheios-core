@@ -4,9 +4,9 @@ import 'whatwg-fetch'
 
 import AlpheiosChineseLocAdapter from '@clAdapters/adapters/chineseloc/adapter'
 
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
-import { CedictFixture } from 'alpheios-fixtures'
+import { CedictFixture } from '@alpheios-core/fixtures'
 
 describe('chineseloc.test.js', () => {
   const serviceUrl = 'https://some.url'

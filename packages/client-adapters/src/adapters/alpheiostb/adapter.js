@@ -1,4 +1,4 @@
-import { LanguageModelFactory as LMF, LatinLanguageModel, GreekLanguageModel, ResourceProvider, Lexeme, Lemma, Feature, Inflection, Homonym } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, LatinLanguageModel, GreekLanguageModel, ResourceProvider, Lexeme, Lemma, Feature, Inflection, Homonym } from '@alpheios-core/data-models'
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
 import DefaultConfig from '@clAdapters/adapters/alpheiostb/config.json'

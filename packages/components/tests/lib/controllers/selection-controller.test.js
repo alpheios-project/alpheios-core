@@ -34,8 +34,8 @@ describe('SelectionController', () => {
     selC = new SelectionController()
     const registerListenerSpy = jest.spyOn(selC._evc, 'registerListener')
     selC.registerSelector(selectorName, selector, eventConstructor, eventParms)
-    expect(registerListenerSpy).toBeCalledTimes(1)
-    expect(registerListenerSpy).toBeCalledWith(selectorName, selector, expect.any(Function), eventConstructor, eventParms)
+    expect(registerListenerSpy).toHaveBeenCalledTimes(1)
+    expect(registerListenerSpy).toHaveBeenCalledWith(selectorName, selector, expect.any(Function), eventConstructor, eventParms)
   })
 
   it('SelectionController - replaceEventForAll: should update events for all registered selectors', () => {
@@ -50,9 +50,9 @@ describe('SelectionController', () => {
     selC.registerSelector(selectorName, selector, eventConstructor, eventParms)
     selC.registerSelector(selectorNameTwo, selectorTwo, eventConstructor, eventParms)
     selC.replaceEventForAll(eventConstructor, eventParms)
-    expect(updateEventSpy).toBeCalledTimes(2)
-    expect(updateEventSpy).toBeCalledWith(selectorName, eventConstructor, eventParms)
-    expect(updateEventSpy).toBeCalledWith(selectorNameTwo, eventConstructor, eventParms)
+    expect(updateEventSpy).toHaveBeenCalledTimes(2)
+    expect(updateEventSpy).toHaveBeenCalledWith(selectorName, eventConstructor, eventParms)
+    expect(updateEventSpy).toHaveBeenCalledWith(selectorNameTwo, eventConstructor, eventParms)
   })
 
   it('SelectionController - updateParams: should update event parameters of a single text selector', () => {
@@ -65,8 +65,8 @@ describe('SelectionController', () => {
     const updateEventParamsSpy = jest.spyOn(selC._evc, 'updateEventParams')
     selC.registerSelector(selectorName, selector, eventConstructor, eventParms)
     selC.updateParams(selectorName, eventParmsTwo)
-    expect(updateEventParamsSpy).toBeCalledTimes(1)
-    expect(updateEventParamsSpy).toBeCalledWith(selectorName, eventParmsTwo)
+    expect(updateEventParamsSpy).toHaveBeenCalledTimes(1)
+    expect(updateEventParamsSpy).toHaveBeenCalledWith(selectorName, eventParmsTwo)
   })
 
   it('SelectionController - updateParamsForAll: should update event parameters of all registered selectors', () => {
@@ -82,9 +82,9 @@ describe('SelectionController', () => {
     selC.registerSelector(selectorName, selector, eventConstructor, eventParms)
     selC.registerSelector(selectorNameTwo, selectorTwo, eventConstructor, eventParms)
     selC.updateParamsForAll(eventParmsTwo)
-    expect(updateEventParamsSpy).toBeCalledTimes(2)
-    expect(updateEventParamsSpy).toBeCalledWith(selectorName, eventParmsTwo)
-    expect(updateEventParamsSpy).toBeCalledWith(selectorNameTwo, eventParmsTwo)
+    expect(updateEventParamsSpy).toHaveBeenCalledTimes(2)
+    expect(updateEventParamsSpy).toHaveBeenCalledWith(selectorName, eventParmsTwo)
+    expect(updateEventParamsSpy).toHaveBeenCalledWith(selectorNameTwo, eventParmsTwo)
   })
 
   it('SelectionController - activateSelector: should activate a specific text selector', () => {
@@ -96,8 +96,8 @@ describe('SelectionController', () => {
     const activateListenerSpy = jest.spyOn(selC._evc, 'activateListener')
     selC.registerSelector(selectorName, selector, eventConstructor, eventParms)
     selC.activateSelector(selectorName)
-    expect(activateListenerSpy).toBeCalledTimes(1)
-    expect(activateListenerSpy).toBeCalledWith(selectorName)
+    expect(activateListenerSpy).toHaveBeenCalledTimes(1)
+    expect(activateListenerSpy).toHaveBeenCalledWith(selectorName)
   })
 
   it('SelectionController - activate: should activate all registered text selectors', () => {
@@ -112,8 +112,8 @@ describe('SelectionController', () => {
     selC.registerSelector(selectorName, selector, eventConstructor, eventParms)
     selC.registerSelector(selectorNameTwo, selectorTwo, eventConstructor, eventParms)
     selC.activate()
-    expect(activateListenersSpy).toBeCalledTimes(1)
-    expect(activateListenersSpy).toBeCalledWith()
+    expect(activateListenersSpy).toHaveBeenCalledTimes(1)
+    expect(activateListenersSpy).toHaveBeenCalledWith()
   })
 
   it('SelectionController - deactivateSelector: should deactivate a specific text selector', () => {
@@ -125,8 +125,8 @@ describe('SelectionController', () => {
     const deactivateListenerSpy = jest.spyOn(selC._evc, 'deactivateListener')
     selC.registerSelector(selectorName, selector, eventConstructor, eventParms)
     selC.deactivateSelector(selectorName)
-    expect(deactivateListenerSpy).toBeCalledTimes(1)
-    expect(deactivateListenerSpy).toBeCalledWith(selectorName)
+    expect(deactivateListenerSpy).toHaveBeenCalledTimes(1)
+    expect(deactivateListenerSpy).toHaveBeenCalledWith(selectorName)
   })
 
   it('SelectionController - deactivate: should deactivate all registered text selectors', () => {
@@ -141,8 +141,8 @@ describe('SelectionController', () => {
     selC.registerSelector(selectorName, selector, eventConstructor, eventParms)
     selC.registerSelector(selectorNameTwo, selectorTwo, eventConstructor, eventParms)
     selC.deactivate()
-    expect(deactivateListenersSpy).toBeCalledTimes(1)
-    expect(deactivateListenersSpy).toBeCalledWith()
+    expect(deactivateListenersSpy).toHaveBeenCalledTimes(1)
+    expect(deactivateListenersSpy).toHaveBeenCalledWith()
   })
 
   it('SelectionController - onTextSelected: should publish a TEXT_SELECTED event', () => {
@@ -170,7 +170,7 @@ describe('SelectionController', () => {
     const textSelectedSpy = jest.spyOn(SelectionController.evt.TEXT_SELECTED, 'pub')
     
     selC.onTextSelected(event, domEvent)
-    expect(textSelectedSpy).toBeCalledTimes(1)
+    expect(textSelectedSpy).toHaveBeenCalledTimes(1)
     // Text selector will be undefined because a valid instance cannot be created from a test event
     expect(textSelectedSpy).toHaveBeenCalledWith({ textSelector: undefined, domEvent: domEvent })
   })

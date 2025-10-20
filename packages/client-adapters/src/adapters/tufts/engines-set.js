@@ -5,7 +5,7 @@ import Hazm from '@clAdapters/adapters/tufts/engine/hazm'
 import Traces from '@clAdapters/adapters/tufts/engine/traces'
 import Sedra from '@clAdapters/adapters/tufts/engine/sedra'
 
-import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 
 class EnginesSet {
   /**
@@ -21,8 +21,9 @@ class EnginesSet {
    * @return {Engine Class}
   */
   getEngineByCode (languageID) {
-    if (this.engine[languageID]) {
-      const engineCode = this.engine[languageID][0]
+    const langCode = LMF.getLanguageCodeFromId(languageID)
+    if (this.engine[languageID] || this.engine[langCode]) {
+      const engineCode = (this.engine[languageID] ?? this.engine[langCode])[0]
       const allEngines = new Map(([Whitakers, Morpheusgrc, Aramorph, Hazm, Traces, Sedra]).map((e) => { return [e.engine, e] }))
       return allEngines.get(engineCode)
     }

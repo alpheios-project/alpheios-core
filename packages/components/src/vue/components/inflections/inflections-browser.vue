@@ -168,7 +168,7 @@
 
 </template>
 <script>
-import { Constants, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 
 import WideTable from '@/vue/components/inflections/inflection-browser-table.vue'
 import InflTablesList from '@/vue/components/inflections/inflections-browser-tables.json'
@@ -255,7 +255,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-ib {
     margin-bottom: textsize(20px);

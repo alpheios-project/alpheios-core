@@ -1,4 +1,4 @@
-import Vue from '@vue-runtime'
+import Vue from 'vue'
 import Module from '@/vue/vuex-modules/module.js'
 import LargePanel from '@/vue/components/panel-large.vue'
 import CompactPanel from '@/vue/components/panel-compact.vue'
@@ -12,6 +12,7 @@ export default class PanelModule extends Module {
     // Create the mount point as the last child of the page's body
     const el = document.createElement('div')
     let mountEl = document.querySelector(this.config.mountInto)
+
     if (!mountEl) {
       mountEl = document.body
     }
@@ -30,6 +31,7 @@ export default class PanelModule extends Module {
         }
       }
     })
+
     this._vi.$mount(viEl)
 
     Platform.evt.ORIENTATION_CHANGE.sub(() => {

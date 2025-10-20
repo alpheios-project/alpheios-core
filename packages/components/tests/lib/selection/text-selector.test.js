@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import TextSelector from '@/lib/selection/text-selector'
 
-import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 
 describe('text-selector.test.js', () => {
   const testLangId = LMF.getLanguageIdFromCode('lat')
@@ -26,7 +26,7 @@ describe('text-selector.test.js', () => {
     expect(function () {
       const l = new TextSelector()
       console.log(l.text)
-    }).not.toThrowError()
+    }).not.toThrow()
   })
 
   it('2 TextSelector - new object has these properties text, languageID, model, location, data, start, end, context, position', () => {

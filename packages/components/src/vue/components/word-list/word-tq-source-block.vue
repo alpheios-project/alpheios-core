@@ -28,7 +28,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
   .alpheios-wordlists-tq {
 
     a.alpheios-wordlists-tq-title {

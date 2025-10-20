@@ -1,4 +1,4 @@
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 import Paradigm from '@/paradigm/lib/paradigm.js'
 
 // Verb paradigm tables

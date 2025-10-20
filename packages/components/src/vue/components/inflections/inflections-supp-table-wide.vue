@@ -17,7 +17,6 @@
 
 export default {
   name: 'WideSupplementalInflectionsTable',
-  inject: ['l10n'],
   props: {
     /*
          An object that represents a wide version of a table, consists of array of rows.
@@ -33,7 +32,11 @@ export default {
       required: true
     }
   },
-
+  computed: {
+    l10n () {
+      return this.$api.l10n
+    }
+  },
   methods: {
     cellClasses: function (cell) {
       if (cell.role === 'label') {

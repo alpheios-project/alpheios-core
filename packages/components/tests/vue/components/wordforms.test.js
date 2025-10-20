@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
 import WordForms from '@/vue/components/wordforms.vue'
-import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 
 describe('wordforms.test.js', () => {
   console.error = function () {}
@@ -32,9 +32,9 @@ describe('wordforms.test.js', () => {
   it('2 WordForms - check required props', () => {
     let cmp = mount(WordForms)
 
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "partOfSpeech"'))
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "targetWord"'))
-    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "lexemes"'))
+    expect(console.error).toHaveBeenCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "partOfSpeech"'))
+    expect(console.error).toHaveBeenCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "targetWord"'))
+    expect(console.error).toHaveBeenCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "lexemes"'))
   })
 
   it('3 WordForms - render', () => {

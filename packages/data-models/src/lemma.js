@@ -125,7 +125,7 @@ class Lemma {
       throw new Error('feature data cannot be empty.')
     }
 
-    if (!(feature instanceof Feature)) {
+    if (!(feature instanceof Feature) && (feature.constructor.name !== 'Feature')) {
       throw new Error('feature data must be a Feature object.')
     }
 

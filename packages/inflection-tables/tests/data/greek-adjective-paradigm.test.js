@@ -1,13 +1,13 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Constants, Feature, LanguageModelFactory } from 'alpheios-data-models'
+import { Constants, Feature, LanguageModelFactory } from '@alpheios-core/data-models'
 
 import BaseTestHelp from '@tests/data/base-test-help.js'
 
 describe('greek-adjective-paradigm.test.js', () => {
 
   // console.error = function () {}
-  console.log = function () {}
+  // console.log = function () {}
   console.warn = function () {}
 
   const locale = "en-US"
@@ -27,11 +27,13 @@ describe('greek-adjective-paradigm.test.js', () => {
   })
 
   it('1-1 - checked Adjective1 - ἀξίου', async () => {
+
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀξίου', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(4)
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -49,6 +51,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // ἀγαθοῦ
     expect(renderedTable.rows[3].cells[6].fullMatch).toBeFalsy() // ἀγαθῆς
     expect(renderedTable.rows[3].cells[7].fullMatch).toBeFalsy() // ἀγαθοῦ
+
   })
 
   it('1-2 - checked Adjective1 - ἀξίοιν', async () => {

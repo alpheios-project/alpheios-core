@@ -3,7 +3,7 @@
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Grammar from '@/vue/components/grammar.vue'
 import BaseTestHelp from '@tests/helpclasses/base-test-help'
-import { Constants, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'

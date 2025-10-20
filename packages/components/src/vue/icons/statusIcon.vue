@@ -1,0 +1,9 @@
+<script>
+</script>
+<template>
+<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+    <circle fill="none" stroke-width="1.1" cx="10" cy="10" r="9"></circle>
+    <rect stroke-width="0" x="9" y="4" width="1" height="7"></rect>
+    <path fill="none" stroke-width="1.1" d="M13.018,14.197 L9.445,10.625"></path>
+</svg>
+</template>

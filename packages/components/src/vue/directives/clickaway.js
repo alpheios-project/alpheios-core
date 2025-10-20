@@ -1,6 +1,6 @@
 /* eslint-disable no-constant-condition */
 // #taken from here https://github.com/simplesmiler/vue-clickaway
-import Vue from '@vue-runtime'
+import Vue from 'vue'
 
 const HANDLER = '_vue_clickaway_handler'
 

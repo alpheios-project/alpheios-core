@@ -1,8 +1,8 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import { ClientAdapters } from 'alpheios-client-adapters'
-import { Constants, WordItem, TextQuoteSelector, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { ClientAdapters } from '@alpheios-core/client-adapters'
+import { Constants, WordItem, TextQuoteSelector, LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 import UserDataManager from '@wordlist/controllers/user-data-manager'
 
 import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver.js'

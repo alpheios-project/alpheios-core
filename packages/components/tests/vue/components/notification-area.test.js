@@ -8,7 +8,7 @@ import NotificationArea from '@/vue/components/notification-area.vue'
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 describe('notification-area.test.js', () => {
   const localVue = createLocalVue()

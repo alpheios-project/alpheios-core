@@ -47,17 +47,17 @@ describe('homonym.test.js', () => {
     expect(function () {
       const l = new Homonym()
       console.log(l)
-    }).toThrowError(/empty/)
+    }).toThrow(/empty/)
 
     expect(function () {
       const l = new Homonym('foodata')
       console.log(l)
-    }).toThrowError(/array/)
+    }).toThrow(/array/)
 
     expect(function () {
       const l = new Homonym(['foodata'])
       console.log(l)
-    }).toThrowError(/Lexeme object type/)
+    }).toThrow(/Lexeme object type/)
   })
 
   it('2 Homonym - create with min arguments', () => {
@@ -89,7 +89,7 @@ describe('homonym.test.js', () => {
     expect(function () {
       const l = Homonym.readObject(testJson)
       console.log(l)
-    }).toThrowError(/empty/)
+    }).toThrow(/empty/)
   })
 
   it('4 Homonym - language method', () => {
@@ -111,7 +111,7 @@ describe('homonym.test.js', () => {
     expect(function () {
       const l = homonym.languageID
       console.log(l)
-    }).toThrowError(/language ID/)
+    }).toThrow(/language ID/)
   })
 
   it('6 Homonym - inflections method', () => {

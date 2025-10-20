@@ -1,4 +1,4 @@
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 
 /**
  * An auxiliary utility class to provide HTML page, window, and document related functionality.

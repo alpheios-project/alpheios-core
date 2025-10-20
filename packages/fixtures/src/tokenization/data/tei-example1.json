@@ -1,0 +1,747 @@
+{
+    "segments": [
+        {
+            "index": 1,
+            "tokens": [
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 0,
+                    "index": 0,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Gallia"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 1,
+                    "index": 1,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "est"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 2,
+                    "index": 2,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "omnis"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 3,
+                    "index": 3,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "divisa"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 4,
+                    "index": 4,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "in"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 5,
+                    "index": 5,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "partes"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 6,
+                    "index": 6,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "tres"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 7,
+                    "index": 7,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": ","
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 8,
+                    "index": 8,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "quarum"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 9,
+                    "index": 9,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "unam"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 10,
+                    "index": 10,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "incolunt"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 11,
+                    "index": 11,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Belgae"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 12,
+                    "index": 12,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": ","
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 13,
+                    "index": 13,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "aliam"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 14,
+                    "index": 14,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Aquitani"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 15,
+                    "index": 15,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": ","
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 16,
+                    "index": 16,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "tertiam"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 17,
+                    "index": 17,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "qui"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 18,
+                    "index": 18,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "ipsorum"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 19,
+                    "index": 19,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "lingua"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 20,
+                    "index": 20,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Celtae"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 21,
+                    "index": 21,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": ","
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 22,
+                    "index": 22,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "nostra"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 23,
+                    "index": 23,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Galli"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 24,
+                    "index": 24,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "appellantur"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 25,
+                    "index": 25,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": "."
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 27,
+                    "index": 26,
+                    "line_break_before": true,
+                    "punct": false,
+                    "text": "Hi"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 28,
+                    "index": 27,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "omnes"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 29,
+                    "index": 28,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "lingua"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 30,
+                    "index": 29,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": ","
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 31,
+                    "index": 30,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "institutis"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 32,
+                    "index": 31,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": ","
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 33,
+                    "index": 32,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "legibus"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 34,
+                    "index": 33,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "inter"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 35,
+                    "index": 34,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "se"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 36,
+                    "index": 35,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "differunt"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 37,
+                    "index": 36,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": "."
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 38,
+                    "index": 37,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Gallos"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 39,
+                    "index": 38,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "ab"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 40,
+                    "index": 39,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Aquitanis"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 41,
+                    "index": 40,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Garumna"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 42,
+                    "index": 41,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "flumen"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 43,
+                    "index": 42,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": ","
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 44,
+                    "index": 43,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "a"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 45,
+                    "index": 44,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Belgis"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 46,
+                    "index": 45,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Matrona"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 47,
+                    "index": 46,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "et"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 48,
+                    "index": 47,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Sequana"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 49,
+                    "index": 48,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "dividit"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 50,
+                    "index": 49,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": "."
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 52,
+                    "index": 50,
+                    "line_break_before": true,
+                    "punct": false,
+                    "text": "Horum"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 53,
+                    "index": 51,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "omnium"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 54,
+                    "index": 52,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "fortissimi"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 55,
+                    "index": 53,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "sunt"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 56,
+                    "index": 54,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "Belgae"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 57,
+                    "index": 55,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": ","
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 58,
+                    "index": 56,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "propterea"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 59,
+                    "index": 57,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "quod"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 60,
+                    "index": 58,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "a"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 61,
+                    "index": 59,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "cultu"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 62,
+                    "index": 60,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "atque"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 63,
+                    "index": 61,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "humanitate"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 64,
+                    "index": 62,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "provinciae"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 65,
+                    "index": 63,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "longissime"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 66,
+                    "index": 64,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "absunt"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 67,
+                    "index": 65,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": ","
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 68,
+                    "index": 66,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "minime"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 69,
+                    "index": 67,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "que"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 70,
+                    "index": 68,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "ad"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 71,
+                    "index": 69,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "eos"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 72,
+                    "index": 70,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "mercatores"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 73,
+                    "index": 71,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "saepe"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 74,
+                    "index": 72,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "commeant"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 75,
+                    "index": 73,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "atque"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 76,
+                    "index": 74,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "ea"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 77,
+                    "index": 75,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "quae"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 78,
+                    "index": 76,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "ad"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 79,
+                    "index": 77,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "effeminandos"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 80,
+                    "index": 78,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "animos"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 81,
+                    "index": 79,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "pertinent"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 82,
+                    "index": 80,
+                    "line_break_before": false,
+                    "punct": false,
+                    "text": "important"
+                },
+                {
+                    "alpheios_data_cite": "",
+                    "alpheios_data_tb_word": "",
+                    "docIndex": 83,
+                    "index": 81,
+                    "line_break_before": false,
+                    "punct": true,
+                    "text": ","
+                }
+            ]
+        }
+    ]
+}

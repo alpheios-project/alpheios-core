@@ -1,12 +1,12 @@
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import AlpheiosLexiconTransformer from '@clAdapters/transformers/alpheios-lexicon-transformer'
-import { LanguageModelFactory, Constants, Feature } from 'alpheios-data-models'
+import { LanguageModelFactory, Constants, Feature } from '@alpheios-core/data-models'
 import ImportData from '@clAdapters/transformers/import-morph-data.js'
 
 import DefaultConfig from '@clAdapters/adapters/alpheiostb/config.json'
 import {
   MessagingService, WindowIframeDestination as Destination, RequestMessage, ResponseMessage
-} from 'alpheios-messaging'
+} from '@alpheios-core/messaging'
 
 class ArethusaTreebankAdapter extends BaseAdapter {
   /**

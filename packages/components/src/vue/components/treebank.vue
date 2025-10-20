@@ -8,13 +8,17 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Treebank',
-  inject: ['settings'],
   storeModules: ['lexis'],
-  mixins: [DependencyCheck]
+  mixins: [DependencyCheck],
+  computed: {
+    settings () {
+      return this.$api.settings
+    }
+  }
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-treebank {
     display: flex;

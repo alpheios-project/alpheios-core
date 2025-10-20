@@ -3,7 +3,7 @@
 import 'whatwg-fetch'
 import Cell from '@views/lib/cell.js'
 
-import { Constants, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from '@alpheios-core/data-models'
 
 import BaseTestHelp from '@tests/data/base-test-help.js'
 import GreekView from '@views/lang/greek/greek-view.js'

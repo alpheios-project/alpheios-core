@@ -8,7 +8,7 @@ import RowTitleCell from '@views/lib/row-title-cell.js'
 
 import Form from '@lib/form.js'
 
-import { Constants, Feature } from 'alpheios-data-models'
+import { Constants, Feature } from '@alpheios-core/data-models'
 import BaseTestHelp from '@tests/data/base-test-help.js'
 import GreekView from '@views/lang/greek/greek-view.js'
 

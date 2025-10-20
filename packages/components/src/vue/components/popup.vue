@@ -117,17 +117,17 @@
 import Morph from './morph.vue'
 import NotificationArea from './notification-area.vue'
 import interact from 'interactjs'
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 
 import Tooltip from './tooltip.vue'
 import ProgressBar from './progress-bar.vue'
 // Embeddable SVG icons
-import LogoIcon from '@/images/alpheios/logo.svg'
-import CloseIcon from '@/images/inline-icons/x-close.svg'
-import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
-import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
-import InflectionsIcon from '@/images/inline-icons/inflections.svg'
-import TreebankIcon from '@/images/inline-icons/sitemap.svg'
+import LogoIcon from '@/vue/icons/alpheios/logoIcon.vue'
+import CloseIcon from '@/vue/icons/x-closeIcon.vue'
+import DefinitionsIcon from '@/vue/icons/definitionsIcon.vue'
+import WordUsageIcon from '@/vue/icons/usage-examples-Icon.vue'
+import InflectionsIcon from '@/vue/icons/inflectionsIcon.vue'
+import TreebankIcon from '@/vue/icons/sitemapIcon.vue'
 
 import { directive as onClickaway } from '../directives/clickaway.js'
 // Modules support
@@ -135,7 +135,6 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Popup',
-  inject: ['app', 'ui', 'l10n', 'settings', 'auth'],
   storeModules: ['app', 'ui', 'popup', 'auth', 'lexis'],
   mixins: [DependencyCheck],
   components: {
@@ -222,8 +221,8 @@ export default {
     },
 
     componentStyles: function () {
-      let maxWidthVal = this.settings.getUiOptions().items.maxPopupWidth.currentValue
-      maxWidthVal = (maxWidthVal === this.settings.getUiOptions().items.maxPopupWidth.values.max) ? null : `${maxWidthVal}px`
+      let maxWidthVal = this.settings?.getUiOptions().items.maxPopupWidth.currentValue
+      maxWidthVal = (maxWidthVal === this.settings?.getUiOptions().items.maxPopupWidth.values.max) ? null : `${maxWidthVal}px`
       return {
         left: this.positionLeftDm,
         top: this.positionTopDm,
@@ -310,6 +309,21 @@ export default {
 
     maxHeight () {
       return this.app.platform.viewport.innerHeight - 2 * this.moduleConfig.viewportMargin
+    },
+    app () {
+      return this.$api.app
+    },
+    ui () {
+      return this.$api.ui
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
+    },
+    auth () {
+      return this.$api.auth
     }
   },
 
@@ -571,7 +585,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
 
   .alpheios-popup {
     display: flex;

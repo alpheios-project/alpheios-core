@@ -1,4 +1,4 @@
-import Vue from '@vue-runtime'
+import Vue from 'vue'
 import Module from '@/vue/vuex-modules/module.js'
 import ActionPanel from '@/vue/components/nav/action-panel.vue'
 import Platform from '@/lib/utility/platform.js'

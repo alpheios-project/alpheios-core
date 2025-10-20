@@ -1,0 +1,27 @@
+{
+  "name": "@alpheios-core/messaging",
+  "version": "1.0.0",
+  "description": "A messaging service for Alpheios Tools",
+  "main": "dist/alpheios-messaging.js",
+  "scripts": {
+    "build": "vite build",
+    "test": "jest tests --detectOpenHandles --coverage"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.28.0",
+    "babel-jest": "^30.0.5",
+    "vite": "^7.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpheios-project/alpheios-messaging.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alpheios-project/alpheios-messaging/issues"
+  },
+  "homepage": "https://github.com/alpheios-project/alpheios-messaging#readme"
+}

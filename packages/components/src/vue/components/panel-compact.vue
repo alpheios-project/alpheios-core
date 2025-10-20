@@ -293,27 +293,27 @@ import InflectionBrowser from '@/vue/components/inflections/inflections-browser.
 
 import UserAuth from './user-auth.vue'
 import WordUsageExamples from '@/vue/components/word-usage-examples/word-usage-examples.vue'
-import { Definition } from 'alpheios-data-models'
+import { Definition } from '@alpheios-core/data-models'
 import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
 import ProgressBar from '@/vue/components/progress-bar.vue'
 import OptionsPanel from '@/vue/components/options.vue'
 
 // Embeddable SVG icons
-import CloseIcon from '@/images/inline-icons/x-close.svg'
-import UpIcon from '@/images/inline-icons/chevron-up.svg'
-import DownIcon from '@/images/inline-icons/chevron-down.svg'
-import LeftIcon from '@/images/inline-icons/chevron-left.svg'
-import RightIcon from '@/images/inline-icons/chevron-right.svg'
-import MorphologyIcon from '@/images/inline-icons/language.svg'
-import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
-import InflectionsIcon from '@/images/inline-icons/inflections.svg'
-import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
-import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
-import UserIcon from '@/images/inline-icons/user.svg'
-import OptionsIcon from '@/images/inline-icons/options.svg'
-import GrammarIcon from '@/images/inline-icons/resources.svg'
-import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import TreebankIcon from '@/images/inline-icons/sitemap.svg'
+import CloseIcon from '@/vue/icons/x-closeIcon.vue'
+import UpIcon from '@/vue/icons/chevron-upIcon.vue'
+import DownIcon from '@/vue/icons/chevron-downIcon.vue'
+import LeftIcon from '@/vue/icons/chevron-leftIcon.vue'
+import RightIcon from '@/vue/icons/chevron-rightIcon.vue'
+import MorphologyIcon from '@/vue/icons/languageIcon.vue'
+import DefinitionsIcon from '@/vue/icons/definitionsIcon.vue'
+import InflectionsIcon from '@/vue/icons/inflectionsIcon.vue'
+import WordUsageIcon from '@/vue/icons/usage-examples-Icon.vue'
+import InflectionsBrowserIcon from '@/vue/icons/inflections-browserIcon.vue'
+import UserIcon from '@/vue/icons/userIcon.vue'
+import OptionsIcon from '@/vue/icons/optionsIcon.vue'
+import GrammarIcon from '@/vue/icons/resourcesIcon.vue'
+import WordlistIcon from '@/vue/icons/wordlist-Icon.vue'
+import TreebankIcon from '@/vue/icons/sitemapIcon.vue'
 
 // Vue directives
 import { directive as onClickaway } from '../directives/clickaway.js'
@@ -326,13 +326,6 @@ const FONT_SIZE_PROP = '--alpheios-base-text-size'
 export default {
   name: 'PanelCompact',
   // API modules that are required for this component
-  inject: {
-    app: 'app',
-    ui: 'ui',
-    l10n: 'l10n',
-    settings: 'settings',
-    auth: 'auth'
-  },
   storeModules: ['app', 'ui', 'panel', 'auth', 'lexis'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
@@ -408,6 +401,21 @@ export default {
   prefixName: 'panel-compact',
 
   computed: {
+    app () {
+      return this.$api.app
+    },
+    ui () {
+      return this.$api.ui
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
+    },
+    auth () {
+      return this.$api.auth
+    },
     currentTab () {
       return this.$store.state.ui.activeTab
     },
@@ -644,7 +652,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
   $alpheios-toolbar-height: uisize(56px);
 
   .alpheios-panel {

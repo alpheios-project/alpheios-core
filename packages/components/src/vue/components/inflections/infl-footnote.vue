@@ -27,19 +27,15 @@
   </a>
 </template>
 <script>
-import uuidv4 from 'uuid/v4'
+import { v4 as uuidv4 } from 'uuid'
 import interact from 'interactjs'
-import Vue from '@vue-runtime'
+import Vue from 'vue'
 
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'InflFootnote',
-  // API modules that are required for this component
-  inject: {
-    app: 'app'
-  },
   storeModules: ['panel'], // Store modules that are required by this component
   mixins: [DependencyCheck],
 
@@ -83,6 +79,11 @@ export default {
     this.$_alpheios_cleanup()
     if (this.$options.visibleUnwatch) {
       this.$options.visibleUnwatch()
+    }
+  },
+  computed: {
+    app () {
+      return this.$api.app
     }
   },
   methods: {
@@ -182,7 +183,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .infl-suff-footnote-link {
     position: relative;

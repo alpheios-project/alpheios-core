@@ -10,7 +10,7 @@ import Vue from 'vue/dist/vue'
 import Download from '@/lib/utility/download.js'
 import DownloadConfirmation from '@/vue/components/word-list/download-confirmation.vue'
 
-import { Constants, WordItem, WordList } from 'alpheios-data-models'
+import { Constants, WordItem, WordList } from '@alpheios-core/data-models'
 
 describe('word-language-panel.test.js', () => {
   const localVue = createLocalVue()
@@ -231,7 +231,7 @@ describe('word-language-panel.test.js', () => {
     expect(cmp.vm.languageName).toEqual('lat')
   })
 
-  it('9 WordLanguagePanel - method showDeleteAll updates showDeleteAllBox to true and shows alpheios-wordlist-delete-all-confirmation block', async () => {
+  it('9 WordLanguagePanel - method showDeleteAll updates showDeleteAllBox to true and shows @alpheios-core/wordlist-delete-all-confirmation block', async () => {
     let cmp = shallowMount(WordLanguagePanel, {
       store,
       localVue,
@@ -251,7 +251,7 @@ describe('word-language-panel.test.js', () => {
     expect(deleteAllBlock.isVisible()).toBeTruthy()
   })
 
-  it('10 WordLanguagePanel - method showDownloadList updates showDownloadBox to true and shows alpheios-wordlist-download-confirmation block', async () => {
+  it('10 WordLanguagePanel - method showDownloadList updates showDownloadBox to true and shows @alpheios-core/wordlist-download-confirmation block', async () => {
     let cmp = shallowMount(WordLanguagePanel, {
       store,
       localVue,
@@ -402,7 +402,7 @@ describe('word-language-panel.test.js', () => {
     expect(cmp.vm.showDeletAllBlock).toBeFalsy()
   })  
 
-  it('16 WordLanguagePanel - method cancelDeleteAll updates showDeleteAllBox to false and hides alpheios-wordlist-delete-all-confirmation block', () => {
+  it('16 WordLanguagePanel - method cancelDeleteAll updates showDeleteAllBox to false and hides @alpheios-core/wordlist-delete-all-confirmation block', () => {
     let cmp = shallowMount(WordLanguagePanel, {
       store,
       localVue,
@@ -420,7 +420,7 @@ describe('word-language-panel.test.js', () => {
     expect(deleteAllBlock.isVisible()).toBeFalsy()
   })
 
-  it('17 WordLanguagePanel - method cancelDownloadList updates showDownloadBox to false and hides alpheios-wordlist-download-confirmation block', () => {
+  it('17 WordLanguagePanel - method cancelDownloadList updates showDownloadBox to false and hides @alpheios-core/wordlist-download-confirmation block', () => {
     let cmp = shallowMount(WordLanguagePanel, {
       store,
       localVue,

@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Logger } from 'alpheios-data-models'
+import { Logger } from '@alpheios-core/data-models'
 import ExtendedGreekData from '@lib/extended-greek-data.js'
 
 describe('extended-greek-data.test.js', () => {

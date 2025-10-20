@@ -13,7 +13,6 @@
 <script>
 export default {
   name: 'BetaCodesInfo',
-  inject: ['l10n', 'settings'],
   props: {
     availableUseBetaCodes: {
       type: Boolean,
@@ -27,13 +26,19 @@ export default {
     },
     currentShowBetaCodesInfo () {
       return this.featureOptions ? this.availableUseBetaCodes && this.featureOptions.items.showBetaCodesInfo.currentValue : null
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   }
 }
 
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+ @use "@/styles/_variables.scss" as *;
   .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
     border-bottom: 1px solid var(--alpheios-color-placehoder);
     margin-bottom: textsize(10px);

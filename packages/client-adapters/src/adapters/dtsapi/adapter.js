@@ -1,6 +1,6 @@
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
-import { Collection } from 'alpheios-data-models'
+import { Collection } from '@alpheios-core/data-models'
 
 export default class DTSAPIAdapter extends BaseAdapter {
   /**

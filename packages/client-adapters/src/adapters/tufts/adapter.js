@@ -1,4 +1,4 @@
-import { LanguageModelFactory as LMF, Lexeme, Feature, Constants } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Lexeme, Feature, Constants } from '@alpheios-core/data-models'
 
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import AlpheiosLexiconTransformer from '@clAdapters/transformers/alpheios-lexicon-transformer'
@@ -34,6 +34,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
       if (langID !== Constants.LANG_UNDEFINED && this.engines[langID] === undefined) {
         this.engines[langID] = engineConfig[langCode]
       }
+      this.engines[langCode] = engineConfig[langCode]
     })
   }
 

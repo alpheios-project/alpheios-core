@@ -23,11 +23,10 @@
 import WordLanguagePanel from '@/vue/components/word-list/word-language-panel.vue'
 import WordContextPanel from '@/vue/components/word-list/word-context-panel.vue'
 
-import { LanguageModelFactory, Constants } from 'alpheios-data-models'
+import { LanguageModelFactory, Constants } from '@alpheios-core/data-models'
 
 export default {
   name: 'WordListPanel',
-  inject: ['app'],
   components: {
     wordLanguage: WordLanguagePanel,
     wordContext: WordContextPanel
@@ -47,6 +46,9 @@ export default {
     },
     showContext () {
       return Boolean(this.showContextWordItem)
+    },
+    app () {
+      return this.$api.app
     }
   },
   methods: {
@@ -67,7 +69,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../../styles/variables";
+    @use "@/styles/_variables.scss" as *;
 
     .alpheios-wordlist-language {
         padding-bottom: 5px;

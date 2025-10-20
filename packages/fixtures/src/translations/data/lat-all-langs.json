@@ -1,0 +1,34 @@
+[
+  {
+    "lang": "cat", 
+    "uri": "https://ats.alpheios.net/lat/cat"
+  }, 
+  {
+    "lang": "eng", 
+    "uri": "https://ats.alpheios.net/lat/eng"
+  }, 
+  {
+    "lang": "fre", 
+    "uri": "https://ats.alpheios.net/lat/fre"
+  }, 
+  {
+    "lang": "ger", 
+    "uri": "https://ats.alpheios.net/lat/ger"
+  }, 
+  {
+    "lang": "glg", 
+    "uri": "https://ats.alpheios.net/lat/glg"
+  }, 
+  {
+    "lang": "ita", 
+    "uri": "https://ats.alpheios.net/lat/ita"
+  }, 
+  {
+    "lang": "por", 
+    "uri": "https://ats.alpheios.net/lat/por"
+  }, 
+  {
+    "lang": "spa", 
+    "uri": "https://ats.alpheios.net/lat/spa"
+  }
+]

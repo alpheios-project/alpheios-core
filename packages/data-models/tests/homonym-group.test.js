@@ -56,11 +56,11 @@ describe('homonym.test.js', () => {
   })
 
   it('HomonymGroup: toHomonym fails if no target word is provided', () => {
-    expect(() => new HomonymGroup().toHomonym()).toThrowError(HomonymGroup.errors.NO_TARGET_WORD)
+    expect(() => new HomonymGroup().toHomonym()).toThrow(HomonymGroup.errors.NO_TARGET_WORD)
   })
 
   it('HomonymGroup: toHomonym fails if a group has no homonyms', () => {
-    expect(() => new HomonymGroup().toHomonym(TARGET_WORD)).toThrowError('Lexemes data should not be empty.')
+    expect(() => new HomonymGroup().toHomonym(TARGET_WORD)).toThrow('Lexemes data should not be empty.')
   })
 
   it('HomonymGroup: toHomonym creates a homonym from a single homonym', () => {

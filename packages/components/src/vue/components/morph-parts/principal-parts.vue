@@ -64,16 +64,15 @@
     </div>
 </template>
 <script>
-import TreebankIcon from '@/images/inline-icons/sitemap.svg'
-import DisambiguatedIcon from '@/images/inline-icons/caret-left.svg'
+import TreebankIcon from '@/vue/icons/sitemapIcon.vue'
+import DisambiguatedIcon from '@/vue/icons/caret-leftIcon.vue'
 import Tooltip from '@/vue/components/tooltip.vue'
-import { Feature, LanguageModelFactory, Logger } from 'alpheios-data-models'
+import { Feature, LanguageModelFactory, Logger } from '@alpheios-core/data-models'
 
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 
 export default {
   name: 'PrincipalParts',
-  inject: ['app','l10n'], // API modules
   components: {
     inflectionattribute: InflectionAttribute,
     treebankIcon: TreebankIcon,
@@ -119,6 +118,12 @@ export default {
     },
     hasSource () {
       return this.lemma.features && this.getFeature('source')
+    },
+    app () {
+      return this.$api.app
+    },
+    l10n () {
+      return this.$api.l10n
     }
   },
   methods: {
@@ -160,7 +165,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   .alpheios-principal-parts__lemma_index,
   .alpheios-principal-parts__lemma_index_spacer {

@@ -41,15 +41,14 @@
 </template>
 <script>
 import Download from '@comp/lib/utility/download.js'
-import CloseIcon from '@comp/images/inline-icons/x-close.svg'
+import CloseIcon from '@/vue/icons/x-closeIcon.vue'
 import Tooltip from '@comp/vue/components/tooltip.vue'
 import TextSelector from '@comp/lib/selection/text-selector'
 import ProgressBar from '@comp/vue/components/progress-bar.vue'
-import { LanguageModelFactory } from 'alpheios-data-models'
+import { LanguageModelFactory } from '@alpheios-core/data-models'
 
 export default {
   name: 'DownloadConfirmation',
-  inject: ['l10n', 'app', 'settings', 'lexis'],
   storeModules: ['settings'],
   components: {
     closeIcon: CloseIcon,
@@ -96,6 +95,18 @@ export default {
     },
     languageID () {
       return LanguageModelFactory.getLanguageIdFromCode(this.languageCode)
+    },
+    app () {
+      return this.$api.app
+    },
+    lexis () {
+      return this.$api.lexis
+    },
+    l10n () {
+      return this.$api.l10n
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -184,7 +195,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../../styles/variables";
+    @use "@/styles/_variables.scss" as *;
 
     .alpheios-wordlist-download-confirmation {
       margin-top: 10px;

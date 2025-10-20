@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { Constants, Inflection } from 'alpheios-data-models'
+import { Constants, Inflection } from '@alpheios-core/data-models'
 
 import InflectionSet from '@lib/inflection-set.js'
 import Inflections from '@lib/inflection-list.js'

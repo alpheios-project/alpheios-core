@@ -1,5 +1,5 @@
-import uuidv4 from 'uuid/v4'
-import { Feature, Logger } from 'alpheios-data-models'
+import { v4 as uuidv4 } from 'uuid'
+import { Feature, Logger } from '@alpheios-core/data-models'
 import ParadigmRule from '@/paradigm/lib/paradigm-rule.js'
 import ParadigmInflectionList from '@/paradigm/lib/paradigm-inflection-list.js'
 

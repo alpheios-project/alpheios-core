@@ -3,7 +3,7 @@
 import 'whatwg-fetch'
 import IndexedDB from 'fake-indexeddb'
 import IDBKeyRange from 'fake-indexeddb/lib/FDBKeyRange'
-import { WordItem, Constants, TextQuoteSelector } from 'alpheios-data-models'
+import { WordItem, Constants, TextQuoteSelector } from '@alpheios-core/data-models'
 
 import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver'
 import Utility from '@wordlist/common/utility'
@@ -233,7 +233,7 @@ describe('worditem-indexeddb-driver.test.js', () => {
     expect(function () {
       let l = dbDriverLocal.listItemsQuery({})
       console.log(l)
-    }).toThrowError(/Invalid query parameters/)
+    }).toThrow(/Invalid query parameters/)
   })
 
   it('17 WordItemIndexedDbDriver - segmentSelectQuery method returns settings for getting data for an objectStore', () => {
@@ -320,7 +320,7 @@ describe('worditem-indexeddb-driver.test.js', () => {
     expect(function () {
       let l = dbDriverLocal.segmentDeleteManyQuery('common', {})
       console.log(l)
-    }).toThrowError(/Invalid query parameters/)
+    }).toThrow(/Invalid query parameters/)
   })
 
   it('23 WordItemIndexedDbDriver - updateSegmentQuery method returns objectStoreName and dataItems for updating', () => {
@@ -517,4 +517,5 @@ describe('worditem-indexeddb-driver.test.js', () => {
     expect(resCreatedRemoteItem.constructor.name).toMatch(/WordItem/)
     expect(resCreatedRemoteItem.homonym.constructor.name).toMatch(/Homonym/)
   })
+
 })

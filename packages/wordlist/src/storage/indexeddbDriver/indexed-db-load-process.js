@@ -1,4 +1,4 @@
-import { Homonym, WordItem, Lexeme, Lemma, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Homonym, WordItem, Lexeme, Lemma, LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 
 export default class IndexedDBLoadProcess {
   /**

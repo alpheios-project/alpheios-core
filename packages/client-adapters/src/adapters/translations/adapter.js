@@ -1,6 +1,6 @@
 import DefaultConfig from '@clAdapters/adapters/translations/config.json'
 
-import { ResourceProvider, Translation, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { ResourceProvider, Translation, LanguageModelFactory as LMF } from '@alpheios-core/data-models'
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
 class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {

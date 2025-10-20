@@ -21,14 +21,13 @@
     </div>
 </template>
 <script>
-import { ClientAdapters } from 'alpheios-client-adapters'
-import { LanguageModelFactory, Constants } from 'alpheios-data-models'
+import { ClientAdapters } from '@alpheios-core/client-adapters'
+import { LanguageModelFactory, Constants } from '@alpheios-core/data-models'
 import GreekInput from '@/lib/utility/greek-input.js'
 import { directive as onClickaway } from '@/vue/directives/clickaway.js'
 
 export default {
   name: 'InputAutocomplete',
-  inject: ['app', 'settings'],
   directives: {
     onClickaway: onClickaway
   },
@@ -75,6 +74,12 @@ export default {
     },
     availableUseBetaCodes () {
       return this.lang === GreekInput.langCode
+    },
+    app () {
+      return this.$api.app
+    },
+    settings () {
+      return this.$api.settings
     }
   },
   methods: {
@@ -145,7 +150,7 @@ export default {
 
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
+  @use "@/styles/_variables.scss" as *;
 
   $fieldsetHeight: 40px;
 

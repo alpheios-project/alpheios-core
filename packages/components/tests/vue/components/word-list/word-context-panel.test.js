@@ -9,7 +9,7 @@ import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 import BackIcon from '@/images/inline-icons/back.svg'
 
-import { Constants, WordItem } from 'alpheios-data-models'
+import { Constants, WordItem } from '@alpheios-core/data-models'
 
 describe('word-context-panel.test.js', () => {
   const localVue = createLocalVue()
@@ -103,7 +103,7 @@ describe('word-context-panel.test.js', () => {
     expect(cmp.emitted()['backToWordList']).toBeTruthy()
   })
 
-  it('5 WordContextPanel - renders back link to alpheios-wordlist-commands__item-back', async() => {
+  it('5 WordContextPanel - renders back link to @alpheios-core/wordlist-commands__item-back', async() => {
     let cmp = shallowMount(WordContextPanel, {
       store,
       localVue,

@@ -9,7 +9,7 @@ import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 
 import Platform from '@/lib/utility/platform.js'
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 describe('panel-compact.test.js', () => {
   const localVue = createLocalVue()

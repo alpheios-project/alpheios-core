@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import MediaSelector from '@/lib/selection/media/media-selector'
-import { Constants } from 'alpheios-data-models'
+import { Constants } from '@alpheios-core/data-models'
 
 describe('media-selector.test.js', () => {
   let testEvent = {
@@ -32,7 +32,7 @@ describe('media-selector.test.js', () => {
     expect(function () {
       let l = new MediaSelector({})
       console.log(l.text)
-    }).toThrowError(testError)
+    }).toThrow(testError)
   })
 
   it('2 MediaSelector - constructor saves target and location from arguments', () => {

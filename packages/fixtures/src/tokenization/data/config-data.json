@@ -1,0 +1,272 @@
+{
+    "paths": {
+      "/tokenize/tei": {
+        "post": {
+          "description": "Tokenize a TEI XML text",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "segstart",
+              "required": false,
+              "description": "Supply the starting segment index.",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 1
+              }
+            },
+            {
+              "in": "query",
+              "name": "lang",
+              "required": true,
+              "description": "Supply the iso language code of the text.",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "in": "query",
+              "name": "tbseg",
+              "required": false,
+              "description": "Is this text aligned with a treebank?",
+              "schema": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            {
+              "in": "query",
+              "name": "direction",
+              "required": false,
+              "description": "Supply the display direction of the text.",
+              "schema": {
+                "type": "string",
+                "default": "ltr",
+                "enum": [
+                  "ltr",
+                  "rtl"
+                ]
+              }
+            },
+            {
+              "in": "query",
+              "name": "linebreaks",
+              "required": false,
+              "description": "Supply a comma-separated list of elements in the text that represent visual blocks.",
+              "schema": {
+                "type": "string",
+                "default": "p,div,seg,l,ab"
+              }
+            },
+            {
+              "in": "query",
+              "name": "segments",
+              "required": false,
+              "description": "Supply a comma-separated list of TEI elements in the text which group segments of tokens.",
+              "schema": {
+                "type": "string",
+                "default": "body"
+              }
+            },
+            {
+              "in": "query",
+              "name": "ignore",
+              "required": false,
+              "description": "Supply a comma-separated list of TEI elements in the text whose contents should be ignored for tokenization.",
+              "schema": {
+                "type": "string",
+                "default": "label,ref,milestone,orig,abbr,head,title,teiHeader,del,g,bibl,front,back,speaker"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TokenizeResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/tokenize/text": {
+        "post": {
+          "description": "Tokenize a plain text document.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "segstart",
+              "required": false,
+              "description": "Supply the starting segment index.",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 1
+              }
+            },
+            {
+              "in": "query",
+              "name": "lang",
+              "required": true,
+              "description": "Supply the iso language code of the text.",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "in": "query",
+              "name": "tbseg",
+              "required": false,
+              "description": "Is this text aligned with a treebank?",
+              "schema": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            {
+              "in": "query",
+              "name": "direction",
+              "required": false,
+              "description": "Supply the display direction of the text.",
+              "schema": {
+                "type": "string",
+                "default": "ltr",
+                "enum": [
+                  "ltr",
+                  "rtl"
+                ]
+              }
+            },
+            {
+              "in": "query",
+              "name": "segments",
+              "required": false,
+              "description": "Identify how segments are separated in the text.",
+              "schema": {
+                "type": "string",
+                "default": "doubleline",
+                "enum": [
+                  "singleline",
+                  "doubleline"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TokenizeResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "info": {
+      "title": "Alpheios Tokenizer Service",
+      "version": "1.0.0"
+    },
+    "openapi": "3.0.2",
+    "components": {
+      "schemas": {
+        "Token": {
+          "type": "object",
+          "properties": {
+            "index": {
+              "type": "integer",
+              "format": "int32",
+              "description": "Index of the Token in the parent Segment."
+            },
+            "punct": {
+              "type": "boolean",
+              "description": "Indicates if the Token is Punctuation."
+            },
+            "text": {
+              "type": "string",
+              "description": "Text contents of the Token."
+            },
+            "alpheios_data_tb_word": {
+              "type": "string",
+              "description": "Metadata field for Alpheios Reading Tools - provides Treebank Word Identifier."
+            },
+            "line_break_before": {
+              "type": "boolean",
+              "description": "Indicates if the Token should have a Line Break displayed before it."
+            },
+            "alpheios_data_cite": {
+              "type": "string",
+              "description": "Metadata field for Alpheios Reading Tools - provides Citatable Identifier."
+            },
+            "docIndex": {
+              "type": "integer",
+              "format": "int32",
+              "description": "Index of the Token in the Document."
+            }
+          },
+          "required": [
+            "docIndex",
+            "index",
+            "line_break_before",
+            "punct",
+            "text"
+          ]
+        },
+        "Segment": {
+          "type": "object",
+          "properties": {
+            "tokens": {
+              "type": "array",
+              "description": "List of Tokens in the Segment.",
+              "items": {
+                "$ref": "#/components/schemas/Token"
+              }
+            },
+            "index": {
+              "type": "integer",
+              "format": "int32",
+              "description": "Index of Segment in the Document."
+            },
+            "alpheios_data_cite": {
+              "type": "string",
+              "description": "Metadata field for Alpheios Reading Tools - provides Citatable Identifier."
+            },
+            "alpheios_data_tb_sent": {
+              "type": "string",
+              "description": "Metadata field for Alpheios Reading Tools - provides Treebank Sentence Identifier."
+            }
+          },
+          "required": [
+            "index",
+            "tokens"
+          ]
+        },
+        "TokenizeResponse": {
+          "type": "object",
+          "properties": {
+            "segments": {
+              "type": "array",
+              "description": "List of Segments.",
+              "items": {
+                "$ref": "#/components/schemas/Segment"
+              }
+            },
+            "metadata": {
+              "type": "object",
+              "description": "Text-level metadata dictionary."
+            }
+          },
+          "required": [
+            "metadata",
+            "segments"
+          ]
+        }
+      }
+    }
+  }

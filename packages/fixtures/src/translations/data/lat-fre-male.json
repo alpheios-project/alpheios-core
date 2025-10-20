@@ -1,0 +1,16 @@
+[
+  {
+    "in": "malus", 
+    "map": "malus", 
+    "translations": [
+      "mauvais (comp. peior, sup. : pessimus -umus)"
+    ]
+  }, 
+  {
+    "in": "male", 
+    "map": "male", 
+    "translations": [
+      "mal, vilainement"
+    ]
+  }
+]

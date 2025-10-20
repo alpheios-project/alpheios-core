@@ -37,21 +37,21 @@ describe('Feature object', () => {
     expect(() => {
       let f = new GrmFeature(featureValue1, Feature.types.number)
       console.log(f)
-    }).toThrowError(/requires a language/)
+    }).toThrow(/requires a language/)
   })
 
   test('Constructor should throw an exception if any incorrect values of arguments are provided', () => {
     expect(() => {
       let f = new GrmFeature(featureValue1, 'incorrect value', languageGreek)
       console.log(f)
-    }).toThrowError(/not supported/)
+    }).toThrow(/not supported/)
   })
 
   test('Constructor should throw an exception if correct argument values are provided in incorrect order', () => {
     expect(() => {
       let f = new GrmFeature(featureValue1, languageGreek, Feature.types.number)
       console.log(f)
-    }).toThrowError(/not supported/)
+    }).toThrow(/not supported/)
   })
 
   test('toString returns value', () => {
